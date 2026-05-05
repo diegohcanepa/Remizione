@@ -27,7 +27,6 @@ namespace ScaryCastle
             Scale = new(20, 12)
         };
 
-        private int ambientLightSourceCount;
         private Color brightnessColor;
         private int currentDrawIndex;
         private readonly Color defaultPlayerLightColor = new(240, 181, 65);
@@ -241,7 +240,7 @@ namespace ScaryCastle
 
             if (Session.Player != null)
             {
-                if (ambientLightSourceCount == 0)
+                if (!HasAmbientLightSources)
                 {
                     playerLight.Color = Session.PlayerInventory.AmbientLightColor ?? defaultPlayerLightColor;
                     playerLight.Scale = defaultPlayerLightScale * Session.PlayerStats.AmbientLight.Value;
@@ -250,7 +249,7 @@ namespace ScaryCastle
                 }
             }
 
-            if (Session.HUD.Countdown.IsRunning)
+            if (Session.HUD.Countdown.IsCritical)
                 alarmLight.Draw(gameTime);
 
             if (BrightnessModifier > 0)
@@ -308,32 +307,6 @@ namespace ScaryCastle
             // Follow player
             if (Session.Player != null && Session.Player.IsInCurrentRoom && FollowPlayer)
                 Session.Camera.Follow(Session.Player, true);
-        }
-
-        // OnChildAdded
-        protected override void OnChildAdded(Entity child)
-        {
-            base.OnChildAdded(child);
-
-            if (child is Prop prop && prop.IsAmbientLightSource)
-            {
-                ambientLightSourceCount++;
-                if (ambientLightSourceCount == 1)
-                    playerLight.TurnOn();
-            }
-        }
-
-        // OnChildRemoved
-        protected override void OnChildRemoved(Entity child)
-        {
-            base.OnChildRemoved(child);
-
-            if (child is Prop prop && prop.IsAmbientLightSource)
-            {
-                ambientLightSourceCount--;
-                if (ambientLightSourceCount == 0)
-                    playerLight.TurnOff();
-            }
         }
 
         // OnDraw
@@ -465,10 +438,10 @@ namespace ScaryCastle
             if (AllowGlobalLight)
                 Session.Environment.GlobalLight.Update(gameTime);
 
-            if (ambientLightSourceCount == 0 && Session.Player != null)
+            if (HasAmbientLightSources && Session.Player != null)
                 playerLight.Update(gameTime);
 
-            if (Session.HUD.Countdown.IsRunning)
+            if (Session.HUD.Countdown.IsCritical)
             {
                 alarmLight.Position = Session.Camera.VisibleBox.Center;
                 alarmLight.Update(gameTime);
@@ -576,7 +549,27 @@ namespace ScaryCastle
         }
 
         // HasAmbientLightSources
-        public bool HasAmbientLightSources => ambientLightSourceCount > 0;
+        public bool HasAmbientLightSources { get; private set; }
+
+        // InvalidateAmbientLightSources
+        public void InvalidateAmbientLightSources()
+        {
+            HasAmbientLightSources = false;
+            
+            for (var i = 0; i < Children.Count; i++)
+            {
+                if (Children[i] is Prop prop && prop.IsAmbientLight && prop.IsEmittingLight)
+                {
+                    HasAmbientLightSources = true;
+                    break;
+                }
+            }
+
+            if (HasAmbientLightSources)
+                playerLight.TurnOff();
+            else
+                playerLight.TurnOn();
+        }
 
         // IsProcedural
         [ScriptProperty]

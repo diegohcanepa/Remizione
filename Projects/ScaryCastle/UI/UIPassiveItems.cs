@@ -27,7 +27,7 @@ namespace ScaryCastle
             {
                 icons[i] = new()
                 {
-                    PivotOrigin = RectanglePoint.RightTop,
+                    PivotOrigin = RectanglePoint.RightBottom,
                     Scale = ScaleInfo.UIElement.Medium
                 };
             }
@@ -47,7 +47,7 @@ namespace ScaryCastle
             }
 
             var index = 0;
-            var iconPos = Screen.Area.GetPoint(RectanglePoint.RightTop, -3, 2);
+            var iconPos = Screen.Area.GetPoint(RectanglePoint.RightBottom, -30, -5);
             for (var i = session.PlayerInventory.Count - 1; i >= 0; i--)
             {
                 if (session.PlayerInventory[i].Definition.IsPassive)

@@ -659,7 +659,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Torch-assets/Torch.png</key>
+            <key type="filename">Torch-assets/Torch01.png</key>
+            <key type="filename">Torch-assets/Torch02.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

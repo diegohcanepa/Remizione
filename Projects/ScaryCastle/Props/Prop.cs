@@ -33,7 +33,8 @@ namespace ScaryCastle
             if (Definition != null)
             {
                 this.DropMode = Definition.DropMode;
-                this.DropChanceMultiplier = Definition.DropChanceMultiplier;
+                this.DropCoinChanceBonus = Definition.DropCoinChanceBonus;
+                this.DropSackChanceBonus = Definition.DropSackChanceBonus;
             }
 
             // Shadow
@@ -131,8 +132,8 @@ namespace ScaryCastle
         // Definition
         public PropDefinition? Definition { get; }
 
-        // IsAmbientLightSource
-        public bool IsAmbientLightSource { get; init; }
+        // IsAmbientLight
+        public bool IsAmbientLight { get; set; }
 
         // SkillChancePenalty
         [ScriptProperty]

@@ -360,6 +360,11 @@ namespace ScaryCastle
         {
         }
 
+        // OnIgnoreAttachedLightChanged
+        protected virtual void OnIgnoreAttachedLightChanged()
+        {
+        }
+
         // OnLoad
         protected override void OnLoad()
         {
@@ -789,8 +794,11 @@ namespace ScaryCastle
         [ScriptProperty]
         public LootDropMode DropMode { get; set; } = LootDropMode.Standard;
 
-        // DropChanceMultiplier
-        public Ratio DropChanceMultiplier { get; set; } = 1;
+        // DropCoinChanceBonus
+        public Ratio DropCoinChanceBonus { get; set; }
+
+        // DropSackChanceBonus
+        public Ratio DropSackChanceBonus { get; set; }
 
         // FaceTo
         public void FaceTo(GameThing target)
@@ -996,7 +1004,18 @@ namespace ScaryCastle
 
         // IgnoreAttachedLight
         [ScriptProperty]
-        public bool IgnoreAttachedLight { get; set; }
+        public bool IgnoreAttachedLight
+        {
+            get;
+            set
+            {
+                if (field != value)
+                {
+                    field = value;
+                    OnIgnoreAttachedLightChanged();
+                }
+            }
+        }
 
         // IgnoreWalkArea
         [ScriptProperty]
@@ -1050,7 +1069,7 @@ namespace ScaryCastle
         public bool IsDead => (HP <= 0 && MaxHP > 0) || (HP == int.MinValue);
 
         // IsEmittingLight
-        public virtual bool IsEmittingLight => AttachedLight != null && !IgnoreAttachedLight && AttachedLight.IsEmitting;
+        public virtual bool IsEmittingLight => AttachedLight?.IsEmitting == true && !IgnoreAttachedLight;
 
         // IsMouseOver
         public bool IsMouseOver()

@@ -112,7 +112,17 @@
           "position": "227,140",
           "placement": "Floor",
           "fillChance": 0.5
-        }
+        },
+        {
+          "position": "69,17",
+          "placement": "WallFrontHang",
+          "allowTags": "Torch"
+        },
+        {
+          "position": "170,17",
+          "placement": "WallFrontHang",
+          "allowTags": "Torch"
+        }        
       ],
       "walkArea": "238,157;4,156;36,91;93,91;111,56;192,57",
       "walls": [
@@ -169,7 +179,17 @@
           "position": "227,140",
           "placement": "Floor",
           "fillChance": 0.5
-        }
+        },
+        {
+          "position": "69,17",
+          "placement": "WallFrontHang",
+          "allowTags": "Torch"
+        },
+        {
+          "position": "170,17",
+          "placement": "WallFrontHang",
+          "allowTags": "Torch"
+        }        
       ],
       "walkArea": "258,58;269,58;295,110;7,110;31,57;44,57;50,45;251,45"
     }

@@ -121,35 +121,45 @@ namespace ScaryCastle
         }
 
         // RollCoinAmount
-        private int RollCoinAmount(ThingDefinition thingDef, float chanceMultiplier)
+        private int RollCoinAmount(ThingDefinition thingDef, float chanceBonus)
         {
-            float baseChance = thingDef.Difficulty switch
+            // 1. Bloqueo rápido: Si el bonus es negativo o el modo de drop lo prohíbe, 0 monedas.
+            // (Asumimos que el chequeo de DropMode se hace en TryDropCoins antes de llamar aquí)
+            if (chanceBonus < 0) return 0;
+
+            // 2. Base por dificultad (Valores planos de probabilidad)
+            float chance = thingDef.Difficulty switch
             {
-                Difficulty.Easy => 0.3f,
-                Difficulty.Normal => 0.5f,
-                Difficulty.Hard => 0.9f,
+                Difficulty.Easy => 0.3f,   // 30%
+                Difficulty.Normal => 0.5f, // 50%
+                Difficulty.Hard => 0.9f,   // 90%
                 _ => 0.1f
             };
 
-            float finalChance = baseChance * chanceMultiplier;
-
-            // Luck Base 0.0: Sumamos el bono directamente
+            // 3. Suma de modificadores
+            // Suerte: Cada punto de Luck suma un +10% de probabilidad de encontrar monedas
             if (session.CurrentRun != null)
             {
-                float luckBonus = session.PlayerStats.Luck.Value * 0.1f;
-                finalChance += luckBonus;
+                chance += session.PlayerStats.Luck.Value * 0.1f;
             }
 
-            finalChance = MathHelper.Clamp(finalChance, 0.0f, 0.98f);
+            // Bonus de la instancia (Si quieres un +30% de chances, pasas 0.3f)
+            chance += chanceBonus;
+
+            // 4. El Roll (Con un cap de 98% para dejar siempre un margen mínimo de error, 
+            // a menos que el diseño pida 100% garantizado)
+            float finalChance = MathHelper.Clamp(chance, 0.0f, 0.98f);
 
             if (session.Random.NextDouble() > finalChance)
                 return 0;
 
+            // 5. Cantidad de monedas (Lógica de cantidad según dificultad)
+            // Se mantiene la precisión de Cero LINQ y switch expressions de C# 13
             return thingDef.Difficulty switch
             {
                 Difficulty.Easy => 1,
-                Difficulty.Normal => session.Random.Next(1, 3),
-                Difficulty.Hard => session.Random.Next(2, 5),
+                Difficulty.Normal => session.Random.Next(1, 3), // 1 a 2 monedas
+                Difficulty.Hard => session.Random.Next(2, 5),   // 2 a 4 monedas
                 _ => 1
             };
         }
@@ -171,41 +181,49 @@ namespace ScaryCastle
         // RollForLoot
         public ItemDefinition? RollForLoot(GameThing thing, bool guaranteeDrop = false)
         {
-            if (thing.DropChanceMultiplier == 1)
-                guaranteeDrop = true;
-
+            // 1. Validaciones de estado (Bánatelo rápido)
             if (thing.DropMode is LootDropMode.None or LootDropMode.CoinsOnly)
                 return null;
-
+            
             if (thing is not IThingDefinition t || t.Definition == null || session.Room is not ProceduralRoom room)
                 return null;
 
+            // 2. Lógica de Garantía (Usamos un valor centinela como 1.0 o una flag)
+            // Si el bonus es 1.0 (100%) o más, es drop garantizado.
+            if (thing.DropSackChanceBonus >= 1.0f)
+                guaranteeDrop = true;
+
             if (!guaranteeDrop)
             {
-                float baseLootChance = t.Definition.Difficulty switch
+                // 3. Base por dificultad (Valores planos)
+                float chance = t.Definition.Difficulty switch
                 {
-                    Difficulty.Easy => 0.05f,
-                    Difficulty.Normal => 0.12f,
-                    Difficulty.Hard => 0.25f,
+                    Difficulty.Easy => 0.05f,   // 5%
+                    Difficulty.Normal => 0.12f, // 12%
+                    Difficulty.Hard => 0.25f,   // 25%
                     _ => 0.02f
                 };
 
-                float finalChance = baseLootChance;
-
-                // Luck Base 0.0: Bono directo
+                // 4. Suma de modificadores (Simple y sólido)
+                // Suerte: Cada punto de Luck es un +5% plano
                 if (session.CurrentRun != null)
                 {
-                    float luckBonus = session.PlayerStats.Luck.Value * 0.05f;
-                    finalChance += luckBonus;
+                    chance += session.PlayerStats.Luck.Value * 0.05f;
                 }
 
-                finalChance *= thing.DropChanceMultiplier;
-                finalChance = MathHelper.Clamp(finalChance, 0.0f, 0.95f);
+                // Bonus de la instancia (Aquí es donde sumas tu 0.30f si quieres un +30%)
+                // IMPORTANTE: Cambia mentalmente 'Multiplier' por 'Bonus'
+                chance += thing.DropSackChanceBonus;
+
+                // 5. El "Roll" con Cap
+                // Nunca dejamos que sea 100% a menos que sea guaranteeDrop explícito
+                float finalChance = MathHelper.Clamp(chance, 0.0f, 0.95f);
 
                 if (session.Random.NextDouble() > finalChance)
                     return null;
             }
 
+            // 6. Selección de Item
             if (thing.DropMode == LootDropMode.Custom && !string.IsNullOrEmpty(thing.CustomDropName))
                 return ItemDefinition.Definitions.Find(thing.CustomDropName);
 
@@ -223,7 +241,7 @@ namespace ScaryCastle
                 return;
 
             // 2. Calculamos la cantidad pasando el multiplicador de la instancia
-            int amount = RollCoinAmount(t.Definition, thing.DropChanceMultiplier);
+            int amount = RollCoinAmount(t.Definition, thing.DropCoinChanceBonus);
 
             // 3. Instanciación física
             for (int i = 0; i < amount; i++)
@@ -231,7 +249,7 @@ namespace ScaryCastle
                 if (room.CreateThingClone("Coin") is Coin coin)
                 {
                     coin.Position = thing.Position;
-                    
+
                     // Offset aleatorio para que no caigan apiladas exactamente en el mismo píxel
                     coin.Position += new Vector2(
                         session.Random.Next(-6, 7),

@@ -1,10 +1,10 @@
-﻿using Adberration.Scripting;
-using Engendro;
-using Microsoft.Xna.Framework;
+﻿using Engendro;
 
 namespace ScaryCastle
 {
-    // Torch
+    /// <summary>
+    /// Torch
+    /// </summary>
     public sealed class Torch : Prop
     {
         // Constructor
@@ -19,34 +19,32 @@ namespace ScaryCastle
                 LightKind = LightKind.Default,
                 PivotOrigin = RectanglePoint.Center,
                 Position = new(9),
+                Scale = new(15)
             };
 
             AttachedLightPosition = new(9);
-            LightIntensity = Intensity.High;
-            IsAmbientLightSource = true;
+
+            IsAmbientLight = true;
         }
 
-        // LightIntensity
-        [ScriptProperty]
-        public Intensity LightIntensity
+        // InvalidateAnimation
+        private void InvalidateAnimation()
         {
-            get;
-            set
-            {
-                field = value;
+            AnimationPlayer.Play(IgnoreAttachedLight ? "Off" : "On");
+        }
 
-                if (AttachedLight != null)
-                {
-                    if (field == Intensity.Low)
-                        AttachedLight.Scale = new(5);
+        // OnIgnoreAttachedLightChanged
+        protected override void OnIgnoreAttachedLightChanged()
+        {
+            base.OnIgnoreAttachedLightChanged();
+            InvalidateAnimation();
+        }
 
-                    else if (field == Intensity.Medium)
-                        AttachedLight.Scale = new(9);
-
-                    if (field == Intensity.High)
-                        AttachedLight.Scale = new(15);
-                }
-            }
+        // OnLoad
+        protected override void OnLoad()
+        {
+            base.OnLoad();
+            InvalidateAnimation();
         }
     }
 }

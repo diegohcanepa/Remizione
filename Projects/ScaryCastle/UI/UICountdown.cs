@@ -12,8 +12,9 @@ namespace ScaryCastle
     public sealed class UICountdown : GameObject
     {
         private SoundInstance? alarmSoundInstance;
-        private readonly TextSprite labelText;
+        private readonly Vector2 defaultTextSize = ScaleInfo.Text.Galactus;
         private double lastKnownValue;
+        private readonly Vector2Tween scaleTween = new();
         private readonly GameSession session;
         private float timeLeft;
         private readonly TextSprite timeText;
@@ -23,44 +24,69 @@ namespace ScaryCastle
         {
             this.session = session;
 
-            // Label text
-            this.labelText = new TextSprite(Fonts.CommonOutline)
-            {
-                Color = ColorPalette.Text.Orange,
-                PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 20),
-                Scale = ScaleInfo.Text.Huge,
-                Spacing = -6,
-                Text = TextRepository.GetValue("Misc.BackToCorridor")
-            };
-
             // Time text
             this.timeText = new TextSprite(Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Orange,
-                PivotOrigin = RectanglePoint.Top,
-                Position = labelText.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -2),
-                Scale = ScaleInfo.Text.Galactus,
+                PivotOrigin = RectanglePoint.Center,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightTop, -7, 4),
+                Scale = defaultTextSize,
                 Spacing = -6,
             };
         }
+
+        #region Private members
+
+        // StartCriticalPhase
+        private void StartCriticalPhase()
+        {
+            if (alarmSoundInstance != null)
+                return;
+
+            timeText.Color = ColorPalette.Text.Red;
+
+            this.alarmSoundInstance = Sound.Get(SoundNames.Alarm).PopInstance();
+            if (alarmSoundInstance != null)
+            {
+                alarmSoundInstance.TransitionAware = false;
+                alarmSoundInstance.IsLooped = true;
+                alarmSoundInstance.Play();
+            }
+
+            scaleTween.Start(TweenStyle.Linear, defaultTextSize, defaultTextSize * 1.1f, 250, -1);
+            timeText.Tweens.ScaleTween = scaleTween;
+        }
+
+        // StopCriticalPhase
+        private void StopCriticalPhase()
+        {
+            if (alarmSoundInstance != null)
+            {
+                alarmSoundInstance?.Stop(2000);
+                alarmSoundInstance = null;
+            }
+
+            timeText.Color = ColorPalette.Text.Highlight;
+            scaleTween.Stop();
+            timeText.Scale = defaultTextSize;
+        }
+
+        #endregion
 
         #region Protected members
 
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (!IsRunning)
+            if (session.IsAwaiting || !IsRunning)
                 return;
 
-            labelText.Draw(gameTime);
             timeText.Draw(gameTime);
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (!IsRunning || timeLeft <= 0)
+            if (session.IsAwaiting || !IsRunning || timeLeft <= 0)
                 return;
 
             timeLeft -= (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -69,21 +95,32 @@ namespace ScaryCastle
             {
                 timeLeft = 0;
                 IsRunning = false;
-                session.AwaitRoutine(RoutineNames.DeathByGate);
+                session.AwaitRoutine(RoutineNames.DeathByTime);
             }
             else
             {
                 var value = Math.Ceiling(timeLeft);
-                
+
                 if (value != lastKnownValue)
                 {
-                    timeText.Text = value.ToString(CultureInfo.InvariantCulture);
+                    timeText.Text = value.ToString("00", CultureInfo.InvariantCulture);
                     lastKnownValue = value;
                 }
+
+                if (value < GameSettings.CountdownCritical)
+                    StartCriticalPhase();
+                else
+                    StopCriticalPhase();
             }
+
+            timeText.Update(gameTime);
         }
 
+
         #endregion
+
+        // IsCritical
+        public bool IsCritical => alarmSoundInstance != null;
 
         // IsRunning
         public bool IsRunning { get; private set; }
@@ -91,10 +128,10 @@ namespace ScaryCastle
         // Reset
         public void Reset()
         {
+            timeText.Color = ColorPalette.Text.Highlight;
             timeLeft = 0;
             IsRunning = false;
-            alarmSoundInstance?.Stop(2000);
-            alarmSoundInstance = null;
+            StopCriticalPhase();
         }
 
         // Start
@@ -109,14 +146,6 @@ namespace ScaryCastle
             lastKnownValue = -1;
             timeLeft = duration;
             IsRunning = true;
-
-            this.alarmSoundInstance = Sound.Get(SoundNames.Alarm).PopInstance();
-            if (alarmSoundInstance != null)
-            {
-                alarmSoundInstance.IsLooped = true;
-                alarmSoundInstance.TransitionAware = false;
-                alarmSoundInstance.Play();
-            }
         }
     }
 }

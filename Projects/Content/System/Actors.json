@@ -12,7 +12,8 @@
     {
       "name": "LootDropper",
       "dropTrigger": "OnImpact",
-      "dropChanceMultiplier": 1,
+      "dropCoinChanceBonus": 1,
+      "dropSackChanceBonus": 0.3,
       "role": "Ambient",
       "spawnLocation": "SideRoom"
     },

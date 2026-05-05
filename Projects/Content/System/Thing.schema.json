@@ -8,9 +8,15 @@
     {
       "type": "object",
       "properties": {
-        "dropChanceMultiplier": {
+        "dropCoinChanceBonus": {
           "type": "number",
-          "default": 1.0,
+          "default": 0,
+          "minimum": 0.0,
+          "maximum": 1.0
+        },        
+        "dropSackChanceBonus": {
+          "type": "number",
+          "default": 0,
           "minimum": 0.0,
           "maximum": 1.0
         },        

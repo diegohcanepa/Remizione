@@ -102,6 +102,9 @@ namespace ScaryCastle
 
             if (context.Target != null)
             {
+                if (context.Target is Actor actor && actor.IsAngry && !context.AttackMode)
+                    MouseCursor.Color = ColorPalette.Text.Red;
+
                 MouseCursor.IsEnabled = context.Session.Player?.ActiveThrowable == null;
 
                 if (context.HeldItem?.Definition.FaithCost > 0)

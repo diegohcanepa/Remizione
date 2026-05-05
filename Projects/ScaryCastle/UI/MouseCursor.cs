@@ -172,6 +172,7 @@ namespace ScaryCastle
         // Reset
         public static void Reset()
         {
+            cursorSprite.Color = ColorPalette.Text.Sentence;
             textSprite.Color = ColorPalette.Text.Sentence;
             CustomImage = null;
             HightlightColor = null;

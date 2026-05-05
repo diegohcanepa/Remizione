@@ -91,7 +91,8 @@ namespace ScaryCastle
             if (Definition != null)
             {
                 this.DropMode = Definition.DropMode;
-                this.DropChanceMultiplier = Definition.DropChanceMultiplier;
+                this.DropCoinChanceBonus = Definition.DropCoinChanceBonus;
+                this.DropSackChanceBonus = Definition.DropSackChanceBonus;
             }
         }
 

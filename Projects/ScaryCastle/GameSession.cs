@@ -459,7 +459,6 @@ namespace ScaryCastle
         [ScriptMethod]
         public void CloseCorridorDoor()
         {
-            HUD.Countdown.Reset();
             (Room as CorridorRoom)?.CloseCorridorDoor();
         }
 
@@ -499,6 +498,8 @@ namespace ScaryCastle
             HUD.Countdown.Reset();
             PlayerInventory.Clear();
             PlayerStats.Reset();
+            InteractionContext.AttackMode = false;
+            InteractionContext.Reset();
 
             if (Player != null)
             {
@@ -725,6 +726,13 @@ namespace ScaryCastle
         public void ShowGuardMeter()
         {
             HUD.GuardMeter.Target = Guard;
+        }
+
+        // StopCountdown
+        [ScriptMethod]
+        public void StopCountdown()
+        {
+            HUD.Countdown.Reset();
         }
     }
 }

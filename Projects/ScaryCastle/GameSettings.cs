@@ -16,8 +16,11 @@ namespace ScaryCastle
         // ContentRootDirectory
         public const string ContentRootDirectory = "Content";
 
-        // CorridorFrontGateCooldown
-        public const int CorridorFrontGateCooldown = 30;
+        // CountdownDuration
+        public const int CountdownDuration = 16;
+
+        // CountdownCritical
+        public const int CountdownCritical = 9;
 
         // DeathCoooldown
         public const int DeathCoooldown = 15000;

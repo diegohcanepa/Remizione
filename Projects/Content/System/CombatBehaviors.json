@@ -14,7 +14,8 @@
               "context": "Attack",
               "effectType": "Damage",
               "amount": "1",
-              "comicText": "Kapow"
+              "comicText": "Kapow",
+              "knockback": "15,4"
             }
           ]
         }
@@ -82,16 +83,16 @@
       "archetype": "Stalker",
       "intents": [
         {
-          "name": "Contact",
-          "sound": "RatAttack",
-          "range": 50,
+          "name": "Headbutt",
+          "category": "Basic",
+          "sound": "EnviousEyeAttack",
+          "range": 15,
           "effects": [
             {
-              "context": "Contact",
+              "context": "Attack",
               "effectType": "Damage",
-              "amount": "1",
-              "comicText": "AghRed",
-              "knockback": "15,5"
+              "amount": "2",
+              "comicText": "OuchBlue"
             }
           ]
         }

@@ -22,8 +22,11 @@ namespace ScaryCastle
         protected ThingDefinition(JsonElement element)
             : base(element)
         {
-            // DropChanceMultiplier
-            DropChanceMultiplier = element.GetFloat("dropChanceMultiplier", 1f);
+            // DropCoinChanceBonus
+            DropCoinChanceBonus = element.GetFloat("dropCoinChanceBonus", 0);
+
+            // DropSackChanceBonus
+            DropSackChanceBonus = element.GetFloat("dropSackChanceBonus", 0);
 
             // DropMode
             DropMode = element.GetEnum("dropMode", LootDropMode.Standard);
@@ -77,8 +80,11 @@ namespace ScaryCastle
         // DropTrigger
         public LootDropTrigger DropTrigger { get; }
 
-        // DropChanceMultiplier
-        public float DropChanceMultiplier { get; }
+        // DropCoinChanceBonus
+        public Ratio DropCoinChanceBonus { get; }
+
+        // DropSackChanceBonus
+        public Ratio DropSackChanceBonus { get; }
 
         // Effects
         public ReadOnlyCollection<EffectDescriptor> Effects { get; }

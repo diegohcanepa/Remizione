@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:247f70da26ab799ac7b526c0d9bd8816:e1e3617b486cc6b79e8d68f30490a9c8:391f3728ce36fa87ff02aadce74a4a71$ -->
+<!-- $TexturePacker:SmartUpdate:991ea58fe444465604471dbf3dcf7a20:7f7e36009aef7cd203198a6647075fe5:391f3728ce36fa87ff02aadce74a4a71$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -20,11 +20,10 @@ verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="ThemePark.png" width="512" height="512">
-    <sprite n="ATM01.png" x="436" y="293" w="39" h="44"/>
-    <sprite n="ATM02.png" x="339" y="303" w="39" h="44"/>
+    <sprite n="ATM01.png" x="339" y="287" w="39" h="44"/>
+    <sprite n="ATM02.png" x="380" y="287" w="39" h="44"/>
     <sprite n="Foreground01.png" x="2" y="197" w="307" h="135"/>
     <sprite n="Foreground02.png" x="2" y="334" w="307" h="135"/>
-    <sprite n="ForegroundBushes.png" x="339" y="287" w="95" h="14"/>
     <sprite n="FrontHouse.png" x="457" y="197" w="51" h="94"/>
     <sprite n="RideCar01.png" x="484" y="2" w="25" h="21"/>
     <sprite n="RideCar02.png" x="484" y="25" w="25" h="21"/>
