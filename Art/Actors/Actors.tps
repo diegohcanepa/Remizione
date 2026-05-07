@@ -748,20 +748,6 @@
             <key type="filename">Skeleton-assets/Headbutt04.png</key>
             <key type="filename">Skeleton-assets/Headbutt05.png</key>
             <key type="filename">Skeleton-assets/Headbutt06.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>6,6,12,11</rect>
-                <key>scale9Paddings</key>
-                <rect>6,6,12,11</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Skeleton-assets/Move01.png</key>
             <key type="filename">Skeleton-assets/Move02.png</key>
             <key type="filename">Skeleton-assets/Move03.png</key>
@@ -777,9 +763,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>5,6,10,11</rect>
+                <rect>6,6,12,11</rect>
                 <key>scale9Paddings</key>
-                <rect>5,6,10,11</rect>
+                <rect>6,6,12,11</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

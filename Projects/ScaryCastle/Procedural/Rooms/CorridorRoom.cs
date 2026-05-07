@@ -130,13 +130,14 @@ namespace ScaryCastle
         {
             base.OnLoad();
 
+            if (Session.Player != null)
+                Session.Player.Faith++;
+
             if (Session.FindDeclaredThing(CorridorRightWallPatchName) is Prop rightWallPatch)
             {
                 rightWallPatch.Atlas = Atlas;
                 rightWallPatch.Position = BoundingBox.GetPoint(RectanglePoint.RightTop);
             }
-
-
         }
 
         // OnPopulating

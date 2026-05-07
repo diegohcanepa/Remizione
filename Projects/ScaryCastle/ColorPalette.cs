@@ -85,9 +85,9 @@ namespace ScaryCastle
         // SpeechBubble
         internal static class SpeechBubble
         {
-            internal static Color Fill { get; } = new(200, 200, 210);
+            internal static Color Fill { get; } = new(190, 170, 150);
             internal static Color Shadow { get; } = Color.Black * .2f;
-            internal static Color Text { get; } = new Color(27, 31, 33) * .7f;
+            internal static Color Text { get; } = new Color(27, 31, 33) * .8f;
             internal static Color Title { get; } = new Color(27, 31, 33) * .5f;
         }
 

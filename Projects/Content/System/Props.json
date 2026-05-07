@@ -52,7 +52,7 @@
         {
           "context": "Contact",
           "effectType": "Damage",
-          "amount": "1",
+          "amount": "6",
           "knockback": "15,5",
           "comicText": "AghRed"
         }

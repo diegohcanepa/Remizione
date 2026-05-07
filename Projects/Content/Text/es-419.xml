@@ -48,14 +48,14 @@
   <String Key="InventoryVerb.Use">Usar</String>
   <String Key="Item.Apple.Description">Una apetitoza manzana en su punto justo.</String>
   <String Key="Item.Apple.Name">Manzana</String>
+  <String Key="Item.BargainCross.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
+  <String Key="Item.BargainCross.Name">Cruz barata</String>
   <String Key="Item.Battery.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Battery.Name">Batería</String>
   <String Key="Item.Chili.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</String>
   <String Key="Item.Chili.Name">Chile picante</String>
   <String Key="Item.Coin.Description">El vil metal: La prueba física de que la moral y los principios tienen un precio.</String>
   <String Key="Item.Coin.Name">Moneda</String>
-  <String Key="Item.Cross.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
-  <String Key="Item.Cross.Name">Cruz de Zumbito</String>
   <String Key="Item.Duck.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Duck.Name">Patito de hule</String>
   <String Key="Item.Firecracker.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
@@ -208,7 +208,7 @@
   <String Key="Misc.All">Todo</String>
   <String Key="Misc.And">y</String>
   <String Key="Misc.BackToCorridor">¡Vuelve al pasillo!</String>
-  <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=—</String>
+  <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=—áéíóúÁÉÍÓÚ</String>
   <String Key="Misc.CopyrightDeveloper">© 2024 Indiesruption</String>
   <String Key="Misc.Credits">Remizione
 
@@ -285,6 +285,7 @@ Bla bla bla</String>
   <String Key="Playtime.LessThanAMinute">Menos de un minuto</String>
   <String Key="Playtime.Minute">minuto</String>
   <String Key="Playtime.Minutes">minutos</String>
+  <String Key="Prop.AnalLever">Palanca anal</String>
   <String Key="Prop.ATM">Cajero automático</String>
   <String Key="Prop.Bag">Bolsa</String>
   <String Key="Prop.Coin">Moneda</String>
@@ -312,11 +313,11 @@ Bla bla bla</String>
   <String Key="Prop.UnderRideEntrance">Inframundo</String>
   <String Key="Prop.VendingMachine">Máquina expendedora</String>
   <String Key="Prop.WC">Inodoro</String>
-  <String Key="Verb.Ellipsis"></String>
+  <String Key="Verb.Ellipsis" />
   <String Key="Verb.Enter">Entrar</String>
   <String Key="Verb.Exit">Salir</String>
   <String Key="Verb.Lift">Alzar</String>
-  <String Key="Verb.None"></String>
+  <String Key="Verb.None" />
   <String Key="Verb.Open">Abrir</String>
   <String Key="Verb.Pull">Accionar</String>
   <String Key="Verb.Take">Agarrar</String>

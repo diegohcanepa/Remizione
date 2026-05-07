@@ -92,7 +92,7 @@ namespace ScaryCastle
             if (!InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
                 return false;
 
-            if (Actor.Session.InteractionContext.AttackMode)
+            if (Actor.Session.InteractionContext.AttackMode && !MouseCursor.IsArrow)
             {
                 if (Actor.Session.InteractionContext.Target != null && !Actor.Session.InteractionContext.Target.CanBeHit)
                 {

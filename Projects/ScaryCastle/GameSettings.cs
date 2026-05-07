@@ -7,6 +7,12 @@ namespace ScaryCastle
     /// </summary>
     public static class GameSettings
     {
+        // AppleItem
+        public const string AppleItem = "Apple";
+
+        // BargainCrossItem
+        public const string BargainCrossItem = "BargainCross";
+
         // Build
         public const int Build = 105;
 
@@ -17,7 +23,7 @@ namespace ScaryCastle
         public const string ContentRootDirectory = "Content";
 
         // CountdownDuration
-        public const int CountdownDuration = 16;
+        public const int CountdownDuration = 66;
 
         // CountdownCritical
         public const int CountdownCritical = 9;

@@ -154,7 +154,6 @@ namespace Engendro
 
             RenderTargets.Swap();
             SceneManager.Draw(gameTime);
-            OnSceneManagerDrawn(gameTime);
             GraphicsDevice.SetRenderTarget(null);
             OnDraw(gameTime);
         }
@@ -191,11 +190,6 @@ namespace Engendro
 
         // OnInitialize
         protected virtual void OnInitialize()
-        {
-        }
-
-        // OnSceneManagerDrawn
-        protected virtual void OnSceneManagerDrawn(GameTime gameTime)
         {
         }
 

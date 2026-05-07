@@ -508,8 +508,7 @@ namespace ScaryCastle
             // 1. Clear status effect
             if (statusEffect == StatusEffectType.None)
             {
-                this.StatusEffect = statusEffect;
-                this.StatusEffectAmount = 0;
+                ClearStatusEffect();
                 return;
             }
 
@@ -675,9 +674,12 @@ namespace ScaryCastle
         // ContactIntent
         public CombatIntent? ContactIntent { get; }
 
-        // CustomMouseCursor
-        [ScriptProperty]
-        public MouseCursorState CustomMouseCursor { get; set; } = MouseCursorState.Cross;
+        // ClearStatusEffect
+        public void ClearStatusEffect()
+        {
+            this.StatusEffect = StatusEffectType.None;
+            this.StatusEffectAmount = 0;
+        }
 
         // CustomDropName
         [ScriptProperty]
@@ -905,10 +907,7 @@ namespace ScaryCastle
         // GetMouseCursor
         public virtual MouseCursorState? GetMouseCursor()
         {
-            if (UseCustomMouseCursor)
-                return CustomMouseCursor;
-            else
-                return null;
+            return null;
         }
 
         // GetOverheadPosition
@@ -1327,10 +1326,6 @@ namespace ScaryCastle
         // TerrainSound
         [ScriptProperty]
         public Sound? TerrainSound { get; set; }
-
-        // UseCustomMouseCursor
-        [ScriptProperty]
-        public bool UseCustomMouseCursor { get; set; }
 
         // Verb
         [ScriptProperty]

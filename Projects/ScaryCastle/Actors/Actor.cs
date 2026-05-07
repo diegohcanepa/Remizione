@@ -667,13 +667,15 @@ namespace ScaryCastle
 
             if (item == null)
             {
-                if (Session.InteractionContext.AttackMode)
+                if (Session.InteractionContext.AttackMode && !MouseCursor.IsArrow)
                 {
                     if (DefaultCombatIntent != null)
                         Session.InteractionData.SetAttackOutcome(target, DefaultCombatIntent);
                 }
                 else
+                {
                     Session.InteractionData.SetDefaultOutcome(target);
+                }
             }
             else
             {
@@ -689,8 +691,8 @@ namespace ScaryCastle
             var destination = target.GetApproachPosition(this, Session.InteractionData.InteractionType == InteractionType.Attack ? ApproachBehavior.ClosestSide : null);
             var result = target != this && MoveTo(destination);
 
-            if (result && !Session.InteractionContext.AttackMode && target is Actor actor && actor.IsAngry)
-                result = false;
+           // if (result && !Session.InteractionContext.AttackMode && target is Actor actor && actor.IsAngry)
+             //   result = false;
 
             if (!result)
                 HandlePendingInteraction();

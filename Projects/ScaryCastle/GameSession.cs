@@ -209,6 +209,11 @@ namespace ScaryCastle
         {
             base.OnDraw(gameTime);
 
+            Game.RenderTargets.Swap();
+            Game.SpriteBatch.Begin(effect: ScaryCastleGame.Effects.CRT.Effect);
+            Game.SpriteBatch.Draw(Game.RenderTargets.PreviousTarget, Vector2.Zero, Color.White);
+            Game.SpriteBatch.End();
+
             if (IsHUDVisible)
                 HUD.Draw(gameTime);
 
@@ -452,6 +457,11 @@ namespace ScaryCastle
 
             CurrentRun = new Run(Seed, 6);
 
+            PlayerInventory.Add(GameSettings.BargainCrossItem);
+
+            if (RunCount == 0)
+                PlayerInventory.Add(GameSettings.AppleItem);
+
             LoadNextCorridor();
         }
 
@@ -506,6 +516,7 @@ namespace ScaryCastle
                 Player.Reheal();
                 Player.MaxFaith = 3;
                 Player.Faith = 3;
+                Player.ClearStatusEffect();
             }
 
             Seed = 0;

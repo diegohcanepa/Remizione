@@ -145,7 +145,7 @@ namespace ScaryCastle
             if (Session.InteractionContext.Target == this && IsOpen)
                 return arrowCursor;
             else
-                return null;
+                return base.GetMouseCursor();
         }
 
         // Prepare

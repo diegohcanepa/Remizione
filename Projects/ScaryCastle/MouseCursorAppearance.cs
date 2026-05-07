@@ -71,7 +71,7 @@ namespace ScaryCastle
         // RefreshText
         private static void RefreshText(InteractionContext context)
         {
-            if (MouseCursor.State is MouseCursorState.Up or MouseCursorState.Down or MouseCursorState.Left or MouseCursorState.Right)
+            if (MouseCursor.IsArrow)
                 return;
 
             if (context.Target != null)

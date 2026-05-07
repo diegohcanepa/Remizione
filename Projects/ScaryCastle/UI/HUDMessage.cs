@@ -64,6 +64,7 @@ namespace ScaryCastle
         public void Show(MessageKind message, int duration = 2000)
         {
             var text = Localization.GetValue(message);
+            icon.RenderImage = null;
 
             var color = ColorPalette.Text.Highlight;
             if (message is MessageKind.NotEnoughCoins or MessageKind.ItemDiscarded or MessageKind.NotEnoughFaith)
