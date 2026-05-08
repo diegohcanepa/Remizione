@@ -56,24 +56,11 @@ namespace ScaryCastle
 
         #endregion
 
-        // AtttackMode
-        public bool AttackMode { get; set; }
-
         // HeldItem
-        public Item? HeldItem
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    if (field != null && value == null)
-                        AttackMode = false;
+        public Item? HeldItem { get; set; }
 
-                    field = value;
-                }
-            }
-        }
+        // Mode
+        public InteractionContextMode Mode { get; set; }
 
         // Refresh
         public void Refresh()
@@ -92,6 +79,7 @@ namespace ScaryCastle
         // Reset
         public void Reset()
         {
+            Mode = InteractionContextMode.Default;
             HeldItem = null;
             Target = null;
             MouseCursorAppearance.Refresh(this);

@@ -48,7 +48,7 @@ namespace ScaryCastle
         {
             Game.SpriteBatch.Begin(Game.Camera);
 
-            if (session.InteractionContext.AttackMode)
+            if (session.InteractionContext.Mode == InteractionContextMode.Attack)
                 attackName.Draw(gameTime);
 
             hpMeter.Draw(gameTime);
@@ -80,8 +80,11 @@ namespace ScaryCastle
             Message.Update(gameTime);
             Countdown.Update(gameTime);
 
-            if (attackName.Tag != session.Player?.CombatBehavior?.DefaultIntent)
-                attackName.Text = session.Player?.CombatBehavior?.DefaultIntent?.DisplayName;
+            if (session.Player != null)
+            {
+                if (attackName.Tag != session.Player.CombatBehavior?.DefaultIntent)
+                    attackName.Text = session.Player.CombatBehavior?.DefaultIntent?.DisplayName;
+            }
         }
 
         #endregion

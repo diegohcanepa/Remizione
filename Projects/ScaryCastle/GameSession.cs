@@ -508,7 +508,6 @@ namespace ScaryCastle
             HUD.Countdown.Reset();
             PlayerInventory.Clear();
             PlayerStats.Reset();
-            InteractionContext.AttackMode = false;
             InteractionContext.Reset();
 
             if (Player != null)

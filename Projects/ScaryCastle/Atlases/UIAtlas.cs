@@ -32,6 +32,7 @@ namespace ScaryCastle
             InventoryNavigationBar = this[nameof(InventoryNavigationBar)];
             ItemGridSlot = this[nameof(ItemGridSlot)];
             ItemGridSlotSelected = this[nameof(ItemGridSlotSelected)];
+            LiftIcon = this[nameof(LiftIcon)];
             MessageContainer = this[nameof(MessageContainer)];
             PickupShadow = this[nameof(PickupShadow)];
             Pixel = this[nameof(Pixel)];
@@ -110,6 +111,9 @@ namespace ScaryCastle
 
         // ItemGridSlotSelected
         public AtlasImage ItemGridSlotSelected { get; }
+
+        // LiftIcon
+        public AtlasImage LiftIcon { get; }
 
         // RedHearts
         public ReadOnlyCollection<AtlasImage> RedHearts { get; }

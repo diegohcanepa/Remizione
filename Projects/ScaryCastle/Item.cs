@@ -95,7 +95,7 @@ namespace ScaryCastle
                         }
 
                         if (!hasPoisonStatus)
-                            target.ApplyStatusEffect(StatusEffectType.None, 0, ComicTextKind.None);
+                            target.ClearStatusEffect();
                     }
                 }
             }

@@ -213,6 +213,7 @@ namespace ScaryCastle
 
         // RefreshDisplayName
         private void RefreshDisplayName()
+
         {
             const string ellipsis = "...";
 
@@ -362,6 +363,11 @@ namespace ScaryCastle
 
         // OnIgnoreAttachedLightChanged
         protected virtual void OnIgnoreAttachedLightChanged()
+        {
+        }
+
+        // OnIsAttackableChanged
+        protected virtual void OnIsAttackableChanged()
         {
         }
 
@@ -1020,6 +1026,21 @@ namespace ScaryCastle
         [ScriptProperty]
         public bool IgnoreWalkArea { get; set; } = true;
 
+        // IsAttackable
+        [ScriptProperty]
+        public bool IsAttackable
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    OnIsAttackableChanged();
+                }
+            }
+        }
+
         // IsBehind
         public bool IsBehind(GameThing thing)
         {
@@ -1220,7 +1241,7 @@ namespace ScaryCastle
         public int TakeDamage(GameThing attacker, DamageType damageType, int amount, ComicTextKind comicTextKind, Vector2 knockbackForce)
         {
             // Si la cantidad es 0 o negativa, no hay interacción de daño.
-            if (amount <= 0 || !CanTakeDamage())
+            if (!CanTakeDamage())
                 return 0;
 
             // ---------------------------------------------------------
@@ -1247,16 +1268,16 @@ namespace ScaryCastle
             if (MaxHP > 0)
             {
                 // Aplicar resistencias
-                int finalDamage = (int)(amount * GetResistanceModifier(damageType));
+                amount = (int)(amount * GetResistanceModifier(damageType));
 
                 // Clamp para no restar más de lo que tiene
-                if (finalDamage > HP)
-                    finalDamage = HP;
+                if (amount > HP)
+                    amount = HP;
 
                 // Si después de la resistencia el daño es 0, salimos de la lógica de HP
-                if (finalDamage > 0)
+                //if (amount > 0)
                 {
-                    HP -= finalDamage;
+                    HP -= amount;
 
                     if (IsDead)
                     {
@@ -1274,7 +1295,7 @@ namespace ScaryCastle
                             blinker.Stop();
                     }
 
-                    OnTakeDamage(attacker, finalDamage, damageType);
+                    OnTakeDamage(attacker, amount, damageType);
 
                     if (!IsDead)
                         Session.ObjectPools.FloatingTexts.Get()?.ShowAmount(this, ColorPalette.Text.Highlight, amount);

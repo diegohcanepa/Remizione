@@ -200,6 +200,7 @@
   <String Key="MessageKind.HandsFull">Tienes las manos ocupadas.</String>
   <String Key="MessageKind.InventoryFull">El inventario está lleno.</String>
   <String Key="MessageKind.ItemDiscarded">Item descartado.</String>
+  <String Key="MessageKind.LiftNotAllowed">No puedes alzar eso.</String>
   <String Key="MessageKind.NotEnoughCoins">No tienes monedas suficientes.</String>
   <String Key="MessageKind.NotEnoughFaith">No tienes la fe suficiente.</String>
   <String Key="MessageKind.OutOfReach">Fuera de alcance.</String>
@@ -285,7 +286,6 @@ Bla bla bla</String>
   <String Key="Playtime.LessThanAMinute">Menos de un minuto</String>
   <String Key="Playtime.Minute">minuto</String>
   <String Key="Playtime.Minutes">minutos</String>
-  <String Key="Prop.AnalLever">Palanca anal</String>
   <String Key="Prop.ATM">Cajero automático</String>
   <String Key="Prop.Bag">Bolsa</String>
   <String Key="Prop.Coin">Moneda</String>
@@ -313,14 +313,15 @@ Bla bla bla</String>
   <String Key="Prop.UnderRideEntrance">Inframundo</String>
   <String Key="Prop.VendingMachine">Máquina expendedora</String>
   <String Key="Prop.WC">Inodoro</String>
-  <String Key="Verb.Ellipsis" />
+  <String Key="Verb.Ellipsis"></String>
   <String Key="Verb.Enter">Entrar</String>
   <String Key="Verb.Exit">Salir</String>
   <String Key="Verb.Lift">Alzar</String>
-  <String Key="Verb.None" />
+  <String Key="Verb.None"></String>
   <String Key="Verb.Open">Abrir</String>
   <String Key="Verb.Pull">Accionar</String>
   <String Key="Verb.Take">Agarrar</String>
   <String Key="Verb.TalkTo">Hablar con</String>
+  <String Key="Verb.Throw">Lanzar</String>
   <String Key="Verb.Use">Usar</String>
 </Strings>

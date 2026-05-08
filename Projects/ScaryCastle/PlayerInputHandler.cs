@@ -92,6 +92,7 @@ namespace ScaryCastle
             if (!InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
                 return false;
 
+            /*
             if (Actor.Session.InteractionContext.AttackMode && !MouseCursor.IsArrow)
             {
                 if (Actor.Session.InteractionContext.Target != null && !Actor.Session.InteractionContext.Target.CanBeHit)
@@ -100,6 +101,10 @@ namespace ScaryCastle
                     return false;
                 }
             }
+            */
+
+            if (Actor.Session.InteractionContext.Target?.IsAttackable == true)
+                Actor.Session.InteractionContext.Mode = InteractionContextMode.Attack;
 
             PerformInteraction();
 
@@ -126,10 +131,18 @@ namespace ScaryCastle
                 Actor.Session.InteractionData.Clear();
                 Actor.StopMoving();
             }
-            else if (Actor.Session.CurrentRun != null)
+            else if (!MouseCursor.IsArrow && Actor.Session.InteractionContext.Target is Prop prop)
             {
-                Actor.Session.InteractionContext.AttackMode = !Actor.Session.InteractionContext.AttackMode;
-                MouseCursor.PerformClick();
+                if (prop.IsLiftable)
+                {
+                    Actor.Session.InteractionContext.Mode = InteractionContextMode.Lift;
+                    PerformInteraction();
+                }
+                else
+                {
+                    Actor.Session.HUD.Message.Show(MessageKind.LiftNotAllowed);
+                    MouseCursor.Shake();
+                }
             }
             else
             {

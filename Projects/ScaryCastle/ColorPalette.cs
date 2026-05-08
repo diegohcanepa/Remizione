@@ -61,11 +61,18 @@ namespace ScaryCastle
         // MessageBoxRedText
         internal static Color MessageBoxRedText { get; } = new Color(224, 144, 144);
 
-        // MouseCursorHighlightBlue
-        internal static Vector4 MouseCursorHighlightBlue { get; } = (new Color(79, 164, 184) * .65f).ToVector4();
+        // MouseCursor
+        internal static class MouseCursor
+        {
+            // AttackableTarget
+            internal static Color AttackableTarget { get; } = Text.Red;
 
-        // MouseCursorHighlightWhite
-        internal static Vector4 MouseCursorHighlightWhite { get; } = (Color.White * .75f).ToVector4();
+            // HighlightBlue
+            internal static Vector4 HighlightBlue { get; } = (new Color(79, 164, 184) * .65f).ToVector4();
+
+            // HighlightWhite
+            internal static Vector4 HighlightWhite { get; } = (Color.White * .75f).ToVector4();
+        }
 
         // OutdoorLight
         internal static Color OutdoorLight { get; } = new Color(75, 95, 220);

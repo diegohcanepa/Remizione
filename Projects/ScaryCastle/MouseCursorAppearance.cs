@@ -65,7 +65,7 @@ namespace ScaryCastle
             if (context.HeldItem != null)
                 MouseCursor.CustomImage = context.HeldItem.Definition.Image;
             else
-                MouseCursor.State = context.AttackMode ? MouseCursorState.Attack : MouseCursorState.Cross;
+                MouseCursor.State = MouseCursorState.Cross;
         }
 
         // RefreshText
@@ -79,7 +79,7 @@ namespace ScaryCastle
                 // No item 
                 if (context.HeldItem == null)
                 {
-                    MouseCursor.Text = context.AttackMode ? context.Target.DisplayName : context.Target.DisplaySentence;
+                    MouseCursor.Text = context.Target.DisplaySentence;
                     return;
                 }
 
@@ -102,15 +102,16 @@ namespace ScaryCastle
 
             if (context.Target != null)
             {
-                if (context.Target is Actor actor && actor.IsAngry && !context.AttackMode)
-                    MouseCursor.Color = ColorPalette.Text.Red;
+                if (context.Target.IsAttackable == true)
+                    MouseCursor.Color = ColorPalette.MouseCursor.AttackableTarget;
 
+                MouseCursor.ShowLiftIcon = context.Target is Prop prop && prop.IsLiftable;
                 MouseCursor.IsEnabled = context.Session.Player?.ActiveThrowable == null;
 
                 if (context.HeldItem?.Definition.FaithCost > 0)
-                    MouseCursor.HightlightColor = ColorPalette.MouseCursorHighlightBlue;
+                    MouseCursor.HightlightColor = ColorPalette.MouseCursor.HighlightBlue;
                 else
-                    MouseCursor.HightlightColor = ColorPalette.MouseCursorHighlightWhite;
+                    MouseCursor.HightlightColor = ColorPalette.MouseCursor.HighlightWhite;
             }
             else
             {

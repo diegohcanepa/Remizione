@@ -11,7 +11,7 @@
         {
             BodySize = BodySize.Medium;
             Guts = 0;
-            IsAngry = true;
+            IsAttackable = true;
         }
     }
 }

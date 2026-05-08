@@ -23,6 +23,7 @@ namespace ScaryCastle
             Atlas = Atlases.Props;
             DeathSound = Sound.Find(SoundNames.WoodDebris);
             DisplayNameKey = "Prop.Trunk";
+            IsLiftable = true;
             LockedSound = Sound.Find(SoundNames.TrunkLocked);
             OpenSound = Sound.Find(SoundNames.TrunkOpen);
             OverheadOrigin = new(6, 2);
@@ -34,8 +35,6 @@ namespace ScaryCastle
             {
                 PivotOrigin = RectanglePoint.Bottom,
             };
-
-            Verb = Verb.Ellipsis;
         }
 
         // Break

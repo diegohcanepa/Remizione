@@ -67,7 +67,12 @@ namespace ScaryCastle
             icon.RenderImage = null;
 
             var color = ColorPalette.Text.Highlight;
-            if (message is MessageKind.NotEnoughCoins or MessageKind.ItemDiscarded or MessageKind.NotEnoughFaith)
+            if (message is MessageKind.NotEnoughCoins or MessageKind.ItemDiscarded or MessageKind.LiftNotAllowed)
+            {
+                color = ColorPalette.Text.Orange;
+                Sound.Play(SoundNames.Error);
+            }
+            else if (message == MessageKind.NotEnoughFaith)
             {
                 color = ColorPalette.Text.Orange;
                 icon.RenderImage = Atlases.UI.FaithIcon;

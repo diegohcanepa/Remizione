@@ -19,6 +19,7 @@ namespace ScaryCastle
         private static readonly Sprite cursorSprite;
         private static readonly Vector2 defaultScale = ScaleInfo.UIElement.Large;
         private static OutlineEffect? effect;
+        private static readonly Sprite liftIcon;
         private static readonly FloatTween opacityTween = FloatTween.Create(TweenStyle.CubicInOut, 1, .5f, 500, -1);
         private static readonly Vector2Tween scaleTween = new();
         private static readonly FloatTween shakeTween = new();
@@ -36,6 +37,13 @@ namespace ScaryCastle
             {
                 PivotOrigin = RectanglePoint.Center,
                 Scale = defaultScale
+            };
+
+            // Lift icon
+            liftIcon = new Sprite(Atlases.UI.LiftIcon)
+            {
+                PivotOrigin = RectanglePoint.Left,
+                Scale = ScaleInfo.UIElement.Medium
             };
 
             const string prefix = "MouseCursor";
@@ -81,6 +89,9 @@ namespace ScaryCastle
 
             if (textSprite.BoundingBox.Bottom >= Screen.NativeHeight)
                 textSprite.Y -= 10;
+
+            if (ShowLiftIcon)
+                liftIcon.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.Right, .5f, -1.5f);
         }
 
         // InvalidateCursorImage
@@ -131,6 +142,10 @@ namespace ScaryCastle
             {
                 EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera);
                 textSprite.Draw(gameTime);
+
+                if (!textSprite.IsEmpty && ShowLiftIcon)
+                    liftIcon.Draw(gameTime);
+
                 EngendroGame.Instance.SpriteBatch.End();
             }
         }
@@ -177,6 +192,7 @@ namespace ScaryCastle
             CustomImage = null;
             HightlightColor = null;
             IsEnabled = true;
+            ShowLiftIcon = false;
             State = MouseCursorState.Arrow;
             Text = null;
         }
@@ -187,6 +203,9 @@ namespace ScaryCastle
             shakeTween.Start(TweenStyle.CubicInOut, 0, 1, 50, 4);
             Sound.Play(SoundNames.Error);
         }
+
+        // ShowLiftIcon
+        public static bool ShowLiftIcon { get; set; }
 
         // State
         public static MouseCursorState State

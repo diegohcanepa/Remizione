@@ -106,6 +106,13 @@ namespace ScaryCastle
                 SetOutcomeCore(target, InteractionType.Outcome, target.OutcomeScript);
         }
 
+        // SetLiftOutcome
+        public void SetLiftOutcome(Prop prop)
+        {
+            if (Session.ScriptLibrary.FindRoutine(RoutineNames.LiftOutcomeTarget) is Script script)
+                SetOutcomeCore(prop, InteractionType.Lift, script);
+        }
+
         // SetUseWithOutcome
         public void SetUseWithOutcome(GameThing target, Item item)
         {

@@ -128,6 +128,7 @@ namespace ScaryCastle
                 return;
 
             Session.InteractionData.Execute(Session);
+            Session.InteractionContext.Reset();
         }
 
         // Hurt
@@ -240,7 +241,7 @@ namespace ScaryCastle
         private void UpdateReactionTimer(GameTime gameTime)
         {
             // Can use brain?
-            if (IsPlayer || CombatBehavior == null || !IsAngry || IsDead)
+            if (IsPlayer || CombatBehavior == null || !IsAttackable || IsDead)
                 return;
 
             // Can update timer?
@@ -432,6 +433,14 @@ namespace ScaryCastle
             BodyMachine.Start();
         }
 
+        // OnIsAttackableChanged
+        protected override void OnIsAttackableChanged()
+        {
+            base.OnIsAttackableChanged();
+            Faction = Faction.Evil;
+            ForceReaction();
+        }
+
         // OnLoad
         protected override void OnLoad()
         {
@@ -505,7 +514,7 @@ namespace ScaryCastle
                 if (Definition?.DropTrigger == LootDropTrigger.OnImpact)
                     DropLoot();
 
-                IsAngry = true;
+                IsAttackable = true;
             }
 
             Session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);
@@ -539,7 +548,7 @@ namespace ScaryCastle
                     if (ActiveThrowable != null && Session.IsCurrentScene && CanHandleInput)
                         FaceToMouseCursor();
                 }
-                else if (IsAngry && Session.Player != null)
+                else if (IsAttackable && Session.Player != null)
                 {
                     FaceTo(Session.Player);
                 }
@@ -667,10 +676,15 @@ namespace ScaryCastle
 
             if (item == null)
             {
-                if (Session.InteractionContext.AttackMode && !MouseCursor.IsArrow)
+                if (Session.InteractionContext.Mode == InteractionContextMode.Attack)
                 {
                     if (DefaultCombatIntent != null)
                         Session.InteractionData.SetAttackOutcome(target, DefaultCombatIntent);
+                }
+                else if (Session.InteractionContext.Mode == InteractionContextMode.Lift)
+                {
+                    if (target is Prop prop)
+                        Session.InteractionData.SetLiftOutcome(prop);
                 }
                 else
                 {
@@ -834,26 +848,6 @@ namespace ScaryCastle
         // HurtVoice
         [ScriptProperty]
         public Sound? HurtVoice { get; set; }
-
-        // IsAngry
-        [ScriptProperty]
-        public bool IsAngry
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-
-                    if (value)
-                    {
-                        Faction = Faction.Evil;
-                        ForceReaction();
-                    }
-                }
-            }
-        }
 
         // IsAttacking
         public bool IsAttacking => BodyMachine.CurrentState is BodyCloseAttackState;

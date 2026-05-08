@@ -109,12 +109,16 @@
           "effects": [
             {
               "context": "Contact",
-              "amount": "2",
               "comicText": "AghGreen",
-              "effectType": "Status",
-              "statusEffectType": "Poison",
+              "effectType": "Damage",
               "knockback": "15,5",
               "sound": "RatAttack"
+            },
+            {
+              "context": "Contact",
+              "amount": "2",
+              "effectType": "Status",
+              "statusEffectType": "Poison"
             }
           ]
         }

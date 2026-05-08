@@ -135,6 +135,10 @@ namespace ScaryCastle
         // IsAmbientLight
         public bool IsAmbientLight { get; set; }
 
+        // IsLiftable
+        [ScriptProperty]
+        public bool IsLiftable { get; set; }
+
         // SkillChancePenalty
         [ScriptProperty]
         public int SkillChancePenalty { get; set; }
