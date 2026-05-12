@@ -245,7 +245,7 @@ namespace ScaryCastle
                 return;
 
             // Can update timer?
-            if (IsMoving || IsAttacking)
+            if (IsMoving || IsAttacking || IsKnockbackInProgress)
                 return;
 
             if (Session.IsAwaiting && Session.AwaitingScript != null && !Session.AwaitingScript.Interruptible)
@@ -954,7 +954,6 @@ namespace ScaryCastle
             state.Intent = intent;
             state.Target = target;
             BodyMachine.ChangeState(state.GetType());
-            //(target as Actor)?.React();
         }
 
         // PlayerNumber

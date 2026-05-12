@@ -89,6 +89,9 @@ namespace ScaryCastle
     // ItemProperty
     public enum ItemProperty { Chance, Durability, Health }
 
+    // KnockbackIntensity
+    public enum KnockbackIntensity { Low, Medium, High }
+
     // LightKind
     public enum LightKind { Default, Alarm, Lantern, Fire, Fireplace, Global, MuzzleFlash, Outdoor, Player }
 

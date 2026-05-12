@@ -177,7 +177,7 @@ namespace ScaryCastle
             }
 
             // Corridor guard
-            if (Session.RunCount > 0 || Session.CurrentRun?.CorridorIndex > 0)
+            //if (Session.RunCount > 0 || Session.CurrentRun?.CorridorIndex > 0)
             {
                 if (RoomNode.Definition.GuardActorPosition != null)
                 {

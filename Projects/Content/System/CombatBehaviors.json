@@ -14,8 +14,7 @@
               "context": "Attack",
               "effectType": "Damage",
               "amount": "1",
-              "comicText": "Kapow",
-              "knockback": "15,4"
+              "comicText": "Kapow"
             }
           ]
         }
@@ -71,8 +70,7 @@
               "context": "Contact",
               "effectType": "Damage",
               "amount": "1",
-              "comicText": "AghRed",
-              "knockback": "15,5"
+              "comicText": "AghRed"
             }
           ]
         }
@@ -111,7 +109,6 @@
               "context": "Contact",
               "comicText": "AghGreen",
               "effectType": "Damage",
-              "knockback": "15,5",
               "sound": "RatAttack"
             },
             {

@@ -371,6 +371,11 @@ namespace ScaryCastle
         {
         }
 
+        // OnKnockbackCompleted
+        protected virtual void OnKnockbackCompleted()
+        {
+        }
+
         // OnLoad
         protected override void OnLoad()
         {
@@ -438,12 +443,17 @@ namespace ScaryCastle
                 knockbackVelocity *= KnockbackFriction;
 
                 // 3. Limpiar valores residuales muy chicos
-                if (knockbackVelocity.LengthSquared() < 100f) // Ajustá según tu escala de píxeles
+                if (knockbackVelocity.LengthSquared() < 100) // Ajustá según tu escala de píxeles
                     knockbackVelocity = Vector2.Zero;
 
                 // Si murió por el golpe, chequear acá si paró para llamar a Die() visualmente
-                if (knockbackVelocity == Vector2.Zero && IsDead)
-                    Die();
+                if (knockbackVelocity == Vector2.Zero)
+                {
+                    if (IsDead)
+                        Die();
+                    else
+                        OnKnockbackCompleted();         
+                }
             }
             else if (IsDead && !dieCalled)
             {
@@ -1102,6 +1112,9 @@ namespace ScaryCastle
             else
                 return RuntimeHotspot.Contains(InputManager.DefaultPlayer.Mouse.WorldPosition(Session.Camera));
         }
+
+        // IsKnockbackInProgress
+        public bool IsKnockbackInProgress => knockbackVelocity != Vector2.Zero;
 
         // MaxHP
         [ScriptProperty]

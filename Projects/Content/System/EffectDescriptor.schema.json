@@ -40,7 +40,9 @@
     },
     "knockback": {
       "type": "string",
-      "description": "Fuerza del knockback."
+      "description": "intensidad del knockback.",
+      "enum": [ "Low", "Medium", "High" ],
+      "default": "Low"
     },
     "modifier": {
       "type": "number",

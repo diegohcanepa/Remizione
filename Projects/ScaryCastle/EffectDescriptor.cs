@@ -23,7 +23,7 @@ namespace ScaryCastle
             this.DamageType = element.GetEnum("damageType", DamageType.Physical);
             this.EffectType = element.GetEnum("effectType", EffectType.None);
             this.Modifier = element.GetFloat("modifier", 0);
-            this.Knockback = element.GetVector2("knockback", Vector2.Zero);
+            this.Knockback = element.GetEnum("knockback", KnockbackIntensity.Low);
             this.Sound = element.GetObject("sound", Sound.Get);
             this.StatusEffectType = element.GetEnum("statusEffectType", StatusEffectType.None);
             this.Target = element.GetEnum("target", EffectTarget.Target);
@@ -80,12 +80,12 @@ namespace ScaryCastle
 
                     // Damage
                     case EffectType.Damage:
-                        realTarget.TakeDamage(source, effect.DamageType, amount, effect.ComicText, effect.Knockback);
+                        realTarget.TakeDamage(source, effect.DamageType, amount, effect.ComicText, effect.GetKnockbackForce());
                         break;
 
                     // Death
                     case EffectType.Death:
-                        realTarget.TakeDamage(source, effect.DamageType, int.MaxValue, effect.ComicText, effect.Knockback);
+                        realTarget.TakeDamage(source, effect.DamageType, int.MaxValue, effect.ComicText, effect.GetKnockbackForce());
                         break;
 
                     // Status
@@ -128,8 +128,21 @@ namespace ScaryCastle
         // EffectType
         public EffectType EffectType { get; }
 
+        // GetKnockbackForce
+        public Vector2 GetKnockbackForce()
+        {
+            if (Knockback == KnockbackIntensity.High)
+                return new(35, 5);
+
+            else if (Knockback == KnockbackIntensity.Medium)
+                return new(25, 5);
+
+            else
+                return new(15, 5);
+        }
+
         // Knockback
-        public Vector2 Knockback { get; }
+        public KnockbackIntensity Knockback { get; }
 
         // Modifier
         public float Modifier { get; }
