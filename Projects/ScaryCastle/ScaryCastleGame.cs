@@ -4,6 +4,7 @@ using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ScaryCastle.Menus;
+using ScaryCastle.UI;
 
 namespace ScaryCastle
 {
@@ -106,6 +107,20 @@ namespace ScaryCastle
             SpriteBatch.End();
 
             MouseCursor.Draw(gameTime);
+        }
+
+        // OnScenesDrawn
+        protected override void OnScenesDrawn(GameTime gameTime)
+        {
+            RenderTargets.Swap();
+            SpriteBatch.Begin(effect: Effects.CRT.Effect);
+            SpriteBatch.Draw(RenderTargets.PreviousTarget, Vector2.Zero, Color.White);
+            SpriteBatch.End();
+
+            // Draw speech bubbles
+            SpeechBubble.DrawSpeechBubbles(gameTime);
+
+            MonitorFrame.Draw(gameTime);
         }
 
         // OnInitialize

@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 
@@ -134,6 +135,9 @@ namespace ScaryCastle
         {
             hpMeter.Actor = session.Player;
             FaithMeter.Actor = session.Player;
+            Message.Hide();
+            Log.Hide();
+            GuardMeter.Target = null;
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Engendro.Audio
                 ArgumentOutOfRangeException.ThrowIfLessThan(value, 1);
                 field = value;
             }
-        } = 1;
+        } = 6;
 
         // Pan
         public float Pan

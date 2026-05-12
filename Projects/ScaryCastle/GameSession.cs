@@ -209,16 +209,8 @@ namespace ScaryCastle
         {
             base.OnDraw(gameTime);
 
-            Game.RenderTargets.Swap();
-            Game.SpriteBatch.Begin(effect: ScaryCastleGame.Effects.CRT.Effect);
-            Game.SpriteBatch.Draw(Game.RenderTargets.PreviousTarget, Vector2.Zero, Color.White);
-            Game.SpriteBatch.End();
-
             if (IsHUDVisible)
                 HUD.Draw(gameTime);
-
-            // Draw speech bubbles
-            SpeechBubble.DrawSpeechBubbles(gameTime);
 
             if (CurrentRun == null)
             {
@@ -479,8 +471,8 @@ namespace ScaryCastle
         [ScriptMethod]
         public void CompleteRun()
         {
-            EndRun();
             RunCount++;
+            EndRun();
         }
 
         // CurrentRun
@@ -532,6 +524,8 @@ namespace ScaryCastle
             // This is necessary because objects finalized in step 2 are now officially
             // marked as "garbage" and can finally be released from memory in this pass.
             GC.Collect(2, GCCollectionMode.Forced, true);
+
+            Save();
         }
 
         // EnterCorridor

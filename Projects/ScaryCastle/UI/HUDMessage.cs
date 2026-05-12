@@ -88,6 +88,10 @@ namespace ScaryCastle
                 color = ColorPalette.Text.Green;
                 icon.RenderImage = Atlases.UI.PoisonedIcon;
             }
+            else if (message == MessageKind.PullCorridorLever)
+            {
+                color = ColorPalette.Text.Orange;
+            }
             else
             {
                 Sound.Play(SoundNames.Error);

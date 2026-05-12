@@ -322,7 +322,7 @@ namespace Engendro.Audio
         }
 
         // MaxInstances
-        public int MaxInstances { get; }
+        public int MaxInstances { get; } = 6;
 
         // Name
         public string Name { get; }

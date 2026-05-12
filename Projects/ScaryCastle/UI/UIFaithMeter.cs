@@ -21,13 +21,13 @@ namespace ScaryCastle
         // Constructor
         public UIFaithMeter()
         {
-            float x = 12;
+            float x = 10;
             for (var i = 0; i < icons.Length; i++)
             {
                 icons[i] = new(Atlases.UI.FaithIcons[0])
                 {
                     PivotOrigin = RectanglePoint.Center,
-                    Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom, x, -12)
+                    Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom, x, -8)
                 };
 
                 x += icons[i].BoundingBox.Width;

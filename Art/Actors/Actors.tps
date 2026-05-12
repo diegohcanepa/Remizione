@@ -354,6 +354,7 @@
             <key type="filename">Designer-assets/StandHead01.png</key>
             <key type="filename">Designer-assets/StandHead02.png</key>
             <key type="filename">Designer-assets/TalkHead01.png</key>
+            <key type="filename">Father-assets/Back01.png</key>
             <key type="filename">Father-assets/Move04.png</key>
             <key type="filename">Father-assets/RaiseArm01.png</key>
             <key type="filename">Father-assets/RaiseArm02.png</key>

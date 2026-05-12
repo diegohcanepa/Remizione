@@ -41,6 +41,8 @@ namespace ScaryCastle
             this.randomSeed = RandomHelper.GetSeed(Session.Seed, salt);
             this.Random = new Random(randomSeed);
             this.Placeholders = placeholders.AsReadOnly();
+
+            this.MonitorStyle = true;
         }
 
         #endregion

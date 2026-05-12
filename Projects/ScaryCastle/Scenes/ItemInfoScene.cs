@@ -56,7 +56,7 @@ namespace ScaryCastle
                 PauseOnPunctuationMarks = false,
                 PivotOrigin = RectanglePoint.Top,
                 Position = gradient.BoundingBox.GetPoint(RectanglePoint.Top, 0, topMargin),
-                Scale = ScaleInfo.Text.VeryLarge,
+                Scale = ScaleInfo.Text.Huge,
                 TypingSpeed = 20
             };
 

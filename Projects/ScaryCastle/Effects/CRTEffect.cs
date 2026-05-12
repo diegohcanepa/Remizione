@@ -7,14 +7,50 @@ namespace ScaryCastle.Effects
     /// </summary>
     public sealed class CRTEffect : ShaderEffect
     {
+        private bool isInitialized;
+
         // Constructor
         public CRTEffect()
             : base("Effects/CRT")
         {
-            //Effect.Parameters["ScreenSize"].SetValue(new Vector2(1920, 1080));
-            //Effect.Parameters["CurvatureAmount"].SetValue(0.1f);
-            //Effect.Parameters["ScanlineIntensity"].SetValue(0.5f);
-            //Effect.Parameters["ChromaticAberrationAmount"].SetValue(0.005f);
         }
+
+        #region Private members
+
+        // Invalidate
+        private void Invalidate()
+        {
+            if (MonitorStyle)
+            {
+                Effect.Parameters["Curvature"].SetValue(0.12f);
+                Effect.Parameters["ScanlineIntensity"].SetValue(0.07f);
+                Effect.Parameters["ChromaticAberration"].SetValue(0.0007f);
+            }
+            else
+            {
+                Effect.Parameters["Curvature"].SetValue(0);
+                Effect.Parameters["ScanlineIntensity"].SetValue(0.025f);
+                Effect.Parameters["ChromaticAberration"].SetValue(0.0002f);
+            }
+
+            isInitialized = true;
+        }
+
+        #endregion
+
+        // MonitorStyle
+        public bool MonitorStyle
+        {
+            get;
+            set
+            {
+                if (value != field || !isInitialized)
+                {
+                    field = value;
+                    Invalidate();
+                }
+            }
+        }
+
     }
 }

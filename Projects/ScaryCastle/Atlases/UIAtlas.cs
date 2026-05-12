@@ -16,7 +16,6 @@ namespace ScaryCastle
             CheckMark = this[nameof(CheckMark)];
             Coin = this[nameof(Coin)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
-            CorridorDoorIcon = this[nameof(CorridorDoorIcon)];
             CreditsBar = this[nameof(CreditsBar)];
             CursedIcon = this[nameof(CursedIcon)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
@@ -63,9 +62,6 @@ namespace ScaryCastle
 
         // ContextMenuOptionSelector
         public AtlasImage ContextMenuOptionSelector { get; }
-
-        // CorridorDoorIcon
-        public AtlasImage CorridorDoorIcon { get; }
 
         // CreditsBar
         public AtlasImage CreditsBar { get; }

@@ -364,7 +364,6 @@
                 <false/>
             </struct>
             <key type="filename">PotteryB-assets/PotteryB.png</key>
-            <key type="filename">PotteryB-assets/PotteryBShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

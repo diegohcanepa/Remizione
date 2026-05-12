@@ -11,6 +11,7 @@ namespace ScaryCastle
     {
         private readonly FloatTween fadeTween = new() { StartDelay = 2600 };
         private readonly Sprite icon;
+        private readonly Sprite iconShadow;
         private readonly TextSprite nounText;
         private readonly TextSprite verbText;
 
@@ -22,6 +23,15 @@ namespace ScaryCastle
             {
                 PivotOrigin = RectanglePoint.LeftTop,
                 Scale = ScaleInfo.UIElement.Medium
+            };
+
+            // Icon shadow
+            iconShadow = new()
+            {
+                Color = Color.Black,
+                Opacity = ColorPalette.ShadowOpacity,
+                PivotOrigin = RectanglePoint.LeftTop,
+                Scale = ScaleInfo.UIElement.Medium,
             };
 
             // Verb
@@ -47,13 +57,18 @@ namespace ScaryCastle
         private void ShowCore(string verb, string noun, bool isWarning, AtlasImage? image)
         {
             verbText.Color = isWarning ? ColorPalette.Text.Orange : ColorPalette.Text.Green;
-            verbText.Position = new Vector2(6, 18);
+            verbText.Position = new Vector2(6, 12);
             verbText.Text = verb;
 
             nounText.Position = verbText.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -2);
             nounText.Text = noun;
             icon.RenderImage = image;
             icon.Position = nounText.BoundingBox.GetPoint(RectanglePoint.LeftBottom);
+
+            iconShadow.Position = icon.Position;
+            iconShadow.RenderImage = image;
+            iconShadow.X -= 1;
+            iconShadow.Y += 1;
 
             fadeTween.Start(TweenStyle.CubicIn, 1, 0, 1000);
         }
@@ -70,6 +85,8 @@ namespace ScaryCastle
 
             verbText.Draw(gameTime);
             nounText.Draw(gameTime);
+
+            iconShadow.Draw(gameTime);
             icon.Draw(gameTime);
         }
 
@@ -84,6 +101,7 @@ namespace ScaryCastle
             verbText.Opacity = fadeTween.IsRunning ? fadeTween.CurrentValue : 1;
             nounText.Opacity = verbText.Opacity;
             icon.Opacity = verbText.Opacity;
+            iconShadow.Opacity = verbText.Opacity;
         }
 
         #endregion

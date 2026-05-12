@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
@@ -11,6 +12,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
+        private SoundInstance? alarmSoundInstance;
         private readonly Sprite[] icons;
         private readonly List<IList<AtlasImage>> imageGroups = [];
         private int lastFilledIconIndex = -1;
@@ -130,6 +132,36 @@ namespace ScaryCastle
             lastKnownMaxValue = maxHp;
             lastKnownStatusEffectAmount = amount;
             lastFilledIconIndex = Actor.IsDead ? 0 : ((Actor.HP + 1) / 2) - 1;
+
+            if (hp == 2)
+                StartHeartbeat();
+            else
+                StopHeartbeat();
+        }
+
+        // StartHeartbeat
+        private void StartHeartbeat()
+        {
+            if (alarmSoundInstance != null)
+                return;
+
+            this.alarmSoundInstance = Sound.Get(SoundNames.Heartbeat).PopInstance();
+            if (alarmSoundInstance != null)
+            {
+                alarmSoundInstance.TransitionAware = false;
+                alarmSoundInstance.IsLooped = true;
+                alarmSoundInstance.Play();
+            }
+        }
+
+        // StopHeartbeat
+        private void StopHeartbeat()
+        {
+            if (alarmSoundInstance != null)
+            {
+                alarmSoundInstance?.Stop();
+                alarmSoundInstance = null;
+            }
         }
 
         #endregion

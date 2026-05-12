@@ -304,6 +304,8 @@ namespace ScaryCastle
         // OnActivate
         protected override void OnActivate()
         {
+            ScaryCastleGame.Effects.CRT.MonitorStyle = MonitorStyle;
+
             // Follow player
             if (Session.Player != null && Session.Player.IsInCurrentRoom && FollowPlayer)
                 Session.Camera.Follow(Session.Player, true);
@@ -588,6 +590,9 @@ namespace ScaryCastle
 
         // Lights
         public NamedObjectReadOnlyCollection<Light> Lights { get; }
+
+        // MonitorStyle
+        public bool MonitorStyle { get; init; }
 
         // PreserveBeforeGateway
         [ScriptMethod]

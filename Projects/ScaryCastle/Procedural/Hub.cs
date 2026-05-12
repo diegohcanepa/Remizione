@@ -11,6 +11,7 @@ namespace ScaryCastle
             : base(session, name)
         {
             UnloadMode = Adberration.UnloadMode.Manual;
+            MonitorStyle = true;
         }
 
         #region Private members

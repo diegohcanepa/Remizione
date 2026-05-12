@@ -54,6 +54,8 @@ namespace ScaryCastle
 
             scaleTween.Start(TweenStyle.Linear, defaultTextSize, defaultTextSize * 1.1f, 250, -1);
             timeText.Tweens.ScaleTween = scaleTween;
+
+            session.HUD.Message.Show(MessageKind.PullCorridorLever);
         }
 
         // StopCriticalPhase

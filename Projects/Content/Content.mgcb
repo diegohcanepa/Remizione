@@ -749,6 +749,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/Headbutt.wav;Audio/FX/Headbutt
 
+#begin Audio/FX/Heartbeat.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Heartbeat.wav;Audio/FX/Heartbeat
+
 #begin Audio/FX/ImpactA.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

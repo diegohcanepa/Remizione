@@ -24,7 +24,6 @@ namespace ScaryCastle
         public Prop(GameSession session, string name)
             : base(session, name)
         {
-            this.ApproachBehavior = ApproachBehavior.InFront;
             this.CanBeHit = false;
             this.Definition = PropDefinition.Definitions.Find(DeclaredName);
             this.HurtSound = Sound.Find(SoundNames.ImpactA);

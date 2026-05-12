@@ -17,6 +17,7 @@
         internal const string FootstepA = nameof(FootstepA);
         internal const string FootstepWater = nameof(FootstepWater);
         internal const string FuseHissing = nameof(FuseHissing);
+        internal const string Heartbeat = nameof(Heartbeat);
         internal const string GutsLarge = nameof(GutsLarge);
         internal const string GutsMedium = nameof(GutsMedium);
         internal const string GutsSmall = nameof(GutsSmall);

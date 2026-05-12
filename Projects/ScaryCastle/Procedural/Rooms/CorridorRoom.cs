@@ -153,30 +153,35 @@ namespace ScaryCastle
 
             if (Session.FindDeclaredThing(CorridorLeftGateName) is Prop leftGate)
             {
+                leftGate.Unload();
                 leftGate.DefaultImageName = CorridorLeftGateImageName;
                 AddGate(leftGate, RoomNode.Definition.LeftGatePosition);
             }
 
             if (Session.FindDeclaredThing(CorridorRightGateName) is Prop rightGate)
             {
+                rightGate.Unload();
                 rightGate.DefaultImageName = CorridorRightGateImageName;
                 AddGate(rightGate, RoomNode.Definition.RightGatePosition);
             }
 
             if (Session.FindDeclaredThing(CorridorLeftWallName) is Prop leftWall)
             {
+                leftWall.Unload();
                 leftWall.Atlas = Atlas;
                 Children.Add(leftWall);
             }
 
             if (Session.FindDeclaredThing(CorridorRightWallName) is Prop rightWall)
             {
+                rightWall.Unload();
                 rightWall.Atlas = Atlas;
                 Children.Add(rightWall);
             }
 
             if (Session.FindDeclaredThing(CorridorLever) is Prop lever)
             {
+                lever.Unload();
                 if (RoomNode.Definition.LeverPosition.HasValue)
                     lever.Position = RoomNode.Definition.LeverPosition.Value;
                 Children.Add(lever);
