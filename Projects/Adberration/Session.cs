@@ -339,7 +339,6 @@ namespace Adberration
             AotTypeRegistry.Register("if-entity", typeof(IfEntityStatement));
             AotTypeRegistry.Register("if-entity-type", typeof(IfEntityTypeStatement));
             AotTypeRegistry.Register("if-flag", typeof(IfFlagStatement));
-            AotTypeRegistry.Register("if-not-null", typeof(IfNotNullStatement));
             AotTypeRegistry.Register("if-parent", typeof(IfParentStatement));
             AotTypeRegistry.Register("if-random-number", typeof(IfRandomNumberStatement));
             AotTypeRegistry.Register("if-roll", typeof(IfRollStatement));

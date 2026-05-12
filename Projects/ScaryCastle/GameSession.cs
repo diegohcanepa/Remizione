@@ -437,6 +437,13 @@ namespace ScaryCastle
 
         #endregion
 
+        // AddCorridorExit
+        [ScriptMethod]
+        public void AddCorridorExit()
+        {
+            (Room as CorridorRoom)?.AddCorridorExit();
+        }
+
         // BeginRun
         [ScriptMethod]
         public void BeginRun()

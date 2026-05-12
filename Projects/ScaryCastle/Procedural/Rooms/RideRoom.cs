@@ -25,7 +25,7 @@ namespace ScaryCastle
             AtlasName = roomNode.Definition.Name ?? string.Empty;
             DefaultImageName = AtlasName;
             GlobalLightSize = new(2.2f, 2);
-            LightMapColor = new(20, 20, 20);
+            LightMapColor = new(40, 40, 40);
             LightingSystem = true;
 
             AddWalkArea("WalkArea", roomNode.Definition.WalkArea);

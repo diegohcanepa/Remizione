@@ -158,6 +158,7 @@ namespace ScaryCastle
         private void Layout()
         {
             var vp = Actor.Session.Camera.VisibleBox;
+            vp.Inflate(-10, -10);
 
             // Origin
             var origin = Actor.GetOverheadPosition();

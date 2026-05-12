@@ -110,18 +110,7 @@ namespace ScaryCastle
             if (child == Session.Guard)
             {
                 Session.Guard = null;
-
-                if (Session.GetEntity<Prop>(CorridorExitName) is Prop exit)
-                {
-                    exit.ApproachPosition = RoomNode.Definition.ExitApproachPosition;
-                    exit.Hotspot.SetVertices(RoomNode.Definition.ExitHotspot);
-                    Children.Add(exit);
-
-                    Session.HUD.Message.Show(MessageKind.PathCleared);
-
-                    if (Session.ScriptLibrary.FindRoutine("CorridorRightGate-MoveUp") is Script script)
-                        Session.ScriptProcessor.StartScript(script);
-                }
+                AddCorridorExit();
             }
         }
 
@@ -188,11 +177,14 @@ namespace ScaryCastle
             }
 
             // Corridor guard
-            if (RoomNode.Definition.GuardActorPosition != null)
+            if (Session.RunCount > 0 || Session.CurrentRun?.CorridorIndex > 0)
             {
-                Session.Guard = SpawnActor(ActorRole.Guard);
-                if (RoomNode.Definition.GuardActorPosition.HasValue)
-                    Session.Guard?.Position = RoomNode.Definition.GuardActorPosition.Value;
+                if (RoomNode.Definition.GuardActorPosition != null)
+                {
+                    Session.Guard = SpawnActor(ActorRole.Guard);
+                    if (Session.Guard != null && RoomNode.Definition.GuardActorPosition.HasValue)
+                        Session.Guard.Position = RoomNode.Definition.GuardActorPosition.Value;
+                }
             }
         }
 
@@ -210,6 +202,22 @@ namespace ScaryCastle
         }
 
         #endregion
+
+        // AddCorridorExit
+        public void AddCorridorExit()
+        {
+            if (Session.GetEntity<Prop>(CorridorExitName) is Prop exit)
+            {
+                exit.ApproachPosition = RoomNode.Definition.ExitApproachPosition;
+                exit.Hotspot.SetVertices(RoomNode.Definition.ExitHotspot);
+                Children.Add(exit);
+
+                Session.HUD.Message.Show(MessageKind.PathCleared);
+
+                if (Session.ScriptLibrary.FindRoutine("CorridorRightGate-MoveUp") is Script script)
+                    Session.ScriptProcessor.StartScript(script);
+            }
+        }
 
         // CloseCorridorDoor
         public void CloseCorridorDoor()
