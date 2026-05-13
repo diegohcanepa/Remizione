@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Strings>
+  <String Key="Actor.CapitalistRat">Rata capitalista</String>
+  <String Key="Actor.CapitalistRat.Group">Ratas capitalistas</String>
   <String Key="Actor.Designer">Lord Percival</String>
   <String Key="Actor.Dog">Perro</String>
   <String Key="Actor.Edmund">Edmundo</String>
@@ -18,7 +20,6 @@
   <String Key="ActorProperty.Grace.Name">Gracia</String>
   <String Key="ActorProperty.Level.Description">El nivel quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Level.Name">Estado de Gracia</String>
-  <String Key="CombatBehavior.Edmund.Headbutt">Topetazo</String>
   <String Key="DurabilityState.Broken">Roto</String>
   <String Key="DurabilityState.Cracked">Resquebrajado</String>
   <String Key="DurabilityState.Sturdy">Integro</String>

@@ -32,7 +32,7 @@ namespace ScaryCastle
         {
             // Por defecto, si es contacto, asumimos que hay que "cargar"
             // pero permitimos que otros arquetipos digan que no.
-            if (string.Equals(intent.Name, CombatIntent.ContactIntentName, StringComparison.OrdinalIgnoreCase))
+            if (intent.Contact)
                 return CombatDecisionType.Charge;
 
             return CombatDecisionType.Attack;
@@ -89,7 +89,7 @@ namespace ScaryCastle
                 // FILTRO CRÍTICO:
                 // Si el intent se llama "Contact" y este arquetipo NO lo considera 
                 // un ataque elegible, lo ignoramos.
-                if (string.Equals(intent.Name, CombatIntent.ContactIntentName, StringComparison.OrdinalIgnoreCase) && !ConsiderContactAsIntent)
+                if (intent.Contact && !ConsiderContactAsIntent)
                 {
                     weights[i] = 0;
                     continue;

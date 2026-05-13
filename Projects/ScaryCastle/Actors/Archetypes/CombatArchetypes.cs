@@ -18,6 +18,7 @@ namespace ScaryCastle
         {
             return archetypeName switch
             {
+                CombatArchetypeName.Harasser => Harasser,
                 CombatArchetypeName.Lurker => Lurker,
                 CombatArchetypeName.Stalker => Stalker,
                 //CombatArchetypeName.Berserk => Berserk,
@@ -25,6 +26,9 @@ namespace ScaryCastle
                 _ => throw new ArgumentOutOfRangeException(nameof(archetypeName))
             };
         }
+
+        // Harasser
+        public static HarasserArchetype Harasser { get; } = new();
 
         // Lurker
         public static LurkerArchetype Lurker { get; } = new();

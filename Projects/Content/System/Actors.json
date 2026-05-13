@@ -3,27 +3,23 @@
   "data": [
     {
       "name": "EnviousEye",
-      "role": "Guard"
+      "spawnLocation": "Gate"
     },
     {
-      "name": "Rat",
-      "role": "Ambient"
+      "name": "Rat"
     },
     {
       "name": "LootDropper",
       "dropTrigger": "OnImpact",
       "dropCoinChanceBonus": 1,
       "dropSackChanceBonus": 0.3,
-      "role": "Ambient",
       "spawnLocation": "SideRoom"
     },
     {
-      "name": "Skeleton",
-      "role": "Ambient"
+      "name": "Skeleton"
     },
     {
-      "name": "StinkyRat",
-      "role": "Ambient"
+      "name": "StinkyRat"
     }
   ]
 }

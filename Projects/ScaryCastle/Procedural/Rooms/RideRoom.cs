@@ -162,57 +162,6 @@ namespace ScaryCastle
             }
         }
 
-        // SpawnActor
-        protected Actor? SpawnActor(ActorRole role, Vector2? position = null)
-        {
-            if (Session.CurrentRun == null)
-                return null;
-
-            // Collect candidates
-            var selectedCandidates = new List<ActorDefinition>();
-            foreach (var definition in ActorDefinition.Definitions.All)
-            {
-                if (definition.Role != role)
-                    continue;
-
-                // MaxPerRun
-                if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns))
-                    continue;
-
-                selectedCandidates.Add(definition);
-            }
-
-            if (selectedCandidates.Count == 0)
-                return null;
-
-            // Pick
-            var chanceTable = new ChanceTable();
-            foreach (var c in selectedCandidates)
-            {
-                var finalWeight = AdjustWeight(Session.CurrentRun.Intensity, RoomNode.Definition.Difficulty, c.Difficulty, c.SpawnWeight);
-                chanceTable.Add(c.Name, finalWeight);
-            }
-
-            if (chanceTable.GetValue() is not ChanceTableItem chanceTableItem)
-                return null;
-
-            if (ActorDefinition.Definitions.Find(chanceTableItem.Name) is not ActorDefinition chosen)
-                return null;
-
-            var instance = CreateThingClone(chosen.Name);
-
-            if (position.HasValue)
-            {
-                instance.Position = position.Value;
-                Children.Add(instance);
-            }
-
-            // Log spawn
-            Session.CurrentRun.Spawns.Increment(chosen.Name);
-
-            return instance as Actor;
-        }
-
         #endregion
 
         // CreateInstance

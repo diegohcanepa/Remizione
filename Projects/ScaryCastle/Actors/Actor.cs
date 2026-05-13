@@ -44,7 +44,7 @@ namespace ScaryCastle
             this.DisplayNameKey = $"Actor.{DeclaredName}";
             this.HitEffect = HitEffect.Blink;
             this.IgnoreWalkArea = false;
-            this.Faction = Definition == null || Definition.Role == ActorRole.Interactive ? Faction.Good : Faction.Evil;
+            this.Faction = Definition == null ? Faction.Good : Definition.Faction;
 
             headSprite = new AnimatedSprite()
             {
@@ -241,7 +241,7 @@ namespace ScaryCastle
         private void UpdateReactionTimer(GameTime gameTime)
         {
             // Can use brain?
-            if (IsPlayer || CombatBehavior == null || !IsAttackable || IsDead)
+            if (IsPlayer || CombatBehavior == null || Faction == Faction.Good || IsDead)
                 return;
 
             // Can update timer?
@@ -421,6 +421,13 @@ namespace ScaryCastle
             footstepEffect?.Draw(gameTime);
         }
 
+        // OnFactionChanged
+        protected override void OnFactionChanged()
+        {
+            if (Faction == Faction.Evil)
+                ForceReaction();
+        }
+
         // OnFaithChanged
         protected virtual void OnFaithChanged()
         {
@@ -431,14 +438,6 @@ namespace ScaryCastle
         {
             base.OnInitialize();
             BodyMachine.Start();
-        }
-
-        // OnIsAttackableChanged
-        protected override void OnIsAttackableChanged()
-        {
-            base.OnIsAttackableChanged();
-            Faction = Faction.Evil;
-            ForceReaction();
         }
 
         // OnLoad
@@ -509,12 +508,12 @@ namespace ScaryCastle
                     speechBubble?.Hide();
                 }
             }
-            else if (IsHostile(attacker) && !IsDead)
+            else if (!IsDead)
             {
                 if (Definition?.DropTrigger == LootDropTrigger.OnImpact)
                     DropLoot();
 
-                IsAttackable = true;
+                Faction = Faction.Evil;
             }
 
             Session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);
@@ -548,7 +547,7 @@ namespace ScaryCastle
                     if (ActiveThrowable != null && Session.IsCurrentScene && CanHandleInput)
                         FaceToMouseCursor();
                 }
-                else if (IsAttackable && Session.Player != null)
+                else if (Faction == Faction.Evil && Session.Player != null)
                 {
                     FaceTo(Session.Player);
                 }
@@ -784,10 +783,6 @@ namespace ScaryCastle
         // Definition
         public ActorDefinition? Definition { get; }
 
-        // Faction
-        [ScriptProperty]
-        public Faction Faction { get; set; }
-
         // Faith
         [ScriptProperty]
         public int Faith
@@ -973,18 +968,6 @@ namespace ScaryCastle
                 }
             }
         } = PlayerNumber.None;
-
-        // RandomMoveAggressiveness
-        [ScriptProperty]
-        public float RandomMoveAggressiveness
-        {
-            get;
-            set
-            {
-                if (value != field)
-                    field = float.Clamp(value, 0, 1);
-            }
-        }
 
         // Say
         public void Say(string text, bool awaitInput)

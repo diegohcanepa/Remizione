@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Microsoft.Xna.Framework;
 
 namespace ScaryCastle.Effects
 {
@@ -8,6 +9,9 @@ namespace ScaryCastle.Effects
     public sealed class CRTEffect : ShaderEffect
     {
         private bool isInitialized;
+        private const string param_chromaticAberration = "ChromaticAberration";
+        private const string param_curvature = "Curvature";
+        private const string param_scanlineIntensity = "ScanlineIntensity";
 
         // Constructor
         public CRTEffect()
@@ -15,28 +19,12 @@ namespace ScaryCastle.Effects
         {
         }
 
-        #region Private members
-
-        // Invalidate
-        private void Invalidate()
+        // ChromaticAberration
+        public float ChromaticAberration
         {
-            if (MonitorStyle)
-            {
-                Effect.Parameters["Curvature"].SetValue(0.12f);
-                Effect.Parameters["ScanlineIntensity"].SetValue(0.07f);
-                Effect.Parameters["ChromaticAberration"].SetValue(0.0007f);
-            }
-            else
-            {
-                Effect.Parameters["Curvature"].SetValue(0);
-                Effect.Parameters["ScanlineIntensity"].SetValue(0.025f);
-                Effect.Parameters["ChromaticAberration"].SetValue(0.0002f);
-            }
-
-            isInitialized = true;
+            get => Effect.Parameters[param_chromaticAberration].GetValueSingle();
+            set => Effect.Parameters[param_chromaticAberration].SetValue(value);
         }
-
-        #endregion
 
         // MonitorStyle
         public bool MonitorStyle
@@ -47,10 +35,28 @@ namespace ScaryCastle.Effects
                 if (value != field || !isInitialized)
                 {
                     field = value;
-                    Invalidate();
+                    Reset();
                 }
             }
         }
 
+        // Reset
+        public void Reset()
+        {
+            if (MonitorStyle)
+            {
+                Effect.Parameters[param_curvature].SetValue(0.12f);
+                Effect.Parameters[param_scanlineIntensity].SetValue(0.07f);
+                Effect.Parameters[param_chromaticAberration].SetValue(0.0007f);
+            }
+            else
+            {
+                Effect.Parameters[param_curvature].SetValue(0);
+                Effect.Parameters[param_scanlineIntensity].SetValue(0.025f);
+                Effect.Parameters[param_chromaticAberration].SetValue(0.0002f);
+            }
+
+            isInitialized = true;
+        }
     }
 }

@@ -5,9 +5,6 @@ namespace ScaryCastle
     // ActorDirection
     public enum ActorDirection { Down, Up }
 
-    // ActorRole
-    public enum ActorRole { Ambient, Guard, Interactive }
-
     // ApproachBehavior
     public enum ApproachBehavior
     {
@@ -20,7 +17,7 @@ namespace ScaryCastle
     public enum BodySize { Small, Medium, Large }
 
     // CombatArchetypeName
-    public enum CombatArchetypeName { Lurker, Stalker, Tactical, Berserk, Coward }
+    public enum CombatArchetypeName { Lurker, Harasser, Stalker, Tactical, Berserk, Coward }
 
     // CombatDecisionType
     public enum CombatDecisionType { None, Attack, Flee, Charge, Move }
@@ -178,13 +175,13 @@ namespace ScaryCastle
     public enum SideRoomCategory { None, Hub, Generic, Save, Treasure }
 
     // SpawnLocation
-    public enum SpawnLocation { Any, Corridor, SideRoom }
+    public enum SpawnLocation { CorridorOrSideRoom, Corridor, SideRoom, Gate }
 
     // SpeechBubbleState
     public enum SpeechBubbleState { Hidden, Typing, Idle }
 
     // StatusEffectType
-    public enum StatusEffectType { None, Curse, Poison }
+    public enum StatusEffectType { None, Curse, Poison, ChromaticAberration }
 
     // TestPolygon
     public enum TestPolygon { Hotspot, Collider }

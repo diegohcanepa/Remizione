@@ -11,6 +11,8 @@ namespace ScaryCastle
     /// </summary>
     public sealed class UICountdown : GameObject
     {
+        #region Private fields
+
         private SoundInstance? alarmSoundInstance;
         private readonly Vector2 defaultTextSize = ScaleInfo.Text.Galactus;
         private double lastKnownValue;
@@ -18,6 +20,8 @@ namespace ScaryCastle
         private readonly GameSession session;
         private float timeLeft;
         private readonly TextSprite timeText;
+
+        #endregion
 
         // Constructor
         public UICountdown(GameSession session)
@@ -67,7 +71,7 @@ namespace ScaryCastle
                 alarmSoundInstance = null;
             }
 
-            timeText.Color = ColorPalette.Text.Highlight;
+            timeText.Color = GuardMode ? ColorPalette.Text.Orange : ColorPalette.Text.Highlight;
             scaleTween.Stop();
             timeText.Scale = defaultTextSize;
         }
@@ -121,6 +125,9 @@ namespace ScaryCastle
 
         #endregion
 
+        // GuardMode
+        public bool GuardMode { get; private set; }
+
         // IsCritical
         public bool IsCritical => alarmSoundInstance != null;
 
@@ -130,14 +137,14 @@ namespace ScaryCastle
         // Reset
         public void Reset()
         {
-            timeText.Color = ColorPalette.Text.Highlight;
+            GuardMode = false;
             timeLeft = 0;
             IsRunning = false;
             StopCriticalPhase();
         }
 
         // Start
-        public void Start(int duration)
+        public void Start(int duration, bool guardMode)
         {
             if (duration < 0)
             {
@@ -145,9 +152,11 @@ namespace ScaryCastle
                 return;
             }
 
-            lastKnownValue = -1;
-            timeLeft = duration;
-            IsRunning = true;
+            this.GuardMode = guardMode;
+            this.lastKnownValue = -1;
+            this.timeLeft = duration;
+            this.timeText.Color = guardMode ? ColorPalette.Text.Orange : ColorPalette.Text.Highlight;
+            this.IsRunning = true;
         }
     }
 }

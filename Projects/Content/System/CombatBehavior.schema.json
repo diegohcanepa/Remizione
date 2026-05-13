@@ -28,6 +28,7 @@
           "type": "string",
           "enum": [
             "Lurker",
+            "Harasser",
             "Stalker",
             "Tactical",
             "Berserk",

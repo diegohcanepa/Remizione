@@ -241,8 +241,11 @@ namespace ScaryCastle
             if (statusEffectTimer > 0)
             {
                 statusEffectTimer -= gameTime.ElapsedGameTime.Milliseconds;
+
                 if (statusEffectTimer <= 0)
                 {
+                    statusEffectTimer = 0;
+
                     if (StatusEffectAmount > 0)
                     {
                         StatusEffectAmount -= 1;
@@ -356,6 +359,11 @@ namespace ScaryCastle
             shadowSpot.Draw(gameTime);
         }
 
+        // OnFactionChanged
+        protected virtual void OnFactionChanged()
+        {
+        }
+
         // OnHPChanged
         protected virtual void OnHPChanged()
         {
@@ -363,11 +371,6 @@ namespace ScaryCastle
 
         // OnIgnoreAttachedLightChanged
         protected virtual void OnIgnoreAttachedLightChanged()
-        {
-        }
-
-        // OnIsAttackableChanged
-        protected virtual void OnIsAttackableChanged()
         {
         }
 
@@ -529,6 +532,13 @@ namespace ScaryCastle
             }
 
             // 2. Si el efecto entrante es Maldición: PISA el veneno o SE SUMA a una maldición previa.
+            if (statusEffect == StatusEffectType.ChromaticAberration)
+            {
+                Session.PerformChromaticAberration();
+                return;
+            }
+
+            // 3. Si el efecto entrante es Maldición: PISA el veneno o SE SUMA a una maldición previa.
             if (statusEffect == StatusEffectType.Curse)
             {
                 if (StatusEffect != StatusEffectType.Curse)
@@ -551,7 +561,7 @@ namespace ScaryCastle
                 }
             }
 
-            // 3. Si el efecto entrante es Veneno: Solo importa si no estás maldito.
+            // 4. Si el efecto entrante es Veneno: Solo importa si no estás maldito.
             if (statusEffect == StatusEffectType.Poison && StatusEffect != StatusEffectType.Curse)
             {
                 if (StatusEffect != StatusEffectType.Poison)
@@ -833,6 +843,10 @@ namespace ScaryCastle
                 Direction = FacingDirection.Left;
         }
 
+        // Faction
+        [ScriptProperty]
+        public Faction Faction { get; set; }
+
         // FloatingForce
         [ScriptProperty]
         public float FloatingForce
@@ -1035,21 +1049,6 @@ namespace ScaryCastle
         // IgnoreWalkArea
         [ScriptProperty]
         public bool IgnoreWalkArea { get; set; } = true;
-
-        // IsAttackable
-        [ScriptProperty]
-        public bool IsAttackable
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    OnIsAttackableChanged();
-                }
-            }
-        }
 
         // IsBehind
         public bool IsBehind(GameThing thing)

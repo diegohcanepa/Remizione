@@ -283,7 +283,6 @@
             <key type="filename">Edmund-assets/StandCarry01.png</key>
             <key type="filename">Edmund-assets/StandHead01.png</key>
             <key type="filename">Edmund-assets/StandHead02.png</key>
-            <key type="filename">Edmund-assets/Stun01.png</key>
             <key type="filename">Edmund-assets/TakeSack01.png</key>
             <key type="filename">Edmund-assets/TakeSack02.png</key>
             <key type="filename">Edmund-assets/TalkHead01.png</key>

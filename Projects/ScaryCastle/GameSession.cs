@@ -21,6 +21,7 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly ScriptConsole? console;
+        private readonly FloatTween chromaticAberrationTween = new();
         private readonly InventoryScene inventoryScene;
         private readonly ItemInfoScene itemInfoScene;
         private Vector2? playerPosition;
@@ -241,6 +242,8 @@ namespace ScaryCastle
             Game.SceneManager.PopUntil(this);
             InteractionContext.Reset();
             MouseCursor.Reset();
+            if (room is not ProceduralRoom)
+                chromaticAberrationTween.Stop();
             SyncProceduralMusic();
         }
 
@@ -379,6 +382,12 @@ namespace ScaryCastle
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
+
+            if (chromaticAberrationTween.IsRunning)
+            {
+                chromaticAberrationTween.Update(gameTime);
+                ScaryCastleGame.Effects.CRT.ChromaticAberration = chromaticAberrationTween.CurrentValue;
+            }
 
             savingIcon.Update(gameTime);
 
@@ -603,7 +612,7 @@ namespace ScaryCastle
             CleanUpRuntimeEntities();
 
             Guard = null;
-            HUD.GuardMeter.Target = null;
+            HUD.BossMeter.Reset();
 
             if (!CurrentRun.LoadNextCorridor(this))
             {
@@ -647,6 +656,13 @@ namespace ScaryCastle
         // OutcomeTarget
         [ScriptProperty]
         public override GameThing? OutcomeTarget => base.OutcomeTarget as GameThing;
+
+        // PerformChromaticAberration
+        public void PerformChromaticAberration()
+        {
+            ScaryCastleGame.Effects.CRT.Reset();
+            chromaticAberrationTween.Start(TweenStyle.Linear, ScaryCastleGame.Effects.CRT.ChromaticAberration, ScaryCastleGame.Effects.CRT.ChromaticAberration + 0.009f, 2500, 2);
+        }
 
         // Player
         [ScriptProperty]
@@ -732,11 +748,22 @@ namespace ScaryCastle
             Game.SceneManager.Push(itemInfoScene);
         }
 
-        // ShowGuardMeter
+        // StartGatePhase
         [ScriptMethod]
-        public void ShowGuardMeter()
+        public void StartGatePhase()
         {
-            HUD.GuardMeter.Target = Guard;
+            if (Guard != null)
+            {
+                HUD.BossMeter.SetTargets([Guard]);
+
+                var duration = 30;
+                if (Guard.Definition?.Difficulty == ScaryCastle.Difficulty.Normal)
+                    duration = 45;
+                else if (Guard.Definition?.Difficulty == ScaryCastle.Difficulty.Hard)
+                    duration = 66;
+
+                HUD.Countdown.Start(duration, true);
+            }
         }
 
         // StopCountdown

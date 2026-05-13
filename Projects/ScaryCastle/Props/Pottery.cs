@@ -17,7 +17,6 @@ namespace ScaryCastle
             DepthOffset = -2;
             DisplayNameKey = "Prop.Pottery";
             HurtSound = Sound.Find(SoundNames.ImpactA);
-            IsAttackable = true;
             IsLiftable = true;
             MaxHP = 1;
         }

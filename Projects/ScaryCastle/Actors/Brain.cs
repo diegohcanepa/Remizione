@@ -40,7 +40,7 @@ namespace ScaryCastle
             // Si está acorralado, la probabilidad es 1.0 (100%). Si no, es la del arquetipo.
             if (target != null)
             {
-                float chance = isCornered ? 1.0f : archetype.AttackChance;
+                float chance = isCornered ? 1 : archetype.AttackChance;
                 float distance = DistanceToTarget(actor, target);
 
                 if (Random.Shared.NextDouble() < chance)

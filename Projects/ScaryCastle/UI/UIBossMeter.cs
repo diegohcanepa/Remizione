@@ -1,13 +1,14 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace ScaryCastle
 {
     /// <summary>
-    /// UIGuardMeter
+    /// UIBossMeter
     /// </summary>
-    public sealed class UIGuardMeter : GameObject
+    public sealed class UIBossMeter : GameObject
     {
         #region Private fields
 
@@ -15,13 +16,14 @@ namespace ScaryCastle
         private readonly Sprite icon;
         private readonly TextSprite labelText;
         private readonly Meter meter;
+        private readonly List<Actor> targetList = [];
 
         #endregion
 
         #region Constructor
 
         // Constructor
-        public UIGuardMeter()
+        public UIBossMeter()
             : base()
         {
             this.meter = new Meter(ColorPalette.GuardMeter.Back, ColorPalette.GuardMeter.Fore, ColorPalette.GuardMeter.Diff, new(40, 6), 1)
@@ -59,7 +61,7 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (Target == null)
+            if (targetList.Count == 0)
                 return;
 
             Game.SpriteBatch.Begin(Game.Camera);
@@ -73,48 +75,73 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (Target != null)
-            {
-                if (Target.IsDead)
-                {
-                    Target = null;
-                }
-                else
-                {
-                    if (meter.Value != Target.HP)
-                    {
-                        meter.Value = Target.HP;
-                        amountText.Text = Target.HP.ToString(CultureInfo.InvariantCulture);
-                    }
+            if (targetList.Count == 0)
+                return;
 
-                    meter.Update(gameTime);
+            var currentTotalHP = 0;
+            var allDead = true;
+
+            for (int i = 0; i < targetList.Count; i++)
+            {
+                var t = targetList[i];
+               
+                if (t != null && !t.IsDead)
+                {
+                    currentTotalHP += t.HP;
+                    allDead = false;
                 }
             }
+
+            if (allDead)
+            {
+                targetList.Clear();
+            }
+            else if (meter.Value != currentTotalHP)
+            {
+                meter.Value = currentTotalHP;
+                amountText.Text = currentTotalHP.ToString(CultureInfo.InvariantCulture);
+            }
+
+            meter.Update(gameTime);
         }
 
         #endregion
 
-        // Target
-        public Actor? Target
+        // Reset
+        public void Reset()
         {
-            get;
-            set
+            targetList.Clear();
+            amountText.Clear();
+            labelText.Clear();
+            meter.MaximumValue = 0;
+            meter.Value = 0;
+        }
+
+        // SetTargets
+        public void SetTargets(IList<Actor> targets)
+        {
+            Reset();
+
+            targetList.AddRange(targets);
+
+            int totalMaxHP = 0;
+            int totalCurrentHP = 0;
+
+            for (int i = 0; i < targets.Count; i++)
             {
-                if (value != field)
-                {
-                    field = value;
-
-                    if (field != null && field.MaxHP == 0)
-                        field = null;
-
-                    if (field != null)
-                    {
-                        meter.MaximumValue = field.MaxHP;
-                        amountText.Text = field.HP.ToString(CultureInfo.InvariantCulture);
-                        labelText.Text = field.DisplayName;
-                    }
-                }
+                totalMaxHP += targets[i].MaxHP;
+                totalCurrentHP += targets[i].HP;
             }
+
+            meter.MaximumValue = totalMaxHP;
+            meter.Value = totalCurrentHP;
+            amountText.Text = totalCurrentHP.ToString(CultureInfo.InvariantCulture);
+            
+            if (targetList.Count > 1)
+                labelText.Text = TextRepository.GetValue($"{targetList[0].DisplayNameKey}.Group");
+
+            if (labelText.IsEmpty)
+                labelText.Text = targets[0].DisplayName;
         }
     }
 }

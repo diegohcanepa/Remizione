@@ -94,7 +94,7 @@ namespace ScaryCastle
                 if (Session.ScriptLibrary.FindRoutine(CorridorLeftGateRoutineName) is Script script)
                     Session.AwaitScript(script);
 
-                Session.HUD.Countdown.Start(GameSettings.CountdownDuration);
+                Session.HUD.Countdown.Start(GameSettings.CountdownDuration, false);
             }
             else if (Session.PreviousRoom is SideRoom)
             {
@@ -181,7 +181,7 @@ namespace ScaryCastle
             {
                 if (RoomNode.Definition.GuardActorPosition != null)
                 {
-                    Session.Guard = SpawnActor(ActorRole.Guard);
+                    Session.Guard = SpawnGateActor();
                     if (Session.Guard != null && RoomNode.Definition.GuardActorPosition.HasValue)
                         Session.Guard.Position = RoomNode.Definition.GuardActorPosition.Value;
                 }
@@ -201,6 +201,48 @@ namespace ScaryCastle
             }
         }
 
+        // SpawnGateActor
+        private Actor? SpawnGateActor(Vector2? position = null)
+        {
+            if (Session.CurrentRun == null)
+                return null;
+
+            var candidates = GetCandidateDefinitions<ActorDefinition, Actor>(
+                ActorDefinition.Definitions.All,
+                def => def.SpawnLocation == SpawnLocation.Gate
+            );
+
+            if (candidates.Count == 0)
+                return null;
+
+            // Pick
+            var chanceTable = new ChanceTable();
+            foreach (var c in candidates)
+            {
+                var finalWeight = AdjustWeight(Session.CurrentRun.Intensity, RoomNode.Definition.Difficulty, c.Difficulty, c.SpawnWeight);
+                chanceTable.Add(c.Name, finalWeight);
+            }
+
+            if (chanceTable.GetValue() is not ChanceTableItem chanceTableItem)
+                return null;
+
+            if (ActorDefinition.Definitions.Find(chanceTableItem.Name) is not ActorDefinition chosen)
+                return null;
+
+            var instance = CreateThingClone(chosen.Name);
+
+            if (position.HasValue)
+            {
+                instance.Position = position.Value;
+                Children.Add(instance);
+            }
+
+            // Log spawn
+            Session.CurrentRun.Spawns.Increment(chosen.Name);
+
+            return instance as Actor;
+        }
+
         #endregion
 
         // AddCorridorExit
@@ -208,6 +250,7 @@ namespace ScaryCastle
         {
             if (Session.GetEntity<Prop>(CorridorExitName) is Prop exit)
             {
+                Session.StopCountdown();
                 exit.ApproachPosition = RoomNode.Definition.ExitApproachPosition;
                 exit.Hotspot.SetVertices(RoomNode.Definition.ExitHotspot);
                 Children.Add(exit);

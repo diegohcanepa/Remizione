@@ -103,7 +103,7 @@ namespace ScaryCastle
             }
             */
 
-            if (Actor.Session.InteractionContext.Target?.IsAttackable == true)
+            if (Actor.Session.InteractionContext.Target?.Faction == Faction.Evil)
                 Actor.Session.InteractionContext.Mode = InteractionContextMode.Attack;
 
             PerformInteraction();

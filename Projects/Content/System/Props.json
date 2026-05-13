@@ -11,8 +11,7 @@
           "context": "Contact",
           "effectType": "Damage",
           "amount": "3",
-          "comicText": "Kapow",
-          "knockback": "15,0"
+          "comicText": "Kapow"
         }
       ],
       "placements": [
@@ -29,8 +28,7 @@
           "context": "Contact",
           "effectType": "Damage",
           "amount": "3",
-          "comicText": "Kapow",
-          "knockback": "15,0"
+          "comicText": "Kapow"
         }
       ],
       "placements": [
@@ -67,7 +65,6 @@
           "context": "Contact",
           "effectType": "Damage",
           "amount": "6",
-          "knockback": "15,5",
           "comicText": "AghRed"
         }
       ],

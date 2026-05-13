@@ -34,6 +34,9 @@ namespace ScaryCastle
             // DropTrigger
             DropTrigger = element.GetEnum("dropTrigger", LootDropTrigger.OnDeath);
 
+            // Faction
+            Faction = element.GetEnum("faction", Faction.Evil);
+
             // MaxPerRoom
             MaxPerRoom = element.GetInt32("maxPerRoom", -1);
             if (MaxPerRoom < 0)
@@ -44,14 +47,14 @@ namespace ScaryCastle
             if (MinProgress < 0)
                 MinProgress = 0;
 
-            // requiresDeadEnd
+            // RequiresDeadEnd
             RequiresDeadEnd = element.GetBool("requiresDeadEnd", false);
 
             // RoomTheme
             RoomTheme = element.GetEnum<RoomTheme>("roomTheme");
 
             // SpawnLocation
-            SpawnLocation = element.GetEnum("spawnLocation", SpawnLocation.Any);
+            SpawnLocation = element.GetEnum("spawnLocation", SpawnLocation.CorridorOrSideRoom);
 
             if (element.TryGetProperty("effects", out JsonElement effectsArray))
             {
@@ -88,6 +91,9 @@ namespace ScaryCastle
 
         // Effects
         public ReadOnlyCollection<EffectDescriptor> Effects { get; }
+
+        // Faction
+        public Faction Faction { get; init; }
 
         // MaxPerRoom
         public int MaxPerRoom { get; }

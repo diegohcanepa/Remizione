@@ -38,6 +38,13 @@
             "OnImpact"
           ],
           "default": "OnDeath"
+        },
+        "faction": {
+          "type": "string",
+          "enum": [
+            "Good",
+            "Evil"
+          ]
         },        
         "requiresDeadEnd": {
           "type": "boolean"
@@ -61,11 +68,12 @@
         "spawnLocation": {
           "type": "string",
           "enum": [
-            "Any",
+            "CorridorOrSideRoom",
             "Corridor",
-            "SideRoom"
+            "SideRoom",
+            "Gate"
           ],
-          "default": "Any"
+          "default": "CorridorOrSideRoom"
         }        
       }
     }

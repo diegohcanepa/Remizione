@@ -52,7 +52,7 @@
     "statusEffectType": {
       "type": "string",
       "description": "Si es status, qué tipo es.",
-      "enum": [ "None", "Curse", "Poison" ],
+      "enum": [ "None", "Curse", "Poison", "ChromaticAberration" ],
       "default": "None"
     },          
     "target": {

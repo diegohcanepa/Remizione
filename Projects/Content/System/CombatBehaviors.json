@@ -22,7 +22,7 @@
     },
     {
       "name": "EnviousEye",
-      "archetype": "Stalker",
+      "archetype": "Harasser",
       "intents": [
         {
           "name": "Contact",
@@ -32,21 +32,13 @@
               "effectType": "Damage",
               "amount": "1",
               "comicText": "AghRed"
-            }
-          ]
-        },
-        {
-          "name": "Bite",
-          "category": "Basic",
-          "sound": "EnviousEyeAttack",
-          "range": 15,
-          "effects": [
+            },
             {
-              "context": "Attack",
-              "effectType": "Damage",
+              "context": "Contact",
               "amount": "2",
-              "comicText": "AghRed"
-            }
+              "effectType": "Status",
+              "statusEffectType": "ChromaticAberration"
+            }            
           ]
         }
       ]

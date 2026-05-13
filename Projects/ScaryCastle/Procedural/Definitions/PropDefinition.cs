@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Engendro;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json;
@@ -18,6 +19,8 @@ namespace ScaryCastle
         public PropDefinition(JsonElement element)
             : base(element)
         {
+            Faction = element.GetEnum("faction", Faction.Good);
+
             // Placements
             if (element.TryGetProperty("placements", out JsonElement placementsElement))
             {

@@ -18,15 +18,12 @@
         {
           "type": "object",
           "properties": {
-            "role": {
-              "type": "string",
-              "default": "Guard",
-              "enum": ["Ambient", "Guard", "Interactive"]
+            "groupCount": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
             }
-          },
-          "required": [
-            "role"
-          ]          
+          }
         }
       ],
       "unevaluatedProperties": false

@@ -12,7 +12,6 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly TextSprite attackName;
         private readonly UIHPMeter hpMeter;
         private readonly GameSession session;
 
@@ -24,15 +23,6 @@ namespace ScaryCastle
         public HUD(GameSession session)
         {
             this.session = session;
-
-            this.attackName = new(Fonts.CommonOutline)
-            {
-                Color = ColorPalette.Text.Orange,
-                PivotOrigin = RectanglePoint.LeftTop,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 2, 7),
-                Scale = ScaleInfo.Text.Huge
-            };
-
             this.hpMeter = new(new(4, 2));
             this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5), ScaleInfo.Text.Huge);
             this.Countdown = new(session);
@@ -48,10 +38,6 @@ namespace ScaryCastle
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera);
-
-            if (session.InteractionContext.Mode == InteractionContextMode.Attack)
-                attackName.Draw(gameTime);
-
             hpMeter.Draw(gameTime);
             FaithMeter.Draw(gameTime);
             InventoryMeter.Draw(gameTime);
@@ -65,7 +51,7 @@ namespace ScaryCastle
             if (session.IsCurrentScene)
             {
                 if (session.Room is RideRoom rideRoom && rideRoom.RoomNode.RoomType == RoomType.Corridor)
-                    GuardMeter.Draw(gameTime);
+                    BossMeter.Draw(gameTime);
             }
         }
 
@@ -74,37 +60,24 @@ namespace ScaryCastle
         {
             PassiveItems.Update(gameTime);
             InventoryMeter.Update(gameTime);
-            GuardMeter.Update(gameTime);
+            BossMeter.Update(gameTime);
             hpMeter.Update(gameTime);
             FaithMeter.Update(gameTime);
             Log.Update(gameTime);
             Message.Update(gameTime);
             Countdown.Update(gameTime);
-
-            if (session.Player != null)
-            {
-                if (attackName.Tag != session.Player.CombatBehavior?.DefaultIntent)
-                    attackName.Text = session.Player.CombatBehavior?.DefaultIntent?.DisplayName;
-            }
         }
 
         #endregion
 
-        // AttackName
-        public string? AttackName
-        {
-            get => attackName.Text;
-            set => attackName.Text = value;
-        }
+        // BossMeter
+        public UIBossMeter BossMeter { get; } = new();
 
         // FaithMeter
         public UIFaithMeter FaithMeter { get; } = new();
 
         // GateMeter
         public UICountdown Countdown { get; }
-
-        // GuardMeter
-        public UIGuardMeter GuardMeter { get; } = new();
 
         // HandleInput
         public HandleInputResult HandleInput()
@@ -137,7 +110,7 @@ namespace ScaryCastle
             FaithMeter.Actor = session.Player;
             Message.Hide();
             Log.Hide();
-            GuardMeter.Target = null;
+            BossMeter.Reset();
         }
     }
 }

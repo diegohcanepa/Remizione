@@ -11,7 +11,6 @@
         {
             BodySize = BodySize.Medium;
             Guts = 0;
-            IsAttackable = true;
         }
     }
 }

@@ -74,76 +74,6 @@ namespace ScaryCastle
             return Math.Clamp(finalBudget, min, max);
         }
 
-        // GetCandidateDefinitions
-        private List<TDefinition> GetCandidateDefinitions<TDefinition, TThing>(IList<TDefinition> definitions, Func<TDefinition, bool>? predicate = null)
-            where TDefinition : ThingDefinition where TThing : GameThing
-        {
-            var outList = new List<TDefinition>();
-            if (Session.CurrentRun == null)
-                return outList;
-
-            foreach (var definition in definitions)
-            {
-                if (predicate != null && !predicate(definition))
-                    continue;
-
-                // 1. Filtro por tipo de room
-                if (definition.SpawnLocation != SpawnLocation.Any)
-                {
-                    if (definition.SpawnLocation == SpawnLocation.Corridor && this is not CorridorRoom)
-                        continue;
-
-                    if (definition.SpawnLocation == SpawnLocation.SideRoom && this is not SideRoom)
-                        continue;
-                }
-
-                // 2. Filtro por room theme
-                if (definition.RoomTheme.HasValue)
-                {
-                    if (definition.RoomTheme != RoomNode.Definition.Theme)
-                        continue;
-                }
-
-
-                // 3. Filtro por progreso en el run
-                if (Session.CurrentRun.Progress < definition.MinProgress)
-                    continue;
-
-                // 4. Filtro de dificultad: No permitimos que aparezcan cosas más difíciles que el cuarto
-                if (definition.Difficulty > RoomNode.Definition.Difficulty)
-                    continue;
-
-                // 5. Filtro de topologia
-                if (definition.RequiresDeadEnd && RoomNode.ConnectionCount > 1)
-                    continue;
-
-                // 6. Validación de Existencia de instancia declarada en script
-                var thing = Session.FindDeclaredThing(definition.Name) ?? throw new InvalidOperationException($"There is no declared thing named '{definition.Name}'. ");
-
-                // Is expected type?
-                if (thing is not TThing)
-                    continue;
-
-                // 7. Meta-progreso
-                // Chequea si el enemigo está desbloqueado (MinRun)
-                if (!definition.PassesRunConstraints(Session.RunCount))
-                    continue;
-
-                // 8. Historial de la Run
-                // Chequea si el enemigo ya alcanzó su MaxPerRun global
-                if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns))
-                    continue;
-
-                // 9. Reglas de Scope (Pools/Tags de la habitación)
-                if (!TagScope.Test(RoomNode.Definition.Scope, RoomNode.Definition.Pools, RoomNode.Definition.Tags))
-                    continue;
-
-                outList.Add(definition);
-            }
-
-            return outList;
-        }
-
         // GetSpawnPoints (Refactorizado)
         // Ahora acepta ReadOnlyPolygon para validar la geometría real.
         private List<Vector2> GetSpawnPoints(ReadOnlyPolygon polygon, int count, int cellSize)
@@ -194,6 +124,25 @@ namespace ScaryCastle
             return cells;
         }
 
+        // IsCompatible
+        private bool IsCompatible(SpawnLocation required)
+        {
+            if (required == SpawnLocation.CorridorOrSideRoom)
+            {
+                return RoomNode.RoomType is RoomType.Corridor or RoomType.SideRoom;
+            }
+            else if (required == SpawnLocation.Corridor)
+            {
+                return RoomNode.RoomType == RoomType.Corridor;
+            }
+            else if (required == SpawnLocation.SideRoom)
+            {
+                return RoomNode.RoomType == RoomType.SideRoom;
+            }
+
+            return false;
+        }
+
         // Populate
         private void Populate()
         {
@@ -212,7 +161,7 @@ namespace ScaryCastle
             // (MinProgress, MaxPerRun global, Scope, Difficulty, etc.)
             var candidates = GetCandidateDefinitions<ActorDefinition, Actor>(
                 ActorDefinition.Definitions.All,
-                def => def.Role == ActorRole.Ambient
+                def => IsCompatible(def.SpawnLocation)
             );
 
             if (candidates.Count == 0)
@@ -239,7 +188,7 @@ namespace ScaryCastle
                 if (ActorDefinition.Definitions.Find(item.Name) is not ActorDefinition chosen)
                     continue;
 
-                // VALIDACIÓN DE LÍMITE LOCAL (AOT-Friendly, sin LINQ)
+                // VALIDACIÓN DE LÍMITE LOCAL
                 // Contamos cuántos de este tipo ya pusimos en la lista de pendientes
                 int pendingCount = 0;
                 for (int i = 0; i < pendingSpawns.Count; i++)
@@ -291,7 +240,10 @@ namespace ScaryCastle
                 return;
 
             // Filtro maestro inicial (Saca los props que ya agotaron su cupo global antes de entrar acá)
-            var candidates = GetCandidateDefinitions<PropDefinition, Prop>(PropDefinition.Definitions.All);
+            var candidates = GetCandidateDefinitions<PropDefinition, Prop>(
+                PropDefinition.Definitions.All,
+                def => IsCompatible(def.SpawnLocation));
+
             if (candidates.Count == 0)
                 return;
 
@@ -392,6 +344,80 @@ namespace ScaryCastle
 
             return baseWeight * roomMultiplier * intensityMultiplier;
         }
+
+        // GetCandidateDefinitions
+        protected List<TDefinition> GetCandidateDefinitions<TDefinition, TThing>(IList<TDefinition> definitions, Func<TDefinition, bool>? predicate = null)
+            where TDefinition : ThingDefinition where TThing : GameThing
+        {
+            var outList = new List<TDefinition>();
+            if (Session.CurrentRun == null)
+                return outList;
+
+            foreach (var definition in definitions)
+            {
+                // 1. Filtro por predicate
+                if (predicate != null && !predicate(definition))
+                    continue;
+
+                // 1. Filtro por tipo de room
+                if (definition.SpawnLocation == SpawnLocation.Gate && RoomNode.RoomType != RoomType.Corridor)
+                    continue;
+
+                if (definition.SpawnLocation != SpawnLocation.CorridorOrSideRoom)
+                {
+                    if (definition.SpawnLocation == SpawnLocation.Corridor && this is not CorridorRoom)
+                        continue;
+
+                    if (definition.SpawnLocation == SpawnLocation.SideRoom && this is not SideRoom)
+                        continue;
+                }
+
+                // 2. Filtro por room theme
+                if (definition.RoomTheme.HasValue)
+                {
+                    if (definition.RoomTheme != RoomNode.Definition.Theme)
+                        continue;
+                }
+
+                // 3. Filtro por progreso en el run
+                if (Session.CurrentRun.Progress < definition.MinProgress)
+                    continue;
+
+                // 4. Filtro de dificultad: No permitimos que aparezcan cosas más difíciles que el cuarto
+                if (definition.Difficulty > RoomNode.Definition.Difficulty)
+                    continue;
+
+                // 5. Filtro de topologia
+                if (definition.RequiresDeadEnd && RoomNode.ConnectionCount > 1)
+                    continue;
+
+                // 6. Validación de Existencia de instancia declarada en script
+                var thing = Session.FindDeclaredThing(definition.Name) ?? throw new InvalidOperationException($"There is no declared thing named '{definition.Name}'. ");
+
+                // Is expected type?
+                if (thing is not TThing)
+                    continue;
+
+                // 7. Meta-progreso
+                // Chequea si el enemigo está desbloqueado (MinRun)
+                if (!definition.PassesRunConstraints(Session.RunCount))
+                    continue;
+
+                // 8. Historial de la Run
+                // Chequea si el enemigo ya alcanzó su MaxPerRun global
+                if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns))
+                    continue;
+
+                // 9. Reglas de Scope (Pools/Tags de la habitación)
+                if (!TagScope.Test(RoomNode.Definition.Scope, RoomNode.Definition.Pools, RoomNode.Definition.Tags))
+                    continue;
+
+                outList.Add(definition);
+            }
+
+            return outList;
+        }
+
 
         // OnChildAdded
         protected override void OnChildAdded(Entity child)
