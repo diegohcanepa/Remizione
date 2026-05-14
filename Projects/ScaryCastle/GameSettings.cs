@@ -26,7 +26,7 @@ namespace ScaryCastle
         public const string ContentRootDirectory = "Content";
 
         // CountdownDuration
-        public const int CountdownDuration = 6;
+        public const int CountdownDuration = 66;
 
         // CountdownCritical
         public const int CountdownCritical = 9;

@@ -13,7 +13,7 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly Sprite[] icons;
-        private readonly List<IList<AtlasImage>> imageGroups = [];
+        private readonly Dictionary<ConditionType, IList<AtlasImage>> imageGroups = [];
         private int lastFilledIconIndex = -1;
         private int lastKnownMaxValue;
         private int lastKnownConditionAmount;
@@ -28,9 +28,9 @@ namespace ScaryCastle
         // Constructor
         public UIHPMeter(Vector2 margin)
         {
-            imageGroups.Add(Atlases.UI.RedHearts);
-            imageGroups.Add(Atlases.UI.PurpleHearts);
-            imageGroups.Add(Atlases.UI.GreenHearts);
+            imageGroups.Add(ConditionType.None, Atlases.UI.RedHearts);
+            imageGroups.Add(ConditionType.Curse, Atlases.UI.PurpleHearts);
+            imageGroups.Add(ConditionType.Poison, Atlases.UI.GreenHearts);
 
             this.icons = new Sprite[10];
             var pos = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, margin);
@@ -69,9 +69,7 @@ namespace ScaryCastle
 
             // 2. Dimensionamiento
             totalIcons = maxHp / 2;
-            var images = (Actor.Condition != ConditionType.None)
-                ? imageGroups[(int)Actor.Condition]
-                : imageGroups[0];
+            var images = imageGroups[Actor.Condition];
 
             for (int i = 0; i < totalIcons; i++)
             {
