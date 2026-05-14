@@ -148,9 +148,9 @@ namespace ScaryCastle
             AotTypeRegistry.Register("await-approach", typeof(AwaitApproachCommand));
             AotTypeRegistry.Register("await-boss-intro", typeof(AwaitBossIntroCommand));
             AotTypeRegistry.Register("await-credits", typeof(AwaitCreditsCommand));
+            AotTypeRegistry.Register("await-devil-hand", typeof(AwaitDevilHandCommand));
             AotTypeRegistry.Register("await-dialog-block", typeof(AwaitDialogBlockCommand));
             AotTypeRegistry.Register("await-input", typeof(AwaitInputCommand));
-            AotTypeRegistry.Register("await-large-hand", typeof(AwaitLargeHandCommand));
             AotTypeRegistry.Register("await-monitor-text", typeof(AwaitMonitorTextCommand));
             AotTypeRegistry.Register("await-popup", typeof(AwaitPopupCommand));
             AotTypeRegistry.Register("cast-lightning", typeof(CastLightningCommand));

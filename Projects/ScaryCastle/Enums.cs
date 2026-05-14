@@ -40,6 +40,9 @@ namespace ScaryCastle
     // DamageType
     public enum DamageType { None, Physical, Acid, Explosive, Fire, Ice, Lightning }
 
+    // DeityHandKind
+    public enum DeityHandKind { Devil, God }
+
     // Difficulty
     public enum Difficulty { Easy, Normal, Hard }
 
@@ -138,7 +141,7 @@ namespace ScaryCastle
     }
 
     // MessageKind
-    public enum MessageKind { CannotPlaceItem, Cursed, HandsFull, InventoryFull, ItemDiscarded, LiftNotAllowed, NotEnoughCoins, NotEnoughFaith, OutOfReach, PathCleared, Poisoned, PullCorridorLever }
+    public enum MessageKind { CannotPlaceItem, HandsFull, HurryUp, InventoryFull, ItemDiscarded, LiftNotAllowed, NotEnoughCoins, NotEnoughFaith, OutOfReach, PathCleared, PullCorridorLever }
 
     // MouseCursorState
     public enum MouseCursorState { Arrow, Cross, Down, Hand, Left, Prohibition, Right, Up, Wait }

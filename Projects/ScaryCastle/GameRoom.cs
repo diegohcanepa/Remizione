@@ -359,7 +359,7 @@ namespace ScaryCastle
             }
 
             Game.SpriteBatch.Begin(Session.Camera, SamplerState.PointClamp);
-            Session.Environment.LargeHand.Draw(gameTime);
+            Session.Environment.DevilHand.Draw(gameTime);
             Game.SpriteBatch.End();
 
             // Foreround (layer)
@@ -428,7 +428,7 @@ namespace ScaryCastle
         {
             base.OnUpdate(gameTime);
 
-            Session.Environment.LargeHand.Update(gameTime);
+            Session.Environment.DevilHand.Update(gameTime);
 
             for (int i = 0; i < Session.ComicTextPool.InUse.Count; i++)
             {

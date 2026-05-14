@@ -5,9 +5,9 @@ using Microsoft.Xna.Framework;
 namespace ScaryCastle
 {
     /// <summary>
-    /// LargeHand
+    /// DeityHand
     /// </summary>
-    public sealed class LargeHand : GameObject
+    public sealed class DeityHand : GameObject
     {
         private readonly AnimatedSprite handSprite;
         private Vector2 origin;
@@ -17,9 +17,11 @@ namespace ScaryCastle
         private readonly Vector2Tween positionTween = new();
 
         // Constructor
-        public LargeHand()
+        public DeityHand(DeityHandKind kind)
             : base()
         {
+            this.Kind = kind;
+
             this.handSprite = new()
             {
                 Atlas = Atlases.Environment,
@@ -27,12 +29,12 @@ namespace ScaryCastle
                 Scale = new(.24f)
             };
 
-            var prefix = "Devil";
+            var prefix = kind.ToString();
 
-            var anim = handSprite.AddAnimation("Idle");
+            var anim = handSprite.AddAnimation(AnimationNames.Idle);
             anim.AddFrame($"{prefix}Hand01", 1000);
 
-            anim = handSprite.AddAnimation("Hit");
+            anim = handSprite.AddAnimation(AnimationNames.Hit);
             anim.AddFrame($"{prefix}Hand02", 100);
             anim.AddFrame($"{prefix}Hand03", 100);
         }
@@ -42,7 +44,8 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            handSprite.Draw(gameTime);
+            if (IsBusy)
+                handSprite.Draw(gameTime);
         }
 
         // OnUpdate
@@ -55,7 +58,7 @@ namespace ScaryCastle
                 if (!handSprite.Tweens.IsTweeningPosition)
                 {
                     currentState = HitState.Hitting;
-                    handSprite.Player.Play("Hit", false);
+                    handSprite.Player.Play(AnimationNames.Hit, false);
                 }
             }
 
@@ -90,6 +93,8 @@ namespace ScaryCastle
         {
             this.target = target;
 
+            target.StopMoving();
+
             if (target.X > Screen.NativeWidth / 2)
             {
                 origin = new(241, 0);
@@ -105,7 +110,7 @@ namespace ScaryCastle
 
             handSprite.Position = origin;
 
-            handSprite.Player.Play("Idle");
+            handSprite.Player.Play(AnimationNames.Idle);
 
             var targetPosition = target.RuntimeHotspot.BoundingRectangleF.Center;
             targetPosition.Y -= handSprite.BoundingBox.Height * .95f;
@@ -122,5 +127,8 @@ namespace ScaryCastle
 
         // IsBusy
         public bool IsBusy => currentState != HitState.Idle;
+
+        // Kind
+        public DeityHandKind Kind { get; }
     }
 }

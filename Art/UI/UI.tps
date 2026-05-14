@@ -538,10 +538,6 @@
             <key type="filename">UIIcons-assets/PurpleHearts2.png</key>
             <key type="filename">UIIcons-assets/PurpleHearts3.png</key>
             <key type="filename">UIIcons-assets/PurpleHearts4.png</key>
-            <key type="filename">UIIcons-assets/RedHearts1.png</key>
-            <key type="filename">UIIcons-assets/RedHearts2.png</key>
-            <key type="filename">UIIcons-assets/RedHearts3.png</key>
-            <key type="filename">UIIcons-assets/RedHearts4.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -790,7 +786,10 @@
             <key type="filename">UIIcons-assets/FaithIcon.png</key>
             <key type="filename">UIIcons-assets/FaithIcons1.png</key>
             <key type="filename">UIIcons-assets/FaithIcons2.png</key>
-            <key type="filename">UIIcons-assets/TalkIcon.png</key>
+            <key type="filename">UIIcons-assets/RedHearts1.png</key>
+            <key type="filename">UIIcons-assets/RedHearts2.png</key>
+            <key type="filename">UIIcons-assets/RedHearts3.png</key>
+            <key type="filename">UIIcons-assets/RedHearts4.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

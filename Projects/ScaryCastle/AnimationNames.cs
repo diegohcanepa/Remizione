@@ -7,7 +7,9 @@
     {
         internal const string Death = nameof(Death);
         internal const string Default = nameof(Default);
+        internal const string Hit = nameof(Hit);
         internal const string Hurt = nameof(Hurt);
+        internal const string Idle = nameof(Idle);
         internal const string Move = nameof(Move);
         internal const string MoveCarry = nameof(MoveCarry);
         internal const string PickUp = nameof(PickUp);

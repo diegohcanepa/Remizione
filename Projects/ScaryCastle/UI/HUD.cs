@@ -22,8 +22,8 @@ namespace ScaryCastle
         public HUD(GameSession session)
         {
             this.session = session;
-            this.hpMeter = new(new(4, 2));
-            this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5), ScaleInfo.Text.Huge);
+            this.hpMeter = new(new(5, 3));
+            this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5), ScaleInfo.Text.Giant);
             this.Countdown = new(session);
             this.InventoryMeter = new(session.PlayerInventory);
             this.PassiveItems = new(session);

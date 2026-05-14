@@ -22,16 +22,20 @@ namespace ScaryCastle
 
             this.GlobalLight.Prepare(Atlases.Environment);
 
-            this.LargeHand = new();
+            this.DevilHand = new(DeityHandKind.Devil);
+            this.GodHand = new(DeityHandKind.God);
         }
 
         #region Internal members
 
+        // DevilHand
+        internal DeityHand DevilHand { get; }
+
         // GlobalLight
         internal Light GlobalLight { get; }
 
-        // LargeHand
-        internal LargeHand LargeHand { get; }
+        // GodHand
+        internal DeityHand GodHand { get; }
 
         #endregion
     }

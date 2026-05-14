@@ -59,7 +59,7 @@ namespace ScaryCastle
             scaleTween.Start(TweenStyle.Linear, defaultTextSize, defaultTextSize * 1.1f, 250, -1);
             timeText.Tweens.ScaleTween = scaleTween;
 
-            session.HUD.Message.Show(MessageKind.PullCorridorLever);
+            session.HUD.Message.Show(BossPhase ? MessageKind.HurryUp : MessageKind.PullCorridorLever);
         }
 
         // StopCriticalPhase
@@ -67,7 +67,7 @@ namespace ScaryCastle
         {
             if (alarmSoundInstance != null)
             {
-                alarmSoundInstance?.Stop(2000);
+                alarmSoundInstance?.Stop();
                 alarmSoundInstance = null;
             }
 
@@ -101,13 +101,9 @@ namespace ScaryCastle
             {
                 timeLeft = 0;
                 IsRunning = false;
-
-                if (session.Player != null)
-                    session.Environment.LargeHand.Hit(session.Player);
-
                 StopCriticalPhase();
-
-                session.AwaitRoutine(RoutineNames.DeathByTime);
+                session.Player?.StopMoving();
+                session.AwaitRoutine(session.Room is CorridorRoom ? RoutineNames.DeathByMandinga : RoutineNames.DeathByCorridorLever);
             }
             else
             {
