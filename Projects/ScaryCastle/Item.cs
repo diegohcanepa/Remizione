@@ -82,12 +82,12 @@ namespace ScaryCastle
                     EffectDescriptor.Apply(Definition.EffectDescriptors, source, target, context);
 
                     // Any food item remove poison status
-                    if (Definition.Category == ItemCategory.Food && target.StatusEffect == StatusEffectType.Poison)
+                    if (Definition.Category == ItemCategory.Food && target.Condition == ConditionType.Poison)
                     {
                         var hasPoisonStatus = false;
                         for (var i = 0; i < Definition.EffectDescriptors.Count; i++)
                         {
-                            if (Definition.EffectDescriptors[i].StatusEffectType == StatusEffectType.Poison)
+                            if (Definition.EffectDescriptors[i].Condition == ConditionType.Poison)
                             {
                                 hasPoisonStatus = true;
                                 break;
@@ -95,7 +95,7 @@ namespace ScaryCastle
                         }
 
                         if (!hasPoisonStatus)
-                            target.ClearStatusEffect();
+                            target.ClearCondition();
                     }
                 }
             }
@@ -148,7 +148,9 @@ namespace ScaryCastle
                 {
                     field = int.Clamp(value, 0, Definition.IsStackable ? 99 : 1);
                     isDisplayTextDiry = true;
-                    Inventory.Invalidate();
+                    if (field == 0)
+                        Inventory.Remove(this);
+                    Inventory.InvalidateContentVersion();
                 }
             }
         }

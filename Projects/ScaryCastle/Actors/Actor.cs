@@ -328,11 +328,6 @@ namespace ScaryCastle
                 reactionTimer = CombatBehavior?.Archetype.GetNextCooldown() ?? 2000;
         }
 
-        // OnApplyStatusEffect
-        protected override void OnApplyStatusEffect(StatusEffectType statusEffect, int amount)
-        {
-        }
-
         // OnCollisioning
         protected override void OnCollisioning(GameThing thing, out bool handled)
         {

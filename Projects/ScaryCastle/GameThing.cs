@@ -18,6 +18,7 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly Blinker<bool> blinker = new(false, true);
+        private int conditionTimer;
         private const int contactCooldown = 500;
         private int contactTimer;
         private bool dieCalled;
@@ -34,7 +35,6 @@ namespace ScaryCastle
         private int renderLayerDepth;
         private readonly ShadowSpot shadowSpot;
         private bool shouldClampToWalkablePosition;
-        private int statusEffectTimer;
 
         #endregion
 
@@ -232,25 +232,25 @@ namespace ScaryCastle
                 DisplaySentence = DisplayName;
         }
 
-        // UpdateStatusEffect
-        private void UpdateStatusEffect(GameTime gameTime)
+        // UpdateCondition
+        private void UpdateCondition(GameTime gameTime)
         {
-            if (StatusEffect == StatusEffectType.None)
+            if (Condition == ConditionType.None)
                 return;
 
-            if (statusEffectTimer > 0)
+            if (conditionTimer > 0)
             {
-                statusEffectTimer -= gameTime.ElapsedGameTime.Milliseconds;
+                conditionTimer -= gameTime.ElapsedGameTime.Milliseconds;
 
-                if (statusEffectTimer <= 0)
+                if (conditionTimer <= 0)
                 {
-                    statusEffectTimer = 0;
+                    conditionTimer = 0;
 
-                    if (StatusEffectAmount > 0)
+                    if (ConditionAmount > 0)
                     {
-                        StatusEffectAmount -= 1;
+                        ConditionAmount -= 1;
                         HP -= 1;
-                        statusEffectTimer = GameSettings.StatusEffectCooldown;
+                        conditionTimer = GameSettings.ConditionCooldown;
                         Sound.Play(SoundNames.StatusEffectDamage);
                         ShowComicText(ComicTextKind.AghGreen);
                     }
@@ -303,8 +303,8 @@ namespace ScaryCastle
             contactTimer = 0;
         }
 
-        // OnApplyStatusEffect
-        protected virtual void OnApplyStatusEffect(StatusEffectType statusEffect, int amount)
+        // OnApplyCondition
+        protected virtual void OnApplyCondition(ConditionType condition, int amount)
         {
         }
 
@@ -493,7 +493,7 @@ namespace ScaryCastle
                 }
             }
 
-            UpdateStatusEffect(gameTime);
+            UpdateCondition(gameTime);
         }
 
         // OnUpdateEmittingSound
@@ -521,36 +521,52 @@ namespace ScaryCastle
         [ScriptProperty]
         public bool AllowInteraction { get; set; } = true;
 
-        // ApplyStatusEffect
-        public void ApplyStatusEffect(StatusEffectType statusEffect, int amount, ComicTextKind comicTextKind)
+        // ApplyCondition
+        public void ApplyCondition(ConditionType condition, int amount, ComicTextKind comicTextKind)
         {
-            // 1. Clear status effect
-            if (statusEffect == StatusEffectType.None)
+            // 1. Clear
+            if (condition == ConditionType.None)
             {
-                ClearStatusEffect();
+                ClearCondition();
                 return;
             }
 
-            // 2. Si el efecto entrante es Maldición: PISA el veneno o SE SUMA a una maldición previa.
-            if (statusEffect == StatusEffectType.ChromaticAberration)
+            // 2. Chromatic aberration
+            if (condition == ConditionType.ChromaticAberration)
             {
                 Session.PerformChromaticAberration();
                 return;
             }
 
-            // 3. Si el efecto entrante es Maldición: PISA el veneno o SE SUMA a una maldición previa.
-            if (statusEffect == StatusEffectType.Curse)
+            // 3. Coin loss
+            if (condition == ConditionType.CoinLoss)
             {
-                if (StatusEffect != StatusEffectType.Curse)
+                if (Session.Player == this)
                 {
-                    StatusEffect = StatusEffectType.Curse;
-                    StatusEffectAmount = amount;
-                    statusEffectTimer = GameSettings.StatusEffectCooldown;
+                    if (Session.PlayerInventory.Find(nameof(Coin)) is Item coin)
+                    {
+                        coin.Count--;
+                        Sound.Play(SoundNames.CoinLoss);
+                        Session.HUD.Log.Show(LogVerb.Lost, coin.Definition, true);
+                    }
+                }
+
+                return;
+            }
+
+            // 4. Si el efecto entrante es Maldición: PISA el veneno o SE SUMA a una maldición previa.
+            if (condition == ConditionType.Curse)
+            {
+                if (Condition != ConditionType.Curse)
+                {
+                    Condition = ConditionType.Curse;
+                    ConditionAmount = amount;
+                    conditionTimer = GameSettings.ConditionCooldown;
                 }
                 else
                 {
-                    StatusEffectAmount += amount; // Ya estaba maldito, se acumula.
-                    if (StatusEffectAmount > HP)
+                    ConditionAmount += amount; // Ya estaba maldito, se acumula.
+                    if (ConditionAmount > HP)
                         HP -= 1;
                 }
 
@@ -561,19 +577,19 @@ namespace ScaryCastle
                 }
             }
 
-            // 4. Si el efecto entrante es Veneno: Solo importa si no estás maldito.
-            if (statusEffect == StatusEffectType.Poison && StatusEffect != StatusEffectType.Curse)
+            // 5. Si el efecto entrante es Veneno: Solo importa si no estás maldito.
+            if (condition == ConditionType.Poison && Condition != ConditionType.Curse)
             {
-                if (StatusEffect != StatusEffectType.Poison)
+                if (Condition != ConditionType.Poison)
                 {
-                    StatusEffect = StatusEffectType.Poison;
-                    StatusEffectAmount = amount;
-                    statusEffectTimer = GameSettings.StatusEffectCooldown;
+                    Condition = ConditionType.Poison;
+                    ConditionAmount = amount;
+                    conditionTimer = GameSettings.ConditionCooldown;
                 }
                 else
                 {
-                    StatusEffectAmount += amount; // Ya estaba envenenado, se acumula.
-                    if (StatusEffectAmount > HP)
+                    ConditionAmount += amount; // Ya estaba envenenado, se acumula.
+                    if (ConditionAmount > HP)
                         HP -= 1;
                 }
 
@@ -591,7 +607,7 @@ namespace ScaryCastle
                     ShowComicText(comicTextKind);
             }
 
-            OnApplyStatusEffect(statusEffect, amount);
+            OnApplyCondition(condition, amount);
         }
 
         // ApproachBehavior
@@ -700,11 +716,30 @@ namespace ScaryCastle
         // ContactIntent
         public CombatIntent? ContactIntent { get; }
 
-        // ClearStatusEffect
-        public void ClearStatusEffect()
+        // ClearCondition
+        public void ClearCondition()
         {
-            this.StatusEffect = StatusEffectType.None;
-            this.StatusEffectAmount = 0;
+            this.Condition = ConditionType.None;
+            this.ConditionAmount = 0;
+        }
+
+        // Condition
+        public ConditionType Condition { get; private set; }
+
+        // ConditionAmount
+        [ScriptProperty]
+        public int ConditionAmount
+        {
+            get;
+            private set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    if (field < 0)
+                        field = 0;
+                }
+            }
         }
 
         // CustomDropName
@@ -1228,25 +1263,6 @@ namespace ScaryCastle
         {
             if (Session.ObjectPools.FloatingTexts.Get() is FloatingText floatingText)
                 floatingText.Show(GetOverheadPosition(), text, color, duration);
-        }
-
-        // StatusEffect
-        public StatusEffectType StatusEffect { get; private set; }
-
-        // StatusEffectAmount
-        [ScriptProperty]
-        public int StatusEffectAmount
-        {
-            get;
-            private set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    if (field < 0)
-                        field = 0;
-                }
-            }
         }
 
         // TakeDamage

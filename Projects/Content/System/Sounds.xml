@@ -31,6 +31,7 @@
 	<FX Name="ChatMessage" Volume=".6" />
 	<FX Name="CardFlap" />
 	<FX Name="CardWhoosh" Sounds="1..6" />
+	<FX Name="CoinLoss" />
 	<FX Name="CollectCoin" />
 	<FX Name="Courage" />
 	<FX Name="DeathByFear" />

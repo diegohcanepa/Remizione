@@ -51,14 +51,14 @@ namespace ScaryCastle
         protected override void ClearItems()
         {
             base.ClearItems();
-            Invalidate();
+            InvalidateContentVersion();
         }
 
         // InsertItem
         protected override void InsertItem(int index, Item item)
         {
             base.InsertItem(index, item);
-            Invalidate();
+            InvalidateContentVersion();
         }
 
         // RemoveItem
@@ -67,7 +67,7 @@ namespace ScaryCastle
             Session.PlayerStats.RemoveAllModifiers(this[index]);
             base.RemoveItem(index);
             InvalidateAmbientLightColor();
-            Invalidate();
+            InvalidateContentVersion();
         }
 
         #endregion
@@ -128,7 +128,7 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = int.Clamp(value, MinimumCapacity, MaximumCapacity);
-                    Invalidate();
+                    InvalidateContentVersion();
                 }
             }
         } = 6;
@@ -176,17 +176,17 @@ namespace ScaryCastle
             return item != null || !IsFull;
         }
 
+        // InvalidateContentVersion
+        public void InvalidateContentVersion()
+        {
+            unchecked { ContentVersion++; }
+        }
+
         // IsEmpty
         public bool IsEmpty => Count == 0;
 
         // IsFull
         public bool IsFull => Count == Capacity;
-
-        // Invalidate
-        public void Invalidate()
-        {
-            unchecked { ContentVersion++; }
-        }
 
         // LoadState
         public void LoadState(string data)

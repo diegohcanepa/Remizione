@@ -422,6 +422,24 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">DevilHand-assets/DevilHand01.png</key>
+            <key type="filename">DevilHand-assets/DevilHand02.png</key>
+            <key type="filename">DevilHand-assets/DevilHand03.png</key>
+            <key type="filename">DevilHand-assets/DevilHand04.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>119,54,239,108</rect>
+                <key>scale9Paddings</key>
+                <rect>119,54,239,108</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Dice-assets/Dice01.png</key>
             <key type="filename">Dice-assets/Dice02.png</key>
             <key type="filename">Dice-assets/Dice03.png</key>
@@ -865,6 +883,7 @@
                     <filename>Bible-assets</filename>
                     <filename>ThrownProps-assets</filename>
                     <filename>ComicTexts-assets</filename>
+                    <filename>DevilHand-assets</filename>
                 </array>
             </struct>
         </map>

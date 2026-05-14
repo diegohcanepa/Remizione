@@ -150,6 +150,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register("await-credits", typeof(AwaitCreditsCommand));
             AotTypeRegistry.Register("await-dialog-block", typeof(AwaitDialogBlockCommand));
             AotTypeRegistry.Register("await-input", typeof(AwaitInputCommand));
+            AotTypeRegistry.Register("await-large-hand", typeof(AwaitLargeHandCommand));
             AotTypeRegistry.Register("await-monitor-text", typeof(AwaitMonitorTextCommand));
             AotTypeRegistry.Register("await-popup", typeof(AwaitPopupCommand));
             AotTypeRegistry.Register("cast-lightning", typeof(CastLightningCommand));
@@ -528,7 +529,7 @@ namespace ScaryCastle
                 Player.Reheal();
                 Player.MaxFaith = 3;
                 Player.Faith = 3;
-                Player.ClearStatusEffect();
+                Player.ClearCondition();
             }
 
             Seed = 0;

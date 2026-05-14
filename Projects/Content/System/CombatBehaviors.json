@@ -36,8 +36,8 @@
             {
               "context": "Contact",
               "amount": "2",
-              "effectType": "Status",
-              "statusEffectType": "ChromaticAberration"
+              "effectType": "Condition",
+              "conditionType": "ChromaticAberration"
             }            
           ]
         }
@@ -63,7 +63,13 @@
               "effectType": "Damage",
               "amount": "2",
               "comicText": "AghRed"
-            }
+            },
+            {
+              "context": "Contact",
+              "amount": "1",
+              "effectType": "Condition",
+              "conditionType": "CoinLoss"
+            }            
           ]
         }
       ]
@@ -125,8 +131,8 @@
             {
               "context": "Contact",
               "amount": "2",
-              "effectType": "Status",
-              "statusEffectType": "Poison"
+              "effectType": "Condition",
+              "conditionType": "Poison"
             }
           ]
         }

@@ -395,6 +395,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/ChatMessage.wav;Audio/FX/ChatMessage
 
+#begin Audio/FX/CoinLoss.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/CoinLoss.wav;Audio/FX/CoinLoss
+
 #begin Audio/FX/CollectCoin.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

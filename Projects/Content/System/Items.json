@@ -31,7 +31,7 @@
 			]
 		},		{
 			"name": "Coin",
-			"category": "Misc",
+			"category": "Money",
 			"isStackable": true,
 			"pickupSound": "CollectCoin"
 		},		

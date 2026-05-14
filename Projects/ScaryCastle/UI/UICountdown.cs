@@ -101,6 +101,12 @@ namespace ScaryCastle
             {
                 timeLeft = 0;
                 IsRunning = false;
+
+                if (session.Player != null)
+                    session.Environment.LargeHand.Hit(session.Player);
+
+                StopCriticalPhase();
+
                 session.AwaitRoutine(RoutineNames.DeathByTime);
             }
             else

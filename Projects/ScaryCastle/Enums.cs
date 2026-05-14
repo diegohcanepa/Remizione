@@ -28,6 +28,9 @@ namespace ScaryCastle
     // ComicTextKind
     public enum ComicTextKind { None, AghGreen, AghRed, BoomPurple, BoomRed, BangBlue, BangRed, CrackBlue, CrackYellow, CuackPurple, CuackYellow, Kapow, KapowStrong, OuchBlue, OuchGreen, PlopRed, PlopYellow, SlapBlue, SlapRed, Zap }
 
+    // ConditionType
+    public enum ConditionType { None, Curse, Poison, ChromaticAberration, CoinLoss }
+
     // ContentFolder
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Video, Voices, System, Text }
 
@@ -50,7 +53,7 @@ namespace ScaryCastle
     public enum EffectContext { Contact, Attack, Update, Use }
 
     // EffectType
-    public enum EffectType { None, Damage, Death, Heal, Status }
+    public enum EffectType { None, Damage, Death, Heal, Condition }
 
     // EffectTarget
     public enum EffectTarget
@@ -81,7 +84,7 @@ namespace ScaryCastle
     public enum InteractionType { None, Outcome, UseWithOutcome, Cast, Attack, Lift }
 
     // ItemCategory
-    public enum ItemCategory { Access, Explosive, Food, Luck, Medicine, Misc, Sacred }
+    public enum ItemCategory { Access, Explosive, Food, Luck, Medicine, Misc, Money, Sacred }
 
     // ItemProperty
     public enum ItemProperty { Chance, Durability, Health }
@@ -99,7 +102,7 @@ namespace ScaryCastle
     public enum LockType { None, GoldenKey }
 
     // LogVerb
-    public enum LogVerb { Bought, Found, Requires, Used }
+    public enum LogVerb { Bought, Found, Lost, Requires, Used }
 
     // LootDropMode
     public enum LootDropMode
@@ -179,9 +182,6 @@ namespace ScaryCastle
 
     // SpeechBubbleState
     public enum SpeechBubbleState { Hidden, Typing, Idle }
-
-    // StatusEffectType
-    public enum StatusEffectType { None, Curse, Poison, ChromaticAberration }
 
     // TestPolygon
     public enum TestPolygon { Hotspot, Collider }

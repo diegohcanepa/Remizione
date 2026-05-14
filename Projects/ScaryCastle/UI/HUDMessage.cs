@@ -67,31 +67,37 @@ namespace ScaryCastle
             icon.RenderImage = null;
 
             var color = ColorPalette.Text.Highlight;
+            
             if (message is MessageKind.NotEnoughCoins or MessageKind.ItemDiscarded or MessageKind.LiftNotAllowed)
             {
                 color = ColorPalette.Text.Orange;
                 Sound.Play(SoundNames.Error);
             }
+
             else if (message == MessageKind.NotEnoughFaith)
             {
                 color = ColorPalette.Text.Orange;
                 icon.RenderImage = Atlases.UI.FaithIcon;
                 Sound.Play(SoundNames.Error);
             }
+
             else if (message == MessageKind.Cursed)
             {
                 color = ColorPalette.Text.Purple;
                 icon.RenderImage = Atlases.UI.CursedIcon;
             }
+
             else if (message == MessageKind.Poisoned)
             {
                 color = ColorPalette.Text.Green;
                 icon.RenderImage = Atlases.UI.PoisonedIcon;
             }
+
             else if (message == MessageKind.PullCorridorLever)
             {
                 color = ColorPalette.Text.Orange;
             }
+
             else
             {
                 Sound.Play(SoundNames.Error);

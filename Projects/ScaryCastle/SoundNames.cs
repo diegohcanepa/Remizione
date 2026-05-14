@@ -8,7 +8,9 @@
         internal const string Alarm = nameof(Alarm);
         internal const string CardFlap = nameof(CardFlap);
         internal const string CardWhoosh = nameof(CardWhoosh);
+        internal const string CoinLoss = nameof(CoinLoss);
         internal const string CollectCoin = nameof(CollectCoin);
+        internal const string StatusEffectDamage = nameof(StatusEffectDamage);
         internal const string Courage = nameof(Courage);
         internal const string Dice = nameof(Dice);
         internal const string Error = nameof(Error);
@@ -39,7 +41,6 @@
         internal const string SaintPeregrineArm = nameof(SaintPeregrineArm);
         internal const string ShockZap = nameof(ShockZap);
         internal const string SpearTrap = nameof(SpearTrap);
-        internal const string StatusEffectDamage = nameof(StatusEffectDamage);
         internal const string TestSkillFail = nameof(TestSkillFail);
         internal const string Text = nameof(Text);
         internal const string TowerDoorClose = nameof(TowerDoorClose);

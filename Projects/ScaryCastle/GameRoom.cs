@@ -358,6 +358,10 @@ namespace ScaryCastle
                 ApplyLightMap(Game.RenderTargets.PreviousTarget, lightMapTarget);
             }
 
+            Game.SpriteBatch.Begin(Session.Camera, SamplerState.PointClamp);
+            Session.Environment.LargeHand.Draw(gameTime);
+            Game.SpriteBatch.End();
+
             // Foreround (layer)
             DrawThings(gameTime, RenderLayer.ForegroundNoLight);
 
@@ -423,6 +427,8 @@ namespace ScaryCastle
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
+
+            Session.Environment.LargeHand.Update(gameTime);
 
             for (int i = 0; i < Session.ComicTextPool.InUse.Count; i++)
             {

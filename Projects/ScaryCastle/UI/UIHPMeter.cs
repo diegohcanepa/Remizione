@@ -12,12 +12,11 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private SoundInstance? alarmSoundInstance;
         private readonly Sprite[] icons;
         private readonly List<IList<AtlasImage>> imageGroups = [];
         private int lastFilledIconIndex = -1;
         private int lastKnownMaxValue;
-        private int lastKnownStatusEffectAmount;
+        private int lastKnownConditionAmount;
         private int lastKnownValue;
         private readonly Vector2Tween scaleTween = new();
         private int totalIcons;
@@ -63,15 +62,15 @@ namespace ScaryCastle
             // 1. Fuentes de verdad
             int hp = Actor.HP;
             int maxHp = Actor.MaxHP;
-            int amount = (Actor.StatusEffect != StatusEffectType.None) ? Actor.StatusEffectAmount : 0;
+            int amount = (Actor.Condition != ConditionType.None) ? Actor.ConditionAmount : 0;
 
             // La "vida segura" es la que no está marcada por el estado
             int safeHp = hp - amount;
 
             // 2. Dimensionamiento
             totalIcons = maxHp / 2;
-            var images = (Actor.StatusEffect != StatusEffectType.None)
-                ? imageGroups[(int)Actor.StatusEffect]
+            var images = (Actor.Condition != ConditionType.None)
+                ? imageGroups[(int)Actor.Condition]
                 : imageGroups[0];
 
             for (int i = 0; i < totalIcons; i++)
@@ -130,38 +129,8 @@ namespace ScaryCastle
 
             lastKnownValue = hp;
             lastKnownMaxValue = maxHp;
-            lastKnownStatusEffectAmount = amount;
+            lastKnownConditionAmount = amount;
             lastFilledIconIndex = Actor.IsDead ? 0 : ((Actor.HP + 1) / 2) - 1;
-
-            if (hp == 2)
-                StartHeartbeat();
-            else
-                StopHeartbeat();
-        }
-
-        // StartHeartbeat
-        private void StartHeartbeat()
-        {
-            if (alarmSoundInstance != null)
-                return;
-
-            this.alarmSoundInstance = Sound.Get(SoundNames.Heartbeat).PopInstance();
-            if (alarmSoundInstance != null)
-            {
-                alarmSoundInstance.TransitionAware = false;
-                alarmSoundInstance.IsLooped = true;
-                alarmSoundInstance.Play();
-            }
-        }
-
-        // StopHeartbeat
-        private void StopHeartbeat()
-        {
-            if (alarmSoundInstance != null)
-            {
-                alarmSoundInstance?.Stop();
-                alarmSoundInstance = null;
-            }
         }
 
         #endregion
@@ -188,12 +157,12 @@ namespace ScaryCastle
 
             scaleTween.Update(gameTime);
 
-            if (lastKnownValue != Actor.HP || lastKnownMaxValue != Actor.MaxHP || lastKnownStatusEffectAmount != Actor.StatusEffectAmount)
+            if (lastKnownValue != Actor.HP || lastKnownMaxValue != Actor.MaxHP || lastKnownConditionAmount != Actor.ConditionAmount)
                 Refresh();
 
             if (totalIcons > 0)
             {
-                if (Actor.HP <= 2 || Actor.StatusEffectAmount > 0)
+                if (Actor.HP <= 2 || Actor.ConditionAmount > 0)
                     icons[lastFilledIconIndex].Scale = scaleTween.CurrentValue;
                 else
                     icons[lastFilledIconIndex].Scale = Vector2.One;
@@ -216,7 +185,7 @@ namespace ScaryCastle
                     {
                         lastKnownValue = int.MinValue;
                         lastKnownMaxValue = int.MinValue;
-                        lastKnownStatusEffectAmount = int.MinValue;
+                        lastKnownConditionAmount = int.MinValue;
                     }
 
                     Refresh();

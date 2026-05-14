@@ -19,11 +19,14 @@ namespace ScaryCastle
         // CameraFollowSpeed
         public const float CameraSmoothSpeed = 2;
 
+        // ConditionCooldown
+        public const int ConditionCooldown = 10000;
+
         // ContentRootDirectory
         public const string ContentRootDirectory = "Content";
 
         // CountdownDuration
-        public const int CountdownDuration = 66;
+        public const int CountdownDuration = 6;
 
         // CountdownCritical
         public const int CountdownCritical = 9;
@@ -45,9 +48,6 @@ namespace ScaryCastle
 
         // LogFileName
         public const string LogFileName = "ErrorLog.txt";
-
-        // StatusEffectCooldown
-        public const int StatusEffectCooldown = 10000;
 
         // SteamAppID
         public const int SteamAppID = 480;

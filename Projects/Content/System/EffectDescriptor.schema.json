@@ -7,7 +7,7 @@
     "effectType": {
       "type": "string",
       "description": "El tipo de acción a ejecutar.",
-      "enum": [ "None", "Damage", "Death", "Heal", "Status" ] 
+      "enum": [ "None", "Damage", "Death", "Heal", "Condition" ] 
     },
     "amount": {
       "type": "string",
@@ -49,10 +49,10 @@
       "format": "float",
       "description": "Multiplier."
     },
-    "statusEffectType": {
+    "conditionType": {
       "type": "string",
-      "description": "Si es status, qué tipo es.",
-      "enum": [ "None", "Curse", "Poison", "ChromaticAberration" ],
+      "description": "Si es condition, qué tipo es.",
+      "enum": [ "None", "CoinLoss", "Curse", "Poison", "ChromaticAberration" ],
       "default": "None"
     },          
     "target": {

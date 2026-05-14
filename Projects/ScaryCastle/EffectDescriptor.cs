@@ -19,13 +19,13 @@ namespace ScaryCastle
             this.Amount = element.GetObject("amount", v => new DiceExpression(v));
             this.Chance = element.GetFloat("chance", 1);
             this.ComicText = element.GetEnum("comicText", ComicTextKind.None);
+            this.Condition = element.GetEnum("conditionType", ConditionType.None);
             this.Context = element.GetEnum("context", EffectContext.Contact);
             this.DamageType = element.GetEnum("damageType", DamageType.Physical);
             this.EffectType = element.GetEnum("effectType", EffectType.None);
             this.Modifier = element.GetFloat("modifier", 0);
             this.Knockback = element.GetEnum("knockback", KnockbackIntensity.Low);
             this.Sound = element.GetObject("sound", Sound.Get);
-            this.StatusEffectType = element.GetEnum("statusEffectType", StatusEffectType.None);
             this.Target = element.GetEnum("target", EffectTarget.Target);
         }
 
@@ -88,13 +88,16 @@ namespace ScaryCastle
                         realTarget.TakeDamage(source, effect.DamageType, int.MaxValue, effect.ComicText, effect.GetKnockbackForce());
                         break;
 
-                    // Status
-                    case EffectType.Status:
-                        realTarget.ApplyStatusEffect(effect.StatusEffectType, amount, effect.ComicText);
+                    // Condition
+                    case EffectType.Condition:
+                        realTarget.ApplyCondition(effect.Condition, amount, effect.ComicText);
                         break;
                 }
             }
         }
+
+        // ConditionType
+        public ConditionType Condition { get; }
 
         // Contains
         public static bool Contains(IList<EffectDescriptor> effects, EffectContext context)
@@ -149,9 +152,6 @@ namespace ScaryCastle
 
         // Sound
         public Sound? Sound { get; }
-
-        // StatusEffectType
-        public StatusEffectType StatusEffectType { get; }
 
         // Target
         public EffectTarget Target { get; }

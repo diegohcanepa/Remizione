@@ -21,12 +21,17 @@ namespace ScaryCastle
             };
 
             this.GlobalLight.Prepare(Atlases.Environment);
+
+            this.LargeHand = new();
         }
 
         #region Internal members
 
         // GlobalLight
         internal Light GlobalLight { get; }
+
+        // LargeHand
+        internal LargeHand LargeHand { get; }
 
         #endregion
     }
