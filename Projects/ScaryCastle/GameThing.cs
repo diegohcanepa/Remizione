@@ -455,7 +455,7 @@ namespace ScaryCastle
                     if (IsDead)
                         Die();
                     else
-                        OnKnockbackCompleted();         
+                        OnKnockbackCompleted();
                 }
             }
             else if (IsDead && !dieCalled)

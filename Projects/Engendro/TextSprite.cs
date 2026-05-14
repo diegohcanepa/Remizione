@@ -162,9 +162,7 @@ namespace Engendro
 
             // GUARDIA: Verificamos nulidad (aunque Invalidate lo previene) y límites
             if (string.IsNullOrEmpty(formattedText) || _typingIndex >= formattedText.Length)
-            {
                 return false;
-            }
 
             // Obtenemos caracter actual
             char currentChar = formattedText[_typingIndex];

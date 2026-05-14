@@ -16,6 +16,7 @@ namespace ScaryCastle
         private readonly Sprite icon;
         private readonly TextSprite labelText;
         private readonly Meter meter;
+        private readonly GameSession session;
         private readonly List<Actor> targetList = [];
 
         #endregion
@@ -23,10 +24,12 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public UIBossMeter()
+        public UIBossMeter(GameSession session)
             : base()
         {
-            this.meter = new Meter(ColorPalette.GuardMeter.Back, ColorPalette.GuardMeter.Fore, ColorPalette.GuardMeter.Diff, new(40, 6), 1)
+            this.session = session;
+
+            this.meter = new Meter(ColorPalette.BossMeter.Back, ColorPalette.BossMeter.Fore, ColorPalette.BossMeter.Diff, new(40, 6), 1)
             {
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -10)
             };
@@ -84,7 +87,7 @@ namespace ScaryCastle
             for (int i = 0; i < targetList.Count; i++)
             {
                 var t = targetList[i];
-               
+
                 if (t != null && !t.IsDead)
                 {
                     currentTotalHP += t.HP;
@@ -95,6 +98,7 @@ namespace ScaryCastle
             if (allDead)
             {
                 targetList.Clear();
+                session.AddCorridorExit();
             }
             else if (meter.Value != currentTotalHP)
             {
@@ -136,7 +140,7 @@ namespace ScaryCastle
             meter.MaximumValue = totalMaxHP;
             meter.Value = totalCurrentHP;
             amountText.Text = totalCurrentHP.ToString(CultureInfo.InvariantCulture);
-            
+
             if (targetList.Count > 1)
                 labelText.Text = TextRepository.GetValue($"{targetList[0].DisplayNameKey}.Group");
 

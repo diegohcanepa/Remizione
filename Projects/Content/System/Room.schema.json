@@ -97,7 +97,7 @@
               "type": "boolean",
               "default": true
             },
-            "guardActorPosition": {
+            "bossPosition": {
               "type": "string"
             },
             "leftGatePosition": {

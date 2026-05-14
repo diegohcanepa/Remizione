@@ -85,6 +85,7 @@
 			<Word>await-animation</Word>
 			<Word>await-answer</Word>
 			<Word>await-approach</Word>
+			<Word>await-boss-intro</Word>
 			<Word>await-camera</Word>
 			<Word>await-closeup</Word>
 			<Word>await-closing-credits</Word>
@@ -93,7 +94,6 @@
 			<Word>await-dialog-block</Word>
 			<Word>await-dialog</Word>
 			<Word>await-enter-room</Word>
-			<Word>await-guard-intro</Word>
 			<Word>await-input</Word>
 			<Word>await-message</Word>
 			<Word>await-monitor-text</Word>

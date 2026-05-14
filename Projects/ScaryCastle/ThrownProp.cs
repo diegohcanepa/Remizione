@@ -225,10 +225,16 @@ namespace ScaryCastle
         public override float Depth => depth;
 
         // Drop
-        public void Drop() => Launch(true);
+        public void Drop()
+        {
+            Launch(true);
+        }
 
         // Throw
-        public void Throw() => Launch(false);
+        public void Throw()
+        {
+            Launch(false);
+        }
 
         // Prop
         public Prop Prop { get; }

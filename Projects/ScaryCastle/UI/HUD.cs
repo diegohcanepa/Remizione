@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 
@@ -28,6 +27,7 @@ namespace ScaryCastle
             this.Countdown = new(session);
             this.InventoryMeter = new(session.PlayerInventory);
             this.PassiveItems = new(session);
+            this.BossMeter = new(session);
         }
 
         #endregion
@@ -71,7 +71,7 @@ namespace ScaryCastle
         #endregion
 
         // BossMeter
-        public UIBossMeter BossMeter { get; } = new();
+        public UIBossMeter BossMeter { get; }
 
         // FaithMeter
         public UIFaithMeter FaithMeter { get; } = new();

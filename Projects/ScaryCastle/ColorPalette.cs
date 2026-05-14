@@ -10,6 +10,14 @@ namespace ScaryCastle
         // BackgroundColor
         internal static Color BackgroundColor { get; } = new Color(0, 2, 5);
 
+        // BossMeter
+        internal static class BossMeter
+        {
+            internal static Color Back { get; } = new(77, 34, 34);
+            internal static Color Diff { get; } = ColorPalette.Text.Orange;
+            internal static Color Fore { get; } = new(199, 47, 47);
+        }
+
         // ContextMenu
         internal static class ContextMenu
         {
@@ -33,14 +41,6 @@ namespace ScaryCastle
         {
             internal static Color Critical { get; } = new(255, 64, 64);
             internal static Color Default { get; } = Color.White;
-        }
-
-        // GuardMeter
-        internal static class GuardMeter
-        {
-            internal static Color Back { get; } = new(77, 34, 34);
-            internal static Color Diff { get; } = ColorPalette.Text.Orange;
-            internal static Color Fore { get; } = new(199, 47, 47);
         }
 
         // HighlightedText

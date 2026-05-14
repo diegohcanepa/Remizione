@@ -38,8 +38,8 @@ namespace ScaryCastle
             LockType = element.GetEnum("lockType", LockType.None);
             MusicTag = element.GetString("musicTag");
 
-            if (element.GetString("guardActorPosition") is string guardActorPositionValue && !string.IsNullOrWhiteSpace(guardActorPositionValue))
-                GuardActorPosition = DataConvert.ToVector2(guardActorPositionValue);
+            if (element.GetString("bossPosition") is string bossPositionValue && !string.IsNullOrWhiteSpace(bossPositionValue))
+                BossPosition = DataConvert.ToVector2(bossPositionValue);
 
             if (element.GetString("interactiveActorPosition") is string interactiveActorPositionValue && !string.IsNullOrWhiteSpace(interactiveActorPositionValue))
                 InteractiveActorPosition = DataConvert.ToVector2(interactiveActorPositionValue);
@@ -134,6 +134,9 @@ namespace ScaryCastle
         // AllowEnemies
         public bool AllowEnemies { get; }
 
+        // BossPosition
+        public Vector2? BossPosition { get; }
+
         // Definitions
         public static DataContainer<RoomDefinition> Definitions { get; } = new(element => new RoomDefinition(element));
 
@@ -157,9 +160,6 @@ namespace ScaryCastle
 
         // ExitHotspot
         public string ExitHotspot { get; }
-
-        // GuardActorPosition
-        public Vector2? GuardActorPosition { get; }
 
         // HasDownDoor
         public bool HasDownDoor => DoorDown != null;

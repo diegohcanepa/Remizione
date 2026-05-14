@@ -15,7 +15,7 @@ namespace Adberration.Scripting
 
             var op = Body.Clauses[1];
 
-            if (op == ScriptSyntax.EqualityOp || op == ScriptSyntax.InequalityOp)
+            if (op is ScriptSyntax.EqualityOp or ScriptSyntax.InequalityOp)
                 Parser.ParseEntities<Entity>(this, 2);
             else
                 AssertEntity<Entity>(2);

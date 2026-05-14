@@ -557,7 +557,7 @@ namespace ScaryCastle
         public void InvalidateAmbientLightSources()
         {
             HasAmbientLightSources = false;
-            
+
             for (var i = 0; i < Children.Count; i++)
             {
                 if (Children[i] is Prop prop && prop.IsAmbientLight && prop.IsEmittingLight)

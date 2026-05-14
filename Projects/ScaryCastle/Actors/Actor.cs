@@ -704,8 +704,8 @@ namespace ScaryCastle
             var destination = target.GetApproachPosition(this, Session.InteractionData.InteractionType == InteractionType.Attack ? ApproachBehavior.ClosestSide : null);
             var result = target != this && MoveTo(destination);
 
-           // if (result && !Session.InteractionContext.AttackMode && target is Actor actor && actor.IsAngry)
-             //   result = false;
+            // if (result && !Session.InteractionContext.AttackMode && target is Actor actor && actor.IsAngry)
+            //   result = false;
 
             if (!result)
                 HandlePendingInteraction();
@@ -781,7 +781,10 @@ namespace ScaryCastle
         }
 
         // Definition
-        public ActorDefinition? Definition { get; }
+        public ActorDefinition?
+
+            Definition
+        { get; }
 
         // Faith
         [ScriptProperty]

@@ -184,7 +184,7 @@ namespace ScaryCastle
             // 1. Validaciones de estado (Bánatelo rápido)
             if (thing.DropMode is LootDropMode.None or LootDropMode.CoinsOnly)
                 return null;
-            
+
             if (thing is not IThingDefinition t || t.Definition == null || session.Room is not ProceduralRoom room)
                 return null;
 

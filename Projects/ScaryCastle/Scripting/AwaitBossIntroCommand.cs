@@ -2,14 +2,14 @@
 
 namespace ScaryCastle.Scripting
 {
-    // AwaitGuardIntroCommand
+    // AwaitBossIntroCommand
     [ForceAwait]
-    internal sealed class AwaitGuardIntroCommand : AwaitableCommand
+    internal sealed class AwaitBossIntroCommand : AwaitableCommand
     {
         private Script? routine;
 
         // Constructor
-        internal AwaitGuardIntroCommand(Script script, string source, StatementBody body)
+        internal AwaitBossIntroCommand(Script script, string source, StatementBody body)
             : base(script, source, body, 0)
         {
         }
@@ -17,10 +17,10 @@ namespace ScaryCastle.Scripting
         // OnExecute
         protected override void OnExecute()
         {
-            if (Session is not GameSession session || session.Guard == null)
+            if (Session is not GameSession session || session.Boss == null)
                 return;
 
-            routine = session.ScriptLibrary.FindRoutine($"{session.Guard.DeclaredName}-Intro");
+            routine = session.ScriptLibrary.FindRoutine($"{session.Boss.DeclaredName}-Intro");
             if (routine != null)
                 session.AwaitScript(routine);
         }

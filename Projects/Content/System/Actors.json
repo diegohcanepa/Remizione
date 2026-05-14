@@ -3,7 +3,12 @@
   "data": [
     {
       "name": "EnviousEye",
-      "spawnLocation": "Gate"
+      "spawnLocation": "SideRoom"
+    },
+    {
+      "name": "CapitalistRat",
+      "spawnLocation": "Gate",
+      "groupCount": 2
     },
     {
       "name": "Rat"

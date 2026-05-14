@@ -1,5 +1,4 @@
 ﻿using Adberration;
-using Assimp;
 using Engendro;
 using Microsoft.Xna.Framework;
 using System;

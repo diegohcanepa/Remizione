@@ -71,7 +71,7 @@ namespace ScaryCastle
                 alarmSoundInstance = null;
             }
 
-            timeText.Color = GuardMode ? ColorPalette.Text.Orange : ColorPalette.Text.Highlight;
+            timeText.Color = BossPhase ? ColorPalette.Text.Orange : ColorPalette.Text.Highlight;
             scaleTween.Stop();
             timeText.Scale = defaultTextSize;
         }
@@ -125,8 +125,8 @@ namespace ScaryCastle
 
         #endregion
 
-        // GuardMode
-        public bool GuardMode { get; private set; }
+        // BossPhase
+        public bool BossPhase { get; private set; }
 
         // IsCritical
         public bool IsCritical => alarmSoundInstance != null;
@@ -137,14 +137,14 @@ namespace ScaryCastle
         // Reset
         public void Reset()
         {
-            GuardMode = false;
+            BossPhase = false;
             timeLeft = 0;
             IsRunning = false;
             StopCriticalPhase();
         }
 
         // Start
-        public void Start(int duration, bool guardMode)
+        public void Start(int duration, bool bossPhase)
         {
             if (duration < 0)
             {
@@ -152,10 +152,10 @@ namespace ScaryCastle
                 return;
             }
 
-            this.GuardMode = guardMode;
+            this.BossPhase = bossPhase;
             this.lastKnownValue = -1;
             this.timeLeft = duration;
-            this.timeText.Color = guardMode ? ColorPalette.Text.Orange : ColorPalette.Text.Highlight;
+            this.timeText.Color = bossPhase ? ColorPalette.Text.Orange : ColorPalette.Text.Highlight;
             this.IsRunning = true;
         }
     }

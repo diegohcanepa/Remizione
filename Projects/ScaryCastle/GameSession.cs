@@ -146,9 +146,9 @@ namespace ScaryCastle
             AotTypeRegistry.Register("apply-item-effects", typeof(ApplyItemEffectsCommand));
             AotTypeRegistry.Register("attach-light", typeof(AttachLightCommand), CodingContext.EntityDeclaration);
             AotTypeRegistry.Register("await-approach", typeof(AwaitApproachCommand));
+            AotTypeRegistry.Register("await-boss-intro", typeof(AwaitBossIntroCommand));
             AotTypeRegistry.Register("await-credits", typeof(AwaitCreditsCommand));
             AotTypeRegistry.Register("await-dialog-block", typeof(AwaitDialogBlockCommand));
-            AotTypeRegistry.Register("await-guard-intro", typeof(AwaitGuardIntroCommand));
             AotTypeRegistry.Register("await-input", typeof(AwaitInputCommand));
             AotTypeRegistry.Register("await-monitor-text", typeof(AwaitMonitorTextCommand));
             AotTypeRegistry.Register("await-popup", typeof(AwaitPopupCommand));
@@ -450,6 +450,7 @@ namespace ScaryCastle
         [ScriptMethod]
         public void AddCorridorExit()
         {
+            Bosses.Clear();
             (Room as CorridorRoom)?.AddCorridorExit();
         }
 
@@ -472,6 +473,10 @@ namespace ScaryCastle
 
             LoadNextCorridor();
         }
+
+        // Boss
+        [ScriptProperty]
+        public Actor? Boss => Bosses.Count > 0 ? Bosses[0] : null;
 
         // CloseCorridorDoor
         [ScriptMethod]
@@ -564,10 +569,6 @@ namespace ScaryCastle
         // Game
         public new ScaryCastleGame Game { get; }
 
-        // Guard
-        [ScriptProperty]
-        public Actor? Guard { get; set; }
-
         // HUD
         public HUD HUD { get; }
 
@@ -611,7 +612,7 @@ namespace ScaryCastle
 
             CleanUpRuntimeEntities();
 
-            Guard = null;
+            Bosses.Clear();
             HUD.BossMeter.Reset();
 
             if (!CurrentRun.LoadNextCorridor(this))
@@ -752,14 +753,14 @@ namespace ScaryCastle
         [ScriptMethod]
         public void StartGatePhase()
         {
-            if (Guard != null)
+            if (Boss != null)
             {
-                HUD.BossMeter.SetTargets([Guard]);
+                HUD.BossMeter.SetTargets(Bosses);
 
                 var duration = 30;
-                if (Guard.Definition?.Difficulty == ScaryCastle.Difficulty.Normal)
+                if (Boss.Definition?.Difficulty == ScaryCastle.Difficulty.Normal)
                     duration = 45;
-                else if (Guard.Definition?.Difficulty == ScaryCastle.Difficulty.Hard)
+                else if (Boss.Definition?.Difficulty == ScaryCastle.Difficulty.Hard)
                     duration = 66;
 
                 HUD.Countdown.Start(duration, true);
@@ -772,5 +773,8 @@ namespace ScaryCastle
         {
             HUD.Countdown.Reset();
         }
+
+        // Bosses
+        public List<Actor> Bosses { get; } = [];
     }
 }

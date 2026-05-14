@@ -50,6 +50,25 @@
       ]
     },    
     {
+      "name": "CapitalistRat",
+      "archetype": "Lurker",
+      "intents": [
+        {
+          "name": "Contact",
+          "sound": "RatAttack",
+          "range": 50,
+          "effects": [
+            {
+              "context": "Contact",
+              "effectType": "Damage",
+              "amount": "2",
+              "comicText": "AghRed"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "Rat",
       "archetype": "Lurker",
       "intents": [

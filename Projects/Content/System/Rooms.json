@@ -10,7 +10,7 @@
       "exitHotspot": "231,35;231,85;244,95;244,41",
       "leftGatePosition": "16,34",
       "rightGatePosition": "232,34",
-      "guardActorPosition": "260,90",
+      "bossPosition": "260,90",
       "playerPosition": "30,90",
       "placeholders": [
         {

@@ -1,5 +1,4 @@
-﻿using Adberration;
-using Adberration.Scripting;
+﻿using Adberration.Scripting;
 using Engendro;
 using Microsoft.Xna.Framework;
 using System;
@@ -102,18 +101,6 @@ namespace ScaryCastle
             }
         }
 
-        // OnChildRemoved
-        protected override void OnChildRemoved(Entity child)
-        {
-            base.OnChildRemoved(child);
-
-            if (child == Session.Guard)
-            {
-                Session.Guard = null;
-                AddCorridorExit();
-            }
-        }
-
         // OnLoad
         protected override void OnLoad()
         {
@@ -176,14 +163,16 @@ namespace ScaryCastle
                 Children.Add(lever);
             }
 
-            // Corridor guard
+            // Boss
             //if (Session.RunCount > 0 || Session.CurrentRun?.CorridorIndex > 0)
             {
-                if (RoomNode.Definition.GuardActorPosition != null)
+                if (RoomNode.Definition.BossPosition != null)
                 {
-                    Session.Guard = SpawnGateActor();
-                    if (Session.Guard != null && RoomNode.Definition.GuardActorPosition.HasValue)
-                        Session.Guard.Position = RoomNode.Definition.GuardActorPosition.Value;
+                    if (SpawnBoss() is Actor boss)
+                        Session.Bosses.Add(boss);
+
+                    if (Session.Boss != null && RoomNode.Definition.BossPosition.HasValue)
+                        Session.Boss.Position = RoomNode.Definition.BossPosition.Value;
                 }
             }
         }
@@ -201,8 +190,8 @@ namespace ScaryCastle
             }
         }
 
-        // SpawnGateActor
-        private Actor? SpawnGateActor(Vector2? position = null)
+        // SpawnBoss
+        private Actor? SpawnBoss(Vector2? position = null)
         {
             if (Session.CurrentRun == null)
                 return null;
