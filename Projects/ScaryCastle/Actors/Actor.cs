@@ -423,8 +423,8 @@ namespace ScaryCastle
                 ForceReaction();
         }
 
-        // OnFaithChanged
-        protected virtual void OnFaithChanged()
+        // OnGooChanged
+        protected virtual void OnGooChanged()
         {
         }
 
@@ -742,7 +742,7 @@ namespace ScaryCastle
             if (!IsPlayer)
                 return false;
 
-            if (item.Definition.FaithCost == 0)
+            if (item.Definition.GooCost == 0)
                 return false;
 
             Session.InteractionData.SetCastOutcome(target, item);
@@ -781,21 +781,6 @@ namespace ScaryCastle
             Definition
         { get; }
 
-        // Faith
-        [ScriptProperty]
-        public int Faith
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = Math.Min(value, MaxFaith);
-                    OnFaithChanged();
-                }
-            }
-        }
-
         // FastMove
         public bool FastMove { get; set; }
 
@@ -817,6 +802,21 @@ namespace ScaryCastle
         public Vector2? GetActiveThrowablePosition()
         {
             return activeThrowableSprite?.Position;
+        }
+
+        // Goo
+        [ScriptProperty]
+        public int Goo
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = Math.Min(value, MaxGoo);
+                    OnGooChanged();
+                }
+            }
         }
 
         // Guts
@@ -869,9 +869,9 @@ namespace ScaryCastle
         // IsStandingOrMoving
         public bool IsStandingOrMoving => BodyMachine.CurrentState is BodyStandState or BodyMoveState;
 
-        // MaxFaith
+        // MaxGoo
         [ScriptProperty]
-        public int MaxFaith
+        public int MaxGoo
         {
             get;
             set
@@ -879,7 +879,7 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = value;
-                    Faith = value;
+                    Goo = value;
                 }
             }
         }

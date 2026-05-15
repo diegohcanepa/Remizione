@@ -10,7 +10,8 @@ namespace ScaryCastle
     {
         FaceToFace,     // Cara a cara (respetando la dirección del NPC)
         ClosestSide,    // Lado más cercano (sin cruzar al NPC)
-        InFront         // Justo encima (para items o puertas)
+        InFront,         // Justo encima (para items o puertas)
+        Over
     }
 
     // BodySize
@@ -141,7 +142,7 @@ namespace ScaryCastle
     }
 
     // MessageKind
-    public enum MessageKind { CannotPlaceItem, HandsFull, HurryUp, InventoryFull, ItemDiscarded, LiftNotAllowed, NotEnoughCoins, NotEnoughFaith, OutOfReach, PathCleared, PullCorridorLever }
+    public enum MessageKind { CannotPlaceItem, HandsFull, HurryUp, InventoryFull, ItemDiscarded, LiftNotAllowed, NotEnoughCoins, NotEnoughGoo, OutOfReach, PathCleared, PullCorridorLever }
 
     // MouseCursorState
     public enum MouseCursorState { Arrow, Cross, Down, Hand, Left, Prohibition, Right, Up, Wait }

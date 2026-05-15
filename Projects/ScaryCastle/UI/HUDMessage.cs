@@ -73,9 +73,9 @@ namespace ScaryCastle
                 Sound.Play(SoundNames.Error);
             }
 
-            else if (message == MessageKind.NotEnoughFaith)
+            else if (message == MessageKind.NotEnoughGoo)
             {
-                icon.RenderImage = Atlases.UI.FaithIcon;
+                icon.RenderImage = Atlases.UI.GooIcon;
                 Sound.Play(SoundNames.Error);
             }
 

@@ -1,9 +1,12 @@
-﻿namespace ScaryCastle
+﻿using Engendro.Audio;
+using Microsoft.Xna.Framework;
+
+namespace ScaryCastle
 {
     /// <summary>
     /// WaterPuddle
     /// </summary>
-    public class WaterPuddle : Prop
+    public sealed class WaterPuddle : Prop
     {
         // Constructor
         public WaterPuddle(GameSession session, string name)
@@ -12,8 +15,8 @@
             Atlas = Atlases.Props;
             CollisionDetection = false;
             RenderLayer = RenderLayer.Background;
-            //TerrainParticleColor = new Color(75, 133, 150);
-            //TerrainSound = Sound.Find(SoundNames.FootstepWater);
+            TerrainParticleColor = new(75, 133, 150);
+            TerrainSound = Sound.Find(SoundNames.FootstepWater);
         }
     }
 }

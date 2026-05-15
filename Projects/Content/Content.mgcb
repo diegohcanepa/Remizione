@@ -503,6 +503,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/Drink.wav;Audio/FX/Drink
 
+#begin Audio/FX/DrinkGoo.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/DrinkGoo.wav;Audio/FX/DrinkGoo
+
 #begin Audio/FX/EdmundHurt1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

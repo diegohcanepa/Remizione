@@ -32,6 +32,7 @@ namespace Adberration.Scripting
                 {
                     var imageName = prefix + j.ToString(CultureInfo.InvariantCulture).PadLeft(AnimationCommand.ZeroPaddingLength, '0');
                     AnimationCommand.ActiveAnimation.AddFrame(imageName, duration, isEventFrame, label, speedFactor, sound, subArea, gotoLabel);
+                    sound = string.Empty;
                 }
             }
         }

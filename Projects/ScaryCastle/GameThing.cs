@@ -927,7 +927,8 @@ namespace ScaryCastle
             // Si soy un Actor (NPC), dejo espacio para conversar. Si soy un objeto, te puedes pegar más.
             float spacing = (this is Actor) ? requesterBox.Width : requesterBox.Width / 2;
 
-            float targetX = X; // Default
+            float targetX = X;
+            float targetY = BoundingBox.Bottom + Altitude;
 
             switch (behavior)
             {
@@ -951,10 +952,15 @@ namespace ScaryCastle
                     // "Párate en mi centro X"
                     targetX = myBox.Center.X;
                     break;
+
+                case ApproachBehavior.Over:
+                    targetX = myBox.Center.X;
+                    targetY = myBox.Center.Y;
+                    break;
             }
 
             // Mantenemos la Y en la base del objeto (los pies)
-            return new Vector2(targetX, BoundingBox.Bottom + Altitude);
+            return new Vector2(targetX, targetY);
         }
 
         // GetFootstepSound

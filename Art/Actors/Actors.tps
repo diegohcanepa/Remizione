@@ -231,6 +231,12 @@
             <key type="filename">Edmund-assets/Consume02.png</key>
             <key type="filename">Edmund-assets/Consume03.png</key>
             <key type="filename">Edmund-assets/Consume04.png</key>
+            <key type="filename">Edmund-assets/DrinkGoo01.png</key>
+            <key type="filename">Edmund-assets/DrinkGoo02.png</key>
+            <key type="filename">Edmund-assets/DrinkGoo03.png</key>
+            <key type="filename">Edmund-assets/DrinkGoo04.png</key>
+            <key type="filename">Edmund-assets/DrinkGoo05.png</key>
+            <key type="filename">Edmund-assets/DrinkGoo06.png</key>
             <key type="filename">Edmund-assets/Fatigue01.png</key>
             <key type="filename">Edmund-assets/Fatigue02.png</key>
             <key type="filename">Edmund-assets/Fatigue03.png</key>

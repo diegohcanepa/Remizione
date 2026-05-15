@@ -44,10 +44,10 @@ namespace ScaryCastle
             // ExecutionDelay
             ExecutionDelay = element.GetInt32("executionDelay", 0);
 
-            // FaithCost
-            FaithCost = element.GetInt32("faithCost", 0);
-            if (FaithCost < 0)
-                FaithCost = 0;
+            // GooCost
+            GooCost = element.GetInt32("gooCost", 0);
+            if (GooCost < 0)
+                GooCost = 0;
 
             // HP
             DiceExpression? hp = element.GetObject("hp", value => new DiceExpression(value));
@@ -130,8 +130,8 @@ namespace ScaryCastle
         // ExecutionDelay
         public int ExecutionDelay { get; }
 
-        // FaithCost
-        public int FaithCost { get; }
+        // GooCost
+        public int GooCost { get; }
 
         // Image
         public AtlasImage? Image { get; }

@@ -21,8 +21,8 @@ namespace ScaryCastle
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
             DialogOptionBullet = this[nameof(DialogOptionBullet)];
             DiscardItemIcon = this[nameof(DiscardItemIcon)];
-            FaithIcon = this[nameof(FaithIcon)];
-            FaithIcons = CreateReadOnlyCollection(nameof(FaithIcons), 1, 2);
+            GooIcon = this[nameof(GooIcon)];
+            GooIcons = CreateReadOnlyCollection(nameof(GooIcons), 1, 2);
             GreenHearts = CreateReadOnlyCollection(nameof(GreenHearts), 1, 4);
             InventorySlot = this[nameof(InventorySlot)];
             InventoryGridContainer = this[nameof(InventoryGridContainer)];
@@ -77,11 +77,11 @@ namespace ScaryCastle
         // DiscardItemIcon
         public AtlasImage DiscardItemIcon { get; }
 
-        // FaithIcon
-        public AtlasImage FaithIcon { get; }
+        // GooIcon
+        public AtlasImage GooIcon { get; }
 
-        // FaithIcons
-        public ReadOnlyCollection<AtlasImage> FaithIcons { get; }
+        // GooIcons
+        public ReadOnlyCollection<AtlasImage> GooIcons { get; }
 
         // GreenHearts
         public ReadOnlyCollection<AtlasImage> GreenHearts { get; }

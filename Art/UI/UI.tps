@@ -783,9 +783,6 @@
                 <false/>
             </struct>
             <key type="filename">UI-assets/ProhibitionIcon.png</key>
-            <key type="filename">UIIcons-assets/FaithIcon.png</key>
-            <key type="filename">UIIcons-assets/FaithIcons1.png</key>
-            <key type="filename">UIIcons-assets/FaithIcons2.png</key>
             <key type="filename">UIIcons-assets/RedHearts1.png</key>
             <key type="filename">UIIcons-assets/RedHearts2.png</key>
             <key type="filename">UIIcons-assets/RedHearts3.png</key>
@@ -929,6 +926,23 @@
                 <rect>2,2,3,5</rect>
                 <key>scale9Paddings</key>
                 <rect>2,2,3,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">UIIcons-assets/GooIcon.png</key>
+            <key type="filename">UIIcons-assets/GooIcons1.png</key>
+            <key type="filename">UIIcons-assets/GooIcons2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,4,5</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,4,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

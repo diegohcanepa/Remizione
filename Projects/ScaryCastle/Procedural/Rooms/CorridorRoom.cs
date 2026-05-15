@@ -107,7 +107,7 @@ namespace ScaryCastle
             base.OnLoad();
 
             if (Session.Player != null)
-                Session.Player.Faith++;
+                Session.Player.Goo++;
 
             if (Session.FindDeclaredThing(CorridorRightWallPatchName) is Prop rightWallPatch)
             {

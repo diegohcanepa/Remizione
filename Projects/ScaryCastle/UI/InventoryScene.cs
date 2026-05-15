@@ -15,7 +15,7 @@ namespace ScaryCastle
 
         private readonly TextSprite[] amounts;
         private readonly Sprite bottomGradient;
-        private readonly Sprite[] faithIcons;
+        private readonly Sprite[] gooIcons;
         private readonly Sprite[] icons;
         private readonly TextSprite itemName;
         private int lastSeenInventoryVersion = -1;
@@ -31,7 +31,7 @@ namespace ScaryCastle
         {
             this.PausePreviousScenes = false;
             this.amounts = new TextSprite[PlayerInventory.MaximumCapacity];
-            this.faithIcons = new Sprite[PlayerInventory.MaximumCapacity];
+            this.gooIcons = new Sprite[PlayerInventory.MaximumCapacity];
             this.icons = new Sprite[PlayerInventory.MaximumCapacity];
             this.shadows = new Sprite[PlayerInventory.MaximumCapacity];
             this.slots = new Sprite[PlayerInventory.MaximumCapacity];
@@ -59,7 +59,7 @@ namespace ScaryCastle
                     Y = slots[i].BoundingBox.Center.Y
                 };
 
-                faithIcons[i] = new()
+                gooIcons[i] = new()
                 {
                     PivotOrigin = RectanglePoint.Top,
                     Scale = ScaleInfo.UIElement.Medium,
@@ -160,7 +160,7 @@ namespace ScaryCastle
                 slots[i].RenderImage = Atlases.UI.InventorySlot;
                 slots[i].X = startingX + (i * (slotWidth + spacing));
                 icons[i].RenderImage = null;
-                faithIcons[i].RenderImage = null;
+                gooIcons[i].RenderImage = null;
                 shadows[i].RenderImage = null;
                 amounts[i].Text = null;
 
@@ -169,10 +169,10 @@ namespace ScaryCastle
                     icons[i].X = slots[i].BoundingBox.Center.X;
                     icons[i].RenderImage = Inventory[i].Definition.Image;
 
-                    if (Inventory[i].Definition.FaithCost > 0)
+                    if (Inventory[i].Definition.GooCost > 0)
                     {
-                        faithIcons[i].X = slots[i].BoundingBox.Center.X;
-                        faithIcons[i].RenderImage = Atlases.UI.FaithIcon;
+                        gooIcons[i].X = slots[i].BoundingBox.Center.X;
+                        gooIcons[i].RenderImage = Atlases.UI.GooIcon;
                     }
 
                     shadows[i].X = icons[i].X - 1;
@@ -211,7 +211,7 @@ namespace ScaryCastle
 
                 shadows[i].Draw(gameTime);
                 icons[i].Draw(gameTime);
-                faithIcons[i].Draw(gameTime);
+                gooIcons[i].Draw(gameTime);
                 amounts[i].Draw(gameTime);
             }
 

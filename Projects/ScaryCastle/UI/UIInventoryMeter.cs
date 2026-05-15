@@ -39,7 +39,7 @@ namespace ScaryCastle
                 Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Right,
                 Position = icon.BoundingBox.GetPoint(RectanglePoint.Left, -1, 1),
-                Scale = ScaleInfo.Text.Huge,
+                Scale = ScaleInfo.Text.Giant,
                 Spacing = -6
             };
         }

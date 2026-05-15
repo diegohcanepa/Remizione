@@ -19,7 +19,7 @@
 			"name": "BargainCross",
 			"consumptionType": "None",
 			"executionDelay": 1500,
-			"faithCost": 1,
+			"gooCost": 1,
 			"effects": [
 				{
 					"context": "Attack",

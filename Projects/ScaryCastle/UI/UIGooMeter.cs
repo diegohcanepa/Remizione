@@ -4,9 +4,9 @@ using Microsoft.Xna.Framework;
 namespace ScaryCastle
 {
     /// <summary>
-    /// UIFaithMeter
+    /// UIGooMeter
     /// </summary>
-    public sealed class UIFaithMeter : GameObject
+    public sealed class UIGooMeter : GameObject
     {
         #region Private fields
 
@@ -19,12 +19,12 @@ namespace ScaryCastle
         #endregion
 
         // Constructor
-        public UIFaithMeter()
+        public UIGooMeter()
         {
             float x = 10;
             for (var i = 0; i < icons.Length; i++)
             {
-                icons[i] = new(Atlases.UI.FaithIcons[0])
+                icons[i] = new(Atlases.UI.GooIcons[0])
                 {
                     PivotOrigin = RectanglePoint.Center,
                     Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom, x, -8)
@@ -36,24 +36,41 @@ namespace ScaryCastle
 
         #region Private members
 
+        // Animate
+        private void Animate(Sprite icon)
+        {
+            rotationTween.Start(TweenStyle.QuadraticInOut, 0, 15, 50, 6);
+            scaleTween.Start(TweenStyle.QuadraticInOut, Vector2.One, Vector2.One * 1.3f, 150, 4);
+
+            icon.Tweens.RotationTween = rotationTween;
+            icon.Tweens.ScaleTween = scaleTween;
+        }
+
         // Refresh
         private void Refresh()
         {
             if (Actor == null)
                 return;
 
-            for (var i = 0; i < Actor.MaxFaith; i++)
+            for (var i = 0; i < Actor.MaxGoo; i++)
             {
-                icons[i].RenderImage = Atlases.UI.FaithIcons[0];
+                icons[i].RenderImage = Atlases.UI.GooIcons[0];
             }
 
-            for (var i = 0; i < Actor.Faith; i++)
+            var animationCount = Actor.Goo - lastKnownValue;
+            for (var i = Actor.Goo - 1; i >= 0; i--)
             {
-                icons[i].RenderImage = Atlases.UI.FaithIcons[1];
+                if (animationCount > 0)
+                {
+                    Animate(icons[i]);
+                    animationCount--;
+                }
+
+                icons[i].RenderImage = Atlases.UI.GooIcons[1];
             }
 
-            lastKnownValue = Actor.Faith;
-            lastKnownMaxValue = Actor.MaxFaith;
+            lastKnownValue = Actor.Goo;
+            lastKnownMaxValue = Actor.MaxGoo;
         }
 
         #endregion
@@ -66,7 +83,7 @@ namespace ScaryCastle
             if (Actor == null)
                 return;
 
-            for (var i = 0; i < Actor.MaxFaith; i++)
+            for (var i = 0; i < Actor.MaxGoo; i++)
             {
                 icons[i].Draw(gameTime);
             }
@@ -78,12 +95,12 @@ namespace ScaryCastle
             if (Actor == null)
                 return;
 
-            for (var i = 0; i < Actor.MaxFaith; i++)
+            for (var i = 0; i < Actor.MaxGoo; i++)
             {
                 icons[i].Update(gameTime);
             }
 
-            if (lastKnownValue != Actor.Faith || lastKnownMaxValue != Actor.MaxFaith)
+            if (lastKnownValue != Actor.Goo || lastKnownMaxValue != Actor.MaxGoo)
                 Refresh();
         }
 
@@ -108,16 +125,6 @@ namespace ScaryCastle
                     Refresh();
                 }
             }
-        }
-
-        // Animate
-        public void Animate()
-        {
-            rotationTween.Start(TweenStyle.QuadraticInOut, 0, 15, 50, 6);
-            scaleTween.Start(TweenStyle.QuadraticInOut, Vector2.One, Vector2.One * 1.3f, 150, 4);
-
-            //icon.Tweens.RotationTween = rotationTween;
-            //icon.Tweens.ScaleTween = scaleTween;
         }
     }
 }

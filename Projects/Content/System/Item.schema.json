@@ -53,7 +53,7 @@
             "isStackable": {
               "type": "boolean"
             },
-            "faithCost": {
+            "gooCost": {
               "type": "integer"
             },
             "lightColor": {

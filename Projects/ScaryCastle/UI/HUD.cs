@@ -39,7 +39,7 @@ namespace ScaryCastle
         {
             Game.SpriteBatch.Begin(Game.Camera);
             hpMeter.Draw(gameTime);
-            FaithMeter.Draw(gameTime);
+            GooMeter.Draw(gameTime);
             InventoryMeter.Draw(gameTime);
             Log.Draw(gameTime);
             Message.Draw(gameTime);
@@ -62,7 +62,7 @@ namespace ScaryCastle
             InventoryMeter.Update(gameTime);
             BossMeter.Update(gameTime);
             hpMeter.Update(gameTime);
-            FaithMeter.Update(gameTime);
+            GooMeter.Update(gameTime);
             Log.Update(gameTime);
             Message.Update(gameTime);
             Countdown.Update(gameTime);
@@ -73,11 +73,11 @@ namespace ScaryCastle
         // BossMeter
         public UIBossMeter BossMeter { get; }
 
-        // FaithMeter
-        public UIFaithMeter FaithMeter { get; } = new();
-
         // GateMeter
         public UICountdown Countdown { get; }
+
+        // GooMeter
+        public UIGooMeter GooMeter { get; } = new();
 
         // HandleInput
         public HandleInputResult HandleInput()
@@ -107,7 +107,7 @@ namespace ScaryCastle
         public void Reset()
         {
             hpMeter.Actor = session.Player;
-            FaithMeter.Actor = session.Player;
+            GooMeter.Actor = session.Player;
             Message.Hide();
             Log.Hide();
             BossMeter.Reset();

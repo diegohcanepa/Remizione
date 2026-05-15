@@ -118,6 +118,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(GameRoom));
             AotTypeRegistry.Register(typeof(GameThing));
             AotTypeRegistry.Register(typeof(GoldenKey));
+            AotTypeRegistry.Register(typeof(Goo));
             AotTypeRegistry.Register(typeof(HellGoat));
             AotTypeRegistry.Register(typeof(Hub));
             AotTypeRegistry.Register(typeof(Monitor));
@@ -527,8 +528,8 @@ namespace ScaryCastle
             if (Player != null)
             {
                 Player.Reheal();
-                Player.MaxFaith = 3;
-                Player.Faith = 3;
+                Player.MaxGoo = 3;
+                Player.Goo = 3;
                 Player.ClearCondition();
             }
 

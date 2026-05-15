@@ -92,7 +92,7 @@ namespace ScaryCastle
         // SetCastOutcome
         public void SetCastOutcome(GameThing target, Item item)
         {
-            if (item.Definition.FaithCost == 0)
+            if (item.Definition.GooCost == 0)
                 throw new InvalidOperationException($"Item '{item.Definition.Name}' cannot be casted.");
 
             if (Session.ScriptLibrary.FindRoutine($"{item.Name}Outcome") is Script script)

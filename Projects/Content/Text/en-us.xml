@@ -204,7 +204,7 @@
   <String Key="MessageKind.ItemDiscarded">Item discarded.</String>
   <String Key="MessageKind.LiftNotAllowed">You can't lift that.</String>
   <String Key="MessageKind.NotEnoughCoins">Not enough coins.</String>
-  <String Key="MessageKind.NotEnoughFaith">Not enough faith.</String>
+  <String Key="MessageKind.NotEnoughGoo">Not enough goo.</String>
   <String Key="MessageKind.OutOfReach">Out of reach.</String>
   <String Key="MessageKind.PathCleared">The way is open.</String>
   <String Key="MessageKind.PullCorridorLever">Pull the lever!</String>
@@ -299,6 +299,7 @@ Bla bla bla</String>
   <String Key="Prop.ExitTower">Exit tower</String>
   <String Key="Prop.FoodStall">Food stall</String>
   <String Key="Prop.Gate">Gate</String>
+  <String Key="Prop.Goo">Goo</String>
   <String Key="Prop.Lever">Lever</String>
   <String Key="Prop.PortableToilet">Little purgatory</String>
   <String Key="Prop.PostClock">Tyrant time</String>

@@ -108,7 +108,7 @@ namespace ScaryCastle
                 MouseCursor.ShowLiftIcon = context.Target is Prop prop && prop.IsLiftable;
                 MouseCursor.IsEnabled = context.Session.Player?.ActiveThrowable == null;
 
-                if (context.HeldItem?.Definition.FaithCost > 0)
+                if (context.HeldItem?.Definition.GooCost > 0)
                     MouseCursor.HightlightColor = ColorPalette.MouseCursor.HighlightBlue;
                 else
                     MouseCursor.HightlightColor = ColorPalette.MouseCursor.HighlightWhite;
