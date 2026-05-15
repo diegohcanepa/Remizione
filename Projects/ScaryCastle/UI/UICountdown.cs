@@ -59,7 +59,7 @@ namespace ScaryCastle
             scaleTween.Start(TweenStyle.Linear, defaultTextSize, defaultTextSize * 1.1f, 250, -1);
             timeText.Tweens.ScaleTween = scaleTween;
 
-            session.HUD.Message.Show(BossPhase ? MessageKind.HurryUp : MessageKind.PullCorridorLever);
+            session.TextHUD.Message.Show(BossPhase ? MessageKind.HurryUp : MessageKind.PullCorridorLever);
         }
 
         // StopCriticalPhase
@@ -83,10 +83,8 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (session.IsAwaiting || !IsRunning)
-                return;
-
-            timeText.Draw(gameTime);
+            if (IsRunning)
+                timeText.Draw(gameTime);
         }
 
         // OnUpdate

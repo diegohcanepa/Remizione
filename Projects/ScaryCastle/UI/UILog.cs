@@ -57,13 +57,13 @@ namespace ScaryCastle
         private void ShowCore(string verb, string noun, bool isWarning, AtlasImage? image)
         {
             verbText.Color = isWarning ? ColorPalette.Text.Orange : ColorPalette.Text.Green;
-            verbText.Position = new Vector2(6, 12);
+            verbText.Position = new Vector2(11, 17);
             verbText.Text = verb;
 
             nounText.Position = verbText.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -2);
             nounText.Text = noun;
             icon.RenderImage = image;
-            icon.Position = nounText.BoundingBox.GetPoint(RectanglePoint.LeftBottom);
+            icon.Position = nounText.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -2);
 
             iconShadow.Position = icon.Position;
             iconShadow.RenderImage = image;

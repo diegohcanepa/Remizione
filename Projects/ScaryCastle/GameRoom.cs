@@ -249,7 +249,7 @@ namespace ScaryCastle
                 }
             }
 
-            if (Session.HUD.Countdown.IsCritical)
+            if (Session.StatusHUD.Countdown.IsCritical)
                 alarmLight.Draw(gameTime);
 
             if (BrightnessModifier > 0)
@@ -449,7 +449,7 @@ namespace ScaryCastle
             if (HasAmbientLightSources && Session.Player != null)
                 playerLight.Update(gameTime);
 
-            if (Session.HUD.Countdown.IsCritical)
+            if (Session.StatusHUD.Countdown.IsCritical)
             {
                 alarmLight.Position = Session.Camera.VisibleBox.Center;
                 alarmLight.Update(gameTime);

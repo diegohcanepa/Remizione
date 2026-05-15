@@ -57,7 +57,7 @@ namespace ScaryCastle
     public enum EffectContext { Contact, Attack, Update, Use }
 
     // EffectType
-    public enum EffectType { None, Damage, Death, Heal, Condition }
+    public enum EffectType { None, Condition, Damage, Death, Goo, Heal }
 
     // EffectTarget
     public enum EffectTarget

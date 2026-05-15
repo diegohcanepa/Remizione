@@ -130,7 +130,7 @@ namespace ScaryCastle
             {
                 item?.Remove();
                 session.InteractionContext.HeldItem = null;
-                session.HUD.Message.Show(MessageKind.ItemDiscarded);
+                session.TextHUD.Message.Show(MessageKind.ItemDiscarded);
                 Game.SceneManager.Pop();
                 return HandleInputResult.Handled;
             }

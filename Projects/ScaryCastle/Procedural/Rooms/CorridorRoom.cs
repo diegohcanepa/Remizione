@@ -93,7 +93,7 @@ namespace ScaryCastle
                 if (Session.ScriptLibrary.FindRoutine(CorridorLeftGateRoutineName) is Script script)
                     Session.AwaitScript(script);
 
-                Session.HUD.Countdown.Start(GameSettings.CountdownDuration, false);
+                Session.StatusHUD.Countdown.Start(GameSettings.CountdownDuration, false);
             }
             else if (Session.PreviousRoom is SideRoom)
             {
@@ -244,7 +244,7 @@ namespace ScaryCastle
                 exit.Hotspot.SetVertices(RoomNode.Definition.ExitHotspot);
                 Children.Add(exit);
 
-                Session.HUD.Message.Show(MessageKind.PathCleared);
+                Session.TextHUD.Message.Show(MessageKind.PathCleared);
 
                 if (Session.ScriptLibrary.FindRoutine("CorridorRightGate-MoveUp") is Script script)
                     Session.ScriptProcessor.StartScript(script);

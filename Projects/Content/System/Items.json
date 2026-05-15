@@ -58,6 +58,18 @@
 			"pickupSound": "PickupKey"
 		},
 		{
+			"name": "GooBottle",
+			"category": "Food",
+			"isStackable": true,
+			"effects": [
+				{
+					"context": "Use",
+					"effectType": "Goo",
+					"amount": "99",
+					"target": "Self"
+				}
+			]
+		},		{
 			"name": "Lantern",
 			"category": "Misc",
 			"lightModifier": 3,
@@ -83,8 +95,8 @@
 				},
 				{
 					"context": "Use",
-					"effectType": "Status",
-					"statusEffectType": "Poison",
+					"effectType": "Condition",
+					"conditionType": "Poison",
 					"amount": "2",
 					"chance": 0.95,
 					"target": "Self",

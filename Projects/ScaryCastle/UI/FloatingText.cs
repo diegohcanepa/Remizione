@@ -110,18 +110,5 @@ namespace ScaryCastle
 
             ShowCore(origin, amount.ToString(CultureInfo.InvariantCulture), color, new(horzDirection, -10), ScaleInfo.Text.Giant.X, 1700);
         }
-
-        // ShowHealingAmount
-        public void ShowHealingAmount(GameThing source, int amount)
-        {
-            if (amount == 0)
-                return;
-
-            var origin = source.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, source.IsDead ? -4 : 0);
-            var deltaX = Random.Shared.Next(3, 6);
-            var horzDirection = source.Direction == FacingDirection.Left ? deltaX : -deltaX;
-
-            ShowCore(origin, amount.ToString(CultureInfo.InvariantCulture), ColorPalette.Text.SteelBlue, new(horzDirection, -10), ScaleInfo.Text.Giant.X, 1700);
-        }
     }
 }

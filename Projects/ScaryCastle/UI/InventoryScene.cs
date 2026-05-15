@@ -196,9 +196,6 @@ namespace ScaryCastle
 
             Game.SpriteBatch.Begin(Game.Camera);
 
-            // Gradient
-            bottomGradient.Draw(gameTime);
-
             for (var i = 0; i < Inventory.Capacity; i++)
             {
                 slots[i].Draw(gameTime);
@@ -218,8 +215,6 @@ namespace ScaryCastle
             itemName.Draw(gameTime);
 
             Game.SpriteBatch.End();
-
-            Inventory.Session.HUD.Draw(gameTime);
         }
 
         // OnHandleInput
@@ -259,8 +254,6 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            Inventory.Session.HUD.Update(gameTime);
-
             if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y < 105)
             {
                 Game.SceneManager.Pop();

@@ -70,7 +70,7 @@ namespace ScaryCastle
             {
                 if (Actor.Goo == 0)
                 {
-                    Actor.Session.HUD.Message.Show(MessageKind.NotEnoughGoo);
+                    Actor.Session.TextHUD.Message.Show(MessageKind.NotEnoughGoo);
                 }
                 else
                 {
@@ -140,7 +140,7 @@ namespace ScaryCastle
                 }
                 else
                 {
-                    Actor.Session.HUD.Message.Show(MessageKind.LiftNotAllowed);
+                    Actor.Session.TextHUD.Message.Show(MessageKind.LiftNotAllowed);
                     MouseCursor.Shake();
                 }
             }

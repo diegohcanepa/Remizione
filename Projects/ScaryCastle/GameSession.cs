@@ -52,7 +52,8 @@ namespace ScaryCastle
             this.PlayerInventory = new(this);
             this.Environment = new Environment(this);
             this.LootGenerator = new(this);
-            this.HUD = new HUD(this);
+            this.StatusHUD = new StatusHUD(this);
+            this.TextHUD = new TextHUD(this);
             this.InteractionContext = new(this);
             this.InteractionData = new(this);
             this.DeclaredThings = new(proceduralThings);
@@ -213,7 +214,7 @@ namespace ScaryCastle
             base.OnDraw(gameTime);
 
             if (IsHUDVisible)
-                HUD.Draw(gameTime);
+                StatusHUD.Draw(gameTime);
 
             if (CurrentRun == null)
             {
@@ -236,6 +237,17 @@ namespace ScaryCastle
 
             console?.Draw(gameTime);
             roomEditor?.Draw(gameTime);
+
+            Game.RenderTargets.Swap();
+            Game.SpriteBatch.Begin(effect: ScaryCastleGame.Effects.CRT.Effect);
+            Game.SpriteBatch.Draw(Game.RenderTargets.PreviousTarget, Vector2.Zero, Color.White);
+            Game.SpriteBatch.End();
+
+            // Draw speech bubbles
+            SpeechBubble.DrawSpeechBubbles(gameTime);
+
+            if (IsHUDVisible)
+                TextHUD.Draw(gameTime);
         }
 
         // OnEnterRoom
@@ -252,7 +264,8 @@ namespace ScaryCastle
         // OnExitRoom
         protected override void OnExitRoom(Room currentRoom, Room nextRoom)
         {
-            HUD.Reset();
+            StatusHUD.Reset();
+            TextHUD.Reset();
             ComicTextPool.ReturnAll();
             ObjectPools.FloatingTexts.ReturnAll();
 
@@ -269,7 +282,7 @@ namespace ScaryCastle
             if (roomEditor?.HandleInput() == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
-            else if (HUD.HandleInput() == HandleInputResult.Handled)
+            else if (TextHUD.HandleInput() == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
             else
@@ -404,7 +417,10 @@ namespace ScaryCastle
             if (CurrentRun != null)
             {
                 if (IsHUDVisible)
-                    HUD.Update(gameTime);
+                {
+                    StatusHUD.Update(gameTime);
+                    TextHUD.Update(gameTime);
+                }
 
                 if (!IsAwaiting)
                 {
@@ -520,7 +536,7 @@ namespace ScaryCastle
             if (FindEntity<Hub>(nameof(Hub)) is Hub hubRoom)
                 hubRoom.Unload();
 
-            HUD.Countdown.Reset();
+            StatusHUD.Countdown.Reset();
             PlayerInventory.Clear();
             PlayerStats.Reset();
             InteractionContext.Reset();
@@ -571,9 +587,6 @@ namespace ScaryCastle
         // Game
         public new ScaryCastleGame Game { get; }
 
-        // HUD
-        public HUD HUD { get; }
-
         // InteractionContext
         public InteractionContext InteractionContext { get; }
 
@@ -615,7 +628,7 @@ namespace ScaryCastle
             CleanUpRuntimeEntities();
 
             Bosses.Clear();
-            HUD.BossMeter.Reset();
+            StatusHUD.BossMeter.Reset();
 
             if (!CurrentRun.LoadNextCorridor(this))
             {
@@ -678,7 +691,8 @@ namespace ScaryCastle
                 {
                     field?.StopMoving();
                     field = value;
-                    HUD.Reset();
+                    StatusHUD.Reset();
+                    TextHUD.Reset();
                     InteractionData.Clear();
                     if (value != null)
                         Camera.Follow(value);
@@ -757,7 +771,7 @@ namespace ScaryCastle
         {
             if (Boss != null)
             {
-                HUD.BossMeter.SetTargets(Bosses);
+                StatusHUD.BossMeter.SetTargets(Bosses);
 
                 var duration = 30;
                 if (Boss.Definition?.Difficulty == ScaryCastle.Difficulty.Normal)
@@ -765,16 +779,22 @@ namespace ScaryCastle
                 else if (Boss.Definition?.Difficulty == ScaryCastle.Difficulty.Hard)
                     duration = 66;
 
-                HUD.Countdown.Start(duration, true);
+                StatusHUD.Countdown.Start(duration, true);
             }
         }
+
+        // StatusHUD
+        public StatusHUD StatusHUD { get; }
 
         // StopCountdown
         [ScriptMethod]
         public void StopCountdown()
         {
-            HUD.Countdown.Reset();
+            StatusHUD.Countdown.Reset();
         }
+
+        // TextHUD
+        public TextHUD TextHUD { get; }
 
         // Bosses
         public List<Actor> Bosses { get; } = [];

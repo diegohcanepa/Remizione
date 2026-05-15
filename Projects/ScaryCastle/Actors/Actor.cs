@@ -664,7 +664,7 @@ namespace ScaryCastle
 
             if (!MouseCursor.IsEnabled)
             {
-                Session.HUD.Message.Show(MessageKind.HandsFull);
+                Session.TextHUD.Message.Show(MessageKind.HandsFull);
                 return false;
             }
 

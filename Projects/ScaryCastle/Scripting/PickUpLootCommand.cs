@@ -23,8 +23,8 @@ namespace ScaryCastle.Scripting
                 {
                     loot.Loot.PickupSound?.Play();
                     session.PlayerInventory.Add(loot.Loot);
-                    session.HUD.InventoryMeter.Animate();
-                    session.HUD.Log.Show(LogVerb.Found, loot.Loot);
+                    session.StatusHUD.InventoryMeter.Animate();
+                    session.TextHUD.Log.Show(LogVerb.Found, loot.Loot);
                     loot.Loot = null;
                 }
             }

@@ -15,6 +15,8 @@ namespace ScaryCastle
             this.Session = session;
         }
 
+        #region Private members
+
         // SetOutcomeCore
         private void SetOutcomeCore(GameThing target, InteractionType interactionType, Script script)
         {
@@ -24,6 +26,8 @@ namespace ScaryCastle
             InteractionType = interactionType;
             Script = script;
         }
+
+        #endregion
 
         // Clear
         public void Clear()
@@ -47,11 +51,12 @@ namespace ScaryCastle
             {
                 if (Vector2.Distance(Target.Position, TargetPosition) > 1)
                 {
-                    session.HUD.Message.Show(MessageKind.OutOfReach);
+                    session.TextHUD.Message.Show(MessageKind.OutOfReach);
                 }
                 else
                 {
                     session.Player.FaceTo(Target);
+                    
                     if (Script != null)
                     {
                         if (InteractionType == InteractionType.Attack)

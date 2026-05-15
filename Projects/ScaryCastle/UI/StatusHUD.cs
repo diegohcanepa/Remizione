@@ -5,9 +5,9 @@ using Microsoft.Xna.Framework;
 namespace ScaryCastle
 {
     /// <summary>
-    /// HUD
+    /// StatusHUD
     /// </summary>
-    public sealed class HUD : GameObject, IInputHandler
+    public sealed class StatusHUD : GameObject
     {
         #region Private fields
 
@@ -19,11 +19,10 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public HUD(GameSession session)
+        public StatusHUD(GameSession session)
         {
             this.session = session;
             this.hpMeter = new(new(5, 3));
-            this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5), ScaleInfo.Text.Giant);
             this.Countdown = new(session);
             this.InventoryMeter = new(session.PlayerInventory);
             this.PassiveItems = new(session);
@@ -41,8 +40,6 @@ namespace ScaryCastle
             hpMeter.Draw(gameTime);
             GooMeter.Draw(gameTime);
             InventoryMeter.Draw(gameTime);
-            Log.Draw(gameTime);
-            Message.Draw(gameTime);
             Countdown.Draw(gameTime);
             PassiveItems.Draw(gameTime);
 
@@ -63,8 +60,6 @@ namespace ScaryCastle
             BossMeter.Update(gameTime);
             hpMeter.Update(gameTime);
             GooMeter.Update(gameTime);
-            Log.Update(gameTime);
-            Message.Update(gameTime);
             Countdown.Update(gameTime);
         }
 
@@ -79,26 +74,8 @@ namespace ScaryCastle
         // GooMeter
         public UIGooMeter GooMeter { get; } = new();
 
-        // HandleInput
-        public HandleInputResult HandleInput()
-        {
-            if (session.IsAwaiting)
-                return HandleInputResult.Unhandled;
-
-            if (session.IsConsoleVisible)
-                return HandleInputResult.Unhandled;
-
-            return HandleInputResult.Unhandled;
-        }
-
         // InventoryMeter
         public UIInventoryMeter InventoryMeter { get; }
-
-        // Log
-        public UILog Log { get; } = new();
-
-        // Message
-        public HUDMessage Message { get; }
 
         // PassiveItems
         public UIPassiveItems PassiveItems { get; }
@@ -108,8 +85,6 @@ namespace ScaryCastle
         {
             hpMeter.Actor = session.Player;
             GooMeter.Actor = session.Player;
-            Message.Hide();
-            Log.Hide();
             BossMeter.Reset();
         }
     }

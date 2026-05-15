@@ -112,14 +112,6 @@ namespace ScaryCastle
         // OnScenesDrawn
         protected override void OnScenesDrawn(GameTime gameTime)
         {
-            RenderTargets.Swap();
-            SpriteBatch.Begin(effect: Effects.CRT.Effect);
-            SpriteBatch.Draw(RenderTargets.PreviousTarget, Vector2.Zero, Color.White);
-            SpriteBatch.End();
-
-            // Draw speech bubbles
-            SpeechBubble.DrawSpeechBubbles(gameTime);
-
             MonitorFrame.Draw(gameTime);
         }
 

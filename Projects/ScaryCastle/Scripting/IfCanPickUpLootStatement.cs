@@ -21,7 +21,7 @@ namespace ScaryCastle.Scripting
             {
                 if (!session.PlayerInventory.HasSpace(lootContainer.Loot))
                 {
-                    session.HUD.Message.Show(MessageKind.InventoryFull);
+                    session.TextHUD.Message.Show(MessageKind.InventoryFull);
                     return false;
                 }
             }

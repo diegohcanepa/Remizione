@@ -8,13 +8,13 @@ namespace ScaryCastle
     internal static class ColorPalette
     {
         // BackgroundColor
-        internal static Color BackgroundColor { get; } = new Color(0, 2, 5);
+        internal static Color BackgroundColor { get; } = new(0, 2, 5);
 
         // BossMeter
         internal static class BossMeter
         {
             internal static Color Back { get; } = new(77, 34, 34);
-            internal static Color Diff { get; } = ColorPalette.Text.Orange;
+            internal static Color Diff { get; } = Text.Orange;
             internal static Color Fore { get; } = new(199, 47, 47);
         }
 
@@ -28,10 +28,10 @@ namespace ScaryCastle
         }
 
         // CreditHeading
-        internal static Color CreditHeading { get; } = new Color(230, 190, 90);
+        internal static Color CreditHeading { get; } = new(230, 190, 90);
 
         // CreditLine
-        internal static Color CreditLine { get; } = new Color(230, 230, 212);
+        internal static Color CreditLine { get; } = new(230, 230, 212);
 
         // DefaultDarknessLight
         internal static Color DefaultDarknessLight { get; } = Color.WhiteSmoke * .75f;
@@ -44,28 +44,28 @@ namespace ScaryCastle
         }
 
         // HighlightedText
-        internal static Color HighlightedText { get; } = new Color(215, 215, 170);
+        internal static Color HighlightedText { get; } = new(215, 215, 170);
 
         // HUDMessage
-        internal static Color HUDMessage { get; } = new Color(227, 213, 200);
+        internal static Color HUDMessage { get; } = new(227, 213, 200);
 
         // MenuItemTextActive
-        internal static Color MenuItemTextActive { get; } = new Color(240, 240, 240);
+        internal static Color MenuItemTextActive { get; } = new(240, 240, 240);
 
         // MenuItemTextInactive
-        internal static Color MenuItemTextInactive { get; } = new Color(187, 180, 207);
+        internal static Color MenuItemTextInactive { get; } = new(187, 180, 207);
 
         // MenuOptionLabel
-        internal static Color MenuOptionLabel { get; } = new Color(130, 130, 160);
+        internal static Color MenuOptionLabel { get; } = new(130, 130, 160);
 
         // MessageBoxRedText
-        internal static Color MessageBoxRedText { get; } = new Color(224, 144, 144);
+        internal static Color MessageBoxRedText { get; } = new(224, 144, 144);
 
         // MouseCursor
         internal static class MouseCursor
         {
             // AttackableTarget
-            internal static Color AttackableTarget { get; } = Text.Red;
+            internal static Color AttackableTarget { get; } = new(230, 65, 65);
 
             // HighlightBlue
             internal static Vector4 HighlightBlue { get; } = (new Color(79, 164, 184) * .65f).ToVector4();
@@ -75,10 +75,10 @@ namespace ScaryCastle
         }
 
         // OutdoorLight
-        internal static Color OutdoorLight { get; } = new Color(75, 95, 220);
+        internal static Color OutdoorLight { get; } = new(75, 95, 220);
 
         // PopupTitle
-        internal static Color PopupTitle { get; } = new Color(116, 95, 75);
+        internal static Color PopupTitle { get; } = new(116, 95, 75);
 
         // SceneShade
         internal static Color SceneShade { get; } = Color.Black * .2f;
@@ -126,12 +126,12 @@ namespace ScaryCastle
         }
 
         // TextWhite
-        internal static Color TextWhite { get; } = new Color(223, 224, 232);
+        internal static Color TextWhite { get; } = new(223, 224, 232);
 
         // TextLastSave
-        internal static Color TextLastSave { get; } = new Color(71, 115, 80);
+        internal static Color TextLastSave { get; } = new(71, 115, 80);
 
         // TextStandardMenuTitle
-        internal static Color TextStandardMenuTitle { get; } = new Color(227, 213, 200);
+        internal static Color TextStandardMenuTitle { get; } = new(227, 213, 200);
     }
 }

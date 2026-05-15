@@ -73,9 +73,9 @@ namespace ScaryCastle
                     case EffectType.None:
                         break;
 
-                    // Heal
-                    case EffectType.Heal:
-                        realTarget.Heal(amount);
+                    // Condition
+                    case EffectType.Condition:
+                        realTarget.ApplyCondition(effect.Condition, amount, effect.ComicText);
                         break;
 
                     // Damage
@@ -88,9 +88,14 @@ namespace ScaryCastle
                         realTarget.TakeDamage(source, effect.DamageType, int.MaxValue, effect.ComicText, effect.GetKnockbackForce());
                         break;
 
-                    // Condition
-                    case EffectType.Condition:
-                        realTarget.ApplyCondition(effect.Condition, amount, effect.ComicText);
+                    // Goo
+                    case EffectType.Goo:
+                        actor?.Goo += amount;
+                        break;
+
+                    // Heal
+                    case EffectType.Heal:
+                        realTarget.HP += amount;
                         break;
                 }
             }

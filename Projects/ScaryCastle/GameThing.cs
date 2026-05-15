@@ -547,7 +547,7 @@ namespace ScaryCastle
                     {
                         coin.Count--;
                         Sound.Play(SoundNames.CoinLoss);
-                        Session.HUD.Log.Show(LogVerb.Lost, coin.Definition, true);
+                        Session.TextHUD.Log.Show(LogVerb.Lost, coin.Definition, true);
                     }
                 }
 
@@ -860,7 +860,8 @@ namespace ScaryCastle
         // FaceTo
         public void FaceTo(GameThing target)
         {
-            FaceTo(target.Position);
+            if (target != this)
+                FaceTo(target.Position);
         }
 
         // FaceTo
@@ -992,14 +993,6 @@ namespace ScaryCastle
                 return table.GetModifier(damageType);
 
             return 1;
-        }
-
-        // Heal
-        public void Heal(int amount)
-        {
-            var current = HP;
-            HP += amount;
-            Session.ObjectPools.FloatingTexts.Get()?.ShowHealingAmount(this, Math.Abs(current - HP));
         }
 
         // HitTest
@@ -1347,7 +1340,7 @@ namespace ScaryCastle
             // ---------------------------------------------------------
             // El empuje se aplica independientemente de la vida. 
             // Una caja de metal indestructible (MaxHP=0) debería poder ser empujada.
-            if (knockbackForce != Vector2.Zero)
+            if (MaxHP > 0 && knockbackForce != Vector2.Zero)
             {
                 knockbackForce *= attacker.GetKnockbackMultiplier(this);
 
