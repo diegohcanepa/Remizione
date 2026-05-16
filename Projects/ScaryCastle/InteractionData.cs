@@ -56,7 +56,7 @@ namespace ScaryCastle
                 else
                 {
                     session.Player.FaceTo(Target);
-                    
+
                     if (Script != null)
                     {
                         if (InteractionType == InteractionType.Attack)
@@ -122,7 +122,7 @@ namespace ScaryCastle
         public void SetUseWithOutcome(GameThing target, Item item)
         {
             var script = target.Session.ScriptLibrary.FindOverload(target.DeclaredName, item.Name);
-            script ??= target.Session.ScriptLibrary.FindRoutine($"{item.Name}Outcome");
+            script ??= item.Script;
 
             if (script != null)
             {

@@ -136,7 +136,6 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(StinkyRat));
             AotTypeRegistry.Register(typeof(Torch));
             AotTypeRegistry.Register(typeof(Trunk));
-            AotTypeRegistry.Register(typeof(WaterPuddle));
 
             AotTypeRegistry.Register("add-dialog-option", typeof(AddDialogOptionCommand));
             AotTypeRegistry.Register("add-hole", typeof(AddHoleCommand), CodingContext.EntityDeclaration);

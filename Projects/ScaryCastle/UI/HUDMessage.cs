@@ -67,7 +67,7 @@ namespace ScaryCastle
             icon.RenderImage = null;
 
             var color = ColorPalette.Text.Highlight;
-            
+
             if (message is MessageKind.NotEnoughCoins or MessageKind.ItemDiscarded or MessageKind.LiftNotAllowed)
             {
                 Sound.Play(SoundNames.Error);

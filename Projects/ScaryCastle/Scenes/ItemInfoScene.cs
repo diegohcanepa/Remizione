@@ -10,14 +10,14 @@ namespace ScaryCastle
     /// </summary>
     public sealed class ItemInfoScene : Scene
     {
-        private readonly Sprite arrow;
         private readonly UIButton button;
         private readonly Sprite gradient;
         private readonly Sprite image;
+        private readonly Sprite imageShadow;
         private Item? item;
-        private readonly FloatTween opacityTween = new();
+        private readonly TextSprite itemNameText;
         private readonly GameSession session;
-        private readonly TextSprite textSprite;
+        private readonly TextSprite descriptionText;
 
         #region Constructor
 
@@ -26,54 +26,65 @@ namespace ScaryCastle
         {
             this.session = session;
 
-            const int topMargin = 35;
-
             PausePreviousScenes = true;
 
             // Gradient
-            this.gradient = new(Atlases.UI.BottomGradient)
+            this.gradient = new(Atlases.UI.GetImage("ItemInfoContainer"))
             {
                 PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.Area.GetPoint(RectanglePoint.Bottom)
-            };
-
-            // Arrow
-            this.arrow = new(Atlases.UI.DialogArrowLarge)
-            {
-                Color = ColorPalette.Text.Default,
-                PivotOrigin = RectanglePoint.Bottom,
-                Position = gradient.BoundingBox.GetPoint(RectanglePoint.RightBottom, -14, -8),
-                Scale = ScaleInfo.UIElement.Large
-            };
-
-            arrow.Tweens.YTween = FloatTween.Create(TweenStyle.CubicInOut, arrow.Y, arrow.Y + 1, 250, -1);
-
-            // Text sprite
-            this.textSprite = new(Fonts.CommonOutline)
-            {
-                Color = ColorPalette.Text.Sentence,
-                MaximumWidth = (int)(Screen.NativeWidth * .8f),
-                PauseOnPunctuationMarks = false,
-                PivotOrigin = RectanglePoint.Top,
-                Position = gradient.BoundingBox.GetPoint(RectanglePoint.Top, 0, topMargin),
-                Scale = ScaleInfo.Text.Huge,
-                TypingSpeed = 20
+                Position = Screen.Area.GetPoint(RectanglePoint.Bottom, 0, -5)
             };
 
             // Image
             this.image = new()
             {
+                PivotOrigin = RectanglePoint.Center,
+                Position = gradient.BoundingBox.GetPoint(RectanglePoint.LeftTop, 9, 9),
+                Scale =ScaleInfo.UIElement.Medium
+            };
+
+            // ImageShadow
+            imageShadow = new()
+            {
+                Color = Color.Black,
+                Opacity = ColorPalette.ShadowOpacity,
+                PivotOrigin = RectanglePoint.Center,
+                Scale = ScaleInfo.UIElement.Medium,
+                X = image.X,
+                Y = image.BoundingBox.Center.Y + 1,
+            };
+
+            // Item name text
+            this.itemNameText = new(Fonts.Common)
+            {
+                Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Left,
-                Position = gradient.BoundingBox.GetPoint(RectanglePoint.LeftTop, 8, topMargin)
+                Position = gradient.BoundingBox.GetPoint(RectanglePoint.LeftTop, 22, 13),
+                Scale = ScaleInfo.Text.ExtraLarge,
+                ShadowOffset = new(.5f)
+            };
+
+            // Description sprite
+            this.descriptionText = new(Fonts.Common)
+            {
+                Color = ColorPalette.Text.Sentence,
+                Opacity = .7f,
+                MaximumWidth = 130,
+                PauseOnPunctuationMarks = false,
+                PivotOrigin = RectanglePoint.LeftTop,
+                Position = gradient.BoundingBox.GetPoint(RectanglePoint.LeftTop, 6, 23),
+                Scale = ScaleInfo.Text.ExtraLarge,
+                ShadowOffset = new(.5f),
+                TypingSpeed = 20
             };
 
             // Button
-            this.button = new()
+            this.button = new(null, 1.5f)
             {
                 ImageName = nameof(Atlases.UI.DiscardItemIcon),
-                PivotOrigin = RectanglePoint.Right,
-                Text = "Descartar",
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, 0, -40)
+                PivotOrigin = RectanglePoint.RightTop,
+                Position = gradient.BoundingBox.GetPoint(RectanglePoint.RightTop, 0, 2),
+                
             };
         }
 
@@ -92,8 +103,8 @@ namespace ScaryCastle
             {
                 MouseCursor.PerformClick();
 
-                if (textSprite.IsTyping)
-                    textSprite.StopTyping();
+                if (descriptionText.IsTyping)
+                    descriptionText.StopTyping();
                 else
                     Game.SceneManager.Pop();
 
@@ -111,13 +122,12 @@ namespace ScaryCastle
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
+            Game.Shapes.DrawRectangle(Screen.Area, ColorPalette.SceneShade);
             gradient.Draw(gameTime);
+            imageShadow.Draw(gameTime);
             image.Draw(gameTime);
-            textSprite.Draw(gameTime);
-            Game.SpriteBatch.End();
-
-            Game.SpriteBatch.Begin(Game.Camera);
-            arrow.Draw(gameTime);
+            itemNameText.Draw(gameTime);
+            descriptionText.Draw(gameTime);
             Game.SpriteBatch.End();
 
             button.Draw(gameTime);
@@ -140,8 +150,8 @@ namespace ScaryCastle
 
             if (InputBindings.Continue.IsPressed(PlayerIndex.One))
             {
-                if (textSprite.IsTyping)
-                    textSprite.StopTyping();
+                if (descriptionText.IsTyping)
+                    descriptionText.StopTyping();
                 else
                     Game.SceneManager.Pop();
                 return HandleInputResult.Handled;
@@ -153,10 +163,9 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            arrow.Update(gameTime);
             button.Update(gameTime);
-            textSprite.Update(gameTime);
-            image.Opacity = textSprite.Opacity;
+            itemNameText.Update(gameTime);
+            descriptionText.Update(gameTime);
         }
 
         #endregion
@@ -165,10 +174,11 @@ namespace ScaryCastle
         public void Show(Item item)
         {
             this.item = item;
-            textSprite.Text = item.Definition.Description;
-            opacityTween.Start(TweenStyle.CubicIn, 0, 1, 500);
-            textSprite.Tweens.OpacityTween = opacityTween;
+            itemNameText.Text = item.Definition.DisplayName;
+            descriptionText.Text = item.Definition.Description;
+            this.imageShadow.RenderImage = item.Definition.Image;
             this.image.RenderImage = item.Definition.Image;
+            MouseCursor.State = MouseCursorState.Arrow;
         }
     }
 }

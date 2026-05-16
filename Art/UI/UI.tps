@@ -341,6 +341,36 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">ItemInfo-assets/DiscardItemIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,4,8,7</rect>
+                <key>scale9Paddings</key>
+                <rect>4,4,8,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ItemInfo-assets/ItemInfoContainer.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>54,14,107,28</rect>
+                <key>scale9Paddings</key>
+                <rect>54,14,107,28</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Items-assets/Apple.png</key>
             <key type="filename">Items-assets/Battery.png</key>
             <key type="filename">Items-assets/Burger.png</key>
@@ -915,21 +945,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UIIcons-assets/DiscardItemIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,3,5</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,3,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">UIIcons-assets/GooIcon.png</key>
             <key type="filename">UIIcons-assets/GooIcons1.png</key>
             <key type="filename">UIIcons-assets/GooIcons2.png</key>
@@ -979,6 +994,7 @@
                     <filename>Items-assets</filename>
                     <filename>Inventory-assets</filename>
                     <filename>MonitorFrame-assets</filename>
+                    <filename>ItemInfo-assets</filename>
                 </array>
             </struct>
         </map>
