@@ -17,7 +17,6 @@ namespace ScaryCastle
             Coin = this[nameof(Coin)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
-            CursedIcon = this[nameof(CursedIcon)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
             DialogOptionBullet = this[nameof(DialogOptionBullet)];
             DiscardItemIcon = this[nameof(DiscardItemIcon)];
@@ -36,7 +35,6 @@ namespace ScaryCastle
             PickupShadow = this[nameof(PickupShadow)];
             Pixel = this[nameof(Pixel)];
             PointingHand = this[nameof(PointingHand)];
-            PoisonedIcon = this[nameof(PoisonedIcon)];
             PopupContainer = this[nameof(PopupContainer)];
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
             PurpleHearts = CreateReadOnlyCollection(nameof(PurpleHearts), 1, 4);
@@ -64,9 +62,6 @@ namespace ScaryCastle
 
         // CreditsBar
         public AtlasImage CreditsBar { get; }
-
-        // CursedIcon
-        public AtlasImage CursedIcon { get; }
 
         // DialogArrowLarge
         public AtlasImage DialogArrowLarge { get; }
@@ -110,9 +105,6 @@ namespace ScaryCastle
         // LiftIcon
         public AtlasImage LiftIcon { get; }
 
-        // RedHearts
-        public ReadOnlyCollection<AtlasImage> RedHearts { get; }
-
         // MessageContainer
         public AtlasImage MessageContainer { get; }
 
@@ -125,9 +117,6 @@ namespace ScaryCastle
         // PointingHand
         public AtlasImage PointingHand { get; }
 
-        // PoisonedIcon
-        public AtlasImage PoisonedIcon { get; }
-
         // PopupContainer
         public AtlasImage PopupContainer { get; }
 
@@ -136,6 +125,9 @@ namespace ScaryCastle
 
         // PurpleHearts
         public ReadOnlyCollection<AtlasImage> PurpleHearts { get; }
+
+        // RedHearts
+        public ReadOnlyCollection<AtlasImage> RedHearts { get; }
 
         // Sack
         public AtlasImage Sack { get; }
