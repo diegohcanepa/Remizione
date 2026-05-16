@@ -15,7 +15,14 @@ namespace ScaryCastle
         {
             internal static Color Back { get; } = new(77, 34, 34);
             internal static Color Diff { get; } = Text.Orange;
-            internal static Color Fore { get; } = new(199, 47, 47);
+            internal static Color Fore { get; } = new(168, 45, 45);
+        }
+
+        // Condition
+        internal static class Condition
+        {
+            internal static Color Curse { get; } = new(119, 103, 211);
+            internal static Color Poison { get; } = new(110, 224, 31);
         }
 
         // ContextMenu
@@ -65,7 +72,7 @@ namespace ScaryCastle
         internal static class MouseCursor
         {
             // AttackableTarget
-            internal static Color AttackableTarget { get; } = new(230, 65, 65);
+            internal static Color AttackableTarget { get; } = Text.OrangeLight;
 
             // HighlightBlue
             internal static Vector4 HighlightBlue { get; } = (new Color(79, 164, 184) * .65f).ToVector4();

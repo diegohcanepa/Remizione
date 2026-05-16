@@ -27,7 +27,7 @@ namespace ScaryCastle
     public enum CombatIntentCategory { Basic, Special }
 
     // ComicTextKind
-    public enum ComicTextKind { None, AghGreen, AghRed, BoomPurple, BoomRed, BangBlue, BangRed, CrackBlue, CrackYellow, CuackPurple, CuackYellow, Kapow, KapowStrong, OuchBlue, OuchGreen, PlopRed, PlopYellow, SlapBlue, SlapRed, Zap }
+    public enum ComicTextKind { None, AghGreen, AghPurple, AghRed, BoomPurple, BoomRed, BangBlue, BangRed, CrackBlue, CrackYellow, CuackPurple, CuackYellow, Kapow, KapowStrong, OuchBlue, OuchGreen, PlopRed, PlopYellow, SlapBlue, SlapRed, Zap }
 
     // ConditionType
     public enum ConditionType { None, Curse, Poison, ChromaticAberration, CoinLoss }

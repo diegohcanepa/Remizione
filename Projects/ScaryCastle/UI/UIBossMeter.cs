@@ -29,7 +29,7 @@ namespace ScaryCastle
         {
             this.session = session;
 
-            this.meter = new Meter(ColorPalette.BossMeter.Back, ColorPalette.BossMeter.Fore, ColorPalette.BossMeter.Diff, new(40, 6), 1)
+            this.meter = new Meter(ColorPalette.BossMeter.Back, ColorPalette.BossMeter.Fore, ColorPalette.BossMeter.Diff, new(60, 6), 1)
             {
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -10)
             };
@@ -47,13 +47,13 @@ namespace ScaryCastle
                 Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Left,
                 Position = meter.BoundingBox.GetPoint(RectanglePoint.Right, 1.5f, .5f),
-                Scale = ScaleInfo.Text.ExtraLarge
+                Scale = ScaleInfo.Text.Huge
             };
 
-            this.icon = new(Atlases.UI.SkullIcon)
+            this.icon = new(Atlases.UI.BossMeter)
             {
                 PivotOrigin = RectanglePoint.Right,
-                Position = meter.BoundingBox.GetPoint(RectanglePoint.Left, -1, .2f)
+                Position = meter.BoundingBox.GetPoint(RectanglePoint.Left, 1, 0)
             };
         }
 
@@ -68,8 +68,8 @@ namespace ScaryCastle
                 return;
 
             Game.SpriteBatch.Begin(Game.Camera);
-            icon.Draw(gameTime);
             meter.Draw(gameTime);
+            icon.Draw(gameTime);
             labelText.Draw(gameTime);
             amountText.Draw(gameTime);
             Game.SpriteBatch.End();

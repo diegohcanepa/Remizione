@@ -571,7 +571,7 @@ namespace ScaryCastle
                 }
 
                 if (Session.Player == this)
-                    Session.ObjectPools.FloatingTexts.Get()?.ShowAmount(this, ColorPalette.Text.Purple, amount);
+                    Session.ObjectPools.FloatingTexts.Get()?.ShowAmount(this, ColorPalette.Condition.Curse, amount);
             }
 
             // 5. Si el efecto entrante es Veneno: Solo importa si no estás maldito.
@@ -591,7 +591,7 @@ namespace ScaryCastle
                 }
 
                 if (Session.Player == this)
-                    Session.ObjectPools.FloatingTexts.Get()?.ShowAmount(this, ColorPalette.Text.Green, amount);
+                    Session.ObjectPools.FloatingTexts.Get()?.ShowAmount(this, ColorPalette.Condition.Poison, amount);
             }
 
             // ComicText si hubo daño real
