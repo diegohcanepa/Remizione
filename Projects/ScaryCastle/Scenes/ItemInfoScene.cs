@@ -11,7 +11,7 @@ namespace ScaryCastle
     public sealed class ItemInfoScene : Scene
     {
         private readonly UIButton button;
-        private readonly Sprite gradient;
+        private readonly Sprite container;
         private readonly Sprite image;
         private readonly Sprite imageShadow;
         private Item? item;
@@ -28,8 +28,8 @@ namespace ScaryCastle
 
             PausePreviousScenes = true;
 
-            // Gradient
-            this.gradient = new(Atlases.UI.GetImage("ItemInfoContainer"))
+            // Container
+            this.container = new(Atlases.UI.GetImage("ItemInfoContainer"))
             {
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.Area.GetPoint(RectanglePoint.Bottom, 0, -5)
@@ -39,7 +39,7 @@ namespace ScaryCastle
             this.image = new()
             {
                 PivotOrigin = RectanglePoint.Center,
-                Position = gradient.BoundingBox.GetPoint(RectanglePoint.LeftTop, 9, 9),
+                Position = container.BoundingBox.GetPoint(RectanglePoint.LeftTop, 9, 9),
                 Scale =ScaleInfo.UIElement.Medium
             };
 
@@ -59,7 +59,7 @@ namespace ScaryCastle
             {
                 Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Left,
-                Position = gradient.BoundingBox.GetPoint(RectanglePoint.LeftTop, 22, 13),
+                Position = container.BoundingBox.GetPoint(RectanglePoint.LeftTop, 22, 13),
                 Scale = ScaleInfo.Text.ExtraLarge,
                 ShadowOffset = new(.5f)
             };
@@ -72,7 +72,7 @@ namespace ScaryCastle
                 MaximumWidth = 130,
                 PauseOnPunctuationMarks = false,
                 PivotOrigin = RectanglePoint.LeftTop,
-                Position = gradient.BoundingBox.GetPoint(RectanglePoint.LeftTop, 6, 23),
+                Position = container.BoundingBox.GetPoint(RectanglePoint.LeftTop, 6, 23),
                 Scale = ScaleInfo.Text.ExtraLarge,
                 ShadowOffset = new(.5f),
                 TypingSpeed = 20
@@ -83,7 +83,7 @@ namespace ScaryCastle
             {
                 ImageName = nameof(Atlases.UI.DiscardItemIcon),
                 PivotOrigin = RectanglePoint.RightTop,
-                Position = gradient.BoundingBox.GetPoint(RectanglePoint.RightTop, 0, 2),
+                Position = container.BoundingBox.GetPoint(RectanglePoint.RightTop, 0, 2),
                 
             };
         }
@@ -123,7 +123,7 @@ namespace ScaryCastle
         {
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
             Game.Shapes.DrawRectangle(Screen.Area, ColorPalette.SceneShade);
-            gradient.Draw(gameTime);
+            container.Draw(gameTime);
             imageShadow.Draw(gameTime);
             image.Draw(gameTime);
             itemNameText.Draw(gameTime);

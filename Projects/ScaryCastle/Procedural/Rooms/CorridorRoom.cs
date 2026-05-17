@@ -106,9 +106,6 @@ namespace ScaryCastle
         {
             base.OnLoad();
 
-            if (Session.Player != null)
-                Session.Player.Goo++;
-
             if (Session.FindDeclaredThing(CorridorRightWallPatchName) is Prop rightWallPatch)
             {
                 rightWallPatch.Atlas = Atlas;

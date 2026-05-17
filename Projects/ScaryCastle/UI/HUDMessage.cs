@@ -9,6 +9,7 @@ namespace ScaryCastle
     /// </summary>
     public sealed class HUDMessage : GameObject
     {
+        private readonly Sprite container = new(Atlases.UI.GetImage("MessageContainer")) { PivotOrigin = RectanglePoint.Center };
         private readonly FloatTween fadeTween = new();
         private readonly Sprite icon = new() { PivotOrigin = RectanglePoint.Right };
         private readonly TextSprite messageText;
@@ -38,6 +39,7 @@ namespace ScaryCastle
             if (!fadeTween.IsRunning)
                 return;
 
+            container.Draw(gameTime);
             icon.Draw(gameTime);
             messageText.Draw(gameTime);
         }
@@ -106,6 +108,8 @@ namespace ScaryCastle
             fadeTween.Start(TweenStyle.CubicIn, 1, 0, 200);
             scaleTween.Start(TweenStyle.CubicIn, scale * .8f, scale, 50);
             messageText.Tweens.ScaleTween = scaleTween;
+            container.Position = messageText.Position;
+            container.Y += 3;
         }
     }
 }

@@ -549,9 +549,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>49,7,99,13</rect>
+                <rect>50,8,100,15</rect>
                 <key>scale9Paddings</key>
-                <rect>49,7,99,13</rect>
+                <rect>50,8,100,15</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -688,21 +688,6 @@
                 <rect>3,3,6,5</rect>
                 <key>scale9Paddings</key>
                 <rect>3,3,6,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UI-assets/BottomGradient.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>60,8,120,15</rect>
-                <key>scale9Paddings</key>
-                <rect>60,8,120,15</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

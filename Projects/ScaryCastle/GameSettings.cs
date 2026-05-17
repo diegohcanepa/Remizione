@@ -7,12 +7,6 @@ namespace ScaryCastle
     /// </summary>
     public static class GameSettings
     {
-        // AppleItem
-        public const string AppleItem = "Apple";
-
-        // BargainCrossItem
-        public const string BargainCrossItem = "BargainCross";
-
         // Build
         public const int Build = 105;
 

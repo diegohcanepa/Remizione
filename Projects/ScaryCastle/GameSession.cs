@@ -483,10 +483,14 @@ namespace ScaryCastle
 
             CurrentRun = new Run(Seed, 6);
 
-            PlayerInventory.Add(GameSettings.BargainCrossItem);
+            PlayerInventory.Add(ItemNames.BargainCross);
 
             if (RunCount == 0)
-                PlayerInventory.Add(GameSettings.AppleItem);
+            {
+                PlayerInventory.Add(ItemNames.Apple);
+                PlayerInventory.Add(ItemNames.GooBottle);
+                Player?.Goo = 0;
+            }
 
             LoadNextCorridor();
         }
