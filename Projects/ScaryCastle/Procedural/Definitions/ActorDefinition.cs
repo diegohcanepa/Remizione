@@ -15,10 +15,16 @@ namespace ScaryCastle
             // Faction
             Faction = element.GetEnum("faction", Faction.Evil);
 
+            // GroupCount
+            GroupCount = element.GetInt32("groupCount", 0);
+
             Definitions.Add(this);
         }
 
         // Definitions
         public static DataContainer<ActorDefinition> Definitions { get; } = new(element => new ActorDefinition(element));
+
+        // GroupCount
+        public int GroupCount { get; }
     }
 }

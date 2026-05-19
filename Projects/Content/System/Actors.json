@@ -2,12 +2,12 @@
   "$schema": "./Actor.schema.json",
   "data": [
     {
-      "name": "EnviousEye",
-      "spawnLocation": "SideRoom"
+      "name": "AnabolicRat",
+      "spawnLocation": "Gate"
     },
     {
-      "name": "CapitalistRat",
-      "spawnLocation": "Gate"
+      "name": "EnviousEye",
+      "spawnLocation": "SideRoom"
     },
     {
       "name": "Rat"

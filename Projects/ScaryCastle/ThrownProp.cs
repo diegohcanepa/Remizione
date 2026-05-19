@@ -42,7 +42,7 @@ namespace ScaryCastle
             this.brokenPieces = new BrokenPieces(prop);
 
             var animation = AddAnimation(AnimationNames.Default);
-            animation.AddFrame(prop.DeclaredName, 1000);
+            animation.AddFrame(prop.GetThrowableImageName(), 1000);
         }
 
         #endregion

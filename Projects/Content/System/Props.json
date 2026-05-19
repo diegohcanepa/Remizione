@@ -6,14 +6,6 @@
       "dropCoinChanceBonus": 0.5,
       "dropMode": "CoinsOnly",
       "tags": "Pottery",
-      "effects": [
-        {
-          "context": "Contact",
-          "effectType": "Damage",
-          "amount": "3",
-          "comicText": "Kapow"
-        }
-      ],
       "placements": [
         "Floor"
       ]
@@ -23,14 +15,6 @@
       "dropCoinChanceBonus": 0.25,
       "dropSackChanceBonus": 0.25,
       "tags": "Pottery",
-      "effects": [
-        {
-          "context": "Contact",
-          "effectType": "Damage",
-          "amount": "3",
-          "comicText": "Kapow"
-        }
-      ],
       "placements": [
         "Floor"
       ]

@@ -21,7 +21,7 @@ namespace ScaryCastle.Scripting
             if (Session is not GameSession session)
                 return;
 
-            if (AssertEntity<Actor>(0) is Actor actor && session.OutcomeTarget is Prop prop)
+            if (AssertEntity<Actor>(0) is Actor actor && session.OutcomeTarget is Prop prop && prop.IsLiftable)
                 actor.ActiveThrowable = prop;
         }
 

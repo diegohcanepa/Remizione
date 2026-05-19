@@ -619,7 +619,7 @@ namespace ScaryCastle
                     if (field != null)
                     {
                         activeThrowableSprite ??= new Sprite() { PivotOrigin = RectanglePoint.Bottom };
-                        activeThrowableSprite.RenderImage = Atlases.Environment.FindImage(field.DeclaredName);
+                        activeThrowableSprite.RenderImage = Atlases.Environment.FindImage(field.GetThrowableImageName());
                         field.Unparent();
                         Stand();
                     }

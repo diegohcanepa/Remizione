@@ -14,7 +14,17 @@
   "$defs": {
     "Actor": {
       "allOf": [
-        { "$ref": "./Thing.schema.json" }
+        { "$ref": "./Thing.schema.json" },
+        {
+          "type": "object",
+          "properties": {
+            "groupCount": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
+            }
+          }
+        }
       ],
       "unevaluatedProperties": false
     }

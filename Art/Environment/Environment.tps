@@ -884,6 +884,7 @@
                 <false/>
             </struct>
             <key type="filename">ThrownProps-assets/PotteryB.png</key>
+            <key type="filename">ThrownProps-assets/PotteryB_Cracked.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

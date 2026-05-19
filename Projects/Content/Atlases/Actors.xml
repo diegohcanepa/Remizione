@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:eccf8543a8f7a6102f4f5841032aad19:15a00a9492ba180694ed3afbfdf39d98:b23792595b5c0e9561078184f535bec7$ -->
+<!-- $TexturePacker:SmartUpdate:82fb5f06fedbdbc5768bf20e0133d2a3:0a8b08fabe892b582f7fe26243ddab87:b23792595b5c0e9561078184f535bec7$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -20,6 +20,14 @@ verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="Actors.png" width="512" height="512">
+    <sprite n="AnabolicRat-assets/Move01.png" x="122" y="252" w="28" h="12"/>
+    <sprite n="AnabolicRat-assets/Move02.png" x="152" y="252" w="28" h="12"/>
+    <sprite n="AnabolicRat-assets/Move03.png" x="122" y="266" w="28" h="12"/>
+    <sprite n="AnabolicRat-assets/Move04.png" x="152" y="266" w="28" h="12"/>
+    <sprite n="AnabolicRat-assets/Move05.png" x="32" y="279" w="28" h="12"/>
+    <sprite n="AnabolicRat-assets/Stand01.png" x="2" y="282" w="28" h="12"/>
+    <sprite n="AnabolicRat-assets/Stand02.png" x="62" y="279" w="28" h="12"/>
+    <sprite n="AnabolicRat-assets/Stand03.png" x="92" y="279" w="28" h="12"/>
     <sprite n="Baal-assets/Stand01.png" x="2" y="296" w="18" h="14"/>
     <sprite n="Baal-assets/Stand02.png" x="22" y="296" w="18" h="14"/>
     <sprite n="Berta-assets/Back01.png" x="482" y="2" w="28" h="25"/>
@@ -63,14 +71,6 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="BloodyEye-assets/Stand02.png" x="404" y="30" w="36" h="15"/>
     <sprite n="BloodyEye-assets/Stand03.png" x="290" y="30" w="36" h="15"/>
     <sprite n="BloodyEye-assets/Stand04.png" x="442" y="30" w="36" h="15"/>
-    <sprite n="CapitalistRat-assets/Move01.png" x="122" y="252" w="28" h="12"/>
-    <sprite n="CapitalistRat-assets/Move02.png" x="152" y="252" w="28" h="12"/>
-    <sprite n="CapitalistRat-assets/Move03.png" x="122" y="266" w="28" h="12"/>
-    <sprite n="CapitalistRat-assets/Move04.png" x="152" y="266" w="28" h="12"/>
-    <sprite n="CapitalistRat-assets/Move05.png" x="32" y="279" w="28" h="12"/>
-    <sprite n="CapitalistRat-assets/Stand01.png" x="2" y="282" w="28" h="12"/>
-    <sprite n="CapitalistRat-assets/Stand02.png" x="62" y="279" w="28" h="12"/>
-    <sprite n="CapitalistRat-assets/Stand03.png" x="92" y="279" w="28" h="12"/>
     <sprite n="Designer-assets/Move01.png" x="321" y="274" w="22" h="20"/>
     <sprite n="Designer-assets/Move02.png" x="345" y="274" w="22" h="20"/>
     <sprite n="Designer-assets/Move03.png" x="369" y="274" w="22" h="20"/>
