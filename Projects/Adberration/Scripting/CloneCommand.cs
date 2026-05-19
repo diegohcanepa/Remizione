@@ -71,7 +71,9 @@ namespace Adberration.Scripting
                 }
             }
             else
+            {
                 CreateCloneInstance(Body.Clauses[0]);
+            }
         }
 
         #endregion

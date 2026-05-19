@@ -39,7 +39,9 @@ namespace Engendro
                 states[type] = state;
             }
             else
+            {
                 throw new InvalidOperationException("Duplicated state.");
+            }
         }
 
         #endregion

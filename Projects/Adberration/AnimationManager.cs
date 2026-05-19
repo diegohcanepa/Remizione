@@ -6,7 +6,7 @@ namespace Adberration
     /// <summary>
     /// AnimationManager
     /// </summary>
-    internal class AnimationManager
+    internal sealed class AnimationManager
     {
         private readonly Dictionary<string, AnimationSet> animationSets = [];
 

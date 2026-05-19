@@ -78,7 +78,9 @@ namespace ScaryCastle
                             Room.Session.AwaitScript(ExitRoutine);
                         }
                         else
+                        {
                             Room.Session.ScriptProcessor.StartScript(ExitRoutine);
+                        }
                     }
                 }
             }
@@ -93,7 +95,9 @@ namespace ScaryCastle
                         Room.Session.AwaitScript(Routine);
                     }
                     else
+                    {
                         Room.Session.ScriptProcessor.StartScript(Routine);
+                    }
 
                     if (Once)
                         triggered = true;

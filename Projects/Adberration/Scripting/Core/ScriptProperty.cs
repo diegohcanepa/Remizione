@@ -41,11 +41,7 @@ namespace Adberration.Scripting
             }
             else
             {
-                parsedValue = Atlas.FindInstance(value);
-                if (parsedValue is null)
-                {
-                    throw ScriptExceptionBuilder.AssetNotFound(statement, value);
-                }
+                parsedValue = Atlas.FindInstance(value) ?? throw ScriptExceptionBuilder.AssetNotFound(statement, value);
             }
 
             if (instance != null)

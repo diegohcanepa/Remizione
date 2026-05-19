@@ -179,7 +179,9 @@ namespace ScaryCastle
                 return HandleInputResult.Handled;
 
             if (HandleMouseInput())
+            {
                 return HandleInputResult.Handled;
+            }
 
             // Select
             else if (menu.SelectInputBinding != null && menu.SelectInputBinding.IsPressed(PlayerIndex.One))

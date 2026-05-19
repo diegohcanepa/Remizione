@@ -8,8 +8,6 @@ namespace Engendro
     /// </summary>
     public static class Vector2Extensions
     {
-        private static readonly Random random = new();
-
         extension(Vector2 vector1)
         {
             // AngleBetween

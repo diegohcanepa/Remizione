@@ -194,7 +194,7 @@ namespace ScaryCastle
         }
 
         // GetDisplayStat
-        public string GetDisplayStat(ItemProperty property)
+        public static string GetDisplayStat(ItemProperty property)
         {
             string value = string.Empty;
 

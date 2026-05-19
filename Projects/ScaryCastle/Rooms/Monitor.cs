@@ -37,7 +37,7 @@ namespace ScaryCastle
         #region Private members
 
         // CreateText
-        private TextSprite CreateText(string? text = null)
+        private static TextSprite CreateText(string? text = null)
         {
             return new(Fonts.Common)
             {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Engendro
 {
@@ -26,7 +27,7 @@ namespace Engendro
             foreach (var value in values)
             {
                 var v = value.Split(":");
-                data.Add(v[0], int.Parse(v[1]));
+                data.Add(v[0], int.Parse(v[1], CultureInfo.InvariantCulture));
             }
         }
 

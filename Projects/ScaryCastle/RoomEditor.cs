@@ -108,7 +108,9 @@ namespace ScaryCastle
                     awaitingScript += $"({statement.Name})";
             }
             else
+            {
                 awaitingScript = "(None)";
+            }
 
             DrawText(gameTime, text, $"Seed: {session.Seed}");
             DrawText(gameTime, text, $"Awaiting script: {awaitingScript}");
@@ -446,7 +448,9 @@ namespace ScaryCastle
                     if (field)
                     {
                         if (session.Player != null && session.Player.IsInCurrentRoom)
+                        {
                             SelectedThing = session.Player;
+                        }
                         else
                         {
                             SelectFirstThing();

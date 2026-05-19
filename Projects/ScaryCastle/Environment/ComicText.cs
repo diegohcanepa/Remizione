@@ -61,7 +61,9 @@ namespace ScaryCastle
                 }
             }
             else if (!opacityTween.IsRunning)
+            {
                 IsActive = false;
+            }
         }
 
         #endregion

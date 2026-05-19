@@ -72,6 +72,30 @@ namespace ScaryCastle
                 Session.Camera.Shake(TweenStyle.Linear, new(.8f), 50, 6);
         }
 
+        // RollGateEvent
+        private GateEventType RollGateEvent(Difficulty roomDiff)
+        {
+            // Tiramos un dado del 1 al 100
+            int roll = Random.Shared.Next(1, 101);
+
+            return roomDiff switch
+            {
+                // Easy: 50% Malo, 35% Nada, 15% Bueno
+                Difficulty.Easy => roll <= 50 ? GateEventType.Bad :
+                                   roll <= 85 ? GateEventType.Nothing : GateEventType.Good,
+
+                // Normal: 70% Malo, 22% Nada, 8% Bueno
+                Difficulty.Normal => roll <= 70 ? GateEventType.Bad :
+                                     roll <= 92 ? GateEventType.Nothing : GateEventType.Good,
+
+                // Hard: 85% Malo, 13% Nada, 2% Bueno (Casi imposible)
+                Difficulty.Hard => roll <= 85 ? GateEventType.Bad :
+                                   roll <= 98 ? GateEventType.Nothing : GateEventType.Good,
+
+                _ => GateEventType.Nothing
+            };
+        }
+
         #endregion
 
         #region Protected members
@@ -160,16 +184,23 @@ namespace ScaryCastle
                 Children.Add(lever);
             }
 
+            Session.GateEvent = GateEventType.Nothing;
+
             // Boss
             //if (Session.RunCount > 0 || Session.CurrentRun?.CorridorIndex > 0)
             {
                 if (RoomNode.Definition.BossPosition != null)
                 {
-                    if (SpawnBoss() is Actor boss)
+                    Session.Bosses.Clear();
+                    Session.GateEvent = RollGateEvent(RoomNode.Definition.Difficulty);
+
+                    if (SpawnBoss(Session.GateEvent) is Actor boss)
+                    {
                         Session.Bosses.Add(boss);
 
-                    if (Session.Boss != null && RoomNode.Definition.BossPosition.HasValue)
-                        Session.Boss.Position = RoomNode.Definition.BossPosition.Value;
+                        if (RoomNode.Definition.BossPosition.HasValue)
+                            boss.Position = RoomNode.Definition.BossPosition.Value;
+                    }
                 }
             }
         }
@@ -188,11 +219,16 @@ namespace ScaryCastle
         }
 
         // SpawnBoss
-        private Actor? SpawnBoss(Vector2? position = null)
+        private Actor? SpawnBoss(GateEventType eventType)
         {
             if (Session.CurrentRun == null)
                 return null;
 
+            // Si el dado dijo que no sale nada, salimos rápido
+            if (eventType == GateEventType.Nothing)
+                return null;
+
+            // 2. Recolectamos candidatos usando tu GetCandidateDefinitions (que ya filtra progreso, etc.)
             var candidates = GetCandidateDefinitions<ActorDefinition, Actor>(
                 ActorDefinition.Definitions.All,
                 def => def.SpawnLocation == SpawnLocation.Gate
@@ -201,32 +237,54 @@ namespace ScaryCastle
             if (candidates.Count == 0)
                 return null;
 
-            // Pick
+            // 3. Filtramos por facción en base al evento que elegimos, y guardamos un fallback
             var chanceTable = new ChanceTable();
-            foreach (var c in candidates)
+            ActorDefinition? fallbackBadBoss = null;
+
+            for (int i = 0; i < candidates.Count; i++)
             {
+                var c = candidates[i];
+                bool isFriendly = c.Faction is Faction.Good; // O tu propiedad equivalente de facción
+
+                // Si buscamos algo bueno y es malo, o viceversa, lo ignoramos
+                if (eventType == GateEventType.Good && !isFriendly)
+                    continue;
+                
+                if (eventType == GateEventType.Bad && isFriendly)
+                    continue;
+
+                // Guardamos el bicho malo de menor progreso por si la tabla de chances se queda vacía
+                if (eventType == GateEventType.Bad && (fallbackBadBoss == null || c.MinProgress < fallbackBadBoss.MinProgress))
+                    fallbackBadBoss = c;
+
                 var finalWeight = AdjustWeight(Session.CurrentRun.Intensity, RoomNode.Definition.Difficulty, c.Difficulty, c.SpawnWeight);
                 chanceTable.Add(c.Name, finalWeight);
             }
 
-            if (chanceTable.GetValue() is not ChanceTableItem chanceTableItem)
-                return null;
+            // 4. Selección final
+            ActorDefinition? chosenDef = null;
 
-            if (ActorDefinition.Definitions.Find(chanceTableItem.Name) is not ActorDefinition chosen)
-                return null;
-
-            var instance = CreateThingClone(chosen.Name);
-
-            if (position.HasValue)
+            if (chanceTable.Count > 0 && chanceTable.GetValue() is ChanceTableItem chanceTableItem)
             {
-                instance.Position = position.Value;
-                Children.Add(instance);
+                chosenDef = ActorDefinition.Definitions.Find(chanceTableItem.Name);
+            }
+            else if (eventType == GateEventType.Bad)
+            {
+                // Si el pool dinámico falló pero el juego exige un Boss Malo, aplicamos el fallback obligatorio
+                chosenDef = fallbackBadBoss;
             }
 
-            // Log spawn
-            Session.CurrentRun.Spawns.Increment(chosen.Name);
+            // Si no se pudo seleccionar nada (o era un evento Good y no había aliados disponibles), abrimos limpio
+            if (chosenDef == null)
+                return null;
 
-            return instance as Actor;
+            // 5. Instanciación (Respetando tu arquitectura exacta de clonación)
+            var instance = CreateThingClone<Actor>(chosenDef.Name);
+
+            // Log spawn global
+            Session.CurrentRun.Spawns.Increment(chosenDef.Name);
+
+            return instance;
         }
 
         #endregion

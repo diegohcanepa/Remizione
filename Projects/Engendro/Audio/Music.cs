@@ -62,8 +62,7 @@ namespace Engendro.Audio
             else
                 result = Sound.Find(tag)?.PopInstance();
 
-            if (result != null)
-                result.IsLooped = false;
+            result?.IsLooped = false;
 
             return result;
         }

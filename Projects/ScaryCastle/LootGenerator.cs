@@ -246,7 +246,7 @@ namespace ScaryCastle
             // 3. Instanciación física
             for (int i = 0; i < amount; i++)
             {
-                if (room.CreateThingClone("Coin") is Coin coin)
+                if (room.CreateThingClone<Coin>("Coin") is Coin coin)
                 {
                     coin.Position = thing.Position;
 
@@ -270,11 +270,11 @@ namespace ScaryCastle
                 Prop? loot;
                 if (AotTypeRegistry.Find(itemDefinition.Name) is AotTypeEntry entry && typeof(PickableLoot).IsAssignableFrom(entry.Type))
                 {
-                    loot = room.CreateThingClone(itemDefinition.Name) as Prop;
+                    loot = room.CreateThingClone<Prop>(itemDefinition.Name);
                 }
                 else
                 {
-                    loot = room.CreateThingClone(nameof(Sack)) as Prop;
+                    loot = room.CreateThingClone<Prop>(nameof(Sack));
                 }
 
                 if (loot != null)

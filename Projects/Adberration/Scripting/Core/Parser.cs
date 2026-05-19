@@ -482,10 +482,7 @@ namespace Adberration.Scripting
                 if (!arg.HasValue)
                     throw new ScriptException(statement, ScriptException.GetMissingArgValueMessage(argName));
 
-                result = atlas.FindImage(arg.Value);
-
-                if (result == null)
-                    throw ScriptExceptionBuilder.AssetNotFound(statement, arg.Value);
+                result = atlas.FindImage(arg.Value) ?? throw ScriptExceptionBuilder.AssetNotFound(statement, arg.Value);
             }
 
             return result;

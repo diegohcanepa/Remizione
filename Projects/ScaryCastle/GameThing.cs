@@ -229,7 +229,9 @@ namespace ScaryCastle
                 DisplaySentence = Localization.GetValue(Verb) + " " + DisplayName;
             }
             else
+            {
                 DisplaySentence = DisplayName;
+            }
         }
 
         // UpdateCondition

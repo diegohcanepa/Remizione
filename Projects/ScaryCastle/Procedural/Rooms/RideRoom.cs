@@ -60,7 +60,7 @@ namespace ScaryCastle
             var def = this.RoomNode.Definition;
 
             // Up
-            if (RoomNode.Up != null && def.DoorUp != null && CreateThingClone("RideDoorUp") is RideDoor upDoor)
+            if (RoomNode.Up != null && def.DoorUp != null && CreateThingClone<RideDoor>("RideDoorUp") is RideDoor upDoor)
             {
                 doors.Add(upDoor);
                 Children.Add(upDoor);
@@ -69,7 +69,7 @@ namespace ScaryCastle
             }
 
             // Left
-            if (RoomNode.Left != null && def.DoorLeft != null && CreateThingClone("RideDoorLeft") is RideDoor leftDoor)
+            if (RoomNode.Left != null && def.DoorLeft != null && CreateThingClone<RideDoor>("RideDoorLeft") is RideDoor leftDoor)
             {
                 doors.Add(leftDoor);
                 Children.Add(leftDoor);
@@ -78,7 +78,7 @@ namespace ScaryCastle
             }
 
             // Right
-            if (RoomNode.Right != null && def.DoorRight != null && CreateThingClone("RideDoorRight") is RideDoor rightDoor)
+            if (RoomNode.Right != null && def.DoorRight != null && CreateThingClone<RideDoor>("RideDoorRight") is RideDoor rightDoor)
             {
                 doors.Add(rightDoor);
                 Children.Add(rightDoor);
@@ -89,7 +89,7 @@ namespace ScaryCastle
             // Down
             if (RoomNode.Down != null)
             {
-                if (def.DoorDown != null && CreateThingClone("RideDoorDown") is RideDoor downDoor)
+                if (def.DoorDown != null && CreateThingClone<RideDoor>("RideDoorDown") is RideDoor downDoor)
                 {
                     doors.Add(downDoor);
                     Children.Add(downDoor);

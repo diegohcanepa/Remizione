@@ -594,9 +594,11 @@ namespace Adberration.Scripting
         {
             // SetTargetEntity
             if (value == ScriptCapability.SetTargetEntity)
+            {
                 return ScriptType is ScriptType.Room or ScriptType.Thing or
                        ScriptType.Load or ScriptType.Unload or
                        ScriptType.Enter or ScriptType.Outcome;
+            }
 
             // EntityContext
             if (value == ScriptCapability.EntityContext)

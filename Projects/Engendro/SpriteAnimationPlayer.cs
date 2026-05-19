@@ -217,7 +217,9 @@ namespace Engendro
                 return true;
             }
             else
+            {
                 return false;
+            }
         }
 
         // IsPlaying

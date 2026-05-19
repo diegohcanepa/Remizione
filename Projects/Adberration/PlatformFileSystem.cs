@@ -106,8 +106,7 @@ namespace Adberration
                 return null;
 
             var result = ReadFileCore(fileName);
-            if (result != null)
-                result.Position = 0;
+            result?.Position = 0;
 
             return result;
         }

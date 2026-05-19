@@ -111,6 +111,6 @@ namespace ScaryCastle
         public static bool IsSteamRunning { get; private set; }
 
         // Mutex
-        public static Mutex? Mutex { get; set; } = null;
+        public static Mutex? Mutex { get; set; }
     }
 }

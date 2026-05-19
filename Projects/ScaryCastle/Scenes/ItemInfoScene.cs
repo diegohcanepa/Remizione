@@ -40,7 +40,7 @@ namespace ScaryCastle
             {
                 PivotOrigin = RectanglePoint.Center,
                 Position = container.BoundingBox.GetPoint(RectanglePoint.LeftTop, 9, 9),
-                Scale =ScaleInfo.UIElement.Medium
+                Scale = ScaleInfo.UIElement.Medium
             };
 
             // ImageShadow
@@ -83,8 +83,7 @@ namespace ScaryCastle
             {
                 ImageName = nameof(Atlases.UI.DiscardItemIcon),
                 PivotOrigin = RectanglePoint.RightTop,
-                Position = container.BoundingBox.GetPoint(RectanglePoint.RightTop, 0, 2),
-                
+                Position = container.BoundingBox.GetPoint(RectanglePoint.RightTop, 0, 2)
             };
         }
 

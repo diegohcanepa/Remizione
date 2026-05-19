@@ -23,7 +23,9 @@ namespace Adberration.Scripting
                     throw new ScriptException(this, "Use 'play-music' for music assets.");
             }
             else
+            {
                 throw ScriptExceptionBuilder.AssetNotFound(this, name);
+            }
 
             Parser.ParseInt32Argument(this, DelayArg);
             Parser.ParseInt32Argument(this, FadeArg);

@@ -727,10 +727,7 @@ namespace Engendro
             _renderBuffer.Clear();
             _typingIndex = 0;
 
-            if (textTimer == null)
-            {
-                textTimer = new Timer();
-            }
+            textTimer ??= new Timer();
 
             textTimer.Start(TypingSpeed);
             if (typingSound != null)

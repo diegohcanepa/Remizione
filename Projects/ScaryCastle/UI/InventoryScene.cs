@@ -14,7 +14,6 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly TextSprite[] amounts;
-        private readonly Sprite bottomGradient;
         private readonly Sprite[] gooIcons;
         private readonly Sprite[] icons;
         private readonly TextSprite itemName;
@@ -35,14 +34,6 @@ namespace ScaryCastle
             this.icons = new Sprite[PlayerInventory.MaximumCapacity];
             this.shadows = new Sprite[PlayerInventory.MaximumCapacity];
             this.slots = new Sprite[PlayerInventory.MaximumCapacity];
-
-            // Bottom gradient
-            this.bottomGradient = new(Atlases.UI.GetImage("InventoryContainer"))
-            {
-                Opacity = .8f,
-                PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.Area.GetPoint(RectanglePoint.Bottom),
-            };
 
             // Slots
             for (var i = 0; i < slots.Length; i++)

@@ -80,7 +80,9 @@ namespace Engendro.Input
                 state.MiddleButton == ButtonState.Pressed ||
                 state.XButton1 == ButtonState.Pressed ||
                 state.XButton2 == ButtonState.Pressed)
+            {
                 InputManager.AllowMouse = true;
+            }
         }
 
         #endregion

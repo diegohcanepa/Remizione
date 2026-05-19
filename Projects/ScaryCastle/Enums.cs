@@ -72,6 +72,9 @@ namespace ScaryCastle
     // FloatingMessage
     public enum FloatingMessage { Failed, Locked, Success }
 
+    // GateEventType
+    public enum GateEventType { Nothing, Good, Bad }
+
     // HitEffect
     public enum HitEffect { None, Shake, Blink }
 

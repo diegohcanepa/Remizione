@@ -222,7 +222,7 @@ namespace ScaryCastle
             {
                 var chosenDef = pendingSpawns[i];
 
-                var instance = CreateThingClone(chosenDef.Name);
+                var instance = CreateThingClone<Actor>(chosenDef.Name);
                 instance.Position = points[i];
                 Children.Add(instance);
 
@@ -292,7 +292,7 @@ namespace ScaryCastle
                 // 4) Spawneo físico
                 usedPlaceholders.Add(placeholder);
 
-                var instance = CreateThingClone(chosen.Name);
+                var instance = CreateThingClone<Prop>(chosen.Name);
                 instance.Position = placeholder.Position;
                 Children.Add(instance);
 
@@ -465,9 +465,9 @@ namespace ScaryCastle
         #endregion
 
         // CreateThingClone
-        public GameThing CreateThingClone(string declaredName)
+        public T CreateThingClone<T>(string declaredName) where T : GameThing
         {
-            if (Session.CreateThingClone(declaredName, $"{declaredName}*{RoomNode.Index}_{Name}_{instanceCount}") is not GameThing result)
+            if (Session.CreateThingClone(declaredName, $"{declaredName}*{RoomNode.Index}_{Name}_{instanceCount}") is not T result)
                 throw new InvalidOperationException($"Failed to create runtime clone from'{declaredName}'.");
 
             instanceCount++;

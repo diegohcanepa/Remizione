@@ -123,7 +123,9 @@ namespace Engendro.Input
                 State.Buttons.LeftStick == ButtonState.Pressed ||
                 State.Buttons.RightStick == ButtonState.Pressed ||
                 State.Buttons.BigButton == ButtonState.Pressed) // Botón Xbox/Home
+            {
                 return true;
+            }
 
             // Check triggers
             if (State.Triggers.Left > 0.0f || State.Triggers.Right > 0.0f)
@@ -134,11 +136,8 @@ namespace Engendro.Input
                 return true;
 
             // Check DPad
-            if (State.DPad.Up == ButtonState.Pressed || State.DPad.Down == ButtonState.Pressed ||
-                State.DPad.Left == ButtonState.Pressed || State.DPad.Right == ButtonState.Pressed)
-                return true;
-
-            return false;
+            return State.DPad.Up == ButtonState.Pressed || State.DPad.Down == ButtonState.Pressed ||
+                State.DPad.Left == ButtonState.Pressed || State.DPad.Right == ButtonState.Pressed;
         }
 
         // IsButtonDown

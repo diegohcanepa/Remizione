@@ -131,7 +131,9 @@ namespace ScaryCastle
                 lightSprite.Color = color;
             }
             else
+            {
                 lightSprite.Draw(gameTime);
+            }
 
             var passes = flashBlinker.IsRunning && flashBlinker.CurrentValue ? 6 : Passes;
 

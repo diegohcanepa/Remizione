@@ -590,6 +590,10 @@ namespace ScaryCastle
         // Game
         public new ScaryCastleGame Game { get; }
 
+        // GateEvent
+        [ScriptProperty]
+        public GateEventType GateEvent { get; set; }
+
         // InteractionContext
         public InteractionContext InteractionContext { get; }
 
