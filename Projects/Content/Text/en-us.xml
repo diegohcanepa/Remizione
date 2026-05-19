@@ -74,7 +74,7 @@
   <String Key="Item.Lockpicking.Name">Lockpicking</String>
   <String Key="Item.MagneticCard.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.MagneticCard.Name">Magnetic card</String>
-  <String Key="Item.PieceOfWood.Description" />
+  <String Key="Item.PieceOfWood.Description"></String>
   <String Key="Item.PieceOfWood.Name">Piece of wood</String>
   <String Key="Item.RottenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.RottenApple.Name">Rotten apple</String>
@@ -238,6 +238,7 @@ Bla bla bla</String>
   <String Key="Misc.DisclaimerMessage">Some scenes and images may be disturbing. The following story is fictional and does not depict any real person or event.</String>
   <String Key="Misc.DisclaimerTitle">WARNING</String>
   <String Key="Misc.DollarSign">$</String>
+  <String Key="Misc.EnterTunnel">Go to tunnel</String>
   <String Key="Misc.FearSyncope">Fear syncope</String>
   <String Key="Misc.Here">Here</String>
   <String Key="Misc.Level">Level</String>
@@ -317,11 +318,11 @@ Bla bla bla</String>
   <String Key="Prop.UnderRideEntrance">Under ride</String>
   <String Key="Prop.VendingMachine">Vending machine</String>
   <String Key="Prop.WC">W.C.</String>
-  <String Key="Verb.Ellipsis"></String>
+  <String Key="Verb.Ellipsis" />
   <String Key="Verb.Enter">Enter</String>
   <String Key="Verb.Exit">Exit</String>
   <String Key="Verb.Lift">Lift</String>
-  <String Key="Verb.None"></String>
+  <String Key="Verb.None" />
   <String Key="Verb.Open">Open</String>
   <String Key="Verb.Pull">Pull</String>
   <String Key="Verb.Take">Take</String>

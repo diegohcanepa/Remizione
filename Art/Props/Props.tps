@@ -486,7 +486,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">PotteryB-assets/PotteryB_Broken.png</key>
+            <key type="filename">PotteryB-assets/PotteryB_Cracked.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

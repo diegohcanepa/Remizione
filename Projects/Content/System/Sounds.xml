@@ -28,6 +28,7 @@
 	<FX Name="BlipMandinga" />
 	<FX Name="BodyFallMedium" Sounds="1..1" />
 	<FX Name="Bones" />
+	<FX Name="Break" />
 	<FX Name="ChatMessage" Volume=".6" />
 	<FX Name="CardFlap" />
 	<FX Name="CardWhoosh" Sounds="1..6" />

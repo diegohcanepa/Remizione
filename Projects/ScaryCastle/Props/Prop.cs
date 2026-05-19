@@ -26,7 +26,6 @@ namespace ScaryCastle
         {
             this.CanBeHit = false;
             this.Definition = PropDefinition.Definitions.Find(DeclaredName);
-            this.HurtSound = Sound.Find(SoundNames.ImpactA);
 
             // Assign defaults from definition if available
             if (Definition != null)

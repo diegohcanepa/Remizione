@@ -19,7 +19,7 @@ namespace ScaryCastle
             DepthOffset = -2;
             DisplayNameKey = "Prop.Pottery";
             Faction = Faction.Evil;
-            HurtSound = Sound.Find(SoundNames.ImpactA);
+            //HurtSound = Sound.Find(SoundNames.ImpactA);
             IsLiftable = true;
             MaxHP = 1;
         }
@@ -30,7 +30,10 @@ namespace ScaryCastle
             base.OnTakeDamage(attacker, amount, damageType);
 
             if (!IsDead && HPRatio < 1)
+            {
                 Sprite.RenderImage = Atlas?.FindImage($"{DeclaredName}{CrackedSuffix}");
+                PlaySound(SoundNames.Break);
+            }
         }
 
         // GetThrowableImageName

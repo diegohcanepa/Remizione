@@ -347,6 +347,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/Bones.wav;Audio/FX/Bones
 
+#begin Audio/FX/Break.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Break.wav;Audio/FX/Break
+
 #begin Audio/FX/CardFlap.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

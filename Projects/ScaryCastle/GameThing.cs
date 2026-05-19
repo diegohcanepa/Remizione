@@ -260,6 +260,26 @@ namespace ScaryCastle
             }
         }
 
+        // UpdateContactIntent
+        private bool UpdateContactIntent(GameTime gameTime)
+        {
+            if (contactTimer > 0)
+            {
+                contactTimer -= gameTime.ElapsedGameTime.Milliseconds;
+            }
+            else if (Session.Player != null && IsMoving)
+            {
+                if (RuntimeCollider.Contains(Session.Player.Position))
+                {
+                    TryInflictContactDamage(Session.Player);
+                    contactTimer = 500;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         #endregion
 
         #region Protected members
@@ -478,24 +498,8 @@ namespace ScaryCastle
             if (blinker.IsRunning)
                 blinker.Update(gameTime);
 
-            if (ContactIntent != null)
-            {
-                if (contactTimer > 0)
-                {
-                    contactTimer -= gameTime.ElapsedGameTime.Milliseconds;
-                }
-                else if (Session.Player != null && IsMoving)
-                {
-                    if (RuntimeCollider.Contains(Session.Player.Position))
-                    {
-                        TryInflictContactDamage(Session.Player);
-                        contactTimer = 500;
-                        return;
-                    }
-                }
-            }
-
-            UpdateCondition(gameTime);
+            if (!UpdateContactIntent(gameTime))
+                UpdateCondition(gameTime);
         }
 
         // OnUpdateEmittingSound
@@ -508,9 +512,7 @@ namespace ScaryCastle
         protected virtual void TryInflictContactDamage(GameThing target)
         {
             if (ContactIntent != null)
-            {
                 EffectDescriptor.Apply(ContactIntent.EffectDescriptors, this, target, EffectContext.Contact);
-            }
         }
 
         #endregion

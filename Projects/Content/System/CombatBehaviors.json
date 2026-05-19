@@ -14,7 +14,8 @@
               "context": "Attack",
               "effectType": "Damage",
               "amount": "1",
-              "comicText": "Kapow"
+              "comicText": "Kapow",
+              "sound": "ImpactA"
             }
           ]
         }

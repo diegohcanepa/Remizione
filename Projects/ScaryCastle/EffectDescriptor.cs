@@ -34,13 +34,6 @@ namespace ScaryCastle
         #region Static members
 
         // Apply
-        public static void Apply(GameThing source, GameThing target, EffectContext context)
-        {
-            if (source is IThingDefinition t && t.Definition != null)
-                Apply(t.Definition.EffectDescriptors, source, target, context);
-        }
-
-        // Apply
         public static void Apply(IList<EffectDescriptor> effects, GameThing source, GameThing target, EffectContext context)
         {
             if (effects.Count == 0)
