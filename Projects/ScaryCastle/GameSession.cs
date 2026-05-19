@@ -636,6 +636,7 @@ namespace ScaryCastle
 
             Bosses.Clear();
             StatusHUD.BossMeter.Reset();
+            StatusHUD.Countdown.Reset();
 
             if (!CurrentRun.LoadNextCorridor(this))
             {

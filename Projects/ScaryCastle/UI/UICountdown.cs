@@ -139,22 +139,22 @@ namespace ScaryCastle
         {
             BossPhase = false;
             timeLeft = 0;
-            IsRunning = false;
+            lastKnownValue = -1;
             StopCriticalPhase();
+            IsRunning = false;
         }
 
         // Start
         public void Start(int duration, bool bossPhase)
         {
+            Reset();
+
             if (duration < 0)
-            {
-                Reset();
                 return;
-            }
 
             this.BossPhase = bossPhase;
-            this.lastKnownValue = -1;
             this.timeLeft = duration;
+            this.timeText.Text = duration.ToString(CultureInfo.InvariantCulture);
             this.timeText.Color = bossPhase ? ColorPalette.Text.Orange : ColorPalette.Text.Highlight;
             this.IsRunning = true;
         }
