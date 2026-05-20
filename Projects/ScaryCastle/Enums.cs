@@ -85,10 +85,10 @@ namespace ScaryCastle
     public enum Intensity { Low, Medium, High }
 
     // InteractionContextMode
-    public enum InteractionContextMode { Default, Attack, Lift }
+    public enum InteractionContextMode { Default, CloseAttack, Lift }
 
     // InteractionType
-    public enum InteractionType { None, Outcome, UseWithOutcome, Cast, Attack, Lift }
+    public enum InteractionType { None, Outcome, UseWithOutcome, Cast, CloseAttack, Lift }
 
     // ItemCategory
     public enum ItemCategory { Access, Explosive, Food, Luck, Medicine, Misc, Money, Sacred }

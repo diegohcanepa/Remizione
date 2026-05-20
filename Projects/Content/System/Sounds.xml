@@ -92,6 +92,7 @@
 	<FX Name="PickupGeneric" />
 	<FX Name="PickupHeart"  />
 	<FX Name="PickupKey" />
+	<FX Name="Pistol" Sounds="1..2" />
 	<FX Name="PneumaticDoor" />
 	<FX Name="PopHeart" />
 	<FX Name="PotteryBreak" Sounds="1..2" />

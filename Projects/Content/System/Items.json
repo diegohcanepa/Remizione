@@ -20,6 +20,7 @@
 			"consumptionType": "None",
 			"executionDelay": 1500,
 			"gooCost": 1,
+			"requiresApproach": false,
 			"effects": [
 				{
 					"context": "Attack",
@@ -29,18 +30,19 @@
 					"comicText": "Kapow"
 				}
 			]
-		},		{
+		},
+		{
 			"name": "Coin",
 			"category": "Money",
 			"isStackable": true,
 			"pickupSound": "CollectCoin"
-		},		
+		},
 		{
 			"name": "Firecracker",
 			"areaRange": 40,
 			"category": "Explosive",
 			"executionDelay": 2000,
-		    "sound": "Firecracker",
+			"sound": "Firecracker",
 			"effects": [
 				{
 					"context": "Attack",
@@ -69,7 +71,8 @@
 					"target": "Self"
 				}
 			]
-		},		{
+		},
+		{
 			"name": "Lantern",
 			"category": "Misc",
 			"lightModifier": 3,
@@ -80,6 +83,23 @@
 			"category": "Access",
 			"skillChance": 70,
 			"isStackable": true
+		},
+		{
+			"name": "Pistol",
+			"category": "Misc",
+			"sound": "Pistol",
+			"durability": 6,
+			"durabilityCost": 1,
+			"requiresApproach": false,
+			"effects": [
+				{
+					"context": "Attack",
+					"effectType": "Damage",
+					"damageType": "Physical",
+					"amount": "1d4+2",
+					"comicText": "BangRed"
+				}
+			]
 		},
 		{
 			"name": "RottenApple",
@@ -102,7 +122,6 @@
 					"target": "Self",
 					"comicText": "AghGreen"
 				}
-
 			]
 		},
 		{
@@ -123,6 +142,6 @@
 					"sound": "Drink"
 				}
 			]
-		}		
+		}
 	]
 }

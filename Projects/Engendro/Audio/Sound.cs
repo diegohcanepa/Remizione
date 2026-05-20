@@ -28,13 +28,6 @@ namespace Engendro.Audio
 
         #region Constructor
 
-        // Static constructor
-        static Sound()
-        {
-            AvailableTags = new ReadOnlyCollection<string>(availableTagList);
-            Sounds = new NamedObjectReadOnlyCollection<Sound>(instanceList);
-        }
-
         // Constructor
         private Sound(string name, SoundCategory category, string[]? soundNames, string[]? tags, int maxInstances, float volume, float pan, float pitch, SoundPopMode popMode, bool transitionAware, bool pauseAware, string caption)
         {
@@ -202,7 +195,7 @@ namespace Engendro.Audio
         #endregion
 
         // AvailableTags
-        public static ReadOnlyCollection<string> AvailableTags { get; }
+        public static ReadOnlyCollection<string> AvailableTags { get; } = new(availableTagList);
 
         // Caption
         public string Caption { get; }
@@ -494,7 +487,7 @@ namespace Engendro.Audio
         }
 
         // Sounds
-        public static NamedObjectReadOnlyCollection<Sound> Sounds { get; }
+        public static NamedObjectReadOnlyCollection<Sound> Sounds { get; } = new(instanceList);
 
         // Stop
         public void Stop()

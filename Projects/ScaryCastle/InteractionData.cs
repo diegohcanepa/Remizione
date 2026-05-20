@@ -59,7 +59,7 @@ namespace ScaryCastle
 
                     if (Script != null)
                     {
-                        if (InteractionType == InteractionType.Attack)
+                        if (InteractionType == InteractionType.CloseAttack)
                         {
                             if (session.Player.DefaultCombatIntent != null)
                                 session.Player.PerformAttack(session.Player.DefaultCombatIntent, Target);
@@ -87,13 +87,6 @@ namespace ScaryCastle
         // Session
         public GameSession Session { get; }
 
-        // SetAttackOutcome
-        public void SetAttackOutcome(GameThing target, CombatIntent combatIntent)
-        {
-            if (Session.ScriptLibrary.FindRoutine(combatIntent.Name) is Script script)
-                SetOutcomeCore(target, InteractionType.Attack, script);
-        }
-
         // SetCastOutcome
         public void SetCastOutcome(GameThing target, Item item)
         {
@@ -102,6 +95,13 @@ namespace ScaryCastle
 
             if (Session.ScriptLibrary.FindRoutine($"{item.Name}Outcome") is Script script)
                 SetOutcomeCore(target, InteractionType.Cast, script);
+        }
+
+        // SetCloseAttackOutcome
+        public void SetCloseAttackOutcome(GameThing target, CombatIntent combatIntent)
+        {
+            if (Session.ScriptLibrary.FindRoutine(combatIntent.Name) is Script script)
+                SetOutcomeCore(target, InteractionType.CloseAttack, script);
         }
 
         // SetDefaultOutcome

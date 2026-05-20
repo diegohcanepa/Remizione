@@ -61,7 +61,7 @@ namespace ScaryCastle
             }
 
             // 4. Classic "Use with" interaction: Approach and interact with target using held item
-            if (context.HeldItem.Definition.GooCost == 0)
+            if (context.HeldItem.Definition.RequiresApproach)
             {
                 if (Actor.ApproachAndInteract(context.Target, context.HeldItem))
                     return;
@@ -104,7 +104,7 @@ namespace ScaryCastle
             */
 
             if (Actor.Session.InteractionContext.Target?.Faction == Faction.Evil)
-                Actor.Session.InteractionContext.Mode = InteractionContextMode.Attack;
+                Actor.Session.InteractionContext.Mode = InteractionContextMode.CloseAttack;
 
             PerformInteraction();
 

@@ -137,14 +137,6 @@ namespace Engendro
                 return false;
             }
 
-            // Min
-            if (values[0] == "..")
-                values[0] = float.MinValue.ToString(CultureInfo.InvariantCulture);
-
-            // Max
-            if (values[1] == "..")
-                values[1] = float.MaxValue.ToString(CultureInfo.InvariantCulture);
-
             if (float.TryParse(values[0], NumberStyles.Float, CultureInfo.InvariantCulture, out var min) &&
                 float.TryParse(values[1], NumberStyles.Float, CultureInfo.InvariantCulture, out var max))
             {

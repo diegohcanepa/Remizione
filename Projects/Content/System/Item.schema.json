@@ -72,6 +72,10 @@
               "type": "string",
               "description": "Nombre del archivo de sonido a reproducir cuando se colecta."
             },
+            "requiresApproach": {
+              "type": "boolean",
+              "default": true
+            },            
             "skillChance": {
               "type": "integer"
             },

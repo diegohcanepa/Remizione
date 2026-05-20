@@ -670,10 +670,10 @@ namespace ScaryCastle
 
             if (item == null)
             {
-                if (Session.InteractionContext.Mode == InteractionContextMode.Attack)
+                if (Session.InteractionContext.Mode == InteractionContextMode.CloseAttack)
                 {
                     if (DefaultCombatIntent != null)
-                        Session.InteractionData.SetAttackOutcome(target, DefaultCombatIntent);
+                        Session.InteractionData.SetCloseAttackOutcome(target, DefaultCombatIntent);
                 }
                 else if (Session.InteractionContext.Mode == InteractionContextMode.Lift)
                 {
@@ -696,11 +696,8 @@ namespace ScaryCastle
                 return false;
             }
 
-            var destination = target.GetApproachPosition(this, Session.InteractionData.InteractionType == InteractionType.Attack ? ApproachBehavior.ClosestSide : null);
+            var destination = target.GetApproachPosition(this, Session.InteractionData.InteractionType == InteractionType.CloseAttack ? ApproachBehavior.ClosestSide : null);
             var result = target != this && MoveTo(destination);
-
-            // if (result && !Session.InteractionContext.AttackMode && target is Actor actor && actor.IsAngry)
-            //   result = false;
 
             if (!result)
                 HandlePendingInteraction();

@@ -113,9 +113,6 @@ namespace ScaryCastle
             return true;
         }
 
-        // ConsumptionCooldown
-        public int ConsumptionCooldown { get; set; }
-
         // ComputeUse
         public bool ComputeUse()
         {
@@ -137,6 +134,9 @@ namespace ScaryCastle
 
             return true;
         }
+
+        // ConsumptionCooldown
+        public int ConsumptionCooldown { get; set; }
 
         // Count
         public int Count
@@ -191,25 +191,6 @@ namespace ScaryCastle
         public string GetDisplayAmount()
         {
             return Count.ToString(CultureInfo.InvariantCulture);
-        }
-
-        // GetDisplayStat
-        public static string GetDisplayStat(ItemProperty property)
-        {
-            string value = string.Empty;
-
-            /*
-            // Health
-            if (property == ItemProperty.Health && MetaItem.Effect.HP is DiceExpression exp)
-                value = exp.GetValueRangeAsString();
-
-            // Chance
-            else if (property == ItemProperty.Chance)
-                value = MetaItem.SkillChance.ToString(CultureInfo.InvariantCulture) + "%";
-
-                        */
-
-            return $"{Localization.GetValue(property)}: {value}";
         }
 
         // Index

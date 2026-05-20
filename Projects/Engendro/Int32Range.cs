@@ -127,14 +127,6 @@ namespace Engendro
             if (values.Length != 2)
                 return false;
 
-            // Min
-            if (values[0] == "..")
-                values[0] = int.MinValue.ToString(CultureInfo.InvariantCulture);
-
-            // Max
-            if (values[1] == "..")
-                values[1] = int.MaxValue.ToString(CultureInfo.InvariantCulture);
-
             if (int.TryParse(values[0], NumberStyles.Integer, CultureInfo.InvariantCulture, out var min) &&
                 int.TryParse(values[1], NumberStyles.Integer, CultureInfo.InvariantCulture, out var max))
             {

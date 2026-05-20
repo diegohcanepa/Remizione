@@ -923,6 +923,18 @@
 /processorParam:Quality=Best
 /build:Audio/FX/PickupKey.wav;Audio/FX/PickupKey
 
+#begin Audio/FX/Pistol1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Pistol1.wav;Audio/FX/Pistol1
+
+#begin Audio/FX/Pistol2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Pistol2.wav;Audio/FX/Pistol2
+
 #begin Audio/FX/PneumaticDoor.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

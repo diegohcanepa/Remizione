@@ -416,6 +416,7 @@
             <key type="filename">Items-assets/GoldenKey.png</key>
             <key type="filename">Items-assets/GooBottle.png</key>
             <key type="filename">Items-assets/Lockpick.png</key>
+            <key type="filename">Items-assets/Pistol.png</key>
             <key type="filename">Items-assets/SodaCan.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
