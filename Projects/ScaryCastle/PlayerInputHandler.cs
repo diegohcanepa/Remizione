@@ -45,7 +45,7 @@ namespace ScaryCastle
 
             var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
 
-            // 2. No target: Basic walk to destination
+            // 1. Walk to
             if (context.Target == null)
             {
                 Actor.Session.InteractionData.Clear();
@@ -53,32 +53,30 @@ namespace ScaryCastle
                 return;
             }
 
-            // 3. Outcome interaction: Approach and interact with target using outcome script
+            // 2. Outcome interaction: Approach and interact with target
             if (context.HeldItem == null || MouseCursor.IsArrow)
             {
-                Actor.ApproachAndInteract(context.Target, null);
+                Actor.PerformInteraction(context.Target, null);
                 return;
             }
 
-            // 4. Classic "Use with" interaction: Approach and interact with target using held item
-            if (context.HeldItem.Definition.RequiresApproach)
+            // 3. Check for goo if item requires it
+            var gooCost = context.HeldItem.Definition.GooCost;
+            if (gooCost > 0)
             {
-                if (Actor.ApproachAndInteract(context.Target, context.HeldItem))
-                    return;
-            }
-            else
-            {
-                if (Actor.Goo == 0)
+                if (Actor.Goo < gooCost)
                 {
                     Actor.Session.TextHUD.Message.Show(MessageKind.NotEnoughGoo);
+                    return;
                 }
                 else
                 {
                     Actor.Goo--;
-                    if (Actor.Cast(context.Target, context.HeldItem))
-                        return;
                 }
             }
+
+            if (Actor.PerformInteraction(context.Target, context.HeldItem))
+                return;
 
             MouseCursor.Shake();
         }
@@ -91,20 +89,6 @@ namespace ScaryCastle
 
             if (!InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
                 return false;
-
-            /*
-            if (Actor.Session.InteractionContext.AttackMode && !MouseCursor.IsArrow)
-            {
-                if (Actor.Session.InteractionContext.Target != null && !Actor.Session.InteractionContext.Target.CanBeHit)
-                {
-                    MouseCursor.Shake();
-                    return false;
-                }
-            }
-            */
-
-            if (Actor.Session.InteractionContext.Target?.Faction == Faction.Evil)
-                Actor.Session.InteractionContext.Mode = InteractionContextMode.CloseAttack;
 
             PerformInteraction();
 
@@ -135,7 +119,7 @@ namespace ScaryCastle
             {
                 if (prop.IsLiftable)
                 {
-                    Actor.Session.InteractionContext.Mode = InteractionContextMode.Lift;
+                    Actor.Session.InteractionContext.LiftMode = true;
                     PerformInteraction();
                 }
                 else

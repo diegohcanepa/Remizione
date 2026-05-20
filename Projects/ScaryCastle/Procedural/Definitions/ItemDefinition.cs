@@ -75,14 +75,14 @@ namespace ScaryCastle
             // Realm
             Realm = element.GetEnum("realm", Realm.Earthly);
 
-            // RequiresApproach
-            RequiresApproach = element.GetBool("requiresApproach", true);
-
             // SkillChance
             SkillChance = element.GetInt32("skillChance", 0);
 
             // Sound
             Sound = element.GetObject("sound", Sound.Get);
+
+            // UsageScope
+            UsageScope = element.GetEnum("usageScope", ItemUsageScope.World);
 
             this.Description = Localization.GetItemDescription(this);
             this.DisplayName = Localization.GetItemName(this);
@@ -166,13 +166,13 @@ namespace ScaryCastle
         // Realm
         public Realm Realm { get; }
 
-        // RequiresApproach
-        public bool RequiresApproach { get; }
-
         // SkillChance
         public int SkillChance { get; }
 
         // Sound
         public Sound? Sound { get; }
+
+        // UsageScope
+        public ItemUsageScope UsageScope { get; }
     }
 }

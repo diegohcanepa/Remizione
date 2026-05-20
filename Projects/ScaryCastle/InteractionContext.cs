@@ -59,8 +59,8 @@ namespace ScaryCastle
         // HeldItem
         public Item? HeldItem { get; set; }
 
-        // Mode
-        public InteractionContextMode Mode { get; set; }
+        // LiftMode
+        public bool LiftMode { get; set; }
 
         // Refresh
         public void Refresh()
@@ -79,7 +79,7 @@ namespace ScaryCastle
         // Reset
         public void Reset()
         {
-            Mode = InteractionContextMode.Default;
+            LiftMode = false;
             HeldItem = null;
             Target = null;
             MouseCursorAppearance.Refresh(this);

@@ -656,55 +656,6 @@ namespace ScaryCastle
         // AnimationSettings
         public ActorAnimationSettings AnimationSettings { get; } = new();
 
-        // ApproachAndInteract
-        public bool ApproachAndInteract(GameThing target, Item? item)
-        {
-            if (!IsPlayer)
-                return false;
-
-            if (!MouseCursor.IsEnabled)
-            {
-                Session.TextHUD.Message.Show(MessageKind.HandsFull);
-                return false;
-            }
-
-            if (item == null)
-            {
-                if (Session.InteractionContext.Mode == InteractionContextMode.CloseAttack)
-                {
-                    if (DefaultCombatIntent != null)
-                        Session.InteractionData.SetCloseAttackOutcome(target, DefaultCombatIntent);
-                }
-                else if (Session.InteractionContext.Mode == InteractionContextMode.Lift)
-                {
-                    if (target is Prop prop)
-                        Session.InteractionData.SetLiftOutcome(prop);
-                }
-                else
-                {
-                    Session.InteractionData.SetDefaultOutcome(target);
-                }
-            }
-            else
-            {
-                Session.InteractionData.SetUseWithOutcome(target, item);
-            }
-
-            if (Session.InteractionData.Script == null)
-            {
-                MouseCursor.Shake();
-                return false;
-            }
-
-            var destination = target.GetApproachPosition(this, Session.InteractionData.InteractionType == InteractionType.CloseAttack ? ApproachBehavior.ClosestSide : null);
-            var result = target != this && MoveTo(destination);
-
-            if (!result)
-                HandlePendingInteraction();
-
-            return true;
-        }
-
         // BodySize
         public BodySize BodySize { get; set; } = BodySize.Medium;
 
@@ -731,22 +682,6 @@ namespace ScaryCastle
             {
                 return base.CanTakeDamage();
             }
-        }
-
-        // Cast
-        public bool Cast(GameThing target, Item item)
-        {
-            if (!IsPlayer)
-                return false;
-
-            if (item.Definition.GooCost == 0)
-                return false;
-
-            Session.InteractionData.SetCastOutcome(target, item);
-
-            HandlePendingInteraction();
-
-            return true;
         }
 
         // DefaultCombatIntent
@@ -944,6 +879,58 @@ namespace ScaryCastle
             state.Intent = intent;
             state.Target = target;
             BodyMachine.ChangeState(state.GetType());
+        }
+
+        // PerformInteraction
+        public bool PerformInteraction(GameThing target, Item? item)
+        {
+            if (!IsPlayer)
+                return false;
+
+            if (ActiveThrowable != null)
+            {
+                Session.TextHUD.Message.Show(MessageKind.HandsFull);
+                return false;
+            }
+
+            if (item == null)
+            {
+                // Lift
+                if (Session.InteractionContext.LiftMode)
+                {
+                    if (target is Prop prop)
+                        Session.InteractionData.SetLiftOutcome(prop);
+                }
+
+                // Headbutt
+                else if (target.Faction == Faction.Evil)
+                {
+                    if (DefaultCombatIntent != null)
+                        Session.InteractionData.SetCloseAttackOutcome(target, DefaultCombatIntent);
+                }
+
+                else
+                {
+                    Session.InteractionData.SetDefaultOutcome(target);
+                }
+            }
+            else
+            {
+                Session.InteractionData.SetUseWithOutcome(target, item);
+            }
+
+            if (Session.InteractionData.Script == null)
+            {
+                MouseCursor.Shake();
+                return false;
+            }
+
+            var destination = target.GetApproachPosition(this, Session.InteractionData.CloseAttack ? ApproachBehavior.ClosestSide : null);
+            var result = target != this && MoveTo(destination);
+            if (!result)
+                HandlePendingInteraction();
+
+            return true;
         }
 
         // PlayerNumber

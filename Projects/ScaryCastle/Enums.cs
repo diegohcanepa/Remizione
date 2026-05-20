@@ -60,11 +60,7 @@ namespace ScaryCastle
     public enum EffectType { None, Condition, Damage, Death, Goo, Heal }
 
     // EffectTarget
-    public enum EffectTarget
-    {
-        Target,
-        Self
-    }
+    public enum EffectTarget { Target, Self }
 
     // Faction
     public enum Faction { Good, Evil }
@@ -84,17 +80,14 @@ namespace ScaryCastle
     // Intensity
     public enum Intensity { Low, Medium, High }
 
-    // InteractionContextMode
-    public enum InteractionContextMode { Default, CloseAttack, Lift }
-
-    // InteractionType
-    public enum InteractionType { None, Outcome, UseWithOutcome, Cast, CloseAttack, Lift }
-
     // ItemCategory
     public enum ItemCategory { Access, Explosive, Food, Luck, Medicine, Misc, Money, Sacred }
 
     // ItemProperty
     public enum ItemProperty { Chance, Durability, Health }
+
+    // ItemUsageScope
+    public enum ItemUsageScope { World, Player, Any }
 
     // KnockbackIntensity
     public enum KnockbackIntensity { Low, Medium, High }

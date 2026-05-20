@@ -4,6 +4,7 @@
 		{
 			"name": "Apple",
 			"category": "Food",
+			"usageScope": "Player",
 			"isStackable": true,
 			"effects": [
 				{
@@ -20,7 +21,7 @@
 			"consumptionType": "None",
 			"executionDelay": 1500,
 			"gooCost": 1,
-			"requiresApproach": false,
+			"usageScope": "Any",
 			"effects": [
 				{
 					"context": "Attack",
@@ -62,6 +63,7 @@
 		{
 			"name": "GooBottle",
 			"category": "Food",
+			"usageScope": "Player",
 			"isStackable": true,
 			"effects": [
 				{
@@ -90,7 +92,6 @@
 			"sound": "Pistol",
 			"durability": 6,
 			"durabilityCost": 1,
-			"requiresApproach": false,
 			"effects": [
 				{
 					"context": "Attack",
@@ -104,6 +105,7 @@
 		{
 			"name": "RottenApple",
 			"category": "Food",
+			"usageScope": "Player",			
 			"isStackable": true,
 			"effects": [
 				{
@@ -133,6 +135,7 @@
 			"name": "SodaCan",
 			"category": "Food",
 			"isStackable": true,
+			"usageScope": "Player",
 			"effects": [
 				{
 					"context": "Use",

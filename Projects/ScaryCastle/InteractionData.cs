@@ -18,21 +18,23 @@ namespace ScaryCastle
         #region Private members
 
         // SetOutcomeCore
-        private void SetOutcomeCore(GameThing target, InteractionType interactionType, Script script)
+        private void SetOutcomeCore(GameThing target, Script script)
         {
             Clear();
             Target = target;
             TargetPosition = target.Position;
-            InteractionType = interactionType;
             Script = script;
         }
 
         #endregion
 
+        // CloseAttack
+        public bool CloseAttack { get; private set; }
+
         // Clear
         public void Clear()
         {
-            InteractionType = InteractionType.None;
+            CloseAttack = false;
             Item = null;
             Script = null;
             Target = null;
@@ -42,7 +44,7 @@ namespace ScaryCastle
         // Execute
         public void Execute(GameSession session)
         {
-            if (InteractionType == InteractionType.None || session.Player == null)
+            if (Script == null || session.Player == null)
                 return;
 
             session.Player.StopMoving();
@@ -59,7 +61,7 @@ namespace ScaryCastle
 
                     if (Script != null)
                     {
-                        if (InteractionType == InteractionType.CloseAttack)
+                        if (CloseAttack)
                         {
                             if (session.Player.DefaultCombatIntent != null)
                                 session.Player.PerformAttack(session.Player.DefaultCombatIntent, Target);
@@ -74,9 +76,6 @@ namespace ScaryCastle
 
             Clear();
         }
-
-        // InteractionType
-        public InteractionType InteractionType { get; private set; }
 
         // Item
         public Item? Item { get; private set; }
@@ -94,41 +93,56 @@ namespace ScaryCastle
                 throw new InvalidOperationException($"Item '{item.Definition.Name}' cannot be casted.");
 
             if (Session.ScriptLibrary.FindRoutine($"{item.Name}Outcome") is Script script)
-                SetOutcomeCore(target, InteractionType.Cast, script);
+                SetOutcomeCore(target, script);
         }
 
         // SetCloseAttackOutcome
         public void SetCloseAttackOutcome(GameThing target, CombatIntent combatIntent)
         {
             if (Session.ScriptLibrary.FindRoutine(combatIntent.Name) is Script script)
-                SetOutcomeCore(target, InteractionType.CloseAttack, script);
+            {
+                CloseAttack = true;
+                SetOutcomeCore(target, script);
+            }
         }
 
         // SetDefaultOutcome
         public void SetDefaultOutcome(GameThing target)
         {
             if (target.OutcomeScript != null)
-                SetOutcomeCore(target, InteractionType.Outcome, target.OutcomeScript);
+                SetOutcomeCore(target, target.OutcomeScript);
         }
 
         // SetLiftOutcome
         public void SetLiftOutcome(Prop prop)
         {
             if (Session.ScriptLibrary.FindRoutine(RoutineNames.LiftOutcomeTarget) is Script script)
-                SetOutcomeCore(prop, InteractionType.Lift, script);
+                SetOutcomeCore(prop, script);
         }
 
         // SetUseWithOutcome
         public void SetUseWithOutcome(GameThing target, Item item)
         {
-            var script = target.Session.ScriptLibrary.FindOverload(target.DeclaredName, item.Name);
-            script ??= item.Script;
+            var script = target.Session.ScriptLibrary.FindOutcomeOverload(target.DeclaredName, item.Name);
+
+            if (script == null && item.Script != null)
+            {
+                if (Session.Player == target)
+                {
+                    if (item.Definition.UsageScope is ItemUsageScope.Player or ItemUsageScope.Any)
+                        script = item.Script;
+                }
+                else
+                {
+                    if (item.Definition.UsageScope is ItemUsageScope.World or ItemUsageScope.Any)
+                        script = item.Script;
+                }
+            }
 
             if (script != null)
             {
-                SetOutcomeCore(target, InteractionType.UseWithOutcome, script);
+                SetOutcomeCore(target, script);
                 Item = item;
-                InteractionType = InteractionType.UseWithOutcome;
             }
         }
 

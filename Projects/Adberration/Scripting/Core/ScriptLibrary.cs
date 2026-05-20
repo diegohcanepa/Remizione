@@ -256,8 +256,8 @@ namespace Adberration.Scripting
             return FindScript(ScriptType.Outcome, name);
         }
 
-        // FindOverload
-        public Script? FindOverload(string name1, string name2)
+        // FindOutcomeOverload
+        public Script? FindOutcomeOverload(string name1, string name2)
         {
             CodeContract.NotEmpty(name1, nameof(name1));
             CodeContract.NotEmpty(name2, nameof(name2));
