@@ -4,7 +4,7 @@
 		{
 			"name": "Apple",
 			"category": "Food",
-			"usageScope": "Player",
+			"usageScope": "Self",
 			"isStackable": true,
 			"effects": [
 				{
@@ -18,10 +18,10 @@
 		},
 		{
 			"name": "BargainCross",
+			"usageScope": "Range",
 			"consumptionType": "None",
 			"executionDelay": 1500,
 			"gooCost": 1,
-			"usageScope": "Any",
 			"effects": [
 				{
 					"context": "Attack",
@@ -34,6 +34,7 @@
 		},
 		{
 			"name": "Coin",
+			"usageScope": "Close",
 			"category": "Money",
 			"isStackable": true,
 			"pickupSound": "CollectCoin"
@@ -41,6 +42,7 @@
 		{
 			"name": "Firecracker",
 			"areaRange": 40,
+			"usageScope": "Self",
 			"category": "Explosive",
 			"executionDelay": 2000,
 			"sound": "Firecracker",
@@ -56,6 +58,7 @@
 		},
 		{
 			"name": "GoldenKey",
+			"usageScope": "Close",
 			"category": "Access",
 			"isStackable": true,
 			"pickupSound": "PickupKey"
@@ -63,7 +66,7 @@
 		{
 			"name": "GooBottle",
 			"category": "Food",
-			"usageScope": "Player",
+			"usageScope": "Self",
 			"isStackable": true,
 			"effects": [
 				{
@@ -76,12 +79,14 @@
 		},
 		{
 			"name": "Lantern",
+			"usageScope": "Self",
 			"category": "Misc",
 			"lightModifier": 3,
 			"lightColor": "240,181,65"
 		},
 		{
 			"name": "Lockpick",
+			"usageScope": "Close",
 			"category": "Access",
 			"skillChance": 70,
 			"isStackable": true
@@ -89,6 +94,7 @@
 		{
 			"name": "Pistol",
 			"category": "Misc",
+			"usageScope": "Range",
 			"sound": "Pistol",
 			"durability": 6,
 			"durabilityCost": 1,
@@ -105,7 +111,7 @@
 		{
 			"name": "RottenApple",
 			"category": "Food",
-			"usageScope": "Player",			
+			"usageScope": "Self",
 			"isStackable": true,
 			"effects": [
 				{
@@ -128,14 +134,15 @@
 		},
 		{
 			"name": "RustyLockpick",
+			"usageScope": "Close",
 			"category": "Access",
 			"skillChance": 30
 		},
 		{
 			"name": "SodaCan",
 			"category": "Food",
+			"usageScope": "Self",
 			"isStackable": true,
-			"usageScope": "Player",
 			"effects": [
 				{
 					"context": "Use",

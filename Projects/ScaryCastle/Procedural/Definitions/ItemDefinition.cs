@@ -82,7 +82,7 @@ namespace ScaryCastle
             Sound = element.GetObject("sound", Sound.Get);
 
             // UsageScope
-            UsageScope = element.GetEnum("usageScope", ItemUsageScope.World);
+            UsageScope = element.GetEnum("usageScope", ItemUsageScope.Close);
 
             this.Description = Localization.GetItemDescription(this);
             this.DisplayName = Localization.GetItemName(this);

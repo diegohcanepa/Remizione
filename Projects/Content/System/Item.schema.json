@@ -79,6 +79,14 @@
               "type": "string",
               "description": "Nombre del archivo de sonido a reproducir."
             },
+            "usageScope": {
+              "type": "string",
+              "enum": [
+                "Close",
+                "Range",
+                "Self"
+              ]
+            },
             "consumptionType": {
               "type": "string",
               "enum": [
@@ -89,17 +97,11 @@
             },
             "consumptionInterval": {
               "type": "integer"
-            },
-            "usageScope": {
-              "type": "string",
-              "enum": [
-                "World",
-                "Player",
-                "Any"
-              ],
-              "default": "World"
             }
-          }
+          },
+          "required": [
+            "usageScope"
+          ]          
         }
       ],
       "unevaluatedProperties": false

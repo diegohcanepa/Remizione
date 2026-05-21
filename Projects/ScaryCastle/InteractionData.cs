@@ -86,16 +86,6 @@ namespace ScaryCastle
         // Session
         public GameSession Session { get; }
 
-        // SetCastOutcome
-        public void SetCastOutcome(GameThing target, Item item)
-        {
-            if (item.Definition.GooCost == 0)
-                throw new InvalidOperationException($"Item '{item.Definition.Name}' cannot be casted.");
-
-            if (Session.ScriptLibrary.FindRoutine($"{item.Name}Outcome") is Script script)
-                SetOutcomeCore(target, script);
-        }
-
         // SetCloseAttackOutcome
         public void SetCloseAttackOutcome(GameThing target, CombatIntent combatIntent)
         {
@@ -124,20 +114,7 @@ namespace ScaryCastle
         public void SetUseWithOutcome(GameThing target, Item item)
         {
             var script = target.Session.ScriptLibrary.FindOutcomeOverload(target.DeclaredName, item.Name);
-
-            if (script == null && item.Script != null)
-            {
-                if (Session.Player == target)
-                {
-                    if (item.Definition.UsageScope is ItemUsageScope.Player or ItemUsageScope.Any)
-                        script = item.Script;
-                }
-                else
-                {
-                    if (item.Definition.UsageScope is ItemUsageScope.World or ItemUsageScope.Any)
-                        script = item.Script;
-                }
-            }
+            script ??= item.Script;
 
             if (script != null)
             {

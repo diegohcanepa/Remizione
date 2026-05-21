@@ -537,10 +537,9 @@ namespace ScaryCastle
 
             if (!Session.IsAwaiting && !IsMoving)
             {
-                if (IsPlayer)
+                if (IsPlayer && Session.IsCurrentScene && CanHandleInput)
                 {
-                    if (ActiveThrowable != null && Session.IsCurrentScene && CanHandleInput)
-                        FaceToMouseCursor();
+                    FaceToMouseCursor();
                 }
                 else if (Faction == Faction.Evil && Session.Player != null)
                 {
@@ -887,6 +886,7 @@ namespace ScaryCastle
             if (!IsPlayer)
                 return false;
 
+            // Is carrying something?
             if (ActiveThrowable != null)
             {
                 Session.TextHUD.Message.Show(MessageKind.HandsFull);
@@ -916,7 +916,14 @@ namespace ScaryCastle
             }
             else
             {
-                Session.InteractionData.SetUseWithOutcome(target, item);
+                if (item.Definition.UsageScope != ItemUsageScope.Self && target != this)
+                {
+                    Session.InteractionData.SetUseWithOutcome(target, item);
+                }
+                else if (item.Definition.UsageScope == ItemUsageScope.Self && target == this)
+                {
+                    Session.InteractionData.SetUseWithOutcome(target, item);
+                }
             }
 
             if (Session.InteractionData.Script == null)
@@ -925,10 +932,16 @@ namespace ScaryCastle
                 return false;
             }
 
-            var destination = target.GetApproachPosition(this, Session.InteractionData.CloseAttack ? ApproachBehavior.ClosestSide : null);
-            var result = target != this && MoveTo(destination);
-            if (!result)
+            if (item != null && item.Definition.UsageScope != ItemUsageScope.Close)
+            {
                 HandlePendingInteraction();
+            }
+            else
+            {
+                var destination = target.GetApproachPosition(this, Session.InteractionData.CloseAttack ? ApproachBehavior.ClosestSide : null);
+                if (target == this || !MoveTo(destination))
+                    HandlePendingInteraction();
+            }
 
             return true;
         }

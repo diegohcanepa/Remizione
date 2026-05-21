@@ -87,7 +87,7 @@ namespace ScaryCastle
     public enum ItemProperty { Chance, Durability, Health }
 
     // ItemUsageScope
-    public enum ItemUsageScope { World, Player, Any }
+    public enum ItemUsageScope { Close, Range, Self }
 
     // KnockbackIntensity
     public enum KnockbackIntensity { Low, Medium, High }

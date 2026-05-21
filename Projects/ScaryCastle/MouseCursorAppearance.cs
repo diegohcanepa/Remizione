@@ -105,7 +105,7 @@ namespace ScaryCastle
                 if (context.Target.Faction == Faction.Evil && context.HeldItem == null)
                     MouseCursor.Color = ColorPalette.MouseCursor.AttackableTarget;
 
-                MouseCursor.ShowLiftIcon = context.Target is Prop prop && prop.IsLiftable;
+                MouseCursor.ShowLiftIcon = context.HeldItem == null && context.Target is Prop prop && prop.IsLiftable;
                 MouseCursor.IsEnabled = context.Session.Player?.ActiveThrowable == null;
 
                 if (context.HeldItem?.Definition.GooCost > 0)
