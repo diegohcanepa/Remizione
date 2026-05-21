@@ -17,7 +17,6 @@ namespace ScaryCastle
         #region Private fields
 
         private Sprite? activeThrowableSprite;
-        private const float attackLaneThickness = 4;
         private readonly List<AtlasImage>? customGuts;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
@@ -777,9 +776,8 @@ namespace ScaryCastle
         public bool IsAttacking => BodyMachine.CurrentState is BodyCloseAttackState;
 
         // IsInAttackLane
-        public bool IsInAttackLane(GameThing target)
+        public bool IsInAttackLane(GameThing target, int attackLaneThickness = 4)
         {
-            // CONDICIÓN Y: Debe estar en mi misma línea de profundidad
             float dy = Math.Abs(Position.Y - target.Y);
             return dy <= attackLaneThickness;
         }

@@ -172,6 +172,9 @@ namespace ScaryCastle
             }
         } = true;
 
+        // FlipCustomImage
+        public static bool FlipCustomImage { get; set; }
+
         // PerformClick
         public static void PerformClick(bool animate = true)
         {
@@ -190,6 +193,7 @@ namespace ScaryCastle
             cursorSprite.Color = Color.White;
             textSprite.Color = ColorPalette.Text.Sentence;
             CustomImage = null;
+            FlipCustomImage = false;
             HightlightColor = null;
             IsEnabled = true;
             ShowLiftIcon = false;
@@ -240,6 +244,7 @@ namespace ScaryCastle
         {
             opacityTween.Update(gameTime);
             cursorSprite.Position = InputManager.DefaultPlayer.Mouse.VirtualPosition;
+            cursorSprite.Effects = FlipCustomImage && CustomImage != null ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
             cursorSprite.Update(gameTime);
             shakeTween.Update(gameTime);
             ClampTextToScreen();

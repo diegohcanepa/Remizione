@@ -73,14 +73,14 @@ namespace ScaryCastle
         #endregion
 
         // Add
-        public Item? Add(string name, int amount = 1)
+        public Item? Add(string name)
         {
             var definition = ItemDefinition.Definitions.Find(name) ?? throw new InvalidOperationException("Item definition not found.");
-            return Add(definition, amount);
+            return Add(definition);
         }
 
         // Add
-        public Item? Add(ItemDefinition definition, int amount = 1)
+        public Item? Add(ItemDefinition definition)
         {
             if (!HasSpace(definition))
                 return null;
@@ -92,7 +92,7 @@ namespace ScaryCastle
                 if (IsFull)
                     return null;
 
-                item = new Item(this, definition) { Count = amount };
+                item = new Item(this, definition);
                 Add(item);
 
                 if (Session.CurrentRun != null)
@@ -110,7 +110,7 @@ namespace ScaryCastle
             }
             else
             {
-                item.Count += amount;
+                item.Amount += 1;
             }
 
             return item;
@@ -188,30 +188,6 @@ namespace ScaryCastle
         // IsFull
         public bool IsFull => Count == Capacity;
 
-        // LoadState
-        public void LoadState(string data)
-        {
-            Clear();
-
-            if (string.IsNullOrEmpty(data))
-                return;
-
-            var itemList = data.Split(';');
-
-            for (var i = 0; i < itemList.Length; i++)
-            {
-                var itemData = itemList[i].Split(':');
-
-                if (ItemDefinition.Definitions.Find(itemData[0]) != null)
-                {
-                    if (Add(itemData[0], int.Parse(itemData[1], CultureInfo.InvariantCulture)) is Item addedItem)
-                    {
-                        addedItem.Durability = float.Parse(itemData[2], CultureInfo.InvariantCulture);
-                    }
-                }
-            }
-        }
-
         // MaximumCapacity
         public const int MaximumCapacity = 8;
 
@@ -225,19 +201,6 @@ namespace ScaryCastle
                 return Remove(item);
 
             return false;
-        }
-
-        // SaveState
-        public string SaveState()
-        {
-            var result = new List<string>();
-
-            foreach (var item in this)
-            {
-                result.Add($"{item.Name}:{item.Count}:{item.Durability}");
-            }
-
-            return string.Join(";", result);
         }
 
         // Session

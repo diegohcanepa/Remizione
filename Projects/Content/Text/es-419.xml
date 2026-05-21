@@ -19,11 +19,6 @@
   <String Key="ActorProperty.Grace.Name">Gracia</String>
   <String Key="ActorProperty.Level.Description">El nivel quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Level.Name">Estado de Gracia</String>
-  <String Key="DurabilityState.Broken">Roto</String>
-  <String Key="DurabilityState.Cracked">Resquebrajado</String>
-  <String Key="DurabilityState.Sturdy">Integro</String>
-  <String Key="DurabilityState.Used">Usado</String>
-  <String Key="DurabilityState.Worn">Gastado</String>
   <String Key="FloatingMessage.Failed">¡Fallaste!</String>
   <String Key="FloatingMessage.Locked">Cerrado con llave</String>
   <String Key="FloatingMessage.Success">¡Éxito!</String>
@@ -318,11 +313,11 @@ Bla bla bla</String>
   <String Key="Prop.UnderRideEntrance">Inframundo</String>
   <String Key="Prop.VendingMachine">Máquina expendedora</String>
   <String Key="Prop.WC">Inodoro</String>
-  <String Key="Verb.Ellipsis"></String>
+  <String Key="Verb.Ellipsis" />
   <String Key="Verb.Enter">Entrar</String>
   <String Key="Verb.Exit">Salir</String>
   <String Key="Verb.Lift">Alzar</String>
-  <String Key="Verb.None"></String>
+  <String Key="Verb.None" />
   <String Key="Verb.Open">Abrir</String>
   <String Key="Verb.Pull">Accionar</String>
   <String Key="Verb.Take">Agarrar</String>

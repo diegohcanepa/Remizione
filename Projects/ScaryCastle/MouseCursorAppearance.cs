@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Input;
 using ScaryCastle.Scripting;
 
 namespace ScaryCastle
@@ -20,6 +21,15 @@ namespace ScaryCastle
         // RefreshCursor
         private static void RefreshCursor(InteractionContext context)
         {
+            if (context.HeldItem?.Definition.UsageScope == ItemUsageScope.LineOfFire)
+            {
+                if (context.Session.Player != null)
+                {
+                    var mousePos = InputManager.DefaultPlayer.Mouse.WorldPosition(context.Session.Camera);
+                    MouseCursor.FlipCustomImage = mousePos.X < context.Session.Player.X;
+                }
+            }
+
             // Inventory
             if (context.Session.Game.SceneManager.CurrentScene is InventoryScene)
             {
@@ -107,11 +117,35 @@ namespace ScaryCastle
 
                 MouseCursor.ShowLiftIcon = context.HeldItem == null && context.Target is Prop prop && prop.IsLiftable;
                 MouseCursor.IsEnabled = context.Session.Player?.ActiveThrowable == null;
+                MouseCursor.HightlightColor = ColorPalette.MouseCursor.HighlightWhite;
 
-                if (context.HeldItem?.Definition.GooCost > 0)
-                    MouseCursor.HightlightColor = ColorPalette.MouseCursor.HighlightBlue;
-                else
-                    MouseCursor.HightlightColor = ColorPalette.MouseCursor.HighlightWhite;
+                if (context.HeldItem?.Definition is { } itemDef)
+                {
+                    if (itemDef.UsageScope == ItemUsageScope.FreeRange)
+                    {
+                        MouseCursor.HightlightColor = ColorPalette.MouseCursor.HighlightGreen;
+                    }
+                    else if(itemDef.UsageScope == ItemUsageScope.LineOfFire)
+                    {
+                        if (context.Session.Player != null)
+                        {
+                            var mousePos = InputManager.DefaultPlayer.Mouse.WorldPosition(context.Session.Camera);
+                            MouseCursor.FlipCustomImage = mousePos.X < context.Session.Player.X;
+                        }
+
+                        if (context.Session.Player != null && context.Target != context.Session.Player)
+                        {
+                            if (context.Session.Player.IsInAttackLane(context.Target, 13))
+                            {
+                                MouseCursor.HightlightColor = ColorPalette.MouseCursor.HighlightGreen;
+                            }
+                            else
+                            {
+                                MouseCursor.HightlightColor = ColorPalette.MouseCursor.HighlightRed;
+                            }
+                        }
+                    }
+                }
             }
             else
             {

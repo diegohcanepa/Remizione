@@ -72,6 +72,8 @@ namespace ScaryCastle
             }
 
             Target = CanScanTarget() ? ScanTarget() : null;
+            if (HeldItem?.Amount == 0)
+                HeldItem = null;
 
             MouseCursorAppearance.Refresh(this);
         }
@@ -80,7 +82,13 @@ namespace ScaryCastle
         public void Reset()
         {
             LiftMode = false;
-            HeldItem = null;
+
+            if (HeldItem != null && Target != null)
+            {
+                if (HeldItem?.Definition.UsageScope is not ItemUsageScope.FreeRange and not ItemUsageScope.LineOfFire)
+                    HeldItem = null;
+            }
+
             Target = null;
             MouseCursorAppearance.Refresh(this);
         }

@@ -24,8 +24,8 @@ namespace ScaryCastle
         {
             this.Inventory = inventory;
             this.Definition = definition;
-            this.ConsumptionCooldown = definition.ConsumptionInterval;
             this.Script = inventory.Session.ScriptLibrary.FindRoutine($"{Definition.Name}Outcome");
+            this.Amount = definition.InitialAmount;
         }
 
         #endregion
@@ -38,35 +38,29 @@ namespace ScaryCastle
             if (!isDisplayTextDiry)
                 return;
 
-            var text = Definition.DisplayName;
-
-            // Durability state
-            if (Definition.Durability > 0)
-            {
-                var ratio = Durability / Definition.Durability;
-
-                if (ratio >= .85f)
-                    text += $" ({TextRepository.GetValue("@DurabilityState.Sturdy")})";
-
-                else if (ratio >= .75f)
-                    text += $" ({TextRepository.GetValue("@DurabilityState.Used")})";
-
-                else if (ratio >= .5f)
-                    text += $" ({TextRepository.GetValue("@DurabilityState.Worn")})";
-
-                else if (ratio >= .25f)
-                    text += $" ({TextRepository.GetValue("@DurabilityState.Cracked")})";
-
-                else
-                    text += $" ({TextRepository.GetValue("@DurabilityState.Broken")})";
-            }
-
-            DisplayText = text;
+            DisplayText = Definition.DisplayName;
 
             isDisplayTextDiry = false;
         }
 
         #endregion
+
+        // Amount
+        public int Amount
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = int.Clamp(value, 0, Definition.IsStackable || Definition.IsDepletable ? 99 : 1);
+                    isDisplayTextDiry = true;
+                    if (field == 0)
+                        Inventory.Remove(this);
+                    Inventory.InvalidateContentVersion();
+                }
+            }
+        }
 
         // ApplyEffects
         public bool ApplyEffects(GameThing source, GameThing? target, EffectContext context)
@@ -116,43 +110,16 @@ namespace ScaryCastle
         // ComputeUse
         public bool ComputeUse()
         {
-            // Quantity
-            if (Definition.ConsumptionType == ConsumptionType.Quantity)
+            if (Definition.IsDepletable)
             {
-                Count--;
-                if (Count <= 0)
+                Amount--;
+                if (Amount <= 0)
                     Inventory.Remove(this);
             }
-            else if (Definition.ConsumptionType == ConsumptionType.Durability)
-            {
-                Durability -= Definition.DurabilityCost;
-                if (Durability <= 0)
-                    Inventory.Remove(this);
-            }
-
+            
             InvalidateDisplayText();
 
             return true;
-        }
-
-        // ConsumptionCooldown
-        public int ConsumptionCooldown { get; set; }
-
-        // Count
-        public int Count
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = int.Clamp(value, 0, Definition.IsStackable ? 99 : 1);
-                    isDisplayTextDiry = true;
-                    if (field == 0)
-                        Inventory.Remove(this);
-                    Inventory.InvalidateContentVersion();
-                }
-            }
         }
 
         // Definition
@@ -172,25 +139,10 @@ namespace ScaryCastle
             private set;
         } = string.Empty;
 
-        // Durability
-        public Ratio Durability
-        {
-            get;
-            set
-            {
-                field = value;
-
-                if (field < 0)
-                    field = 0;
-
-                isDisplayTextDiry = true;
-            }
-        }
-
         // GetDisplayAmount
         public string GetDisplayAmount()
         {
-            return Count.ToString(CultureInfo.InvariantCulture);
+            return Amount.ToString(CultureInfo.InvariantCulture);
         }
 
         // Index
@@ -215,20 +167,6 @@ namespace ScaryCastle
         public override string ToString()
         {
             return DisplayText;
-        }
-
-        // Update
-        public void Update(GameTime gameTime)
-        {
-            if (Definition.ConsumptionInterval > 0)
-            {
-                ConsumptionCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-                if (ConsumptionCooldown <= 0)
-                {
-                    ConsumptionCooldown = Definition.ConsumptionInterval;
-                    //Use( );
-                }
-            }
         }
     }
 }

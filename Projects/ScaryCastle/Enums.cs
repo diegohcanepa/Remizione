@@ -35,9 +35,6 @@ namespace ScaryCastle
     // ContentFolder
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Video, Voices, System, Text }
 
-    // ConsumptionType
-    public enum ConsumptionType { Quantity, Durability, None }
-
     // DamageType
     public enum DamageType { None, Physical, Acid, Explosive, Fire, Ice, Lightning }
 
@@ -57,7 +54,7 @@ namespace ScaryCastle
     public enum EffectContext { Contact, Attack, Update, Use }
 
     // EffectType
-    public enum EffectType { None, Condition, Damage, Death, Goo, Heal }
+    public enum EffectType { None, Condition, ComicText, Damage, Death, Goo, Heal }
 
     // EffectTarget
     public enum EffectTarget { Target, Self }
@@ -87,7 +84,7 @@ namespace ScaryCastle
     public enum ItemProperty { Chance, Durability, Health }
 
     // ItemUsageScope
-    public enum ItemUsageScope { Close, Range, Self }
+    public enum ItemUsageScope { Close, FreeRange, LineOfFire, Self }
 
     // KnockbackIntensity
     public enum KnockbackIntensity { Low, Medium, High }

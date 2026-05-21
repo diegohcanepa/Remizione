@@ -292,7 +292,9 @@ namespace ScaryCastle
         protected override void OnOutcome(Thing target)
         {
             base.OnOutcome(target);
-            InteractionContext.HeldItem = null;
+
+            if (InteractionContext.HeldItem?.Definition.UsageScope is not ItemUsageScope.FreeRange and not ItemUsageScope.LineOfFire)
+                InteractionContext.HeldItem = null;
         }
 
         // OnPause

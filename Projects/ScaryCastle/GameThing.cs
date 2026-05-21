@@ -549,7 +549,7 @@ namespace ScaryCastle
                 {
                     if (Session.PlayerInventory.Find(nameof(Coin)) is Item coin)
                     {
-                        coin.Count--;
+                        coin.Amount--;
                         Sound.Play(SoundNames.CoinLoss);
                         Session.TextHUD.Log.Show(LogVerb.Lost, coin.Definition, true);
                     }

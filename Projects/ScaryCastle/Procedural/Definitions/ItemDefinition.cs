@@ -24,23 +24,9 @@ namespace ScaryCastle
             // Category
             Category = element.GetEnum("category", ItemCategory.Misc);
 
-            // ConsumptionInterval
-            ConsumptionInterval = element.GetInt32("consumptionInterval", 0);
-            if (ConsumptionInterval < 0)
-                ConsumptionInterval = 0;
-
-            // ConsumptionType
-            ConsumptionType = element.GetEnum("consumptionType", ConsumptionType.Quantity);
-
             // Damage
             DiceExpression? damage = element.GetObject("hp", value => new DiceExpression(value));
-
-            // Durability
-            Durability = element.GetFloat("durability", 0);
-
-            // DurabilityCost
-            DurabilityCost = element.GetFloat("durabilityCost", 0);
-
+            
             // ExecutionDelay
             ExecutionDelay = element.GetInt32("executionDelay", 0);
 
@@ -51,6 +37,14 @@ namespace ScaryCastle
 
             // HP
             DiceExpression? hp = element.GetObject("hp", value => new DiceExpression(value));
+
+            // InitialAmount
+            InitialAmount = element.GetInt32("initialAmount", 1);
+            if (InitialAmount < 1)
+                InitialAmount = 1;
+
+            // IsDepletable
+            IsDepletable = element.GetBool("isDepletable", false);
 
             // IsStackable
             IsStackable = element.GetBool("isStackable", false);
@@ -109,12 +103,6 @@ namespace ScaryCastle
         // Category
         public ItemCategory Category { get; }
 
-        // ConsumptionInterval
-        public int ConsumptionInterval { get; }
-
-        // ConsumptionType
-        public ConsumptionType ConsumptionType { get; }
-
         // Definitions
         public static ItemDefinitionContainer Definitions { get; } = new(element => new ItemDefinition(element));
 
@@ -124,12 +112,6 @@ namespace ScaryCastle
         // DisplayName
         public string DisplayName { get; }
 
-        // Durability
-        public Ratio Durability { get; }
-
-        // DurabilityCost
-        public float DurabilityCost { get; }
-
         // ExecutionDelay
         public int ExecutionDelay { get; }
 
@@ -138,6 +120,12 @@ namespace ScaryCastle
 
         // Image
         public AtlasImage? Image { get; }
+
+        // InitialAmount
+        public int InitialAmount { get; }
+
+        // IsDepletable
+        public bool IsDepletable { get; }
 
         // IsPassive
         public bool IsPassive { get; }

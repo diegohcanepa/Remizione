@@ -40,21 +40,22 @@
               "type": "integer",
               "default": 0
             },
-            "durability": {
-              "type": "number"
-            },
-            "durabilityCost": {
-              "type": "number"
-            },
             "executionDelay": {
               "type": "integer",
               "minimum": 0
+            },
+            "isDepletable": {
+              "type": "boolean"
             },
             "isStackable": {
               "type": "boolean"
             },
             "gooCost": {
               "type": "integer"
+            },
+            "initialAmount": {
+              "type": "integer",
+              "default": 1
             },
             "lightColor": {
               "type": "string"
@@ -83,20 +84,10 @@
               "type": "string",
               "enum": [
                 "Close",
-                "Range",
+                "FreeRange",
+                "LineOfFire",
                 "Self"
               ]
-            },
-            "consumptionType": {
-              "type": "string",
-              "enum": [
-                "None",
-                "Consumable",
-                "Durability"
-              ]
-            },
-            "consumptionInterval": {
-              "type": "integer"
             }
           },
           "required": [

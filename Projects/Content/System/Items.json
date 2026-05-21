@@ -18,8 +18,7 @@
 		},
 		{
 			"name": "BargainCross",
-			"usageScope": "Range",
-			"consumptionType": "None",
+			"usageScope": "FreeRange",
 			"executionDelay": 1500,
 			"gooCost": 1,
 			"effects": [
@@ -93,18 +92,24 @@
 		},
 		{
 			"name": "Pistol",
+			"initialAmount": 6,
 			"category": "Misc",
-			"usageScope": "Range",
+			"usageScope": "LineOfFire",
 			"sound": "Pistol",
-			"durability": 6,
-			"durabilityCost": 1,
+			"isDepletable": true,
 			"effects": [
+				{
+					"context": "Attack",
+					"effectType": "ComicText",
+					"comicText": "BangRed",
+					"target": "Self"
+				},
 				{
 					"context": "Attack",
 					"effectType": "Damage",
 					"damageType": "Physical",
 					"amount": "1d4+2",
-					"comicText": "BangRed"
+					"comicText": "BoomRed"
 				}
 			]
 		},

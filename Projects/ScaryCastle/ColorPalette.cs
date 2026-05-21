@@ -74,8 +74,11 @@ namespace ScaryCastle
             // AttackableTarget
             internal static Color AttackableTarget { get; } = Text.OrangeLight;
 
-            // HighlightBlue
-            internal static Vector4 HighlightBlue { get; } = (new Color(79, 164, 184) * .65f).ToVector4();
+            // HighlightGreen
+            internal static Vector4 HighlightGreen { get; } = (new Color(79, 164, 79) * .7f).ToVector4();
+
+            // HighlightRed
+            internal static Vector4 HighlightRed { get; } = (new Color(164, 79, 79) * .7f).ToVector4();
 
             // HighlightWhite
             internal static Vector4 HighlightWhite { get; } = (Color.White * .75f).ToVector4();

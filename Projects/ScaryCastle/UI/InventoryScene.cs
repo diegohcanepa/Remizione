@@ -170,7 +170,9 @@ namespace ScaryCastle
                     shadows[i].RenderImage = Inventory[i].Definition.Image;
 
                     amounts[i].X = icons[i].X;
-                    amounts[i].Text = Inventory[i].Definition.IsStackable ? Inventory[i].Count.ToString(CultureInfo.InvariantCulture) : null;
+                    
+                    if (Inventory[i].Definition.IsStackable || Inventory[i].Definition.IsDepletable)
+                        amounts[i].Text = Inventory[i].Amount.ToString(CultureInfo.InvariantCulture);
                 }
             }
         }

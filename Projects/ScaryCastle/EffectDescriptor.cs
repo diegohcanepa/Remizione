@@ -66,6 +66,13 @@ namespace ScaryCastle
                     case EffectType.None:
                         break;
 
+                    // ComicText
+                    case EffectType.ComicText:
+                        // ComicText si hubo daño real
+                        if (effect.ComicText != ComicTextKind.None)
+                            realTarget.ShowComicText(effect.ComicText);
+                        break;
+
                     // Condition
                     case EffectType.Condition:
                         realTarget.ApplyCondition(effect.Condition, amount, effect.ComicText);
