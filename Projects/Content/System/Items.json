@@ -19,6 +19,7 @@
 		{
 			"name": "BargainCross",
 			"usageScope": "FreeRange",
+			"isDepletable": false,
 			"executionDelay": 1500,
 			"gooCost": 1,
 			"effects": [
@@ -35,6 +36,7 @@
 			"name": "Coin",
 			"usageScope": "Close",
 			"category": "Money",
+			"deselectOnUse": true,
 			"isStackable": true,
 			"pickupSound": "CollectCoin"
 		},
@@ -65,6 +67,7 @@
 		{
 			"name": "GooBottle",
 			"category": "Food",
+			"deselectOnUse": true,
 			"usageScope": "Self",
 			"isStackable": true,
 			"effects": [
@@ -87,6 +90,7 @@
 			"name": "Lockpick",
 			"usageScope": "Close",
 			"category": "Access",
+			"deselectOnUse": true,
 			"skillChance": 70,
 			"isStackable": true
 		},
@@ -97,20 +101,21 @@
 			"usageScope": "LineOfFire",
 			"sound": "Pistol",
 			"isDepletable": true,
+			"projectile": {
+				"speed": 200,
+				"imageName": "PistolBullet",
+				"effects": [
+					{
+						"context": "ProjectileHit",
+						"effectType": "Damage",
+						"damageType": "Physical",
+						"amount": "1d4+2",
+						"comicText": "BoomRed"
+					}
+				],
+				"trajectory": "Linear"
+			},
 			"effects": [
-				{
-					"context": "Attack",
-					"effectType": "ComicText",
-					"comicText": "BangRed",
-					"target": "Self"
-				},
-				{
-					"context": "Attack",
-					"effectType": "Damage",
-					"damageType": "Physical",
-					"amount": "1d4+2",
-					"comicText": "BoomRed"
-				}
 			]
 		},
 		{
@@ -141,6 +146,7 @@
 			"name": "RustyLockpick",
 			"usageScope": "Close",
 			"category": "Access",
+			"deselectOnUse": true,
 			"skillChance": 30
 		},
 		{

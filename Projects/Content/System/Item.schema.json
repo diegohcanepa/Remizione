@@ -40,6 +40,10 @@
               "type": "integer",
               "default": 0
             },
+            "deselectOnUse": {
+              "type": "boolean",
+              "default": false
+            },
             "executionDelay": {
               "type": "integer",
               "minimum": 0
@@ -73,6 +77,10 @@
               "type": "string",
               "description": "Nombre del archivo de sonido a reproducir cuando se colecta."
             },
+            "projectile": {
+              "$ref": "Projectile.schema.json",
+              "description": "Referencia al comportamiento y descriptor del proyectil que este ítem dispara o genera."
+            },            
             "skillChance": {
               "type": "integer"
             },

@@ -78,6 +78,9 @@ namespace ScaryCastle
             if (MouseCursor.HightlightColor != ColorPalette.MouseCursor.HighlightRed && Actor.PerformInteraction(context.Target, context.HeldItem))
                 return;
 
+            if (MouseCursor.HightlightColor == ColorPalette.MouseCursor.HighlightRed)
+                Actor.Session.TextHUD.Message.Show(MessageKind.OutOfLine);
+
             MouseCursor.Shake();
         }
 

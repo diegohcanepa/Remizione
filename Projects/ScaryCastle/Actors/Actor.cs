@@ -743,6 +743,8 @@ namespace ScaryCastle
             {
                 if (value != field)
                 {
+                    if (value > field)
+                        ClearCondition();
                     field = Math.Min(value, MaxGoo);
                     OnGooChanged();
                 }
@@ -797,6 +799,16 @@ namespace ScaryCastle
 
         // IsStandingOrMoving
         public bool IsStandingOrMoving => BodyMachine.CurrentState is BodyStandState or BodyMoveState;
+
+        // LaunchProjectile
+        public void LaunchProjectile(string actionName, ProjectileDescriptor projectileDescriptor)
+        {
+            StopMoving();
+            var state = BodyMachine.FindOrCreateState<BodyLaunchProjectileState>();
+            state.ActionName = actionName;
+            state.ProjectileDescriptor = projectileDescriptor;
+            BodyMachine.ChangeState(state.GetType());
+        }
 
         // MaxGoo
         [ScriptProperty]

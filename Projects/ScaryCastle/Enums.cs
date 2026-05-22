@@ -51,7 +51,7 @@ namespace ScaryCastle
     public enum DustParticleKind { None, Dust, Ash }
 
     // EffectContext
-    public enum EffectContext { Contact, Attack, Update, Use }
+    public enum EffectContext { Contact, Attack, Update, Use, ProjectileHit }
 
     // EffectType
     public enum EffectType { None, Condition, ComicText, Damage, Death, Goo, Heal }
@@ -135,7 +135,7 @@ namespace ScaryCastle
     }
 
     // MessageKind
-    public enum MessageKind { CannotPlaceItem, HandsFull, HurryUp, InventoryFull, ItemDiscarded, LiftNotAllowed, NotEnoughCoins, NotEnoughGoo, OutOfReach, PathCleared, PullCorridorLever }
+    public enum MessageKind { CannotPlaceItem, HandsFull, HurryUp, InventoryFull, ItemDiscarded, LiftNotAllowed, NotEnoughCoins, NotEnoughGoo, OutOfReach, OutOfLine, PathCleared, PullCorridorLever }
 
     // MouseCursorState
     public enum MouseCursorState { Arrow, Cross, Down, Hand, Left, Prohibition, Right, Up, Wait }
@@ -155,6 +155,9 @@ namespace ScaryCastle
 
     // PlayerNumber
     public enum PlayerNumber { None = -1, One = 0, Two = 1, Three = 2, Four = 3 }
+
+    // ProjectileTrajectoryType
+    public enum ProjectileTrajectoryType { Linear, Parabolic }
 
     // Realm
     public enum Realm { Earthly, Infernal, Celestial }

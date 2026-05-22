@@ -34,7 +34,7 @@ namespace ScaryCastle
         #region Static members
 
         // Apply
-        public static void Apply(IList<EffectDescriptor> effects, GameThing source, GameThing target, EffectContext context)
+        public static void Apply(IList<EffectDescriptor> effects, GameThing source, GameThing? target, EffectContext context)
         {
             if (effects.Count == 0)
                 return;
@@ -50,7 +50,6 @@ namespace ScaryCastle
                     continue;
 
                 var realTarget = effect.Target == EffectTarget.Self ? source : target;
-                var actor = realTarget as Actor;
 
                 // Play sound
                 if (effect.Sound != null)
@@ -70,32 +69,32 @@ namespace ScaryCastle
                     case EffectType.ComicText:
                         // ComicText si hubo daño real
                         if (effect.ComicText != ComicTextKind.None)
-                            realTarget.ShowComicText(effect.ComicText);
+                            realTarget?.ShowComicText(effect.ComicText);
                         break;
 
                     // Condition
                     case EffectType.Condition:
-                        realTarget.ApplyCondition(effect.Condition, amount, effect.ComicText);
+                        realTarget?.ApplyCondition(effect.Condition, amount, effect.ComicText);
                         break;
 
                     // Damage
                     case EffectType.Damage:
-                        realTarget.TakeDamage(source, effect.DamageType, amount, effect.ComicText, effect.GetKnockbackForce());
+                        realTarget?.TakeDamage(source, effect.DamageType, amount, effect.ComicText, effect.GetKnockbackForce());
                         break;
 
                     // Death
                     case EffectType.Death:
-                        realTarget.TakeDamage(source, effect.DamageType, int.MaxValue, effect.ComicText, effect.GetKnockbackForce());
+                        realTarget?.TakeDamage(source, effect.DamageType, int.MaxValue, effect.ComicText, effect.GetKnockbackForce());
                         break;
 
                     // Goo
                     case EffectType.Goo:
-                        actor?.Goo += amount;
+                        (realTarget as Actor)?.Goo += amount;
                         break;
 
                     // Heal
                     case EffectType.Heal:
-                        realTarget.HP += amount;
+                        realTarget?.HP += amount;
                         break;
                 }
             }

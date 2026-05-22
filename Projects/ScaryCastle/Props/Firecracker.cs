@@ -44,7 +44,7 @@ namespace ScaryCastle
                 {
                     if (Room != null && Session.PlayerInventory.Find("Firecracker") is Item item)
                     {
-                        item.ApplyEffects(this, null, EffectContext.Attack);
+                        item.Use(this, null, EffectContext.Attack);
                         Session.Camera.Shake(TweenStyle.Linear, new Vector2(1.5f), 66, 4);
                     }
                 }

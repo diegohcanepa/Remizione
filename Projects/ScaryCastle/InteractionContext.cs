@@ -83,11 +83,8 @@ namespace ScaryCastle
         {
             LiftMode = false;
 
-            if (HeldItem != null && Target != null)
-            {
-                if (HeldItem?.Definition.UsageScope is not ItemUsageScope.FreeRange and not ItemUsageScope.LineOfFire)
-                    HeldItem = null;
-            }
+            if (HeldItem?.Definition.DeselectOnUse == true)
+                HeldItem = null;
 
             Target = null;
             MouseCursorAppearance.Refresh(this);

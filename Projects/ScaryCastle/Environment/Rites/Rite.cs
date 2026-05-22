@@ -35,7 +35,7 @@ namespace ScaryCastle
                 done = true;
                 RenderLayer = RenderLayer.Default;
                 OnCast();
-                Item.ApplyEffects(this, Session.OutcomeTarget, EffectContext.Attack);
+                Item.Use(this, Session.OutcomeTarget, EffectContext.Attack);
                 return;
             }
 

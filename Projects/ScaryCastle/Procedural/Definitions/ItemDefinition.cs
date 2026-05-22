@@ -24,9 +24,9 @@ namespace ScaryCastle
             // Category
             Category = element.GetEnum("category", ItemCategory.Misc);
 
-            // Damage
-            DiceExpression? damage = element.GetObject("hp", value => new DiceExpression(value));
-            
+            // DeselectOnUse
+            DeselectOnUse = element.GetBool("deselectOnUse", false);
+
             // ExecutionDelay
             ExecutionDelay = element.GetInt32("executionDelay", 0);
 
@@ -35,16 +35,13 @@ namespace ScaryCastle
             if (GooCost < 0)
                 GooCost = 0;
 
-            // HP
-            DiceExpression? hp = element.GetObject("hp", value => new DiceExpression(value));
-
             // InitialAmount
             InitialAmount = element.GetInt32("initialAmount", 1);
             if (InitialAmount < 1)
                 InitialAmount = 1;
 
             // IsDepletable
-            IsDepletable = element.GetBool("isDepletable", false);
+            IsDepletable = element.GetBool("isDepletable", true);
 
             // IsStackable
             IsStackable = element.GetBool("isStackable", false);
@@ -62,6 +59,10 @@ namespace ScaryCastle
 
             // PickupSound
             PickupSound = element.GetObject("pickupSound", Sound.Get) ?? Sound.Get(SoundNames.PickupGeneric);
+
+            // Projectile
+            if (element.TryGetProperty("projectile", out JsonElement projectileElement) && projectileElement.ValueKind == JsonValueKind.Object)
+                Projectile = new ProjectileDescriptor(projectileElement);
 
             // Quality
             Quality = element.GetInt32("quality", 0);
@@ -109,6 +110,9 @@ namespace ScaryCastle
         // Description
         public string Description { get; }
 
+        // DeselectOnUse
+        public bool DeselectOnUse { get; }
+
         // DisplayName
         public string DisplayName { get; }
 
@@ -147,6 +151,9 @@ namespace ScaryCastle
 
         // Price
         public int Price { get; }
+
+        // Projectile
+        public ProjectileDescriptor? Projectile { get; }
 
         // Quality
         public int Quality { get; }

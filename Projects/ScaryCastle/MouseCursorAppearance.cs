@@ -119,31 +119,15 @@ namespace ScaryCastle
                 MouseCursor.IsEnabled = context.Session.Player?.ActiveThrowable == null;
                 MouseCursor.HightlightColor = ColorPalette.MouseCursor.HighlightWhite;
 
-                if (context.HeldItem?.Definition is { } itemDef)
+                if (context.Session.Player != null && context.HeldItem?.Definition.UsageScope == ItemUsageScope.LineOfFire)
                 {
-                    if (itemDef.UsageScope == ItemUsageScope.FreeRange)
-                    {
-                        MouseCursor.HightlightColor = ColorPalette.MouseCursor.HighlightGreen;
-                    }
-                    else if(itemDef.UsageScope == ItemUsageScope.LineOfFire)
-                    {
-                        if (context.Session.Player != null)
-                        {
-                            var mousePos = InputManager.DefaultPlayer.Mouse.WorldPosition(context.Session.Camera);
-                            MouseCursor.FlipCustomImage = mousePos.X < context.Session.Player.X;
-                        }
+                    var mousePos = InputManager.DefaultPlayer.Mouse.WorldPosition(context.Session.Camera);
+                    MouseCursor.FlipCustomImage = mousePos.X < context.Session.Player.X;
 
-                        if (context.Session.Player != null && context.Target != context.Session.Player)
-                        {
-                            if (context.Session.Player.IsInAttackLane(context.Target, 13))
-                            {
-                                MouseCursor.HightlightColor = ColorPalette.MouseCursor.HighlightGreen;
-                            }
-                            else
-                            {
-                                MouseCursor.HightlightColor = ColorPalette.MouseCursor.HighlightRed;
-                            }
-                        }
+                    if (context.Target != context.Session.Player)
+                    {
+                        if (!context.Session.Player.IsInAttackLane(context.Target, 13))
+                            MouseCursor.HightlightColor = ColorPalette.MouseCursor.HighlightRed;
                     }
                 }
             }

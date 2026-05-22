@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "Projectile.schema.json",
+  "title": "Projectile Descriptor",
+  "type": "object",
+  "properties": {
+    "trajectory": {
+      "type": "string",
+      "description": "El tipo de trayectoria que describirá el proyectil al avanzar.",
+      "enum": [ "Linear", "Parabolic" ],
+      "default": "Linear"
+    },
+    "speed": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Velocidad constante de desplazamiento horizontal/direccional."
+    },
+    "initialYVelocity": {
+      "type": "number",
+      "default": 0.0,
+      "description": "Impulso vertical inicial. Usar valores negativos para que el proyectil sea despedido hacia arriba (Trayectoria Parabolic)."
+    },
+    "gravity": {
+      "type": "number",
+      "default": 0.0,
+      "minimum": 0,
+      "description": "Fuerza de gravedad que empuja el proyectil hacia abajo en el eje Y frame a frame (Trayectoria Parabolic)."
+    },
+    "imageName": {
+      "type": "string",
+      "description": "Ruta o clave del asset en el AtlasImage para renderizar el proyectil."
+    },
+    "effects": {
+      "type": "array",
+      "description": "Lista de efectos que el proyectil transporta y aplicará al impactar un objetivo.",
+      "items": {
+        "$ref": "EffectDescriptor.schema.json"
+      }
+    }
+  },
+  "required": [ "imageName", "trajectory", "speed", "effects" ],
+  "additionalProperties": false
+}

@@ -233,9 +233,7 @@ namespace Engendro
             var y2 = Math.Min(value1.Y + value1.Height, value2.Y + value2.Height);
 
             if (x2 >= x1 && y2 >= y1)
-            {
                 return new RectangleF(x1, y1, x2 - x1, y2 - y1);
-            }
 
             return Empty;
         }
@@ -257,27 +255,19 @@ namespace Engendro
 
             // Upper segment
             if (Geometry.LineSegmentsCross(start, end, GetPoint(RectanglePoint.LeftTop), GetPoint(RectanglePoint.RightTop)))
-            {
                 return true;
-            }
 
             // Right segment
             if (Geometry.LineSegmentsCross(start, end, GetPoint(RectanglePoint.RightTop), GetPoint(RectanglePoint.RightBottom)))
-            {
                 return true;
-            }
 
             // Bottom segment
             if (Geometry.LineSegmentsCross(start, end, GetPoint(RectanglePoint.LeftBottom), GetPoint(RectanglePoint.RightBottom)))
-            {
                 return true;
-            }
 
             // Left segment
             if (Geometry.LineSegmentsCross(start, end, GetPoint(RectanglePoint.LeftTop), GetPoint(RectanglePoint.LeftBottom)))
-            {
                 return true;
-            }
 
             return false;
         }

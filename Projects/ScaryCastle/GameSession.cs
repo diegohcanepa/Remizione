@@ -170,6 +170,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register("set-light", typeof(SetLightCommand));
             AotTypeRegistry.Register("show-message", typeof(ShowMessageCommand));
             AotTypeRegistry.Register("terminate-dialog-block", typeof(TerminateDialogBlockCommand));
+            AotTypeRegistry.Register("use-item", typeof(UseItemCommand));
             AotTypeRegistry.Register("x-tween", typeof(XTweenCommand));
             AotTypeRegistry.Register("y-tween", typeof(YTweenCommand));
         }
@@ -293,7 +294,7 @@ namespace ScaryCastle
         {
             base.OnOutcome(target);
 
-            if (InteractionContext.HeldItem?.Definition.UsageScope is not ItemUsageScope.FreeRange and not ItemUsageScope.LineOfFire)
+            if (InteractionContext.HeldItem?.Definition.DeselectOnUse == true)
                 InteractionContext.HeldItem = null;
         }
 
@@ -545,6 +546,7 @@ namespace ScaryCastle
             PlayerInventory.Clear();
             PlayerStats.Reset();
             InteractionContext.Reset();
+            InteractionContext.HeldItem = null;
 
             if (Player != null)
             {

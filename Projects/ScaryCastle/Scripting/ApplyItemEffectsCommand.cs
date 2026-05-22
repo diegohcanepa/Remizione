@@ -26,7 +26,7 @@ namespace ScaryCastle.Scripting
             if (session.PlayerInventory.Find(Body.Clauses[0]) is Item item && session.OutcomeTarget is GameThing target)
             {
                 var context = Parser.ParseEnumArgument(this, ContextArg, EffectContext.Use);
-                item.ApplyEffects(player, target, context);
+                item.Use(player, target, context);
             }
         }
     }

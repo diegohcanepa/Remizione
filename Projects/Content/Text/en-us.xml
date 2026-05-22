@@ -67,7 +67,7 @@
   <String Key="Item.Lockpick.Name">Lockpick</String>
   <String Key="Item.MagneticCard.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.MagneticCard.Name">Magnetic card</String>
-  <String Key="Item.PieceOfWood.Description"></String>
+  <String Key="Item.PieceOfWood.Description" />
   <String Key="Item.PieceOfWood.Name">Piece of wood</String>
   <String Key="Item.Pistol.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </String>
   <String Key="Item.Pistol.Name">Pistol</String>
@@ -201,6 +201,7 @@
   <String Key="MessageKind.LiftNotAllowed">You can't lift that.</String>
   <String Key="MessageKind.NotEnoughCoins">Not enough coins.</String>
   <String Key="MessageKind.NotEnoughGoo">You don't have goo on your body.</String>
+  <String Key="MessageKind.OutOfLine">Out of line!</String>
   <String Key="MessageKind.OutOfReach">Out of reach.</String>
   <String Key="MessageKind.PathCleared">The way is open.</String>
   <String Key="MessageKind.PullCorridorLever">Pull the lever!</String>
@@ -313,11 +314,11 @@ Bla bla bla</String>
   <String Key="Prop.UnderRideEntrance">Under ride</String>
   <String Key="Prop.VendingMachine">Vending machine</String>
   <String Key="Prop.WC">W.C.</String>
-  <String Key="Verb.Ellipsis" />
+  <String Key="Verb.Ellipsis"></String>
   <String Key="Verb.Enter">Enter</String>
   <String Key="Verb.Exit">Exit</String>
   <String Key="Verb.Lift">Lift</String>
-  <String Key="Verb.None" />
+  <String Key="Verb.None"></String>
   <String Key="Verb.Open">Open</String>
   <String Key="Verb.Pull">Pull</String>
   <String Key="Verb.Take">Take</String>

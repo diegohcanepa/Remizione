@@ -30,6 +30,7 @@ namespace ScaryCastle
                 throw new InvalidOperationException($"ERROR: No assets found for {node.RoomType}/{node.SideRoomCategory} in {diff}");
             }
             else
+
             {
                 node.Definition = def;
                 this.Spawns.Increment(def.Name);
