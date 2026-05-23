@@ -44,10 +44,6 @@
               "type": "boolean",
               "default": false
             },
-            "executionDelay": {
-              "type": "integer",
-              "minimum": 0
-            },
             "isDepletable": {
               "type": "boolean"
             },
@@ -60,6 +56,14 @@
             "initialAmount": {
               "type": "integer",
               "default": 1
+            },
+            "inPlaceEffectType": {
+              "type": "string",
+              "enum": [
+                "None",
+                "Lightning"
+              ],
+              "default": "Lightning"
             },
             "lightColor": {
               "type": "string"
@@ -92,8 +96,8 @@
               "type": "string",
               "enum": [
                 "Close",
-                "FreeRange",
-                "LineOfFire",
+                "InPlace",
+                "Projectile",
                 "Self"
               ]
             }

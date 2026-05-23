@@ -125,48 +125,10 @@ namespace ScaryCastle
         }
 
         // Use
-        public bool Use(GameThing source, GameThing? target, EffectContext context)
+        public void Use(GameThing source, GameThing? target, EffectContext context)
         {
-            // Play sound
-            if (Definition.Sound != null)
-                source.PlaySound(Definition.Sound);
-
-            if (Definition.AreaRange == 0)
-            {
-                EffectDescriptor.Apply(Definition.EffectDescriptors, source, target, context);
-
-                if (target != null)
-                {
-                    // Any food item remove poison status
-                    if (Definition.Category == ItemCategory.Food && target.Condition == ConditionType.Poison)
-                    {
-                        var hasPoisonStatus = false;
-                        for (var i = 0; i < Definition.EffectDescriptors.Count; i++)
-                        {
-                            if (Definition.EffectDescriptors[i].Condition == ConditionType.Poison)
-                            {
-                                hasPoisonStatus = true;
-                                break;
-                            }
-                        }
-
-                        if (!hasPoisonStatus)
-                            target.ClearCondition();
-                    }
-                }
-            }
-            else if (source.Room is GameRoom room)
-            {
-                foreach (var potentialTarget in room.Children.OfType<GameThing>())
-                {
-                    if (source.DistanceTo(potentialTarget) < Definition.AreaRange)
-                        EffectDescriptor.Apply(Definition.EffectDescriptors, source, potentialTarget, context);
-                }
-            }
-
+            GameAction.Apply(Definition, source, target, context);
             ComputeUse();
-
-            return true;
         }
     }
 }

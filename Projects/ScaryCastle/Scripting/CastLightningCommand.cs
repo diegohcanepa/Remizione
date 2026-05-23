@@ -29,7 +29,7 @@ namespace ScaryCastle.Scripting
             {
                 if (session.PlayerInventory.Find(Body.Clauses[0]) is Item item)
                 {
-                    var lightning = new LightningRite(target, item);
+                    var lightning = new LightningInvocation(target, item);
                     player.Room.Children.Add(lightning);
                 }
             }

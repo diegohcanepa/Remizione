@@ -3,18 +3,18 @@
 namespace ScaryCastle
 {
     /// <summary>
-    /// Rite
+    /// Invocation
     /// </summary>
-    public abstract class Rite : GameThing
+    public abstract class Invocation : GameThing
     {
         private bool done;
 
         // Constructor
-        protected Rite(GameThing target, Item item)
+        protected Invocation(GameThing target, Item item)
             : base(target.Session, string.Empty)
         {
+            this.Target = target;
             this.Item = item;
-            this.Position = target.Position;
             this.RenderLayer = RenderLayer.OverBackground;
             this.Atlas = Atlases.Environment;
             this.Scale = ScaleInfo.UIElement.Small;
@@ -22,8 +22,8 @@ namespace ScaryCastle
 
         #region Protected members
 
-        // OnCast
-        protected virtual void OnCast()
+        // OnExecute
+        protected virtual void OnExecute()
         {
         }
 
@@ -34,8 +34,9 @@ namespace ScaryCastle
             {
                 done = true;
                 RenderLayer = RenderLayer.Default;
-                OnCast();
-                Item.Use(this, Session.OutcomeTarget, EffectContext.Attack);
+                Position = Target.Position;
+                OnExecute();
+                Item.Use(this, Target, EffectContext.Attack);
                 return;
             }
 
@@ -49,5 +50,8 @@ namespace ScaryCastle
 
         // Item
         public Item Item { get; }
+
+        // Target
+        public GameThing Target { get; }
     }
 }

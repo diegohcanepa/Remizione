@@ -45,7 +45,7 @@ namespace ScaryCastle
                 if (Room.Children[i] is not GameThing thing || thing == this || thing == this.emitter || !thing.CanBeHit || thing.Hotspot.IsEmpty)
                     continue;
 
-                if (LineIntersectsRectangle(from, to, thing.RuntimeHotspot.BoundingRectangle))
+                if (thing.RuntimeHotspot.BoundingRectangleF.Intersects(from, to))
                 {
                     ApplyEffectsTo(thing);
                     Destroy();
@@ -60,35 +60,6 @@ namespace ScaryCastle
             this.effects.Clear();
             this.emitter = null;
             Unparent();
-        }
-
-        // LineIntersectsRectangle
-        private bool LineIntersectsRectangle(Vector2 p1, Vector2 p2, Rectangle rect)
-        {
-            if (rect.Contains(p1) || rect.Contains(p2))
-                return true;
-
-            float left = rect.Left;
-            float right = rect.Right;
-            float top = rect.Top;
-            float bottom = rect.Bottom;
-
-            return LineIntersectsLine(p1, p2, new Vector2(left, top), new Vector2(right, top)) ||       // Techo
-                   LineIntersectsLine(p1, p2, new Vector2(right, top), new Vector2(right, bottom)) ||   // Lateral Derecho
-                   LineIntersectsLine(p1, p2, new Vector2(left, bottom), new Vector2(right, bottom)) || // Piso
-                   LineIntersectsLine(p1, p2, new Vector2(left, top), new Vector2(left, bottom));       // Lateral Izquierdo
-        }
-
-        // LineIntersectsLine
-        private bool LineIntersectsLine(Vector2 a1, Vector2 a2, Vector2 b1, Vector2 b2)
-        {
-            float d = (a2.X - a1.X) * (b2.Y - b1.Y) - (a2.Y - a1.Y) * (b2.X - b1.X);
-            if (d == 0) return false;
-
-            float u = ((b1.X - a1.X) * (b2.Y - b1.Y) - (b1.Y - a1.Y) * (b2.X - b1.X)) / d;
-            float v = ((b1.X - a1.X) * (a2.Y - a1.Y) - (b1.Y - a1.Y) * (a2.X - a1.X)) / d;
-
-            return u >= 0f && u <= 1f && v >= 0f && v <= 1f;
         }
 
         #endregion

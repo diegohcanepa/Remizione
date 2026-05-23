@@ -173,7 +173,7 @@ namespace ScaryCastle
                 }
                 else if (decision.Type == CombatDecisionType.Attack && decision.Intent != null)
                 {
-                    PerformAttack(decision.Intent, target);
+                    PerformCloseAttack(decision.Intent, target);
                 }
             }
         }
@@ -423,8 +423,19 @@ namespace ScaryCastle
         }
 
         // OnGooChanged
-        protected virtual void OnGooChanged()
+        protected virtual void OnGooChanged(int previousValue)
         {
+        }
+
+        // OnHPChanged
+        protected override void OnHPChanged(int previousValue)
+        {
+            // Any food item remove poison status
+            if (previousValue < HP)
+            {
+                if (Condition == ConditionType.Poison)
+                    ClearCondition();
+            }
         }
 
         // OnInitialize
@@ -536,7 +547,7 @@ namespace ScaryCastle
 
             if (!Session.IsAwaiting && !IsMoving)
             {
-                if (IsPlayer && Session.IsCurrentScene && CanHandleInput)
+                if (IsPlayer && ActiveThrowable != null && Session.IsCurrentScene && CanHandleInput)
                 {
                     FaceToMouseCursor();
                 }
@@ -743,10 +754,13 @@ namespace ScaryCastle
             {
                 if (value != field)
                 {
+                    var previousValue = field;
+
                     if (value > field)
                         ClearCondition();
                     field = Math.Min(value, MaxGoo);
-                    OnGooChanged();
+                    
+                    OnGooChanged(previousValue);
                 }
             }
         }
@@ -801,11 +815,11 @@ namespace ScaryCastle
         public bool IsStandingOrMoving => BodyMachine.CurrentState is BodyStandState or BodyMoveState;
 
         // LaunchProjectile
-        public void LaunchProjectile(string actionName, ProjectileDescriptor projectileDescriptor)
+        public void LaunchProjectile(string animationName, ProjectileDescriptor projectileDescriptor)
         {
             StopMoving();
             var state = BodyMachine.FindOrCreateState<BodyLaunchProjectileState>();
-            state.ActionName = actionName;
+            state.AnimationName = animationName;
             state.ProjectileDescriptor = projectileDescriptor;
             BodyMachine.ChangeState(state.GetType());
         }
@@ -877,8 +891,8 @@ namespace ScaryCastle
             return true;
         }
 
-        // PerformAttack
-        public void PerformAttack(CombatIntent intent, GameThing? target)
+        // PerformCloseAttack
+        public void PerformCloseAttack(CombatIntent intent, GameThing? target)
         {
             StopMoving();
             if (target != null)
@@ -942,14 +956,19 @@ namespace ScaryCastle
                 return false;
             }
 
-            if (item != null && item.Definition.UsageScope != ItemUsageScope.Close)
+            if (target == this || (item?.Definition.UsageScope is ItemUsageScope.Self or ItemUsageScope.InPlace))
             {
                 HandlePendingInteraction();
             }
             else
             {
                 var destination = target.GetApproachPosition(this, Session.InteractionData.CloseAttack ? ApproachBehavior.ClosestSide : null);
-                if (target == this || !MoveTo(destination))
+
+                if (item?.Definition.UsageScope == ItemUsageScope.Projectile)
+                    destination.X = X;
+
+                if (
+                    !MoveTo(destination))
                     HandlePendingInteraction();
             }
 
@@ -1020,6 +1039,34 @@ namespace ScaryCastle
             state.Prop = ActiveThrowable;
             ActiveThrowable = null;
             BodyMachine.ChangeState(state.GetType());
+        }
+
+        // UseItem
+        public void UseItem(Item item, GameThing? target)
+        {
+            StopMoving();
+            if (target != null)
+                FaceTo(target);
+
+            // Projectile
+            if (item.Definition.UsageScope == ItemUsageScope.Projectile)
+            {
+                if (item.Definition.Projectile != null)
+                    LaunchProjectile($"Use{item.Name}", item.Definition.Projectile);
+            }
+
+            // InPlace
+            else if (item.Definition.UsageScope == ItemUsageScope.InPlace)
+            {
+                if (item.Definition.InPlaceEffectType == InPlaceEffectType.Lightning)
+                {
+                    if (target != null && Session.Room != null)
+                    {
+                        var lightning = new LightningInvocation(target, item);
+                        Session.Room.Children.Add(lightning);
+                    }
+                }
+            }
         }
 
         /// <summary>

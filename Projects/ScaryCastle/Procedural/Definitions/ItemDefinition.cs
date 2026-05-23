@@ -8,7 +8,7 @@ namespace ScaryCastle
     /// <summary>
     /// ItemDefinition
     /// </summary>
-    public sealed class ItemDefinition : Definition
+    public sealed class ItemDefinition : Definition, IGameAction
     {
         #region Constructor
 
@@ -27,9 +27,6 @@ namespace ScaryCastle
             // DeselectOnUse
             DeselectOnUse = element.GetBool("deselectOnUse", false);
 
-            // ExecutionDelay
-            ExecutionDelay = element.GetInt32("executionDelay", 0);
-
             // GooCost
             GooCost = element.GetInt32("gooCost", 0);
             if (GooCost < 0)
@@ -39,6 +36,9 @@ namespace ScaryCastle
             InitialAmount = element.GetInt32("initialAmount", 1);
             if (InitialAmount < 1)
                 InitialAmount = 1;
+
+            // InPlaceEffectType
+            InPlaceEffectType = element.GetEnum("inPlaceEffectType", InPlaceEffectType.None);
 
             // IsDepletable
             IsDepletable = element.GetBool("isDepletable", true);
@@ -93,6 +93,9 @@ namespace ScaryCastle
 
             IsPassive = LightModifier != 0 || LuckModifier != 0;
 
+            if (UsageScope == ItemUsageScope.Projectile && Projectile == null)
+                RaiseValidationError(this, "Items with Projectile usage scope must have a Projectile defined.", nameof(UsageScope));
+
             Definitions.Add(this);
         }
 
@@ -116,9 +119,6 @@ namespace ScaryCastle
         // DisplayName
         public string DisplayName { get; }
 
-        // ExecutionDelay
-        public int ExecutionDelay { get; }
-
         // GooCost
         public int GooCost { get; }
 
@@ -127,6 +127,9 @@ namespace ScaryCastle
 
         // InitialAmount
         public int InitialAmount { get; }
+
+        // InPlaceEffectType
+        public InPlaceEffectType InPlaceEffectType { get; }
 
         // IsDepletable
         public bool IsDepletable { get; }

@@ -74,6 +74,9 @@ namespace ScaryCastle
     // ImpactType
     public enum ImpactType { Low, Medium, High }
 
+    // InPlaceEffectType
+    public enum InPlaceEffectType { None, Lightning }
+
     // Intensity
     public enum Intensity { Low, Medium, High }
 
@@ -84,7 +87,7 @@ namespace ScaryCastle
     public enum ItemProperty { Chance, Durability, Health }
 
     // ItemUsageScope
-    public enum ItemUsageScope { Close, FreeRange, LineOfFire, Self }
+    public enum ItemUsageScope { Close, InPlace, Projectile, Self }
 
     // KnockbackIntensity
     public enum KnockbackIntensity { Low, Medium, High }

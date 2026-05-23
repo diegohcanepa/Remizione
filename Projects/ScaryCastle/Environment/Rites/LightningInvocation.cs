@@ -6,24 +6,24 @@ using Microsoft.Xna.Framework;
 namespace ScaryCastle
 {
     /// <summary>
-    /// LightningRite
+    /// LightningInvocation
     /// </summary>
-    public sealed class LightningRite : Rite
+    public sealed class LightningInvocation : Invocation
     {
         // Constructor
-        public LightningRite(GameThing target, Item item)
+        public LightningInvocation(GameThing target, Item item)
             : base(target, item)
         {
-            var animation = AddAnimation("Default");
+            var animation = AddAnimation(AnimationNames.Default);
             animation.AddFrameSequence("Lightning", 80, 1, 3);
         }
 
         #region Protected members
 
-        // OnCast
-        protected override void OnCast()
+        // OnExecute
+        protected override void OnExecute()
         {
-            this.AnimationPlayer.Play("Default", false);
+            this.AnimationPlayer.Play(AnimationNames.Default, false);
             InputManager.DefaultPlayer.GamePad.Vibrate(200, .4f, .4f);
             Session.Camera.Shake(TweenStyle.Linear, new Vector2(1.5f), 66, 4);
             Sound.Play(SoundNames.Lightning);

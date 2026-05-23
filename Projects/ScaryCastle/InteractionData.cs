@@ -64,7 +64,7 @@ namespace ScaryCastle
                         if (CloseAttack)
                         {
                             if (session.Player.DefaultCombatIntent != null)
-                                session.Player.PerformAttack(session.Player.DefaultCombatIntent, Target);
+                                session.Player.PerformCloseAttack(session.Player.DefaultCombatIntent, Target);
                         }
                         else
                         {

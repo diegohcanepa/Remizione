@@ -18,9 +18,8 @@
 		},
 		{
 			"name": "BargainCross",
-			"usageScope": "FreeRange",
+			"usageScope": "InPlace",
 			"isDepletable": false,
-			"executionDelay": 1500,
 			"gooCost": 1,
 			"effects": [
 				{
@@ -29,6 +28,22 @@
 					"damageType": "Physical",
 					"amount": "1d4",
 					"comicText": "Kapow"
+				}
+			]
+		},
+		{
+			"name": "BittenApple",
+			"category": "Food",
+			"usageScope": "Self",
+			"isStackable": true,
+			"effects": [
+				{
+					"context": "Use",
+					"effectType": "Heal",
+					"amount": "2",
+					"target": "Self",
+					"sound": "AppleBite",
+					"chance": 0.5
 				}
 			]
 		},
@@ -45,7 +60,6 @@
 			"areaRange": 40,
 			"usageScope": "Self",
 			"category": "Explosive",
-			"executionDelay": 2000,
 			"sound": "Firecracker",
 			"effects": [
 				{
@@ -98,11 +112,11 @@
 			"name": "Pistol",
 			"initialAmount": 6,
 			"category": "Misc",
-			"usageScope": "LineOfFire",
+			"usageScope": "Projectile",
 			"sound": "Pistol",
 			"isDepletable": true,
 			"projectile": {
-				"speed": 200,
+				"speed": 240,
 				"imageName": "PistolBullet",
 				"effects": [
 					{
@@ -116,30 +130,6 @@
 				"trajectory": "Linear"
 			},
 			"effects": [
-			]
-		},
-		{
-			"name": "RottenApple",
-			"category": "Food",
-			"usageScope": "Self",
-			"isStackable": true,
-			"effects": [
-				{
-					"context": "Use",
-					"effectType": "Heal",
-					"amount": "2",
-					"target": "Self",
-					"sound": "AppleBite"
-				},
-				{
-					"context": "Use",
-					"effectType": "Condition",
-					"conditionType": "Poison",
-					"amount": "2",
-					"chance": 0.95,
-					"target": "Self",
-					"comicText": "AghGreen"
-				}
 			]
 		},
 		{

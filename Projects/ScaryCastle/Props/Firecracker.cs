@@ -8,7 +8,7 @@ namespace ScaryCastle
     /// </summary>
     public sealed class Firecracker : Prop
     {
-        private int cooldown;
+        private int cooldown = 1500;
 
         // Constructor
         public Firecracker(GameSession session, Item item, Vector2 spawnPosition)
@@ -16,7 +16,6 @@ namespace ScaryCastle
         {
             Atlas = Atlases.Props;
             DepthOffset = -1;
-            cooldown = item.Definition.ExecutionDelay;
             Position = spawnPosition;
 
             var animation = AddAnimation("Default");

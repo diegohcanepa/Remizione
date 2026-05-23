@@ -4,14 +4,14 @@ using Microsoft.Xna.Framework;
 namespace ScaryCastle
 {
     /// <summary>
-    /// BodyLaunchProjectileState
+    /// BodyUseInPlaceItemState
     /// </summary>
-    public sealed class BodyLaunchProjectileState : BodyAnimatedState
+    public sealed class BodyUseInPlaceEffectState : BodyAnimatedState
     {
         private bool eventDone;
 
         // Constructor
-        public BodyLaunchProjectileState()
+        public BodyUseInPlaceEffectState()
             : base(string.Empty, false)
         {
         }
@@ -65,11 +65,22 @@ namespace ScaryCastle
         public override void Enter()
         {
             base.Enter();
-            eventDone = ProjectileDescriptor == null;
+            eventDone = EffectType != ScaryCastle.InPlaceEffectType.None;
         }
 
-        // ProjectileDescriptor
-        public ProjectileDescriptor? ProjectileDescriptor { get; set; }
+        // Exit
+        public override void Exit()
+        {
+            base.Exit();
+            EffectType = InPlaceEffectType.None; 
+            Target = null;
+        }
+
+        // EffectType
+        public InPlaceEffectType EffectType { get; set; }
+
+        // Target
+        public GameThing? Target { get; set; }
 
         // Update
         public override void Update(GameTime gameTime)
@@ -78,13 +89,11 @@ namespace ScaryCastle
             {
                 eventDone = true;
 
-                if (Owner.AnimationPlayer.Frame.SubArea is Rectangle subArea)
+                if (EffectType == InPlaceEffectType.Lightning)
                 {
-                    if (ProjectileDescriptor != null)
+                    if (Target != null)
                     {
-                        var projectile = new Projectile(Owner.Session);
-                        var pos = Owner.GetAnchoredPosition(subArea.Location.ToVector2());
-                        projectile.Launch(Owner, pos, Owner.Direction == Adberration.FacingDirection.Right ? Vector2.UnitX : -Vector2.UnitX, ProjectileDescriptor);
+                        var lightning = new LightningInvocation(Target, item);
                     }
                 }
 

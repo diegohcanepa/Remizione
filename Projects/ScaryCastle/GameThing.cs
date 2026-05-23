@@ -387,7 +387,7 @@ namespace ScaryCastle
         }
 
         // OnHPChanged
-        protected virtual void OnHPChanged()
+        protected virtual void OnHPChanged(int previousValue)
         {
         }
 
@@ -1045,12 +1045,14 @@ namespace ScaryCastle
             {
                 if (value != field)
                 {
+                    var previousValue = field;
+
                     field = Math.Min(value, MaxHP);
 
                     if (field > 0)
                         dieCalled = false;
 
-                    OnHPChanged();
+                    OnHPChanged(previousValue);
                 }
             }
         }
