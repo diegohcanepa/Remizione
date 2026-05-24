@@ -53,31 +53,28 @@ namespace ScaryCastle
         // GetAnimationName
         protected override string GetAnimationName()
         {
-            return AnimationName;
+            return Action?.AnimationName ?? string.Empty;
         }
 
         #endregion
 
-        // AnimationName
-        public string AnimationName { get; set; } = string.Empty;
+        // Action
+        public IGameAction? Action { get; set; }
 
         // Enter
         public override void Enter()
         {
             base.Enter();
-            eventDone = EffectType != ScaryCastle.InPlaceEffectType.None;
+            eventDone = Action?.InPlaceEffectType != InPlaceEffectType.None;
         }
 
         // Exit
         public override void Exit()
         {
             base.Exit();
-            EffectType = InPlaceEffectType.None; 
+            Action = null;
             Target = null;
         }
-
-        // EffectType
-        public InPlaceEffectType EffectType { get; set; }
 
         // Target
         public GameThing? Target { get; set; }
@@ -89,13 +86,8 @@ namespace ScaryCastle
             {
                 eventDone = true;
 
-                if (EffectType == InPlaceEffectType.Lightning)
-                {
-                    if (Target != null)
-                    {
-                        var lightning = new LightningInvocation(Target, item);
-                    }
-                }
+                if (Action != null)
+                    Owner.PerformAction(Action, Target);
 
                 return;
             }

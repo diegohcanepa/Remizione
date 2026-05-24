@@ -11,11 +11,15 @@ namespace ScaryCastle
     public sealed class GameAction : IGameAction
     {
         // Constructor
-        public GameAction(ItemUsageScope usageScope, IList<EffectDescriptor> effectDescriptors)
+        public GameAction(string animationName, ItemUsageScope usageScope, IList<EffectDescriptor> effectDescriptors)
         {
+            this.AnimationName = animationName;
             this.UsageScope = usageScope;
             this.EffectDescriptors = new(effectDescriptors);
         }
+
+        // AnimationName
+        public string AnimationName { get; }
 
         // Apply
         public static void Apply(IGameAction gameAction, GameThing source, GameThing? target, EffectContext context)

@@ -36,7 +36,10 @@
       "items": {
         "$ref": "EffectDescriptor.schema.json"
       }
-    }
+    },
+    "ricochetSound": {
+      "type": "string"
+    }    
   },
   "required": [ "imageName", "trajectory", "speed", "effects" ],
   "additionalProperties": false

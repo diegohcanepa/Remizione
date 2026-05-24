@@ -11,6 +11,7 @@ namespace Adberration.Scripting
         #region Argument names
 
         protected static readonly string ActionArg = "#action";
+        protected static readonly string ActionPointArg = "#action-point";
         protected static readonly string AmountArg = "#amount";
         protected static readonly string AnimationArg = "#animation";
         protected static readonly string AtArg = "#at";

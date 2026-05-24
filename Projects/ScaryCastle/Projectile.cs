@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
@@ -13,6 +14,7 @@ namespace ScaryCastle
         private readonly List<EffectDescriptor> effects = [];
         private GameThing? emitter;
         private float gravity;
+        private Sound? ricochetSound;
         private RectangleF roomBounds;
         private ProjectileTrajectoryType trajectory;
         private float yVelocity;
@@ -25,20 +27,11 @@ namespace ScaryCastle
 
         #region Private members
 
-        // ApplyEffectsTo
-        private void ApplyEffectsTo(GameThing target)
-        {
-            if (effects == null)
-                return;
-
-            EffectDescriptor.Apply(effects, this, target, EffectContext.ProjectileHit);
-        }
-
         // CheckImpacts
-        private void CheckImpacts(Vector2 from, Vector2 to)
+        private bool CheckImpacts(Vector2 from, Vector2 to)
         {
             if (Room == null)
-                return;
+                return false;
 
             for (var i = 0; i < Room.Children.Count; i++)
             {
@@ -47,11 +40,36 @@ namespace ScaryCastle
 
                 if (thing.RuntimeHotspot.BoundingRectangleF.Intersects(from, to))
                 {
-                    ApplyEffectsTo(thing);
+                    if (effects != null)
+                        EffectDescriptor.Apply(effects, this, thing, EffectContext.ProjectileHit);
                     Destroy();
-                    break;
+                    return true;
                 }
             }
+
+            return false;
+        }
+
+
+        // CheckWallImpact
+        private bool CheckWallImpact(Vector2 position)
+        {
+            if (Room == null)
+                return false;
+
+            for (var i = 0; i < Room.Walls.Count; i++)
+            {
+                if (Room.Walls[i].Contains(position))
+                {
+                    if (ricochetSound != null)
+                        PlaySound(ricochetSound);
+
+                    Destroy();
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         // Destroy
@@ -77,35 +95,50 @@ namespace ScaryCastle
         {
             base.OnUpdate(gameTime);
 
+            // Si por alguna razón la entidad ya se destruyó en este frame, abortamos inmediatamente
+            if (Room == null) return;
+
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             Vector2 previousPosition = this.Position;
+            Vector2 nextPosition = previousPosition;
 
-            // 1. Cálculo del movimiento según el tipo de trayectoria
+            // 1. Cálculo del movimiento simulado (Posición futura)
             if (this.trajectory == ProjectileTrajectoryType.Linear)
             {
-                this.Position += this.direction * this.Speed * deltaTime;
+                nextPosition += this.direction * this.Speed * deltaTime;
             }
             else if (this.trajectory == ProjectileTrajectoryType.Parabolic)
             {
-                // El avance horizontal (X) sigue siendo constante basado en la dirección
                 float moveX = this.direction.X * this.Speed * deltaTime;
 
-                // Aplicamos gravedad al impulso vertical (MonoGame: Y positivo es hacia abajo)
                 this.yVelocity += this.gravity * deltaTime;
                 float moveY = this.yVelocity * deltaTime;
 
-                this.Position += new Vector2(moveX, moveY);
+                nextPosition += new Vector2(moveX, moveY);
             }
 
-            // 2. Control de salida de los límites de la habitación
-            if (!this.roomBounds.Contains(this.Position))
+            // 2. Control de salida de los límites absolutos de la habitación
+            if (!this.roomBounds.Contains(nextPosition))
             {
                 Destroy();
                 return;
             }
 
-            // 3. Verificación de impactos barriendo el segmento recorrido (Anti-Tunneling)
-            CheckImpacts(previousPosition, this.Position);
+            // 3. Verificación de impactos ambientales (Paredes) PRIMERO
+            // Si la posición futura se metió en una pared, muere acá y no procesa daño a entidades ocultas
+            if (CheckWallImpact(nextPosition))
+            {
+                return;
+            }
+
+            // 4. Verificación de impactos contra entidades usando el barrido anti-tunneling
+            if (CheckImpacts(previousPosition, nextPosition))
+            {
+                return;
+            }
+
+            // 5. Si no chocó con nada, aplicamos el movimiento real de forma segura
+            this.Position = nextPosition;
         }
 
         #endregion
@@ -113,30 +146,25 @@ namespace ScaryCastle
         // Launch
         public void Launch(GameThing emitter, Vector2 spawnPosition, Vector2 direction, ProjectileDescriptor descriptor)
         {
-            Launch(emitter, descriptor.Trajectory, spawnPosition, direction, descriptor.Speed, descriptor.InitialYVelocity, descriptor.Gravity, Atlases.Environment.FindImage(descriptor.ImageName), descriptor.EffectDescriptors);
-        }
-
-        // Launch
-        public void Launch(GameThing emitter, ProjectileTrajectoryType trajectory, Vector2 spawnPosition, Vector2 direction, float speed, float initialYVelocity, float gravity, AtlasImage? image, IList<EffectDescriptor> effects)
-        {
             if (emitter.Room == null)
                 return;
 
             this.Atlas = Atlases.Environment;
             this.emitter = emitter;
-            this.trajectory = trajectory;
+            this.trajectory = descriptor.Trajectory;
             this.Position = spawnPosition;
             this.direction = direction != Vector2.Zero ? Vector2.Normalize(direction) : Vector2.Zero;
-            this.Speed = speed;
-            this.yVelocity = initialYVelocity;
-            this.gravity = gravity;
+            this.Speed = descriptor.Speed;
+            this.yVelocity = descriptor.InitialYVelocity;
+            this.gravity = descriptor.Gravity;
             this.roomBounds = emitter.Room.BoundingBox;
+            this.ricochetSound = descriptor.RicochetSound;
 
             var anim = AddAnimation("Default");
             anim.AddFrame("PistolBullet", 1000);
 
             this.effects.Clear();
-            this.effects.AddRange(effects);
+            this.effects.AddRange(descriptor.EffectDescriptors);
 
             emitter.Room.Children.Add(this);
         }

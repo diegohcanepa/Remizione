@@ -18,7 +18,9 @@
 		},
 		{
 			"name": "BargainCross",
+			"animationName": "UseCross",
 			"usageScope": "InPlace",
+			"inPlaceEffectType": "Lightning",
 			"isDepletable": false,
 			"gooCost": 1,
 			"effects": [
@@ -118,6 +120,7 @@
 			"projectile": {
 				"speed": 240,
 				"imageName": "PistolBullet",
+				"ricochetSound": "BulletRicochet",
 				"effects": [
 					{
 						"context": "ProjectileHit",

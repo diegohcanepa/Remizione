@@ -151,7 +151,7 @@ namespace ScaryCastle
             var successChance = item.Definition.SkillChance - SkillChancePenalty;
             var success = roll <= successChance;
 
-            item.ComputeUse();
+            item.Consume();
 
             var text = TextRepository.GetValue(success ? Localization.GetValue(FloatingMessage.Success) : Localization.GetValue(FloatingMessage.Failed));
 

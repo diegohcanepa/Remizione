@@ -53,23 +53,20 @@ namespace ScaryCastle
         // GetAnimationName
         protected override string GetAnimationName()
         {
-            return AnimationName;
+            return Action?.AnimationName ?? string.Empty;
         }
 
         #endregion
 
-        // AnimationName
-        public string AnimationName { get; set; } = string.Empty;
+        // Action
+        public IGameAction? Action { get; set; }
 
         // Enter
         public override void Enter()
         {
             base.Enter();
-            eventDone = ProjectileDescriptor == null;
+            eventDone = Action?.Projectile == null;
         }
-
-        // ProjectileDescriptor
-        public ProjectileDescriptor? ProjectileDescriptor { get; set; }
 
         // Update
         public override void Update(GameTime gameTime)
@@ -78,13 +75,15 @@ namespace ScaryCastle
             {
                 eventDone = true;
 
-                if (Owner.AnimationPlayer.Frame.SubArea is Rectangle subArea)
+                if (Owner.AnimationPlayer.Frame.ActionPoint != Vector2.Zero)
                 {
-                    if (ProjectileDescriptor != null)
+                    if (Action?.Projectile != null)
                     {
                         var projectile = new Projectile(Owner.Session);
-                        var pos = Owner.GetAnchoredPosition(subArea.Location.ToVector2());
-                        projectile.Launch(Owner, pos, Owner.Direction == Adberration.FacingDirection.Right ? Vector2.UnitX : -Vector2.UnitX, ProjectileDescriptor);
+                        var pos = Owner.GetAnchoredPosition(Owner.AnimationPlayer.Frame.ActionPoint);
+                        projectile.Launch(Owner, pos, Owner.Direction == Adberration.FacingDirection.Right ? Vector2.UnitX : -Vector2.UnitX, Action.Projectile);
+                        if (Action.Sound != null)
+                            Owner.PlaySound(Action.Sound);
                     }
                 }
 

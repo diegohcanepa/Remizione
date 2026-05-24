@@ -20,6 +20,7 @@ namespace ScaryCastle
             this.Gravity = element.GetFloat("gravity", 0);
             this.ImageName = element.GetString("imageName", string.Empty);
             this.InitialYVelocity = element.GetFloat("initialYVelocity", 0);
+            this.RicochetSound = element.GetObject("ricochetSound", Sound.Get);
             this.Speed = element.GetFloat("speed", 0);
             this.Trajectory = element.GetEnum("trajectory", ProjectileTrajectoryType.Linear);
 
@@ -46,6 +47,9 @@ namespace ScaryCastle
 
         // InitialYVelocity
         public float InitialYVelocity { get; }
+
+        // RicochetSound
+        public Sound? RicochetSound { get; }
 
         // Speed
         public float Speed { get; }

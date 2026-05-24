@@ -8,7 +8,7 @@ namespace Adberration.Scripting
     {
         // Constructor
         internal FrameCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 3, EventFrameArg, GotoArg, LabelArg, RepeatArg, SoundArg, SubAreaArg, SpeedFactorArg)
+            : base(script, source, body, 3, ActionPointArg, EventFrameArg, GotoArg, LabelArg, RepeatArg, SoundArg, SubAreaArg, SpeedFactorArg)
         {
             if (AnimationCommand.ActiveAnimation == null)
                 throw ScriptExceptionBuilder.AnimationNotActive(this);
@@ -22,6 +22,7 @@ namespace Adberration.Scripting
             var speedFactor = Parser.ParseFloatArgument(this, SpeedFactorArg, 1);
             var gotoLabel = Parser.ParseNameArgument(this, GotoArg) ?? string.Empty;
             var subArea = Parser.ParseRectangleArgument(this, SubAreaArg);
+            var actionPoint = Parser.ParseVector2Argument(this, ActionPointArg);
 
             // Add frames
             var prefix = AnimationCommand.ActiveAnimationFramePrefix ?? AnimationCommand.ActiveAnimation.Name;
@@ -31,7 +32,7 @@ namespace Adberration.Scripting
                 for (var j = range.Minimum; j <= range.Maximum; j++)
                 {
                     var imageName = prefix + j.ToString(CultureInfo.InvariantCulture).PadLeft(AnimationCommand.ZeroPaddingLength, '0');
-                    AnimationCommand.ActiveAnimation.AddFrame(imageName, duration, isEventFrame, label, speedFactor, sound, subArea, gotoLabel);
+                    AnimationCommand.ActiveAnimation.AddFrame(imageName, duration, isEventFrame, label, speedFactor, sound, subArea, gotoLabel, actionPoint);
                     sound = string.Empty;
                 }
             }

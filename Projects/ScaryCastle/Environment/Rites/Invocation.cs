@@ -10,11 +10,11 @@ namespace ScaryCastle
         private bool done;
 
         // Constructor
-        protected Invocation(GameThing target, Item item)
+        protected Invocation(IGameAction action, GameThing target)
             : base(target.Session, string.Empty)
         {
+            this.Action = action;
             this.Target = target;
-            this.Item = item;
             this.RenderLayer = RenderLayer.OverBackground;
             this.Atlas = Atlases.Environment;
             this.Scale = ScaleInfo.UIElement.Small;
@@ -36,7 +36,7 @@ namespace ScaryCastle
                 RenderLayer = RenderLayer.Default;
                 Position = Target.Position;
                 OnExecute();
-                Item.Use(this, Target, EffectContext.Attack);
+                GameAction.Apply(Action, this, Target, EffectContext.Attack);
                 return;
             }
 
@@ -48,8 +48,8 @@ namespace ScaryCastle
 
         #endregion
 
-        // Item
-        public Item Item { get; }
+        // Action
+        public IGameAction Action{ get; }
 
         // Target
         public GameThing Target { get; }

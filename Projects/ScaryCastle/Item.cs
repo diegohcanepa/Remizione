@@ -1,6 +1,8 @@
 ﻿using Adberration.Scripting;
 using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 
@@ -62,8 +64,8 @@ namespace ScaryCastle
             }
         }
 
-        // ComputeUse
-        public bool ComputeUse()
+        // Consume
+        public bool Consume()
         {
             if (Definition.IsDepletable)
             {
@@ -122,13 +124,6 @@ namespace ScaryCastle
         public override string ToString()
         {
             return DisplayText;
-        }
-
-        // Use
-        public void Use(GameThing source, GameThing? target, EffectContext context)
-        {
-            GameAction.Apply(Definition, source, target, context);
-            ComputeUse();
         }
     }
 }

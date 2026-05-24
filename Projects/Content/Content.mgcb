@@ -353,6 +353,24 @@
 /processorParam:Quality=Best
 /build:Audio/FX/Break.wav;Audio/FX/Break
 
+#begin Audio/FX/BulletRicochet1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/BulletRicochet1.wav;Audio/FX/BulletRicochet1
+
+#begin Audio/FX/BulletRicochet2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/BulletRicochet2.wav;Audio/FX/BulletRicochet2
+
+#begin Audio/FX/BulletRicochet3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/BulletRicochet3.wav;Audio/FX/BulletRicochet3
+
 #begin Audio/FX/CardFlap.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

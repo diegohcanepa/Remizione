@@ -815,12 +815,11 @@ namespace ScaryCastle
         public bool IsStandingOrMoving => BodyMachine.CurrentState is BodyStandState or BodyMoveState;
 
         // LaunchProjectile
-        public void LaunchProjectile(string animationName, ProjectileDescriptor projectileDescriptor)
+        public void LaunchProjectile(IGameAction action)
         {
             StopMoving();
             var state = BodyMachine.FindOrCreateState<BodyLaunchProjectileState>();
-            state.AnimationName = animationName;
-            state.ProjectileDescriptor = projectileDescriptor;
+            state.Action = action;
             BodyMachine.ChangeState(state.GetType());
         }
 
@@ -889,6 +888,38 @@ namespace ScaryCastle
             BodyMachine.ChangeState<BodyMoveState>();
 
             return true;
+        }
+
+        // PerformAction
+        public void PerformAction(IGameAction action, GameThing? target)
+        {
+            if (IsDead)
+                return;
+
+            StopMoving();
+
+            if (target != null)
+                FaceTo(target);
+
+            // Projectile
+            if (action.UsageScope == ItemUsageScope.Projectile)
+            {
+                if (action.Projectile != null)
+                    LaunchProjectile(action);
+            }
+
+            // InPlace
+            else if (action.UsageScope == ItemUsageScope.InPlace)
+            {
+                if (action.InPlaceEffectType == InPlaceEffectType.Lightning)
+                {
+                    if (target != null && Session.Room != null)
+                    {
+                        var lightning = new LightningInvocation(action, target);
+                        Session.Room.Children.Add(lightning);
+                    }
+                }
+            }
         }
 
         // PerformCloseAttack
@@ -1039,34 +1070,6 @@ namespace ScaryCastle
             state.Prop = ActiveThrowable;
             ActiveThrowable = null;
             BodyMachine.ChangeState(state.GetType());
-        }
-
-        // UseItem
-        public void UseItem(Item item, GameThing? target)
-        {
-            StopMoving();
-            if (target != null)
-                FaceTo(target);
-
-            // Projectile
-            if (item.Definition.UsageScope == ItemUsageScope.Projectile)
-            {
-                if (item.Definition.Projectile != null)
-                    LaunchProjectile($"Use{item.Name}", item.Definition.Projectile);
-            }
-
-            // InPlace
-            else if (item.Definition.UsageScope == ItemUsageScope.InPlace)
-            {
-                if (item.Definition.InPlaceEffectType == InPlaceEffectType.Lightning)
-                {
-                    if (target != null && Session.Room != null)
-                    {
-                        var lightning = new LightningInvocation(target, item);
-                        Session.Room.Children.Add(lightning);
-                    }
-                }
-            }
         }
 
         /// <summary>

@@ -24,6 +24,9 @@
         {
           "type": "object",
           "properties": {
+            "animationName": {
+              "type": "string"
+            },
             "category": {
               "type": "string",
               "enum": [

@@ -16,6 +16,11 @@ namespace ScaryCastle
         private ItemDefinition(JsonElement element)
             : base(element)
         {
+            // AnimationName
+            AnimationName = element.GetString("animationName");
+            if (string.IsNullOrWhiteSpace(AnimationName))
+                AnimationName = $"Use{Name}";
+
             // AreaRange
             AreaRange = element.GetInt32("areaRange", 0);
             if (AreaRange < 0)
@@ -100,6 +105,9 @@ namespace ScaryCastle
         }
 
         #endregion
+
+        // AnimationName
+        public string AnimationName { get; }
 
         // AreaRange
         public int AreaRange { get; }
