@@ -36,7 +36,7 @@ namespace ScaryCastle
                 RenderLayer = RenderLayer.Default;
                 Position = Target.Position;
                 OnExecute();
-                GameAction.Apply(Action, this, Target, EffectContext.Attack);
+                GameActionProcessor.Apply(Action, this, Target, EffectContext.Attack);
                 return;
             }
 
@@ -49,7 +49,7 @@ namespace ScaryCastle
         #endregion
 
         // Action
-        public IGameAction Action{ get; }
+        public IGameAction Action { get; }
 
         // Target
         public GameThing Target { get; }

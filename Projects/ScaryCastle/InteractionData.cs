@@ -1,6 +1,5 @@
 ﻿using Adberration.Scripting;
 using Microsoft.Xna.Framework;
-using System;
 
 namespace ScaryCastle
 {
@@ -35,11 +34,16 @@ namespace ScaryCastle
         public void Clear()
         {
             CloseAttack = false;
+            CombatIntent = null;
+            LiftProp = null;
             Item = null;
             Script = null;
             Target = null;
             TargetPosition = Vector2.Zero;
         }
+
+        // CombatIntent
+        public CombatIntent? CombatIntent { get; private set; }
 
         // Execute
         public void Execute(GameSession session)
@@ -47,40 +51,39 @@ namespace ScaryCastle
             if (session.Player == null)
                 return;
 
-            if (session.InteractionContext.LiftMode)
+            if (LiftProp != null)
             {
-                if (Target is Prop prop)
-                    session.Player.Lift(prop);
-
-                return;
+                session.Player.Lift(LiftProp);
             }
-
-            if (Script == null)
-                return;
-
-
-            session.Player.StopMoving();
-
-            if (Target != null)
+            else if (CombatIntent != null)
             {
-                if (Vector2.Distance(Target.Position, TargetPosition) > 1)
-                {
-                    session.TextHUD.Message.Show(MessageKind.OutOfReach);
-                }
-                else
-                {
-                    session.Player.FaceTo(Target);
+                session.Player.PerformAction(CombatIntent, Target);
+            }
+            else if (Script != null)
+            {
+                session.Player.StopMoving();
 
-                    if (Script != null)
+                if (Target != null)
+                {
+                    if (Vector2.Distance(Target.Position, TargetPosition) > 1)
                     {
-                        if (CloseAttack)
+                        session.TextHUD.Message.Show(MessageKind.OutOfReach);
+                    }
+                    else
+                    {
+                        session.Player.FaceTo(Target);
+
+                        if (Script != null)
                         {
-                            if (session.Player.DefaultCombatIntent != null)
-                                session.Player.PerformAction(session.Player.DefaultCombatIntent, Target);
-                        }
-                        else
-                        {
-                            session.BeginOutcome(Script, Target);
+                            if (CloseAttack)
+                            {
+                                if (session.Player.DefaultCombatIntent != null)
+                                    session.Player.PerformAction(session.Player.DefaultCombatIntent, Target);
+                            }
+                            else
+                            {
+                                session.BeginOutcome(Script, Target);
+                            }
                         }
                     }
                 }
@@ -92,33 +95,38 @@ namespace ScaryCastle
         // Item
         public Item? Item { get; private set; }
 
+        // LiftProp
+        public Prop? LiftProp { get; private set; }
+
         // Script
         public Script? Script { get; private set; }
 
         // Session
         public GameSession Session { get; }
 
-        // SetAttackOutcome
-        public void SetAttackOutcome(GameThing target, CombatIntent combatIntent)
+        // SetCombatIntent
+        public void SetCombatIntent(CombatIntent combatIntent, GameThing target)
         {
-            if (Session.ScriptLibrary.FindRoutine(combatIntent.Name) is Script script)
-            {
-                CloseAttack = true;
-                SetOutcomeCore(target, script);
-            }
-        }
-
-        // SetDefaultOutcome
-        public void SetDefaultOutcome(GameThing target)
-        {
-            if (target.OutcomeScript != null)
-                SetOutcomeCore(target, target.OutcomeScript);
+            Clear();
+            this.CloseAttack = true;
+            this.CombatIntent = combatIntent;
+            this.Target = target;
         }
 
         // SetLiftTarget
         public void SetLiftTarget(Prop prop)
         {
-            this.Target = prop;
+            Clear();
+            this.LiftProp = prop;
+        }
+
+        // SetOutcome
+        public Script? SetOutcome(GameThing target)
+        {
+            if (target.OutcomeScript != null)
+                SetOutcomeCore(target, target.OutcomeScript);
+
+            return target.OutcomeScript;
         }
 
         // SetUseWithOutcome

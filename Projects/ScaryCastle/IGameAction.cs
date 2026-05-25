@@ -26,8 +26,11 @@ namespace ScaryCastle
         // Projectile
         ProjectileDescriptor? Projectile { get; }
 
-        // Sound
-        Sound? Sound { get; }
+        // SoundStart
+        Sound? SoundStart { get; }
+
+        // SoundTrigger
+        Sound? SoundTrigger { get; }
 
         // UsageScope
         ItemUsageScope UsageScope { get; }

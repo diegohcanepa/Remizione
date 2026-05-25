@@ -63,7 +63,7 @@
 			"areaOfEffect": 40,
 			"usageScope": "Self",
 			"category": "Explosive",
-			"sound": "Firecracker",
+			"soundStart": "Firecracker",
 			"effects": [
 				{
 					"context": "Attack",
@@ -117,7 +117,7 @@
 			"initialAmount": 6,
 			"category": "Misc",
 			"usageScope": "Projectile",
-			"sound": "Pistol",
+			"soundTrigger": "Pistol",
 			"isDepletable": true,
 			"projectile": {
 				"speed": 240,

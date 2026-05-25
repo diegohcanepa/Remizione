@@ -8,14 +8,14 @@ namespace Adberration.Scripting
     {
         // Constructor
         internal FrameCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 3, ActionPointArg, EventFrameArg, GotoArg, LabelArg, RepeatArg, SoundArg, SubAreaArg, SpeedFactorArg)
+            : base(script, source, body, 3, ActionPointArg, TriggerArg, GotoArg, LabelArg, RepeatArg, SoundArg, SubAreaArg, SpeedFactorArg)
         {
             if (AnimationCommand.ActiveAnimation == null)
                 throw ScriptExceptionBuilder.AnimationNotActive(this);
 
             var range = Parser.ParseInt32Range(this, 0);
             var duration = Parser.ParseInt32(this, 2);
-            var isEventFrame = HasArg(EventFrameArg);
+            var isTriggerFrame = HasArg(TriggerArg);
             var label = Parser.ParseNameArgument(this, LabelArg) ?? string.Empty;
             var repeat = Parser.ParseInt32Argument(this, RepeatArg, 1);
             var sound = Parser.ParseNameArgument(this, SoundArg) ?? string.Empty;
@@ -32,7 +32,7 @@ namespace Adberration.Scripting
                 for (var j = range.Minimum; j <= range.Maximum; j++)
                 {
                     var imageName = prefix + j.ToString(CultureInfo.InvariantCulture).PadLeft(AnimationCommand.ZeroPaddingLength, '0');
-                    AnimationCommand.ActiveAnimation.AddFrame(imageName, duration, isEventFrame, label, speedFactor, sound, subArea, gotoLabel, actionPoint);
+                    AnimationCommand.ActiveAnimation.AddFrame(imageName, duration, isTriggerFrame, label, speedFactor, sound, subArea, gotoLabel, actionPoint);
                     sound = string.Empty;
                 }
             }

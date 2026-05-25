@@ -28,7 +28,7 @@ namespace ScaryCastle
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (!eventDone && Target?.IsLiftable == true && Owner.AnimationPlayer.Frame?.IsEvent == true)
+            if (!eventDone && Target?.IsLiftable == true && Owner.AnimationPlayer.Frame?.IsTrigger == true)
             {
                 eventDone = true;
                 Owner.PlaySound(SoundNames.Gesture1);

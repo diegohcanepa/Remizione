@@ -249,7 +249,7 @@ namespace ScaryCastle
                 // Si buscamos algo bueno y es malo, o viceversa, lo ignoramos
                 if (eventType == GateEventType.Good && !isFriendly)
                     continue;
-                
+
                 if (eventType == GateEventType.Bad && isFriendly)
                     continue;
 

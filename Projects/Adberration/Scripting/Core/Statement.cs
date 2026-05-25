@@ -28,7 +28,6 @@ namespace Adberration.Scripting
         protected static readonly string DepthOffsetArg = "#depth-offset";
         protected static readonly string DurationArg = "#duration";
         protected static readonly string EmitterArg = "#emitter";
-        protected static readonly string EventFrameArg = "#event";
         protected static readonly string FaceArg = "#face";
         protected static readonly string FadeArg = "#fade";
         protected static readonly string FastArg = "#fast";
@@ -80,6 +79,7 @@ namespace Adberration.Scripting
         protected static readonly string TargetArg = "#target";
         protected static readonly string TransientArg = "#transient";
         protected static readonly string TransitionAwareArg = "#transition-aware";
+        protected static readonly string TriggerArg = "#trigger";
         protected static readonly string TweenArg = "#tween";
         protected static readonly string UnparentArg = "#unparent";
         protected static readonly string VibrateArg = "#vibrate";

@@ -1,10 +1,7 @@
 ﻿using Adberration.Scripting;
-using Engendro;
 using Engendro.Audio;
-using Microsoft.Xna.Framework;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Linq;
 
 namespace ScaryCastle
 {
@@ -44,7 +41,9 @@ namespace ScaryCastle
 
         ProjectileDescriptor? IGameAction.Projectile => Definition.Projectile;
 
-        Sound? IGameAction.Sound => Definition.Sound;
+        Sound? IGameAction.SoundStart => Definition.SoundStart;
+
+        Sound? IGameAction.SoundTrigger => Definition.SoundTrigger;
 
         ItemUsageScope IGameAction.UsageScope => Definition.UsageScope;
 
@@ -92,7 +91,7 @@ namespace ScaryCastle
                 if (Amount <= 0)
                     Inventory.Remove(this);
             }
-            
+
             InvalidateDisplayText();
         }
 

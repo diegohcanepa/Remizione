@@ -215,7 +215,7 @@ namespace ScaryCastle
             if (Room == null)
                 return;
 
-            if (Sprite.Player.Frame == null || Sprite.Player.Frame == footstepLastUsedFrame || !Sprite.Player.Frame.IsEvent)
+            if (Sprite.Player.Frame == null || Sprite.Player.Frame == footstepLastUsedFrame || !Sprite.Player.Frame.IsTrigger)
                 return;
 
             for (var i = 0; i < Room.CulledThings.Count; i++)
@@ -244,7 +244,7 @@ namespace ScaryCastle
                 return;
 
             // Can update timer?
-            if (IsMoving || IsAttacking || IsKnockbackInProgress)
+            if (IsMoving || IsPerformingAction || IsKnockbackInProgress)
                 return;
 
             if (Session.IsAwaiting && Session.AwaitingScript != null && !Session.AwaitingScript.Interruptible)
@@ -759,7 +759,7 @@ namespace ScaryCastle
                     if (value > field)
                         ClearCondition();
                     field = Math.Min(value, MaxGoo);
-                    
+
                     OnGooChanged(previousValue);
                 }
             }
@@ -788,9 +788,6 @@ namespace ScaryCastle
         [ScriptProperty]
         public Sound? HurtVoice { get; set; }
 
-        // IsAttacking
-        public bool IsAttacking => BodyMachine.CurrentState is BodyCloseAttackState;
-
         // IsInAttackLane
         public bool IsInAttackLane(GameThing target, int attackLaneThickness = 4)
         {
@@ -806,6 +803,9 @@ namespace ScaryCastle
         {
             return this.Faction == Faction.Evil && other == Session.Player;
         }
+
+        // IsPerformingAction
+        public bool IsPerformingAction => BodyMachine.CurrentState is BodyPerformActionState;
 
         // IsPlayer
         [ScriptProperty]
@@ -908,7 +908,6 @@ namespace ScaryCastle
             if (target != null)
                 FaceTo(target);
 
-            StopMoving();
             var state = BodyMachine.FindOrCreateState<BodyPerformActionState>();
             state.Action = action;
             state.Target = target;
@@ -946,48 +945,35 @@ namespace ScaryCastle
             if (item == null)
             {
                 // Lift
-                if (Session.InteractionContext.LiftMode)
+                if (Session.InteractionContext.LiftMode && target is Prop prop)
                 {
-                    if (target is Prop prop)
-                        Session.InteractionData.SetLiftTarget(prop);
+                    Session.InteractionData.SetLiftTarget(prop);
                 }
 
                 // Headbutt
                 else if (target.Faction == Faction.Evil)
                 {
                     if (DefaultCombatIntent != null)
-                        Session.InteractionData.SetAttackOutcome(target, DefaultCombatIntent);
+                        Session.InteractionData.SetCombatIntent(DefaultCombatIntent, target);
                 }
 
                 else
                 {
-                    Session.InteractionData.SetDefaultOutcome(target);
+                    Session.InteractionData.SetOutcome(target);
                 }
             }
             else
             {
                 Session.InteractionData.SetUseWithOutcome(target, item);
-
-                //if (item.Definition.UsageScope != ItemUsageScope.Self && target != this)
-                //{
-                //    Session.InteractionData.SetUseWithOutcome(target, item);
-                //}
-                //else if (item.Definition.UsageScope == ItemUsageScope.Self && target == this)
-                //{
-                //    Session.InteractionData.SetUseWithOutcome(target, item);
-                //}
             }
 
-            if (!Session.InteractionContext.LiftMode)
+            if (Session.InteractionData.LiftProp == null && Session.InteractionData.CombatIntent == null && Session.InteractionData.Script == null && item == null)
             {
-                if (Session.InteractionData.Script == null && item == null)
-                {
-                    MouseCursor.Shake();
-                    return false;
-                }
+                MouseCursor.Shake();
+                return false;
             }
 
-            if (target == this || (item?.Definition.UsageScope is ItemUsageScope.Self or ItemUsageScope.InPlace))
+            if (item?.Definition.UsageScope is ItemUsageScope.Self or ItemUsageScope.InPlace)
             {
                 HandlePendingInteraction();
             }
@@ -998,28 +984,9 @@ namespace ScaryCastle
                 if (item?.Definition.UsageScope == ItemUsageScope.Projectile)
                     destination.X = X;
 
-                if (
-                    !MoveTo(destination))
+                if (!MoveTo(destination))
                     HandlePendingInteraction();
             }
-
-            /*
-            if (target == this || (item?.Definition.UsageScope is ItemUsageScope.Self or ItemUsageScope.InPlace))
-            {
-                HandlePendingInteraction();
-            }
-            else
-            {
-                var destination = target.GetApproachPosition(this, Session.InteractionData.CloseAttack ? ApproachBehavior.ClosestSide : null);
-
-                if (item?.Definition.UsageScope == ItemUsageScope.Projectile)
-                    destination.X = X;
-
-                if (
-                    !MoveTo(destination))
-                    HandlePendingInteraction();
-            }
-            */
 
             return true;
         }

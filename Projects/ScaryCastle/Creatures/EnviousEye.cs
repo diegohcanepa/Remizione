@@ -19,8 +19,6 @@ namespace ScaryCastle
             FastMoveFactor = 3;
             Guts = 7;
             scaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, Vector2.Zero, new(0, .1f), 600, -1);
-
-            BodyMachine.AddState(new BodyCloseAttackState());
         }
 
         #region Protected members

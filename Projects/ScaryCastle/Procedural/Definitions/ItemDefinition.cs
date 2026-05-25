@@ -19,7 +19,7 @@ namespace ScaryCastle
             // AnimationName
             AnimationName = element.GetString("animationName");
             if (string.IsNullOrWhiteSpace(AnimationName))
-                AnimationName = Name;
+                AnimationName = $"Use{Name}";
 
             // AreaOfEffect
             AreaOfEffect = element.GetInt32("areaOfEffect", 0);
@@ -78,8 +78,11 @@ namespace ScaryCastle
             // SkillChance
             SkillChance = element.GetInt32("skillChance", 0);
 
-            // Sound
-            Sound = element.GetObject("sound", Sound.Get);
+            // SoundStart
+            this.SoundStart = element.GetObject("soundStart", Sound.Get);
+
+            // SoundTrigger
+            this.SoundTrigger = element.GetObject("soundTrigger", Sound.Get);
 
             // UsageScope
             UsageScope = element.GetEnum("usageScope", ItemUsageScope.Close);
@@ -175,8 +178,11 @@ namespace ScaryCastle
         // SkillChance
         public int SkillChance { get; }
 
-        // Sound
-        public Sound? Sound { get; }
+        // SoundStart
+        public Sound? SoundStart { get; }
+
+        // SoundTrigger
+        public Sound? SoundTrigger { get; }
 
         // UsageScope
         public ItemUsageScope UsageScope { get; }

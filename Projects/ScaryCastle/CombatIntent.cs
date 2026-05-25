@@ -1,7 +1,6 @@
 ﻿using Engendro;
 using Engendro.Audio;
 using System;
-using System.Collections.ObjectModel;
 using System.Text.Json;
 
 namespace ScaryCastle
@@ -18,7 +17,7 @@ namespace ScaryCastle
             // AnimationName
             AnimationName = element.GetString("animationName");
             if (string.IsNullOrWhiteSpace(AnimationName))
-                AnimationName = $"Use{Name}";
+                AnimationName = Name;
 
             // AreaOfEffect
             AreaOfEffect = element.GetInt32("areaOfEffect", 0);
@@ -37,8 +36,11 @@ namespace ScaryCastle
             // Range
             this.Range = element.GetInt32("range", 5);
 
-            // Sound
-            this.Sound = element.GetObject("sound", Sound.Get);
+            // SoundStart
+            this.SoundStart = element.GetObject("soundStart", Sound.Get);
+
+            // SoundTrigger
+            this.SoundTrigger = element.GetObject("soundTrigger", Sound.Get);
 
             // UsageScope
             UsageScope = element.GetEnum("usageScope", ItemUsageScope.Close);
@@ -76,8 +78,11 @@ namespace ScaryCastle
         // Range
         public int Range { get; }
 
-        // Sound
-        public Sound? Sound { get; }
+        // SoundStart
+        public Sound? SoundStart { get; }
+
+        // SoundTrigger
+        public Sound? SoundTrigger { get; }
 
         // UsageScope
         public ItemUsageScope UsageScope { get; }

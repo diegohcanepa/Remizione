@@ -21,7 +21,7 @@ namespace ScaryCastle
         // CanInflictDamage
         private bool CanInflictDamage(GameThing target)
         {
-            if (target.CanBeHit && Owner.AnimationPlayer.Frame?.IsEvent == true)
+            if (target.CanBeHit && Owner.AnimationPlayer.Frame?.IsTrigger == true)
             {
                 if (Owner.IsInAttackLane(target))
                 {
@@ -36,6 +36,11 @@ namespace ScaryCastle
         // ResolveCloseAction
         private void ResolveCloseAction(IGameAction action)
         {
+            if (Target != null && CanInflictDamage(Target))
+            {
+                EffectDescriptor.Apply(action.EffectDescriptors, Owner, Target, EffectContext.Attack);
+                Owner.Session.InterruptAwaitingScript();
+            }
         }
 
         // ResolveInPlaceAction
@@ -71,20 +76,7 @@ namespace ScaryCastle
         // ResolveSelfAction
         private void ResolveSelfAction(IGameAction action)
         {
-            GameAction.Apply(action, Owner, null, EffectContext.Use);
-        }
-
-        // TryInflictDamage
-        private bool TryInflictDamage(CombatIntent intent, GameThing target)
-        {
-            if (CanInflictDamage(target))
-            {
-                EffectDescriptor.Apply(intent.EffectDescriptors, Owner, target, EffectContext.Attack);
-                Owner.Session.InterruptAwaitingScript();
-                return true;
-            }
-
-            return false;
+            GameActionProcessor.Apply(action, Owner, null, EffectContext.Use);
         }
 
         #endregion
@@ -107,6 +99,9 @@ namespace ScaryCastle
         {
             base.Enter();
             eventDone = false;
+
+            if (Action?.SoundStart != null)
+                Owner.PlaySound(Action.SoundStart);
         }
 
         // Exit
@@ -118,17 +113,17 @@ namespace ScaryCastle
         }
 
         // Target
-        public GameThing? Target { get; set; } 
+        public GameThing? Target { get; set; }
 
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (Action != null && !eventDone && Owner.AnimationPlayer.Frame?.IsEvent == true)
+            if (Action != null && !eventDone && Owner.AnimationPlayer.Frame?.IsTrigger == true)
             {
                 eventDone = true;
 
-                if (Action.Sound != null)
-                    Owner.PlaySound(Action.Sound);
+                if (Action.SoundTrigger != null)
+                    Owner.PlaySound(Action.SoundTrigger);
 
                 switch (Action.UsageScope)
                 {
@@ -136,7 +131,7 @@ namespace ScaryCastle
                     case ItemUsageScope.Close:
                         ResolveCloseAction(Action);
                         break;
-                    
+
                     // InPlace
                     case ItemUsageScope.InPlace:
                         ResolveInPlaceAction(Action);
@@ -151,7 +146,7 @@ namespace ScaryCastle
                     case ItemUsageScope.Self:
                         ResolveSelfAction(Action);
                         break;
-                    
+
                     default:
                         break;
                 }

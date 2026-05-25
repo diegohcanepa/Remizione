@@ -30,7 +30,7 @@ namespace ScaryCastle
         {
             if (Prop != null)
             {
-                if (thrownObject == null && Owner.AnimationPlayer.Frame?.IsEvent == true)
+                if (thrownObject == null && Owner.AnimationPlayer.Frame?.IsTrigger == true)
                 {
                     thrownObject = new ThrownProp(Owner, Prop);
                     thrownObject.Throw();

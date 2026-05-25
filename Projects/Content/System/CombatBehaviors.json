@@ -8,7 +8,7 @@
       "intents": [
         {
           "name": "Headbutt",
-          "sound": "WhooshA",
+          "soundStart": "WhooshA",
           "usageScope": "Close",
           "effects": [
             {
@@ -58,7 +58,7 @@
       "intents": [
         {
           "name": "Contact",
-          "sound": "RatAttack",
+          "soundTrigger": "RatAttack",
           "range": 50,
           "usageScope": "Close",
           "effects": [
@@ -84,7 +84,7 @@
       "intents": [
         {
           "name": "Contact",
-          "sound": "RatAttack",
+          "soundTrigger": "RatAttack",
           "usageScope": "Close",
           "range": 50,
           "effects": [
@@ -106,7 +106,7 @@
           "name": "Headbutt",
           "category": "Basic",
           "usageScope": "Close",
-          "sound": "EnviousEyeAttack",
+          "soundTrigger": "EnviousEyeAttack",
           "range": 15,
           "effects": [
             {
@@ -125,7 +125,7 @@
       "intents": [
         {
           "name": "Contact",
-          "sound": "RatAttack",
+          "soundTrigger": "RatAttack",
           "usageScope": "Close",
           "range": 50,
           "effects": [

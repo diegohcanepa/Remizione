@@ -131,7 +131,10 @@ namespace ScaryCastle
         public PropDefinition? Definition { get; }
 
         // GetThrowableImageName
-        public virtual string GetThrowableImageName() => DeclaredName;
+        public virtual string GetThrowableImageName()
+        {
+            return DeclaredName;
+        }
 
         // IsAmbientLight
         public bool IsAmbientLight { get; set; }

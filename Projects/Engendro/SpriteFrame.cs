@@ -9,12 +9,12 @@ namespace Engendro
     public sealed class SpriteFrame
     {
         // Constructor
-        public SpriteFrame(SpriteAnimation animation, int index, string imageName, int duration, bool isEvent, string label, float speedFactor, string soundName, Rectangle subArea, string gotoLabel, Vector2 actionPoint)
+        public SpriteFrame(SpriteAnimation animation, int index, string imageName, int duration, bool isTrigger, string label, float speedFactor, string soundName, Rectangle subArea, string gotoLabel, Vector2 actionPoint)
         {
             this.Animation = animation;
             this.ImageName = imageName;
             this.Duration = Math.Max(0, duration);
-            this.IsEvent = isEvent;
+            this.IsTrigger = isTrigger;
             this.Label = label;
             this.Index = index;
             this.SpeedFactor = speedFactor;
@@ -57,14 +57,14 @@ namespace Engendro
         // Index
         public int Index { get; }
 
-        // IsEvent
-        public bool IsEvent { get; }
-
         // IsFirstFrame
         public bool IsFirstFrame => Index == 0;
 
         // IsLastFrame
         public bool IsLastFrame => Index == Animation.FrameCount - 1;
+
+        // IsTrigger
+        public bool IsTrigger { get; }
 
         // Label
         public string Label { get; }
