@@ -8,7 +8,7 @@ namespace ScaryCastle
     /// <summary>
     /// ItemDefinition
     /// </summary>
-    public sealed class ItemDefinition : Definition, IGameAction
+    public sealed class ItemDefinition : Definition
     {
         #region Constructor
 
@@ -19,12 +19,12 @@ namespace ScaryCastle
             // AnimationName
             AnimationName = element.GetString("animationName");
             if (string.IsNullOrWhiteSpace(AnimationName))
-                AnimationName = $"Use{Name}";
+                AnimationName = Name;
 
-            // AreaRange
-            AreaRange = element.GetInt32("areaRange", 0);
-            if (AreaRange < 0)
-                AreaRange = 0;
+            // AreaOfEffect
+            AreaOfEffect = element.GetInt32("areaOfEffect", 0);
+            if (AreaOfEffect < 0)
+                AreaOfEffect = 0;
 
             // Category
             Category = element.GetEnum("category", ItemCategory.Misc);
@@ -109,8 +109,8 @@ namespace ScaryCastle
         // AnimationName
         public string AnimationName { get; }
 
-        // AreaRange
-        public int AreaRange { get; }
+        // AreaOfEffect
+        public int AreaOfEffect { get; }
 
         // Category
         public ItemCategory Category { get; }

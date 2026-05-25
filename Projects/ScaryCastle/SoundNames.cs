@@ -12,6 +12,7 @@
         internal const string Error = nameof(Error);
         internal const string FootstepA = nameof(FootstepA);
         internal const string FootstepWater = nameof(FootstepWater);
+        internal const string Gesture1 = nameof(Gesture1);
         internal const string GutsLarge = nameof(GutsLarge);
         internal const string GutsMedium = nameof(GutsMedium);
         internal const string GutsSmall = nameof(GutsSmall);

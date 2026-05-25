@@ -144,7 +144,6 @@ namespace ScaryCastle
             AotTypeRegistry.Register("add-trigger-area", typeof(AddTriggerAreaCommand), CodingContext.EntityDeclaration);
             AotTypeRegistry.Register("add-walk-area", typeof(AddWalkAreaCommand), CodingContext.EntityDeclaration);
             AotTypeRegistry.Register("animate-actor", typeof(AnimateActorCommand));
-            AotTypeRegistry.Register("apply-item-effects", typeof(ApplyItemEffectsCommand));
             AotTypeRegistry.Register("attach-light", typeof(AttachLightCommand), CodingContext.EntityDeclaration);
             AotTypeRegistry.Register("await-approach", typeof(AwaitApproachCommand));
             AotTypeRegistry.Register("await-boss-intro", typeof(AwaitBossIntroCommand));
@@ -154,7 +153,6 @@ namespace ScaryCastle
             AotTypeRegistry.Register("await-input", typeof(AwaitInputCommand));
             AotTypeRegistry.Register("await-monitor-text", typeof(AwaitMonitorTextCommand));
             AotTypeRegistry.Register("await-popup", typeof(AwaitPopupCommand));
-            AotTypeRegistry.Register("cast-lightning", typeof(CastLightningCommand));
             AotTypeRegistry.Register("create-dialog-block", typeof(CreateDialogBlockCommand));
             AotTypeRegistry.Register("ensure-session-scene", typeof(EnsureSessionSceneCommand));
             AotTypeRegistry.Register("exit-session", typeof(ExitSessionCommand));

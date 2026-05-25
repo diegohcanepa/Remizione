@@ -32,7 +32,7 @@ namespace ScaryCastle.Scripting
             var intent = player.CombatBehavior.Intents.Find(combatIntentName);
             if (intent != null)
             {
-                player.PerformCloseAttack(intent, target);
+                player.PerformAction(intent, target);
                 if (target is Actor npc)
                     npc.ForceReaction();
             }

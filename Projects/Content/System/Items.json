@@ -3,6 +3,7 @@
 	"data": [
 		{
 			"name": "Apple",
+			"animationName": "Consume",
 			"category": "Food",
 			"usageScope": "Self",
 			"isStackable": true,
@@ -59,7 +60,7 @@
 		},
 		{
 			"name": "Firecracker",
-			"areaRange": 40,
+			"areaOfEffect": 40,
 			"usageScope": "Self",
 			"category": "Explosive",
 			"sound": "Firecracker",
@@ -82,6 +83,7 @@
 		},
 		{
 			"name": "GooBottle",
+			"animationName": "ConsumeGooBottle",
 			"category": "Food",
 			"deselectOnUse": true,
 			"usageScope": "Self",

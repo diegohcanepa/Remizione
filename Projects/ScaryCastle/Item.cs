@@ -11,7 +11,7 @@ namespace ScaryCastle
     /// <summary>
     /// Item
     /// </summary>
-    public sealed class Item
+    public sealed class Item : IGameAction
     {
         #region Private fields
 
@@ -29,6 +29,25 @@ namespace ScaryCastle
             this.Script = inventory.Session.ScriptLibrary.FindRoutine($"{Definition.Name}Outcome");
             this.Amount = definition.InitialAmount;
         }
+
+        #endregion
+
+        #region IGameAction interface
+
+        string IGameAction.AnimationName => Definition.AnimationName;
+
+        int IGameAction.AreaOfEffect => Definition.AreaOfEffect;
+
+        ReadOnlyCollection<EffectDescriptor> IGameAction.EffectDescriptors => Definition.EffectDescriptors;
+
+        InPlaceEffectType IGameAction.InPlaceEffectType => Definition.InPlaceEffectType;
+
+        ProjectileDescriptor? IGameAction.Projectile => Definition.Projectile;
+
+        Sound? IGameAction.Sound => Definition.Sound;
+
+        ItemUsageScope IGameAction.UsageScope => Definition.UsageScope;
+
 
         #endregion
 
@@ -65,7 +84,7 @@ namespace ScaryCastle
         }
 
         // Consume
-        public bool Consume()
+        public void Consume()
         {
             if (Definition.IsDepletable)
             {
@@ -75,8 +94,6 @@ namespace ScaryCastle
             }
             
             InvalidateDisplayText();
-
-            return true;
         }
 
         // Definition

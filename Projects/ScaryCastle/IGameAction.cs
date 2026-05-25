@@ -9,10 +9,13 @@ namespace ScaryCastle
     public interface IGameAction
     {
         // AnimationName
-        public string AnimationName { get; }
+        string AnimationName { get; }
 
-        // AreaRange
-        int AreaRange { get; }
+        // AreaOfEffect
+        int AreaOfEffect { get; }
+
+        // Consume
+        void Consume();
 
         // EffectDescriptors
         ReadOnlyCollection<EffectDescriptor> EffectDescriptors { get; }

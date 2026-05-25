@@ -119,7 +119,7 @@ namespace ScaryCastle
         // HandlePendingInteraction
         private void HandlePendingInteraction()
         {
-            if (!IsPlayer || !IsInCurrentRoom)
+            if (!IsPlayer || !IsInCurrentRoom || IsDead)
                 return;
 
             // Session is busy
@@ -173,7 +173,7 @@ namespace ScaryCastle
                 }
                 else if (decision.Type == CombatDecisionType.Attack && decision.Intent != null)
                 {
-                    PerformCloseAttack(decision.Intent, target);
+                    PerformAction(decision.Intent, target);
                 }
             }
         }
@@ -814,12 +814,19 @@ namespace ScaryCastle
         // IsStandingOrMoving
         public bool IsStandingOrMoving => BodyMachine.CurrentState is BodyStandState or BodyMoveState;
 
-        // LaunchProjectile
-        public void LaunchProjectile(IGameAction action)
+        // Lift
+        public void Lift(Prop prop)
         {
+            if (IsDead)
+                return;
+
             StopMoving();
-            var state = BodyMachine.FindOrCreateState<BodyLaunchProjectileState>();
-            state.Action = action;
+
+            if (prop != null)
+                FaceTo(prop);
+
+            var state = BodyMachine.FindOrCreateState<BodyLiftPropState>();
+            state.Target = prop;
             BodyMachine.ChangeState(state.GetType());
         }
 
@@ -901,27 +908,14 @@ namespace ScaryCastle
             if (target != null)
                 FaceTo(target);
 
-            // Projectile
-            if (action.UsageScope == ItemUsageScope.Projectile)
-            {
-                if (action.Projectile != null)
-                    LaunchProjectile(action);
-            }
-
-            // InPlace
-            else if (action.UsageScope == ItemUsageScope.InPlace)
-            {
-                if (action.InPlaceEffectType == InPlaceEffectType.Lightning)
-                {
-                    if (target != null && Session.Room != null)
-                    {
-                        var lightning = new LightningInvocation(action, target);
-                        Session.Room.Children.Add(lightning);
-                    }
-                }
-            }
+            StopMoving();
+            var state = BodyMachine.FindOrCreateState<BodyPerformActionState>();
+            state.Action = action;
+            state.Target = target;
+            BodyMachine.ChangeState(state.GetType());
         }
 
+        /*
         // PerformCloseAttack
         public void PerformCloseAttack(CombatIntent intent, GameThing? target)
         {
@@ -934,11 +928,12 @@ namespace ScaryCastle
             state.Target = target;
             BodyMachine.ChangeState(state.GetType());
         }
+        */
 
         // PerformInteraction
         public bool PerformInteraction(GameThing target, Item? item)
         {
-            if (!IsPlayer)
+            if (!IsPlayer || IsDead)
                 return false;
 
             // Is carrying something?
@@ -954,14 +949,14 @@ namespace ScaryCastle
                 if (Session.InteractionContext.LiftMode)
                 {
                     if (target is Prop prop)
-                        Session.InteractionData.SetLiftOutcome(prop);
+                        Session.InteractionData.SetLiftTarget(prop);
                 }
 
                 // Headbutt
                 else if (target.Faction == Faction.Evil)
                 {
                     if (DefaultCombatIntent != null)
-                        Session.InteractionData.SetCloseAttackOutcome(target, DefaultCombatIntent);
+                        Session.InteractionData.SetAttackOutcome(target, DefaultCombatIntent);
                 }
 
                 else
@@ -971,20 +966,25 @@ namespace ScaryCastle
             }
             else
             {
-                if (item.Definition.UsageScope != ItemUsageScope.Self && target != this)
-                {
-                    Session.InteractionData.SetUseWithOutcome(target, item);
-                }
-                else if (item.Definition.UsageScope == ItemUsageScope.Self && target == this)
-                {
-                    Session.InteractionData.SetUseWithOutcome(target, item);
-                }
+                Session.InteractionData.SetUseWithOutcome(target, item);
+
+                //if (item.Definition.UsageScope != ItemUsageScope.Self && target != this)
+                //{
+                //    Session.InteractionData.SetUseWithOutcome(target, item);
+                //}
+                //else if (item.Definition.UsageScope == ItemUsageScope.Self && target == this)
+                //{
+                //    Session.InteractionData.SetUseWithOutcome(target, item);
+                //}
             }
 
-            if (Session.InteractionData.Script == null)
+            if (!Session.InteractionContext.LiftMode)
             {
-                MouseCursor.Shake();
-                return false;
+                if (Session.InteractionData.Script == null && item == null)
+                {
+                    MouseCursor.Shake();
+                    return false;
+                }
             }
 
             if (target == this || (item?.Definition.UsageScope is ItemUsageScope.Self or ItemUsageScope.InPlace))
@@ -1002,6 +1002,24 @@ namespace ScaryCastle
                     !MoveTo(destination))
                     HandlePendingInteraction();
             }
+
+            /*
+            if (target == this || (item?.Definition.UsageScope is ItemUsageScope.Self or ItemUsageScope.InPlace))
+            {
+                HandlePendingInteraction();
+            }
+            else
+            {
+                var destination = target.GetApproachPosition(this, Session.InteractionData.CloseAttack ? ApproachBehavior.ClosestSide : null);
+
+                if (item?.Definition.UsageScope == ItemUsageScope.Projectile)
+                    destination.X = X;
+
+                if (
+                    !MoveTo(destination))
+                    HandlePendingInteraction();
+            }
+            */
 
             return true;
         }

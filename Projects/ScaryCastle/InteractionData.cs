@@ -44,8 +44,20 @@ namespace ScaryCastle
         // Execute
         public void Execute(GameSession session)
         {
-            if (Script == null || session.Player == null)
+            if (session.Player == null)
                 return;
+
+            if (session.InteractionContext.LiftMode)
+            {
+                if (Target is Prop prop)
+                    session.Player.Lift(prop);
+
+                return;
+            }
+
+            if (Script == null)
+                return;
+
 
             session.Player.StopMoving();
 
@@ -64,7 +76,7 @@ namespace ScaryCastle
                         if (CloseAttack)
                         {
                             if (session.Player.DefaultCombatIntent != null)
-                                session.Player.PerformCloseAttack(session.Player.DefaultCombatIntent, Target);
+                                session.Player.PerformAction(session.Player.DefaultCombatIntent, Target);
                         }
                         else
                         {
@@ -86,8 +98,8 @@ namespace ScaryCastle
         // Session
         public GameSession Session { get; }
 
-        // SetCloseAttackOutcome
-        public void SetCloseAttackOutcome(GameThing target, CombatIntent combatIntent)
+        // SetAttackOutcome
+        public void SetAttackOutcome(GameThing target, CombatIntent combatIntent)
         {
             if (Session.ScriptLibrary.FindRoutine(combatIntent.Name) is Script script)
             {
@@ -103,24 +115,24 @@ namespace ScaryCastle
                 SetOutcomeCore(target, target.OutcomeScript);
         }
 
-        // SetLiftOutcome
-        public void SetLiftOutcome(Prop prop)
+        // SetLiftTarget
+        public void SetLiftTarget(Prop prop)
         {
-            if (Session.ScriptLibrary.FindRoutine(RoutineNames.LiftOutcomeTarget) is Script script)
-                SetOutcomeCore(prop, script);
+            this.Target = prop;
         }
 
         // SetUseWithOutcome
-        public void SetUseWithOutcome(GameThing target, Item item)
+        public Script? SetUseWithOutcome(GameThing target, Item item)
         {
             var script = target.Session.ScriptLibrary.FindOutcomeOverload(target.DeclaredName, item.Name);
-            script ??= item.Script;
 
             if (script != null)
             {
                 SetOutcomeCore(target, script);
                 Item = item;
             }
+
+            return script;
         }
 
         // Target

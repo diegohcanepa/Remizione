@@ -1,4 +1,5 @@
 ﻿using Engendro.Audio;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -10,13 +11,23 @@ namespace ScaryCastle
     /// </summary>
     public sealed class GameAction : IGameAction
     {
+        private readonly Action? onConsume;
+
         // Constructor
-        public GameAction(string animationName, ItemUsageScope usageScope, IList<EffectDescriptor> effectDescriptors)
+        public GameAction(string animationName, ItemUsageScope usageScope, IList<EffectDescriptor> effectDescriptors, Action? onConsume = null)
         {
             this.AnimationName = animationName;
             this.UsageScope = usageScope;
             this.EffectDescriptors = new(effectDescriptors);
+            this.onConsume = onConsume;
         }
+
+        #region IGameAction explicit members
+
+        // OnConsume
+        void IGameAction.Consume() => onConsume?.Invoke();
+
+        #endregion
 
         // AnimationName
         public string AnimationName { get; }
@@ -28,7 +39,7 @@ namespace ScaryCastle
             if (gameAction.Sound != null)
                 source.PlaySound(gameAction.Sound);
 
-            if (gameAction.AreaRange == 0)
+            if (gameAction.AreaOfEffect == 0)
             {
                 EffectDescriptor.Apply(gameAction.EffectDescriptors, source, target, context);
             }
@@ -36,14 +47,14 @@ namespace ScaryCastle
             {
                 foreach (var potentialTarget in room.Children.OfType<GameThing>())
                 {
-                    if (source.DistanceTo(potentialTarget) < gameAction.AreaRange)
+                    if (source.DistanceTo(potentialTarget) < gameAction.AreaOfEffect)
                         EffectDescriptor.Apply(gameAction.EffectDescriptors, source, potentialTarget, context);
                 }
             }
         }
 
-        // AreaRange
-        public int AreaRange { get; init; }
+        // AreaOfEffect
+        public int AreaOfEffect { get; init; }
 
         // EffectDescriptors
         public ReadOnlyCollection<EffectDescriptor> EffectDescriptors { get; }
