@@ -4,14 +4,14 @@ using Microsoft.Xna.Framework;
 namespace ScaryCastle
 {
     /// <summary>
-    /// BodyPerformActionState
+    /// BodyExecuteActionState
     /// </summary>
-    public sealed class BodyPerformActionState : BodyAnimatedState
+    public sealed class BodyExecuteActionState : BodyAnimatedState
     {
         private bool eventDone;
 
         // Constructor
-        public BodyPerformActionState()
+        public BodyExecuteActionState()
             : base(string.Empty, false)
         {
         }
@@ -65,7 +65,7 @@ namespace ScaryCastle
             if (action.Projectile == null)
                 return;
 
-            if (Owner.AnimationPlayer.Frame?.ActionPoint is Vector2 actionPoint && actionPoint != Vector2.Zero)
+            if (Owner.AnimationPlayer.Frame?.SpawnPoint is Vector2 actionPoint && actionPoint != Vector2.Zero)
             {
                 var projectile = new Projectile(Owner.Session);
                 var pos = Owner.GetAnchoredPosition(actionPoint);
@@ -151,7 +151,7 @@ namespace ScaryCastle
                         break;
                 }
 
-                Action.Consume();
+                Action.Consume(Owner);
 
                 return;
             }

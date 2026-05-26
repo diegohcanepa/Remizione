@@ -27,6 +27,9 @@
             "Contact"
           ]
         },
+        "gooCost": {
+          "type": "integer"
+        },
         "projectile": {
           "$ref": "Projectile.schema.json",
           "description": "Referencia al comportamiento y descriptor del proyectil que este ítem dispara o genera."

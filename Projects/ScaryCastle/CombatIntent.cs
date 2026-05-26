@@ -30,6 +30,11 @@ namespace ScaryCastle
             // Contact
             this.Contact = string.Equals(Name, nameof(Contact), StringComparison.OrdinalIgnoreCase);
 
+            // GooCost
+            GooCost = element.GetInt32("gooCost", 0);
+            if (GooCost < 0)
+                GooCost = 0;
+
             // InPlaceEffectType
             InPlaceEffectType = element.GetEnum("inPlaceEffectType", InPlaceEffectType.None);
 
@@ -51,8 +56,9 @@ namespace ScaryCastle
 
         #region IGameAction interface
 
-        void IGameAction.Consume()
+        void IGameAction.Consume(Actor actor)
         {
+            actor.Goo -= GooCost;
         }
 
         #endregion
@@ -71,6 +77,9 @@ namespace ScaryCastle
 
         // InPlaceEffectType
         public InPlaceEffectType InPlaceEffectType { get; }
+
+        // GooCost
+        public int GooCost { get; }
 
         // Projectile
         public ProjectileDescriptor? Projectile { get; }

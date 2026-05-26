@@ -3,14 +3,14 @@
 namespace ScaryCastle
 {
     /// <summary>
-    /// BodyLiftPropState
+    /// BodyLiftState
     /// </summary>
-    public sealed class BodyLiftPropState : BodyAnimatedState
+    public sealed class BodyLiftState : BodyAnimatedState
     {
         private bool eventDone;
 
         // Constructor
-        public BodyLiftPropState()
+        public BodyLiftState()
             : base(AnimationNames.PickUp, false)
         {
         }

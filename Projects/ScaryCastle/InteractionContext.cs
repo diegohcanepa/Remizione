@@ -59,8 +59,8 @@ namespace ScaryCastle
         // HeldItem
         public Item? HeldItem { get; set; }
 
-        // LiftMode
-        public bool LiftMode { get; set; }
+        // LiftTarget
+        public Prop? LiftTarget { get; set; }
 
         // Refresh
         public void Refresh()
@@ -81,10 +81,13 @@ namespace ScaryCastle
         // Reset
         public void Reset()
         {
-            LiftMode = false;
+            LiftTarget = null;
 
-            if (HeldItem?.Definition.DeselectOnUse == true)
-                HeldItem = null;
+            if (Target != null)
+            {
+                if (HeldItem?.Definition.DeselectOnUse == true)
+                    HeldItem = null;
+            }
 
             Target = null;
             MouseCursorAppearance.Refresh(this);

@@ -26,7 +26,7 @@ namespace ScaryCastle.Scripting
                 return;
 
             if (session.PlayerInventory.Find(definition.Name) is Item item)
-                session.Player.PerformAction(item, session.OutcomeTarget);
+                session.Player.ExecuteAction(item, session.OutcomeTarget);
         }
     }
 }

@@ -173,7 +173,7 @@ namespace ScaryCastle
                 }
                 else if (decision.Type == CombatDecisionType.Attack && decision.Intent != null)
                 {
-                    PerformAction(decision.Intent, target);
+                    ExecuteAction(decision.Intent, target);
                 }
             }
         }
@@ -717,10 +717,24 @@ namespace ScaryCastle
         }
 
         // Definition
-        public ActorDefinition?
+        public ActorDefinition? Definition { get; }
 
-            Definition
-        { get; }
+        // ExecuteAction
+        public void ExecuteAction(IGameAction action, GameThing? target)
+        {
+            if (IsDead)
+                return;
+
+            StopMoving();
+
+            if (target != null)
+                FaceTo(target);
+
+            var state = BodyMachine.FindOrCreateState<BodyExecuteActionState>();
+            state.Action = action;
+            state.Target = target;
+            BodyMachine.ChangeState(state.GetType());
+        }
 
         // FastMove
         public bool FastMove { get; set; }
@@ -805,7 +819,7 @@ namespace ScaryCastle
         }
 
         // IsPerformingAction
-        public bool IsPerformingAction => BodyMachine.CurrentState is BodyPerformActionState;
+        public bool IsPerformingAction => BodyMachine.CurrentState is BodyExecuteActionState;
 
         // IsPlayer
         [ScriptProperty]
@@ -825,7 +839,7 @@ namespace ScaryCastle
             if (prop != null)
                 FaceTo(prop);
 
-            var state = BodyMachine.FindOrCreateState<BodyLiftPropState>();
+            var state = BodyMachine.FindOrCreateState<BodyLiftState>();
             state.Target = prop;
             BodyMachine.ChangeState(state.GetType());
         }
@@ -897,100 +911,6 @@ namespace ScaryCastle
             return true;
         }
 
-        // PerformAction
-        public void PerformAction(IGameAction action, GameThing? target)
-        {
-            if (IsDead)
-                return;
-
-            StopMoving();
-
-            if (target != null)
-                FaceTo(target);
-
-            var state = BodyMachine.FindOrCreateState<BodyPerformActionState>();
-            state.Action = action;
-            state.Target = target;
-            BodyMachine.ChangeState(state.GetType());
-        }
-
-        /*
-        // PerformCloseAttack
-        public void PerformCloseAttack(CombatIntent intent, GameThing? target)
-        {
-            StopMoving();
-            if (target != null)
-                FaceTo(target);
-
-            var state = BodyMachine.FindOrCreateState<BodyCloseAttackState>();
-            state.Intent = intent;
-            state.Target = target;
-            BodyMachine.ChangeState(state.GetType());
-        }
-        */
-
-        // PerformInteraction
-        public bool PerformInteraction(GameThing target, Item? item)
-        {
-            if (!IsPlayer || IsDead)
-                return false;
-
-            // Is carrying something?
-            if (ActiveThrowable != null)
-            {
-                Session.TextHUD.Message.Show(MessageKind.HandsFull);
-                return false;
-            }
-
-            if (item == null)
-            {
-                // Lift
-                if (Session.InteractionContext.LiftMode && target is Prop prop)
-                {
-                    Session.InteractionData.SetLiftTarget(prop);
-                }
-
-                // Headbutt
-                else if (target.Faction == Faction.Evil)
-                {
-                    if (DefaultCombatIntent != null)
-                        Session.InteractionData.SetCombatIntent(DefaultCombatIntent, target);
-                }
-
-                else
-                {
-                    Session.InteractionData.SetOutcome(target);
-                }
-            }
-            else
-            {
-                Session.InteractionData.SetUseWithOutcome(target, item);
-            }
-
-            if (Session.InteractionData.LiftProp == null && Session.InteractionData.CombatIntent == null && Session.InteractionData.Script == null && item == null)
-            {
-                MouseCursor.Shake();
-                return false;
-            }
-
-            if (item?.Definition.UsageScope is ItemUsageScope.Self or ItemUsageScope.InPlace)
-            {
-                HandlePendingInteraction();
-            }
-            else
-            {
-                var destination = target.GetApproachPosition(this, Session.InteractionData.CloseAttack ? ApproachBehavior.ClosestSide : null);
-
-                if (item?.Definition.UsageScope == ItemUsageScope.Projectile)
-                    destination.X = X;
-
-                if (!MoveTo(destination))
-                    HandlePendingInteraction();
-            }
-
-            return true;
-        }
-
         // PlayerNumber
         [ScriptProperty]
         public PlayerNumber PlayerNumber
@@ -1008,6 +928,44 @@ namespace ScaryCastle
                 }
             }
         } = PlayerNumber.None;
+
+        // ResolveInteraction
+        public bool ResolveInteraction(GameThing target, Item? item)
+        {
+            if (!IsPlayer || IsDead)
+                return false;
+
+            // Is carrying something?
+            if (ActiveThrowable != null)
+            {
+                Session.TextHUD.Message.Show(MessageKind.HandsFull);
+                return false;
+            }
+
+            Session.InteractionData.Update(Session.InteractionContext);
+            if (!Session.InteractionData.CanExecute)
+            {
+                MouseCursor.Shake();
+                return false;
+            }
+
+            if (item?.Definition.UsageScope is ItemUsageScope.Self or ItemUsageScope.InPlace)
+            {
+                HandlePendingInteraction();
+            }
+            else
+            {
+                var destination = target.GetApproachPosition(this, Session.InteractionData.IsAttack ? ApproachBehavior.ClosestSide : null);
+
+                if (item?.Definition.UsageScope == ItemUsageScope.Projectile)
+                    destination.X = X;
+
+                if (!MoveTo(destination))
+                    HandlePendingInteraction();
+            }
+
+            return true;
+        }
 
         // Say
         public void Say(string text, bool awaitInput)

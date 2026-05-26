@@ -8,145 +8,133 @@ namespace ScaryCastle
     /// </summary>
     public sealed class InteractionData
     {
-        // Constructor
-        public InteractionData(GameSession session)
-        {
-            this.Session = session;
-        }
+        #region Private fields
 
-        #region Private members
-
-        // SetOutcomeCore
-        private void SetOutcomeCore(GameThing target, Script script)
-        {
-            Clear();
-            Target = target;
-            TargetPosition = target.Position;
-            Script = script;
-        }
+        private CombatIntent? combatIntent;
+        private Item? item;
+        private Prop? liftProp;
+        private Script? script;
+        private GameThing? target;
+        private Vector2 targetPosition;
 
         #endregion
 
-        // CloseAttack
-        public bool CloseAttack { get; private set; }
+        // CanExecute
+        public bool CanExecute => liftProp != null || combatIntent != null || script != null || item != null;
 
         // Clear
         public void Clear()
         {
-            CloseAttack = false;
-            CombatIntent = null;
-            LiftProp = null;
-            Item = null;
-            Script = null;
-            Target = null;
-            TargetPosition = Vector2.Zero;
+            IsAttack = false;
+            combatIntent = null;
+            liftProp = null;
+            item = null;
+            script = null;
+            target = null;
+            targetPosition = Vector2.Zero;
         }
-
-        // CombatIntent
-        public CombatIntent? CombatIntent { get; private set; }
 
         // Execute
         public void Execute(GameSession session)
         {
-            if (session.Player == null)
+            if (session.Player == null || target == null)
                 return;
 
-            if (LiftProp != null)
+            if (liftProp != null)
             {
-                session.Player.Lift(LiftProp);
+                session.Player.Lift(liftProp);
             }
-            else if (CombatIntent != null)
+            else if (combatIntent != null)
             {
-                session.Player.PerformAction(CombatIntent, Target);
+                session.Player.ExecuteAction(combatIntent, target);
             }
-            else if (Script != null)
+            else if (script != null)
             {
                 session.Player.StopMoving();
 
-                if (Target != null)
+                if (target != null)
                 {
-                    if (Vector2.Distance(Target.Position, TargetPosition) > 1)
+                    if (Vector2.Distance(target.Position, targetPosition) > 1)
                     {
                         session.TextHUD.Message.Show(MessageKind.OutOfReach);
                     }
                     else
                     {
-                        session.Player.FaceTo(Target);
+                        session.Player.FaceTo(target);
 
-                        if (Script != null)
+                        if (script != null)
                         {
-                            if (CloseAttack)
+                            if (IsAttack)
                             {
                                 if (session.Player.DefaultCombatIntent != null)
-                                    session.Player.PerformAction(session.Player.DefaultCombatIntent, Target);
+                                    session.Player.ExecuteAction(session.Player.DefaultCombatIntent, target);
                             }
                             else
                             {
-                                session.BeginOutcome(Script, Target);
+                                session.BeginOutcome(script, target);
                             }
                         }
                     }
                 }
             }
-
-            Clear();
-        }
-
-        // Item
-        public Item? Item { get; private set; }
-
-        // LiftProp
-        public Prop? LiftProp { get; private set; }
-
-        // Script
-        public Script? Script { get; private set; }
-
-        // Session
-        public GameSession Session { get; }
-
-        // SetCombatIntent
-        public void SetCombatIntent(CombatIntent combatIntent, GameThing target)
-        {
-            Clear();
-            this.CloseAttack = true;
-            this.CombatIntent = combatIntent;
-            this.Target = target;
-        }
-
-        // SetLiftTarget
-        public void SetLiftTarget(Prop prop)
-        {
-            Clear();
-            this.LiftProp = prop;
-        }
-
-        // SetOutcome
-        public Script? SetOutcome(GameThing target)
-        {
-            if (target.OutcomeScript != null)
-                SetOutcomeCore(target, target.OutcomeScript);
-
-            return target.OutcomeScript;
-        }
-
-        // SetUseWithOutcome
-        public Script? SetUseWithOutcome(GameThing target, Item item)
-        {
-            var script = target.Session.ScriptLibrary.FindOutcomeOverload(target.DeclaredName, item.Name);
-
-            if (script != null)
+            else if (session.InteractionContext.HeldItem != null && !MouseCursor.IsArrow)
             {
-                SetOutcomeCore(target, script);
-                Item = item;
+                session.Player.ExecuteAction(session.InteractionContext.HeldItem, target);
             }
 
-            return script;
+            Clear();
         }
 
-        // Target
-        public GameThing? Target { get; private set; }
+        // IsAttack
+        public bool IsAttack { get; private set; }
 
-        // TargetPosition
-        public Vector2 TargetPosition { get; private set; }
+        // Update
+        public void Update(InteractionContext context)
+        {
+            Clear();
+
+            if (context.Target == null)
+                return;
+
+            this.target = context.Target;
+            this.targetPosition = context.Target.Position;
+
+            if (context.HeldItem == null)
+            {
+                // Lift
+                if (context.LiftTarget != null)
+                {
+                    this.liftProp = context.LiftTarget;
+                }
+
+                // Headbutt
+                else if (context.Target.Faction == Faction.Evil)
+                {
+                    if (context.Session.Player?.DefaultCombatIntent is CombatIntent combatIntent)
+                    {
+                        this.IsAttack = true;
+                        this.combatIntent = combatIntent;
+                    }
+                }
+
+                else
+                {
+                    this.script = target.OutcomeScript;
+                }
+            }
+            else
+            {
+                if (MouseCursor.IsArrow)
+                {
+                    this.script = target.OutcomeScript;
+                }
+                else
+                {
+                    this.item = context.HeldItem;
+                    if (target.Session.ScriptLibrary.FindOutcomeOverload(target.DeclaredName, item.Name) is Script script)
+                        this.script = script;
+                }
+            }
+        }
     }
 }

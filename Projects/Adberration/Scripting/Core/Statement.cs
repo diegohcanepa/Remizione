@@ -11,7 +11,6 @@ namespace Adberration.Scripting
         #region Argument names
 
         protected static readonly string ActionArg = "#action";
-        protected static readonly string ActionPointArg = "#action-point";
         protected static readonly string AmountArg = "#amount";
         protected static readonly string AnimationArg = "#animation";
         protected static readonly string AtArg = "#at";
@@ -72,6 +71,7 @@ namespace Adberration.Scripting
         protected static readonly string ScaleArg = "#scale";
         protected static readonly string ScopeArg = "#scope";
         protected static readonly string SoundArg = "#sound";
+        protected static readonly string SpawnPointArg = "#spawn-point";
         protected static readonly string SpeedFactorArg = "#speed-factor";
         protected static readonly string StartDelayArg = "#start-delay";
         protected static readonly string StyleArg = "#style";

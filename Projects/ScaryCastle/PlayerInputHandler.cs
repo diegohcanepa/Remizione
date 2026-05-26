@@ -33,8 +33,8 @@ namespace ScaryCastle
             return HandleInputResult.Unhandled;
         }
 
-        // PerformInteraction
-        private void PerformInteraction()
+        // ResolveInteraction
+        private void ResolveInteraction()
         {
             if (!Actor.IsPlayer)
                 return;
@@ -56,7 +56,7 @@ namespace ScaryCastle
             // 2. Outcome interaction: Approach and interact with target
             if (context.HeldItem == null || MouseCursor.IsArrow)
             {
-                Actor.PerformInteraction(context.Target, null);
+                Actor.ResolveInteraction(context.Target, null);
                 return;
             }
 
@@ -69,13 +69,9 @@ namespace ScaryCastle
                     Actor.Session.TextHUD.Message.Show(MessageKind.NotEnoughGoo);
                     return;
                 }
-                else
-                {
-                    Actor.Goo--;
-                }
             }
 
-            if (Actor.PerformInteraction(context.Target, context.HeldItem))
+            if (Actor.ResolveInteraction(context.Target, context.HeldItem))
                 return;
 
             MouseCursor.Shake();
@@ -90,7 +86,7 @@ namespace ScaryCastle
             if (!InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
                 return false;
 
-            PerformInteraction();
+            ResolveInteraction();
 
             return true;
         }
@@ -119,8 +115,8 @@ namespace ScaryCastle
             {
                 if (prop.IsLiftable)
                 {
-                    Actor.Session.InteractionContext.LiftMode = true;
-                    PerformInteraction();
+                    Actor.Session.InteractionContext.LiftTarget = prop;
+                    ResolveInteraction();
                 }
                 else
                 {

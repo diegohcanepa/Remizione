@@ -55,7 +55,6 @@ namespace ScaryCastle
             this.StatusHUD = new StatusHUD(this);
             this.TextHUD = new TextHUD(this);
             this.InteractionContext = new(this);
-            this.InteractionData = new(this);
             this.DeclaredThings = new(proceduralThings);
             this.Random = new Random(Seed);
             this.inventoryScene = new(PlayerInventory);
@@ -285,15 +284,6 @@ namespace ScaryCastle
 
             else
                 return base.OnHandleInput();
-        }
-
-        // OnOutcome
-        protected override void OnOutcome(Thing target)
-        {
-            base.OnOutcome(target);
-
-            if (InteractionContext.HeldItem?.Definition.DeselectOnUse == true)
-                InteractionContext.HeldItem = null;
         }
 
         // OnPause
@@ -600,7 +590,7 @@ namespace ScaryCastle
         public InteractionContext InteractionContext { get; }
 
         // InteractionData
-        public InteractionData InteractionData { get; }
+        public InteractionData InteractionData { get; } = new();
 
         // IsConsoleVisible
         public bool IsConsoleVisible => console?.IsActive ?? false;

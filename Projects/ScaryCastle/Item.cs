@@ -83,8 +83,10 @@ namespace ScaryCastle
         }
 
         // Consume
-        public void Consume()
+        public void Consume(Actor actor)
         {
+            actor.Goo -= Definition.GooCost;
+
             if (Definition.IsDepletable)
             {
                 Amount--;

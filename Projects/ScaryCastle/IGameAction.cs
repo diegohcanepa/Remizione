@@ -15,7 +15,7 @@ namespace ScaryCastle
         int AreaOfEffect { get; }
 
         // Consume
-        void Consume();
+        void Consume(Actor actor);
 
         // EffectDescriptors
         ReadOnlyCollection<EffectDescriptor> EffectDescriptors { get; }
