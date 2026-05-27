@@ -77,8 +77,8 @@ namespace ScaryCastle
         // IsAttack
         public bool IsAttack => combatIntent != null;
 
-        // Update
-        public void Update(InteractionContext context)
+        // Refresh
+        public void Refresh(InteractionContext context)
         {
             Clear();
 
@@ -137,7 +137,7 @@ namespace ScaryCastle
                             this.item = context.HeldItem;
                         }
                     }
-                    else if (context.HeldItem.Definition.UsageMode == ItemUsageMode.ProximityAction)
+                    else
                     {
                         this.item = context.HeldItem;
                     }

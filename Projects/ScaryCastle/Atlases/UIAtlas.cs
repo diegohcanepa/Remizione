@@ -13,6 +13,7 @@ namespace ScaryCastle
             : base(EngendroGame.Instance.Content, "UI", ContentManagerExtension.EncodePath(ContentFolder.Atlases, "UI"), false)
         {
             BossMeter = this[nameof(BossMeter)];
+            BossMeterAmount = this[nameof(BossMeterAmount)];
             CheckMark = this[nameof(CheckMark)];
             Coin = this[nameof(Coin)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
@@ -50,6 +51,9 @@ namespace ScaryCastle
 
         // BossMeter
         public AtlasImage BossMeter { get; }
+
+        // BossMeterAmount
+        public AtlasImage BossMeterAmount { get; }
 
         // CheckMark
         public AtlasImage CheckMark { get; }

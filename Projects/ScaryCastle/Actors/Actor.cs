@@ -942,7 +942,7 @@ namespace ScaryCastle
                 return false;
             }
 
-            Session.InteractionData.Update(Session.InteractionContext);
+            Session.InteractionData.Refresh(Session.InteractionContext);
             if (!Session.InteractionData.CanExecute)
             {
                 MouseCursor.Shake();

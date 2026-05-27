@@ -12,11 +12,13 @@ namespace ScaryCastle
     {
         #region Private fields
 
+        private readonly Sprite amountContainer;
         private readonly TextSprite amountText;
         private readonly Sprite icon;
         private readonly TextSprite labelText;
         private readonly Meter meter;
         private readonly GameSession session;
+        private readonly FloatTween shakeTween = new();
         private readonly List<Actor> targetList = [];
 
         #endregion
@@ -42,12 +44,20 @@ namespace ScaryCastle
                 Scale = ScaleInfo.Text.ExtraLarge
             };
 
+            this.amountContainer = new(Atlases.UI.BossMeterAmount)
+            {
+                PivotOrigin = RectanglePoint.Left,
+                Position = meter.BoundingBox.GetPoint(RectanglePoint.Right, -1, 0)
+            };
+
             this.amountText = new(Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Highlight,
-                PivotOrigin = RectanglePoint.Left,
-                Position = meter.BoundingBox.GetPoint(RectanglePoint.Right, 1.5f, .5f),
-                Scale = ScaleInfo.Text.Huge
+                PivotOrigin = RectanglePoint.Center,
+                Position = amountContainer.BoundingBox.GetPoint(RectanglePoint.Center),
+                Scale = ScaleInfo.Text.Giant,
+                ShadowColor = ColorPalette.SceneShade,
+                ShadowOffset = new(0, 1)
             };
 
             this.icon = new(Atlases.UI.BossMeter)
@@ -70,8 +80,11 @@ namespace ScaryCastle
             Game.SpriteBatch.Begin(Game.Camera);
             meter.Draw(gameTime);
             icon.Draw(gameTime);
+            amountContainer.Draw(gameTime);
             labelText.Draw(gameTime);
+            amountText.X += shakeTween.CurrentValue;
             amountText.Draw(gameTime);
+            amountText.X -= shakeTween.CurrentValue;
             Game.SpriteBatch.End();
         }
 
@@ -104,9 +117,11 @@ namespace ScaryCastle
             {
                 meter.Value = currentTotalHP;
                 amountText.Text = currentTotalHP.ToString(CultureInfo.InvariantCulture);
+                shakeTween.Start(TweenStyle.CubicInOut, 0, .5f, 60, 4);
             }
 
             meter.Update(gameTime);
+            shakeTween.Update(gameTime);
         }
 
         #endregion
