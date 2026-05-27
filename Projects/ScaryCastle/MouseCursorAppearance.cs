@@ -64,18 +64,14 @@ namespace ScaryCastle
                 return;
             }
 
-            // Cursor override
-            if (context.Target?.GetMouseCursor() is { } customState)
+            if (context.HeldItem != null && (context.Target == null || context.Target.Cursor == MouseCursorState.Cross))
             {
-                MouseCursor.State = customState;
-                return;
-            }
-
-            // Item grabbed
-            if (context.HeldItem != null)
                 MouseCursor.CustomImage = context.HeldItem.Definition.Image;
+            }
             else
-                MouseCursor.State = MouseCursorState.Cross;
+            {
+                MouseCursor.State = context.Target != null ? context.Target.Cursor : MouseCursorState.Cross;
+            }
         }
 
         // RefreshText

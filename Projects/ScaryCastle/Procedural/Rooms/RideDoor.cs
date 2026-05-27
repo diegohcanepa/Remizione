@@ -102,6 +102,9 @@ namespace ScaryCastle
         {
             if (actionInProgress)
                 Bounce();
+
+            if (IsOpen)
+                Cursor = arrowCursor;
         }
 
         // OnDraw
@@ -138,15 +141,6 @@ namespace ScaryCastle
         // DoorDirection
         [ScriptProperty]
         public RideDoorDirection DoorDirection { get; }
-
-        // GetMouseCursor
-        public override MouseCursorState? GetMouseCursor()
-        {
-            if (Session.InteractionContext.Target == this && IsOpen)
-                return arrowCursor;
-            else
-                return base.GetMouseCursor();
-        }
 
         // Prepare
         [ScriptMethod]

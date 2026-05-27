@@ -740,6 +740,10 @@ namespace ScaryCastle
             }
         }
 
+        // Cursor
+        [ScriptProperty]
+        public MouseCursorState Cursor { get; set; } = MouseCursorState.Cross;
+
         // CustomDropName
         [ScriptProperty]
         public string CustomDropName { get; set; } = string.Empty;
@@ -972,12 +976,6 @@ namespace ScaryCastle
         public Sound? GetFootstepSound(Vector2 position)
         {
             return RuntimeCollider?.Contains(position) == true ? TerrainSound : null;
-        }
-
-        // GetMouseCursor
-        public virtual MouseCursorState? GetMouseCursor()
-        {
-            return null;
         }
 
         // GetOverheadPosition

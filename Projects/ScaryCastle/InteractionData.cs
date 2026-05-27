@@ -77,9 +77,9 @@ namespace ScaryCastle
                     }
                 }
             }
-            else if (session.InteractionContext.HeldItem != null && !MouseCursor.IsArrow)
+            else if (item != null && !MouseCursor.IsArrow)
             {
-                session.Player.ExecuteAction(session.InteractionContext.HeldItem, target);
+                session.Player.ExecuteAction(item, target);
             }
 
             Clear();
@@ -95,6 +95,19 @@ namespace ScaryCastle
 
             if (context.Target == null)
                 return;
+
+            if (context.HeldItem != null)
+            {
+                if (context.Session.Player == context.Target)
+                {
+                    if (context.HeldItem.Definition.UsageScope is ItemUsageScope.Projectile or ItemUsageScope.Close)
+                        return;
+                }
+                else if (context.HeldItem.Definition.UsageScope == ItemUsageScope.Self)
+                {
+                    return;
+                }
+            }
 
             this.target = context.Target;
             this.targetPosition = context.Target.Position;
@@ -132,7 +145,9 @@ namespace ScaryCastle
                 {
                     this.item = context.HeldItem;
                     if (target.Session.ScriptLibrary.FindOutcomeOverload(target.DeclaredName, item.Name) is Script script)
+                    {
                         this.script = script;
+                    }
                 }
             }
         }
