@@ -160,7 +160,7 @@ namespace ScaryCastle
                     icons[i].X = slots[i].BoundingBox.Center.X;
                     icons[i].RenderImage = Inventory[i].Definition.Image;
 
-                    if (Inventory[i].Definition.GooCost > 0)
+                    if (Inventory[i].Definition.EnergyCost > 0)
                     {
                         gooIcons[i].X = slots[i].BoundingBox.Center.X;
                         gooIcons[i].RenderImage = Atlases.UI.GooIcon;

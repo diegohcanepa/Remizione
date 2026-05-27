@@ -24,6 +24,7 @@ namespace ScaryCastle
         public Prop(GameSession session, string name)
             : base(session, name)
         {
+            this.IgnoreKnockback = true;
             this.CanBeHit = false;
             this.Definition = PropDefinition.Definitions.Find(DeclaredName);
 

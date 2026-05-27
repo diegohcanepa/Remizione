@@ -32,10 +32,10 @@ namespace ScaryCastle
             // DeselectOnUse
             DeselectOnUse = element.GetBool("deselectOnUse", false);
 
-            // GooCost
-            GooCost = element.GetInt32("gooCost", 0);
-            if (GooCost < 0)
-                GooCost = 0;
+            // EnergyCost
+            EnergyCost = element.GetInt32("energyCost", 0);
+            if (EnergyCost < 0)
+                EnergyCost = 0;
 
             // InitialAmount
             InitialAmount = element.GetInt32("initialAmount", 1);
@@ -84,8 +84,8 @@ namespace ScaryCastle
             // SoundTrigger
             this.SoundTrigger = element.GetObject("soundTrigger", Sound.Get);
 
-            // UsageScope
-            UsageScope = element.GetEnum("usageScope", ItemUsageScope.Close);
+            // UsageMode
+            UsageMode = element.GetEnum("usageMode", ItemUsageMode.Script);
 
             this.Description = Localization.GetItemDescription(this);
             this.DisplayName = Localization.GetItemName(this);
@@ -101,8 +101,8 @@ namespace ScaryCastle
 
             IsPassive = LightModifier != 0 || LuckModifier != 0;
 
-            if (UsageScope == ItemUsageScope.Projectile && Projectile == null)
-                RaiseValidationError(this, "Items with Projectile usage scope must have a Projectile defined.", nameof(UsageScope));
+            if (UsageMode == ItemUsageMode.ProjectileAction && Projectile == null)
+                RaiseValidationError(this, "Items with Projectile usage mode must have a Projectile defined.", nameof(UsageMode));
 
             Definitions.Add(this);
         }
@@ -130,8 +130,8 @@ namespace ScaryCastle
         // DisplayName
         public string DisplayName { get; }
 
-        // GooCost
-        public int GooCost { get; }
+        // EnergyCost
+        public int EnergyCost { get; }
 
         // Image
         public AtlasImage? Image { get; }
@@ -184,7 +184,7 @@ namespace ScaryCastle
         // SoundTrigger
         public Sound? SoundTrigger { get; }
 
-        // UsageScope
-        public ItemUsageScope UsageScope { get; }
+        // UsageMode
+        public ItemUsageMode UsageMode { get; }
     }
 }

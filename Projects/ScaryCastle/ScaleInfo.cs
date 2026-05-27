@@ -84,7 +84,7 @@ namespace ScaryCastle
             internal static Vector2 Huge { get; } = new(.11f);
             internal static Vector2 Giant { get; } = new(.12f);
             internal static Vector2 ExtraGiant { get; } = new(.14f);
-            internal static Vector2 Galactus { get; } = new(.18f);
+            internal static Vector2 Galactus { get; } = new(.17f);
         }
 
         // TextMenuContainerTitle

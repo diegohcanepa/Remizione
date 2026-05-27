@@ -37,6 +37,8 @@ namespace ScaryCastle
 
         ReadOnlyCollection<EffectDescriptor> IGameAction.EffectDescriptors => Definition.EffectDescriptors;
 
+        int IGameAction.EnergyCost => Definition.EnergyCost;
+
         InPlaceEffectType IGameAction.InPlaceEffectType => Definition.InPlaceEffectType;
 
         ProjectileDescriptor? IGameAction.Projectile => Definition.Projectile;
@@ -45,7 +47,7 @@ namespace ScaryCastle
 
         Sound? IGameAction.SoundTrigger => Definition.SoundTrigger;
 
-        ItemUsageScope IGameAction.UsageScope => Definition.UsageScope;
+        ItemUsageMode IGameAction.UsageMode => Definition.UsageMode;
 
 
         #endregion
@@ -85,7 +87,7 @@ namespace ScaryCastle
         // Consume
         public void Consume(Actor actor)
         {
-            actor.Goo -= Definition.GooCost;
+            actor.Energy -= Definition.EnergyCost;
 
             if (Definition.IsDepletable)
             {

@@ -415,16 +415,16 @@ namespace ScaryCastle
             footstepEffect?.Draw(gameTime);
         }
 
+        // OnEnergyChanged
+        protected virtual void OnEnergyChanged(int previousValue)
+        {
+        }
+
         // OnFactionChanged
         protected override void OnFactionChanged()
         {
             if (Faction == Faction.Evil)
                 ForceReaction();
-        }
-
-        // OnGooChanged
-        protected virtual void OnGooChanged(int previousValue)
-        {
         }
 
         // OnHPChanged
@@ -719,6 +719,26 @@ namespace ScaryCastle
         // Definition
         public ActorDefinition? Definition { get; }
 
+        // Energy
+        [ScriptProperty]
+        public int Energy
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    var previousValue = field;
+
+                    if (value > field)
+                        ClearCondition();
+                    field = Math.Min(value, MaxEnergy);
+
+                    OnEnergyChanged(previousValue);
+                }
+            }
+        }
+
         // ExecuteAction
         public void ExecuteAction(IGameAction action, GameThing? target)
         {
@@ -757,26 +777,6 @@ namespace ScaryCastle
         public Vector2? GetActiveThrowablePosition()
         {
             return activeThrowableSprite?.Position;
-        }
-
-        // Goo
-        [ScriptProperty]
-        public int Goo
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    var previousValue = field;
-
-                    if (value > field)
-                        ClearCondition();
-                    field = Math.Min(value, MaxGoo);
-
-                    OnGooChanged(previousValue);
-                }
-            }
         }
 
         // Guts
@@ -844,9 +844,9 @@ namespace ScaryCastle
             BodyMachine.ChangeState(state.GetType());
         }
 
-        // MaxGoo
+        // MaxEnergy
         [ScriptProperty]
-        public int MaxGoo
+        public int MaxEnergy
         {
             get;
             set
@@ -854,7 +854,7 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = value;
-                    Goo = value;
+                    Energy = value;
                 }
             }
         }
@@ -949,7 +949,7 @@ namespace ScaryCastle
                 return false;
             }
 
-            if (item?.Definition.UsageScope is ItemUsageScope.Self or ItemUsageScope.InPlace)
+            if (item?.Definition.UsageMode is ItemUsageMode.SelfAction or ItemUsageMode.InPlaceAction)
             {
                 HandlePendingInteraction();
             }
@@ -957,7 +957,7 @@ namespace ScaryCastle
             {
                 var destination = target.GetApproachPosition(this, Session.InteractionData.IsAttack ? ApproachBehavior.ClosestSide : null);
 
-                if (item?.Definition.UsageScope == ItemUsageScope.Projectile)
+                if (item?.Definition.UsageMode == ItemUsageMode.ProjectileAction)
                     destination.X = X;
 
                 if (!MoveTo(destination))

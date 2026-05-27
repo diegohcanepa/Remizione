@@ -5,7 +5,7 @@
 			"name": "Apple",
 			"animationName": "Consume",
 			"category": "Food",
-			"usageScope": "Self",
+			"usageMode": "SelfAction",
 			"isStackable": true,
 			"effects": [
 				{
@@ -20,10 +20,10 @@
 		{
 			"name": "BargainCross",
 			"animationName": "UseCross",
-			"usageScope": "InPlace",
+			"usageMode": "InPlaceAction",
 			"inPlaceEffectType": "Lightning",
 			"isDepletable": false,
-			"gooCost": 1,
+			"energyCost": 1,
 			"effects": [
 				{
 					"context": "Attack",
@@ -37,7 +37,7 @@
 		{
 			"name": "BittenApple",
 			"category": "Food",
-			"usageScope": "Self",
+			"usageMode": "SelfAction",
 			"isStackable": true,
 			"effects": [
 				{
@@ -52,7 +52,7 @@
 		},
 		{
 			"name": "Coin",
-			"usageScope": "Close",
+			"usageMode": "Script",
 			"category": "Money",
 			"deselectOnUse": true,
 			"isStackable": true,
@@ -61,7 +61,7 @@
 		{
 			"name": "Firecracker",
 			"areaOfEffect": 40,
-			"usageScope": "Self",
+			"usageMode": "SelfAction",
 			"category": "Explosive",
 			"soundStart": "Firecracker",
 			"effects": [
@@ -76,7 +76,7 @@
 		},
 		{
 			"name": "GoldenKey",
-			"usageScope": "Close",
+			"usageMode": "Script",
 			"category": "Access",
 			"isStackable": true,
 			"pickupSound": "PickupKey"
@@ -86,12 +86,12 @@
 			"animationName": "ConsumeGooBottle",
 			"category": "Food",
 			"deselectOnUse": true,
-			"usageScope": "Self",
+			"usageMode": "SelfAction",
 			"isStackable": true,
 			"effects": [
 				{
 					"context": "Use",
-					"effectType": "Goo",
+					"effectType": "Energy",
 					"amount": "99",
 					"target": "Self"
 				}
@@ -99,14 +99,14 @@
 		},
 		{
 			"name": "Lantern",
-			"usageScope": "Self",
+			"usageMode": "SelfAction",
 			"category": "Misc",
 			"lightModifier": 3,
 			"lightColor": "240,181,65"
 		},
 		{
 			"name": "Lockpick",
-			"usageScope": "Close",
+			"usageMode": "Script",
 			"category": "Access",
 			"deselectOnUse": true,
 			"skillChance": 70,
@@ -116,7 +116,7 @@
 			"name": "Pistol",
 			"initialAmount": 6,
 			"category": "Misc",
-			"usageScope": "Projectile",
+			"usageMode": "ProjectileAction",
 			"soundTrigger": "Pistol",
 			"isDepletable": true,
 			"projectile": {
@@ -139,7 +139,7 @@
 		},
 		{
 			"name": "RustyLockpick",
-			"usageScope": "Close",
+			"usageMode": "Script",
 			"category": "Access",
 			"deselectOnUse": true,
 			"skillChance": 30
@@ -147,7 +147,7 @@
 		{
 			"name": "SodaCan",
 			"category": "Food",
-			"usageScope": "Self",
+			"usageMode": "SelfAction",
 			"isStackable": true,
 			"effects": [
 				{

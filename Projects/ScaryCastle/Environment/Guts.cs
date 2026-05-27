@@ -10,7 +10,7 @@ namespace ScaryCastle
     /// </summary>
     public class Guts : GameThing
     {
-        private readonly List<Debris> debrisList = [];
+        private readonly List<Debris> parts = [];
 
         // Constructor
         public Guts(GameSession session, bool bloodStain, int amount, Vector2 scale, IList<AtlasImage>? extraImages)
@@ -30,7 +30,7 @@ namespace ScaryCastle
                     var debris = Session.ObjectPools.Debris.Get();
                     debris.Image = Atlases.Environment.Guts[i];
                     debris.Scale = scale;
-                    debrisList.Add(debris);
+                    parts.Add(debris);
                 }
             }
 
@@ -42,7 +42,7 @@ namespace ScaryCastle
                     var debris = Session.ObjectPools.Debris.Get();
                     debris.Image = extraImages[i];
                     debris.Scale = scale;
-                    debrisList.Add(debris);
+                    parts.Add(debris);
                 }
             }
 
@@ -56,9 +56,9 @@ namespace ScaryCastle
         {
             base.OnDraw(gameTime);
 
-            for (var i = 0; i < debrisList.Count; i++)
+            for (var i = 0; i < parts.Count; i++)
             {
-                debrisList[i].Draw(gameTime);
+                parts[i].Draw(gameTime);
             }
         }
 
@@ -67,9 +67,9 @@ namespace ScaryCastle
         {
             base.OnLoad();
 
-            for (var i = 0; i < debrisList.Count; i++)
+            for (var i = 0; i < parts.Count; i++)
             {
-                debrisList[i].Launch(this);
+                parts[i].Launch(this);
                 RenderLayer = RenderLayer.OverBackground;
             }
 
@@ -81,9 +81,9 @@ namespace ScaryCastle
         {
             base.OnUpdate(gameTime);
 
-            for (var i = 0; i < debrisList.Count; i++)
+            for (var i = 0; i < parts.Count; i++)
             {
-                debrisList[i].Update(gameTime);
+                parts[i].Update(gameTime);
             }
         }
 

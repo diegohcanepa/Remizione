@@ -15,6 +15,7 @@ namespace ScaryCastle
 
         private SoundInstance? alarmSoundInstance;
         private readonly Vector2 defaultTextSize = ScaleInfo.Text.Galactus;
+        private readonly Sprite icon = new(Atlases.UI.SkullIcon) { PivotOrigin = RectanglePoint.RightTop };
         private double lastKnownValue;
         private readonly Vector2Tween scaleTween = new();
         private readonly GameSession session;
@@ -28,11 +29,13 @@ namespace ScaryCastle
         {
             this.session = session;
 
+            icon.Position = Screen.HUDArea.GetPoint(RectanglePoint.RightTop, 0, -2);
+
             // Time text
             this.timeText = new TextSprite(Fonts.CommonOutline)
             {
                 PivotOrigin = RectanglePoint.Center,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightTop, -7, 4),
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightTop, -(7 + icon.BoundingBox.Width), 5),
                 Scale = defaultTextSize,
                 Spacing = -6,
             };
@@ -84,7 +87,10 @@ namespace ScaryCastle
         protected override void OnDraw(GameTime gameTime)
         {
             if (IsRunning)
+            {
+                icon.Draw(gameTime);
                 timeText.Draw(gameTime);
+            }
         }
 
         // OnUpdate

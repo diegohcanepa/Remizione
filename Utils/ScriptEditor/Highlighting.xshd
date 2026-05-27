@@ -217,15 +217,12 @@
 			<Word>add-hole</Word>
 			<Word>add-item</Word>
 			<Word>add-light</Word>
-			<Word>add-loot-item</Word>
 			<Word>add-terrain-area</Word>
 			<Word>add-trigger-area</Word>
 			<Word>add-walk-area</Word>
-			<Word>apply-effects</Word>
 			<Word>atlas</Word>
 			<Word>attach-light</Word>
-			<Word>dizziness-effect</Word>
-			<Word>empty-inventory</Word>
+			<Word>consume-item</Word>
 			<Word>flip</Word>
 			<Word>focus-xy</Word>
 			<Word>focus</Word>
@@ -234,9 +231,7 @@
 			<Word>hide-dialog-box</Word>
 			<Word>hide-message</Word>
 			<Word>kill-all-creatures</Word>
-			<Word>lift-outcome-target</Word>
 			<Word>pickup-loot</Word>
-			<Word>player-attack</Word>
 			<Word>push-dialog</Word>
 			<Word>push-scene</Word>
 			<Word>put</Word>
@@ -256,7 +251,6 @@
 			<Word>shake</Word>
 			<Word>show-command-tip</Word>
 			<Word>show-inventory</Word>
-			<Word>show-log-message</Word>
 			<Word>show-message</Word>
 			<Word>stand</Word>
 			<Word>stop-following</Word>

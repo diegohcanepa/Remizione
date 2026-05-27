@@ -87,9 +87,9 @@ namespace ScaryCastle
                         realTarget?.TakeDamage(source, effect.DamageType, int.MaxValue, effect.ComicText, effect.GetKnockbackForce());
                         break;
 
-                    // Goo
-                    case EffectType.Goo:
-                        (realTarget as Actor)?.Goo += amount;
+                    // Energy
+                    case EffectType.Energy:
+                        (realTarget as Actor)?.Energy += amount;
                         break;
 
                     // Heal

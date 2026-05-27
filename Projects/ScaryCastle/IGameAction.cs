@@ -20,6 +20,9 @@ namespace ScaryCastle
         // EffectDescriptors
         ReadOnlyCollection<EffectDescriptor> EffectDescriptors { get; }
 
+        // EnergyCost
+        int EnergyCost { get; }
+
         // InPlaceEffectType
         InPlaceEffectType InPlaceEffectType { get; }
 
@@ -32,7 +35,7 @@ namespace ScaryCastle
         // SoundTrigger
         Sound? SoundTrigger { get; }
 
-        // UsageScope
-        ItemUsageScope UsageScope { get; }
+        // UsageMode
+        ItemUsageMode UsageMode { get; }
     }
 }

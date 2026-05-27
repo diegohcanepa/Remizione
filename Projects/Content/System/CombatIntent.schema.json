@@ -27,7 +27,7 @@
             "Contact"
           ]
         },
-        "gooCost": {
+        "energyCost": {
           "type": "integer"
         },
         "projectile": {
@@ -46,18 +46,19 @@
           "type": "string",
           "description": "Nombre del archivo de sonido a reproducir en el trigger de la accion."
         },
-        "usageScope": {
+        "usageMode": {
           "type": "string",
           "enum": [
-            "Close",
-            "InPlace",
-            "Projectile",
-            "Self"
-          ]
+            "InPlaceAction",
+            "ProjectileAction",
+            "ProximityAction",            
+            "SelfAction"
+          ],
+          "default": "ProximityAction"
         }
       },
       "required": [
-        "usageScope"
+        "usageMode"
       ]
     }
   ],

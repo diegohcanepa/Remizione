@@ -2,14 +2,14 @@
 
 namespace ScaryCastle.Scripting
 {
-    // RemoveItemCommand
+    // ConsumeItemCommand
     // Syntax: {Item}
-    internal sealed class RemoveItemCommand : NonAwaitableCommand
+    internal sealed class ConsumeItemCommand : NonAwaitableCommand
     {
         private readonly ItemDefinition definition;
 
         // Constructor
-        internal RemoveItemCommand(Script script, string source, StatementBody body)
+        internal ConsumeItemCommand(Script script, string source, StatementBody body)
             : base(script, source, body, 1)
         {
             var itemName = Parser.ParseName(this, 0);
@@ -19,15 +19,11 @@ namespace ScaryCastle.Scripting
         // OnExecute
         protected override void OnExecute()
         {
-            if (definition == null)
+            if (Session is not GameSession session || session.Player == null)
                 return;
 
-            if (Session is not GameSession session)
-                return;
-
-            var amount = Parser.ParseInt32Argument(this, AmountArg, 1);
-
-            session.PlayerInventory.Remove(definition.Name);
+            if (session.PlayerInventory.Find(definition.Name) is Item item)
+                item.Consume(session.Player);
         }
     }
 }

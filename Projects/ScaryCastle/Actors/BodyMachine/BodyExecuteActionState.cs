@@ -33,16 +33,6 @@ namespace ScaryCastle
             return false;
         }
 
-        // ResolveCloseAction
-        private void ResolveCloseAction(IGameAction action)
-        {
-            if (Target != null && CanInflictDamage(Target))
-            {
-                EffectDescriptor.Apply(action.EffectDescriptors, Owner, Target, EffectContext.Attack);
-                Owner.Session.InterruptAwaitingScript();
-            }
-        }
-
         // ResolveInPlaceAction
         private void ResolveInPlaceAction(IGameAction action)
         {
@@ -70,6 +60,16 @@ namespace ScaryCastle
                 var projectile = new Projectile(Owner.Session);
                 var pos = Owner.GetAnchoredPosition(actionPoint);
                 projectile.Launch(Owner, pos, Owner.Direction == Adberration.FacingDirection.Right ? Vector2.UnitX : -Vector2.UnitX, action.Projectile);
+            }
+        }
+
+        // ResolveProximityAction
+        private void ResolveProximityAction(IGameAction action)
+        {
+            if (Target != null && CanInflictDamage(Target))
+            {
+                EffectDescriptor.Apply(action.EffectDescriptors, Owner, Target, EffectContext.Attack);
+                Owner.Session.InterruptAwaitingScript();
             }
         }
 
@@ -125,25 +125,25 @@ namespace ScaryCastle
                 if (Action.SoundTrigger != null)
                     Owner.PlaySound(Action.SoundTrigger);
 
-                switch (Action.UsageScope)
+                switch (Action.UsageMode)
                 {
-                    // Close
-                    case ItemUsageScope.Close:
-                        ResolveCloseAction(Action);
-                        break;
-
-                    // InPlace
-                    case ItemUsageScope.InPlace:
+                    // InPlaceAction
+                    case ItemUsageMode.InPlaceAction:
                         ResolveInPlaceAction(Action);
                         break;
 
-                    // Projectile
-                    case ItemUsageScope.Projectile:
+                    // ProjectileAction
+                    case ItemUsageMode.ProjectileAction:
                         ResolveProjectileAction(Action);
                         break;
 
-                    // Self
-                    case ItemUsageScope.Self:
+                    // ProximityAction
+                    case ItemUsageMode.ProximityAction:
+                        ResolveProximityAction(Action);
+                        break;
+
+                    // SelfAction
+                    case ItemUsageMode.SelfAction:
                         ResolveSelfAction(Action);
                         break;
 

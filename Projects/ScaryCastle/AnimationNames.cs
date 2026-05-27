@@ -17,5 +17,6 @@
         internal const string StandCarry = nameof(StandCarry);
         internal const string Stun = nameof(Stun);
         internal const string Talk = nameof(Talk);
+        internal const string ThrowObject = nameof(ThrowObject);
     }
 }

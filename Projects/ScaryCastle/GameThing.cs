@@ -1078,6 +1078,10 @@ namespace ScaryCastle
             }
         }
 
+        // IgnoreKnockback
+        [ScriptProperty]
+        public bool IgnoreKnockback { get; set; }
+
         // IgnoreWalkArea
         [ScriptProperty]
         public bool IgnoreWalkArea { get; set; } = true;
@@ -1107,7 +1111,7 @@ namespace ScaryCastle
             var destX = Direction == FacingDirection.Left ? int.MaxValue : int.MinValue;
             var destination = Room.WalkArea.ClampInside(new(destX, Y));
 
-            var distanceToTarget = float.MaxValue;
+            float distanceToTarget;
             if (target.X < X)
             {
                 distanceToTarget = Vector2.Distance(target.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.RightBottom), RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.LeftBottom));
@@ -1344,7 +1348,7 @@ namespace ScaryCastle
             // ---------------------------------------------------------
             // El empuje se aplica independientemente de la vida. 
             // Una caja de metal indestructible (MaxHP=0) debería poder ser empujada.
-            if (MaxHP > 0 && knockbackForce != Vector2.Zero)
+            if (MaxHP > 0 && knockbackForce != Vector2.Zero && !IgnoreKnockback)
             {
                 knockbackForce *= attacker.GetKnockbackMultiplier(this);
 

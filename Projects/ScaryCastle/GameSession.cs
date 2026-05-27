@@ -152,16 +152,14 @@ namespace ScaryCastle
             AotTypeRegistry.Register("await-input", typeof(AwaitInputCommand));
             AotTypeRegistry.Register("await-monitor-text", typeof(AwaitMonitorTextCommand));
             AotTypeRegistry.Register("await-popup", typeof(AwaitPopupCommand));
+            AotTypeRegistry.Register("consume-item", typeof(ConsumeItemCommand));
             AotTypeRegistry.Register("create-dialog-block", typeof(CreateDialogBlockCommand));
             AotTypeRegistry.Register("ensure-session-scene", typeof(EnsureSessionSceneCommand));
             AotTypeRegistry.Register("exit-session", typeof(ExitSessionCommand));
             AotTypeRegistry.Register("if-can-pickup-loot", typeof(IfCanPickUpLootStatement));
             AotTypeRegistry.Register("if-test-skill", typeof(IfTestSkillStatement));
-            AotTypeRegistry.Register("lift-outcome-target", typeof(LiftOutcomeTargetCommand));
             AotTypeRegistry.Register("pickup-loot", typeof(PickUpLootCommand));
             AotTypeRegistry.Register("place-item", typeof(PlaceItemCommand));
-            AotTypeRegistry.Register("player-attack", typeof(PlayerAttackCommand));
-            AotTypeRegistry.Register("remove-item", typeof(RemoveItemCommand));
             AotTypeRegistry.Register("say", typeof(SayCommand));
             AotTypeRegistry.Register("select-walk-area", typeof(SelectWalkAreaCommand));
             AotTypeRegistry.Register("set-light", typeof(SetLightCommand));
@@ -479,7 +477,7 @@ namespace ScaryCastle
             {
                 PlayerInventory.Add(ItemNames.Apple);
                 PlayerInventory.Add(ItemNames.GooBottle);
-                Player?.Goo = 0;
+                Player?.Energy = 0;
             }
 
             LoadNextCorridor();
@@ -538,8 +536,8 @@ namespace ScaryCastle
             if (Player != null)
             {
                 Player.Reheal();
-                Player.MaxGoo = 3;
-                Player.Goo = 3;
+                Player.MaxEnergy = 3;
+                Player.Energy = 3;
                 Player.ClearCondition();
             }
 

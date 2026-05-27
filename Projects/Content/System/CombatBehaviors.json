@@ -9,7 +9,7 @@
         {
           "name": "Headbutt",
           "soundStart": "WhooshA",
-          "usageScope": "Close",
+          "usageMode": "ProximityAction",
           "effects": [
             {
               "context": "Attack",
@@ -28,7 +28,7 @@
       "intents": [
         {
           "name": "Contact",
-          "usageScope": "Close",
+          "usageMode": "ProximityAction",
           "effects": [
             {
               "context": "Contact",
@@ -60,7 +60,7 @@
           "name": "Contact",
           "soundTrigger": "RatAttack",
           "range": 50,
-          "usageScope": "Close",
+          "usageMode": "ProximityAction",
           "effects": [
             {
               "context": "Contact",
@@ -85,7 +85,7 @@
         {
           "name": "Contact",
           "soundTrigger": "RatAttack",
-          "usageScope": "Close",
+          "usageMode": "ProximityAction",
           "range": 50,
           "effects": [
             {
@@ -105,7 +105,7 @@
         {
           "name": "Headbutt",
           "category": "Basic",
-          "usageScope": "Close",
+          "usageMode": "ProximityAction",
           "soundTrigger": "EnviousEyeAttack",
           "range": 15,
           "effects": [
@@ -126,7 +126,7 @@
         {
           "name": "Contact",
           "soundTrigger": "RatAttack",
-          "usageScope": "Close",
+          "usageMode": "ProximityAction",
           "range": 50,
           "effects": [
             {

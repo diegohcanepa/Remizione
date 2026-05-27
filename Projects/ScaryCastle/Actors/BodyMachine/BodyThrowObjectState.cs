@@ -11,7 +11,7 @@ namespace ScaryCastle
 
         // Constructor
         public ActorThrowObjectState()
-            : base("ThrowObject", false, true)
+            : base(AnimationNames.ThrowObject, false, true)
         {
         }
 

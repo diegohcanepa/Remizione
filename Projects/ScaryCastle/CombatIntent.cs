@@ -30,10 +30,10 @@ namespace ScaryCastle
             // Contact
             this.Contact = string.Equals(Name, nameof(Contact), StringComparison.OrdinalIgnoreCase);
 
-            // GooCost
-            GooCost = element.GetInt32("gooCost", 0);
-            if (GooCost < 0)
-                GooCost = 0;
+            // EnergyCost
+            EnergyCost = element.GetInt32("energyCost", 0);
+            if (EnergyCost < 0)
+                EnergyCost = 0;
 
             // InPlaceEffectType
             InPlaceEffectType = element.GetEnum("inPlaceEffectType", InPlaceEffectType.None);
@@ -47,18 +47,18 @@ namespace ScaryCastle
             // SoundTrigger
             this.SoundTrigger = element.GetObject("soundTrigger", Sound.Get);
 
-            // UsageScope
-            UsageScope = element.GetEnum("usageScope", ItemUsageScope.Close);
+            // UsageMode
+            UsageMode = element.GetEnum("usageMode", ItemUsageMode.ProximityAction);
 
-            if (UsageScope == ItemUsageScope.Projectile && Projectile == null)
-                RaiseValidationError(this, "Items with Projectile usage scope must have a Projectile defined.", nameof(UsageScope));
+            if (UsageMode == ItemUsageMode.ProjectileAction && Projectile == null)
+                RaiseValidationError(this, "Items with Projectile usage mode must have a Projectile defined.", nameof(UsageMode));
         }
 
         #region IGameAction interface
 
         void IGameAction.Consume(Actor actor)
         {
-            actor.Goo -= GooCost;
+            actor.Energy -= EnergyCost;
         }
 
         #endregion
@@ -78,8 +78,8 @@ namespace ScaryCastle
         // InPlaceEffectType
         public InPlaceEffectType InPlaceEffectType { get; }
 
-        // GooCost
-        public int GooCost { get; }
+        // EnergyCost
+        public int EnergyCost { get; }
 
         // Projectile
         public ProjectileDescriptor? Projectile { get; }
@@ -93,7 +93,7 @@ namespace ScaryCastle
         // SoundTrigger
         public Sound? SoundTrigger { get; }
 
-        // UsageScope
-        public ItemUsageScope UsageScope { get; }
+        // UsageMode
+        public ItemUsageMode UsageMode { get; }
     }
 }

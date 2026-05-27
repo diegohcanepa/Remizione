@@ -54,7 +54,7 @@ namespace ScaryCastle
     public enum EffectContext { Contact, Attack, Update, Use, ProjectileHit }
 
     // EffectType
-    public enum EffectType { None, Condition, ComicText, Damage, Death, Goo, Heal }
+    public enum EffectType { None, Condition, ComicText, Damage, Death, Energy, Heal }
 
     // EffectTarget
     public enum EffectTarget { Target, Self }
@@ -86,8 +86,8 @@ namespace ScaryCastle
     // ItemProperty
     public enum ItemProperty { Chance, Durability, Health }
 
-    // ItemUsageScope
-    public enum ItemUsageScope { Close, InPlace, Projectile, Self }
+    // ItemUsageMode
+    public enum ItemUsageMode { Script, ProximityAction, InPlaceAction, ProjectileAction, SelfAction }
 
     // KnockbackIntensity
     public enum KnockbackIntensity { Low, Medium, High }

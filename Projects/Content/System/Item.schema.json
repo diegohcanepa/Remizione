@@ -53,7 +53,7 @@
             "isStackable": {
               "type": "boolean"
             },
-            "gooCost": {
+            "energyCost": {
               "type": "integer"
             },
             "initialAmount": {
@@ -99,18 +99,20 @@
               "type": "string",
               "description": "Nombre del archivo de sonido a reproducir en el trigger de la accion."
             },
-            "usageScope": {
+            "usageMode": {
               "type": "string",
               "enum": [
-                "Close",
-                "InPlace",
-                "Projectile",
-                "Self"
-              ]
+                "InPlaceAction",
+                "ProjectileAction",
+                "ProximityAction",
+                "Script",
+                "SelfAction"
+              ],
+              "default": "Script"
             }
           },
           "required": [
-            "usageScope"
+            "usageMode"
           ]          
         }
       ],

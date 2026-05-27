@@ -64,14 +64,14 @@ namespace ScaryCastle
             if (Actor == null)
                 return;
 
-            for (var i = 0; i < Actor.MaxGoo; i++)
+            for (var i = 0; i < Actor.MaxEnergy; i++)
             {
                 icons[i].RenderImage = Atlases.UI.GooIcons[0];
             }
 
             var delay = 0;
-            var animationCount = Actor.Goo - lastKnownValue;
-            for (var i = Actor.Goo - 1; i >= 0; i--)
+            var animationCount = Actor.Energy - lastKnownValue;
+            for (var i = Actor.Energy - 1; i >= 0; i--)
             {
                 if (animationCount > 0)
                 {
@@ -83,8 +83,8 @@ namespace ScaryCastle
                 icons[i].RenderImage = Atlases.UI.GooIcons[1];
             }
 
-            lastKnownValue = Actor.Goo;
-            lastKnownMaxValue = Actor.MaxGoo;
+            lastKnownValue = Actor.Energy;
+            lastKnownMaxValue = Actor.MaxEnergy;
         }
 
         #endregion
@@ -97,7 +97,7 @@ namespace ScaryCastle
             if (Actor == null)
                 return;
 
-            for (var i = 0; i < Actor.MaxGoo; i++)
+            for (var i = 0; i < Actor.MaxEnergy; i++)
             {
                 icons[i].Draw(gameTime);
             }
@@ -109,12 +109,12 @@ namespace ScaryCastle
             if (Actor == null)
                 return;
 
-            for (var i = 0; i < Actor.MaxGoo; i++)
+            for (var i = 0; i < Actor.MaxEnergy; i++)
             {
                 icons[i].Update(gameTime);
             }
 
-            if (lastKnownValue != Actor.Goo || lastKnownMaxValue != Actor.MaxGoo)
+            if (lastKnownValue != Actor.Energy || lastKnownMaxValue != Actor.MaxEnergy)
                 Refresh();
         }
 

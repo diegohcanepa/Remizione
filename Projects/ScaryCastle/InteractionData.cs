@@ -25,7 +25,6 @@ namespace ScaryCastle
         // Clear
         public void Clear()
         {
-            IsAttack = false;
             combatIntent = null;
             liftProp = null;
             item = null;
@@ -63,17 +62,7 @@ namespace ScaryCastle
                         session.Player.FaceTo(target);
 
                         if (script != null)
-                        {
-                            if (IsAttack)
-                            {
-                                if (session.Player.DefaultCombatIntent != null)
-                                    session.Player.ExecuteAction(session.Player.DefaultCombatIntent, target);
-                            }
-                            else
-                            {
-                                session.BeginOutcome(script, target);
-                            }
-                        }
+                            session.BeginOutcome(script, target);
                     }
                 }
             }
@@ -86,7 +75,7 @@ namespace ScaryCastle
         }
 
         // IsAttack
-        public bool IsAttack { get; private set; }
+        public bool IsAttack => combatIntent != null;
 
         // Update
         public void Update(InteractionContext context)
@@ -96,14 +85,14 @@ namespace ScaryCastle
             if (context.Target == null)
                 return;
 
-            if (context.HeldItem != null)
+            if (context.HeldItem != null && context.Target.Cursor == MouseCursorState.Cross)
             {
                 if (context.Session.Player == context.Target)
                 {
-                    if (context.HeldItem.Definition.UsageScope is ItemUsageScope.Projectile or ItemUsageScope.Close)
+                    if (context.HeldItem.Definition.UsageMode is ItemUsageMode.ProjectileAction or ItemUsageMode.ProximityAction)
                         return;
                 }
-                else if (context.HeldItem.Definition.UsageScope == ItemUsageScope.Self)
+                else if (context.HeldItem.Definition.UsageMode == ItemUsageMode.SelfAction)
                 {
                     return;
                 }
@@ -124,10 +113,7 @@ namespace ScaryCastle
                 else if (context.Target.Faction == Faction.Evil)
                 {
                     if (context.Session.Player?.DefaultCombatIntent is CombatIntent combatIntent)
-                    {
-                        this.IsAttack = true;
                         this.combatIntent = combatIntent;
-                    }
                 }
 
                 else
@@ -143,10 +129,17 @@ namespace ScaryCastle
                 }
                 else
                 {
-                    this.item = context.HeldItem;
-                    if (target.Session.ScriptLibrary.FindOutcomeOverload(target.DeclaredName, item.Name) is Script script)
+                    if (context.HeldItem.Definition.UsageMode == ItemUsageMode.Script)
                     {
-                        this.script = script;
+                        if (target.Session.ScriptLibrary.FindOutcomeOverload(target.DeclaredName, context.HeldItem.Name) is Script script)
+                        {
+                            this.script = script;
+                            this.item = context.HeldItem;
+                        }
+                    }
+                    else if (context.HeldItem.Definition.UsageMode == ItemUsageMode.ProximityAction)
+                    {
+                        this.item = context.HeldItem;
                     }
                 }
             }

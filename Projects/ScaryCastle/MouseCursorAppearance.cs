@@ -21,7 +21,7 @@ namespace ScaryCastle
         // RefreshCursor
         private static void RefreshCursor(InteractionContext context)
         {
-            if (context.HeldItem?.Definition.UsageScope == ItemUsageScope.Projectile)
+            if (context.HeldItem?.Definition.UsageMode == ItemUsageMode.ProjectileAction)
             {
                 if (context.Session.Player != null)
                 {
@@ -115,7 +115,7 @@ namespace ScaryCastle
                 MouseCursor.IsEnabled = context.Session.Player?.ActiveThrowable == null;
                 MouseCursor.HightlightColor = ColorPalette.MouseCursor.HighlightWhite;
 
-                if (context.Session.Player != null && context.HeldItem?.Definition.UsageScope == ItemUsageScope.Projectile)
+                if (context.Session.Player != null && context.HeldItem?.Definition.UsageMode == ItemUsageMode.ProjectileAction)
                 {
                     var mousePos = InputManager.DefaultPlayer.Mouse.WorldPosition(context.Session.Camera);
                     MouseCursor.FlipCustomImage = mousePos.X < context.Session.Player.X;
