@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Engendro
 {
@@ -42,7 +43,7 @@ namespace Engendro
         // ToString
         public override string ToString()
         {
-            return Value.ToString();
+            return Value.ToString(CultureInfo.CurrentCulture);
         }
 
         // Value

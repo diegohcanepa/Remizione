@@ -405,7 +405,7 @@ namespace Adberration
         }
 
         // SerializeEntities
-        private static string SerializeEntities(IList<Thing> things)
+        private static string SerializeEntities(Entity.ChildCollection things)
         {
             List<string> list = [];
 
@@ -958,7 +958,6 @@ namespace Adberration
 
             return new FlagCondition(expressions);
         }
-
 
         // CreateThingClone
         public Thing CreateThingClone(string declaredName, string instanceName)

@@ -3,9 +3,9 @@
 namespace ScaryCastle
 {
     /// <summary>
-    /// GameActionProcessor
+    /// ActionProcessor
     /// </summary>
-    public static class GameActionProcessor
+    public static class ActionProcessor
     {
         // Apply
         public static void Apply(IAction gameAction, GameThing source, GameThing? target, EffectContext context)

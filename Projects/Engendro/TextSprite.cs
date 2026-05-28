@@ -103,7 +103,7 @@ namespace Engendro
             // Ajuste del punto final si es necesario
             if (processedText != null && HideEndingPeriod && processedText.EndsWith('.'))
             {
-                processedText = processedText.Substring(0, processedText.Length - 1);
+                processedText = processedText[..^1];
             }
 
             // FIX: Null Coalescing para asegurar que _formattedText nunca sea null

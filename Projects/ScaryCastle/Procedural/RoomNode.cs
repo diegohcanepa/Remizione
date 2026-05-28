@@ -49,7 +49,7 @@ namespace ScaryCastle
         // Down
         public RoomNode? Down
         {
-            get => field;
+            get;
             set
             {
                 field = value;
@@ -126,7 +126,7 @@ namespace ScaryCastle
         // Left
         public RoomNode? Left
         {
-            get => field;
+            get;
             set
             {
                 field = value;
@@ -140,7 +140,7 @@ namespace ScaryCastle
         // Right
         public RoomNode? Right
         {
-            get => field;
+            get;
             set
             {
                 field = value;
@@ -163,7 +163,7 @@ namespace ScaryCastle
         // Up
         public RoomNode? Up
         {
-            get => field;
+            get;
             set
             {
                 field = value;

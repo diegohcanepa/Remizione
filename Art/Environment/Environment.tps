@@ -541,21 +541,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Environment-assets/PistolBullet.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,0,1,1</rect>
-                <key>scale9Paddings</key>
-                <rect>1,0,1,1</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Environment-assets/ShadowSpot10.png</key>
             <key type="filename">Environment-assets/ShadowSpot11.png</key>
             <struct type="IndividualSpriteSettings">
@@ -851,6 +836,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Projectiles-assets/PistolBullet.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,0,3,1</rect>
+                <key>scale9Paddings</key>
+                <rect>2,0,3,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Sign-assets/Sign.png</key>
             <key type="filename">Sign-assets/SignShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -934,6 +934,7 @@
                     <filename>ComicTexts-assets</filename>
                     <filename>DevilHand-assets</filename>
                     <filename>GodHand-assets</filename>
+                    <filename>Projectiles-assets</filename>
                 </array>
             </struct>
         </map>

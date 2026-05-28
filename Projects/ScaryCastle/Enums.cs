@@ -2,9 +2,6 @@
 
 namespace ScaryCastle
 {
-    // ActorDirection
-    public enum ActorDirection { Down, Up }
-
     // ApproachBehavior
     public enum ApproachBehavior
     {
@@ -44,9 +41,6 @@ namespace ScaryCastle
     // Difficulty
     public enum Difficulty { Easy, Normal, Hard }
 
-    // DoorStyle
-    public enum DoorStyle { Wooden, Gate }
-
     // DustParticleKind
     public enum DustParticleKind { None, Dust, Ash }
 
@@ -77,14 +71,8 @@ namespace ScaryCastle
     // InPlaceEffectType
     public enum InPlaceEffectType { None, Lightning }
 
-    // Intensity
-    public enum Intensity { Low, Medium, High }
-
     // ItemCategory
     public enum ItemCategory { Access, Explosive, Food, Luck, Medicine, Misc, Money, Sacred }
-
-    // ItemProperty
-    public enum ItemProperty { Chance, Durability, Health }
 
     // ItemUsageMode
     public enum ItemUsageMode { Script, ProximityAction, InPlaceAction, ProjectileAction, SelfAction }
@@ -123,9 +111,6 @@ namespace ScaryCastle
 
     // MenuItemName
     public enum MenuItemName { Options, Resume, Start, Exit, ExitToMainMenu, Yes, No, Cancel, Accept, Credits, WishlistNow, Memoirs }
-
-    // Message
-    public enum Message { None }
 
     // MessageBoxOptions
     [Flags]

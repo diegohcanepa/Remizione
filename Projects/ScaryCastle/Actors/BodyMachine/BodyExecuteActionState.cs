@@ -57,7 +57,7 @@ namespace ScaryCastle
 
             if (Owner.AnimationPlayer.Frame?.SpawnPoint is Vector2 actionPoint && actionPoint != Vector2.Zero)
             {
-                var projectile = new Projectile(Owner.Session);
+                var projectile = Owner.Session.ObjectPools.Projectiles.Get();
                 var pos = Owner.GetAnchoredPosition(actionPoint);
                 projectile.Launch(Owner, pos, Owner.Direction == Adberration.FacingDirection.Right ? Vector2.UnitX : -Vector2.UnitX, action.Projectile);
             }
@@ -76,7 +76,7 @@ namespace ScaryCastle
         // ResolveSelfAction
         private void ResolveSelfAction(IAction action)
         {
-            GameActionProcessor.Apply(action, Owner, null, EffectContext.Use);
+            ActionProcessor.Apply(action, Owner, null, EffectContext.Use);
         }
 
         #endregion

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:46d0ef5285d2f39efa93e7177481fa4b:770f9553257fba52dfc0e843c0a04d58:90dd61259f597836213851943cf8b193$ -->
+<!-- $TexturePacker:SmartUpdate:f034158b449a594672e1fa10b874f144:f60c5c36d55ec91b77a22e4c64b2851d:90dd61259f597836213851943cf8b193$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -26,9 +26,9 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="BiblePiece3.png" x="348" y="907" w="4" h="3"/>
     <sprite n="BiblePiece4.png" x="264" y="941" w="3" h="3"/>
     <sprite n="BiblePiece5.png" x="264" y="951" w="3" h="2"/>
-    <sprite n="BiblePiece6.png" x="286" y="892" w="1" h="1"/>
-    <sprite n="BiblePiece7.png" x="289" y="892" w="1" h="1"/>
-    <sprite n="BiblePiece8.png" x="286" y="892" w="1" h="1"/>
+    <sprite n="BiblePiece6.png" x="292" y="892" w="1" h="1"/>
+    <sprite n="BiblePiece7.png" x="295" y="892" w="1" h="1"/>
+    <sprite n="BiblePiece8.png" x="292" y="892" w="1" h="1"/>
     <sprite n="BiblePiece9.png" x="326" y="959" w="4" h="5"/>
     <sprite n="BiblePiece10.png" x="311" y="960" w="6" h="5"/>
     <sprite n="BibleShadow.png" x="413" y="891" w="6" h="8"/>
@@ -98,7 +98,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="LightningLight.png" x="545" y="858" w="266" h="158"/>
     <sprite n="NumberSix01.png" x="241" y="889" w="16" h="26"/>
     <sprite n="NumberSix02.png" x="259" y="889" w="16" h="26"/>
-    <sprite n="PistolBullet.png" x="282" y="892" w="2" h="1"/>
+    <sprite n="PistolBullet.png" x="282" y="892" w="8" h="1"/>
     <sprite n="PotteryA.png" x="264" y="967" w="12" h="7"/>
     <sprite n="PotteryB.png" x="351" y="919" w="12" h="12"/>
     <sprite n="PotteryB_Cracked.png" x="351" y="933" w="12" h="12"/>

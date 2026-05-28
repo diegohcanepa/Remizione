@@ -69,7 +69,7 @@ namespace ScaryCastle
             {
                 Color = ColorPalette.Text.Sentence,
                 Opacity = .7f,
-                MaximumWidth = 130,
+                MaximumWidth = 120,
                 PauseOnPunctuationMarks = false,
                 PivotOrigin = RectanglePoint.LeftTop,
                 Position = container.BoundingBox.GetPoint(RectanglePoint.LeftTop, 6, 23),

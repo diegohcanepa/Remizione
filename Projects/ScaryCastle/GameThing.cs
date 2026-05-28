@@ -107,10 +107,10 @@ namespace ScaryCastle
         }
 
         // InLineOfSight
-        bool IHoleArea.InLineOfSight(Vector2 start, Vector2 end)
+        bool IHoleArea.InLineOfSight(Vector2 origin, Vector2 destination)
         {
             InvalidateCollisionPolygons();
-            return holePoly.InLineOfSight(start, end);
+            return holePoly.InLineOfSight(origin, destination);
         }
 
         // IsActive

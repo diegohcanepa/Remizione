@@ -105,7 +105,7 @@ namespace ScaryCastle
             foreach (var option in dialogBlock.AvailableOptions)
             {
                 var optionText = option.Text;
-                var menuOption = menu.AddOption(option.Id.ToString(), optionText, image);
+                var menuOption = menu.AddOption(option.Id.ToString(CultureInfo.InvariantCulture), optionText, image);
                 menuOption.IconOffset = new(0, -1);
             }
 

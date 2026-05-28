@@ -23,7 +23,7 @@ namespace ScaryCastle
         bool Contains(Vector2 point);
 
         // InLineOfSight
-        bool InLineOfSight(Vector2 start, Vector2 end);
+        bool InLineOfSight(Vector2 origin, Vector2 destination);
 
         // IsActive
         bool IsActive { get; }

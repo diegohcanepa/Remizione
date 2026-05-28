@@ -153,7 +153,7 @@ namespace Adberration
             else if (e.Key == Keys.Back)
             {
                 if (inputText.Length > 0)
-                    inputText = inputText.Remove(inputText.Length - 1);
+                    inputText = inputText[..^1];
             }
             else if (e.Key == Keys.Enter)
             {

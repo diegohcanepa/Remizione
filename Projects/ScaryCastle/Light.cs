@@ -230,7 +230,6 @@ namespace ScaryCastle
             {
                 if (IsFlashing && !flashBlinker.CurrentValue)
                     return false;
-
                 else
                     return lightSprite.Opacity > 0 || (opacityTween.IsRunning && opacityTween.EndValue > opacityTween.StartValue);
             }

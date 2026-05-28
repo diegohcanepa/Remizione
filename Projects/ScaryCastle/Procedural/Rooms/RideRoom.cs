@@ -193,5 +193,18 @@ namespace ScaryCastle
 
             return Vector2.Zero;
         }
+
+        // SpawnGoo
+        public void SpawnGoo()
+        {
+            if (WalkArea != null)
+            {
+                if (CreateThingClone<Goo>("Goo") is Goo goo)
+                {
+                    goo.Position = WalkArea.RandomWalkablePoint(10);
+                    Children.Add(goo);
+                }
+            }
+        }
     }
 }

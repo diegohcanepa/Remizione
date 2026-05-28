@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace ScaryCastle
@@ -10,14 +11,20 @@ namespace ScaryCastle
     /// </summary>
     public sealed class Projectile : GameThing
     {
+        #region Private fields
+
         private Vector2 direction;
         private readonly List<EffectDescriptor> effects = [];
         private GameThing? emitter;
         private float gravity;
+        private bool impactDone;
+        private readonly ParticlePopEffect particles = new();
         private Sound? ricochetSound;
         private RectangleF roomBounds;
         private ProjectileTrajectoryType trajectory;
         private float yVelocity;
+
+        #endregion
 
         // Constructor
         public Projectile(GameSession session)
@@ -38,18 +45,20 @@ namespace ScaryCastle
                 if (Room.Children[i] is not GameThing thing || thing == this || thing == this.emitter || !thing.CanBeHit || thing.Hotspot.IsEmpty)
                     continue;
 
-                if (thing.RuntimeHotspot.BoundingRectangleF.Intersects(from, to))
+                if (!thing.IsDead && thing.IsInViewport)
                 {
-                    if (effects != null)
-                        EffectDescriptor.Apply(effects, this, thing, EffectContext.ProjectileHit);
-                    Destroy();
-                    return true;
+                    if (thing.RuntimeHotspot.BoundingRectangleF.Intersects(from, to))
+                    {
+                        if (effects != null)
+                            EffectDescriptor.Apply(effects, this, thing, EffectContext.ProjectileHit);
+                        Impact();
+                        return true;
+                    }
                 }
             }
 
             return false;
         }
-
 
         // CheckWallImpact
         private bool CheckWallImpact(Vector2 position)
@@ -64,7 +73,7 @@ namespace ScaryCastle
                     if (ricochetSound != null)
                         PlaySound(ricochetSound);
 
-                    Destroy();
+                    Impact();
                     return true;
                 }
             }
@@ -78,6 +87,14 @@ namespace ScaryCastle
             this.effects.Clear();
             this.emitter = null;
             Unparent();
+            Session.ObjectPools.Projectiles.Return(this);
+        }
+
+        // Impact
+        private void Impact()
+        {
+            particles.Spawn(this.Position, Color.Gray);
+            impactDone = true;
         }
 
         #endregion
@@ -87,7 +104,10 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            base.OnDraw(gameTime);
+            if (particles.IsActive)
+                particles.Draw(gameTime);
+            else if (!impactDone)
+                base.OnDraw(gameTime);
         }
 
         // OnUpdate
@@ -96,7 +116,22 @@ namespace ScaryCastle
             base.OnUpdate(gameTime);
 
             // Si por alguna razón la entidad ya se destruyó en este frame, abortamos inmediatamente
-            if (Room == null) return;
+            if (Room == null)
+                return;
+
+            if (impactDone)
+            {
+                if (particles.IsActive)
+                {
+                    particles.Update(gameTime);
+                }
+                else
+                {
+                    Destroy();
+                }
+
+                return;
+            }
 
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             Vector2 previousPosition = this.Position;
@@ -127,15 +162,11 @@ namespace ScaryCastle
             // 3. Verificación de impactos ambientales (Paredes) PRIMERO
             // Si la posición futura se metió en una pared, muere acá y no procesa daño a entidades ocultas
             if (CheckWallImpact(nextPosition))
-            {
                 return;
-            }
 
             // 4. Verificación de impactos contra entidades usando el barrido anti-tunneling
             if (CheckImpacts(previousPosition, nextPosition))
-            {
                 return;
-            }
 
             // 5. Si no chocó con nada, aplicamos el movimiento real de forma segura
             this.Position = nextPosition;
@@ -149,6 +180,8 @@ namespace ScaryCastle
             if (emitter.Room == null)
                 return;
 
+            Sprite.ClearAnimations();
+
             this.Atlas = Atlases.Environment;
             this.emitter = emitter;
             this.trajectory = descriptor.Trajectory;
@@ -159,6 +192,7 @@ namespace ScaryCastle
             this.gravity = descriptor.Gravity;
             this.roomBounds = emitter.Room.BoundingBox;
             this.ricochetSound = descriptor.RicochetSound;
+            this.impactDone = false;
 
             var anim = AddAnimation("Default");
             anim.AddFrame("PistolBullet", 1000);

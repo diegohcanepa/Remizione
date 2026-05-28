@@ -29,9 +29,6 @@ namespace ScaryCastle.Scripting
         // OnExecute
         protected override void OnExecute()
         {
-            if (Session is not GameSession session)
-                return;
-
             source = AssertEntity<Actor>(0);
             if (source == null || !source.IsInCurrentRoom || !source.CanMove)
                 return;

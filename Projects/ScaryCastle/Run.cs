@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using System;
+using System.Collections.Generic;
 
 namespace ScaryCastle
 {
@@ -130,6 +131,34 @@ namespace ScaryCastle
             }
         }
 
+        // SpawnGoo
+        private void SpawnGoo()
+        {
+            if (CurrentCorridor == null)
+                return;
+
+            var roomList = new List<RideRoom>();
+            foreach (var node in CurrentCorridor.GetAllNodes())
+            {
+                if (node.RideRoom != null)
+                    roomList.Add(node.RideRoom);
+            }
+
+            if (roomList.Count == 0)
+                return;
+
+            // Calculamos una chance que decrece con la intensidad. 
+            // Al principio (Intensity 0): 85% de chance.
+            // Al final (Intensity 1): 20% de chance (Un milagro absoluto).
+            float spawnChance = float.Lerp(.85f, .20f, this.Intensity);
+
+            if (Random.Shared.NextDouble() <= spawnChance)
+            {
+                int luckyRoomIndex = Random.Shared.Next(0, roomList.Count);
+                roomList[luckyRoomIndex].SpawnGoo();
+            }
+        }
+
         #endregion
 
         // CorridorIndex
@@ -195,6 +224,8 @@ namespace ScaryCastle
             {
                 roomNode.RideRoom.Load();
             }
+
+            SpawnGoo();
 
             return true;
         }

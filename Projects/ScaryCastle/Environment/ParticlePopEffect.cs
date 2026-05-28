@@ -15,31 +15,7 @@ namespace ScaryCastle
 
         private Color color;
         private readonly List<Particle> particles = [];
-        private readonly Texture2D pixel;
-        private static readonly ObjectPool<Particle> pool = new(() => new Particle(), 100, 50);
-        private static readonly Random random = new();
-
-        #endregion
-
-        // Constructor
-        public ParticlePopEffect()
-        {
-            pixel = new Texture2D(Game.GraphicsDevice, 1, 1);
-            pixel.SetData([Color.White]);
-        }
-
-        #region Private members
-
-        // CleanUp
-        private void CleanUp()
-        {
-            for (var i = 0; i < particles.Count; i++)
-            {
-                pool.Return(particles[i]);
-            }
-
-            particles.Clear();
-        }
+        private AtlasImage renderImage = Atlases.UI.Pixel;
 
         #endregion
 
@@ -51,7 +27,8 @@ namespace ScaryCastle
             foreach (var p in particles)
             {
                 float alpha = MathHelper.Clamp(p.Life / p.MaxLife, 0f, 1f);
-                Game.SpriteBatch.Draw(pixel, p.Position, null, color * alpha, 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
+                var origin = new Vector2(renderImage.TextureArea.Width / 2, renderImage.TextureArea.Height / 2);
+                Game.SpriteBatch.Draw(renderImage.Atlas.Texture, p.Position, renderImage.TextureArea, color * alpha, 0, origin, Scale, SpriteEffects.None, 0);
             }
         }
 
@@ -67,7 +44,6 @@ namespace ScaryCastle
                 if (p.Life <= 0)
                 {
                     particles.RemoveAt(i);
-                    pool.Return(p);
                 }
                 else
                 {
@@ -81,55 +57,54 @@ namespace ScaryCastle
         #endregion
 
         // BurstSize
-        public Int32Range BurstSize { get; init; } = new(3, 6);
+        public Int32Range BurstSize { get; set; } = new(3, 6);
 
         // Gravity
-        public float Gravity { get; init; } = 150;
+        public float Gravity { get; set; } = 150;
 
         // HorizontalSpeed
-        public float HorizontalSpeed { get; init; } = 30;
+        public float HorizontalSpeed { get; set; } = 30;
 
         // IsActive
         public bool IsActive => particles.Count > 0;
 
         // ParticleLifetime
-        public float ParticleLifetime { get; init; } = .25f;
+        public float ParticleLifetime { get; set; } = .25f;
 
         // Scale
-        public float Scale { get; init; } = 1;
+        public float Scale { get; set; } = 1;
 
         // Spawn
         public void Spawn(Vector2 position, Color splashColor)
         {
-            CleanUp();
+            particles.Clear();
 
             color = splashColor;
             int count = BurstSize.GetRandomValue(Random.Shared);
 
             for (int i = 0; i < count; i++)
             {
-                if (pool.Get() is Particle particle)
-                {
-                    float vx = (float)((random.NextDouble() * 2) - 1) * HorizontalSpeed;
-                    float vy = -(float)((random.NextDouble() * VerticalSpeed.Delta) + VerticalSpeed.Minimum);
+                var particle = new Particle();
 
-                    particle.Position = position;
-                    particle.Velocity = new Vector2(vx, vy);
-                    particle.Life = ParticleLifetime;
-                    particle.MaxLife = ParticleLifetime;
+                float vx = (float)((Random.Shared.NextDouble() * 2) - 1) * HorizontalSpeed;
+                float vy = -(float)((Random.Shared.NextDouble() * VerticalSpeed.Delta) + VerticalSpeed.Minimum);
 
-                    particles.Add(particle);
-                }
+                particle.Position = position;
+                particle.Velocity = new Vector2(vx, vy);
+                particle.Life = ParticleLifetime;
+                particle.MaxLife = ParticleLifetime;
+
+                particles.Add(particle);
             }
         }
 
         // VerticalSpeed
-        public FloatRange VerticalSpeed { get; init; } = new(25, 35);
+        public FloatRange VerticalSpeed { get; set; } = new(25, 35);
 
         /// <summary>
         /// Particle
         /// </summary>
-        private sealed class Particle
+        private struct Particle
         {
             public float Life;
             public float MaxLife;

@@ -73,7 +73,7 @@ namespace ScaryCastle
         }
 
         // RollGateEvent
-        private GateEventType RollGateEvent(Difficulty roomDiff)
+        private static GateEventType RollGateEvent(Difficulty roomDiff)
         {
             // Tiramos un dado del 1 al 100
             int roll = Random.Shared.Next(1, 101);

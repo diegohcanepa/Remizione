@@ -26,8 +26,6 @@ namespace ScaryCastle.Scripting
             if (Session is not GameSession session)
                 return;
 
-            var amount = Parser.ParseInt32Argument(this, AmountArg, 1);
-
             session.PlayerInventory.Add(definition.Name);
         }
     }

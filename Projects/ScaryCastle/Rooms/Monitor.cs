@@ -104,7 +104,7 @@ namespace ScaryCastle
         #endregion
 
         // IsTypingText
-        public bool IsTypingText => lineIndex < 0 ? false : lines[lineIndex].IsTyping;
+        public bool IsTypingText => lineIndex >= 0 && lines[lineIndex].IsTyping;
 
         // TypeText
         public void TypeText(string text, bool fast, bool color)

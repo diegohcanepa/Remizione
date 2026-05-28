@@ -36,7 +36,7 @@ namespace ScaryCastle
                 RenderLayer = RenderLayer.Default;
                 Position = Target.Position;
                 OnExecute();
-                GameActionProcessor.Apply(Action, this, Target, EffectContext.Attack);
+                ActionProcessor.Apply(Action, this, Target, EffectContext.Attack);
                 return;
             }
 

@@ -64,11 +64,9 @@ namespace ScaryCastle
             }
 
 
-            using (FileStream output = new(path, FileMode.Create, FileAccess.Write))
-            {
-                input.CopyTo(output);
-                output.Flush();
-            }
+            using FileStream output = new(path, FileMode.Create, FileAccess.Write);
+            input.CopyTo(output);
+            output.Flush();
 
             return true;
         }

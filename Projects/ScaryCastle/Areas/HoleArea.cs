@@ -77,9 +77,9 @@ namespace ScaryCastle
         }
 
         // InLineOfSight
-        public bool InLineOfSight(Vector2 start, Vector2 end)
+        public bool InLineOfSight(Vector2 origin, Vector2 destination)
         {
-            return Polygon.InLineOfSight(start, end);
+            return Polygon.InLineOfSight(origin, destination);
         }
 
         // WalkArea

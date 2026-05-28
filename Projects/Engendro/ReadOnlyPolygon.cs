@@ -380,14 +380,14 @@ namespace Engendro
         }
 
         // InLineOfSight
-        public bool InLineOfSight(Vector2 start, Vector2 end)
+        public bool InLineOfSight(Vector2 origin, Vector2 destination)
         {
-            if ((start - end).LengthSquared() < float.Epsilon)
+            if ((origin - destination).LengthSquared() < float.Epsilon)
                 return true;
 
             for (var i = 0; i < Vertices.Count; i++)
             {
-                if (Geometry.LineSegmentsCross(start, end, Vertices[i], Vertices[(i + 1) % Vertices.Count]))
+                if (Geometry.LineSegmentsCross(origin, destination, Vertices[i], Vertices[(i + 1) % Vertices.Count]))
                     return false;
             }
 
