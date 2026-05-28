@@ -8,7 +8,7 @@ namespace ScaryCastle
     /// <summary>
     /// Item
     /// </summary>
-    public sealed class Item : IGameAction
+    public sealed class Item : IAction
     {
         #region Private fields
 
@@ -29,25 +29,25 @@ namespace ScaryCastle
 
         #endregion
 
-        #region IGameAction interface
+        #region IAction interface
 
-        string IGameAction.AnimationName => Definition.AnimationName;
+        string IAction.AnimationName => Definition.AnimationName;
 
-        int IGameAction.AreaOfEffect => Definition.AreaOfEffect;
+        int IAction.AreaOfEffect => Definition.AreaOfEffect;
 
-        ReadOnlyCollection<EffectDescriptor> IGameAction.EffectDescriptors => Definition.EffectDescriptors;
+        ReadOnlyCollection<EffectDescriptor> IAction.EffectDescriptors => Definition.EffectDescriptors;
 
-        int IGameAction.EnergyCost => Definition.EnergyCost;
+        int IAction.EnergyCost => Definition.EnergyCost;
 
-        InPlaceEffectType IGameAction.InPlaceEffectType => Definition.InPlaceEffectType;
+        InPlaceEffectType IAction.InPlaceEffectType => Definition.InPlaceEffectType;
 
-        ProjectileDescriptor? IGameAction.Projectile => Definition.Projectile;
+        ProjectileDescriptor? IAction.Projectile => Definition.Projectile;
 
-        Sound? IGameAction.SoundStart => Definition.SoundStart;
+        Sound? IAction.SoundStart => Definition.SoundStart;
 
-        Sound? IGameAction.SoundTrigger => Definition.SoundTrigger;
+        Sound? IAction.SoundTrigger => Definition.SoundTrigger;
 
-        ItemUsageMode IGameAction.UsageMode => Definition.UsageMode;
+        ItemUsageMode IAction.UsageMode => Definition.UsageMode;
 
 
         #endregion

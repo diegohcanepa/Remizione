@@ -10,7 +10,7 @@ namespace ScaryCastle
         private bool done;
 
         // Constructor
-        protected Invocation(IGameAction action, GameThing target)
+        protected Invocation(IAction action, GameThing target)
             : base(target.Session, string.Empty)
         {
             this.Action = action;
@@ -49,7 +49,7 @@ namespace ScaryCastle
         #endregion
 
         // Action
-        public IGameAction Action { get; }
+        public IAction Action { get; }
 
         // Target
         public GameThing Target { get; }

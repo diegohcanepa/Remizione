@@ -740,7 +740,7 @@ namespace ScaryCastle
         }
 
         // ExecuteAction
-        public void ExecuteAction(IGameAction action, GameThing? target)
+        public void ExecuteAction(IAction action, GameThing? target)
         {
             if (IsDead)
                 return;

@@ -103,7 +103,7 @@ namespace ScaryCastle
             depth = owner.Depth + .01f;
 
             this.Position = owner.GetActiveThrowablePosition() ?? Vector2.Zero;
-            this.floorY = owner.Y - (BoundingBox.Height / 2);
+            this.floorY = owner.Y;
 
             if (drop)
             {

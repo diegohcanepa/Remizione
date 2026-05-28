@@ -4,9 +4,9 @@ using System.Collections.ObjectModel;
 namespace ScaryCastle
 {
     /// <summary>
-    /// IGameAction
+    /// IAction
     /// </summary>
-    public interface IGameAction
+    public interface IAction
     {
         // AnimationName
         string AnimationName { get; }

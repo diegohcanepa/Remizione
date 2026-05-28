@@ -8,7 +8,7 @@ namespace ScaryCastle
     public static class GameActionProcessor
     {
         // Apply
-        public static void Apply(IGameAction gameAction, GameThing source, GameThing? target, EffectContext context)
+        public static void Apply(IAction gameAction, GameThing source, GameThing? target, EffectContext context)
         {
             // Play sound
             if (gameAction.SoundTrigger != null)

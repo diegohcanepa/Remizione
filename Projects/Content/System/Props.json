@@ -6,6 +6,14 @@
       "dropCoinChanceBonus": 0.5,
       "dropMode": "CoinsOnly",
       "tags": "Pottery",
+      "effects": [
+        {
+          "context": "Contact",
+          "effectType": "Damage",
+          "amount": "6",
+          "comicText": "CrackYellow"
+        }
+      ],      
       "placements": [
         "Floor"
       ]
@@ -15,6 +23,14 @@
       "dropCoinChanceBonus": 0.25,
       "dropSackChanceBonus": 0.25,
       "tags": "Pottery",
+      "effects": [
+        {
+          "context": "Contact",
+          "effectType": "Damage",
+          "amount": "6",
+          "comicText": "CrackYellow"
+        }
+      ],      
       "placements": [
         "Floor"
       ]
@@ -60,7 +76,7 @@
         {
           "context": "Contact",
           "effectType": "Damage",
-          "amount": "1",
+          "amount": "6",
           "comicText": "Kapow"
         }
       ],      
@@ -76,7 +92,7 @@
         {
           "context": "Contact",
           "effectType": "Damage",
-          "amount": "1",
+          "amount": "6",
           "comicText": "Kapow"
         }
       ],      

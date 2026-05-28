@@ -11,7 +11,7 @@ namespace ScaryCastle
     public sealed class LightningInvocation : Invocation
     {
         // Constructor
-        public LightningInvocation(IGameAction action, GameThing target)
+        public LightningInvocation(IAction action, GameThing target)
             : base(action, target)
         {
             var animation = AddAnimation(AnimationNames.Default);

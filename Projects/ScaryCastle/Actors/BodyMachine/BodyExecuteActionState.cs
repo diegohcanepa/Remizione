@@ -34,7 +34,7 @@ namespace ScaryCastle
         }
 
         // ResolveInPlaceAction
-        private void ResolveInPlaceAction(IGameAction action)
+        private void ResolveInPlaceAction(IAction action)
         {
             if (action.InPlaceEffectType == InPlaceEffectType.None)
                 return;
@@ -50,7 +50,7 @@ namespace ScaryCastle
         }
 
         // ResolveProjectileAction
-        private void ResolveProjectileAction(IGameAction action)
+        private void ResolveProjectileAction(IAction action)
         {
             if (action.Projectile == null)
                 return;
@@ -64,7 +64,7 @@ namespace ScaryCastle
         }
 
         // ResolveProximityAction
-        private void ResolveProximityAction(IGameAction action)
+        private void ResolveProximityAction(IAction action)
         {
             if (Target != null && CanInflictDamage(Target))
             {
@@ -74,7 +74,7 @@ namespace ScaryCastle
         }
 
         // ResolveSelfAction
-        private void ResolveSelfAction(IGameAction action)
+        private void ResolveSelfAction(IAction action)
         {
             GameActionProcessor.Apply(action, Owner, null, EffectContext.Use);
         }
@@ -92,7 +92,7 @@ namespace ScaryCastle
         #endregion
 
         // Action
-        public IGameAction? Action { get; set; }
+        public IAction? Action { get; set; }
 
         // Enter
         public override void Enter()

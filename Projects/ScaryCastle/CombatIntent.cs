@@ -8,7 +8,7 @@ namespace ScaryCastle
     /// <summary>
     /// CombatIntent
     /// </summary>
-    public sealed class CombatIntent : Definition, IGameAction
+    public sealed class CombatIntent : Definition, IAction
     {
         // Constructor
         public CombatIntent(JsonElement element)
@@ -54,9 +54,9 @@ namespace ScaryCastle
                 RaiseValidationError(this, "Items with Projectile usage mode must have a Projectile defined.", nameof(UsageMode));
         }
 
-        #region IGameAction interface
+        #region IAction interface
 
-        void IGameAction.Consume(Actor actor)
+        void IAction.Consume(Actor actor)
         {
             actor.Energy -= EnergyCost;
         }
