@@ -21,10 +21,8 @@ namespace ScaryCastle
             : base(session, string.Empty, roomNode)
         {
             Zoom = 1.15f;
-            AllowGlobalLight = false;
             AtlasName = roomNode.Definition.Name ?? string.Empty;
             DefaultImageName = AtlasName;
-            GlobalLightSize = new(2.2f, 2);
             LightMapColor = new(40, 40, 40);
             LightingSystem = true;
 

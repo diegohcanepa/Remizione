@@ -43,13 +43,6 @@ namespace ScaryCastle
         // DefaultDarknessLight
         internal static Color DefaultDarknessLight { get; } = Color.WhiteSmoke * .75f;
 
-        // GlobalLight
-        internal static class GlobalLight
-        {
-            internal static Color Critical { get; } = new(255, 64, 64);
-            internal static Color Default { get; } = Color.White;
-        }
-
         // HighlightedText
         internal static Color HighlightedText { get; } = new(215, 215, 170);
 

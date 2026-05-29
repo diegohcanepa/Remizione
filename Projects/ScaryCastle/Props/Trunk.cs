@@ -11,7 +11,7 @@ namespace ScaryCastle
     public class Trunk : Openable, ILoot<ItemDefinition>
     {
         private int breakTimer = -1;
-        private readonly BrokenPieces brokenPieces;
+        private readonly Debris debris;
         private bool isBroken;
         private readonly Sprite lootImage;
 
@@ -29,7 +29,7 @@ namespace ScaryCastle
             OverheadOrigin = new(6, 2);
             UnlockSound = Sound.Find(SoundNames.LockOpen);
 
-            this.brokenPieces = new BrokenPieces(this);
+            this.debris = new Debris(this);
 
             this.lootImage = new(Atlas.FindImage($"{DeclaredName}LootBag"))
             {
@@ -47,7 +47,7 @@ namespace ScaryCastle
 
             RenderLayer = RenderLayer.Background;
             DepthOffset = 0;
-            brokenPieces.Launch();
+            debris.Launch();
         }
 
         #region Protected members
@@ -78,7 +78,7 @@ namespace ScaryCastle
         {
             if (isBroken)
             {
-                brokenPieces.Draw(gameTime);
+                debris.Draw(gameTime);
             }
             else
             {
@@ -100,7 +100,7 @@ namespace ScaryCastle
         protected override void OnUnload()
         {
             base.OnUnload();
-            brokenPieces.Release();
+            debris.Release();
         }
 
         // OnUpdate
@@ -122,7 +122,7 @@ namespace ScaryCastle
             }
             else
             {
-                brokenPieces.Update(gameTime);
+                debris.Update(gameTime);
             }
         }
 

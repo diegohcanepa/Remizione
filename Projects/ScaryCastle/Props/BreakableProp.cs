@@ -9,7 +9,7 @@ namespace ScaryCastle
     /// </summary>
     public class BreakableProp : Prop
     {
-        private readonly List<Debris> debrisList = [];
+        private readonly List<DebrisPiece> debrisList = [];
 
         // Constructor
         public BreakableProp(GameSession session, string name)
@@ -54,7 +54,7 @@ namespace ScaryCastle
                 {
                     if (Atlas?.FindImage($"{DeclaredName}Piece{index}") is AtlasImage image)
                     {
-                        var debris = Session.ObjectPools.Debris.Get();
+                        var debris = Session.ObjectPools.DebrisPieces.Get();
                         debris.Image = image;
                         debrisList.Add(debris);
                         index++;
@@ -71,7 +71,7 @@ namespace ScaryCastle
         protected override void OnUnload()
         {
             base.OnUnload();
-            Session.ObjectPools.Debris.Return(debrisList);
+            Session.ObjectPools.DebrisPieces.Return(debrisList);
         }
 
         // OnUpdate

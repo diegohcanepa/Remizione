@@ -8,8 +8,8 @@ namespace ScaryCastle
     /// </summary>
     public sealed class ObjectPools(GameSession session)
     {
-        // Debris
-        public ObjectPool<Debris> Debris { get; } = new ObjectPool<Debris>(() => new Debris(), 100);
+        // DebrisPieces
+        public ObjectPool<DebrisPiece> DebrisPieces { get; } = new ObjectPool<DebrisPiece>(() => new DebrisPiece(), 100);
 
         // FloatingTexts
         public ObjectPool<FloatingText> FloatingTexts { get; } = new ObjectPool<FloatingText>(() => new FloatingText(session), 30);

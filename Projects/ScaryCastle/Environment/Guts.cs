@@ -10,7 +10,7 @@ namespace ScaryCastle
     /// </summary>
     public class Guts : GameThing
     {
-        private readonly List<Debris> parts = [];
+        private readonly List<DebrisPiece> parts = [];
 
         // Constructor
         public Guts(GameSession session, bool bloodStain, int amount, Vector2 scale, IList<AtlasImage>? extraImages)
@@ -27,7 +27,7 @@ namespace ScaryCastle
             {
                 for (var i = 0; i < guts; i++)
                 {
-                    var debris = Session.ObjectPools.Debris.Get();
+                    var debris = Session.ObjectPools.DebrisPieces.Get();
                     debris.Image = Atlases.Environment.Guts[i];
                     debris.Scale = scale;
                     parts.Add(debris);
@@ -39,7 +39,7 @@ namespace ScaryCastle
             {
                 for (var i = 0; i < extraImages.Count; i++)
                 {
-                    var debris = Session.ObjectPools.Debris.Get();
+                    var debris = Session.ObjectPools.DebrisPieces.Get();
                     debris.Image = extraImages[i];
                     debris.Scale = scale;
                     parts.Add(debris);

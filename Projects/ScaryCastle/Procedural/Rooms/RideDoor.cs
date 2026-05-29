@@ -142,6 +142,9 @@ namespace ScaryCastle
         [ScriptProperty]
         public RideDoorDirection DoorDirection { get; }
 
+        // IsEmittingLight
+        public override bool IsEmittingLight => Room?.HasAmbientLightSources == true ? false : base.IsEmittingLight;
+
         // Prepare
         [ScriptMethod]
         public void Prepare()
@@ -163,7 +166,7 @@ namespace ScaryCastle
                 {
                     assetPrefix = GetVisualAssetName(rideRoom.RoomNode, rideRoom.RoomNode.Down);
 
-                    if (!rideRoom.HasAmbientLightSources)
+                    //if (!rideRoom.HasAmbientLightSources)
                     {
                         this.AttachedLight = new("Light")
                         {

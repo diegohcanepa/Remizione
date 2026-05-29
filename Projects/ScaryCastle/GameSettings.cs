@@ -28,9 +28,6 @@ namespace ScaryCastle
         // DeathCoooldown
         public const int DeathCoooldown = 15000;
 
-        // DefaultGlobalLightSize
-        public static readonly Vector2 DefaultGlobalLightSize = new(1.5f, 2);
-
         // DefaultTransitionDuration
         public const int DefaultTransitionDuration = 500;
 

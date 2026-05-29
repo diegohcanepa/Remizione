@@ -75,13 +75,6 @@ namespace ScaryCastle
                     unlitTweenDuration = 1000;
                     break;
 
-                // Global
-                case LightKind.Global:
-                    lightSprite.Tweens.Reset();
-                    litTweenDuration = 5000;
-                    unlitTweenDuration = 5000;
-                    break;
-
                 // MuzzleFlash
                 case LightKind.MuzzleFlash:
                     lightSprite.Tweens.Reset();

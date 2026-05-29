@@ -216,9 +216,6 @@ namespace ScaryCastle
 
             Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
 
-            if (AllowGlobalLight)
-                Session.Environment.GlobalLight.Draw(gameTime);
-
             // Owned lights
             for (int i = 0; i < lights.Count; i++)
             {
@@ -394,8 +391,6 @@ namespace ScaryCastle
             if (FollowPlayer && Session.Player?.Room == this)
                 Session.Camera.Follow(Session.Player, true);
 
-            Session.Environment.GlobalLight.Scale = GlobalLightSize;
-
             if (DustParticleKind != DustParticleKind.None)
                 dustEmitter?.Activate();
 
@@ -442,9 +437,6 @@ namespace ScaryCastle
             {
                 lights[i].Update(gameTime);
             }
-
-            if (AllowGlobalLight)
-                Session.Environment.GlobalLight.Update(gameTime);
 
             if (HasAmbientLightSources && Session.Player != null)
                 playerLight.Update(gameTime);
@@ -515,10 +507,6 @@ namespace ScaryCastle
         [ScriptProperty]
         public bool AllowFireflyParticles { get; set; }
 
-        // AllowGlobalLight
-        [ScriptProperty]
-        public bool AllowGlobalLight { get; set; }
-
         // AllowPauseMenu
         [ScriptProperty]
         public bool AllowPauseMenu { get; set; } = true;
@@ -547,14 +535,6 @@ namespace ScaryCastle
 
         // FollowPlayer
         public bool FollowPlayer { get; set; } = true;
-
-        // GlobalLightSize
-        [ScriptProperty]
-        public Vector2 GlobalLightSize
-        {
-            get => Session.Environment.GlobalLight.Scale;
-            set => Session.Environment.GlobalLight.Scale = value;
-        }
 
         // HasAmbientLightSources
         public bool HasAmbientLightSources { get; private set; }
@@ -638,14 +618,6 @@ namespace ScaryCastle
 
         // Session
         public new GameSession Session { get; }
-
-        // ShowLightning
-        public void ShowLightning()
-        {
-            var interval = new Int32Range(30);
-            int count = 8;
-            Session.Environment.GlobalLight.Flash(interval, count);
-        }
 
         // TriggerAreas
         public RoomAreaReadOnlyCollection<TriggerArea> TriggerAreas { get; }

@@ -18,7 +18,6 @@ namespace ScaryCastle
             FloorMark = this[nameof(FloorMark)];
             Guts = CreateReadOnlyCollection("Gut", 1, 12);
             GutStains = CreateReadOnlyCollection("GutStain", 1, 2);
-            GlobalLight = this[nameof(GlobalLight)];
             LightningLight = this[nameof(LightningLight)];
         }
 
@@ -33,9 +32,6 @@ namespace ScaryCastle
 
         // FloorMark
         public AtlasImage FloorMark { get; }
-
-        // GlobalLight
-        public AtlasImage GlobalLight { get; }
 
         // Guts
         public ReadOnlyCollection<AtlasImage> Guts { get; }

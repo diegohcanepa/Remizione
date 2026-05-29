@@ -10,8 +10,8 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly BrokenPieces brokenPieces;
         private float depth;
+        private readonly Debris debris;
         private float floorY;               // Cuánto se frena en horizontal al chocar
         private readonly float gravity;     // gravedad base
         private GameThing? ignoreThing;
@@ -38,7 +38,7 @@ namespace ScaryCastle
             this.IgnoreWalkArea = true;
             this.weight = .8f;
             this.gravity = 500;
-            this.brokenPieces = new BrokenPieces(prop);
+            this.debris = new Debris(prop);
 
             var animation = AddAnimation(AnimationNames.Default);
             animation.AddFrame(prop.GetThrowableImageName(), 1000);
@@ -161,7 +161,7 @@ namespace ScaryCastle
         protected override void OnDraw(GameTime gameTime)
         {
             if (isGrounded)
-                brokenPieces.Draw(gameTime);
+                debris.Draw(gameTime);
             else
                 base.OnDraw(gameTime);
         }
@@ -170,7 +170,7 @@ namespace ScaryCastle
         protected override void OnUnload()
         {
             base.OnUnload();
-            brokenPieces.Release();
+            debris.Release();
         }
 
         // OnUpdate
@@ -180,7 +180,7 @@ namespace ScaryCastle
 
             if (isGrounded)
             {
-                brokenPieces.Update(gameTime);
+                debris.Update(gameTime);
                 return;
             }
 
@@ -213,7 +213,7 @@ namespace ScaryCastle
             DepthOffset = 0;
             isGrounded = true;
             Prop.Position = this.Position;
-            brokenPieces.Launch();
+            debris.Launch();
 
             Session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);
         }

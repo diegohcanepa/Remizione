@@ -31,8 +31,6 @@ namespace ScaryCastle
             : base(session, name)
         {
             this.RoomNode = roomNode;
-
-            this.AllowGlobalLight = true;
             this.LightingSystem = true;
             this.UnloadMode = UnloadMode.Manual;
 
