@@ -17,7 +17,6 @@ namespace ScaryCastle
         private GameThing? ignoreThing;
         private readonly Vector2 initialVelocity;     // gravedad base
         private bool isGrounded;
-        private object? lastThingCollisioned;
         private readonly Actor owner;
         private readonly Polygon testPoly = new();
         private Vector2 velocity;
@@ -60,11 +59,11 @@ namespace ScaryCastle
                 if (Room.CulledThings[i] == this || Room.CulledThings[i] == owner || Room.CulledThings[i] == ignoreThing)
                     continue;
 
-                if (Room.CulledThings[i] is GameThing target && target.CanBeHit && target.CollisionDetection && target != lastThingCollisioned && !target.IsDead)
+                if (Room.CulledThings[i] is GameThing target && target.CanBeHit() && !target.IsDead)
                 {
                     if (target.RuntimeHotspot.BoundingRectangleF.Intersects(BoundingBox))
                     {
-                        if (lastThingCollisioned == null && appyDamage)
+                        if (appyDamage)
                         {
                             EffectDescriptor.Apply(Prop.Definition.EffectDescriptors, owner, target, EffectContext.Contact);
                             Break();
@@ -77,9 +76,8 @@ namespace ScaryCastle
 
             for (var i = 0; i < Room.Walls.Count; i++)
             {
-                if (Room.Walls[i] != lastThingCollisioned && Room.Walls[i].Contains(Position))
+                if (Room.Walls[i].Contains(Position))
                 {
-                    lastThingCollisioned = Room.Walls[i];
                     Break();
                     return null;
                 }
@@ -97,7 +95,6 @@ namespace ScaryCastle
             this.ignoreThing = null;
             this.isGrounded = false;
             this.velocity = initialVelocity;
-            this.lastThingCollisioned = null;
             this.RenderLayer = RenderLayer.Default;
 
             depth = owner.Depth + .01f;

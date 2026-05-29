@@ -25,7 +25,7 @@ namespace ScaryCastle
             : base(session, name)
         {
             this.IgnoreKnockback = true;
-            this.CanBeHit = false;
+            this.IsHittable = false;
             this.Definition = PropDefinition.Definitions.Find(DeclaredName);
 
             // Assign defaults from definition if available

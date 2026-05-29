@@ -9,70 +9,40 @@ namespace ScaryCastle
     /// </summary>
     public class Debris : GameObject, IPoolable
     {
-        private readonly Sprite _image;
-        private GameRoom? _room;
+        #region Private fields
 
-        private Vector2 _startPos;
-        private Vector2 _targetPos;
-        private float _arcHeight;
-        private float _duration;
-        private float _elapsed;
+        private bool active;
+        private float arcHeight;
+        private Vector2 direction;
+        private float duration;
+        private float elapsed;
+        private readonly Sprite image = new() { PivotOrigin = RectanglePoint.Center };
+        private bool isFirstBounce;
+        private bool isLaunched;
+        private float launchDelay;
+        private GameRoom? room;
+        private float rotationSpeed;
+        private float speed;
+        private Vector2 startPos;
+        private Vector2 targetPos;
 
-        private bool _isFirstBounce;
-        private bool _active;
-        private bool _isLaunched;
-        private float _launchDelay;
-        private Vector2 _direction;
-        private float _speed;
-        private float _rotationSpeed; // Nueva: para evitar rotación uniforme
+        #endregion
 
-        // Constructor
-        public Debris()
-        {
-            _image = new Sprite()
-            {
-                PivotOrigin = RectanglePoint.Center,
-            };
-        }
+        #region Private members
 
-        public void Launch(GameThing owner)
-        {
-            _room = owner.Session.Room;
-            _startPos = new Vector2(owner.X, owner.Y);
-
-            // 1. Variación de ángulo y deformación de perspectiva (Y)
-            float angle = (float)(Random.Shared.NextDouble() * Math.PI * 2);
-            float flattenFactor = 0.35f + ((float)Random.Shared.NextDouble() * 0.25f);
-            _direction = new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle) * flattenFactor);
-
-            // 2. Velocidad con rango más amplio
-            _speed = Random.Shared.Next(35, 65);
-
-            // 3. Rotación única (algunas giran hacia atrás, otras rápido, otras lento)
-            _rotationSpeed = (float)((Random.Shared.NextDouble() * 12) - 6);
-
-            _isFirstBounce = true;
-            _active = true;
-            _isLaunched = false;
-
-            // 4. Delay de salida más generoso para romper el "bloque" inicial
-            _launchDelay = (float)Random.Shared.NextDouble() * 0.2f;
-
-            CalculateNextArc(12, 22);
-        }
-
+        // CalculateNextArc
         private void CalculateNextArc(float minHeight, float maxHeight)
         {
-            _elapsed = 0;
-            _arcHeight = Random.Shared.Next((int)minHeight, (int)maxHeight);
+            elapsed = 0;
+            arcHeight = Random.Shared.Next((int)minHeight, (int)maxHeight);
 
             // 5. Duración aleatoria: esto es lo que evita que todas aterricen a la vez
-            float baseDuration = _isFirstBounce ? 0.3f : 0.15f;
-            _duration = baseDuration + ((float)Random.Shared.NextDouble() * 0.25f);
+            float baseDuration = isFirstBounce ? 0.3f : 0.15f;
+            duration = baseDuration + ((float)Random.Shared.NextDouble() * 0.25f);
 
-            Vector2 tentativeTarget = _startPos + (_direction * _speed * _duration);
+            Vector2 tentativeTarget = startPos + (direction * speed * duration);
 
-            if (_room?.WalkArea is { } walkArea)
+            if (room?.WalkArea is { } walkArea)
             {
                 var bounds = walkArea.Polygon.BoundingRectangleF;
 
@@ -84,88 +54,129 @@ namespace ScaryCastle
                     // Lógica de rebote simple contra bordes del WalkArea
                     if (tentativeTarget.Y < bounds.Top + 15)
                     {
-                        _direction.Y = Math.Abs(_direction.Y);
-                        _direction.X = -_direction.X;
+                        direction.Y = Math.Abs(direction.Y);
+                        direction.X = -direction.X;
                     }
                     else if (tentativeTarget.Y > bounds.Bottom - 10)
                     {
-                        _direction.Y = -Math.Abs(_direction.Y);
+                        direction.Y = -Math.Abs(direction.Y);
                     }
                     else
                     {
-                        _direction.X = -_direction.X;
+                        direction.X = -direction.X;
                     }
 
                     int safety = 0;
                     while (!walkArea.Contains(tentativeTarget) && safety < 10)
                     {
-                        tentativeTarget = Vector2.Lerp(tentativeTarget, _startPos, 0.5f);
+                        tentativeTarget = Vector2.Lerp(tentativeTarget, startPos, 0.5f);
                         safety++;
                     }
                 }
             }
 
-            _targetPos = tentativeTarget;
+            targetPos = tentativeTarget;
         }
 
+        #endregion
+
+        #region Protected members
+
+        // OnDraw
+        protected override void OnDraw(GameTime gameTime)
+        {
+            if (!active && elapsed == 0)
+                return;
+
+            image.Color = ColorPalette.SceneShade;
+            image.Y += 1f;
+            image.Draw(gameTime);
+            image.Y -= 1f;
+            image.Color = Color.White;
+            image.Draw(gameTime);
+        }
+
+        // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (!_active) return;
+            if (!active) return;
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (!_isLaunched)
+            if (!isLaunched)
             {
-                _launchDelay -= dt;
-                if (_launchDelay <= 0) _isLaunched = true;
+                launchDelay -= dt;
+                if (launchDelay <= 0) isLaunched = true;
                 return;
             }
 
-            _elapsed += dt;
-            float t = MathHelper.Clamp(_elapsed / _duration, 0, 1);
+            elapsed += dt;
+            float t = MathHelper.Clamp(elapsed / duration, 0, 1);
 
             // Interpolación de posición en "suelo"
-            Vector2 groundPos = Vector2.Lerp(_startPos, _targetPos, t);
+            Vector2 groundPos = Vector2.Lerp(startPos, targetPos, t);
 
             // Parábola de altura
-            float height = 4 * _arcHeight * t * (1 - t);
+            float height = 4 * arcHeight * t * (1 - t);
 
-            _image.Position = new Vector2(groundPos.X, groundPos.Y - height);
+            image.Position = new Vector2(groundPos.X, groundPos.Y - height);
 
             // Usamos la velocidad de rotación calculada en Launch
-            _image.Rotation += dt * _rotationSpeed;
+            image.Rotation += dt * rotationSpeed;
 
             if (t >= 1)
             {
-                if (_isFirstBounce)
+                if (isFirstBounce)
                 {
-                    _isFirstBounce = false;
-                    _startPos = _targetPos;
+                    isFirstBounce = false;
+                    startPos = targetPos;
 
                     // 6. Fricción aleatoria para que no todas se deslicen igual al final
                     float friction = 0.15f + ((float)Random.Shared.NextDouble() * 0.25f);
-                    _speed *= friction;
+                    speed *= friction;
 
                     CalculateNextArc(4, 9);
                 }
                 else
                 {
-                    _active = false;
+                    active = false;
                 }
             }
         }
 
-        protected override void OnDraw(GameTime gameTime)
-        {
-            // Solo dibujamos si está activa o si acaba de terminar (para evitar parpadeo)
-            if (!_active && _elapsed == 0) return;
-            _image.Draw(gameTime);
-        }
+        #endregion
 
         // Image
         public AtlasImage? Image
         {
-            get => _image.RenderImage;
-            set => _image.RenderImage = value;
+            get => image.RenderImage;
+            set => image.RenderImage = value;
+        }
+
+        // Launch
+        public void Launch(GameThing owner)
+        {
+            room = owner.Session.Room;
+            startPos = new Vector2(owner.X, owner.Y);
+
+            // 1. Variación de ángulo y deformación de perspectiva (Y)
+            float angle = (float)(Random.Shared.NextDouble() * Math.PI * 2);
+            float flattenFactor = 0.35f + ((float)Random.Shared.NextDouble() * 0.25f);
+            direction = new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle) * flattenFactor);
+
+            // 2. Velocidad con rango más amplio
+            speed = Random.Shared.Next(35, 65);
+
+            // 3. Rotación única (algunas giran hacia atrás, otras rápido, otras lento)
+            rotationSpeed = (float)((Random.Shared.NextDouble() * 12) - 6);
+
+            isFirstBounce = true;
+            active = true;
+            isLaunched = false;
+
+            // 4. Delay de salida más generoso para romper el "bloque" inicial
+            launchDelay = (float)Random.Shared.NextDouble() * 0.2f;
+
+            CalculateNextArc(12, 22);
         }
 
         // Reset
@@ -175,10 +186,11 @@ namespace ScaryCastle
             Scale = Vector2.One;
         }
 
+        // Scale
         public Vector2 Scale
         {
-            get => _image.Scale;
-            set => _image.Scale = value;
+            get => image.Scale;
+            set => image.Scale = value;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace ScaryCastle
         // CanInflictDamage
         private bool CanInflictDamage(GameThing target)
         {
-            if (target.CanBeHit && Owner.AnimationPlayer.Frame?.IsTrigger == true)
+            if (target.CanBeHit() && Owner.AnimationPlayer.Frame?.IsTrigger == true)
             {
                 if (Owner.IsInAttackLane(target))
                 {

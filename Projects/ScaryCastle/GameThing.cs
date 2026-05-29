@@ -623,8 +623,10 @@ namespace ScaryCastle
         public Vector2 AttachedLightPosition { get; set; }
 
         // CanBeHit
-        [ScriptProperty]
-        public bool CanBeHit { get; set; } = true;
+        public virtual bool CanBeHit()
+        {
+            return IsHittable && !IsDead;
+        }
 
         // CanInteract
         public virtual bool CanInteract()
@@ -1135,6 +1137,10 @@ namespace ScaryCastle
 
         // IsEmittingLight
         public virtual bool IsEmittingLight => AttachedLight?.IsEmitting == true && !IgnoreAttachedLight;
+
+        // IsHittable
+        [ScriptProperty]
+        public bool IsHittable { get; set; } = true;
 
         // IsMouseOver
         public bool IsMouseOver()

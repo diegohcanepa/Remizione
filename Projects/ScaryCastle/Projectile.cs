@@ -42,10 +42,10 @@ namespace ScaryCastle
 
             for (var i = 0; i < Room.Children.Count; i++)
             {
-                if (Room.Children[i] is not GameThing thing || thing == this || thing == this.emitter || !thing.CanBeHit || thing.Hotspot.IsEmpty)
+                if (Room.Children[i] is not GameThing thing || thing == this || thing == this.emitter || !thing.CanBeHit() || thing.Hotspot.IsEmpty)
                     continue;
 
-                if (!thing.IsDead && thing.IsInViewport)
+                if (thing.IsInViewport)
                 {
                     if (thing.RuntimeHotspot.BoundingRectangleF.Intersects(from, to))
                     {
