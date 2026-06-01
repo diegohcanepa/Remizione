@@ -12,7 +12,7 @@ namespace ScaryCastle
     public sealed class FloatingText : GameObject
     {
         private const int fadeDuration = 250;
-        private static readonly float defaultScale = ScaleInfo.Text.Huge.X;
+        private static readonly float defaultScale = ScaleInfo.Text.VeryLarge.X;
 
         private readonly FloatTween opacityTween = new();
         private readonly GameSession session;

@@ -16,15 +16,13 @@ namespace ScaryCastle
             this.AttachedLight = new("Light")
             {
                 Color = new(255, 248, 183),
-                LightKind = LightKind.Default,
+                LightKind = LightKind.Ambient,
                 PivotOrigin = RectanglePoint.Center,
                 Position = new(9),
                 Scale = new(15)
             };
 
             AttachedLightPosition = new(9);
-
-            IsAmbientLight = true;
         }
 
         // InvalidateAnimation

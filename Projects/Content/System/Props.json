@@ -2,6 +2,14 @@
   "$schema": "./Prop.schema.json",
   "data": [
     {
+      "name": "DevilCarvedFace",
+      "tags": "WallDecoration",
+      "spawnLocation": "SideRoom",
+      "placements": [
+        "WallFrontHang"      
+      ]
+    },    
+    {
       "name": "PotteryA",
       "dropCoinChanceBonus": 0.5,
       "dropMode": "CoinsOnly",
@@ -101,6 +109,13 @@
       ],
       "spawnWeight": 0.1,
       "maxPerRun": 3
-    }
+    },
+    {
+      "name": "Vent",
+      "tags": "WallDecoration",
+      "placements": [
+        "WallFrontHang"      
+      ]
+    }    
   ]
 }

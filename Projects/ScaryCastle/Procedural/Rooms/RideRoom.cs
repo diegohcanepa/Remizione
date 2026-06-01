@@ -23,7 +23,7 @@ namespace ScaryCastle
             Zoom = 1.15f;
             AtlasName = roomNode.Definition.Name ?? string.Empty;
             DefaultImageName = AtlasName;
-            LightMapColor = new(40, 40, 40);
+            LightMapColor = new(20, 20, 20);
             LightingSystem = true;
 
             AddWalkArea("WalkArea", roomNode.Definition.WalkArea);
@@ -190,19 +190,6 @@ namespace ScaryCastle
             }
 
             return Vector2.Zero;
-        }
-
-        // SpawnGoo
-        public void SpawnGoo()
-        {
-            if (WalkArea != null)
-            {
-                if (CreateThingClone<Goo>("Goo") is Goo goo)
-                {
-                    goo.Position = WalkArea.RandomWalkablePoint(10);
-                    Children.Add(goo);
-                }
-            }
         }
     }
 }

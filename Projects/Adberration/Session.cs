@@ -334,7 +334,8 @@ namespace Adberration
             AotTypeRegistry.Register("else", typeof(ElseStatement));
             AotTypeRegistry.Register("endif", typeof(EndifStatement));
             AotTypeRegistry.Register("flip", typeof(FlipCommand));
-            AotTypeRegistry.Register("goto-animation-frame", typeof(GoToAnimationFrameCommand));
+            AotTypeRegistry.Register("goto-frame-index", typeof(GoToFrameIndexCommand));
+            AotTypeRegistry.Register("goto-frame-position", typeof(GoToFramePositionCommand));
             AotTypeRegistry.Register("if-counter", typeof(IfCounterStatement));
             AotTypeRegistry.Register("if-entity", typeof(IfEntityStatement));
             AotTypeRegistry.Register("if-entity-type", typeof(IfEntityTypeStatement));

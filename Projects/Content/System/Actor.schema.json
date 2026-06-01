@@ -10,18 +10,27 @@
       }
     }
   },
-  "required": ["data"],
+  "required": [
+    "data"
+  ],
   "$defs": {
     "Actor": {
       "allOf": [
-        { "$ref": "./Thing.schema.json" },
+        {
+          "$ref": "./Thing.schema.json"
+        },
         {
           "type": "object",
           "properties": {
-            "groupCount": {
+            "minPackSize": {
               "type": "integer",
-              "default": 0,
-              "minimum": 0
+              "default": 1,
+              "minimum": 1
+            },
+            "maxPackSize": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
             }
           }
         }

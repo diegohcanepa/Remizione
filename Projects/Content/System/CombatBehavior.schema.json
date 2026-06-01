@@ -29,10 +29,12 @@
           "enum": [
             "Lurker",
             "Harasser",
+            "KamikazeFlyer",
             "Stalker",
             "Tactical",
             "Berserk",
-            "Coward"
+            "Coward",
+            "Volatile"
           ],
           "default": "Lurker"
         },

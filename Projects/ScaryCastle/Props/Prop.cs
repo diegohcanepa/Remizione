@@ -138,7 +138,7 @@ namespace ScaryCastle
         }
 
         // IsAmbientLight
-        public bool IsAmbientLight { get; set; }
+        public bool IsAmbientLight => AttachedLight != null && AttachedLight.LightKind == LightKind.Ambient;
 
         // IsLiftable
         [ScriptProperty]
@@ -157,9 +157,9 @@ namespace ScaryCastle
 
             item.Consume(actor);
 
-            var text = TextRepository.GetValue(success ? Localization.GetValue(FloatingMessage.Success) : Localization.GetValue(FloatingMessage.Failed));
+            var text = success ? Localization.GetValue(FloatingMessage.Success) : Localization.GetValue(FloatingMessage.Failed);
 
-            actor.ShowFloatingText(text, success ? ColorPalette.Text.Green : ColorPalette.Text.Default);
+            actor.ShowFloatingText(text, success ? ColorPalette.Text.Green : ColorPalette.Text.Terra);
 
             if (!success)
                 Sound.Play(SoundNames.TestSkillFail);

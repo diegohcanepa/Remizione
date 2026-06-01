@@ -161,7 +161,7 @@ namespace ScaryCastle
             {
                 if (decision.Type == CombatDecisionType.Charge)
                 {
-                    PerformChargeReaction(target);
+                    PerformChargeReaction(target.Position);
                 }
                 else if (decision.Type == CombatDecisionType.Flee)
                 {
@@ -559,9 +559,11 @@ namespace ScaryCastle
         }
 
         // PerformChargeReaction
-        protected virtual void PerformChargeReaction(GameThing target)
+        protected virtual void PerformChargeReaction(Vector2 destination)
         {
-            MoveTo(target.Position);
+            var state = BodyMachine.FindOrCreateState<BodyChargeState>();
+            state.Destination = destination;
+            BodyMachine.ChangeState(state.GetType());
         }
 
         // PerformFleeReaction

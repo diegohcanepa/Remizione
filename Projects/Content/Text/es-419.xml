@@ -10,6 +10,7 @@
   <String Key="Actor.HellGoat">Cabra del infierno</String>
   <String Key="Actor.LootDropper">Loot Dropper</String>
   <String Key="Actor.Mandinga">Mandinga</String>
+  <String Key="Actor.Penitent">Penitente</String>
   <String Key="Actor.Rat">Rata</String>
   <String Key="Actor.RiderlessHead">Cabeza sin jinete</String>
   <String Key="Actor.Sister">Sor Jamona</String>
@@ -20,7 +21,6 @@
   <String Key="ActorProperty.Level.Description">El nivel quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Level.Name">Estado de Gracia</String>
   <String Key="FloatingMessage.Failed">¡Fallaste!</String>
-  <String Key="FloatingMessage.Locked">Cerrado con llave</String>
   <String Key="FloatingMessage.Success">¡Éxito!</String>
   <String Key="HitType.Critical">¡Crítico!</String>
   <String Key="InputBinding.Back">Atrás</String>
@@ -99,9 +99,10 @@
   <String Key="Languages.es-es">Español (España)</String>
   <String Key="Languages.fr-fr">Français</String>
   <String Key="Languages.ru-ru">Русский</String>
-  <String Key="LogVerb.Bought">Compraste</String>
-  <String Key="LogVerb.Found">Conseguiste</String>
+  <String Key="LogVerb.Consumed">Gastaste</String>
+  <String Key="LogVerb.Found">Encontraste</String>
   <String Key="LogVerb.Lost">Perdiste</String>
+  <String Key="LogVerb.Obtained">Conseguiste</String>
   <String Key="LogVerb.Requires">Necesitas</String>
   <String Key="LogVerb.Used">Usaste</String>
   <String Key="Menu.Controls.Keyboard.Interact">Interactuar</String>
@@ -314,11 +315,11 @@ Bla bla bla</String>
   <String Key="Prop.UnderRideEntrance">Inframundo</String>
   <String Key="Prop.VendingMachine">Máquina expendedora</String>
   <String Key="Prop.WC">Inodoro</String>
-  <String Key="Verb.Ellipsis" />
+  <String Key="Verb.Ellipsis"></String>
   <String Key="Verb.Enter">Entrar</String>
   <String Key="Verb.Exit">Salir</String>
   <String Key="Verb.Lift">Alzar</String>
-  <String Key="Verb.None" />
+  <String Key="Verb.None"></String>
   <String Key="Verb.Open">Abrir</String>
   <String Key="Verb.Pull">Accionar</String>
   <String Key="Verb.Take">Agarrar</String>

@@ -88,6 +88,7 @@
 	<FX Name="NumberSixA" />
 	<FX Name="NumberSixB" />
 	<FX Name="NumberSixC" />
+	<FX Name="Penitent" Sounds="1..5" Volume=".1" />
 	<FX Name="PickupBag" />
 	<FX Name="PickupCoin" />
 	<FX Name="PickupGeneric" />

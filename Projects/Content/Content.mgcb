@@ -74,6 +74,21 @@
 #begin Atlases/Castle_Std_Corridor_01.xml
 /copy:Atlases/Castle_Std_Corridor_01.xml
 
+#begin Atlases/Castle_Std_Corridor_02.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Atlases/Castle_Std_Corridor_02.png
+
+#begin Atlases/Castle_Std_Corridor_02.xml
+/copy:Atlases/Castle_Std_Corridor_02.xml
+
 #begin Atlases/Castle_Std_Pit_01.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -910,6 +925,36 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/FX/NumberSixC.wav;Audio/FX/NumberSixC
+
+#begin Audio/FX/Penitent1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Penitent1.wav;Audio/FX/Penitent1
+
+#begin Audio/FX/Penitent2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Penitent2.wav;Audio/FX/Penitent2
+
+#begin Audio/FX/Penitent3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Penitent3.wav;Audio/FX/Penitent3
+
+#begin Audio/FX/Penitent4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Penitent4.wav;Audio/FX/Penitent4
+
+#begin Audio/FX/Penitent5.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Penitent5.wav;Audio/FX/Penitent5
 
 #begin Audio/FX/PickupBag.wav
 /importer:WavImporter

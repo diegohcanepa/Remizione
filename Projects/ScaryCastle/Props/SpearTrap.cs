@@ -95,6 +95,13 @@ namespace ScaryCastle
 
         #region Protected members
 
+        // OnActivate
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            cooldownInterval = Random.Shared.Next(2500, 4500);
+        }
+
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
@@ -105,7 +112,6 @@ namespace ScaryCastle
         protected override void OnLoad()
         {
             base.OnLoad();
-            cooldownInterval = Random.Shared.Next(3500, 7000);
             Prepare();
         }
 

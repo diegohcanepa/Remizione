@@ -94,6 +94,9 @@ namespace ScaryCastle
                 Amount--;
                 if (Amount <= 0)
                     Inventory.Remove(this);
+
+                if (Definition.ConsumeVerb != LogVerb.None)
+                    actor.Session.TextHUD.Log.Show(Definition.ConsumeVerb, Definition, true);
             }
 
             InvalidateDisplayText();

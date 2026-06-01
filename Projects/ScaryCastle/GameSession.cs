@@ -4,6 +4,7 @@ using Engendro;
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
+using ScaryCastle.Props;
 using ScaryCastle.Scripting;
 using System;
 using System.Collections.Generic;
@@ -108,13 +109,14 @@ namespace ScaryCastle
         private static void RegisterAotTypes()
         {
             AotTypeRegistry.Register(typeof(Actor));
-            AotTypeRegistry.Register(typeof(Zabul));
             AotTypeRegistry.Register(typeof(BloodyEye));
             AotTypeRegistry.Register(typeof(BreakableProp));
             AotTypeRegistry.Register(typeof(CloseUpRoom));
             AotTypeRegistry.Register(typeof(Coin));
             AotTypeRegistry.Register(typeof(CreditsRoom));
+            AotTypeRegistry.Register(typeof(Decoration));
             AotTypeRegistry.Register(typeof(Firecracker));
+            AotTypeRegistry.Register(typeof(FlyingSkull));
             AotTypeRegistry.Register(typeof(GameRoom));
             AotTypeRegistry.Register(typeof(GameThing));
             AotTypeRegistry.Register(typeof(GoldenKey));
@@ -124,6 +126,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(Monitor));
             AotTypeRegistry.Register(typeof(EnviousEye));
             AotTypeRegistry.Register(typeof(NumberSix));
+            AotTypeRegistry.Register(typeof(Penitent));
             AotTypeRegistry.Register(typeof(Pottery));
             AotTypeRegistry.Register(typeof(Prop));
             AotTypeRegistry.Register(typeof(Rat));

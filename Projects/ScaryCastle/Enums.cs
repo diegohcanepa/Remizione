@@ -15,7 +15,7 @@ namespace ScaryCastle
     public enum BodySize { Small, Medium, Large }
 
     // CombatArchetypeName
-    public enum CombatArchetypeName { Lurker, Harasser, Stalker, Tactical, Berserk, Coward }
+    public enum CombatArchetypeName { Lurker, Harasser, Stalker, Tactical, Berserk, Coward, KamikazeFlyer, Volatile }
 
     // CombatDecisionType
     public enum CombatDecisionType { None, Attack, Flee, Charge, Move }
@@ -57,7 +57,7 @@ namespace ScaryCastle
     public enum Faction { Good, Evil }
 
     // FloatingMessage
-    public enum FloatingMessage { Failed, Locked, Success }
+    public enum FloatingMessage { Failed, Success }
 
     // GateEventType
     public enum GateEventType { Nothing, Good, Bad }
@@ -81,7 +81,7 @@ namespace ScaryCastle
     public enum KnockbackIntensity { Low, Medium, High }
 
     // LightKind
-    public enum LightKind { Default, Alarm, Lantern, Fire, Fireplace, MuzzleFlash, Outdoor, Player }
+    public enum LightKind { Default, Ambient, Alarm, Lantern, Fire, Fireplace, MuzzleFlash, Outdoor, Player }
 
     // LightState
     public enum LightState { Off, On, TurningOn, TurningOff }
@@ -90,7 +90,7 @@ namespace ScaryCastle
     public enum LockType { None, GoldenKey }
 
     // LogVerb
-    public enum LogVerb { Bought, Found, Lost, Requires, Used }
+    public enum LogVerb { None, Consumed, Obtained, Found, Lost, Requires, Used }
 
     // LootDropMode
     public enum LootDropMode

@@ -10,6 +10,7 @@
   <String Key="Actor.HellGoat">Hell goat</String>
   <String Key="Actor.LootDropper">Loot Dropper</String>
   <String Key="Actor.Mandinga">Mandinga</String>
+  <String Key="Actor.Penitent">Penitent</String>
   <String Key="Actor.Rat">Rat</String>
   <String Key="Actor.RiderlessHead">Riderless Head</String>
   <String Key="Actor.Sister">Sister Ham</String>
@@ -20,7 +21,6 @@
   <String Key="ActorProperty.Level.Description">El nivel quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Level.Name">State of Grace</String>
   <String Key="FloatingMessage.Failed">Failed!</String>
-  <String Key="FloatingMessage.Locked">Locked</String>
   <String Key="FloatingMessage.Success">Success!</String>
   <String Key="HitType.Critical">Critical!</String>
   <String Key="InputBinding.Back">Back</String>
@@ -69,7 +69,7 @@
   <String Key="Item.Lockpick.Name">Lockpick</String>
   <String Key="Item.MagneticCard.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.MagneticCard.Name">Magnetic card</String>
-  <String Key="Item.PieceOfWood.Description"></String>
+  <String Key="Item.PieceOfWood.Description" />
   <String Key="Item.PieceOfWood.Name">Piece of wood</String>
   <String Key="Item.Pistol.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </String>
   <String Key="Item.Pistol.Name">Pistol</String>
@@ -99,9 +99,10 @@
   <String Key="Languages.es-es">Español (España)</String>
   <String Key="Languages.fr-fr">Français</String>
   <String Key="Languages.ru-ru">Русский</String>
-  <String Key="LogVerb.Bought">Bought</String>
+  <String Key="LogVerb.Consumed">Consumed</String>
   <String Key="LogVerb.Found">Found</String>
   <String Key="LogVerb.Lost">Lost</String>
+  <String Key="LogVerb.Obtained">Obtained</String>
   <String Key="LogVerb.Requires">Requires</String>
   <String Key="LogVerb.Used">Used</String>
   <String Key="Menu.Controls.Keyboard.Interact">Interact</String>
@@ -314,11 +315,11 @@ Bla bla bla</String>
   <String Key="Prop.UnderRideEntrance">Under ride</String>
   <String Key="Prop.VendingMachine">Vending machine</String>
   <String Key="Prop.WC">W.C.</String>
-  <String Key="Verb.Ellipsis" />
+  <String Key="Verb.Ellipsis"></String>
   <String Key="Verb.Enter">Enter</String>
   <String Key="Verb.Exit">Exit</String>
   <String Key="Verb.Lift">Lift</String>
-  <String Key="Verb.None" />
+  <String Key="Verb.None"></String>
   <String Key="Verb.Open">Open</String>
   <String Key="Verb.Pull">Pull</String>
   <String Key="Verb.Take">Take</String>

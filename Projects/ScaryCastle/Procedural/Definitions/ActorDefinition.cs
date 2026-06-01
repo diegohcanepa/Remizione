@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using System;
 using System.Text.Json;
 
 namespace ScaryCastle
@@ -15,8 +16,15 @@ namespace ScaryCastle
             // Faction
             Faction = element.GetEnum("faction", Faction.Evil);
 
-            // GroupCount
-            GroupCount = element.GetInt32("groupCount", 0);
+            // MinPackSize
+            MinPackSize = element.GetInt32("minPackSize", 1);
+
+            // MaxPackSize
+            MaxPackSize = element.GetInt32("maxPackSize", 1);
+
+            // Name cannot be a category
+            if (MinPackSize > MaxPackSize)
+                RaiseValidationError(this, $"Minimum pack size exceeds the maximum pack size.");
 
             Definitions.Add(this);
         }
@@ -24,7 +32,16 @@ namespace ScaryCastle
         // Definitions
         public static DataContainer<ActorDefinition> Definitions { get; } = new(element => new ActorDefinition(element));
 
-        // GroupCount
-        public int GroupCount { get; }
+        // MinPackSize
+        public int MinPackSize { get; }
+
+        // MaxPackSize
+        public int MaxPackSize { get; }
+
+        // RollPackSize
+        public int RollPackSize(Random rng)
+        {
+            return rng.Next(MinPackSize, MaxPackSize + 1);
+        }
     }
 }

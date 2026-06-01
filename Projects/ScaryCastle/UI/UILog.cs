@@ -56,7 +56,7 @@ namespace ScaryCastle
         // ShowCore
         private void ShowCore(string verb, string noun, bool isWarning, AtlasImage? image)
         {
-            verbText.Color = isWarning ? ColorPalette.Text.Orange : ColorPalette.Text.Green;
+            verbText.Color = isWarning ? ColorPalette.Text.Terra : ColorPalette.Text.Green;
             verbText.Position = new Vector2(11, 17);
             verbText.Text = verb;
 
@@ -115,6 +115,9 @@ namespace ScaryCastle
         // Show
         public void Show(LogVerb verb, ItemDefinition itemDefinition, bool isWarning = false)
         {
+            if (verb == LogVerb.None)
+                return;
+
             ShowCore(Localization.GetValue(verb), itemDefinition.DisplayName, isWarning, itemDefinition.Image);
 
             if (verb == LogVerb.Requires)

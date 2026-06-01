@@ -23,6 +23,7 @@
         internal const string Lightning = nameof(Lightning);
         internal const string LockOpen = nameof(LockOpen);
         internal const string LootSack = nameof(LootSack);
+        internal const string Penitent = nameof(Penitent);
         internal const string PickupBag = nameof(PickupBag);
         internal const string PickupGeneric = nameof(PickupGeneric);
         internal const string PotteryBreak = nameof(PotteryBreak);

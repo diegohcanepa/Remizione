@@ -31,7 +31,6 @@ namespace ScaryCastle
                 throw new InvalidOperationException($"ERROR: No assets found for {node.RoomType}/{node.SideRoomCategory} in {diff}");
             }
             else
-
             {
                 node.Definition = def;
                 this.Spawns.Increment(def.Name);
@@ -131,8 +130,39 @@ namespace ScaryCastle
             }
         }
 
+        // SetupDarkness
+        private void SetupDarkness(Random rng)
+        {
+            if (CurrentCorridor == null)
+                return;
+
+            int darkRoll = rng.Next(1, 101);
+
+            // A mayor Intensity, más chances de apagón general (va de 5% al inicio a 25% al final)
+            var stageDarknessChance = float.Lerp(5, 25, this.Intensity);
+
+            // Chance de side rooms oscuros pero pasillo con luz (va de 15% al inicio a 35% al final)
+            var isolatedDarknessChance = float.Lerp(15, 35, this.Intensity);
+
+            if (darkRoll <= stageDarknessChance)
+            {
+                foreach (var roomNode in CurrentCorridor.GetAllNodes())
+                {
+                    roomNode.RideRoom?.TurnOffLights();
+                }
+            }
+            else if (darkRoll <= stageDarknessChance + isolatedDarknessChance)
+            {
+                foreach (var roomNode in CurrentCorridor.GetAllNodes())
+                {
+                    if (roomNode.RoomType != RoomType.Corridor)
+                        roomNode.RideRoom?.TurnOffLights();
+                }
+            }
+        }
+
         // SpawnGoo
-        private void SpawnGoo()
+        private void SpawnGoo(Random rng)
         {
             if (CurrentCorridor == null)
                 return;
@@ -152,10 +182,19 @@ namespace ScaryCastle
             // Al final (Intensity 1): 20% de chance (Un milagro absoluto).
             float spawnChance = float.Lerp(.85f, .20f, this.Intensity);
 
-            if (Random.Shared.NextDouble() <= spawnChance)
+            if (rng.NextDouble() <= spawnChance)
             {
-                int luckyRoomIndex = Random.Shared.Next(0, roomList.Count);
-                roomList[luckyRoomIndex].SpawnGoo();
+                int luckyRoomIndex = rng.Next(0, roomList.Count);
+                var room = roomList[luckyRoomIndex];
+
+                if (room.WalkArea != null)
+                {
+                    if (room.CreateThingClone<Goo>(nameof(Goo)) is Goo goo)
+                    {
+                        goo.Position = room.WalkArea.RandomWalkablePoint(10);
+                        room.Children.Add(goo);
+                    }
+                }
             }
         }
 
@@ -203,9 +242,8 @@ namespace ScaryCastle
             // El RoomNode sigue necesitando X para la lógica de dificultad/posicionamiento
             var corridor = new RoomNode(localIndex++, this.CorridorIndex, 0, RoomType.Corridor, SideRoomCategory.None);
 
-            // 2. Tridente (Nexo + Hojas) - Lógica interna 50/50
-            if (CorridorIndex == 0 || rng.NextDouble() < 0.5)
-                GenerateTrident(corridor, ref localIndex, rng);
+            // 2. Tridente (Nexo + Hojas)
+            GenerateTrident(corridor, ref localIndex, rng);
 
             // 3. Población (Asignación de assets según dificultad)
             Difficulty diff = GetDifficultyTier(this.CorridorIndex, this.MaxCorridors);
@@ -225,7 +263,9 @@ namespace ScaryCastle
                 roomNode.RideRoom.Load();
             }
 
-            SpawnGoo();
+            SpawnGoo(rng);
+
+            SetupDarkness(rng);
 
             return true;
         }

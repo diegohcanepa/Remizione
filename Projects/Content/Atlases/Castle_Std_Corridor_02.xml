@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
+<!-- $TexturePacker:SmartUpdate:fe10f8efc0828e3f95dbb1b100266572:96815111e92ac35ad9f21f16d2c6d984:b64f19434daf859bfda8bd149b21681d$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Castle_Std_Corridor_02.png" width="512" height="512">
+    <sprite n="LeftGate.png" x="421" y="2" w="13" h="62"/>
+    <sprite n="LeftWall.png" x="2" y="2" w="260" h="135"/>
+    <sprite n="RightGate.png" x="436" y="2" w="13" h="62"/>
+    <sprite n="RightWall.png" x="2" y="139" w="260" h="135"/>
+    <sprite n="RightWallPatch.png" x="403" y="2" w="16" h="100"/>
+    <sprite n="View1.png" x="2" y="276" w="260" h="135"/>
+    <sprite n="View1Foreground.png" x="264" y="2" w="137" h="135"/>
+</TextureAtlas>

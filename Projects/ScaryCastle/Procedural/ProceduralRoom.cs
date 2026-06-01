@@ -185,27 +185,50 @@ namespace ScaryCastle
                 if (ActorDefinition.Definitions.Find(item.Name) is not ActorDefinition chosen)
                     continue;
 
-                // VALIDACIÓN DE LÍMITE LOCAL
-                // Contamos cuántos de este tipo ya pusimos en la lista de pendientes
-                int pendingCount = 0;
-                for (int i = 0; i < pendingSpawns.Count; i++)
+                // =========================================================================
+                // LÓGICA DE GRUPO (PACK SIZE)
+                // =========================================================================
+                // Sorteamos cuántos enemigos quieren spawnear en este grupo particular (ej: de 2 a 4)
+                // Si el bicho es solitario (Gladiador), Min y Max serán 1, por lo que dará 1.
+                int packSize = chosen.RollPackSize(Random);
+
+                // Capamos el tamaño del grupo para que no intente procesar más de lo que el presupuesto permite
+                int targetSpawnCount = Math.Min(packSize, remainingInstances);
+                int successfulGroupSpawns = 0;
+
+                for (int p = 0; p < targetSpawnCount; p++)
                 {
-                    if (pendingSpawns[i].Name == chosen.Name)
-                        pendingCount++;
+                    // VALIDACIÓN DE LÍMITE LOCAL
+                    // Contamos cuántos de este tipo específico ya pusimos en la cola en este frame
+                    int pendingCount = 0;
+                    for (int i = 0; i < pendingSpawns.Count; i++)
+                    {
+                        if (pendingSpawns[i].Name == chosen.Name)
+                            pendingCount++;
+                    }
+
+                    int currentInRoom = enemiesSpawnCounter.GetCount(chosen.Name) + pendingCount;
+
+                    // Si sumar un miembro más de la patota rompe las reglas de la sala, cancelamos el resto del pack
+                    if (!chosen.PassesMaxPerRoomConstraint(currentInRoom))
+                    {
+                        break;
+                    }
+
+                    // Pasó el filtro de la sala: lo agregamos a la lista física de pendientes
+                    pendingSpawns.Add(chosen);
+                    successfulGroupSpawns++;
+
+                    // IMPORTANTE: Cada miembro resta 1 punto individual del presupuesto de la sala
+                    remainingInstances--;
                 }
 
-                int currentInRoom = enemiesSpawnCounter.GetCount(chosen.Name) + pendingCount;
-
-                // Si sumar uno más rompe el límite de esta sala, lo fletamos de la tabla
-                if (!chosen.PassesMaxPerRoomConstraint(currentInRoom))
+                // Si por restricciones físicas o de límite de sala no pudimos meter 
+                // NI UNO SOLO de los miembros del grupo, lo fletamos de la tabla para evitar bucles infinitos
+                if (successfulGroupSpawns == 0)
                 {
                     table.Remove(item.Name);
-                    continue;
                 }
-
-                // Pasó la validación, lo agregamos a la cola y restamos presupuesto
-                pendingSpawns.Add(chosen);
-                remainingInstances--;
             }
 
             if (pendingSpawns.Count == 0)
@@ -475,7 +498,7 @@ namespace ScaryCastle
 
         // IsProcedural
         public override bool IsProcedural => true;
-
+            
         // Placeholders
         public ReadOnlyCollection<Placeholder> Placeholders { get; }
 

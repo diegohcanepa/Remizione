@@ -1,12 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "Prop.schema.json",
-  "title": "Prop Data File",
   "type": "object",
   "properties": {
     "data": {
       "type": "array",
-      "description": "Lista de definiciones de Props.",
       "items": {
         "$ref": "#/$defs/Prop"
       }
@@ -17,7 +15,6 @@
   ],
   "$defs": {
     "Prop": {
-      "description": "Una Prop hereda todo de Thing pero agrega propiedades de combate.",
       "allOf": [
         {
           "$ref": "./Thing.schema.json"

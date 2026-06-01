@@ -1,11 +1,11 @@
 ﻿namespace Adberration.Scripting
 {
-    // GoToAnimationFrameCommand
+    // GoToFrameIndexCommand
     // Arguments: {Entity} {FrameIndex:Integer}
-    internal sealed class GoToAnimationFrameCommand : NonAwaitableCommand
+    internal sealed class GoToFrameIndexCommand : NonAwaitableCommand
     {
         // Constructor
-        internal GoToAnimationFrameCommand(Script script, string source, StatementBody body)
+        internal GoToFrameIndexCommand(Script script, string source, StatementBody body)
             : base(script, source, body, 2)
         {
             AssertEntity<Entity>(0);

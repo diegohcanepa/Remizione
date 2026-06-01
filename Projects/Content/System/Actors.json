@@ -11,6 +11,17 @@
       "spawnLocation": "SideRoom"
     },
     {
+      "name": "FlyingSkull",
+      "difficulty": "Normal"
+    },    
+    {
+      "name": "Penitent",
+      "maxPackSize": 2,
+      "dropCoinChanceBonus": 0,
+      "preferredLootCategory": "Food",
+      "dropSackChanceBonus": 0.1
+    },
+    {
       "name": "Rat"
     },
     {

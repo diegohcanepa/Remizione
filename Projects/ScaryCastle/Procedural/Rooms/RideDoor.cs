@@ -173,7 +173,7 @@ namespace ScaryCastle
                             Color = new(240, 181, 65),
                             LightKind = LightKind.Default,
                             PivotOrigin = RectanglePoint.Center,
-                            Scale = new(9),
+                            Scale = new(3, 4)
                         };
 
                         AttachedLightPosition = new(16, 20);

@@ -47,6 +47,26 @@
       ]
     },
     {
+      "name": "FlyingSkull",
+      "archetype": "KamikazeFlyer",
+      "intents": [
+        {
+          "name": "Contact",
+          "soundTrigger": "RatAttack",
+          "usageMode": "ProximityAction",
+          "range": 50,
+          "effects": [
+            {
+              "context": "Contact",
+              "effectType": "Damage",
+              "amount": "1",
+              "comicText": "AghRed"
+            }
+          ]
+        }
+      ]
+    },    
+    {
       "name": "LootDropper",
       "archetype": "Lurker",
       "intents": [
@@ -78,6 +98,30 @@
         }
       ]
     },
+    {
+      "name": "Penitent",
+      "archetype": "Volatile",
+      "intents": [
+        {
+          "name": "Contact",
+          "usageMode": "ProximityAction",
+          "range": 500,
+          "effects": [
+            {
+              "context": "Contact",
+              "effectType": "Damage",
+              "amount": "2",
+              "comicText": "AghRed"
+            },
+            {
+              "context": "Contact",
+              "effectType": "Death",
+              "target": "Self"
+            }
+          ]
+        }
+      ]
+    },    
     {
       "name": "Rat",
       "archetype": "Lurker",

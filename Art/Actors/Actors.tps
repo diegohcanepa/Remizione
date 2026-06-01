@@ -538,6 +538,55 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">FlyingSkull-assets/Gut0.png</key>
+            <key type="filename">FlyingSkull-assets/Gut2.png</key>
+            <key type="filename">FlyingSkull-assets/Gut4.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,1,1</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,1,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">FlyingSkull-assets/Gut1.png</key>
+            <key type="filename">FlyingSkull-assets/Gut3.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,0,1,1</rect>
+                <key>scale9Paddings</key>
+                <rect>1,0,1,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">FlyingSkull-assets/Stand01.png</key>
+            <key type="filename">FlyingSkull-assets/Stand02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,2,8,4</rect>
+                <key>scale9Paddings</key>
+                <rect>4,2,8,4</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Grandma-assets/Stand01.png</key>
             <key type="filename">Grandma-assets/StandHead01.png</key>
             <key type="filename">Grandma-assets/StandHead02.png</key>
@@ -649,6 +698,25 @@
                 <rect>9,8,18,15</rect>
                 <key>scale9Paddings</key>
                 <rect>9,8,18,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Penitent-assets/Move01.png</key>
+            <key type="filename">Penitent-assets/Move02.png</key>
+            <key type="filename">Penitent-assets/Move03.png</key>
+            <key type="filename">Penitent-assets/Move04.png</key>
+            <key type="filename">Penitent-assets/Stand01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,4,10,9</rect>
+                <key>scale9Paddings</key>
+                <rect>5,4,10,9</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -814,55 +882,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Zabul-assets/Gut0.png</key>
-            <key type="filename">Zabul-assets/Gut2.png</key>
-            <key type="filename">Zabul-assets/Gut4.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,1,1,1</rect>
-                <key>scale9Paddings</key>
-                <rect>1,1,1,1</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Zabul-assets/Gut1.png</key>
-            <key type="filename">Zabul-assets/Gut3.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,0,1,1</rect>
-                <key>scale9Paddings</key>
-                <rect>1,0,1,1</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Zabul-assets/Stand01.png</key>
-            <key type="filename">Zabul-assets/Stand02.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,2,6,4</rect>
-                <key>scale9Paddings</key>
-                <rect>3,2,6,4</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
         </map>
         <key>fileLists</key>
         <map type="SpriteSheetMap">
@@ -878,7 +897,6 @@
                     <filename>Berta-assets</filename>
                     <filename>BloodyEye-assets</filename>
                     <filename>HellGoat-assets</filename>
-                    <filename>Zabul-assets</filename>
                     <filename>Designer-assets</filename>
                     <filename>Mandinga-assets</filename>
                     <filename>EnviousEye-assets</filename>
@@ -888,6 +906,8 @@
                     <filename>StinkyRat-assets</filename>
                     <filename>LootDropper-assets</filename>
                     <filename>AnabolicRat-assets</filename>
+                    <filename>FlyingSkull-assets</filename>
+                    <filename>Penitent-assets</filename>
                 </array>
             </struct>
         </map>

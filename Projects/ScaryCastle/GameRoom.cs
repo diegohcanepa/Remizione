@@ -30,7 +30,7 @@ namespace ScaryCastle
         private Color brightnessColor;
         private int currentDrawIndex;
         private readonly Color defaultPlayerLightColor = new(240, 181, 65);
-        private readonly Vector2 defaultPlayerLightScale = new(5, 4);
+        private readonly Vector2 defaultPlayerLightScale = new(3.5f);
         private static DustEmitter dustEmitter = null!;
         private static FireflyEmitter fireflyEmitter = null!;
         private RenderTarget2D? lightMapTarget;
@@ -306,6 +306,8 @@ namespace ScaryCastle
             // Follow player
             if (Session.Player != null && Session.Player.IsInCurrentRoom && FollowPlayer)
                 Session.Camera.Follow(Session.Player, true);
+
+            InvalidateAmbientLightSources();
         }
 
         // OnDraw
@@ -618,6 +620,18 @@ namespace ScaryCastle
 
         // Session
         public new GameSession Session { get; }
+
+        // TurnOffLights
+        public void TurnOffLights()
+        {
+            for (var i = 0; i < Children.Count; i++)
+            {
+                if (Children[i] is Prop prop && prop.IsAmbientLight)
+                    prop.IgnoreAttachedLight = true;
+            }
+
+            InvalidateAmbientLightSources();
+        }
 
         // TriggerAreas
         public RoomAreaReadOnlyCollection<TriggerArea> TriggerAreas { get; }

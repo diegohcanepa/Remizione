@@ -5,7 +5,7 @@
       "name": "Castle_Std_Corridor_01",
       "roomType": "Corridor",
       "doorUp": "130,72",
-      "leverPosition":"207,71",
+      "leverPosition": "207,71",
       "exitApproachPosition": "232,90",
       "exitHotspot": "231,35;231,85;244,95;244,41",
       "leftGatePosition": "16,34",
@@ -30,10 +30,63 @@
           "allowTags": "Pottery"
         },
         {
-          "position": "130,90",
+          "position": "70,95",
+          "placement": "Floor",
+          "fillChance": 0.1,
+          "allowTags": "Trap"
+        },
+        {
+          "position": "131,82",
           "placement": "Floor",
           "fillChance": 0.2,
           "allowTags": "Trap"
+        }
+      ],
+      "walkArea": "218,76;255,111;8,111;40,76",
+      "walls": [
+        "36,0;36,71;0,108;0,0",
+        "220,0;220,74;260,111;260,0"
+      ]
+    },
+    {
+      "name": "Castle_Std_Corridor_02",
+      "roomType": "Corridor",
+      "doorUp": "90,72",
+      "leverPosition": "178,71",
+      "exitApproachPosition": "232,90",
+      "exitHotspot": "231,35;231,85;244,95;244,41",
+      "leftGatePosition": "16,34",
+      "rightGatePosition": "232,34",
+      "bossPosition": "260,90",
+      "playerPosition": "30,90",
+      "placeholders": [
+        {
+          "position": "53,47",
+          "placement": "WallFrontHang",
+          "allowTags": "Torch"
+        },
+        {
+          "position": "130,57",
+          "fillChance": 0.3,
+          "placement": "WallFrontHang",
+          "allowTags": "WallDecoration"
+        },
+        {
+          "position": "193,44",
+          "fillChance": 0.3,
+          "placement": "WallFrontHang",
+          "allowTags": "WallDecoration"
+        },
+        {
+          "position": "162,47",
+          "placement": "WallFrontHang",
+          "allowTags": "Torch"
+        },
+        {
+          "position": "162,76",
+          "placement": "Floor",
+          "fillChance": 0.3,
+          "allowTags": "Pottery"
         }
       ],
       "walkArea": "218,76;255,111;8,111;40,76",
@@ -122,7 +175,7 @@
           "position": "170,17",
           "placement": "WallFrontHang",
           "allowTags": "Torch"
-        }        
+        }
       ],
       "walkArea": "238,157;4,156;36,91;93,91;111,56;192,57",
       "walls": [
@@ -189,7 +242,7 @@
           "position": "170,17",
           "placement": "WallFrontHang",
           "allowTags": "Torch"
-        }        
+        }
       ],
       "walkArea": "258,58;269,58;295,110;7,110;31,57;44,57;50,45;251,45"
     }

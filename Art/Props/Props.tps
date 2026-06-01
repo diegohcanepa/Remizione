@@ -189,6 +189,23 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">DevilCarvedFace-assets/DevilCarvedFace01.png</key>
+            <key type="filename">DevilCarvedFace-assets/DevilCarvedFace02.png</key>
+            <key type="filename">DevilCarvedFace-assets/DevilCarvedFace03.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,8,13,15</rect>
+                <key>scale9Paddings</key>
+                <rect>7,8,13,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Firecracker-assets/Firecracker01.png</key>
             <key type="filename">Firecracker-assets/Firecracker02.png</key>
             <key type="filename">Firecracker-assets/Firecracker03.png</key>
@@ -770,6 +787,23 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Vent-assets/Vent01.png</key>
+            <key type="filename">Vent-assets/Vent02.png</key>
+            <key type="filename">Vent-assets/Vent03.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,5,7,10</rect>
+                <key>scale9Paddings</key>
+                <rect>4,5,7,10</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">WaterPuddleA-assets/WaterPuddleA.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -846,6 +880,8 @@
                     <filename>Psalm-assets</filename>
                     <filename>CorridorLever-assets</filename>
                     <filename>Goo-assets</filename>
+                    <filename>DevilCarvedFace-assets</filename>
+                    <filename>Vent-assets</filename>
                 </array>
             </struct>
         </map>

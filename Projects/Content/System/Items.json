@@ -106,10 +106,11 @@
 		},
 		{
 			"name": "Lockpick",
+			"consumeVerb": "Consumed",
 			"usageMode": "Script",
 			"category": "Access",
 			"deselectOnUse": true,
-			"skillChance": 70,
+			"skillChance": 7,
 			"isStackable": true
 		},
 		{
@@ -139,6 +140,7 @@
 		},
 		{
 			"name": "RustyLockpick",
+			"consumeVerb": "Consumed",
 			"usageMode": "Script",
 			"category": "Access",
 			"deselectOnUse": true,

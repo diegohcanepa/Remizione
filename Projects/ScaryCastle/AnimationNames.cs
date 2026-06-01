@@ -5,6 +5,7 @@
     /// </summary>
     internal static class AnimationNames
     {
+        internal const string Charge = nameof(Charge);
         internal const string Death = nameof(Death);
         internal const string Default = nameof(Default);
         internal const string Hit = nameof(Hit);
