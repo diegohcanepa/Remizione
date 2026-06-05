@@ -40,6 +40,9 @@ namespace ScaryCastle
         // LogFileName
         public const string LogFileName = "ErrorLog.txt";
 
+        // MaxSkills
+        public const int MaxSkills = 2;
+
         // SteamAppID
         public const int SteamAppID = 480;
 

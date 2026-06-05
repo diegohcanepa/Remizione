@@ -63,7 +63,7 @@ namespace ScaryCastle
             if (lastKnownCount != inventory.Count)
             {
                 lastKnownCount = inventory.Count;
-                amountText.Text = $"{inventory.Count}/{inventory.Capacity}";
+                amountText.Text = $"{inventory.Count-GameSettings.MaxSkills}/{inventory.Capacity-GameSettings.MaxSkills}";
             }
         }
 

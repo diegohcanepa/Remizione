@@ -13,7 +13,8 @@ namespace ScaryCastle
         public Pottery(GameSession session, string name)
             : base(session, name)
         {
-            ApproachBehavior = ApproachBehavior.FaceToFace;
+            ApproachBehavior = ApproachBehavior.ClosestSide;
+            ApproachOnDefaultOutcome = false;
             IsHittable = true;
             DeathSound = Sound.Find(SoundNames.PotteryBreak);
             DepthOffset = -2;

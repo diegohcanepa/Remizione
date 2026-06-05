@@ -51,6 +51,9 @@ namespace ScaryCastle
             // IsDepletable
             IsDepletable = element.GetBool("isDepletable", true);
 
+            // IsSkill
+            IsSkill = element.GetBool("isSkill", false);
+
             // IsStackable
             IsStackable = element.GetBool("isStackable", false);
 
@@ -104,6 +107,12 @@ namespace ScaryCastle
 
             IsPassive = LightModifier != 0 || LuckModifier != 0;
 
+            if (IsSkill)
+            {
+                IsDepletable = false;
+                IsStackable = false;
+            }
+
             if (UsageMode == ItemUsageMode.ProjectileAction && Projectile == null)
                 RaiseValidationError(this, "Items with Projectile usage mode must have a Projectile defined.", nameof(UsageMode));
 
@@ -153,6 +162,9 @@ namespace ScaryCastle
 
         // IsPassive
         public bool IsPassive { get; }
+
+        // IsSkill
+        public bool IsSkill { get; }
 
         // IsStackable
         public bool IsStackable { get; }

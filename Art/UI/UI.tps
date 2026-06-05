@@ -189,7 +189,6 @@
                 <false/>
             </struct>
             <key type="filename">BossMeter-assets/BossMeterAmount.png</key>
-            <key type="filename">Items-assets/Coin.png</key>
             <key type="filename">UIIcons-assets/Dice.png</key>
             <key type="filename">XboxControls-assets/XboxA.png</key>
             <key type="filename">XboxControls-assets/XboxB.png</key>
@@ -207,114 +206,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Inventory-assets/InventoryCategoryContainer.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>15,2,30,3</rect>
-                <key>scale9Paddings</key>
-                <rect>15,2,30,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Inventory-assets/InventoryCategoryNotEmpty.png</key>
-            <key type="filename">UI-assets/SpeechBubbleCloseArrow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,1,1,1</rect>
-                <key>scale9Paddings</key>
-                <rect>1,1,1,1</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Inventory-assets/InventoryContainer.png</key>
-            <key type="filename">UI-assets/DialogBlockContainer.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>60,13,120,27</rect>
-                <key>scale9Paddings</key>
-                <rect>60,13,120,27</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Inventory-assets/InventoryGridContainer.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>31,21,62,43</rect>
-                <key>scale9Paddings</key>
-                <rect>31,21,62,43</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Inventory-assets/InventoryInfoContainer.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>23,21,46,43</rect>
-                <key>scale9Paddings</key>
-                <rect>23,21,46,43</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Inventory-assets/InventoryInfoTitleContainer.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>20,2,40,4</rect>
-                <key>scale9Paddings</key>
-                <rect>20,2,40,4</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Inventory-assets/InventoryNavigationBar.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>22,2,44,5</rect>
-                <key>scale9Paddings</key>
-                <rect>22,2,44,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Inventory-assets/InventorySlot.png</key>
+            <key type="filename">Inventory-assets/InventoryItemSlot.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -329,38 +221,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Inventory-assets/InventorySlotLockIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,3,4</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,3,4</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Inventory-assets/InventorySlotQuestionIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>14,3,27,5</rect>
-                <key>scale9Paddings</key>
-                <rect>14,3,27,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Inventory-assets/ItemGridSlot.png</key>
-            <key type="filename">Inventory-assets/ItemGridSlotSelected.png</key>
+            <key type="filename">Inventory-assets/InventorySkillSlot.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -407,16 +268,11 @@
             </struct>
             <key type="filename">Items-assets/Apple.png</key>
             <key type="filename">Items-assets/Battery.png</key>
-            <key type="filename">Items-assets/Burger.png</key>
             <key type="filename">Items-assets/Chili.png</key>
             <key type="filename">Items-assets/Duck.png</key>
-            <key type="filename">Items-assets/Firecracker.png</key>
-            <key type="filename">Items-assets/Lantern.png</key>
-            <key type="filename">Items-assets/MagneticCard.png</key>
             <key type="filename">Items-assets/MissingItem.png</key>
             <key type="filename">Items-assets/RottenApple.png</key>
             <key type="filename">Items-assets/RustyLockpick.png</key>
-            <key type="filename">Items-assets/SteelLockpick.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -432,13 +288,19 @@
                 <false/>
             </struct>
             <key type="filename">Items-assets/BargainCross.png</key>
+            <key type="filename">Items-assets/Burger.png</key>
+            <key type="filename">Items-assets/Coin.png</key>
+            <key type="filename">Items-assets/Firecracker.png</key>
             <key type="filename">Items-assets/GoldenKey.png</key>
             <key type="filename">Items-assets/GooBottle.png</key>
             <key type="filename">Items-assets/Headbutt.png</key>
+            <key type="filename">Items-assets/Lantern.png</key>
             <key type="filename">Items-assets/Lift.png</key>
             <key type="filename">Items-assets/Lockpick.png</key>
+            <key type="filename">Items-assets/MagneticCard.png</key>
             <key type="filename">Items-assets/Pistol.png</key>
             <key type="filename">Items-assets/SodaCan.png</key>
+            <key type="filename">Items-assets/SteelLockpick.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -739,6 +601,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">UI-assets/DialogBlockContainer.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>60,13,120,27</rect>
+                <key>scale9Paddings</key>
+                <rect>60,13,120,27</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">UI-assets/DialogOptionBullet.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -847,6 +724,21 @@
                 <rect>7,7,13,13</rect>
                 <key>scale9Paddings</key>
                 <rect>7,7,13,13</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">UI-assets/SpeechBubbleCloseArrow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,1,1</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,1,1</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

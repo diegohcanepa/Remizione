@@ -22,8 +22,8 @@ namespace ScaryCastle
         private static readonly FloatTween opacityTween = FloatTween.Create(TweenStyle.CubicInOut, 1, .5f, 500, -1);
         private static readonly Vector2Tween scaleTween = new();
         private static readonly FloatTween shakeTween = new();
+        private static readonly TextSprite subTextSprite;
         private static readonly TextSprite textSprite;
-        private static readonly TextSprite textSprite2;
 
         #endregion
 
@@ -57,9 +57,8 @@ namespace ScaryCastle
             };
 
             // Text sprite 2
-            textSprite2 = new(Fonts.CommonOutline)
+            subTextSprite = new(Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.GreenLight,
                 Scale = ScaleInfo.Text.Large
             };
 
@@ -81,10 +80,10 @@ namespace ScaryCastle
             textSprite.PivotOrigin = RectanglePoint.LeftTop;
             textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, -offset, -offset);
 
-            if (!textSprite2.IsEmpty)
+            if (!subTextSprite.IsEmpty)
             {
-                textSprite2.PivotOrigin = textSprite.PivotOrigin;
-                textSprite2.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -1.5f);
+                subTextSprite.PivotOrigin = textSprite.PivotOrigin;
+                subTextSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -1.5f);
             }
 
             if (!textSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox))
@@ -92,10 +91,10 @@ namespace ScaryCastle
                 textSprite.PivotOrigin = RectanglePoint.RightTop;
                 textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom, offset, -offset);
 
-                if (!textSprite2.IsEmpty)
+                if (!subTextSprite.IsEmpty)
                 {
-                    textSprite2.PivotOrigin = textSprite.PivotOrigin;
-                    textSprite2.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -1.5f);
+                    subTextSprite.PivotOrigin = textSprite.PivotOrigin;
+                    subTextSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -1.5f);
                 }
             }
 
@@ -103,9 +102,9 @@ namespace ScaryCastle
             {
                 textSprite.Y -= 10;
             
-                if (!textSprite2.IsEmpty)
+                if (!subTextSprite.IsEmpty)
                 {
-                    textSprite2.Y -= (7 + textSprite.BoundingBox.Height + textSprite2.BoundingBox.Height);
+                    subTextSprite.Y -= (7 + textSprite.BoundingBox.Height + subTextSprite.BoundingBox.Height);
                 }
             }
         }
@@ -158,7 +157,7 @@ namespace ScaryCastle
             {
                 EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera);
                 textSprite.Draw(gameTime);
-                textSprite2.Draw(gameTime);
+                subTextSprite.Draw(gameTime);
 
                 EngendroGame.Instance.SpriteBatch.End();
             }
@@ -182,7 +181,7 @@ namespace ScaryCastle
                     field = value;
                     cursorSprite.Opacity = value ? 1 : .4f;
                     textSprite.Opacity = cursorSprite.Opacity;
-                    textSprite2.Opacity = cursorSprite.Opacity;
+                    subTextSprite.Opacity = cursorSprite.Opacity;
                 }
             }
         } = true;
@@ -207,14 +206,14 @@ namespace ScaryCastle
         {
             cursorSprite.Color = Color.White;
             textSprite.Color = ColorPalette.Text.Sentence;
-            textSprite2.Color = ColorPalette.Text.Green;
+            subTextSprite.Color = ColorPalette.Text.Gold;
             CustomImage = null;
             FlipCustomImage = false;
             HightlightColor = null;
             IsEnabled = true;
             State = MouseCursorState.Arrow;
             Text = null;
-            Text2 = null;
+            SubText = null;
         }
 
         // Shake
@@ -238,18 +237,18 @@ namespace ScaryCastle
             }
         }
 
+        // SubText
+        public static string? SubText
+        {
+            get => subTextSprite.Text;
+            set => subTextSprite.Text = value;
+        }
+
         // Text
         public static string? Text
         {
             get => textSprite.Text;
             set => textSprite.Text = value;
-        }
-
-        // Text2
-        public static string? Text2
-        {
-            get => textSprite2.Text;
-            set => textSprite2.Text = value;
         }
 
         // TextColor

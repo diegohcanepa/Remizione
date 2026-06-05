@@ -63,6 +63,9 @@
             "isDepletable": {
               "type": "boolean"
             },
+            "isSkill": {
+              "type": "boolean"
+            },
             "isStackable": {
               "type": "boolean"
             },

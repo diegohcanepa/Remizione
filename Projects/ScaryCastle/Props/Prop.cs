@@ -28,14 +28,6 @@ namespace ScaryCastle
             this.IsHittable = false;
             this.Definition = PropDefinition.Definitions.Find(DeclaredName);
 
-            // Assign defaults from definition if available
-            if (Definition != null)
-            {
-                this.DropMode = Definition.DropMode;
-                this.DropCoinChanceBonus = Definition.DropCoinChanceBonus;
-                this.DropSackChanceBonus = Definition.DropSackChanceBonus;
-            }
-
             // Shadow
             this.shadow = new Sprite()
             {

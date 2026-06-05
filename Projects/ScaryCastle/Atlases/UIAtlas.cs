@@ -24,13 +24,8 @@ namespace ScaryCastle
             GooIcon = this[nameof(GooIcon)];
             GooIcons = CreateReadOnlyCollection(nameof(GooIcons), 1, 2);
             GreenHearts = CreateReadOnlyCollection(nameof(GreenHearts), 1, 4);
-            InventorySlot = this[nameof(InventorySlot)];
-            InventoryGridContainer = this[nameof(InventoryGridContainer)];
-            InventoryInfoContainer = this[nameof(InventoryInfoContainer)];
-            InventoryInfoTitleContainer = this[nameof(InventoryInfoTitleContainer)];
-            InventoryNavigationBar = this[nameof(InventoryNavigationBar)];
-            ItemGridSlot = this[nameof(ItemGridSlot)];
-            ItemGridSlotSelected = this[nameof(ItemGridSlotSelected)];
+            InventoryItemSlot = this[nameof(InventoryItemSlot)];
+            InventorySkillSlot = this[nameof(InventorySkillSlot)];
             MessageContainer = this[nameof(MessageContainer)];
             PickupShadow = this[nameof(PickupShadow)];
             Pixel = this[nameof(Pixel)];
@@ -88,26 +83,11 @@ namespace ScaryCastle
         // GreenHearts
         public ReadOnlyCollection<AtlasImage> GreenHearts { get; }
 
-        // InventorySlot
-        public AtlasImage InventorySlot { get; }
+        // InventoryItemSlot
+        public AtlasImage InventoryItemSlot { get; }
 
-        // InventoryGridContainer
-        public AtlasImage InventoryGridContainer { get; }
-
-        // InventoryInfoContainer
-        public AtlasImage InventoryInfoContainer { get; }
-
-        // InventoryInfoTitleContainer
-        public AtlasImage InventoryInfoTitleContainer { get; }
-
-        // InventoryNavigationBar
-        public AtlasImage InventoryNavigationBar { get; }
-
-        // ItemGridSlot
-        public AtlasImage ItemGridSlot { get; }
-
-        // ItemGridSlotSelected
-        public AtlasImage ItemGridSlotSelected { get; }
+        // InventorySkillSlot
+        public AtlasImage InventorySkillSlot { get; }
 
         // MessageContainer
         public AtlasImage MessageContainer { get; }

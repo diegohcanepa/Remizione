@@ -16,7 +16,6 @@ namespace ScaryCastle
             : base(session, name)
         {
             Atlas = Atlases.Props;
-            IsAttackable = true;
         }
 
         #region Protected members

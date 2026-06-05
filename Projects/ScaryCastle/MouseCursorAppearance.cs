@@ -81,17 +81,20 @@ namespace ScaryCastle
 
             if (context.Target != null)
             {
-                if (context.Target.Faction == Faction.Evil && context.Target.ItemReward != null)
+                if (context.Target.Faction == Faction.Evil && context.Target is Actor)
                 {
                     if (context.Target.ItemReward != null)
-                        MouseCursor.Text2 = context.Target.ItemReward.DisplayName;
+                    {
+                        MouseCursor.SubText = context.Target.ItemReward.DisplayName;
+                    }
+                    else if ( (context.Target as IThingDefinition)?.Definition?.DropTrigger == LootDropTrigger.OnImpact)
+                    {
+                        MouseCursor.SubText = "[?]";
+                    }
                 }
 
                 // No item 
-                if (context.HeldItem == null)
-                    MouseCursor.Text = context.Target.DisplaySentence;
-                else
-                    MouseCursor.Text = $"{useWith} {context.Target.DisplayName}";
+                MouseCursor.Text = context.Target.DisplaySentence;
             }
         }
 
@@ -107,8 +110,8 @@ namespace ScaryCastle
 
             if (context.Target != null)
             {
-                if (context.Target.Faction == Faction.Evil && context.Target.IsAttackable && context.HeldItem == null)
-                    MouseCursor.Color = ColorPalette.MouseCursor.AttackableTarget;
+                if (context.Target.Faction == Faction.Evil && context.Target.IsHostile && context.HeldItem == null)
+                    MouseCursor.Color = ColorPalette.MouseCursor.HostileTarget;
 
                 MouseCursor.IsEnabled = context.Session.Player?.ActiveThrowable == null;
                 MouseCursor.HightlightColor = ColorPalette.MouseCursor.HighlightWhite;

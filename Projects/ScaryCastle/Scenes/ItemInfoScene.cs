@@ -10,6 +10,7 @@ namespace ScaryCastle
     /// </summary>
     public sealed class ItemInfoScene : Scene
     {
+        private bool allowDiscard;
         private readonly UIButton button;
         private readonly Sprite container;
         private readonly Sprite image;
@@ -129,19 +130,23 @@ namespace ScaryCastle
             descriptionText.Draw(gameTime);
             Game.SpriteBatch.End();
 
-            button.Draw(gameTime);
+            if (allowDiscard)
+                button.Draw(gameTime);
         }
 
         // OnHandleInput
         protected override HandleInputResult OnHandleInput()
         {
-            if (button.TestPressed(PlayerIndex.One))
+            if (allowDiscard)
             {
-                item?.Remove();
-                session.InteractionContext.HeldItem = null;
-                session.TextHUD.Message.Show(MessageKind.ItemDiscarded);
-                Game.SceneManager.Pop();
-                return HandleInputResult.Handled;
+                if (button.TestPressed(PlayerIndex.One))
+                {
+                    item?.Remove();
+                    session.InteractionContext.HeldItem = null;
+                    session.TextHUD.Message.Show(MessageKind.ItemDiscarded);
+                    Game.SceneManager.Pop();
+                    return HandleInputResult.Handled;
+                }
             }
 
             if (HandleMouseInput())
@@ -162,7 +167,9 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            button.Update(gameTime);
+            if (allowDiscard)
+                button.Update(gameTime);
+
             itemNameText.Update(gameTime);
             descriptionText.Update(gameTime);
         }
@@ -173,8 +180,9 @@ namespace ScaryCastle
         public void Show(Item item)
         {
             this.item = item;
-            itemNameText.Text = item.Definition.DisplayName;
-            descriptionText.Text = item.Definition.Description;
+            this.allowDiscard = !item.Definition.IsSkill;
+            this.itemNameText.Text = item.Definition.DisplayName;
+            this.descriptionText.Text = item.Definition.Description;
             this.imageShadow.RenderImage = item.Definition.Image;
             this.image.RenderImage = item.Definition.Image;
             MouseCursor.State = MouseCursorState.Arrow;

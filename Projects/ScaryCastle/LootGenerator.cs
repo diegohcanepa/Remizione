@@ -181,22 +181,28 @@ namespace ScaryCastle
         // RollForCoin
         public int RollForCoin(GameThing thing)
         {
+            if ((thing as IThingDefinition)?.Definition is not { } def)
+                return 0;
+
             // 1. FILTRO DE INSTANCIA: Si el bicho está seteado para no dar nada o solo dar bolsa, abortamos.
-            if (thing.DropMode is LootDropMode.None or LootDropMode.SackOnly or LootDropMode.Custom)
+            if (def.DropMode is LootDropMode.None or LootDropMode.SackOnly or LootDropMode.Custom)
                 return 0;
 
             if (thing is not IThingDefinition t || t.Definition == null || session.Room is not ProceduralRoom room)
                 return 0;
 
             // 2. Calculamos la cantidad pasando el multiplicador de la instancia
-            return RollCoinAmount(t.Definition, thing.DropCoinChanceBonus);
+            return RollCoinAmount(t.Definition, def.DropCoinChanceBonus);
         }
 
         // RollForLoot
         public ItemDefinition? RollForLoot(GameThing thing, bool guaranteeDrop = false)
         {
+            if ((thing as IThingDefinition)?.Definition is not { } def)
+                return null;
+
             // 1. Validaciones de estado (Bánatelo rápido)
-            if (thing.DropMode is LootDropMode.None or LootDropMode.CoinsOnly)
+            if (def.DropMode is LootDropMode.None or LootDropMode.CoinsOnly)
                 return null;
 
             if (thing is not IThingDefinition t || t.Definition == null || session.Room is not ProceduralRoom room)
@@ -204,7 +210,7 @@ namespace ScaryCastle
 
             // 2. Lógica de Garantía (Usamos un valor centinela como 1.0 o una flag)
             // Si el bonus es 1.0 (100%) o más, es drop garantizado.
-            if (thing.DropSackChanceBonus >= 1.0f)
+            if (def.DropSackChanceBonus >= 1.0f)
                 guaranteeDrop = true;
 
             if (!guaranteeDrop)
@@ -227,7 +233,7 @@ namespace ScaryCastle
 
                 // Bonus de la instancia (Aquí es donde sumas tu 0.30f si quieres un +30%)
                 // IMPORTANTE: Cambia mentalmente 'Multiplier' por 'Bonus'
-                chance += thing.DropSackChanceBonus;
+                chance += def.DropSackChanceBonus;
 
                 // 5. El "Roll" con Cap
                 // Nunca dejamos que sea 100% a menos que sea guaranteeDrop explícito
@@ -238,7 +244,7 @@ namespace ScaryCastle
             }
 
             // 6. Selección de Item
-            if (thing.DropMode == LootDropMode.Custom && !string.IsNullOrEmpty(thing.CustomDropName))
+            if (def.DropMode == LootDropMode.Custom && !string.IsNullOrEmpty(thing.CustomDropName))
                 return ItemDefinition.Definitions.Find(thing.CustomDropName);
 
             return GetLoot(room.RoomNode, t.Definition.PreferredLootRealm, t.Definition.PreferredLootCategory, null, t.Definition.QualityBoost, guaranteeDrop);

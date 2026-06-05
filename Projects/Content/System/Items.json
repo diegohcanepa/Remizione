@@ -101,7 +101,7 @@
 			"name": "Headbutt",
 			"usageMode": "ProximityAction",
 			"category": "Misc",
-			"isDepletable": false
+			"isSkill": true
 		},
 		{
 			"name": "Lantern",
@@ -114,7 +114,7 @@
 			"name": "Lift",
 			"usageMode": "ProximityAction",
 			"category": "Misc",
-			"isDepletable": false
+			"isSkill": true
 		},
 		{
 			"name": "Lockpick",

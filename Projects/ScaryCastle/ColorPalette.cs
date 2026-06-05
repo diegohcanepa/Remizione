@@ -64,11 +64,11 @@ namespace ScaryCastle
         // MouseCursor
         internal static class MouseCursor
         {
-            // AttackableTarget
-            internal static Color AttackableTarget { get; } = Text.TerraLight;
-
             // HighlightWhite
             internal static Vector4 HighlightWhite { get; } = (Color.White * .75f).ToVector4();
+
+            // HostileTarget
+            internal static Color HostileTarget { get; } = Text.TerraLight;
         }
 
         // OutdoorLight
@@ -102,6 +102,7 @@ namespace ScaryCastle
             internal static Color Default { get; } = new(163, 167, 194);
             internal static Color Disabled { get; } = new(80, 76, 76);
             internal static Color Fill { get; } = new(15, 42, 63);
+            internal static Color Gold { get; } = new(240, 181, 65);
             internal static Color Green { get; } = new(59, 125, 79);
             internal static Color GreenLight { get; } = new(99, 171, 63);
             internal static Color Highlight { get; } = new(190, 170, 150);

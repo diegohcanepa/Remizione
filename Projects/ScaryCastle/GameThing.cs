@@ -670,6 +670,9 @@ namespace ScaryCastle
         [ScriptProperty]
         public ApproachBehavior ApproachBehavior { get; set; }
 
+        // ApproachOnDefaultOutcome
+        public bool ApproachOnDefaultOutcome { get; set; } = true;
+
         // ApproachPosition
         [ScriptProperty]
         public Vector2 ApproachPosition { get; set; }
@@ -918,16 +921,6 @@ namespace ScaryCastle
                 OnDrawShadow(gameTime);
         }
 
-        // DropMode
-        [ScriptProperty]
-        public LootDropMode DropMode { get; set; } = LootDropMode.Standard;
-
-        // DropCoinChanceBonus
-        public Ratio DropCoinChanceBonus { get; set; }
-
-        // DropSackChanceBonus
-        public Ratio DropSackChanceBonus { get; set; }
-
         // FaceTo
         public void FaceTo(GameThing target)
         {
@@ -1096,7 +1089,6 @@ namespace ScaryCastle
             }
         } = PlacementMode.Relative;
 
-
         // HP
         [ScriptProperty]
         public int HP
@@ -1148,10 +1140,6 @@ namespace ScaryCastle
         // IgnoreWalkArea
         [ScriptProperty]
         public bool IgnoreWalkArea { get; set; } = true;
-
-        // IsAttackable
-        [ScriptProperty]
-        public bool IsAttackable { get; set; }
 
         // IsBehind
         public bool IsBehind(GameThing thing)
@@ -1207,6 +1195,10 @@ namespace ScaryCastle
         [ScriptProperty]
         public bool IsHittable { get; set; } = true;
 
+        // IsHostile
+        [ScriptProperty]
+        public bool IsHostile { get; set; }
+
         // IsMouseOver
         public bool IsMouseOver()
         {
@@ -1242,6 +1234,7 @@ namespace ScaryCastle
         public Vector2 OverheadOrigin { get; set; }
 
         // PrecalculateLoot
+        [ScriptProperty]
         public bool PrecalculateLoot { get; set; }
 
         // Reheal

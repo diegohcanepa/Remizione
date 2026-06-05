@@ -84,14 +84,6 @@ namespace ScaryCastle
             }
 
             ShadowSpotSize = 6;
-
-            // Assign defaults from definition if available
-            if (Definition != null)
-            {
-                this.DropMode = Definition.DropMode;
-                this.DropCoinChanceBonus = Definition.DropCoinChanceBonus;
-                this.DropSackChanceBonus = Definition.DropSackChanceBonus;
-            }
         }
 
         #endregion
@@ -153,7 +145,7 @@ namespace ScaryCastle
         // React
         private void React()
         {
-            if (IsPlayer || !IsAttackable)
+            if (IsPlayer || !IsHostile)
                 return;
 
             if (Brain.Decide(this, Session.Player) is CombatDecision decision && decision.Target is { } target)
@@ -518,7 +510,7 @@ namespace ScaryCastle
                     DropLoot();
 
                 Faction = Faction.Evil;
-                IsAttackable = true;
+                IsHostile = true;
             }
 
             Session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);
@@ -943,7 +935,7 @@ namespace ScaryCastle
                 return false;
             }
 
-            if (item?.Definition.UsageMode is ItemUsageMode.SelfAction or ItemUsageMode.InPlaceAction)
+            if (!target.ApproachOnDefaultOutcome || (item?.Definition.UsageMode is ItemUsageMode.SelfAction or ItemUsageMode.InPlaceAction))
             {
                 HandlePendingInteraction();
             }
