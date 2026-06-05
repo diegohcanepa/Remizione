@@ -19,6 +19,10 @@ namespace ScaryCastle
         // que el Brain deba elegir (es pasivo). Pero un lurker SÍ.
         public virtual bool ConsiderContactAsIntent => false;
 
+        // CooldownUnit
+        // La unidad de tiempo para el cooldown entre decisiones.
+        public virtual CombatArchetypeCooldownUnit CooldownUnit => CombatArchetypeCooldownUnit.Clicks;
+
         // FleeChance
         // Probabilidad de que efectivamente huya una vez herido.
         public abstract Ratio FleeChance { get; }

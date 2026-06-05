@@ -74,7 +74,7 @@ namespace ScaryCastle
 
                     // Condition
                     case EffectType.Condition:
-                        realTarget?.ApplyCondition(effect.Condition, amount, effect.ComicText);
+                        (realTarget as Actor)?.ApplyCondition(effect.Condition, amount, effect.ComicText);
                         break;
 
                     // Damage

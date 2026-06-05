@@ -17,6 +17,9 @@ namespace ScaryCastle
         #region Private fields
 
         private Sprite? activeThrowableSprite;
+        private int conditionTimer;
+        private const int contactCooldown = 500;
+        private int contactTimer;
         private readonly List<AtlasImage>? customGuts;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
@@ -25,7 +28,7 @@ namespace ScaryCastle
         private readonly FloatTween moveBalancingTween = new();
         private readonly FloatTween moveVerticalTween = new();
         private readonly List<Vector2> pendingPathNodes = [];
-        private int reactionTimer;
+        private int reactionCounter;
         private SpeechBubble? speechBubble;
 
         #endregion
@@ -45,6 +48,8 @@ namespace ScaryCastle
             this.IgnoreWalkArea = false;
             this.Faction = Definition == null ? Faction.Good : Definition.Faction;
             this.PrecalculateLoot = true;
+            this.CombatBehavior = CombatBehavior.Behaviors.Find(DeclaredName);
+            this.ContactIntent = CombatBehavior?.Intents.Find(EffectContext.Contact.ToString());
 
             headSprite = new AnimatedSprite()
             {
@@ -188,6 +193,59 @@ namespace ScaryCastle
             }
         }
 
+        // TryInflictContactDamage
+        protected virtual void TryInflictContactDamage(GameThing target)
+        {
+            if (ContactIntent != null)
+                EffectDescriptor.Apply(ContactIntent.EffectDescriptors, this, target, EffectContext.Contact);
+        }
+
+        // UpdateCondition
+        private void UpdateCondition(GameTime gameTime)
+        {
+            if (Condition == ConditionType.None)
+                return;
+
+            if (conditionTimer > 0)
+            {
+                conditionTimer -= gameTime.ElapsedGameTime.Milliseconds;
+
+                if (conditionTimer <= 0)
+                {
+                    conditionTimer = 0;
+
+                    if (ConditionAmount > 0)
+                    {
+                        ConditionAmount -= 1;
+                        HP -= 1;
+                        conditionTimer = GameSettings.ConditionCooldown;
+                        Sound.Play(SoundNames.StatusEffectDamage);
+                        ShowComicText(ComicTextKind.AghGreen);
+                    }
+                }
+            }
+        }
+
+        // UpdateContactIntent
+        private bool UpdateContactIntent(GameTime gameTime)
+        {
+            if (contactTimer > 0)
+            {
+                contactTimer -= gameTime.ElapsedGameTime.Milliseconds;
+            }
+            else if (Session.Player != null && IsMoving)
+            {
+                if (RuntimeCollider.Contains(Session.Player.Position))
+                {
+                    TryInflictContactDamage(Session.Player);
+                    contactTimer = 500;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         // UpdateDirection
         private void UpdateDirection()
         {
@@ -227,8 +285,8 @@ namespace ScaryCastle
             footstepLastUsedFrame = Sprite.Player.Frame;
         }
 
-        // UpdateReactionTimer
-        private void UpdateReactionTimer(GameTime gameTime)
+        // UpdateReactionCounter
+        private void UpdateReactionCounter(GameTime gameTime)
         {
             // Can use brain?
             if (IsPlayer || CombatBehavior == null || Faction == Faction.Good || IsDead)
@@ -241,11 +299,11 @@ namespace ScaryCastle
             if (Session.IsAwaiting && Session.AwaitingScript != null && !Session.AwaitingScript.Interruptible)
                 return;
 
-            reactionTimer -= gameTime.ElapsedGameTime.Milliseconds;
-            if (reactionTimer <= 0)
+            reactionCounter -= gameTime.ElapsedGameTime.Milliseconds;
+            if (reactionCounter <= 0)
             {
                 React();
-                reactionTimer = CombatBehavior.Archetype.GetNextCooldown();
+                reactionCounter = CombatBehavior.Archetype.GetNextCooldown();
             }
         }
 
@@ -314,8 +372,8 @@ namespace ScaryCastle
         {
             base.OnActivate();
 
-            if (reactionTimer <= 0)
-                reactionTimer = CombatBehavior?.Archetype.GetNextCooldown() ?? 2000;
+            if (reactionCounter <= 0)
+                reactionCounter = CombatBehavior?.Archetype.GetNextCooldown() ?? 2000;
         }
 
         // OnCollisioning
@@ -482,6 +540,7 @@ namespace ScaryCastle
         protected override void OnStopMoving()
         {
             base.OnStopMoving();
+            contactTimer = contactCooldown;
             FastMove = false;
             moveVerticalTween.Stop();
             moveBalancingTween.Stop();
@@ -523,6 +582,9 @@ namespace ScaryCastle
         {
             base.OnUpdate(gameTime);
 
+            if (!UpdateContactIntent(gameTime))
+                UpdateCondition(gameTime);
+
             headTween.Update(gameTime);
 
             if (AnimationSettings.DetachedHead)
@@ -535,7 +597,7 @@ namespace ScaryCastle
             UpdateFootstep();
             footstepEffect?.Update(gameTime);
             BodyMachine.Update(gameTime);
-            UpdateReactionTimer(gameTime);
+            UpdateReactionCounter(gameTime);
 
             if (!Session.IsAwaiting && !IsMoving)
             {
@@ -659,6 +721,89 @@ namespace ScaryCastle
         // AnimationSettings
         public ActorAnimationSettings AnimationSettings { get; } = new();
 
+        // ApplyCondition
+        public void ApplyCondition(ConditionType condition, int amount, ComicTextKind comicTextKind)
+        {
+            // 1. Clear
+            if (condition == ConditionType.None)
+            {
+                ClearCondition();
+                return;
+            }
+
+            // 2. Chromatic aberration
+            if (condition == ConditionType.ChromaticAberration)
+            {
+                Session.PerformChromaticAberration();
+                return;
+            }
+
+            // 3. Coin loss
+            if (condition == ConditionType.CoinLoss)
+            {
+                if (Session.Player == this)
+                {
+                    if (Session.PlayerInventory.Find(nameof(Coin)) is Item coin)
+                    {
+                        coin.Amount--;
+                        Sound.Play(SoundNames.CoinLoss);
+                        Session.TextHUD.Log.Show(LogVerb.Lost, coin.Definition, true);
+                    }
+                }
+
+                return;
+            }
+
+            // 4. Si el efecto entrante es Maldición: PISA el veneno o SE SUMA a una maldición previa.
+            if (condition == ConditionType.Curse)
+            {
+                if (Condition != ConditionType.Curse)
+                {
+                    Condition = ConditionType.Curse;
+                    ConditionAmount = amount;
+                    conditionTimer = GameSettings.ConditionCooldown;
+                }
+                else
+                {
+                    ConditionAmount += amount; // Ya estaba maldito, se acumula.
+                    if (ConditionAmount > HP)
+                        HP -= 1;
+                }
+
+                if (Session.Player == this)
+                    Session.ObjectPools.FloatingTexts.Get()?.ShowAmount(this, ColorPalette.Condition.Curse, amount);
+            }
+
+            // 5. Si el efecto entrante es Veneno: Solo importa si no estás maldito.
+            if (condition == ConditionType.Poison && Condition != ConditionType.Curse)
+            {
+                if (Condition != ConditionType.Poison)
+                {
+                    Condition = ConditionType.Poison;
+                    ConditionAmount = amount;
+                    conditionTimer = GameSettings.ConditionCooldown;
+                }
+                else
+                {
+                    ConditionAmount += amount; // Ya estaba envenenado, se acumula.
+                    if (ConditionAmount > HP)
+                        HP -= 1;
+                }
+
+                if (Session.Player == this)
+                    Session.ObjectPools.FloatingTexts.Get()?.ShowAmount(this, ColorPalette.Condition.Poison, amount);
+            }
+
+            // ComicText si hubo daño real
+            if (comicTextKind != ComicTextKind.None)
+            {
+                if (!IsDead || DeathWord == ComicTextKind.None)
+                    ShowComicText(comicTextKind);
+            }
+
+            OnApplyCondition(condition, amount);
+        }
+
         // BodySize
         public BodySize BodySize { get; set; } = BodySize.Medium;
 
@@ -686,6 +831,38 @@ namespace ScaryCastle
                 return base.CanTakeDamage();
             }
         }
+
+        // ClearCondition
+        public void ClearCondition()
+        {
+            this.Condition = ConditionType.None;
+            this.ConditionAmount = 0;
+        }
+
+        // CombatBehavior
+        public CombatBehavior? CombatBehavior { get; }
+
+        // Condition
+        public ConditionType Condition { get; private set; }
+
+        // ConditionAmount
+        [ScriptProperty]
+        public int ConditionAmount
+        {
+            get;
+            private set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    if (field < 0)
+                        field = 0;
+                }
+            }
+        }
+
+        // ContactIntent
+        public CombatIntent? ContactIntent { get; }
 
         // DiscardActiveThrowable
         [ScriptMethod]
@@ -753,7 +930,7 @@ namespace ScaryCastle
         // ForceReaction
         public void ForceReaction()
         {
-            reactionTimer = 1;
+            reactionCounter = 1;
         }
 
         // GetActiveThrowablePosition

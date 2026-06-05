@@ -18,9 +18,6 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly Blinker<bool> blinker = new(false, true);
-        private int conditionTimer;
-        private const int contactCooldown = 500;
-        private int contactTimer;
         private bool dieCalled;
         private FloatTween? floatingTween;
         private readonly Polygon holePoly = new();
@@ -48,8 +45,6 @@ namespace ScaryCastle
             this.Session = session;
             this.ResistanceTableName = DeclaredName;
             this.shadowSpot = new ShadowSpot(this);
-            this.CombatBehavior = CombatBehavior.Behaviors.Find(DeclaredName);
-            this.ContactIntent = CombatBehavior?.Intents.Find(EffectContext.Contact.ToString());
         }
 
         #endregion
@@ -233,52 +228,6 @@ namespace ScaryCastle
             }
         }
 
-        // UpdateCondition
-        private void UpdateCondition(GameTime gameTime)
-        {
-            if (Condition == ConditionType.None)
-                return;
-
-            if (conditionTimer > 0)
-            {
-                conditionTimer -= gameTime.ElapsedGameTime.Milliseconds;
-
-                if (conditionTimer <= 0)
-                {
-                    conditionTimer = 0;
-
-                    if (ConditionAmount > 0)
-                    {
-                        ConditionAmount -= 1;
-                        HP -= 1;
-                        conditionTimer = GameSettings.ConditionCooldown;
-                        Sound.Play(SoundNames.StatusEffectDamage);
-                        ShowComicText(ComicTextKind.AghGreen);
-                    }
-                }
-            }
-        }
-
-        // UpdateContactIntent
-        private bool UpdateContactIntent(GameTime gameTime)
-        {
-            if (contactTimer > 0)
-            {
-                contactTimer -= gameTime.ElapsedGameTime.Milliseconds;
-            }
-            else if (Session.Player != null && IsMoving)
-            {
-                if (RuntimeCollider.Contains(Session.Player.Position))
-                {
-                    TryInflictContactDamage(Session.Player);
-                    contactTimer = 500;
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         #endregion
 
         #region Protected members
@@ -362,12 +311,14 @@ namespace ScaryCastle
         protected override void OnActivate()
         {
             base.OnActivate();
-            contactTimer = 0;
 
             if (PrecalculateLoot && Session.Player != this)
             {
-                PrepareLoot();
-                RefreshDisplayName();
+                if (ItemReward == null && CoinReward == 0)
+                {
+                    PrepareLoot();
+                    RefreshDisplayName();
+                }
             }
         }
 
@@ -461,13 +412,6 @@ namespace ScaryCastle
             InvalidateWalkArea();
         }
 
-        // OnStopMoving
-        protected override void OnStopMoving()
-        {
-            base.OnStopMoving();
-            contactTimer = contactCooldown;
-        }
-
         // OnTakeDamage
         protected virtual void OnTakeDamage(GameThing attacker, int amount, DamageType damageType)
         {
@@ -543,9 +487,6 @@ namespace ScaryCastle
 
             if (blinker.IsRunning)
                 blinker.Update(gameTime);
-
-            if (!UpdateContactIntent(gameTime))
-                UpdateCondition(gameTime);
         }
 
         // OnUpdateEmittingSound
@@ -566,13 +507,6 @@ namespace ScaryCastle
             }
         }
 
-        // TryInflictContactDamage
-        protected virtual void TryInflictContactDamage(GameThing target)
-        {
-            if (ContactIntent != null)
-                EffectDescriptor.Apply(ContactIntent.EffectDescriptors, this, target, EffectContext.Contact);
-        }
-
         #endregion
 
         // AffectsPathfinding
@@ -582,89 +516,6 @@ namespace ScaryCastle
         // AllowInteraction
         [ScriptProperty]
         public bool AllowInteraction { get; set; } = true;
-
-        // ApplyCondition
-        public void ApplyCondition(ConditionType condition, int amount, ComicTextKind comicTextKind)
-        {
-            // 1. Clear
-            if (condition == ConditionType.None)
-            {
-                ClearCondition();
-                return;
-            }
-
-            // 2. Chromatic aberration
-            if (condition == ConditionType.ChromaticAberration)
-            {
-                Session.PerformChromaticAberration();
-                return;
-            }
-
-            // 3. Coin loss
-            if (condition == ConditionType.CoinLoss)
-            {
-                if (Session.Player == this)
-                {
-                    if (Session.PlayerInventory.Find(nameof(Coin)) is Item coin)
-                    {
-                        coin.Amount--;
-                        Sound.Play(SoundNames.CoinLoss);
-                        Session.TextHUD.Log.Show(LogVerb.Lost, coin.Definition, true);
-                    }
-                }
-
-                return;
-            }
-
-            // 4. Si el efecto entrante es Maldición: PISA el veneno o SE SUMA a una maldición previa.
-            if (condition == ConditionType.Curse)
-            {
-                if (Condition != ConditionType.Curse)
-                {
-                    Condition = ConditionType.Curse;
-                    ConditionAmount = amount;
-                    conditionTimer = GameSettings.ConditionCooldown;
-                }
-                else
-                {
-                    ConditionAmount += amount; // Ya estaba maldito, se acumula.
-                    if (ConditionAmount > HP)
-                        HP -= 1;
-                }
-
-                if (Session.Player == this)
-                    Session.ObjectPools.FloatingTexts.Get()?.ShowAmount(this, ColorPalette.Condition.Curse, amount);
-            }
-
-            // 5. Si el efecto entrante es Veneno: Solo importa si no estás maldito.
-            if (condition == ConditionType.Poison && Condition != ConditionType.Curse)
-            {
-                if (Condition != ConditionType.Poison)
-                {
-                    Condition = ConditionType.Poison;
-                    ConditionAmount = amount;
-                    conditionTimer = GameSettings.ConditionCooldown;
-                }
-                else
-                {
-                    ConditionAmount += amount; // Ya estaba envenenado, se acumula.
-                    if (ConditionAmount > HP)
-                        HP -= 1;
-                }
-
-                if (Session.Player == this)
-                    Session.ObjectPools.FloatingTexts.Get()?.ShowAmount(this, ColorPalette.Condition.Poison, amount);
-            }
-
-            // ComicText si hubo daño real
-            if (comicTextKind != ComicTextKind.None)
-            {
-                if (!IsDead || DeathWord == ComicTextKind.None)
-                    ShowComicText(comicTextKind);
-            }
-
-            OnApplyCondition(condition, amount);
-        }
 
         // ApproachBehavior
         [ScriptProperty]
@@ -773,38 +624,6 @@ namespace ScaryCastle
         // CollisionHeight
         [ScriptProperty]
         public int CollisionHeight { get; set; }
-
-        // CombatBehavior
-        public CombatBehavior? CombatBehavior { get; }
-
-        // ContactIntent
-        public CombatIntent? ContactIntent { get; }
-
-        // ClearCondition
-        public void ClearCondition()
-        {
-            this.Condition = ConditionType.None;
-            this.ConditionAmount = 0;
-        }
-
-        // Condition
-        public ConditionType Condition { get; private set; }
-
-        // ConditionAmount
-        [ScriptProperty]
-        public int ConditionAmount
-        {
-            get;
-            private set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    if (field < 0)
-                        field = 0;
-                }
-            }
-        }
 
         // Cursor
         [ScriptProperty]
