@@ -12,7 +12,6 @@ namespace ScaryCastle
 
         private CombatIntent? combatIntent;
         private Item? item;
-        private Prop? liftProp;
         private Script? script;
         private GameThing? target;
         private Vector2 targetPosition;
@@ -20,13 +19,12 @@ namespace ScaryCastle
         #endregion
 
         // CanExecute
-        public bool CanExecute => liftProp != null || combatIntent != null || script != null || item != null;
+        public bool CanExecute => combatIntent != null || script != null || item != null;
 
         // Clear
         public void Clear()
         {
             combatIntent = null;
-            liftProp = null;
             item = null;
             script = null;
             target = null;
@@ -39,11 +37,7 @@ namespace ScaryCastle
             if (session.Player == null || target == null)
                 return;
 
-            if (liftProp != null)
-            {
-                session.Player.Lift(liftProp);
-            }
-            else if (combatIntent != null)
+            if (combatIntent != null)
             {
                 session.Player.ExecuteAction(combatIntent, target);
             }
@@ -68,7 +62,15 @@ namespace ScaryCastle
             }
             else if (item != null && !MouseCursor.IsArrow)
             {
-                session.Player.ExecuteAction(item, target);
+                if (item.Name == ItemNames.Lift)
+                {
+                    if (target is Prop prop && prop.IsLiftable)
+                        session.Player.Lift(prop);
+                }
+                else
+                {
+                    session.Player.ExecuteAction(item, target);
+                }
             }
 
             Clear();
@@ -103,23 +105,7 @@ namespace ScaryCastle
 
             if (context.HeldItem == null)
             {
-                // Lift
-                if (context.LiftTarget != null)
-                {
-                    this.liftProp = context.LiftTarget;
-                }
-
-                // Headbutt
-                else if (context.Target.Faction == Faction.Evil)
-                {
-                    if (context.Session.Player?.DefaultCombatIntent is CombatIntent combatIntent)
-                        this.combatIntent = combatIntent;
-                }
-
-                else
-                {
-                    this.script = target.OutcomeScript;
-                }
+                this.script = target.OutcomeScript;
             }
             else
             {
@@ -140,6 +126,7 @@ namespace ScaryCastle
                     else
                     {
                         this.item = context.HeldItem;
+                        this.combatIntent = context.Session.Player?.CombatBehavior?.Intents.Find(context.HeldItem.Name);
                     }
                 }
             }

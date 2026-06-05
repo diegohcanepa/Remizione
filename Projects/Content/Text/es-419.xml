@@ -63,8 +63,12 @@
   <String Key="Item.GoldenKey.Name">Llave dorada</String>
   <String Key="Item.GooBottle.Description">Baba fresca del Supremo. Te hidrata de fanatismo hasta el tope.</String>
   <String Key="Item.GooBottle.Name">Botella de baba</String>
+  <String Key="Item.Headbutt.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
+  <String Key="Item.Headbutt.Name">Topetazo</String>
   <String Key="Item.Lantern.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.Lantern.Name">Lámpara</String>
+  <String Key="Item.Lift.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
+  <String Key="Item.Lift.Name">Alzar</String>
   <String Key="Item.Lockpick.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Lockpick.Name">Ganzúa</String>
   <String Key="Item.MagneticCard.Description">Utiliza esta tarjeta con la máquina lectora de la torre para abrirte camino.</String>
@@ -194,9 +198,9 @@
   <String Key="MessageBox.QuitToMenu">¿Salir al menú principal?</String>
   <String Key="MessageBox.SlotDeleted">La ranura ha sido eliminada.</String>
   <String Key="MessageBox.Warning">¡Atención!</String>
+  <String Key="MessageKind.BackToHallway">¡Vuelve al pasillo!</String>
   <String Key="MessageKind.CannotPlaceItem">No hay suficiente espacio en el terreno.</String>
   <String Key="MessageKind.HandsFull">Tienes las manos ocupadas.</String>
-  <String Key="MessageKind.HurryUp">¡Apresúrate!</String>
   <String Key="MessageKind.InventoryFull">El inventario está lleno.</String>
   <String Key="MessageKind.ItemDiscarded">Item descartado.</String>
   <String Key="MessageKind.LiftNotAllowed">No puedes alzar eso.</String>
@@ -205,7 +209,6 @@
   <String Key="MessageKind.OutOfLine">¡Fuera línea!</String>
   <String Key="MessageKind.OutOfReach">Fuera de alcance.</String>
   <String Key="MessageKind.PathCleared">Camino despejado.</String>
-  <String Key="MessageKind.PullCorridorLever">¡Acciona la palanca!</String>
   <String Key="Misc.All">Todo</String>
   <String Key="Misc.And">y</String>
   <String Key="Misc.BackToCorridor">¡Vuelve al pasillo!</String>
@@ -249,6 +252,7 @@ Bla bla bla</String>
   <String Key="Misc.Stamina">Resistencia</String>
   <String Key="Misc.Threshold">Umbral</String>
   <String Key="Misc.Unknown">???</String>
+  <String Key="Misc.UseWith">Usar con</String>
   <String Key="Misc.Will">VOLUNTAD</String>
   <String Key="Misc.WithPreposition">con</String>
   <String Key="Misc.Yes">Sí</String>
@@ -315,11 +319,11 @@ Bla bla bla</String>
   <String Key="Prop.UnderRideEntrance">Inframundo</String>
   <String Key="Prop.VendingMachine">Máquina expendedora</String>
   <String Key="Prop.WC">Inodoro</String>
-  <String Key="Verb.Ellipsis"></String>
+  <String Key="Verb.Ellipsis" />
   <String Key="Verb.Enter">Entrar</String>
   <String Key="Verb.Exit">Salir</String>
   <String Key="Verb.Lift">Alzar</String>
-  <String Key="Verb.None"></String>
+  <String Key="Verb.None" />
   <String Key="Verb.Open">Abrir</String>
   <String Key="Verb.Pull">Accionar</String>
   <String Key="Verb.Take">Agarrar</String>

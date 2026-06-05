@@ -31,7 +31,6 @@ namespace ScaryCastle
             InventoryNavigationBar = this[nameof(InventoryNavigationBar)];
             ItemGridSlot = this[nameof(ItemGridSlot)];
             ItemGridSlotSelected = this[nameof(ItemGridSlotSelected)];
-            LiftIcon = this[nameof(LiftIcon)];
             MessageContainer = this[nameof(MessageContainer)];
             PickupShadow = this[nameof(PickupShadow)];
             Pixel = this[nameof(Pixel)];
@@ -40,6 +39,7 @@ namespace ScaryCastle
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
             PurpleHearts = CreateReadOnlyCollection(nameof(PurpleHearts), 1, 4);
             RedHearts = CreateReadOnlyCollection(nameof(RedHearts), 1, 4);
+            CountdownSkullIcon = this[nameof(CountdownSkullIcon)];
             Sack = this[nameof(Sack)];
             SavingIcon = this[nameof(SavingIcon)];
             SkullIcon = this[nameof(SkullIcon)];
@@ -63,6 +63,9 @@ namespace ScaryCastle
 
         // ContextMenuOptionSelector
         public AtlasImage ContextMenuOptionSelector { get; }
+
+        // CountdownSkullIcon
+        public AtlasImage CountdownSkullIcon { get; }
 
         // CreditsBar
         public AtlasImage CreditsBar { get; }
@@ -105,9 +108,6 @@ namespace ScaryCastle
 
         // ItemGridSlotSelected
         public AtlasImage ItemGridSlotSelected { get; }
-
-        // LiftIcon
-        public AtlasImage LiftIcon { get; }
 
         // MessageContainer
         public AtlasImage MessageContainer { get; }

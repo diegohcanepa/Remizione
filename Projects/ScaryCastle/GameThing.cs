@@ -213,7 +213,6 @@ namespace ScaryCastle
 
         // RefreshDisplayName
         private void RefreshDisplayName()
-
         {
             const string ellipsis = "...";
 
@@ -230,7 +229,7 @@ namespace ScaryCastle
             }
             else
             {
-                DisplaySentence = DisplayName;
+                DisplaySentence = DisplayName;               
             }
         }
 
@@ -284,7 +283,7 @@ namespace ScaryCastle
 
         #region Protected members
 
-        // CanCheckCollisions
+         // CanCheckCollisions
         protected virtual bool CanCheckCollisions()
         {
             return CollisionDetection;
@@ -293,8 +292,49 @@ namespace ScaryCastle
         // DropLoot
         protected void DropLoot()
         {
-            if (!Session.LootGenerator.TryDropLoot(this))
-                Session.LootGenerator.TryDropCoins(this);
+            if (!PrecalculateLoot)
+                PrepareLoot();
+
+            if (Room is not ProceduralRoom room)
+                return;
+
+            if (ItemReward != null && CoinReward == 0)
+            {
+                Prop? loot;
+                if (AotTypeRegistry.Find(ItemReward.Name) is AotTypeEntry entry && typeof(PickableLoot).IsAssignableFrom(entry.Type))
+                {
+                    loot = room.CreateThingClone<Prop>(ItemReward.Name);
+                }
+                else
+                {
+                    loot = room.CreateThingClone<Prop>(nameof(Sack));
+                }
+
+                if (loot != null)
+                {
+                    (loot as ILoot<ItemDefinition>)?.Loot = ItemReward;
+                    loot.Position = Position;
+                    room.Children.Add(loot);
+                }
+            }
+
+            else if (CoinReward > 0)
+            {
+                for (int i = 0; i < CoinReward; i++)
+                {
+                    if (room.CreateThingClone<Coin>("Coin") is Coin coin)
+                    {
+                        coin.Position = Position;
+
+                        // Offset aleatorio para que no caigan apiladas exactamente en el mismo píxel
+                        coin.Position += new Vector2(
+                            Session.Random.Next(-6, 7),
+                            Session.Random.Next(-6, 7)
+                        );
+                        room.Children.Add(coin);
+                    }
+                }
+            }
         }
 
         // GetDisplayName
@@ -323,6 +363,12 @@ namespace ScaryCastle
         {
             base.OnActivate();
             contactTimer = 0;
+
+            if (PrecalculateLoot && Session.Player != this)
+            {
+                PrepareLoot();
+                RefreshDisplayName();
+            }
         }
 
         // OnApplyCondition
@@ -508,6 +554,18 @@ namespace ScaryCastle
             Utils.ApplySoundEmitter(this, instance, masterVolume);
         }
 
+        // PrepareLoot
+        protected void PrepareLoot()
+        {
+            ItemReward = Session.LootGenerator.RollForLoot(this);
+            if (ItemReward == null)
+            {
+                CoinReward = Session.LootGenerator.RollForCoin(this);
+                if (CoinReward > 0)
+                    ItemReward = ItemDefinition.Definitions.Find(nameof(Coin));
+            }
+        }
+
         // TryInflictContactDamage
         protected virtual void TryInflictContactDamage(GameThing target)
         {
@@ -651,6 +709,9 @@ namespace ScaryCastle
 
             return true;
         }
+
+        // CoinReward
+        public int CoinReward { get; private set; }
 
         // Collider
         [ScriptProperty]
@@ -1088,6 +1149,10 @@ namespace ScaryCastle
         [ScriptProperty]
         public bool IgnoreWalkArea { get; set; } = true;
 
+        // IsAttackable
+        [ScriptProperty]
+        public bool IsAttackable { get; set; }
+
         // IsBehind
         public bool IsBehind(GameThing thing)
         {
@@ -1176,6 +1241,9 @@ namespace ScaryCastle
         [ScriptProperty]
         public Vector2 OverheadOrigin { get; set; }
 
+        // PrecalculateLoot
+        public bool PrecalculateLoot { get; set; }
+
         // Reheal
         [ScriptMethod]
         public virtual void Reheal()
@@ -1246,6 +1314,9 @@ namespace ScaryCastle
                 return field;
             }
         } = new();
+
+        // ItemReward
+        public ItemDefinition? ItemReward { get; private set; }
 
         // Session
         public new GameSession Session { get; }

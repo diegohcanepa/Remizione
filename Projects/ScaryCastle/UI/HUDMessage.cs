@@ -81,10 +81,6 @@ namespace ScaryCastle
                 Sound.Play(SoundNames.Error);
             }
 
-            else if (message == MessageKind.PullCorridorLever)
-            {
-            }
-
             else
             {
                 Sound.Play(SoundNames.Error);

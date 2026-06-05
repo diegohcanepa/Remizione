@@ -41,12 +41,6 @@ namespace ScaryCastle
 
             Intents = new(intents);
 
-            if (element.GetString("defaultIntent") is string defaultIntentValue)
-            {
-                if (!string.IsNullOrWhiteSpace(defaultIntentValue))
-                    DefaultIntent = Intents.Find(defaultIntentValue) ?? throw new InvalidOperationException("Default intent name is not valid.");
-            }
-
             Behaviors.Add(this);
         }
 

@@ -60,7 +60,18 @@ namespace ScaryCastle
                 return;
             }
 
-            // 3. Check for goo if item requires it
+            // 3. Lift action
+            if (context.HeldItem.Name == ItemNames.Lift)
+            {
+                if (context.Target is not Prop prop || !prop.IsLiftable)
+                {
+                    Actor.Session.TextHUD.Message.Show(MessageKind.LiftNotAllowed);
+                    MouseCursor.Shake();
+                    return;
+                }
+            }
+
+            // 4. Check for goo if item requires it
             var gooCost = context.HeldItem.Definition.EnergyCost;
             if (gooCost > 0)
             {
@@ -110,19 +121,6 @@ namespace ScaryCastle
                 Actor.Session.InteractionContext.HeldItem = null;
                 Actor.Session.InteractionData.Clear();
                 Actor.StopMoving();
-            }
-            else if (!MouseCursor.IsArrow && Actor.Session.InteractionContext.Target is Prop prop)
-            {
-                if (prop.IsLiftable)
-                {
-                    Actor.Session.InteractionContext.LiftTarget = prop;
-                    ResolveInteraction();
-                }
-                else
-                {
-                    Actor.Session.TextHUD.Message.Show(MessageKind.LiftNotAllowed);
-                    MouseCursor.Shake();
-                }
             }
             else
             {

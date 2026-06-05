@@ -30,7 +30,7 @@ namespace ScaryCastle
         public override int GetNextCooldown()
         {
             // Entre 0.8 y 1.5 segundos. Reacciona rápido a tus movimientos.
-            return Random.Shared.Next(2500, 3500);
+            return Random.Shared.Next(3000, 4500);
         }
 
         /// <summary>

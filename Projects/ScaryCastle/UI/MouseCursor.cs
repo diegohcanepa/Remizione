@@ -19,11 +19,11 @@ namespace ScaryCastle
         private static readonly Sprite cursorSprite;
         private static readonly Vector2 defaultScale = ScaleInfo.UIElement.Large;
         private static OutlineEffect? effect;
-        private static readonly Sprite liftIcon;
         private static readonly FloatTween opacityTween = FloatTween.Create(TweenStyle.CubicInOut, 1, .5f, 500, -1);
         private static readonly Vector2Tween scaleTween = new();
         private static readonly FloatTween shakeTween = new();
         private static readonly TextSprite textSprite;
+        private static readonly TextSprite textSprite2;
 
         #endregion
 
@@ -37,13 +37,6 @@ namespace ScaryCastle
             {
                 PivotOrigin = RectanglePoint.Center,
                 Scale = defaultScale
-            };
-
-            // Lift icon
-            liftIcon = new Sprite(Atlases.UI.LiftIcon)
-            {
-                PivotOrigin = RectanglePoint.Left,
-                Scale = ScaleInfo.UIElement.Medium
             };
 
             const string prefix = "MouseCursor";
@@ -61,6 +54,13 @@ namespace ScaryCastle
             {
                 PivotOrigin = RectanglePoint.LeftTop,
                 Scale = ScaleInfo.UISentence
+            };
+
+            // Text sprite 2
+            textSprite2 = new(Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.GreenLight,
+                Scale = ScaleInfo.Text.Large
             };
 
             Reset();
@@ -81,17 +81,33 @@ namespace ScaryCastle
             textSprite.PivotOrigin = RectanglePoint.LeftTop;
             textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, -offset, -offset);
 
+            if (!textSprite2.IsEmpty)
+            {
+                textSprite2.PivotOrigin = textSprite.PivotOrigin;
+                textSprite2.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -1.5f);
+            }
+
             if (!textSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox))
             {
                 textSprite.PivotOrigin = RectanglePoint.RightTop;
                 textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom, offset, -offset);
+
+                if (!textSprite2.IsEmpty)
+                {
+                    textSprite2.PivotOrigin = textSprite.PivotOrigin;
+                    textSprite2.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -1.5f);
+                }
             }
 
             if (textSprite.BoundingBox.Bottom >= Screen.NativeHeight)
+            {
                 textSprite.Y -= 10;
-
-            if (ShowLiftIcon)
-                liftIcon.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.Right, .5f, -1.5f);
+            
+                if (!textSprite2.IsEmpty)
+                {
+                    textSprite2.Y -= (7 + textSprite.BoundingBox.Height + textSprite2.BoundingBox.Height);
+                }
+            }
         }
 
         // InvalidateCursorImage
@@ -142,9 +158,7 @@ namespace ScaryCastle
             {
                 EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera);
                 textSprite.Draw(gameTime);
-
-                if (!textSprite.IsEmpty && ShowLiftIcon)
-                    liftIcon.Draw(gameTime);
+                textSprite2.Draw(gameTime);
 
                 EngendroGame.Instance.SpriteBatch.End();
             }
@@ -168,6 +182,7 @@ namespace ScaryCastle
                     field = value;
                     cursorSprite.Opacity = value ? 1 : .4f;
                     textSprite.Opacity = cursorSprite.Opacity;
+                    textSprite2.Opacity = cursorSprite.Opacity;
                 }
             }
         } = true;
@@ -192,13 +207,14 @@ namespace ScaryCastle
         {
             cursorSprite.Color = Color.White;
             textSprite.Color = ColorPalette.Text.Sentence;
+            textSprite2.Color = ColorPalette.Text.Green;
             CustomImage = null;
             FlipCustomImage = false;
             HightlightColor = null;
             IsEnabled = true;
-            ShowLiftIcon = false;
             State = MouseCursorState.Arrow;
             Text = null;
+            Text2 = null;
         }
 
         // Shake
@@ -207,9 +223,6 @@ namespace ScaryCastle
             shakeTween.Start(TweenStyle.CubicInOut, 0, 1, 50, 4);
             Sound.Play(SoundNames.Error);
         }
-
-        // ShowLiftIcon
-        public static bool ShowLiftIcon { get; set; }
 
         // State
         public static MouseCursorState State
@@ -230,6 +243,13 @@ namespace ScaryCastle
         {
             get => textSprite.Text;
             set => textSprite.Text = value;
+        }
+
+        // Text2
+        public static string? Text2
+        {
+            get => textSprite2.Text;
+            set => textSprite2.Text = value;
         }
 
         // TextColor

@@ -98,11 +98,23 @@
 			]
 		},
 		{
+			"name": "Headbutt",
+			"usageMode": "ProximityAction",
+			"category": "Misc",
+			"isDepletable": false
+		},
+		{
 			"name": "Lantern",
 			"usageMode": "SelfAction",
 			"category": "Misc",
 			"lightModifier": 3,
 			"lightColor": "240,181,65"
+		},
+		{
+			"name": "Lift",
+			"usageMode": "ProximityAction",
+			"category": "Misc",
+			"isDepletable": false
 		},
 		{
 			"name": "Lockpick",

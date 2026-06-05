@@ -15,7 +15,7 @@ namespace ScaryCastle
 
         private SoundInstance? alarmSoundInstance;
         private readonly Vector2 defaultTextSize = ScaleInfo.Text.Galactus;
-        private readonly Sprite icon = new(Atlases.UI.SkullIcon) { PivotOrigin = RectanglePoint.RightTop };
+        private readonly Sprite icon = new(Atlases.UI.CountdownSkullIcon) { PivotOrigin = RectanglePoint.RightTop, Scale = new(.8f) };
         private double lastKnownValue;
         private readonly Vector2Tween scaleTween = new();
         private readonly GameSession session;
@@ -62,7 +62,7 @@ namespace ScaryCastle
             scaleTween.Start(TweenStyle.Linear, defaultTextSize, defaultTextSize * 1.1f, 250, -1);
             timeText.Tweens.ScaleTween = scaleTween;
 
-            session.TextHUD.Message.Show(BossPhase ? MessageKind.HurryUp : MessageKind.PullCorridorLever);
+            session.TextHUD.Message.Show(MessageKind.BackToHallway);
         }
 
         // StopCriticalPhase
@@ -74,7 +74,7 @@ namespace ScaryCastle
                 alarmSoundInstance = null;
             }
 
-            timeText.Color = BossPhase ? ColorPalette.Text.Orange : ColorPalette.Text.Highlight;
+            timeText.Color = ColorPalette.Text.Highlight;
             scaleTween.Stop();
             timeText.Scale = defaultTextSize;
         }
@@ -105,6 +105,7 @@ namespace ScaryCastle
             {
                 timeLeft = 0;
                 IsRunning = false;
+                IsExpired = true;
                 StopCriticalPhase();
                 session.Player?.StopMoving();
                 session.AwaitRoutine(session.Room is CorridorRoom ? RoutineNames.DeathByMandinga : RoutineNames.DeathByCorridorLever);
@@ -131,11 +132,11 @@ namespace ScaryCastle
 
         #endregion
 
-        // BossPhase
-        public bool BossPhase { get; private set; }
-
         // IsCritical
         public bool IsCritical => alarmSoundInstance != null;
+
+        // IsExpired
+        public bool IsExpired { get; private set; }
 
         // IsRunning
         public bool IsRunning { get; private set; }
@@ -143,25 +144,21 @@ namespace ScaryCastle
         // Reset
         public void Reset()
         {
-            BossPhase = false;
             timeLeft = 0;
             lastKnownValue = -1;
             StopCriticalPhase();
             IsRunning = false;
+            IsExpired = false;
         }
 
         // Start
-        public void Start(int duration, bool bossPhase)
+        public void Start()
         {
             Reset();
 
-            if (duration < 0)
-                return;
-
-            this.BossPhase = bossPhase;
-            this.timeLeft = duration;
-            this.timeText.Text = duration.ToString(CultureInfo.InvariantCulture);
-            this.timeText.Color = bossPhase ? ColorPalette.Text.Orange : ColorPalette.Text.Highlight;
+            this.timeLeft = GameSettings.CountdownDuration;
+            this.timeText.Text = timeLeft.ToString(CultureInfo.InvariantCulture);
+            this.timeText.Color = ColorPalette.Text.Highlight;
             this.IsRunning = true;
         }
     }

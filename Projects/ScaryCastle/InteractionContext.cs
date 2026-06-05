@@ -59,9 +59,6 @@ namespace ScaryCastle
         // HeldItem
         public Item? HeldItem { get; set; }
 
-        // LiftTarget
-        public Prop? LiftTarget { get; set; }
-
         // Refresh
         public void Refresh()
         {
@@ -81,8 +78,6 @@ namespace ScaryCastle
         // Reset
         public void Reset()
         {
-            LiftTarget = null;
-
             if (Target != null)
             {
                 if (HeldItem?.Definition.DeselectOnUse == true)

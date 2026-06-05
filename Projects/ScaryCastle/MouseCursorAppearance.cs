@@ -11,8 +11,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private static readonly string useVerb = Localization.GetValue(Verb.Use);
-        private static readonly string withPreposition = TextRepository.GetValue("Misc.WithPreposition");
+        private static readonly string useWith = TextRepository.GetValue("Misc.UseWith");
 
         #endregion
 
@@ -82,17 +81,17 @@ namespace ScaryCastle
 
             if (context.Target != null)
             {
-                // No item 
-                if (context.HeldItem == null)
+                if (context.Target.Faction == Faction.Evil && context.Target.ItemReward != null)
                 {
-                    MouseCursor.Text = context.Target.DisplaySentence;
-                    return;
+                    if (context.Target.ItemReward != null)
+                        MouseCursor.Text2 = context.Target.ItemReward.DisplayName;
                 }
 
-                if (context.Target == context.Session.Player)
-                    MouseCursor.Text = $"{useVerb} {context.HeldItem.Definition.DisplayName}";
+                // No item 
+                if (context.HeldItem == null)
+                    MouseCursor.Text = context.Target.DisplaySentence;
                 else
-                    MouseCursor.Text = $"{useVerb} {context.HeldItem.Definition.DisplayName} {withPreposition} {context.Target.DisplayName}";
+                    MouseCursor.Text = $"{useWith} {context.Target.DisplayName}";
             }
         }
 
@@ -108,10 +107,9 @@ namespace ScaryCastle
 
             if (context.Target != null)
             {
-                if (context.Target.Faction == Faction.Evil && context.HeldItem == null)
+                if (context.Target.Faction == Faction.Evil && context.Target.IsAttackable && context.HeldItem == null)
                     MouseCursor.Color = ColorPalette.MouseCursor.AttackableTarget;
 
-                MouseCursor.ShowLiftIcon = context.HeldItem == null && context.Target is Prop prop && prop.IsLiftable;
                 MouseCursor.IsEnabled = context.Session.Player?.ActiveThrowable == null;
                 MouseCursor.HightlightColor = ColorPalette.MouseCursor.HighlightWhite;
 

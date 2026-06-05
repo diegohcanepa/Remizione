@@ -44,6 +44,7 @@ namespace ScaryCastle
             this.HitEffect = HitEffect.Blink;
             this.IgnoreWalkArea = false;
             this.Faction = Definition == null ? Faction.Good : Definition.Faction;
+            this.PrecalculateLoot = true;
 
             headSprite = new AnimatedSprite()
             {
@@ -83,8 +84,6 @@ namespace ScaryCastle
             }
 
             ShadowSpotSize = 6;
-
-            DefaultCombatIntent = CombatBehavior?.DefaultIntent;
 
             // Assign defaults from definition if available
             if (Definition != null)
@@ -154,7 +153,7 @@ namespace ScaryCastle
         // React
         private void React()
         {
-            if (IsPlayer)
+            if (IsPlayer || !IsAttackable)
                 return;
 
             if (Brain.Decide(this, Session.Player) is CombatDecision decision && decision.Target is { } target)
@@ -519,6 +518,7 @@ namespace ScaryCastle
                     DropLoot();
 
                 Faction = Faction.Evil;
+                IsAttackable = true;
             }
 
             Session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);
@@ -695,17 +695,6 @@ namespace ScaryCastle
             }
         }
 
-        // DefaultCombatIntent
-        public CombatIntent? DefaultCombatIntent
-        {
-            get;
-            set
-            {
-                if (value != field)
-                    field = value ?? CombatBehavior?.DefaultIntent;
-            }
-        }
-
         // DiscardActiveThrowable
         [ScriptMethod]
         public void DiscardActiveThrowable()
@@ -814,12 +803,6 @@ namespace ScaryCastle
         // IsFollowingPath
         public bool IsFollowingPath { get; private set; }
 
-        // IsHostile
-        public virtual bool IsHostile(GameThing other)
-        {
-            return this.Faction == Faction.Evil && other == Session.Player;
-        }
-
         // IsPerformingAction
         public bool IsPerformingAction => BodyMachine.CurrentState is BodyExecuteActionState;
 
@@ -829,6 +812,12 @@ namespace ScaryCastle
 
         // IsStandingOrMoving
         public bool IsStandingOrMoving => BodyMachine.CurrentState is BodyStandState or BodyMoveState;
+
+        // IsTarget
+        public virtual bool IsTarget(GameThing other)
+        {
+            return this.Faction == Faction.Evil && other == Session.Player;
+        }
 
         // Lift
         public void Lift(Prop prop)
@@ -844,6 +833,9 @@ namespace ScaryCastle
             var state = BodyMachine.FindOrCreateState<BodyLiftState>();
             state.Target = prop;
             BodyMachine.ChangeState(state.GetType());
+
+            if (IsPlayer)
+                Session.InteractionContext.HeldItem = null;
         }
 
         // MaxEnergy

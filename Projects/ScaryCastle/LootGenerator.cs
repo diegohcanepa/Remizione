@@ -1,12 +1,11 @@
-﻿using Adberration;
-using Engendro;
+﻿using Engendro;
 using Microsoft.Xna.Framework;
 using System;
 
 namespace ScaryCastle
 {
     /// <summary>
-    /// Generador de Loot orientado a Nodos (AOT-Friendly, Cero LINQ)
+    /// LootGenerator
     /// </summary>
     public sealed class LootGenerator
     {
@@ -125,7 +124,8 @@ namespace ScaryCastle
         {
             // 1. Bloqueo rápido: Si el bonus es negativo o el modo de drop lo prohíbe, 0 monedas.
             // (Asumimos que el chequeo de DropMode se hace en TryDropCoins antes de llamar aquí)
-            if (chanceBonus < 0) return 0;
+            if (chanceBonus < 0)
+                return 0;
 
             // 2. Base por dificultad (Valores planos de probabilidad)
             float chance = thingDef.Difficulty switch
@@ -178,6 +178,20 @@ namespace ScaryCastle
             };
         }
 
+        // RollForCoin
+        public int RollForCoin(GameThing thing)
+        {
+            // 1. FILTRO DE INSTANCIA: Si el bicho está seteado para no dar nada o solo dar bolsa, abortamos.
+            if (thing.DropMode is LootDropMode.None or LootDropMode.SackOnly or LootDropMode.Custom)
+                return 0;
+
+            if (thing is not IThingDefinition t || t.Definition == null || session.Room is not ProceduralRoom room)
+                return 0;
+
+            // 2. Calculamos la cantidad pasando el multiplicador de la instancia
+            return RollCoinAmount(t.Definition, thing.DropCoinChanceBonus);
+        }
+
         // RollForLoot
         public ItemDefinition? RollForLoot(GameThing thing, bool guaranteeDrop = false)
         {
@@ -228,65 +242,6 @@ namespace ScaryCastle
                 return ItemDefinition.Definitions.Find(thing.CustomDropName);
 
             return GetLoot(room.RoomNode, t.Definition.PreferredLootRealm, t.Definition.PreferredLootCategory, null, t.Definition.QualityBoost, guaranteeDrop);
-        }
-
-        // TryDropCoins
-        public void TryDropCoins(GameThing thing)
-        {
-            // 1. FILTRO DE INSTANCIA: Si el bicho está seteado para no dar nada o solo dar items, abortamos.
-            if (thing.DropMode is LootDropMode.None or LootDropMode.SackOnly or LootDropMode.Custom)
-                return;
-
-            if (thing is not IThingDefinition t || t.Definition == null || session.Room is not ProceduralRoom room)
-                return;
-
-            // 2. Calculamos la cantidad pasando el multiplicador de la instancia
-            int amount = RollCoinAmount(t.Definition, thing.DropCoinChanceBonus);
-
-            // 3. Instanciación física
-            for (int i = 0; i < amount; i++)
-            {
-                if (room.CreateThingClone<Coin>("Coin") is Coin coin)
-                {
-                    coin.Position = thing.Position;
-
-                    // Offset aleatorio para que no caigan apiladas exactamente en el mismo píxel
-                    coin.Position += new Vector2(
-                        session.Random.Next(-6, 7),
-                        session.Random.Next(-6, 7)
-                    );
-                    room.Children.Add(coin);
-                }
-            }
-        }
-
-        // TryDropLoot
-        public bool TryDropLoot(GameThing thing)
-        {
-            ItemDefinition? itemDefinition = RollForLoot(thing);
-
-            if (itemDefinition != null && session.Room is ProceduralRoom room)
-            {
-                Prop? loot;
-                if (AotTypeRegistry.Find(itemDefinition.Name) is AotTypeEntry entry && typeof(PickableLoot).IsAssignableFrom(entry.Type))
-                {
-                    loot = room.CreateThingClone<Prop>(itemDefinition.Name);
-                }
-                else
-                {
-                    loot = room.CreateThingClone<Prop>(nameof(Sack));
-                }
-
-                if (loot != null)
-                {
-                    (loot as ILoot<ItemDefinition>)?.Loot = itemDefinition;
-                    loot.Position = thing.Position;
-                    room.Children.Add(loot);
-                    return true;
-                }
-            }
-
-            return false;
         }
     }
 }

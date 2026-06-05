@@ -116,8 +116,6 @@ namespace ScaryCastle
             {
                 if (Session.ScriptLibrary.FindRoutine(CorridorLeftGateRoutineName) is Script script)
                     Session.AwaitScript(script);
-
-                Session.StatusHUD.Countdown.Start(GameSettings.CountdownDuration, false);
             }
             else if (Session.PreviousRoom is SideRoom)
             {
@@ -294,7 +292,6 @@ namespace ScaryCastle
         {
             if (Session.GetEntity<Prop>(CorridorExitName) is Prop exit)
             {
-                Session.StopCountdown();
                 exit.ApproachPosition = RoomNode.Definition.ExitApproachPosition;
                 exit.Hotspot.SetVertices(RoomNode.Definition.ExitHotspot);
                 Children.Add(exit);
@@ -315,6 +312,8 @@ namespace ScaryCastle
             }
 
             closedDoorTimer = 1000;
+
+            Session.StatusHUD.Countdown.Reset();
         }
     }
 }

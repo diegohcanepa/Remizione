@@ -434,6 +434,8 @@
             <key type="filename">Items-assets/BargainCross.png</key>
             <key type="filename">Items-assets/GoldenKey.png</key>
             <key type="filename">Items-assets/GooBottle.png</key>
+            <key type="filename">Items-assets/Headbutt.png</key>
+            <key type="filename">Items-assets/Lift.png</key>
             <key type="filename">Items-assets/Lockpick.png</key>
             <key type="filename">Items-assets/Pistol.png</key>
             <key type="filename">Items-assets/SodaCan.png</key>
@@ -581,7 +583,6 @@
             <key type="filename">UIIcons-assets/GreenHearts4.png</key>
             <key type="filename">UIIcons-assets/HeartBlackFull.png</key>
             <key type="filename">UIIcons-assets/HeartBlackHalf.png</key>
-            <key type="filename">UIIcons-assets/LiftIcon.png</key>
             <key type="filename">UIIcons-assets/PurpleHearts1.png</key>
             <key type="filename">UIIcons-assets/PurpleHearts2.png</key>
             <key type="filename">UIIcons-assets/PurpleHearts3.png</key>
@@ -927,6 +928,21 @@
                 <rect>2,2,4,4</rect>
                 <key>scale9Paddings</key>
                 <rect>2,2,4,4</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">UIIcons-assets/CountdownSkullIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,3,11,6</rect>
+                <key>scale9Paddings</key>
+                <rect>6,3,11,6</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

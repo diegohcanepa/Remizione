@@ -8,5 +8,7 @@
         internal const string Apple = nameof(Apple);
         internal const string BargainCross = nameof(BargainCross);
         internal const string GooBottle = nameof(GooBottle);
+        internal const string Headbutt = nameof(Headbutt);
+        internal const string Lift = nameof(Lift);
     }
 }

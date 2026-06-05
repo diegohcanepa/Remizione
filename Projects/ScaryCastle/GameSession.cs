@@ -474,6 +474,8 @@ namespace ScaryCastle
 
             CurrentRun = new Run(Seed, 6);
 
+            PlayerInventory.Add(ItemNames.Headbutt);
+            PlayerInventory.Add(ItemNames.Lift);
             PlayerInventory.Add(ItemNames.BargainCross);
 
             if (RunCount == 0)
@@ -770,28 +772,11 @@ namespace ScaryCastle
         public void StartGatePhase()
         {
             if (Boss != null)
-            {
                 StatusHUD.BossMeter.SetTargets(Bosses);
-
-                var duration = 30;
-                if (Boss.Definition?.Difficulty == ScaryCastle.Difficulty.Normal)
-                    duration = 45;
-                else if (Boss.Definition?.Difficulty == ScaryCastle.Difficulty.Hard)
-                    duration = 66;
-
-                StatusHUD.Countdown.Start(duration, true);
-            }
         }
 
         // StatusHUD
         public StatusHUD StatusHUD { get; }
-
-        // StopCountdown
-        [ScriptMethod]
-        public void StopCountdown()
-        {
-            StatusHUD.Countdown.Reset();
-        }
 
         // TextHUD
         public TextHUD TextHUD { get; }

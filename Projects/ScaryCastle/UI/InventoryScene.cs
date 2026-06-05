@@ -113,16 +113,6 @@ namespace ScaryCastle
                 }
             }
 
-            /*
-            if (MouseCursor.Item == null && InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
-            {
-                if (session.Player != null && GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item itemToDrop)
-                {
-                    session.Inventory.DropItem(itemToDrop, session.Player.Position);
-                }
-            }
-            */
-
             if (InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
             {
                 if (GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item item)
@@ -141,7 +131,7 @@ namespace ScaryCastle
             float screenWidth = Screen.NativeWidth;
             int slotCount = Inventory.Capacity;
             float slotWidth = slots[0].BoundingBox.Width;
-            float spacing = 2;
+            float spacing = 1;
 
             float rowWidth = (slotCount * slotWidth) + ((slotCount - 1) * spacing);
             float startingX = (screenWidth - rowWidth) / 2;
