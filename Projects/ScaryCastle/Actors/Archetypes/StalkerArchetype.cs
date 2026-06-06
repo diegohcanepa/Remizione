@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using System;
 
 namespace ScaryCastle
 {
@@ -19,18 +18,14 @@ namespace ScaryCastle
         public override Ratio FleeHPThreshold => 0.00f;
         public override Ratio FleeChance => 0.00f;
 
-        // A diferencia del Lurker que "merodea", este siempre se mueve hacia vos.
-        public override CombatDecisionType IdleMoveType => CombatDecisionType.Move;
-
         /// <summary>
         /// Cooldowns más cortos y consistentes.
         /// Esto hace que el movimiento del ojo se sienta más fluido y "teledirigido"
         /// que el de la rata, que es más espasmódico.
         /// </summary>
-        public override int GetNextCooldown()
+        public override int GetPatienceTolerance()
         {
-            // Entre 0.8 y 1.5 segundos. Reacciona rápido a tus movimientos.
-            return Random.Shared.Next(3000, 4500);
+            return 3;
         }
 
         /// <summary>
@@ -41,13 +36,7 @@ namespace ScaryCastle
         {
             // Si quieres que el ojo sea una masa pesada que no salta,
             // podrías forzar 'Attack' en lugar de 'Charge' incluso para contacto.
-            return CombatDecisionType.Attack;
+            return CombatDecisionType.ApproachAndAttack;
         }
-
-        // MinComfortDistance
-        public override float MinComfortDistance => 0;
-
-        // MaxComfortDistance
-        public override float MaxComfortDistance => 20;
     }
 }

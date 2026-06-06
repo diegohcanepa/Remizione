@@ -28,7 +28,6 @@ namespace ScaryCastle
         private readonly FloatTween moveBalancingTween = new();
         private readonly FloatTween moveVerticalTween = new();
         private readonly List<Vector2> pendingPathNodes = [];
-        private int reactionCounter;
         private SpeechBubble? speechBubble;
 
         #endregion
@@ -122,7 +121,9 @@ namespace ScaryCastle
             if (Session.State != GameSessionState.Idle)
                 return;
 
-            Session.InteractionData.Execute(Session);
+            if (Session.InteractionData.Execute(Session))
+                Session.ApplyPatiencePenalty(GameSettings.PatiencePenaltyForInteraction);
+
             Session.InteractionContext.Reset();
         }
 
@@ -145,33 +146,6 @@ namespace ScaryCastle
         {
             base.MoveTo(pendingPathNodes[0]);
             pendingPathNodes.RemoveAt(0);
-        }
-
-        // React
-        private void React()
-        {
-            if (IsPlayer || !IsHostile)
-                return;
-
-            if (Brain.Decide(this, Session.Player) is CombatDecision decision && decision.Target is { } target)
-            {
-                if (decision.Type == CombatDecisionType.Charge)
-                {
-                    PerformChargeReaction(target.Position);
-                }
-                else if (decision.Type == CombatDecisionType.Flee)
-                {
-                    PerformFleeReaction(target);
-                }
-                else if (decision.Type == CombatDecisionType.Move)
-                {
-                    PerformMoveReaction(target);
-                }
-                else if (decision.Type == CombatDecisionType.Attack && decision.Intent != null)
-                {
-                    ExecuteAction(decision.Intent, target);
-                }
-            }
         }
 
         // ResetHeadTween
@@ -285,6 +259,7 @@ namespace ScaryCastle
             footstepLastUsedFrame = Sprite.Player.Frame;
         }
 
+        /*
         // UpdateReactionCounter
         private void UpdateReactionCounter(GameTime gameTime)
         {
@@ -292,20 +267,23 @@ namespace ScaryCastle
             if (IsPlayer || CombatBehavior == null || Faction == Faction.Good || IsDead)
                 return;
 
-            // Can update timer?
+            if (CombatBehavior.Archetype.CooldownUnit == CombatArchetypeCooldownUnit.Milliseconds)
+                ReactionCounter -= gameTime.ElapsedGameTime.Milliseconds;
+
+            // Can update counter?
             if (IsMoving || IsPerformingAction || IsKnockbackInProgress)
                 return;
 
             if (Session.IsAwaiting && Session.AwaitingScript != null && !Session.AwaitingScript.Interruptible)
                 return;
 
-            reactionCounter -= gameTime.ElapsedGameTime.Milliseconds;
-            if (reactionCounter <= 0)
+            if (ReactionCounter <= 0)
             {
                 React();
-                reactionCounter = CombatBehavior.Archetype.GetNextCooldown();
+                ReactionCounter = CombatBehavior.Archetype.GetNextCooldown();
             }
         }
+        */
 
         #endregion
 
@@ -366,15 +344,6 @@ namespace ScaryCastle
 
         // InputHandler
         protected InputHandler? InputHandler { get; set; }
-
-        // OnActivate
-        protected override void OnActivate()
-        {
-            base.OnActivate();
-
-            if (reactionCounter <= 0)
-                reactionCounter = CombatBehavior?.Archetype.GetNextCooldown() ?? 2000;
-        }
 
         // OnCollisioning
         protected override void OnCollisioning(GameThing thing, out bool handled)
@@ -469,13 +438,6 @@ namespace ScaryCastle
         {
         }
 
-        // OnFactionChanged
-        protected override void OnFactionChanged()
-        {
-            if (Faction == Faction.Evil)
-                ForceReaction();
-        }
-
         // OnHPChanged
         protected override void OnHPChanged(int previousValue)
         {
@@ -498,6 +460,8 @@ namespace ScaryCastle
         protected override void OnLoad()
         {
             base.OnLoad();
+            if (CombatBehavior?.Archetype is { } archetype)
+                Patience = archetype.GetPatienceTolerance();
             OpacityFactor = 1;
             Stand();
         }
@@ -544,6 +508,12 @@ namespace ScaryCastle
             FastMove = false;
             moveVerticalTween.Stop();
             moveBalancingTween.Stop();
+
+            if (CheckEnemiesAfterMoving)
+            {
+                CheckEnemiesAfterMoving = false;
+                Session.WaitEnemiesTurn();
+            }
         }
 
         // OnTakeDamage
@@ -597,7 +567,6 @@ namespace ScaryCastle
             UpdateFootstep();
             footstepEffect?.Update(gameTime);
             BodyMachine.Update(gameTime);
-            UpdateReactionCounter(gameTime);
 
             if (!Session.IsAwaiting && !IsMoving)
             {
@@ -832,6 +801,9 @@ namespace ScaryCastle
             }
         }
 
+        // CheckEnemiesAfterMoving
+        public bool CheckEnemiesAfterMoving { get; set; }
+
         // ClearCondition
         public void ClearCondition()
         {
@@ -926,12 +898,6 @@ namespace ScaryCastle
         // FootstepSound
         [ScriptProperty]
         public Sound? FootstepSound { get; set; }
-
-        // ForceReaction
-        public void ForceReaction()
-        {
-            reactionCounter = 1;
-        }
 
         // GetActiveThrowablePosition
         public Vector2? GetActiveThrowablePosition()
@@ -1074,6 +1040,21 @@ namespace ScaryCastle
             return true;
         }
 
+        // Patience
+        public int Patience
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    if (field < 0)
+                        field = 0;
+                }
+            }
+        }
+
         // PlayerNumber
         [ScriptProperty]
         public PlayerNumber PlayerNumber
@@ -1091,6 +1072,40 @@ namespace ScaryCastle
                 }
             }
         } = PlayerNumber.None;
+
+        // React
+        public void React()
+        {
+            if (IsPlayer || !IsHostile)
+                return;
+
+            if (CombatBehavior?.Archetype is { } archetype)
+                Patience = archetype.GetPatienceTolerance();
+
+            if (Brain.Decide(this, Session.Player) is CombatDecision decision && decision.Target is { } target)
+            {
+                if (decision.Type == CombatDecisionType.Charge)
+                {
+                    PerformChargeReaction(target.Position);
+                }
+                else if (decision.Type == CombatDecisionType.Flee)
+                {
+                    PerformFleeReaction(target);
+                }
+                else if (decision.Type == CombatDecisionType.RandomMove)
+                {
+                    PerformMoveReaction(target);
+                }
+                else if (decision.Type == CombatDecisionType.Approach)
+                {
+                    PerformMoveReaction(target);
+                }
+                else if (decision.Type == CombatDecisionType.ApproachAndAttack && decision.Intent != null)
+                {
+                    ExecuteAction(decision.Intent, target);
+                }
+            }
+        }
 
         // ResolveInteraction
         public bool ResolveInteraction(GameThing target, Item? item)

@@ -152,6 +152,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register("await-credits", typeof(AwaitCreditsCommand));
             AotTypeRegistry.Register("await-devil-hand", typeof(AwaitDevilHandCommand));
             AotTypeRegistry.Register("await-dialog-block", typeof(AwaitDialogBlockCommand));
+            AotTypeRegistry.Register("await-enemies-turn", typeof(AwaitEnemiesTurnCommand));
             AotTypeRegistry.Register("await-input", typeof(AwaitInputCommand));
             AotTypeRegistry.Register("await-monitor-text", typeof(AwaitMonitorTextCommand));
             AotTypeRegistry.Register("await-popup", typeof(AwaitPopupCommand));
@@ -452,6 +453,14 @@ namespace ScaryCastle
             output.WriteAttributeString(nameof(RunCount), XmlConvert.ToString(RunCount));
         }
 
+        // OnOutcomeCompleted
+        protected override void OnOutcomeCompleted(Thing target)
+        {
+            base.OnOutcomeCompleted(target);
+            ApplyPatiencePenalty(GameSettings.PatiencePenaltyForInteraction);
+            WaitEnemiesTurn();
+        }
+
         #endregion
 
         // AddCorridorExit
@@ -460,6 +469,22 @@ namespace ScaryCastle
         {
             Bosses.Clear();
             (Room as CorridorRoom)?.AddCorridorExit();
+        }
+
+        // ApplyPatiencePenalty
+        public void ApplyPatiencePenalty(int value)
+        {
+            if (IsAwaiting)
+                return;
+
+            if (Room is not ProceduralRoom room)
+                return;
+
+            for (var i = 0; i < room.Children.Count; i++)
+            {
+                if (room.Children[i] is Actor actor && !actor.IsPlayer)
+                    actor.Patience -= value;
+            }
         }
 
         // BeginRun
@@ -491,6 +516,9 @@ namespace ScaryCastle
         // Boss
         [ScriptProperty]
         public Actor? Boss => Bosses.Count > 0 ? Bosses[0] : null;
+
+        // Bosses
+        public List<Actor> Bosses { get; } = [];
 
         // CloseCorridorDoor
         [ScriptMethod]
@@ -781,7 +809,22 @@ namespace ScaryCastle
         // TextHUD
         public TextHUD TextHUD { get; }
 
-        // Bosses
-        public List<Actor> Bosses { get; } = [];
+        // WaitEnemiesTurn
+        public bool WaitEnemiesTurn()
+        {
+            if (Room is not ProceduralRoom room)
+                return false;
+
+            for (var i = 0; i < room.Children.Count; i++)
+            {
+                if (room.Children[i] is Actor actor && !actor.IsPlayer && actor.Patience <= 0)
+                {
+                    AwaitRoutine(RoutineNames.WaitEnemiesTurn);
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

@@ -188,7 +188,7 @@ namespace ScaryCastle
             if (def.DropMode is LootDropMode.None or LootDropMode.SackOnly or LootDropMode.Custom)
                 return 0;
 
-            if (thing is not IThingDefinition t || t.Definition == null || session.Room is not ProceduralRoom room)
+            if (thing is not IThingDefinition t || t.Definition == null || session.Room is not ProceduralRoom)
                 return 0;
 
             // 2. Calculamos la cantidad pasando el multiplicador de la instancia

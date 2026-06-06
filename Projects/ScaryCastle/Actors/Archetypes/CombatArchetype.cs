@@ -9,6 +9,10 @@ namespace ScaryCastle
     /// </summary>
     public abstract class CombatArchetype
     {
+        // AllowRandomMove
+        // Por defecto, los NPCs no se mueven aleatoriamente. Solo lo hacen si el arquetipo lo permite explícitamente.
+        public virtual bool AllowRandomMove => false;
+
         // AttackChance
         // Probabilidad (0 a 1) de que el NPC intente un ataque en su turno.
         // Un valor bajo (0.2) crea un comportamiento de "acecho".
@@ -18,10 +22,6 @@ namespace ScaryCastle
         // Por defecto, la mayoría de los enemigos no usan el "Contacto" como un ataque 
         // que el Brain deba elegir (es pasivo). Pero un lurker SÍ.
         public virtual bool ConsiderContactAsIntent => false;
-
-        // CooldownUnit
-        // La unidad de tiempo para el cooldown entre decisiones.
-        public virtual CombatArchetypeCooldownUnit CooldownUnit => CombatArchetypeCooldownUnit.Clicks;
 
         // FleeChance
         // Probabilidad de que efectivamente huya una vez herido.
@@ -39,7 +39,7 @@ namespace ScaryCastle
             if (intent.Contact)
                 return CombatDecisionType.Charge;
 
-            return CombatDecisionType.Attack;
+            return CombatDecisionType.ApproachAndAttack;
         }
 
         // GetIntentWeight
@@ -50,29 +50,13 @@ namespace ScaryCastle
             return distance > intent.Range ? 0 : intent.SpawnWeight;
         }
 
-        // GetNextCooldown
-        // Devuelve el tiempo de espera (ms) para la próxima decisión, 
+        // GetPatienceTolerance
+        // Devuelve el tiempo de espera en clicks para la próxima decisión, 
         // ya calculado según el rango del arquetipo.
-        public abstract int GetNextCooldown();
+        public abstract int GetPatienceTolerance();
 
-        /// <summary>
-        /// Distancia mínima que el bicho intenta mantener con el jugador.
-        /// </summary>
-        public abstract float MinComfortDistance { get; }
-
-        /// <summary>
-        /// Distancia máxima que el bicho tolera antes de querer acercarse.
-        /// </summary>
-        public abstract float MaxComfortDistance { get; }
-
-        /// <summary>
-        /// Qué tan rápido se mueve el bicho (multiplicador).
-        /// </summary>
-        public virtual float MovementSpeedFactor => 1;
-
-        // IdleMoveType
-        // El tipo de decisión por defecto cuando no está atacando o huyendo.
-        public virtual CombatDecisionType IdleMoveType => CombatDecisionType.Move;
+        // MoveRange
+        public virtual int MoveRange => 20;
 
         // SelectIntent
         // Selecciona un ataque de la lista disponible basándose en pesos y distancia.

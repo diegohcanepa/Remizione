@@ -10,8 +10,7 @@ namespace ScaryCastle
     public readonly record struct CombatDecision(CombatDecisionType Type, CombatIntent? Intent, GameThing? Target);
 
     /// <summary>
-    /// Motor de decisiones de combate. 
-    /// Solo procesa lógica usando los datos del actor y su arquetipo.
+    /// Brain
     /// </summary>
     public static class Brain
     {
@@ -25,35 +24,63 @@ namespace ScaryCastle
         }
 
         // Decide
-        public static CombatDecision Decide(Actor actor, GameThing? target)
+        public static CombatDecision? Decide(Actor actor, GameThing? target)
         {
             if (actor.CombatBehavior?.Archetype is not { } archetype)
-                return new CombatDecision(CombatDecisionType.None, null, target);
+                return null;
 
             bool isCornered = target != null && actor.IsCornered(target);
 
-            // 1. Decisión de Huida: Solo si NO está atrapado
+            // 1. Decisión de Huida: Filtro de pánico si está reventado y hay espacio físico para escapar
             if (!isCornered && actor.HPRatio <= archetype.FleeHPThreshold && Random.Shared.NextDouble() < archetype.FleeChance)
                 return new CombatDecision(CombatDecisionType.Flee, null, target);
 
-            // 2. Decisión de Ataque: 
-            // Si está acorralado, la probabilidad es 1.0 (100%). Si no, es la del arquetipo.
+            // 2. Procesamiento de la Intención de Ataque / Persecución
             if (target != null)
             {
-                float chance = isCornered ? 1 : archetype.AttackChance;
                 float distance = DistanceToTarget(actor, target);
 
-                if (Random.Shared.NextDouble() < chance)
+                // Tiramos el dado de AttackChance para ver si el bicho quiere ir a buscarte voluntariamente en este pulso
+                if (Random.Shared.NextDouble() < archetype.AttackChance || isCornered)
                 {
+                    // SelectIntent selecciona el ataque SIN descartar por distancia 
                     var intent = archetype.SelectIntent(actor, actor.CombatBehavior.Intents, distance);
+
                     if (intent != null)
-                        return new CombatDecision(archetype.GetDecisionType(intent), intent, target);
+                    {
+                        if (intent.Contact)
+                        {
+                            // Cuerpo a cuerpo: Evaluamos si la brecha física (distancia - rango) entra en su MoveRange
+                            if ((distance - intent.Range) <= archetype.MoveRange)
+                            {
+                                // Le da la nafta para llegar: se mueve y te emboca en el mismo pulso
+                                return new CombatDecision(CombatDecisionType.ApproachAndAttack, intent, target);
+                            }
+                            else
+                            {
+                                // Quiere morderte pero está lejos: usa el pulso para acortar distancia hacia Edmundo
+                                return new CombatDecision(CombatDecisionType.Approach, intent, target);
+                            }
+                        }
+                        else
+                        {
+                            // Ataque a distancia: Si está en rango ejecuta, si no, se acerca
+                            if (distance <= intent.Range)
+                                return new CombatDecision(CombatDecisionType.ApproachAndAttack, intent, target);
+                            else
+                                return new CombatDecision(CombatDecisionType.Approach, intent, target);
+                        }
+                    }
                 }
             }
 
-            // 3. Fallback (Si no atacó y no huyó)
-            // Ojo: Si es un cobarde acorralado y el SelectIntent falló, va a intentar Flee igual.
-            return new CombatDecision(archetype.IdleMoveType, null, target);
+            // 3. Fallback Determinista (Si falló la chance de ataque o no hay intents válidos)
+            // Si es un obstáculo ambiental (Rata), se mueve al azar de forma caótica.
+            if (archetype.AllowRandomMove)
+                return new CombatDecision(CombatDecisionType.RandomMove, null, target);
+
+            // Si es un enemigo inteligente, usa el pulso para ganar terreno y achicarte el pasillo.
+            return new CombatDecision(CombatDecisionType.Approach, null, target);
         }
     }
 }

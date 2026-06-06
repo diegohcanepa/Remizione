@@ -101,10 +101,10 @@ namespace ScaryCastle
             if (textSprite.BoundingBox.Bottom >= Screen.NativeHeight)
             {
                 textSprite.Y -= 10;
-            
+
                 if (!subTextSprite.IsEmpty)
                 {
-                    subTextSprite.Y -= (7 + textSprite.BoundingBox.Height + subTextSprite.BoundingBox.Height);
+                    subTextSprite.Y -= 7 + textSprite.BoundingBox.Height + subTextSprite.BoundingBox.Height;
                 }
             }
         }

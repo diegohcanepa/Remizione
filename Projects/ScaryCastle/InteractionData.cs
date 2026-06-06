@@ -32,14 +32,17 @@ namespace ScaryCastle
         }
 
         // Execute
-        public void Execute(GameSession session)
+        public bool Execute(GameSession session)
         {
             if (session.Player == null || target == null)
-                return;
+                return false;
+
+            var result = false;
 
             if (combatIntent != null)
             {
                 session.Player.ExecuteAction(combatIntent, target);
+                result = true;
             }
             else if (script != null)
             {
@@ -54,9 +57,11 @@ namespace ScaryCastle
                     else
                     {
                         session.Player.FaceTo(target);
-
                         if (script != null)
+                        {
                             session.BeginOutcome(script, target);
+                            result = true;
+                        }
                     }
                 }
             }
@@ -65,15 +70,21 @@ namespace ScaryCastle
                 if (item.Name == ItemNames.Lift)
                 {
                     if (target is Prop prop && prop.IsLiftable)
+                    {
                         session.Player.Lift(prop);
+                        result = true;
+                    }
                 }
                 else
                 {
                     session.Player.ExecuteAction(item, target);
+                    result = true;
                 }
             }
 
             Clear();
+
+            return result;
         }
 
         // IsAttack

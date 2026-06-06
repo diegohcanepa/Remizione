@@ -28,20 +28,11 @@ namespace ScaryCastle
             return .8f;
         }
 
-        // IdleMoveType
-        public override CombatDecisionType IdleMoveType => CombatDecisionType.Move;
-
-        // GetNextCooldown
-        public override int GetNextCooldown()
+        // GetPatienceTolerance
+        public override int GetPatienceTolerance()
         {
             // Entre 1.2 y 3.5 segundos entre decisiones.
             return Random.Shared.Next(1200, 3500);
         }
-
-        // MinComfortDistance
-        public override float MinComfortDistance => 60;
-
-        // MaxComfortDistance
-        public override float MaxComfortDistance => 110;
     }
 }

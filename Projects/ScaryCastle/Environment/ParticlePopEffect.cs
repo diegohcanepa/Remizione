@@ -15,7 +15,7 @@ namespace ScaryCastle
 
         private Color color;
         private readonly List<Particle> particles = [];
-        private AtlasImage renderImage = Atlases.UI.Pixel;
+        private readonly AtlasImage renderImage = Atlases.UI.Pixel;
 
         #endregion
 

@@ -113,7 +113,7 @@ namespace ScaryCastle
             if (!IsEmitting)
                 return;
 
-            if (LightKind == LightKind.Default || LightKind == LightKind.Ambient)
+            if (LightKind is LightKind.Default or LightKind.Ambient)
                 lightSprite.Color = Color;
 
             if (blinker.IsRunning && blinker.CurrentValue)

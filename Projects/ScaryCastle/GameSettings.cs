@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace ScaryCastle
+﻿namespace ScaryCastle
 {
     /// <summary>
     /// GameSettings
@@ -42,6 +40,12 @@ namespace ScaryCastle
 
         // MaxSkills
         public const int MaxSkills = 2;
+
+        // PatiencePenaltyForInteraction
+        public const int PatiencePenaltyForInteraction = 5;
+
+        // PatiencePenaltyForMovement
+        public const int PatiencePenaltyForMovement = 1;
 
         // SteamAppID
         public const int SteamAppID = 480;

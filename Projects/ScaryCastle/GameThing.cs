@@ -224,7 +224,7 @@ namespace ScaryCastle
             }
             else
             {
-                DisplaySentence = DisplayName;               
+                DisplaySentence = DisplayName;
             }
         }
 
@@ -232,7 +232,7 @@ namespace ScaryCastle
 
         #region Protected members
 
-         // CanCheckCollisions
+        // CanCheckCollisions
         protected virtual bool CanCheckCollisions()
         {
             return CollisionDetection;

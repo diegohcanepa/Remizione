@@ -20,18 +20,7 @@ namespace ScaryCastle
         public override Ratio FleeHPThreshold => 0.00f;
         public override Ratio FleeChance => 0.00f;
 
-        // Si no está atacando, su decisión es 'Move' (moverse al "techo" sobre el jugador).
-        public override CombatDecisionType IdleMoveType => CombatDecisionType.Move;
-
-        // Distancia horizontal mínima y máxima que tolera. 
-        // Queremos que esté prácticamente alineado en el eje X con el jugador (0 a 30px).
-        public override float MinComfortDistance => 0f;
-        public override float MaxComfortDistance => 30f;
-
-        // Vuela un 20% más rápido que los enemigos terrestres para reubicarse arriba tuyo.
-        public override float MovementSpeedFactor => 1.2f;
-
-        public override int GetNextCooldown()
+        public override int GetPatienceTolerance()
         {
             // Decisiones rápidas (0.5 a 1.2 segundos) para reposicionarse agresivamente.
             return Random.Shared.Next(500, 1200);

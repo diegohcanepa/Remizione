@@ -110,6 +110,8 @@ namespace ScaryCastle
             base.Exit();
             Action = null;
             Target = null;
+            Owner.Session.ApplyPatiencePenalty(GameSettings.PatiencePenaltyForInteraction);
+            Owner.Session.WaitEnemiesTurn();
         }
 
         // Target

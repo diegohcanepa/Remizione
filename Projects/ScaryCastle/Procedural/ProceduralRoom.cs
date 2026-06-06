@@ -498,7 +498,7 @@ namespace ScaryCastle
 
         // IsProcedural
         public override bool IsProcedural => true;
-            
+
         // Placeholders
         public ReadOnlyCollection<Placeholder> Placeholders { get; }
 

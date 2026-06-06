@@ -10,6 +10,9 @@ namespace ScaryCastle
     /// </summary>
     public sealed class LurkerArchetype : CombatArchetype
     {
+        // AllowRandomMove
+        public override bool AllowRandomMove => true;
+
         // Solo el 22% de las veces que el Brain procesa, decidirá morder.
         // Esto genera esa sensación de que "anda por ahí caminando" antes de saltar.
         public override Ratio AttackChance => .22f;
@@ -23,24 +26,11 @@ namespace ScaryCastle
         // FleeChance
         public override Ratio FleeChance => 0.15f;
 
-        // El Lurker usa 'Move' para merodear cuando no está atacando.
-        // (Tu sistema de movimiento debería manejar el "rodear" al jugador aquí).
-        public override CombatDecisionType IdleMoveType => CombatDecisionType.Move;
-
-        /// <summary>
-        /// Devuelve un cooldown errático. 
-        /// Las pausas largas simulan al animal "observando" o "dudando".
-        /// </summary>
-        public override int GetNextCooldown()
+        public override int GetPatienceTolerance()
         {
-            // Entre 1.2 y 3.5 segundos entre decisiones.
-            return Random.Shared.Next(1200, 3500);
+            return Random.Shared.Next(2, 5);
         }
 
-        // MinComfortDistance
-        public override float MinComfortDistance => 60;
-
-        // MaxComfortDistance
-        public override float MaxComfortDistance => 110;
+        public override int MoveRange => 50;
     }
 }

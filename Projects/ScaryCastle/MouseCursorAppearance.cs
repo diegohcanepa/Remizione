@@ -87,7 +87,7 @@ namespace ScaryCastle
                     {
                         MouseCursor.SubText = context.Target.ItemReward.DisplayName;
                     }
-                    else if ( (context.Target as IThingDefinition)?.Definition?.DropTrigger == LootDropTrigger.OnImpact)
+                    else if ((context.Target as IThingDefinition)?.Definition?.DropTrigger == LootDropTrigger.OnImpact)
                     {
                         MouseCursor.SubText = "[?]";
                     }
