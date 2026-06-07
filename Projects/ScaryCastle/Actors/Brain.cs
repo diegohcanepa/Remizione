@@ -7,7 +7,12 @@ namespace ScaryCastle
     /// <summary>
     /// Paquete de datos liviano (Stack allocated, 0 GC) para la decisión de combate.
     /// </summary>
-    public readonly record struct CombatDecision(CombatDecisionType Type, CombatIntent? Intent, GameThing? Target);
+    public sealed class CombatDecision(CombatDecisionType Type, CombatIntent? Intent, GameThing? Target)
+    {
+        public CombatDecisionType Type { get; } = Type;
+        public CombatIntent? Intent { get; } = Intent;
+        public GameThing? Target { get; } = Target;
+    }
 
     /// <summary>
     /// Brain

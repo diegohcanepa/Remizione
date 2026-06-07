@@ -9,6 +9,7 @@ using ScaryCastle.Scripting;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace ScaryCastle
@@ -152,7 +153,6 @@ namespace ScaryCastle
             AotTypeRegistry.Register("await-credits", typeof(AwaitCreditsCommand));
             AotTypeRegistry.Register("await-devil-hand", typeof(AwaitDevilHandCommand));
             AotTypeRegistry.Register("await-dialog-block", typeof(AwaitDialogBlockCommand));
-            AotTypeRegistry.Register("await-enemies-turn", typeof(AwaitEnemiesTurnCommand));
             AotTypeRegistry.Register("await-input", typeof(AwaitInputCommand));
             AotTypeRegistry.Register("await-monitor-text", typeof(AwaitMonitorTextCommand));
             AotTypeRegistry.Register("await-popup", typeof(AwaitPopupCommand));
@@ -457,8 +457,11 @@ namespace ScaryCastle
         protected override void OnOutcomeCompleted(Thing target)
         {
             base.OnOutcomeCompleted(target);
-            ApplyPatiencePenalty(GameSettings.PatiencePenaltyForInteraction);
-            WaitEnemiesTurn();
+
+            if (!IsNpcReaction)
+                ApplyPatiencePenalty(GameSettings.PatiencePenaltyForInteraction);
+
+            HandleNPCReaction();
         }
 
         #endregion
@@ -616,6 +619,29 @@ namespace ScaryCastle
         [ScriptProperty]
         public GateEventType GateEvent { get; set; }
 
+        // HandleNPCReaction
+        public void HandleNPCReaction()
+        {
+            IsNpcReaction = false;
+
+            if (Room is not ProceduralRoom room)
+                return;
+
+            for (var i = 0; i < room.Children.Count; i++)
+            {
+                if (room.Children[i] is Actor actor && !actor.IsPlayer && actor.Patience == 0)
+                {
+                    if (actor.BeginReaction() && actor.OutcomeScript != null)
+                    {
+                        IsNpcReaction = true;
+                        actor.ResetPatience();
+                        BeginOutcome(actor.OutcomeScript, actor);
+                        return;
+                    }
+                }
+            }
+        }
+
         // InteractionContext
         public InteractionContext InteractionContext { get; }
 
@@ -628,6 +654,10 @@ namespace ScaryCastle
         // IsHUDVisible
         [ScriptProperty]
         public bool IsHUDVisible => CurrentRun != null && Player != null && !Player.IsDead;
+
+        // IsNpcReaction
+        [ScriptProperty]
+        public bool IsNpcReaction { get; private set; }
 
         // KillEnemies
         [ScriptMethod]
@@ -808,23 +838,5 @@ namespace ScaryCastle
 
         // TextHUD
         public TextHUD TextHUD { get; }
-
-        // WaitEnemiesTurn
-        public bool WaitEnemiesTurn()
-        {
-            if (Room is not ProceduralRoom room)
-                return false;
-
-            for (var i = 0; i < room.Children.Count; i++)
-            {
-                if (room.Children[i] is Actor actor && !actor.IsPlayer && actor.Patience <= 0)
-                {
-                    AwaitRoutine(RoutineNames.WaitEnemiesTurn);
-                    return true;
-                }
-            }
-
-            return false;
-        }
     }
 }

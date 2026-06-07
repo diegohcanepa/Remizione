@@ -17,6 +17,7 @@ namespace ScaryCastle
         #region Private fields
 
         private Sprite? activeThrowableSprite;
+        private CombatDecision? combatDecision;
         private int conditionTimer;
         private const int contactCooldown = 500;
         private int contactTimer;
@@ -508,12 +509,6 @@ namespace ScaryCastle
             FastMove = false;
             moveVerticalTween.Stop();
             moveBalancingTween.Stop();
-
-            if (CheckEnemiesAfterMoving)
-            {
-                CheckEnemiesAfterMoving = false;
-                Session.WaitEnemiesTurn();
-            }
         }
 
         // OnTakeDamage
@@ -773,6 +768,27 @@ namespace ScaryCastle
             OnApplyCondition(condition, amount);
         }
 
+        // BeginReaction
+        public bool BeginReaction()
+        {
+            if (IsPlayer || !IsHostile)
+                return false;
+
+            if (OutcomeScript != null && Brain.Decide(this, Session.Player) is CombatDecision decision)
+            {
+                combatDecision = decision;
+                CombatDecisionType = decision.Type;
+                return true;
+            }
+            else
+            {
+                combatDecision = null;
+                CombatDecisionType = CombatDecisionType.None;
+            }
+            
+            return false;
+        }
+
         // BodySize
         public BodySize BodySize { get; set; } = BodySize.Medium;
 
@@ -801,9 +817,6 @@ namespace ScaryCastle
             }
         }
 
-        // CheckEnemiesAfterMoving
-        public bool CheckEnemiesAfterMoving { get; set; }
-
         // ClearCondition
         public void ClearCondition()
         {
@@ -813,6 +826,10 @@ namespace ScaryCastle
 
         // CombatBehavior
         public CombatBehavior? CombatBehavior { get; }
+
+        // CombatDecisionType
+        [ScriptProperty]
+        public CombatDecisionType CombatDecisionType { get; private set; }
 
         // Condition
         public ConditionType Condition { get; private set; }
@@ -1055,6 +1072,36 @@ namespace ScaryCastle
             }
         }
 
+        // PerformReaction
+        [ScriptMethod]
+        public void PerformReaction()
+        {
+            if (combatDecision?.Target == null)
+                return;
+
+            if (combatDecision.Type == CombatDecisionType.Charge)
+            {
+                PerformChargeReaction(combatDecision.Target.Position);
+            }
+            else if (combatDecision.Type == CombatDecisionType.Flee)
+            {
+                PerformFleeReaction(combatDecision.Target);
+            }
+            else if (combatDecision.Type == CombatDecisionType.RandomMove)
+            {
+                PerformMoveReaction(combatDecision.Target);
+            }
+            else if (combatDecision.Type == CombatDecisionType.Approach)
+            {
+                PerformMoveReaction(combatDecision.Target);
+            }
+            else if (combatDecision.Type == CombatDecisionType.ApproachAndAttack)
+            {
+                if (combatDecision.Intent != null)
+                    ExecuteAction(combatDecision.Intent, combatDecision.Target);
+            }
+        }
+
         // PlayerNumber
         [ScriptProperty]
         public PlayerNumber PlayerNumber
@@ -1073,38 +1120,11 @@ namespace ScaryCastle
             }
         } = PlayerNumber.None;
 
-        // React
-        public void React()
+        // ResetPatience
+        public void ResetPatience()
         {
-            if (IsPlayer || !IsHostile)
-                return;
-
-            if (CombatBehavior?.Archetype is { } archetype)
-                Patience = archetype.GetPatienceTolerance();
-
-            if (Brain.Decide(this, Session.Player) is CombatDecision decision && decision.Target is { } target)
-            {
-                if (decision.Type == CombatDecisionType.Charge)
-                {
-                    PerformChargeReaction(target.Position);
-                }
-                else if (decision.Type == CombatDecisionType.Flee)
-                {
-                    PerformFleeReaction(target);
-                }
-                else if (decision.Type == CombatDecisionType.RandomMove)
-                {
-                    PerformMoveReaction(target);
-                }
-                else if (decision.Type == CombatDecisionType.Approach)
-                {
-                    PerformMoveReaction(target);
-                }
-                else if (decision.Type == CombatDecisionType.ApproachAndAttack && decision.Intent != null)
-                {
-                    ExecuteAction(decision.Intent, target);
-                }
-            }
+            if (CombatBehavior?.Archetype != null)
+                Patience = CombatBehavior.Archetype.GetPatienceTolerance();
         }
 
         // ResolveInteraction
