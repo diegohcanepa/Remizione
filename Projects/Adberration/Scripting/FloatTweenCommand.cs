@@ -58,6 +58,6 @@ namespace Adberration.Scripting
         protected abstract void SetTween(Entity entity, FloatTween tween);
 
         // IsAwaiting
-        public override bool IsAwaiting => tween != null && tween.IsRunning;
+        public override bool IsAwaiting() => tween != null && tween.IsRunning;
     }
 }

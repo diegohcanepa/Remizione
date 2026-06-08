@@ -422,6 +422,12 @@ namespace Adberration
             set => Sprite.Color = value;
         }
 
+        // ContainsAnimation
+        public bool ContainsAnimation(string name)
+        {
+            return Sprite.Animations.Find(name) != null;
+        }
+
         // DeclaredName
         [ScriptProperty]
         public string DeclaredName { get; }

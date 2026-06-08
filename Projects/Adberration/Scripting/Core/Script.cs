@@ -325,7 +325,7 @@ namespace Adberration.Scripting
                     return false;
             }
 
-            if (command is AwaitableCommand awaitableCommand && awaitableCommand.ShouldAwait && awaitableCommand.IsAwaiting)
+            if (command is AwaitableCommand awaitableCommand && awaitableCommand.ShouldAwait && awaitableCommand.IsAwaiting())
             {
                 awaitableCommand.Update(gameTime);
                 return false;

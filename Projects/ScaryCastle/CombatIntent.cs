@@ -27,9 +27,6 @@ namespace ScaryCastle
             // Category
             this.Category = element.GetEnum("category", CombatIntentCategory.Basic);
 
-            // Contact
-            this.Contact = string.Equals(Name, nameof(Contact), StringComparison.OrdinalIgnoreCase);
-
             // EnergyCost
             EnergyCost = element.GetInt32("energyCost", 0);
             if (EnergyCost < 0)
@@ -71,9 +68,6 @@ namespace ScaryCastle
 
         // Category
         public CombatIntentCategory Category { get; }
-
-        // Contact
-        public bool Contact { get; }
 
         // InPlaceEffectType
         public InPlaceEffectType InPlaceEffectType { get; }

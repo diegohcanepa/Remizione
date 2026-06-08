@@ -67,6 +67,6 @@ namespace ScaryCastle.Scripting
         #endregion
 
         // IsAwaiting
-        public override bool IsAwaiting => source != null && (source.IsMoving || directionCooldown > 0);
+        public override bool IsAwaiting() => source != null && (source.IsMoving || directionCooldown > 0);
     }
 }

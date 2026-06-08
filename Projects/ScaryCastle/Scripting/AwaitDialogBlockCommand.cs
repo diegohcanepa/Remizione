@@ -27,6 +27,6 @@ namespace ScaryCastle.Scripting
         #endregion
 
         // IsAwaiting
-        public override bool IsAwaiting => Game.SceneManager.CurrentScene is DialogBlockScene;
+        public override bool IsAwaiting() => Game.SceneManager.CurrentScene is DialogBlockScene;
     }
 }

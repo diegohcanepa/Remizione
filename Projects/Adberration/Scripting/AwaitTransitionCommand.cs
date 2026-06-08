@@ -13,6 +13,6 @@ namespace Adberration.Scripting
         }
 
         // IsAwaiting
-        public override bool IsAwaiting => TransitionManager.CurrentTransition.IsRunning;
+        public override bool IsAwaiting() => TransitionManager.CurrentTransition.IsRunning;
     }
 }

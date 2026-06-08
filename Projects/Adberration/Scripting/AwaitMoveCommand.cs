@@ -34,26 +34,23 @@
         #endregion
 
         // IsAwaiting
-        public override bool IsAwaiting
+        public override bool IsAwaiting()
         {
-            get
+            if (targets != null && targets.Length > 0)
             {
-                if (targets != null && targets.Length > 0)
+                for (var i = 0; i < targets.Length; i++)
                 {
-                    for (var i = 0; i < targets.Length; i++)
+                    if (targets[i] is Thing thing)
                     {
-                        if (targets[i] is Thing thing)
+                        if (thing.IsMoving || (HasArg(IncludeTweensArg) && thing.Tweens.IsTweeningPosition))
                         {
-                            if (thing.IsMoving || (HasArg(IncludeTweensArg) && thing.Tweens.IsTweeningPosition))
-                            {
-                                return true;
-                            }
+                            return true;
                         }
                     }
                 }
-
-                return false;
             }
+
+            return false;
         }
     }
 }

@@ -8,6 +8,7 @@ namespace ScaryCastle
     /// </summary>
     public sealed class BodyExecuteActionState : BodyAnimatedState
     {
+        private bool animationFound;
         private bool eventDone;
 
         // Constructor
@@ -23,9 +24,9 @@ namespace ScaryCastle
         {
             if (target.CanBeHit() && Owner.AnimationPlayer.Frame?.IsTrigger == true)
             {
-                if (Owner.IsInAttackLane(target))
+                //if (Owner.IsInAttackLane(target))
                 {
-                    if (Owner.AnimationPlayer.GetFrameSubArea().Intersects(target.RuntimeHotspot.BoundingRectangleF))
+                    //if (Owner.AnimationPlayer.GetFrameSubArea().Intersects(target.RuntimeHotspot.BoundingRectangleF))
                         return true;
                 }
             }
@@ -98,7 +99,9 @@ namespace ScaryCastle
         public override void Enter()
         {
             base.Enter();
-            eventDone = false;
+
+            animationFound = Owner.ContainsAnimation(GetAnimationName());
+            eventDone = !animationFound;
 
             if (Action?.SoundStart != null)
                 Owner.PlaySound(Action.SoundStart);
@@ -110,8 +113,6 @@ namespace ScaryCastle
             base.Exit();
             Action = null;
             Target = null;
-            Owner.Session.ApplyPatiencePenalty(GameSettings.PatiencePenaltyForInteraction);
-            Owner.Session.HandleNPCReaction();
         }
 
         // Target
@@ -158,7 +159,7 @@ namespace ScaryCastle
                 return;
             }
 
-            if (!Owner.AnimationPlayer.IsPlaying)
+            if (!animationFound || !Owner.AnimationPlayer.IsPlaying)
                 Machine.ChangeState<BodyStandState>();
         }
     }

@@ -25,6 +25,6 @@ namespace ScaryCastle.Scripting
         #endregion
 
         // IsAwaiting
-        public override bool IsAwaiting => !InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed();
+        public override bool IsAwaiting() => !InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed();
     }
 }

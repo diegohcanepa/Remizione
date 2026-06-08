@@ -13,9 +13,6 @@ namespace ScaryCastle
         // AttackChance
         public override Ratio AttackChance => .9f;
 
-        // ConsiderContactAsIntent
-        public override bool ConsiderContactAsIntent => true;
-
         // FleeHPThreshold
         public override Ratio FleeHPThreshold => 0.08f;
 

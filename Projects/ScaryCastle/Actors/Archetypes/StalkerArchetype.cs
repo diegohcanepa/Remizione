@@ -36,7 +36,7 @@ namespace ScaryCastle
         {
             // Si quieres que el ojo sea una masa pesada que no salta,
             // podrías forzar 'Attack' en lugar de 'Charge' incluso para contacto.
-            return CombatDecisionType.ApproachAndAttack;
+            return CombatDecisionType.Attack;
         }
     }
 }

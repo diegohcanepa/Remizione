@@ -25,6 +25,6 @@
         #endregion
 
         // IsAwaiting
-        public override bool IsAwaiting => entity != null && entity.AnimationPlayer.IsPlaying;
+        public override bool IsAwaiting() => entity != null && entity.AnimationPlayer.IsPlaying;
     }
 }

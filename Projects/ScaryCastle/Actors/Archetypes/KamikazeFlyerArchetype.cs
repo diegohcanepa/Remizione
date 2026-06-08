@@ -13,9 +13,6 @@ namespace ScaryCastle
         // 35% de chance de iniciar la picada en cada tick del Brain si está en posición.
         public override Ratio AttackChance => .35f;
 
-        // El impacto es por contacto directo (físico).
-        public override bool ConsiderContactAsIntent => true;
-
         // Es un kamikaze: no huye jamás. Muere intentando matarte.
         public override Ratio FleeHPThreshold => 0.00f;
         public override Ratio FleeChance => 0.00f;

@@ -42,7 +42,7 @@
         public const int MaxSkills = 2;
 
         // PatiencePenaltyForInteraction
-        public const int PatiencePenaltyForInteraction = 5;
+        public const int PatiencePenaltyForInteraction = 3;
 
         // PatiencePenaltyForMovement
         public const int PatiencePenaltyForMovement = 1;

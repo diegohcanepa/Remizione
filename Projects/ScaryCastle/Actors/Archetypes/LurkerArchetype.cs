@@ -17,19 +17,14 @@ namespace ScaryCastle
         // Esto genera esa sensación de que "anda por ahí caminando" antes de saltar.
         public override Ratio AttackChance => .22f;
 
-        // ConsiderContactAsIntent
-        public override bool ConsiderContactAsIntent => true;
-
         // FleeHPThreshold
         public override Ratio FleeHPThreshold => 0.08f;
 
         // FleeChance
         public override Ratio FleeChance => 0.15f;
 
-        public override int GetPatienceTolerance()
-        {
-            return Random.Shared.Next(2, 5);
-        }
+        // GetPatienceTolerance
+        public override int GetPatienceTolerance() => GameSettings.PatiencePenaltyForInteraction;
 
         public override int MoveRange => 50;
     }

@@ -71,6 +71,6 @@ namespace Adberration.Scripting
         #endregion
 
         // IsAwaiting
-        public override bool IsAwaiting => thing != null && (thing.IsMoving || directionCooldown > 0);
+        public override bool IsAwaiting() => thing != null && (thing.IsMoving || directionCooldown > 0);
     }
 }

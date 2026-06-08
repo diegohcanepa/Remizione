@@ -33,7 +33,7 @@ namespace Adberration.Scripting
         #endregion
 
         // IsAwaiting
-        public override bool IsAwaiting => Session.Camera.ShakeState != CameraShakeState.None;
+        public override bool IsAwaiting() => Session.Camera.ShakeState != CameraShakeState.None;
 
     }
 }

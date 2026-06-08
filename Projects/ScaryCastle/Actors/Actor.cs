@@ -17,7 +17,6 @@ namespace ScaryCastle
         #region Private fields
 
         private Sprite? activeThrowableSprite;
-        private CombatDecision? combatDecision;
         private int conditionTimer;
         private const int contactCooldown = 500;
         private int contactTimer;
@@ -201,6 +200,7 @@ namespace ScaryCastle
             }
         }
 
+        /*
         // UpdateContactIntent
         private bool UpdateContactIntent(GameTime gameTime)
         {
@@ -220,6 +220,7 @@ namespace ScaryCastle
 
             return false;
         }
+        */
 
         // UpdateDirection
         private void UpdateDirection()
@@ -547,8 +548,10 @@ namespace ScaryCastle
         {
             base.OnUpdate(gameTime);
 
+            /*
             if (!UpdateContactIntent(gameTime))
                 UpdateCondition(gameTime);
+            */
 
             headTween.Update(gameTime);
 
@@ -574,62 +577,6 @@ namespace ScaryCastle
                     FaceTo(Session.Player);
                 }
             }
-        }
-
-        // PerformChargeReaction
-        protected virtual void PerformChargeReaction(Vector2 destination)
-        {
-            var state = BodyMachine.FindOrCreateState<BodyChargeState>();
-            state.Destination = destination;
-            BodyMachine.ChangeState(state.GetType());
-        }
-
-        // PerformFleeReaction
-        protected virtual void PerformFleeReaction(GameThing target)
-        {
-            if (Direction == FacingDirection.Left)
-                MoveTo(new(X + 30, Y));
-            else
-                MoveTo(new(X - 30, Y));
-        }
-
-        // PerformMoveReaction
-        protected virtual void PerformMoveReaction(GameThing target)
-        {
-            var arch = CombatBehavior?.Archetype;
-            if (arch == null)
-                return;
-
-            if (WalkArea == null)
-                return;
-
-            Vector2 bestPoint = Position;
-            float moveRadius = 120f;
-            float minStep = 40f; // Si no se mueve al menos 40px, no nos sirve.
-
-            for (int i = 0; i < 3; i++) // 3 intentos para encontrar un lugar decente
-            {
-                float angle = (float)(Random.Shared.NextDouble() * Math.PI * 2);
-                Vector2 offset = new(
-                    (float)Math.Cos(angle) * moveRadius,
-                    (float)Math.Sin(angle) * moveRadius
-                );
-
-                Vector2 potentialTarget = WalkArea.Polygon.Clamp(Position + offset);
-
-                // ¿Este punto nos mueve lo suficiente?
-                if (Vector2.Distance(Position, potentialTarget) >= minStep)
-                {
-                    bestPoint = potentialTarget;
-                    break;
-                }
-
-                // Si no, guardamos el que más nos mueva por las dudas
-                if (Vector2.Distance(Position, potentialTarget) > Vector2.Distance(Position, bestPoint))
-                    bestPoint = potentialTarget;
-            }
-
-            MoveTo(bestPoint);
         }
 
         #endregion
@@ -768,25 +715,26 @@ namespace ScaryCastle
             OnApplyCondition(condition, amount);
         }
 
-        // BeginReaction
-        public bool BeginReaction()
+        // BeginTurn
+        public Script? BeginTurn()
         {
-            if (IsPlayer || !IsHostile)
-                return false;
+            if (IsPlayer || !IsHostile || Session.IsAwaiting)
+                return null;
 
             if (OutcomeScript != null && Brain.Decide(this, Session.Player) is CombatDecision decision)
             {
-                combatDecision = decision;
+                CombatDecision = decision;
                 CombatDecisionType = decision.Type;
-                return true;
+                ResetPatience();
+                return OutcomeScript;
             }
             else
             {
-                combatDecision = null;
+                CombatDecision = null;
                 CombatDecisionType = CombatDecisionType.None;
             }
             
-            return false;
+            return null;
         }
 
         // BodySize
@@ -817,6 +765,14 @@ namespace ScaryCastle
             }
         }
 
+        // Charge
+        public virtual void Charge(Vector2 destination)
+        {
+            var state = BodyMachine.FindOrCreateState<BodyChargeState>();
+            state.Destination = destination;
+            BodyMachine.ChangeState(state.GetType());
+        }
+
         // ClearCondition
         public void ClearCondition()
         {
@@ -826,6 +782,9 @@ namespace ScaryCastle
 
         // CombatBehavior
         public CombatBehavior? CombatBehavior { get; }
+
+        // CombatDecision
+        public CombatDecision? CombatDecision;
 
         // CombatDecisionType
         [ScriptProperty]
@@ -912,6 +871,15 @@ namespace ScaryCastle
         [ScriptProperty(CodingContext.EntityDeclaration)]
         public float FastMoveFactor { get; set; } = 1;
 
+        // Flee
+        public virtual void Flee()
+        {
+            if (Direction == FacingDirection.Left)
+                MoveTo(new(X + 30, Y));
+            else
+                MoveTo(new(X - 30, Y));
+        }
+
         // FootstepSound
         [ScriptProperty]
         public Sound? FootstepSound { get; set; }
@@ -955,12 +923,19 @@ namespace ScaryCastle
         // IsFollowingPath
         public bool IsFollowingPath { get; private set; }
 
+        // IsReacting
+        [ScriptProperty]
+        public bool IsReacting => Session.ActiveNPC == this;
+
         // IsPerformingAction
         public bool IsPerformingAction => BodyMachine.CurrentState is BodyExecuteActionState;
 
         // IsPlayer
         [ScriptProperty]
         public bool IsPlayer => Session.Player == this;
+
+        // IsStanding
+        public bool IsStanding => BodyMachine.CurrentState is BodyStandState;
 
         // IsStandingOrMoving
         public bool IsStandingOrMoving => BodyMachine.CurrentState is BodyStandState or BodyMoveState;
@@ -1003,6 +978,45 @@ namespace ScaryCastle
                     Energy = value;
                 }
             }
+        }
+
+        // MoveNearby
+        public virtual void MoveNearby(GameThing target)
+        {
+            var arch = CombatBehavior?.Archetype;
+            if (arch == null)
+                return;
+
+            if (WalkArea == null)
+                return;
+
+            Vector2 bestPoint = Position;
+            float moveRadius = 120f;
+            float minStep = 40f; // Si no se mueve al menos 40px, no nos sirve.
+
+            for (int i = 0; i < 3; i++) // 3 intentos para encontrar un lugar decente
+            {
+                float angle = (float)(Random.Shared.NextDouble() * Math.PI * 2);
+                Vector2 offset = new(
+                    (float)Math.Cos(angle) * moveRadius,
+                    (float)Math.Sin(angle) * moveRadius
+                );
+
+                Vector2 potentialTarget = WalkArea.Polygon.Clamp(Position + offset);
+
+                // ¿Este punto nos mueve lo suficiente?
+                if (Vector2.Distance(Position, potentialTarget) >= minStep)
+                {
+                    bestPoint = potentialTarget;
+                    break;
+                }
+
+                // Si no, guardamos el que más nos mueva por las dudas
+                if (Vector2.Distance(Position, potentialTarget) > Vector2.Distance(Position, bestPoint))
+                    bestPoint = potentialTarget;
+            }
+
+            MoveTo(bestPoint);
         }
 
         // MoveRandomly
@@ -1072,36 +1086,6 @@ namespace ScaryCastle
             }
         }
 
-        // PerformReaction
-        [ScriptMethod]
-        public void PerformReaction()
-        {
-            if (combatDecision?.Target == null)
-                return;
-
-            if (combatDecision.Type == CombatDecisionType.Charge)
-            {
-                PerformChargeReaction(combatDecision.Target.Position);
-            }
-            else if (combatDecision.Type == CombatDecisionType.Flee)
-            {
-                PerformFleeReaction(combatDecision.Target);
-            }
-            else if (combatDecision.Type == CombatDecisionType.RandomMove)
-            {
-                PerformMoveReaction(combatDecision.Target);
-            }
-            else if (combatDecision.Type == CombatDecisionType.Approach)
-            {
-                PerformMoveReaction(combatDecision.Target);
-            }
-            else if (combatDecision.Type == CombatDecisionType.ApproachAndAttack)
-            {
-                if (combatDecision.Intent != null)
-                    ExecuteAction(combatDecision.Intent, combatDecision.Target);
-            }
-        }
-
         // PlayerNumber
         [ScriptProperty]
         public PlayerNumber PlayerNumber
@@ -1147,7 +1131,9 @@ namespace ScaryCastle
                 return false;
             }
 
-            if (!target.ApproachOnDefaultOutcome || (item?.Definition.UsageMode is ItemUsageMode.SelfAction or ItemUsageMode.InPlaceAction))
+            var approachToTarget = item is null ? target.ApproachOnDefaultOutcome : item.Definition.UsageMode is ItemUsageMode.ProximityAction or ItemUsageMode.ProjectileAction;
+
+            if (!approachToTarget)
             {
                 HandlePendingInteraction();
             }

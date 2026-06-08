@@ -14,6 +14,6 @@ namespace Adberration.Scripting
         }
 
         // IsAwaiting
-        public override bool IsAwaiting => AudioManager.Music.State == SoundState.Playing && !AudioManager.Music.IsLooped;
+        public override bool IsAwaiting() => AudioManager.Music.State == SoundState.Playing && !AudioManager.Music.IsLooped;
     }
 }

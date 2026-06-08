@@ -155,6 +155,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register("await-dialog-block", typeof(AwaitDialogBlockCommand));
             AotTypeRegistry.Register("await-input", typeof(AwaitInputCommand));
             AotTypeRegistry.Register("await-monitor-text", typeof(AwaitMonitorTextCommand));
+            AotTypeRegistry.Register("await-npc-turn", typeof(AwaitNPCTurnCommand));
             AotTypeRegistry.Register("await-popup", typeof(AwaitPopupCommand));
             AotTypeRegistry.Register("consume-item", typeof(ConsumeItemCommand));
             AotTypeRegistry.Register("create-dialog-block", typeof(CreateDialogBlockCommand));
@@ -171,6 +172,28 @@ namespace ScaryCastle
             AotTypeRegistry.Register("terminate-dialog-block", typeof(TerminateDialogBlockCommand));
             AotTypeRegistry.Register("x-tween", typeof(XTweenCommand));
             AotTypeRegistry.Register("y-tween", typeof(YTweenCommand));
+        }
+
+        // ResolveNPCTurn
+        private void ResolveNPCTurn()
+        {
+            ActiveNPC = null;
+
+            if (Room is not ProceduralRoom room)
+                return;
+
+            for (var i = 0; i < room.Children.Count; i++)
+            {
+                if (room.Children[i] is Actor actor && !actor.IsPlayer && actor.Patience == 0)
+                {
+                    if (actor.BeginTurn() is { } script)
+                    {
+                        ActiveNPC = actor;
+                        BeginOutcome(script, actor);
+                        return;
+                    }
+                }
+            }
         }
 
         // SyncProceduralMusic
@@ -458,13 +481,17 @@ namespace ScaryCastle
         {
             base.OnOutcomeCompleted(target);
 
-            if (!IsNpcReaction)
+            if (ActiveNPC == null)
                 ApplyPatiencePenalty(GameSettings.PatiencePenaltyForInteraction);
 
-            HandleNPCReaction();
+            ResolveNPCTurn();
         }
 
         #endregion
+
+        // ActiveNPC
+        [ScriptProperty]
+        public Actor? ActiveNPC { get; private set; }
 
         // AddCorridorExit
         [ScriptMethod]
@@ -619,29 +646,6 @@ namespace ScaryCastle
         [ScriptProperty]
         public GateEventType GateEvent { get; set; }
 
-        // HandleNPCReaction
-        public void HandleNPCReaction()
-        {
-            IsNpcReaction = false;
-
-            if (Room is not ProceduralRoom room)
-                return;
-
-            for (var i = 0; i < room.Children.Count; i++)
-            {
-                if (room.Children[i] is Actor actor && !actor.IsPlayer && actor.Patience == 0)
-                {
-                    if (actor.BeginReaction() && actor.OutcomeScript != null)
-                    {
-                        IsNpcReaction = true;
-                        actor.ResetPatience();
-                        BeginOutcome(actor.OutcomeScript, actor);
-                        return;
-                    }
-                }
-            }
-        }
-
         // InteractionContext
         public InteractionContext InteractionContext { get; }
 
@@ -654,10 +658,6 @@ namespace ScaryCastle
         // IsHUDVisible
         [ScriptProperty]
         public bool IsHUDVisible => CurrentRun != null && Player != null && !Player.IsDead;
-
-        // IsNpcReaction
-        [ScriptProperty]
-        public bool IsNpcReaction { get; private set; }
 
         // KillEnemies
         [ScriptMethod]

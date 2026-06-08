@@ -11,6 +11,6 @@
         }
 
         // IsAwaiting
-        public override bool IsAwaiting => !Session.IsCurrentScene;
+        public override bool IsAwaiting() => !Session.IsCurrentScene;
     }
 }

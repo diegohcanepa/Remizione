@@ -41,7 +41,7 @@ namespace Adberration.Scripting
         public bool ImplicitAwait { get; }
 
         // IsAwaiting
-        public virtual bool IsAwaiting => false;
+        public virtual bool IsAwaiting() => false;
 
         // ShouldAwait
         public bool ShouldAwait => Body.Await || ImplicitAwait;

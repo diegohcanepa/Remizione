@@ -39,6 +39,6 @@ namespace ScaryCastle.Scripting
         #endregion
 
         // IsAwaiting
-        public override bool IsAwaiting => scene != null && scene.IsCurrentScene;
+        public override bool IsAwaiting() => scene != null && scene.IsCurrentScene;
     }
 }

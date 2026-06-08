@@ -45,35 +45,44 @@ namespace ScaryCastle
             {
                 float distance = DistanceToTarget(actor, target);
 
-                // Tiramos el dado de AttackChance para ver si el bicho quiere ir a buscarte voluntariamente en este pulso
                 if (Random.Shared.NextDouble() < archetype.AttackChance || isCornered)
                 {
-                    // SelectIntent selecciona el ataque SIN descartar por distancia 
+                    // Selecciona el ataque según pesos.
                     var intent = archetype.SelectIntent(actor, actor.CombatBehavior.Intents, distance);
 
                     if (intent != null)
                     {
-                        if (intent.Contact)
+                        // UNIFICACIÓN: ¿Es un ataque que requiere proximidad física? (Melee, Espada, Mordisco, Contact)
+                        if (intent.UsageMode == ItemUsageMode.ProximityAction)
                         {
-                            // Cuerpo a cuerpo: Evaluamos si la brecha física (distancia - rango) entra en su MoveRange
-                            if ((distance - intent.Range) <= archetype.MoveRange)
+                            // El alcance total de este turno es lo que camina + el largo de su arma/cuerpo
+                            float totalReach = archetype.MoveRange + intent.Range;
+
+                            if (distance <= totalReach)
                             {
-                                // Le da la nafta para llegar: se mueve y te emboca en el mismo pulso
-                                return new CombatDecision(CombatDecisionType.ApproachAndAttack, intent, target);
+                                // Le da la nafta: se mueve los píxeles necesarios, se te pega y te ejecuta el tajo/mordisco
+                                return new CombatDecision(CombatDecisionType.Attack, intent, target);
                             }
                             else
                             {
-                                // Quiere morderte pero está lejos: usa el pulso para acortar distancia hacia Edmundo
-                                return new CombatDecision(CombatDecisionType.Approach, intent, target);
+                                // Está demasiado lejos para llegar a pegarte en este turno: 
+                                // simplemente gasta su MoveRange para acortar distancia y quedar mejor posicionado
+                                return new CombatDecision(CombatDecisionType.MoveNearby, intent, target);
                             }
                         }
                         else
                         {
-                            // Ataque a distancia: Si está en rango ejecuta, si no, se acerca
+                            // ATAQUE A DISTANCIA PURO (Proyectiles, Magias)
+                            // No gasta movimiento para atacar. Si estás en su rango de fuego, dispara.
                             if (distance <= intent.Range)
-                                return new CombatDecision(CombatDecisionType.ApproachAndAttack, intent, target);
+                            {
+                                return new CombatDecision(CombatDecisionType.Attack, intent, target);
+                            }
                             else
-                                return new CombatDecision(CombatDecisionType.Approach, intent, target);
+                            {
+                                // Si el arquero está lejos, avanza para intentar ponerte en rango el turno que viene
+                                return new CombatDecision(CombatDecisionType.MoveNearby, intent, target);
+                            }
                         }
                     }
                 }
@@ -85,7 +94,7 @@ namespace ScaryCastle
                 return new CombatDecision(CombatDecisionType.RandomMove, null, target);
 
             // Si es un enemigo inteligente, usa el pulso para ganar terreno y achicarte el pasillo.
-            return new CombatDecision(CombatDecisionType.Approach, null, target);
+            return new CombatDecision(CombatDecisionType.MoveNearby, null, target);
         }
     }
 }

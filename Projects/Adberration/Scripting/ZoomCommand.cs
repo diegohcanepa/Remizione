@@ -40,6 +40,6 @@ namespace Adberration.Scripting
         }
 
         // IsAwaiting
-        public override bool IsAwaiting => Session.Camera.ZoomState != ZoomState.None;
+        public override bool IsAwaiting() => Session.Camera.ZoomState != ZoomState.None;
     }
 }

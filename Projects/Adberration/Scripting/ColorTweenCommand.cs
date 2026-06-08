@@ -55,6 +55,6 @@ namespace Adberration.Scripting
         }
 
         // IsAwaiting
-        public override bool IsAwaiting => duration >= 0;
+        public override bool IsAwaiting() => duration >= 0;
     }
 }

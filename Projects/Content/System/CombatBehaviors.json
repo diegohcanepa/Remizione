@@ -126,13 +126,13 @@
       "archetype": "Lurker",
       "intents": [
         {
-          "name": "Contact",
+          "name": "Bite",
           "soundTrigger": "RatAttack",
           "usageMode": "ProximityAction",
           "range": 50,
           "effects": [
             {
-              "context": "Contact",
+              "context": "Attack",
               "effectType": "Damage",
               "amount": "1",
               "comicText": "AghRed"

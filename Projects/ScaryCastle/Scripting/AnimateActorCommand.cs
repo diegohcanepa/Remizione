@@ -39,7 +39,7 @@ namespace ScaryCastle.Scripting
         }
 
         // IsAwaiting
-        public override bool IsAwaiting => actor != null && animation != null &&
+        public override bool IsAwaiting() => actor != null && animation != null &&
                                            actor.AnimationPlayer.IsPlaying &&
                                            actor.AnimationPlayer.Animation == animation;
     }

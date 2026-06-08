@@ -33,6 +33,6 @@ namespace ScaryCastle.Scripting
         }
 
         // IsAwaiting
-        public override bool IsAwaiting => routine != null && Session.ScriptProcessor.IsExecutingScript(routine);
+        public override bool IsAwaiting() => routine != null && Session.ScriptProcessor.IsExecutingScript(routine);
     }
 }

@@ -18,11 +18,6 @@ namespace ScaryCastle
         // Un valor bajo (0.2) crea un comportamiento de "acecho".
         public abstract Ratio AttackChance { get; }
 
-        // ConsiderContactAsIntent
-        // Por defecto, la mayoría de los enemigos no usan el "Contacto" como un ataque 
-        // que el Brain deba elegir (es pasivo). Pero un lurker SÍ.
-        public virtual bool ConsiderContactAsIntent => false;
-
         // FleeChance
         // Probabilidad de que efectivamente huya una vez herido.
         public abstract Ratio FleeChance { get; }
@@ -34,12 +29,7 @@ namespace ScaryCastle
         // GetDecisionType
         public virtual CombatDecisionType GetDecisionType(CombatIntent intent)
         {
-            // Por defecto, si es contacto, asumimos que hay que "cargar"
-            // pero permitimos que otros arquetipos digan que no.
-            if (intent.Contact)
-                return CombatDecisionType.Charge;
-
-            return CombatDecisionType.ApproachAndAttack;
+            return CombatDecisionType.Attack;
         }
 
         // GetIntentWeight
@@ -73,16 +63,6 @@ namespace ScaryCastle
             for (int i = 0; i < intents.Count; i++)
             {
                 var intent = intents[i];
-
-                // FILTRO CRÍTICO:
-                // Si el intent se llama "Contact" y este arquetipo NO lo considera 
-                // un ataque elegible, lo ignoramos.
-                if (intent.Contact && !ConsiderContactAsIntent)
-                {
-                    weights[i] = 0;
-                    continue;
-                }
-
                 float weight = GetIntentWeight(intent, actor, distance);
 
                 if (weight > 0)

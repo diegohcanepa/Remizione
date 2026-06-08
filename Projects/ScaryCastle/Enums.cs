@@ -18,7 +18,7 @@ namespace ScaryCastle
     public enum CombatArchetypeName { Lurker, Harasser, Stalker, Tactical, Berserk, Coward, KamikazeFlyer, Volatile }
 
     // CombatDecisionType
-    public enum CombatDecisionType { None, Approach, ApproachAndAttack, Bullying, Flee, Charge, RandomMove }
+    public enum CombatDecisionType { None, Attack, Bullying, Charge, Flee, MoveNearby, RandomMove }
 
     // CombatIntentCategory
     public enum CombatIntentCategory { Basic, Special }
