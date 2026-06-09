@@ -18,6 +18,7 @@ namespace ScaryCastle
             Coin = this[nameof(Coin)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
+            DangerIcon = this[nameof(DangerIcon)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
             DialogOptionBullet = this[nameof(DialogOptionBullet)];
             DiscardItemIcon = this[nameof(DiscardItemIcon)];
@@ -64,6 +65,9 @@ namespace ScaryCastle
 
         // CreditsBar
         public AtlasImage CreditsBar { get; }
+
+        // DangerIcon
+        public AtlasImage DangerIcon { get; }
 
         // DialogArrowLarge
         public AtlasImage DialogArrowLarge { get; }

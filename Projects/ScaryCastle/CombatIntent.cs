@@ -41,11 +41,11 @@ namespace ScaryCastle
             // SoundTrigger
             this.SoundTrigger = element.GetObject("soundTrigger", Sound.Get);
 
-            // UsageMode
-            UsageMode = element.GetEnum("usageMode", ItemUsageMode.ProximityAction);
+            // ActionKind
+            ActionKind = element.GetEnum("actionKind", ActionKind.Proximity);
 
-            if (UsageMode == ItemUsageMode.ProjectileAction && Projectile == null)
-                RaiseValidationError(this, "Items with Projectile usage mode must have a Projectile defined.", nameof(UsageMode));
+            if (ActionKind == ActionKind.Projectile && Projectile == null)
+                RaiseValidationError(this, "Items with Projectile action must have a Projectile defined.", nameof(ActionKind));
         }
 
         #region IAction interface
@@ -56,6 +56,9 @@ namespace ScaryCastle
         }
 
         #endregion
+
+        // ActionKind
+        public ActionKind ActionKind { get; }
 
         // AnimationName
         public string AnimationName { get; }
@@ -80,8 +83,5 @@ namespace ScaryCastle
 
         // SoundTrigger
         public Sound? SoundTrigger { get; }
-
-        // UsageMode
-        public ItemUsageMode UsageMode { get; }
     }
 }

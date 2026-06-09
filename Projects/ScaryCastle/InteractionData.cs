@@ -106,10 +106,10 @@ namespace ScaryCastle
             {
                 if (context.Session.Player == context.Target)
                 {
-                    if (context.HeldItem.Definition.UsageMode is ItemUsageMode.ProjectileAction or ItemUsageMode.ProximityAction)
+                    if (context.HeldItem.Definition.ActionKind is ActionKind.Projectile or ActionKind.Proximity)
                         return;
                 }
-                else if (context.HeldItem.Definition.UsageMode == ItemUsageMode.SelfAction)
+                else if (context.HeldItem.Definition.ActionKind == ActionKind.Self)
                 {
                     return;
                 }
@@ -130,7 +130,7 @@ namespace ScaryCastle
                 }
                 else
                 {
-                    if (context.HeldItem.Definition.UsageMode == ItemUsageMode.Script)
+                    if (context.HeldItem.Definition.ActionKind == ActionKind.Script)
                     {
                         if (target.Session.ScriptLibrary.FindOutcomeOverload(target.DeclaredName, context.HeldItem.Name) is Script script)
                         {

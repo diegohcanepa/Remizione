@@ -5,16 +5,6 @@ using System;
 namespace ScaryCastle
 {
     /// <summary>
-    /// Paquete de datos liviano (Stack allocated, 0 GC) para la decisión de combate.
-    /// </summary>
-    public sealed class CombatDecision(CombatDecisionType Type, CombatIntent? Intent, GameThing? Target)
-    {
-        public CombatDecisionType Type { get; } = Type;
-        public CombatIntent? Intent { get; } = Intent;
-        public GameThing? Target { get; } = Target;
-    }
-
-    /// <summary>
     /// Brain
     /// </summary>
     public static class Brain
@@ -25,9 +15,9 @@ namespace ScaryCastle
         private static CombatDecision GetFallbackMovement(CombatArchetype archetype, GameThing target)
         {
             if (archetype.AllowRandomMove)
-                return new CombatDecision(CombatDecisionType.RandomMove, null, target);
+                return new CombatDecision(CombatDecisionType.RandomMove, null, target, PositioningMode.Move);
 
-            return new CombatDecision(CombatDecisionType.MoveNearby, null, target);
+            return new CombatDecision(CombatDecisionType.MoveNearby, null, target, PositioningMode.Move);
         }
 
         #endregion
@@ -51,41 +41,46 @@ namespace ScaryCastle
 
             // 1. Decisión de Huida: Filtro de pánico si está reventado y hay espacio físico para escapar
             if (!isCornered && actor.HPRatio <= archetype.FleeHPThreshold && Random.Shared.NextDouble() < archetype.FleeChance)
-                return new CombatDecision(CombatDecisionType.Flee, null, target);
+                return new CombatDecision(CombatDecisionType.Flee, null, target, PositioningMode.Move);
 
             // 2. Procesamiento de la Intención de Ataque / Persecución
             if (target != null)
             {
-                if (Random.Shared.NextDouble() < archetype.AttackChance || isCornered)
+                float distance = DistanceToTarget(actor, target);
+
+                // Flag crítico: ¿Ya está físicamente en distancia de meter un viaje cuerpo a cuerpo?
+                bool isAlreadyInMeleeRange = distance <= archetype.MeleeAttackRange;
+
+                // Si está acorralado O si ya te tiene en rango de Melee, IGNORAMOS el AttackChance y va a buscarte sí o sí.
+                if (isAlreadyInMeleeRange || isCornered || Random.Shared.NextDouble() < archetype.AttackChance)
                 {
                     // Selecciona el ataque basado en los pesos del arquetipo
-                    var intent = archetype.SelectIntent(actor, actor.CombatBehavior.Intents, 0f);
+                    var intent = archetype.SelectIntent(actor, actor.CombatBehavior.Intents, distance);
 
                     if (intent != null)
                     {
                         // CASE 1: CUERPO A CUERPO (Espada, Mordisco, Tajo)
-                        if (intent.UsageMode == ItemUsageMode.ProximityAction)
+                        if (intent.ActionKind == ActionKind.Proximity)
                         {
-                            float distance = DistanceToTarget(actor, target);
-
-                            // El AttackRange del arquetipo es el único tapón para el Melee
+                            // Como validamos arriba, si entró acá y es melee, ya sabemos que distance <= MeleeAttackRange
                             if (distance <= archetype.MeleeAttackRange)
                             {
-                                return new CombatDecision(CombatDecisionType.Attack, intent, target);
+                                return new CombatDecision(CombatDecisionType.Attack, intent, target, PositioningMode.Move);
                             }
                             else
                             {
-                                // Está muy lejos para activar el ataque. 
-                                // Camina un poco o se mueve random según el tipo de bicho.
                                 return GetFallbackMovement(archetype, target);
                             }
                         }
 
                         // CASE 2: ATAQUE A DISTANCIA (Flechas, Magia, Escupitajo)
-                        if (intent.UsageMode == ItemUsageMode.ProjectileAction)
+                        if (intent.ActionKind == ActionKind.Projectile)
                         {
-                            // En rooms chicos el proyectil siempre viaja y pega. Dispara directo.
-                            return new CombatDecision(CombatDecisionType.Attack, intent, target);
+                            return new CombatDecision(CombatDecisionType.Attack, intent, target, PositioningMode.MoveOnY);
+                        }
+                        else if (intent.ActionKind == ActionKind.InPlace)
+                        {
+                            return new CombatDecision(CombatDecisionType.Attack, intent, target, PositioningMode.None);
                         }
                     }
                 }
@@ -94,10 +89,10 @@ namespace ScaryCastle
             // 3. Fallback Determinista (Si falló la chance de ataque o no hay intents válidos)
             // Si es un obstáculo ambiental (Rata), se mueve al azar de forma caótica.
             if (archetype.AllowRandomMove)
-                return new CombatDecision(CombatDecisionType.RandomMove, null, target);
+                return new CombatDecision(CombatDecisionType.RandomMove, null, target, PositioningMode.Move);
 
             // Si es un enemigo inteligente, usa el pulso para ganar terreno y achicarte el pasillo.
-            return new CombatDecision(CombatDecisionType.MoveNearby, null, target);
+            return new CombatDecision(CombatDecisionType.MoveNearby, null, target, PositioningMode.Move);
         }
     }
 }

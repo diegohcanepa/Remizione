@@ -9,18 +9,12 @@ namespace ScaryCastle
     /// </summary>
     internal static class MouseCursorAppearance
     {
-        #region Private fields
-
-        private static readonly string useWith = TextRepository.GetValue("Misc.UseWith");
-
-        #endregion
-
         #region Private members
 
         // RefreshCursor
         private static void RefreshCursor(InteractionContext context)
         {
-            if (context.HeldItem?.Definition.UsageMode == ItemUsageMode.ProjectileAction)
+            if (context.HeldItem?.Definition.ActionKind == ActionKind.Projectile)
             {
                 if (context.Session.Player != null)
                 {
@@ -110,13 +104,15 @@ namespace ScaryCastle
 
             if (context.Target != null)
             {
+                /*
                 if (context.Target.Faction == Faction.Evil && context.Target.IsHostile && context.HeldItem == null)
                     MouseCursor.Color = ColorPalette.MouseCursor.HostileTarget;
+                */
 
                 MouseCursor.IsEnabled = context.Session.Player?.ActiveThrowable == null;
                 MouseCursor.HightlightColor = ColorPalette.MouseCursor.HighlightWhite;
 
-                if (context.Session.Player != null && context.HeldItem?.Definition.UsageMode == ItemUsageMode.ProjectileAction)
+                if (context.Session.Player != null && context.HeldItem?.Definition.ActionKind == ActionKind.Projectile)
                 {
                     var mousePos = InputManager.DefaultPlayer.Mouse.WorldPosition(context.Session.Camera);
                     MouseCursor.FlipCustomImage = mousePos.X < context.Session.Player.X;

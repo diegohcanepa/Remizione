@@ -16,6 +16,9 @@ namespace ScaryCastle
         private ItemDefinition(JsonElement element)
             : base(element)
         {
+            // ActionKind
+            ActionKind = element.GetEnum("actionKind", ActionKind.Script);
+
             // AnimationName
             AnimationName = element.GetString("animationName");
             if (string.IsNullOrWhiteSpace(AnimationName))
@@ -90,9 +93,6 @@ namespace ScaryCastle
             // SoundTrigger
             this.SoundTrigger = element.GetObject("soundTrigger", Sound.Get);
 
-            // UsageMode
-            UsageMode = element.GetEnum("usageMode", ItemUsageMode.Script);
-
             this.Description = Localization.GetItemDescription(this);
             this.DisplayName = Localization.GetItemName(this);
             this.Image = Atlases.UI.FindImage(Name);
@@ -113,13 +113,16 @@ namespace ScaryCastle
                 IsStackable = false;
             }
 
-            if (UsageMode == ItemUsageMode.ProjectileAction && Projectile == null)
-                RaiseValidationError(this, "Items with Projectile usage mode must have a Projectile defined.", nameof(UsageMode));
+            if (ActionKind == ActionKind.Projectile && Projectile == null)
+                RaiseValidationError(this, "Items with Projectile usage mode must have a Projectile defined.", nameof(ActionKind));
 
             Definitions.Add(this);
         }
 
         #endregion
+
+        // ActionKind
+        public ActionKind ActionKind { get; }
 
         // AnimationName
         public string AnimationName { get; }
@@ -201,8 +204,5 @@ namespace ScaryCastle
 
         // SoundTrigger
         public Sound? SoundTrigger { get; }
-
-        // UsageMode
-        public ItemUsageMode UsageMode { get; }
     }
 }

@@ -8,6 +8,9 @@ namespace ScaryCastle
     /// </summary>
     public interface IAction
     {
+        // ActionKind
+        ActionKind ActionKind { get; }
+
         // AnimationName
         string AnimationName { get; }
 
@@ -34,8 +37,5 @@ namespace ScaryCastle
 
         // SoundTrigger
         Sound? SoundTrigger { get; }
-
-        // UsageMode
-        ItemUsageMode UsageMode { get; }
     }
 }

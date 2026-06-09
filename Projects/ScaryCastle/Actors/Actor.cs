@@ -6,6 +6,7 @@ using Engendro.Input;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace ScaryCastle
 {
@@ -21,6 +22,7 @@ namespace ScaryCastle
         private const int contactCooldown = 500;
         //private int contactTimer;
         private readonly List<AtlasImage>? customGuts;
+        private Sprite dangerIcon = new(Atlases.UI.DangerIcon) { PivotOrigin = RectanglePoint.Bottom };
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
         private readonly AnimatedSprite headSprite;
@@ -406,6 +408,12 @@ namespace ScaryCastle
                 Rotation += moveBalancingTween.CurrentValue;
 
             base.OnDraw(gameTime);
+
+            if (Patience <= 3 && IsHostile && IsStanding && ActiveThrowable == null && !HasSpeechBubble)
+            {
+                dangerIcon.Position = GetOverheadPosition();
+                dangerIcon.Draw(gameTime);
+            }
 
             if (activeThrowableSprite?.RenderImage != null)
             {
@@ -1154,7 +1162,7 @@ namespace ScaryCastle
                 return false;
             }
 
-            var approachToTarget = item is null ? target.ApproachOnDefaultOutcome : item.Definition.UsageMode is ItemUsageMode.ProximityAction or ItemUsageMode.ProjectileAction;
+            var approachToTarget = item is null ? target.ApproachOnDefaultOutcome : item.Definition.ActionKind is ActionKind.Proximity or ActionKind.Projectile;
 
             if (!approachToTarget)
             {
@@ -1164,7 +1172,7 @@ namespace ScaryCastle
             {
                 var destination = target.GetApproachPosition(this, Session.InteractionData.IsAttack ? ApproachBehavior.ClosestSide : null);
 
-                if (item?.Definition.UsageMode == ItemUsageMode.ProjectileAction)
+                if (item?.Definition.ActionKind == ActionKind.Projectile)
                     destination.X = X;
 
                 if (!MoveTo(destination))

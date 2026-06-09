@@ -47,7 +47,7 @@ namespace ScaryCastle
 
         Sound? IAction.SoundTrigger => Definition.SoundTrigger;
 
-        ItemUsageMode IAction.UsageMode => Definition.UsageMode;
+        ActionKind IAction.ActionKind => Definition.ActionKind;
 
 
         #endregion

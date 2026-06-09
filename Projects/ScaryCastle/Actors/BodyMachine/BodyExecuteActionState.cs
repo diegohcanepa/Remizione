@@ -129,25 +129,25 @@ namespace ScaryCastle
                 if (Action.SoundTrigger != null)
                     Owner.PlaySound(Action.SoundTrigger);
 
-                switch (Action.UsageMode)
+                switch (Action.ActionKind)
                 {
                     // InPlaceAction
-                    case ItemUsageMode.InPlaceAction:
+                    case ActionKind.InPlace:
                         ResolveInPlaceAction(Action);
                         break;
 
                     // ProjectileAction
-                    case ItemUsageMode.ProjectileAction:
+                    case ActionKind.Projectile:
                         ResolveProjectileAction(Action);
                         break;
 
                     // ProximityAction
-                    case ItemUsageMode.ProximityAction:
+                    case ActionKind.Proximity:
                         ResolveProximityAction(Action);
                         break;
 
                     // SelfAction
-                    case ItemUsageMode.SelfAction:
+                    case ActionKind.Self:
                         ResolveSelfAction(Action);
                         break;
 

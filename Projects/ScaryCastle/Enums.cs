@@ -2,6 +2,9 @@
 
 namespace ScaryCastle
 {
+    // ActionKind
+    public enum ActionKind { Script, Proximity, InPlace, Projectile, Self }
+
     // ApproachBehavior
     public enum ApproachBehavior
     {
@@ -74,9 +77,6 @@ namespace ScaryCastle
     // ItemCategory
     public enum ItemCategory { Access, Explosive, Food, Luck, Medicine, Misc, Money, Sacred }
 
-    // ItemUsageMode
-    public enum ItemUsageMode { Script, ProximityAction, InPlaceAction, ProjectileAction, SelfAction }
-
     // KnockbackIntensity
     public enum KnockbackIntensity { Low, Medium, High }
 
@@ -146,12 +146,20 @@ namespace ScaryCastle
     {
         WalkTo = 1,
         Interact = 2,
-        Attack = 4,
-        UseItem = 3
+        UseItem = 3,
+        Attack = 4
     }
 
     // PlayerNumber
     public enum PlayerNumber { None = -1, One = 0, Two = 1, Three = 2, Four = 3 }
+
+    // PositioningMode
+    public enum PositioningMode
+    {
+        None,
+        Move,
+        MoveOnY
+    }
 
     // ProjectileTrajectoryType
     public enum ProjectileTrajectoryType { Linear, Parabolic }

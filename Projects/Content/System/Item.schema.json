@@ -24,6 +24,17 @@
         {
           "type": "object",
           "properties": {
+            "actionKind": {
+              "type": "string",
+              "enum": [
+                "InPlace",
+                "Projectile",
+                "Proximity",
+                "Script",
+                "Self"
+              ],
+              "default": "Script"
+            },
             "animationName": {
               "type": "string"
             },
@@ -114,21 +125,10 @@
             "soundTrigger": {
               "type": "string",
               "description": "Nombre del archivo de sonido a reproducir en el trigger de la accion."
-            },
-            "usageMode": {
-              "type": "string",
-              "enum": [
-                "InPlaceAction",
-                "ProjectileAction",
-                "ProximityAction",
-                "Script",
-                "SelfAction"
-              ],
-              "default": "Script"
             }
           },
           "required": [
-            "usageMode"
+            "actionKind"
           ]          
         }
       ],

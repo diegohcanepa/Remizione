@@ -460,11 +460,7 @@ namespace ScaryCastle
         protected override void OnOutcomeCompleted(Thing target)
         {
             base.OnOutcomeCompleted(target);
-
-            if (ActiveNPC == null)
-                ProcessTurn();
-
-            ActiveNPC = null;
+            ProcessTurn();
         }
 
         #endregion
@@ -765,6 +761,8 @@ namespace ScaryCastle
                     }
                 }
             }
+
+            ActiveNPC = null;
         }
 
         // Random

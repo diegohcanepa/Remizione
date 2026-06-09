@@ -37,13 +37,13 @@ namespace ScaryCastle
         public virtual float GetIntentWeight(CombatIntent intent, Actor actor, float distance)
         {
             // 1. Si es a distancia, en rooms chicas siempre tiene peso válido.
-            if (intent.UsageMode == ItemUsageMode.ProjectileAction)
+            if (intent.ActionKind == ActionKind.Projectile)
             {
                 return intent.SpawnWeight;
             }
 
             // 2. Si es cuerpo a cuerpo, solo tiene peso si el jugador entró en el rango operativo de Melee.
-            if (intent.UsageMode == ItemUsageMode.ProximityAction)
+            if (intent.ActionKind == ActionKind.Proximity)
             {
                 return distance > MeleeAttackRange ? 0 : intent.SpawnWeight;
             }

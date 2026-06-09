@@ -8,7 +8,7 @@
         {
           "name": "Headbutt",
           "soundStart": "WhooshA",
-          "usageMode": "ProximityAction",
+          "actionKind": "ProximityAction",
           "effects": [
             {
               "context": "Attack",
@@ -27,7 +27,7 @@
       "intents": [
         {
           "name": "Contact",
-          "usageMode": "ProximityAction",
+          "actionKind": "ProximityAction",
           "effects": [
             {
               "context": "Contact",
@@ -52,7 +52,7 @@
         {
           "name": "Contact",
           "soundTrigger": "RatAttack",
-          "usageMode": "ProximityAction",
+          "actionKind": "ProximityAction",
           "effects": [
             {
               "context": "Contact",
@@ -77,7 +77,7 @@
         {
           "name": "Contact",
           "soundTrigger": "RatAttack",
-          "usageMode": "ProximityAction",
+          "actionKind": "ProximityAction",
           "effects": [
             {
               "context": "Contact",
@@ -101,7 +101,7 @@
       "intents": [
         {
           "name": "Contact",
-          "usageMode": "ProximityAction",
+          "actionKind": "ProximityAction",
           "effects": [
             {
               "context": "Contact",
@@ -125,7 +125,7 @@
         {
           "name": "Bite",
           "soundTrigger": "RatAttack",
-          "usageMode": "ProximityAction",
+          "actionKind": "ProximityAction",
           "effects": [
             {
               "context": "Attack",
@@ -144,13 +144,13 @@
         {
           "name": "Headbutt",
           "category": "Basic",
-          "usageMode": "ProximityAction",
-          "soundTrigger": "EnviousEyeAttack",
+          "actionKind": "ProximityAction",
           "effects": [
             {
               "context": "Attack",
               "effectType": "Damage",
               "amount": "2",
+              "sound": "ImpactA",
               "comicText": "OuchBlue"
             }
           ]
@@ -164,7 +164,7 @@
         {
           "name": "Contact",
           "soundTrigger": "RatAttack",
-          "usageMode": "ProximityAction",
+          "actionKind": "ProximityAction",
           "effects": [
             {
               "context": "Contact",
