@@ -16,17 +16,11 @@ namespace ScaryCastle
         // CRÍTICA: Un ojo místico/monstruoso no tiene miedo. 
         // Ponemos el umbral de huida en 0 porque no retrocede nunca.
         public override Ratio FleeHPThreshold => 0.00f;
+
+        // FleeChance
         public override Ratio FleeChance => 0.00f;
 
-        /// <summary>
-        /// Cooldowns más cortos y consistentes.
-        /// Esto hace que el movimiento del ojo se sienta más fluido y "teledirigido"
-        /// que el de la rata, que es más espasmódico.
-        /// </summary>
-        public override int GetPatienceTolerance()
-        {
-            return 3;
-        }
+        public override int MeleeAttackRange => 40;
 
         /// <summary>
         /// Opcional: Podrías definir que el Ojo no "salta" (Charge) 

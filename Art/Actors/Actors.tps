@@ -181,6 +181,9 @@
             <key type="filename">AnabolicRat-assets/Stand01.png</key>
             <key type="filename">AnabolicRat-assets/Stand02.png</key>
             <key type="filename">AnabolicRat-assets/Stand03.png</key>
+            <key type="filename">Rat-assets/Bite01.png</key>
+            <key type="filename">Rat-assets/Bite02.png</key>
+            <key type="filename">Rat-assets/Bite03.png</key>
             <key type="filename">StinkyRat-assets/Move01.png</key>
             <key type="filename">StinkyRat-assets/Move02.png</key>
             <key type="filename">StinkyRat-assets/Move03.png</key>

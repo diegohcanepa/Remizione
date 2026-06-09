@@ -19,7 +19,7 @@ namespace ScaryCastle
         private Sprite? activeThrowableSprite;
         private int conditionTimer;
         private const int contactCooldown = 500;
-        private int contactTimer;
+        //private int contactTimer;
         private readonly List<AtlasImage>? customGuts;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
@@ -121,8 +121,7 @@ namespace ScaryCastle
             if (Session.State != GameSessionState.Idle)
                 return;
 
-            if (Session.InteractionData.Execute(Session))
-                Session.ApplyPatiencePenalty(GameSettings.PatiencePenaltyForInteraction);
+            Session.InteractionData.Execute(Session);
 
             Session.InteractionContext.Reset();
         }
@@ -462,8 +461,7 @@ namespace ScaryCastle
         protected override void OnLoad()
         {
             base.OnLoad();
-            if (CombatBehavior?.Archetype is { } archetype)
-                Patience = archetype.GetPatienceTolerance();
+            Patience = MaxPatience;
             OpacityFactor = 1;
             Stand();
         }
@@ -506,10 +504,17 @@ namespace ScaryCastle
         protected override void OnStopMoving()
         {
             base.OnStopMoving();
-            contactTimer = contactCooldown;
+            //contactTimer = contactCooldown;
             FastMove = false;
             moveVerticalTween.Stop();
             moveBalancingTween.Stop();
+
+            if (ApplyPatiencePenaltyOnStop)
+            {
+                ApplyPatiencePenaltyOnStop = false;
+                Session.ApplyPatiencePenalty(PlayerAction.WalkTo);
+                Session.ProcessTurn();
+            }
         }
 
         // OnTakeDamage
@@ -536,6 +541,7 @@ namespace ScaryCastle
 
                 Faction = Faction.Evil;
                 IsHostile = true;
+                Patience = 0;
             }
 
             Session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);
@@ -715,6 +721,9 @@ namespace ScaryCastle
             OnApplyCondition(condition, amount);
         }
 
+        // ApplyPatiencePenaltyOnStop
+        public bool ApplyPatiencePenaltyOnStop { get; set; }
+
         // BeginTurn
         public Script? BeginTurn()
         {
@@ -725,7 +734,7 @@ namespace ScaryCastle
             {
                 CombatDecision = decision;
                 CombatDecisionType = decision.Type;
-                ResetPatience();
+                Patience = MaxPatience;
                 return OutcomeScript;
             }
             else
@@ -755,7 +764,7 @@ namespace ScaryCastle
         // CanTakeDamage
         public override bool CanTakeDamage()
         {
-            if (IsPlayer && Session.AwaitingScript != null)
+            if (IsPlayer && Session.AwaitingScript != null && Session.ActiveNPC == null)
             {
                 return Session.AwaitingScript.Interruptible && base.CanTakeDamage();
             }
@@ -840,7 +849,10 @@ namespace ScaryCastle
 
                     if (value > field)
                         ClearCondition();
+                    
                     field = Math.Min(value, MaxEnergy);
+                    if (field < 0)
+                        field = 0;
 
                     OnEnergyChanged(previousValue);
                 }
@@ -980,6 +992,21 @@ namespace ScaryCastle
             }
         }
 
+        // MaxPatience
+        [ScriptProperty]
+        public int MaxPatience
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    Patience = value;
+                }
+            }
+        } = 10;
+
         // MoveNearby
         public virtual void MoveNearby(GameThing target)
         {
@@ -990,33 +1017,36 @@ namespace ScaryCastle
             if (WalkArea == null)
                 return;
 
-            Vector2 bestPoint = Position;
-            float moveRadius = 120f;
-            float minStep = 40f; // Si no se mueve al menos 40px, no nos sirve.
+            // 1. Calculamos el vector dirección hacia el jugador
+            Vector2 direction = target.Position - Position;
+            float currentDistance = direction.Length();
 
-            for (int i = 0; i < 3; i++) // 3 intentos para encontrar un lugar decente
+            if (currentDistance <= 0.1f)
+                return; // Ya está encima, no hay nada que mover
+
+            direction.Normalize();
+
+            // 2. El MeleeAttackRange del arquetipo define el paso máximo de persecución de este turno
+            float maxStepThisTurn = arch.MeleeAttackRange;
+
+            // 3. El punto ideal es la posición del jugador menos un pequeño margen (ej. 12px) 
+            // para que el sprite del bicho quede perfectamente enfrente y no encima del centro del player
+            float idealStopDistance = Math.Max(0f, currentDistance - 12f);
+
+            // No caminamos más de nuestro rango de ataque por turno, ni nos pasamos del punto ideal
+            float actualMoveDistance = Math.Min(maxStepThisTurn, idealStopDistance);
+
+            // 4. Proyectamos el punto de destino en línea recta hacia el objetivo
+            Vector2 potentialTarget = Position + (direction * actualMoveDistance);
+
+            // 5. Lo blindamos pasándolo por el polígono transitable del cuarto
+            Vector2 bestPoint = WalkArea.Polygon.Clamp(potentialTarget);
+
+            // Si el punto es válido y nos saca de la inercia (evita vibraciones contra muros)
+            if (Vector2.Distance(Position, bestPoint) > 4f)
             {
-                float angle = (float)(Random.Shared.NextDouble() * Math.PI * 2);
-                Vector2 offset = new(
-                    (float)Math.Cos(angle) * moveRadius,
-                    (float)Math.Sin(angle) * moveRadius
-                );
-
-                Vector2 potentialTarget = WalkArea.Polygon.Clamp(Position + offset);
-
-                // ¿Este punto nos mueve lo suficiente?
-                if (Vector2.Distance(Position, potentialTarget) >= minStep)
-                {
-                    bestPoint = potentialTarget;
-                    break;
-                }
-
-                // Si no, guardamos el que más nos mueva por las dudas
-                if (Vector2.Distance(Position, potentialTarget) > Vector2.Distance(Position, bestPoint))
-                    bestPoint = potentialTarget;
+                MoveTo(bestPoint);
             }
-
-            MoveTo(bestPoint);
         }
 
         // MoveRandomly
@@ -1079,7 +1109,7 @@ namespace ScaryCastle
             {
                 if (value != field)
                 {
-                    field = value;
+                    field = Math.Min(value, MaxPatience);
                     if (field < 0)
                         field = 0;
                 }
@@ -1103,13 +1133,6 @@ namespace ScaryCastle
                 }
             }
         } = PlayerNumber.None;
-
-        // ResetPatience
-        public void ResetPatience()
-        {
-            if (CombatBehavior?.Archetype != null)
-                Patience = CombatBehavior.Archetype.GetPatienceTolerance();
-        }
 
         // ResolveInteraction
         public bool ResolveInteraction(GameThing target, Item? item)

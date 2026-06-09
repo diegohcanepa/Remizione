@@ -35,9 +35,6 @@ namespace ScaryCastle
             // InPlaceEffectType
             InPlaceEffectType = element.GetEnum("inPlaceEffectType", InPlaceEffectType.None);
 
-            // Range
-            this.Range = element.GetInt32("range", 5);
-
             // SoundStart
             this.SoundStart = element.GetObject("soundStart", Sound.Get);
 
@@ -77,9 +74,6 @@ namespace ScaryCastle
 
         // Projectile
         public ProjectileDescriptor? Projectile { get; }
-
-        // Range
-        public int Range { get; }
 
         // SoundStart
         public Sound? SoundStart { get; }

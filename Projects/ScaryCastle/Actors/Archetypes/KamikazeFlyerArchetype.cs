@@ -17,12 +17,6 @@ namespace ScaryCastle
         public override Ratio FleeHPThreshold => 0.00f;
         public override Ratio FleeChance => 0.00f;
 
-        public override int GetPatienceTolerance()
-        {
-            // Decisiones rápidas (0.5 a 1.2 segundos) para reposicionarse agresivamente.
-            return Random.Shared.Next(500, 1200);
-        }
-
         public override CombatDecisionType GetDecisionType(CombatIntent intent)
         {
             // Forzamos que su ataque sea de tipo 'Charge' (Embestida/Picada).

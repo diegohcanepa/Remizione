@@ -24,12 +24,5 @@ namespace ScaryCastle
         {
             return .8f;
         }
-
-        // GetPatienceTolerance
-        public override int GetPatienceTolerance()
-        {
-            // Entre 1.2 y 3.5 segundos entre decisiones.
-            return Random.Shared.Next(1200, 3500);
-        }
     }
 }

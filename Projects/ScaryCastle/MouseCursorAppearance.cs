@@ -58,7 +58,7 @@ namespace ScaryCastle
                 else if (context.Session.AwaitingScript?.CurrentStatement is SayCommand)
                     MouseCursor.State = MouseCursorState.Arrow;
                 else
-                    MouseCursor.State = MouseCursorState.Wait;
+                    MouseCursor.State = context.Session.ActiveNPC == null ? MouseCursorState.Wait : MouseCursorState.Skull;
 
                 return;
             }

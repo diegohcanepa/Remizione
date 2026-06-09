@@ -42,6 +42,7 @@ namespace ScaryCastle
             if (combatIntent != null)
             {
                 session.Player.ExecuteAction(combatIntent, target);
+                session.ApplyPatiencePenalty(PlayerAction.Attack);
                 result = true;
             }
             else if (script != null)
@@ -60,6 +61,7 @@ namespace ScaryCastle
                         if (script != null)
                         {
                             session.BeginOutcome(script, target);
+                            session.ApplyPatiencePenalty(PlayerAction.Interact);
                             result = true;
                         }
                     }
@@ -72,12 +74,14 @@ namespace ScaryCastle
                     if (target is Prop prop && prop.IsLiftable)
                     {
                         session.Player.Lift(prop);
+                        session.ApplyPatiencePenalty(PlayerAction.Interact);
                         result = true;
                     }
                 }
                 else
                 {
                     session.Player.ExecuteAction(item, target);
+                    session.ApplyPatiencePenalty(PlayerAction.UseItem);
                     result = true;
                 }
             }

@@ -15,12 +15,5 @@ namespace ScaryCastle
         // No tiene instinto de preservación.
         public override Ratio FleeHPThreshold => 0;
         public override Ratio FleeChance => 0;
-
-        public override int GetPatienceTolerance()
-        {
-            // Cooldown bajísimo e imperceptible (100 a 200ms).
-            // Esto hace que el Brain revalúe constantemente y nunca haga pausas raras.
-            return Random.Shared.Next(100, 200);
-        }
     }
 }

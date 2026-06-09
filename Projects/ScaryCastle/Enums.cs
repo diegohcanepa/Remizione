@@ -126,7 +126,7 @@ namespace ScaryCastle
     public enum MessageKind { BackToHallway, CannotPlaceItem, HandsFull, InventoryFull, ItemDiscarded, LiftNotAllowed, NotEnoughCoins, NotEnoughGoo, OutOfReach, OutOfLine, PathCleared }
 
     // MouseCursorState
-    public enum MouseCursorState { Arrow, Cross, Down, Hand, Left, Prohibition, Right, Up, Wait }
+    public enum MouseCursorState { Arrow, Cross, Down, Hand, Left, Prohibition, Right, Skull, Up, Wait }
 
     // PlacementType
     public enum PlacementType
@@ -139,6 +139,15 @@ namespace ScaryCastle
         WallRightBase,  // Apoyado contra la pared derecha
         WallRightHang,  // Colgado en la pared derecha
         Ceiling         // Techo (lámparas, telarañas)
+    }
+
+    // PlayerAction
+    public enum PlayerAction
+    {
+        WalkTo = 1,
+        Interact = 2,
+        Attack = 4,
+        UseItem = 3
     }
 
     // PlayerNumber

@@ -34,10 +34,6 @@
           "$ref": "Projectile.schema.json",
           "description": "Referencia al comportamiento y descriptor del proyectil que este ítem dispara o genera."
         },
-        "range": {
-          "type": "integer",
-          "default": 10
-        },
         "soundStart": {
           "type": "string",
           "description": "Nombre del archivo de sonido a reproducir cuando comienza la accion."

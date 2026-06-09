@@ -270,6 +270,8 @@ namespace ScaryCastle
 
             if (IsEnabled)
             {
+                cursorSprite.Opacity = State == MouseCursorState.Cross && CustomImage == null ? opacityTween.CurrentValue : 1;
+
                 effect = CustomImage != null && HightlightColor.HasValue ? ScaryCastleGame.Effects.Outline : null;
 
                 if (effect != null && HightlightColor.HasValue && cursorSprite.RenderImage?.Atlas != null)

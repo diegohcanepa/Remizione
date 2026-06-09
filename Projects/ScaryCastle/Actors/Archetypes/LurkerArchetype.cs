@@ -23,9 +23,7 @@ namespace ScaryCastle
         // FleeChance
         public override Ratio FleeChance => 0.15f;
 
-        // GetPatienceTolerance
-        public override int GetPatienceTolerance() => GameSettings.PatiencePenaltyForInteraction;
-
-        public override int MoveRange => 50;
+        // MoveRange
+        public override int MeleeAttackRange => 50;
     }
 }

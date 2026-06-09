@@ -41,12 +41,6 @@
         // MaxSkills
         public const int MaxSkills = 2;
 
-        // PatiencePenaltyForInteraction
-        public const int PatiencePenaltyForInteraction = 3;
-
-        // PatiencePenaltyForMovement
-        public const int PatiencePenaltyForMovement = 1;
-
         // SteamAppID
         public const int SteamAppID = 480;
 

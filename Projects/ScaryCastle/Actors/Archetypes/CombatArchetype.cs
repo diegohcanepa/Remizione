@@ -33,20 +33,26 @@ namespace ScaryCastle
         }
 
         // GetIntentWeight
-        // Calcula el peso específico de un intent. 
-        // Los descendientes pueden sobrescribir esto para priorizar ataques (ej. Berserk).
+        // Calcula el peso específico de un intent sin descartar proyectiles por distancia.
         public virtual float GetIntentWeight(CombatIntent intent, Actor actor, float distance)
         {
-            return distance > intent.Range ? 0 : intent.SpawnWeight;
+            // 1. Si es a distancia, en rooms chicas siempre tiene peso válido.
+            if (intent.UsageMode == ItemUsageMode.ProjectileAction)
+            {
+                return intent.SpawnWeight;
+            }
+
+            // 2. Si es cuerpo a cuerpo, solo tiene peso si el jugador entró en el rango operativo de Melee.
+            if (intent.UsageMode == ItemUsageMode.ProximityAction)
+            {
+                return distance > MeleeAttackRange ? 0 : intent.SpawnWeight;
+            }
+
+            return 0;
         }
 
-        // GetPatienceTolerance
-        // Devuelve el tiempo de espera en clicks para la próxima decisión, 
-        // ya calculado según el rango del arquetipo.
-        public abstract int GetPatienceTolerance();
-
-        // MoveRange
-        public virtual int MoveRange => 20;
+        // MeleeAttackRange
+        public virtual int MeleeAttackRange => 20;
 
         // SelectIntent
         // Selecciona un ataque de la lista disponible basándose en pesos y distancia.

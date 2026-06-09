@@ -83,6 +83,8 @@ namespace ScaryCastle
                     TextErrorColor = ColorPalette.Text.Terra
                 };
 
+                console.CommandList.Add("put PotteryA into $Room #at:120,75");
+                console.CommandList.Add("put Rat into $Room");
                 console.CommandList.Add("put GoldenTrunk into $Room #at:77,77");
                 console.CommandList.Add("add-item Coin");
                 console.CommandList.Add("add-item Lockpick");
@@ -172,28 +174,6 @@ namespace ScaryCastle
             AotTypeRegistry.Register("terminate-dialog-block", typeof(TerminateDialogBlockCommand));
             AotTypeRegistry.Register("x-tween", typeof(XTweenCommand));
             AotTypeRegistry.Register("y-tween", typeof(YTweenCommand));
-        }
-
-        // ResolveNPCTurn
-        private void ResolveNPCTurn()
-        {
-            ActiveNPC = null;
-
-            if (Room is not ProceduralRoom room)
-                return;
-
-            for (var i = 0; i < room.Children.Count; i++)
-            {
-                if (room.Children[i] is Actor actor && !actor.IsPlayer && actor.Patience == 0)
-                {
-                    if (actor.BeginTurn() is { } script)
-                    {
-                        ActiveNPC = actor;
-                        BeginOutcome(script, actor);
-                        return;
-                    }
-                }
-            }
         }
 
         // SyncProceduralMusic
@@ -482,9 +462,9 @@ namespace ScaryCastle
             base.OnOutcomeCompleted(target);
 
             if (ActiveNPC == null)
-                ApplyPatiencePenalty(GameSettings.PatiencePenaltyForInteraction);
+                ProcessTurn();
 
-            ResolveNPCTurn();
+            ActiveNPC = null;
         }
 
         #endregion
@@ -502,18 +482,15 @@ namespace ScaryCastle
         }
 
         // ApplyPatiencePenalty
-        public void ApplyPatiencePenalty(int value)
+        public void ApplyPatiencePenalty(PlayerAction playerAction)
         {
-            if (IsAwaiting)
-                return;
-
             if (Room is not ProceduralRoom room)
                 return;
 
             for (var i = 0; i < room.Children.Count; i++)
             {
-                if (room.Children[i] is Actor actor && !actor.IsPlayer)
-                    actor.Patience -= value;
+                if (room.Children[i] is Actor actor && !actor.IsPlayer && actor.IsHostile)
+                    actor.Patience -= (int)playerAction;
             }
         }
 
@@ -769,6 +746,26 @@ namespace ScaryCastle
         // PreviousRoom
         [ScriptProperty]
         public new GameRoom? PreviousRoom => (GameRoom?)base.PreviousRoom;
+
+        // ProcessTurn
+        public void ProcessTurn()
+        {
+            if (Room is not ProceduralRoom room)
+                return;
+
+            for (var i = 0; i < room.Children.Count; i++)
+            {
+                if (room.Children[i] is Actor actor && !actor.IsPlayer && actor.Patience == 0)
+                {
+                    if (actor.BeginTurn() is { } script)
+                    {
+                        ActiveNPC = actor;
+                        BeginOutcome(script, actor);
+                        return;
+                    }
+                }
+            }
+        }
 
         // Random
         public Random Random { get; private set; }

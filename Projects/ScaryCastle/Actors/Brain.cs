@@ -19,6 +19,19 @@ namespace ScaryCastle
     /// </summary>
     public static class Brain
     {
+        #region Private members
+
+        // GetFallbackMovement
+        private static CombatDecision GetFallbackMovement(CombatArchetype archetype, GameThing target)
+        {
+            if (archetype.AllowRandomMove)
+                return new CombatDecision(CombatDecisionType.RandomMove, null, target);
+
+            return new CombatDecision(CombatDecisionType.MoveNearby, null, target);
+        }
+
+        #endregion
+
         // DistanceToTarget
         private static float DistanceToTarget(GameThing source, GameThing target)
         {
@@ -43,46 +56,36 @@ namespace ScaryCastle
             // 2. Procesamiento de la Intención de Ataque / Persecución
             if (target != null)
             {
-                float distance = DistanceToTarget(actor, target);
-
                 if (Random.Shared.NextDouble() < archetype.AttackChance || isCornered)
                 {
-                    // Selecciona el ataque según pesos.
-                    var intent = archetype.SelectIntent(actor, actor.CombatBehavior.Intents, distance);
+                    // Selecciona el ataque basado en los pesos del arquetipo
+                    var intent = archetype.SelectIntent(actor, actor.CombatBehavior.Intents, 0f);
 
                     if (intent != null)
                     {
-                        // UNIFICACIÓN: ¿Es un ataque que requiere proximidad física? (Melee, Espada, Mordisco, Contact)
+                        // CASE 1: CUERPO A CUERPO (Espada, Mordisco, Tajo)
                         if (intent.UsageMode == ItemUsageMode.ProximityAction)
                         {
-                            // El alcance total de este turno es lo que camina + el largo de su arma/cuerpo
-                            float totalReach = archetype.MoveRange + intent.Range;
+                            float distance = DistanceToTarget(actor, target);
 
-                            if (distance <= totalReach)
+                            // El AttackRange del arquetipo es el único tapón para el Melee
+                            if (distance <= archetype.MeleeAttackRange)
                             {
-                                // Le da la nafta: se mueve los píxeles necesarios, se te pega y te ejecuta el tajo/mordisco
                                 return new CombatDecision(CombatDecisionType.Attack, intent, target);
                             }
                             else
                             {
-                                // Está demasiado lejos para llegar a pegarte en este turno: 
-                                // simplemente gasta su MoveRange para acortar distancia y quedar mejor posicionado
-                                return new CombatDecision(CombatDecisionType.MoveNearby, intent, target);
+                                // Está muy lejos para activar el ataque. 
+                                // Camina un poco o se mueve random según el tipo de bicho.
+                                return GetFallbackMovement(archetype, target);
                             }
                         }
-                        else
+
+                        // CASE 2: ATAQUE A DISTANCIA (Flechas, Magia, Escupitajo)
+                        if (intent.UsageMode == ItemUsageMode.ProjectileAction)
                         {
-                            // ATAQUE A DISTANCIA PURO (Proyectiles, Magias)
-                            // No gasta movimiento para atacar. Si estás en su rango de fuego, dispara.
-                            if (distance <= intent.Range)
-                            {
-                                return new CombatDecision(CombatDecisionType.Attack, intent, target);
-                            }
-                            else
-                            {
-                                // Si el arquero está lejos, avanza para intentar ponerte en rango el turno que viene
-                                return new CombatDecision(CombatDecisionType.MoveNearby, intent, target);
-                            }
+                            // En rooms chicos el proyectil siempre viaja y pega. Dispara directo.
+                            return new CombatDecision(CombatDecisionType.Attack, intent, target);
                         }
                     }
                 }

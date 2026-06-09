@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:e0db13f1106c122873bf6d19e65d0ee1:0ee88f77924eb296ca0857c5d11bf93a:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:2763a79ed8d8b6f552fe9d968d163a14:1149206a2c76e9d1a419704a195e1c28:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -32,10 +32,10 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Coin.png" x="244" y="195" w="22" h="22"/>
     <sprite n="CoinIcon.png" x="142" y="239" w="8" h="8"/>
     <sprite n="ContextMenuOptionSelector.png" x="506" y="227" w="4" h="5"/>
-    <sprite n="CorridorDoorIcon.png" x="449" y="284" w="10" h="11"/>
+    <sprite n="CorridorDoorIcon.png" x="470" y="285" w="10" h="11"/>
     <sprite n="CountdownSkullIcon.png" x="491" y="227" w="13" h="19"/>
     <sprite n="CreditsBar.png" x="2" y="2" w="480" h="67"/>
-    <sprite n="DialogArrowLarge.png" x="503" y="312" w="7" h="5"/>
+    <sprite n="DialogArrowLarge.png" x="332" y="278" w="7" h="5"/>
     <sprite n="DialogBlockContainer.png" x="2" y="147" w="240" h="53"/>
     <sprite n="DialogOptionBullet.png" x="505" y="248" w="5" h="5"/>
     <sprite n="Dice.png" x="142" y="249" w="8" h="8"/>
@@ -49,10 +49,10 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="GooIcon.png" x="142" y="217" w="8" h="9"/>
     <sprite n="GooIcons1.png" x="142" y="228" w="8" h="9"/>
     <sprite n="GooIcons2.png" x="142" y="217" w="8" h="9"/>
-    <sprite n="GreenHearts1.png" x="470" y="298" w="9" h="9"/>
-    <sprite n="GreenHearts2.png" x="481" y="304" w="9" h="9"/>
-    <sprite n="GreenHearts3.png" x="492" y="304" w="9" h="9"/>
-    <sprite n="GreenHearts4.png" x="266" y="273" w="9" h="9"/>
+    <sprite n="GreenHearts1.png" x="482" y="304" w="9" h="9"/>
+    <sprite n="GreenHearts2.png" x="493" y="304" w="9" h="9"/>
+    <sprite n="GreenHearts3.png" x="266" y="273" w="9" h="9"/>
+    <sprite n="GreenHearts4.png" x="248" y="283" w="9" h="9"/>
     <sprite n="Headbutt.png" x="176" y="226" w="22" h="22"/>
     <sprite n="HeartBlackFull.png" x="142" y="269" w="7" h="7"/>
     <sprite n="HeartBlackHalf.png" x="414" y="266" w="7" h="7"/>
@@ -86,29 +86,30 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="MouseCursorLeft.png" x="440" y="258" w="12" h="11"/>
     <sprite n="MouseCursorProhibition.png" x="425" y="245" w="13" h="13"/>
     <sprite n="MouseCursorRight.png" x="424" y="260" w="12" h="11"/>
+    <sprite n="MouseCursorSkull.png" x="470" y="298" w="10" h="10"/>
     <sprite n="MouseCursorUp.png" x="496" y="290" w="11" h="12"/>
-    <sprite n="MouseCursorWait.png" x="482" y="291" w="9" h="11"/>
-    <sprite n="PickupShadow.png" x="321" y="273" w="9" h="3"/>
+    <sprite n="MouseCursorWait.png" x="449" y="284" w="10" h="12"/>
+    <sprite n="PickupShadow.png" x="332" y="273" w="9" h="3"/>
     <sprite n="Pistol.png" x="200" y="250" w="22" h="22"/>
     <sprite n="Pixel.png" x="508" y="15" w="1" h="1"/>
-    <sprite n="PointingHand.png" x="503" y="304" w="7" h="6"/>
+    <sprite n="PointingHand.png" x="343" y="273" w="7" h="6"/>
     <sprite n="PopupContainer.png" x="2" y="71" w="264" h="74"/>
     <sprite n="PopupContainerShadow.png" x="268" y="211" w="114" h="60"/>
-    <sprite n="ProhibitionIcon.png" x="248" y="283" w="9" h="9"/>
-    <sprite n="PurpleHearts1.png" x="223" y="291" w="9" h="9"/>
-    <sprite n="PurpleHearts2.png" x="234" y="291" w="9" h="9"/>
-    <sprite n="PurpleHearts3.png" x="277" y="273" w="9" h="9"/>
-    <sprite n="PurpleHearts4.png" x="288" y="273" w="9" h="9"/>
-    <sprite n="RedHearts1.png" x="223" y="291" w="9" h="9"/>
-    <sprite n="RedHearts2.png" x="299" y="273" w="9" h="9"/>
-    <sprite n="RedHearts3.png" x="310" y="273" w="9" h="9"/>
-    <sprite n="RedHearts4.png" x="310" y="273" w="9" h="9"/>
+    <sprite n="ProhibitionIcon.png" x="223" y="291" w="9" h="9"/>
+    <sprite n="PurpleHearts1.png" x="234" y="291" w="9" h="9"/>
+    <sprite n="PurpleHearts2.png" x="277" y="273" w="9" h="9"/>
+    <sprite n="PurpleHearts3.png" x="288" y="273" w="9" h="9"/>
+    <sprite n="PurpleHearts4.png" x="299" y="273" w="9" h="9"/>
+    <sprite n="RedHearts1.png" x="234" y="291" w="9" h="9"/>
+    <sprite n="RedHearts2.png" x="310" y="273" w="9" h="9"/>
+    <sprite n="RedHearts3.png" x="321" y="273" w="9" h="9"/>
+    <sprite n="RedHearts4.png" x="321" y="273" w="9" h="9"/>
     <sprite n="RottenApple.png" x="224" y="267" w="22" h="22"/>
     <sprite n="RustyLockpick.png" x="151" y="274" w="22" h="22"/>
     <sprite n="Sack.png" x="436" y="284" w="11" h="10"/>
     <sprite n="SackIcon.png" x="142" y="259" w="8" h="8"/>
     <sprite n="SavingIcon.png" x="451" y="271" w="11" h="11"/>
-    <sprite n="SkullIcon.png" x="470" y="285" w="10" h="11"/>
+    <sprite n="SkullIcon.png" x="482" y="291" w="10" h="11"/>
     <sprite n="SodaCan.png" x="175" y="274" w="22" h="22"/>
     <sprite n="SpeechBubbleCloseArrow.png" x="507" y="211" w="3" h="2"/>
     <sprite n="SpeechBubblePipe.png" x="505" y="255" w="5" h="3"/>

@@ -113,6 +113,7 @@ namespace ScaryCastle
             base.Exit();
             Action = null;
             Target = null;
+            Owner.Session.ProcessTurn();
         }
 
         // Target
