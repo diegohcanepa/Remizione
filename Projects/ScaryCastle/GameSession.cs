@@ -477,19 +477,6 @@ namespace ScaryCastle
             (Room as CorridorRoom)?.AddCorridorExit();
         }
 
-        // ApplyPatiencePenalty
-        public void ApplyPatiencePenalty(PlayerAction playerAction)
-        {
-            if (Room is not ProceduralRoom room)
-                return;
-
-            for (var i = 0; i < room.Children.Count; i++)
-            {
-                if (room.Children[i] is Actor actor && !actor.IsPlayer && actor.IsHostile)
-                    actor.Patience -= (int)playerAction;
-            }
-        }
-
         // BeginRun
         [ScriptMethod]
         public void BeginRun()
@@ -751,7 +738,7 @@ namespace ScaryCastle
 
             for (var i = 0; i < room.Children.Count; i++)
             {
-                if (room.Children[i] is Actor actor && !actor.IsPlayer && actor.Patience == 0)
+                if (room.Children[i] is Actor actor && !actor.IsPlayer && actor.PatienceTimer == 0)
                 {
                     if (actor.BeginTurn() is { } script)
                     {

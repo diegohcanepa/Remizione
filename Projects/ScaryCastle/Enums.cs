@@ -141,15 +141,6 @@ namespace ScaryCastle
         Ceiling         // Techo (lámparas, telarañas)
     }
 
-    // PlayerAction
-    public enum PlayerAction
-    {
-        WalkTo = 1,
-        Interact = 2,
-        UseItem = 3,
-        Attack = 4
-    }
-
     // PlayerNumber
     public enum PlayerNumber { None = -1, One = 0, Two = 1, Three = 2, Four = 3 }
 

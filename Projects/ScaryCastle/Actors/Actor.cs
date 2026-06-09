@@ -409,7 +409,7 @@ namespace ScaryCastle
 
             base.OnDraw(gameTime);
 
-            if (Patience <= 3 && IsHostile && IsStanding && ActiveThrowable == null && !HasSpeechBubble)
+            if (PatienceTimer <= 0 && IsHostile && IsStanding && ActiveThrowable == null && !HasSpeechBubble)
             {
                 dangerIcon.Position = GetOverheadPosition();
                 dangerIcon.Draw(gameTime);
@@ -469,7 +469,7 @@ namespace ScaryCastle
         protected override void OnLoad()
         {
             base.OnLoad();
-            Patience = MaxPatience;
+            PatienceTimer = PatienceCooldown;
             OpacityFactor = 1;
             Stand();
         }
@@ -517,10 +517,9 @@ namespace ScaryCastle
             moveVerticalTween.Stop();
             moveBalancingTween.Stop();
 
-            if (ApplyPatiencePenaltyOnStop)
+            if (EnforceTurn)
             {
-                ApplyPatiencePenaltyOnStop = false;
-                Session.ApplyPatiencePenalty(PlayerAction.WalkTo);
+                EnforceTurn = false;
                 Session.ProcessTurn();
             }
         }
@@ -549,7 +548,7 @@ namespace ScaryCastle
 
                 Faction = Faction.Evil;
                 IsHostile = true;
-                Patience = 0;
+                PatienceTimer = 0;
             }
 
             Session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);
@@ -561,6 +560,9 @@ namespace ScaryCastle
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
+
+            if (!Session.IsAwaiting && !IsPlayer && IsHostile && PatienceCooldown > 0 && PatienceTimer > 0)
+                PatienceTimer -= gameTime.ElapsedGameTime.Milliseconds;
 
             /*
             if (!UpdateContactIntent(gameTime))
@@ -729,9 +731,6 @@ namespace ScaryCastle
             OnApplyCondition(condition, amount);
         }
 
-        // ApplyPatiencePenaltyOnStop
-        public bool ApplyPatiencePenaltyOnStop { get; set; }
-
         // BeginTurn
         public Script? BeginTurn()
         {
@@ -742,7 +741,7 @@ namespace ScaryCastle
             {
                 CombatDecision = decision;
                 CombatDecisionType = decision.Type;
-                Patience = MaxPatience;
+                PatienceTimer = PatienceCooldown;
                 return OutcomeScript;
             }
             else
@@ -866,6 +865,9 @@ namespace ScaryCastle
                 }
             }
         }
+
+        // EnforceTurn
+        public bool EnforceTurn { get; set; }
 
         // ExecuteAction
         public void ExecuteAction(IAction action, GameThing? target)
@@ -1000,21 +1002,6 @@ namespace ScaryCastle
             }
         }
 
-        // MaxPatience
-        [ScriptProperty]
-        public int MaxPatience
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    Patience = value;
-                }
-            }
-        } = 10;
-
         // MoveNearby
         public virtual void MoveNearby(GameThing target)
         {
@@ -1109,18 +1096,29 @@ namespace ScaryCastle
             return true;
         }
 
-        // Patience
-        public int Patience
+        // PatienceCooldown
+        [ScriptProperty]
+        public int PatienceCooldown
         {
             get;
             set
             {
                 if (value != field)
                 {
-                    field = Math.Min(value, MaxPatience);
-                    if (field < 0)
-                        field = 0;
+                    field = value;
+                    PatienceTimer = value;
                 }
+            }
+        } = 10000;
+
+        // PatienceTimer
+        public int PatienceTimer
+        {
+            get;
+            set
+            {
+                if (value != field)
+                    field = int.Clamp(value, 0, PatienceCooldown);
             }
         }
 

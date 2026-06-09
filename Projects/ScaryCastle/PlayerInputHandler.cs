@@ -49,7 +49,7 @@ namespace ScaryCastle
             if (context.Target == null)
             {
                 Actor.Session.InteractionData.Clear();
-                Actor.ApplyPatiencePenaltyOnStop = true;
+                Actor.EnforceTurn = true;
                 Actor.MoveTo(destination);
                 return;
             }
