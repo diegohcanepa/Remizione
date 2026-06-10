@@ -396,6 +396,9 @@ namespace ScaryCastle
             }
 
             ShowComicText(ComicTextKind.PlopRed);
+
+            if (!IsPlayer && Session.Player?.Condition == ConditionType.Bullying && IsHostile && Faction == Faction.Evil)
+                ClearCondition();
         }
 
         // OnDraw
@@ -682,11 +685,11 @@ namespace ScaryCastle
             }
 
             // 4. Si el efecto entrante es Maldición: PISA el veneno o SE SUMA a una maldición previa.
-            if (condition == ConditionType.Curse)
+            if (condition == ConditionType.Bullying)
             {
-                if (Condition != ConditionType.Curse)
+                if (Condition != ConditionType.Bullying)
                 {
-                    Condition = ConditionType.Curse;
+                    Condition = ConditionType.Bullying;
                     ConditionAmount = amount;
                     conditionTimer = GameSettings.ConditionCooldown;
                 }
@@ -702,7 +705,7 @@ namespace ScaryCastle
             }
 
             // 5. Si el efecto entrante es Veneno: Solo importa si no estás maldito.
-            if (condition == ConditionType.Poison && Condition != ConditionType.Curse)
+            if (condition == ConditionType.Poison && Condition != ConditionType.Bullying)
             {
                 if (Condition != ConditionType.Poison)
                 {
@@ -718,7 +721,7 @@ namespace ScaryCastle
                 }
 
                 if (Session.Player == this)
-                    Session.ObjectPools.FloatingTexts.Get()?.ShowAmount(this, ColorPalette.Condition.Poison, amount);
+                    Session.ObjectPools.FloatingTexts.Get()?.ShowAmount(this, ColorPalette.Condition.Bullying, amount);
             }
 
             // ComicText si hubo daño real
@@ -853,14 +856,7 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     var previousValue = field;
-
-                    if (value > field)
-                        ClearCondition();
-                    
-                    field = Math.Min(value, MaxEnergy);
-                    if (field < 0)
-                        field = 0;
-
+                    field = int.Clamp(value, 0, MaxEnergy);
                     OnEnergyChanged(previousValue);
                 }
             }

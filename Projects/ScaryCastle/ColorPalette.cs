@@ -21,8 +21,8 @@ namespace ScaryCastle
         // Condition
         internal static class Condition
         {
+            internal static Color Bullying { get; } = new(110, 224, 31);
             internal static Color Curse { get; } = new(119, 103, 211);
-            internal static Color Poison { get; } = new(110, 224, 31);
         }
 
         // ContextMenu
