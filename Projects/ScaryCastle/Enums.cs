@@ -30,7 +30,7 @@ namespace ScaryCastle
     public enum ComicTextKind { None, AghGreen, AghPurple, AghRed, BoomPurple, BoomRed, BangBlue, BangRed, CrackBlue, CrackYellow, CuackPurple, CuackYellow, Kapow, KapowStrong, OuchBlue, OuchGreen, PlopRed, PlopYellow, SlapBlue, SlapRed, Zap }
 
     // ConditionType
-    public enum ConditionType { None, Bullying, Poison, ChromaticAberration, CoinLoss }
+    public enum ConditionType { None, Curse, Poison, ChromaticAberration, CoinLoss }
 
     // ContentFolder
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Video, Voices, System, Text }

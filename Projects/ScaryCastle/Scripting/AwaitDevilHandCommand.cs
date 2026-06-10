@@ -34,6 +34,9 @@ namespace ScaryCastle.Scripting
         #endregion
 
         // IsAwaiting
-        public override bool IsAwaiting() => hand?.IsBusy == true;
+        public override bool IsAwaiting()
+        {
+            return hand?.IsBusy == true;
+        }
     }
 }

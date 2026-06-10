@@ -15,11 +15,12 @@ namespace ScaryCastle
         private Script? script;
         private GameThing? target;
         private Vector2 targetPosition;
+        private Prop? throwable;
 
         #endregion
 
         // CanExecute
-        public bool CanExecute => combatIntent != null || script != null || item != null;
+        public bool CanExecute => combatIntent != null || script != null || item != null || throwable != null;
 
         // Clear
         public void Clear()
@@ -29,6 +30,7 @@ namespace ScaryCastle
             script = null;
             target = null;
             targetPosition = Vector2.Zero;
+            throwable = null;
         }
 
         // Execute
@@ -42,6 +44,12 @@ namespace ScaryCastle
             if (combatIntent != null)
             {
                 session.Player.ExecuteAction(combatIntent, target);
+                result = true;
+            }
+            else if (throwable != null)
+            {
+                session.Player.StopMoving();
+                session.Player.ThrowActiveTrowable(target);
                 result = true;
             }
             else if (script != null)
@@ -116,7 +124,10 @@ namespace ScaryCastle
 
             if (context.HeldItem == null)
             {
-                this.script = target.OutcomeScript;
+                if (context.Session.Player?.ActiveThrowable is Prop activeThrowable)
+                    this.throwable = activeThrowable;
+                else
+                    this.script = target.OutcomeScript;
             }
             else
             {

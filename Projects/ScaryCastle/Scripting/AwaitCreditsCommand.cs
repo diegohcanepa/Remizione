@@ -13,6 +13,9 @@ namespace ScaryCastle.Scripting
         }
 
         // IsAwaiting
-        public override bool IsAwaiting() => Session.Room is CreditsRoom room && room.IsShowingCredits;
+        public override bool IsAwaiting()
+        {
+            return Session.Room is CreditsRoom room && room.IsShowingCredits;
+        }
     }
 }

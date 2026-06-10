@@ -11,6 +11,9 @@
         }
 
         // IsAwaiting
-        public override bool IsAwaiting() => Session.IsAwaiting;
+        public override bool IsAwaiting()
+        {
+            return Session.IsAwaiting;
+        }
     }
 }

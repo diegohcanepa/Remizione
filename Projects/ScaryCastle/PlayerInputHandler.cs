@@ -109,9 +109,10 @@ namespace ScaryCastle
             if (!InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
                 return false;
 
+            // Drop throwable
             if (Actor.ActiveThrowable != null)
             {
-                Actor.ThrowActiveTrowable();
+                Actor.DiscardActiveThrowable();
                 return true;
             }
 

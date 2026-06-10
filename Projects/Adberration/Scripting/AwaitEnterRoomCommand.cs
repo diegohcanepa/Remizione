@@ -35,6 +35,9 @@
         }
 
         // IsAwaiting
-        public override bool IsAwaiting() => room != null && room != Session.PreviousRoom && Session.IsEnteringRoom(room);
+        public override bool IsAwaiting()
+        {
+            return room != null && room != Session.PreviousRoom && Session.IsEnteringRoom(room);
+        }
     }
 }

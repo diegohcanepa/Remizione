@@ -1,5 +1,4 @@
-﻿using Engendro;
-using Engendro.Input;
+﻿using Engendro.Input;
 using ScaryCastle.Scripting;
 
 namespace ScaryCastle
@@ -109,7 +108,7 @@ namespace ScaryCastle
                     MouseCursor.Color = ColorPalette.MouseCursor.HostileTarget;
                 */
 
-                MouseCursor.IsEnabled = context.Session.Player?.ActiveThrowable == null;
+                //MouseCursor.IsEnabled = context.Session.Player?.ActiveThrowable == null;
                 MouseCursor.HightlightColor = ColorPalette.MouseCursor.HighlightWhite;
 
                 if (context.Session.Player != null && context.HeldItem?.Definition.ActionKind == ActionKind.Projectile)

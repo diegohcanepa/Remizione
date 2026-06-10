@@ -47,6 +47,9 @@
         }
 
         // IsAwaiting
-        public override bool IsAwaiting() => routine != null && !routine.IsCompleted;
+        public override bool IsAwaiting()
+        {
+            return routine != null && !routine.IsCompleted;
+        }
     }
 }

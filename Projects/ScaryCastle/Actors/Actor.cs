@@ -6,7 +6,6 @@ using Engendro.Input;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace ScaryCastle
 {
@@ -22,7 +21,7 @@ namespace ScaryCastle
         private const int contactCooldown = 500;
         //private int contactTimer;
         private readonly List<AtlasImage>? customGuts;
-        private Sprite dangerIcon = new(Atlases.UI.DangerIcon) { PivotOrigin = RectanglePoint.Bottom };
+        private readonly Sprite dangerIcon = new(Atlases.UI.DangerIcon) { PivotOrigin = RectanglePoint.Bottom };
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
         private readonly AnimatedSprite headSprite;
@@ -397,7 +396,7 @@ namespace ScaryCastle
 
             ShowComicText(ComicTextKind.PlopRed);
 
-            if (!IsPlayer && Session.Player?.Condition == ConditionType.Bullying && IsHostile && Faction == Faction.Evil)
+            if (!IsPlayer && Session.Player?.Condition == ConditionType.Curse && IsHostile && Faction == Faction.Evil)
                 ClearCondition();
         }
 
@@ -685,11 +684,11 @@ namespace ScaryCastle
             }
 
             // 4. Si el efecto entrante es Maldición: PISA el veneno o SE SUMA a una maldición previa.
-            if (condition == ConditionType.Bullying)
+            if (condition == ConditionType.Curse)
             {
-                if (Condition != ConditionType.Bullying)
+                if (Condition != ConditionType.Curse)
                 {
-                    Condition = ConditionType.Bullying;
+                    Condition = ConditionType.Curse;
                     ConditionAmount = amount;
                     conditionTimer = GameSettings.ConditionCooldown;
                 }
@@ -705,7 +704,7 @@ namespace ScaryCastle
             }
 
             // 5. Si el efecto entrante es Veneno: Solo importa si no estás maldito.
-            if (condition == ConditionType.Poison && Condition != ConditionType.Bullying)
+            if (condition == ConditionType.Poison && Condition != ConditionType.Curse)
             {
                 if (Condition != ConditionType.Poison)
                 {
@@ -752,7 +751,7 @@ namespace ScaryCastle
                 CombatDecision = null;
                 CombatDecisionType = CombatDecisionType.None;
             }
-            
+
             return null;
         }
 
@@ -1143,11 +1142,13 @@ namespace ScaryCastle
                 return false;
 
             // Is carrying something?
+            /*
             if (ActiveThrowable != null)
             {
                 Session.TextHUD.Message.Show(MessageKind.HandsFull);
                 return false;
             }
+            */
 
             Session.InteractionData.Refresh(Session.InteractionContext);
             if (!Session.InteractionData.CanExecute)
@@ -1156,7 +1157,9 @@ namespace ScaryCastle
                 return false;
             }
 
-            var approachToTarget = item is null ? target.ApproachOnDefaultOutcome : item.Definition.ActionKind is ActionKind.Proximity or ActionKind.Projectile;
+            var approachToTarget = ActiveThrowable != null;
+            if (!approachToTarget)
+                approachToTarget = item is null ? target.ApproachOnDefaultOutcome : item.Definition.ActionKind is ActionKind.Proximity or ActionKind.Projectile;
 
             if (!approachToTarget)
             {
@@ -1166,8 +1169,17 @@ namespace ScaryCastle
             {
                 var destination = target.GetApproachPosition(this, Session.InteractionData.IsAttack ? ApproachBehavior.ClosestSide : null);
 
-                if (item?.Definition.ActionKind == ActionKind.Projectile)
+                if (ActiveThrowable != null)
+                {
+                    if (target.X < destination.X)
+                        destination.X += 10;
+                    else
+                        destination.X -= 10;
+                }
+                else if (item?.Definition.ActionKind == ActionKind.Projectile)
+                {
                     destination.X = X;
+                }
 
                 if (!MoveTo(destination))
                     HandlePendingInteraction();
@@ -1213,12 +1225,13 @@ namespace ScaryCastle
         }
 
         // ThrowActiveTrowable
-        public void ThrowActiveTrowable()
+        public void ThrowActiveTrowable(GameThing target)
         {
             if (ActiveThrowable is null)
                 return;
 
             var state = BodyMachine.FindOrCreateState<ActorThrowObjectState>();
+            state.Target = target;
             state.Prop = ActiveThrowable;
             ActiveThrowable = null;
             BodyMachine.ChangeState(state.GetType());

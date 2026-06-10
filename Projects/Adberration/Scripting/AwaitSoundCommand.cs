@@ -27,6 +27,9 @@ namespace Adberration.Scripting
         #endregion
 
         // IsAwaiting
-        public override bool IsAwaiting() => soundInstance != null && soundInstance.RemainingTime > 0;
+        public override bool IsAwaiting()
+        {
+            return soundInstance != null && soundInstance.RemainingTime > 0;
+        }
     }
 }

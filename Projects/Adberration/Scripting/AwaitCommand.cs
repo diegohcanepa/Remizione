@@ -35,6 +35,9 @@ namespace Adberration.Scripting
         #endregion
 
         // IsAwaiting
-        public override bool IsAwaiting() => duration > 0;
+        public override bool IsAwaiting()
+        {
+            return duration > 0;
+        }
     }
 }

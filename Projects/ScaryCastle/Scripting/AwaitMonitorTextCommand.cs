@@ -48,6 +48,9 @@ namespace ScaryCastle.Scripting
         }
 
         // IsAwaiting
-        public override bool IsAwaiting() => monitorRoom != null && monitorRoom.IsTypingText;
+        public override bool IsAwaiting()
+        {
+            return monitorRoom != null && monitorRoom.IsTypingText;
+        }
     }
 }

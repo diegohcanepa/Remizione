@@ -31,6 +31,9 @@ namespace Adberration.Scripting
         }
 
         // IsAwaiting
-        public override bool IsAwaiting() => entity != null && animation != null && entity.AnimationPlayer.IsPlaying && entity.AnimationPlayer.Animation == animation;
+        public override bool IsAwaiting()
+        {
+            return entity != null && animation != null && entity.AnimationPlayer.IsPlaying && entity.AnimationPlayer.Animation == animation;
+        }
     }
 }

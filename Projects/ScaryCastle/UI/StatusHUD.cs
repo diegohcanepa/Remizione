@@ -22,7 +22,6 @@ namespace ScaryCastle
         {
             this.session = session;
             this.hpMeter = new(new(5, 3));
-            this.Countdown = new(session);
             this.InventoryMeter = new(session.PlayerInventory);
             this.PassiveItems = new(session);
             this.BossMeter = new(session);
@@ -39,7 +38,6 @@ namespace ScaryCastle
             hpMeter.Draw(gameTime);
             GooMeter.Draw(gameTime);
             InventoryMeter.Draw(gameTime);
-            Countdown.Draw(gameTime);
             PassiveItems.Draw(gameTime);
 
             Game.SpriteBatch.End();
@@ -59,16 +57,12 @@ namespace ScaryCastle
             BossMeter.Update(gameTime);
             hpMeter.Update(gameTime);
             GooMeter.Update(gameTime);
-            Countdown.Update(gameTime);
         }
 
         #endregion
 
         // BossMeter
         public UIBossMeter BossMeter { get; }
-
-        // GateMeter
-        public UICountdown Countdown { get; }
 
         // GooMeter
         public UIGooMeter GooMeter { get; } = new();

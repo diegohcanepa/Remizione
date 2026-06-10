@@ -17,16 +17,6 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private static readonly Light alarmLight = new("Alarm")
-        {
-            Color = Color.Red,
-            LightKind = LightKind.Alarm,
-            Passes = 3,
-            PivotOrigin = RectanglePoint.Center,
-            Position = Screen.Center,
-            Scale = new(20, 12)
-        };
-
         private Color brightnessColor;
         private int currentDrawIndex;
         private readonly Color defaultPlayerLightColor = new(240, 181, 65);
@@ -246,9 +236,6 @@ namespace ScaryCastle
                 }
             }
 
-            if (Session.StatusHUD.Countdown.IsCritical)
-                alarmLight.Draw(gameTime);
-
             if (BrightnessModifier > 0)
                 Game.Shapes.DrawRectangle(Session.Viewport.ToRectangle(), brightnessColor);
 
@@ -442,12 +429,6 @@ namespace ScaryCastle
 
             if (HasAmbientLightSources && Session.Player != null)
                 playerLight.Update(gameTime);
-
-            if (Session.StatusHUD.Countdown.IsCritical)
-            {
-                alarmLight.Position = Session.Camera.VisibleBox.Center;
-                alarmLight.Update(gameTime);
-            }
 
             // Dust particles
             if (DustParticleKind != DustParticleKind.None)

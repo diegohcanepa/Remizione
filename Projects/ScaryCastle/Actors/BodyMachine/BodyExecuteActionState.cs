@@ -27,7 +27,7 @@ namespace ScaryCastle
                 //if (Owner.IsInAttackLane(target))
                 {
                     //if (Owner.AnimationPlayer.GetFrameSubArea().Intersects(target.RuntimeHotspot.BoundingRectangleF))
-                        return true;
+                    return true;
                 }
             }
 

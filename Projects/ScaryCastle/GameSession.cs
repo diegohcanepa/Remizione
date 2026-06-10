@@ -9,7 +9,6 @@ using ScaryCastle.Scripting;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace ScaryCastle
@@ -550,7 +549,6 @@ namespace ScaryCastle
             if (FindEntity<Hub>(nameof(Hub)) is Hub hubRoom)
                 hubRoom.Unload();
 
-            StatusHUD.Countdown.Reset();
             PlayerInventory.Clear();
             PlayerStats.Reset();
             InteractionContext.Reset();
@@ -648,7 +646,6 @@ namespace ScaryCastle
 
             Bosses.Clear();
             StatusHUD.BossMeter.Reset();
-            StatusHUD.Countdown.Reset();
 
             if (!CurrentRun.LoadNextCorridor(this))
             {

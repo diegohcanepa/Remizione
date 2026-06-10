@@ -18,6 +18,9 @@ namespace ScaryCastle
         // Prop
         public Prop? Prop { get; set; }
 
+        // Target
+        public GameThing? Target { get; set; }
+
         // Enter
         public override void Enter()
         {
@@ -25,15 +28,23 @@ namespace ScaryCastle
             thrownObject = null;
         }
 
+        // Exit
+        public override void Exit()
+        {
+            base.Exit();
+            Prop = null;
+            Target = null;
+        }
+
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (Prop != null)
+            if (Prop != null && Target != null)
             {
                 if (thrownObject == null && Owner.AnimationPlayer.Frame?.IsTrigger == true)
                 {
                     thrownObject = new ThrownProp(Owner, Prop);
-                    thrownObject.Throw();
+                    thrownObject.Throw(Target);
                 }
             }
 

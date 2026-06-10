@@ -312,8 +312,6 @@ namespace ScaryCastle
             }
 
             closedDoorTimer = 1000;
-
-            Session.StatusHUD.Countdown.Reset();
         }
     }
 }

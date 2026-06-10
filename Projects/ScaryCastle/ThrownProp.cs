@@ -14,11 +14,10 @@ namespace ScaryCastle
         private readonly Debris debris;
         private float floorY;               // Cuánto se frena en horizontal al chocar
         private readonly float gravity;     // gravedad base
-        private GameThing? ignoreThing;
         private readonly Vector2 initialVelocity;     // gravedad base
         private bool isGrounded;
         private readonly Actor owner;
-        private readonly Polygon testPoly = new();
+        private GameThing? target;
         private Vector2 velocity;
         private readonly float weight;      // Masa relativa (afecta la gravedad)
 
@@ -49,99 +48,23 @@ namespace ScaryCastle
         #region Private members
 
         // CheckCollision
-        private GameThing? CheckCollision(bool appyDamage)
+        private void CheckCollision()
         {
-            if (Room == null || Prop.Definition == null)
-                return null;
-
-            for (var i = 0; i < Room.CulledThings.Count; i++)
-            {
-                if (Room.CulledThings[i] == this || Room.CulledThings[i] == owner || Room.CulledThings[i] == ignoreThing)
-                    continue;
-
-                if (Room.CulledThings[i] is GameThing target && target.CanBeHit() && !target.IsDead)
-                {
-                    if (target.RuntimeHotspot.BoundingRectangleF.Intersects(BoundingBox))
-                    {
-                        if (appyDamage)
-                        {
-                            EffectDescriptor.Apply(Prop.Definition.EffectDescriptors, owner, target, EffectContext.Contact);
-                            Break();
-                        }
-
-                        return target;
-                    }
-                }
-            }
-
-            for (var i = 0; i < Room.Walls.Count; i++)
-            {
-                if (Room.Walls[i].Contains(Position))
-                {
-                    Break();
-                    return null;
-                }
-            }
-
-            return null;
-        }
-
-        // Launch
-        private void Launch(bool drop)
-        {
-            if (owner.Room == null || owner.GetActiveThrowablePosition() == null)
+            if (Prop.Definition == null || target == null)
                 return;
 
-            this.ignoreThing = null;
-            this.isGrounded = false;
-            this.velocity = initialVelocity;
-            this.RenderLayer = RenderLayer.Default;
-
-            depth = owner.Depth + .01f;
-
-            this.Position = owner.GetActiveThrowablePosition() ?? Vector2.Zero;
-            this.floorY = owner.Y;
-
-            if (drop)
+            if (target.CanBeHit() && !target.IsDead)
             {
-                velocity.X = 0;
-            }
-            else if (owner.IsFlippedHorizontally)
-            {
-                velocity.X *= -1;
-            }
-
-            owner.Room.Children.Add(this);
-
-            ignoreThing = CheckCollision(false);
-            var y = float.MinValue;
-            if (ignoreThing is IHoleArea holeArea)
-            {
-                testPoly.SetVertices(holeArea.Polygon.GetVertices(), -2);
-
-                for (var i = 0; i < testPoly.Vertices.Count; i++)
+                if (target.RuntimeHotspot.BoundingRectangleF.Intersects(BoundingBox))
                 {
-                    if (owner.IsFlippedHorizontally)
-                    {
-                        if (testPoly.Vertices[i].X > owner.X)
-                            continue;
-                    }
-                    else if (testPoly.Vertices[i].X < owner.X)
-                    {
-                        continue;
-                    }
-
-                    if (testPoly.Vertices[i].Y > y)
-                        y = testPoly.Vertices[i].Y;
+                    EffectDescriptor.Apply(Prop.Definition.EffectDescriptors, owner, target, EffectContext.Contact);
+                    Break();
                 }
-
-                if (owner.Y <= y)
-                    ignoreThing = null;
             }
         }
 
-        // UpdateFloorCollision
-        private void UpdateFloorCollision()
+        // CheckFloorCollision
+        private void CheckFloorCollision()
         {
             if (isGrounded)
                 return;
@@ -151,6 +74,34 @@ namespace ScaryCastle
                 Position = new Vector2(Position.X, floorY);
                 Break();
             }
+        }
+
+        // Launch
+        private void Launch(GameThing? target)
+        {
+            if (owner.Room == null || owner.GetActiveThrowablePosition() == null)
+                return;
+
+            this.target = target;
+            this.isGrounded = false;
+            this.velocity = initialVelocity;
+            this.RenderLayer = RenderLayer.Default;
+
+            depth = owner.Depth + .01f;
+
+            this.Position = owner.GetActiveThrowablePosition() ?? Vector2.Zero;
+            this.floorY = owner.Y;
+
+            if (target == null)
+            {
+                velocity.X = 0;
+            }
+            else if (owner.IsFlippedHorizontally)
+            {
+                velocity.X *= -1;
+            }
+
+            owner.Room.Children.Add(this);
         }
 
         #endregion
@@ -193,11 +144,11 @@ namespace ScaryCastle
             // Movement
             Position += velocity * dt;
 
-            // Floor collision
-            UpdateFloorCollision();
+            // Target collision
+            CheckCollision();
 
-            // Object collision
-            CheckCollision(true);
+            // Floor collision
+            CheckFloorCollision();
         }
 
         #endregion
@@ -224,13 +175,13 @@ namespace ScaryCastle
         // Drop
         public void Drop()
         {
-            Launch(true);
+            Launch(null);
         }
 
         // Throw
-        public void Throw()
+        public void Throw(GameThing target)
         {
-            Launch(false);
+            Launch(target);
         }
 
         // Prop

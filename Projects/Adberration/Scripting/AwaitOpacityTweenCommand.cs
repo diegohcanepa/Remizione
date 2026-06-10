@@ -32,6 +32,9 @@
         #endregion
 
         // IsAwaiting
-        public override bool IsAwaiting() => entity != null && entity.Tweens.IsTweeningOpacity;
+        public override bool IsAwaiting()
+        {
+            return entity != null && entity.Tweens.IsTweeningOpacity;
+        }
     }
 }

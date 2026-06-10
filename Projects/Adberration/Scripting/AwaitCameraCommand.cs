@@ -11,7 +11,10 @@
         }
 
         // IsAwaiting
-        public override bool IsAwaiting() => Session.Camera.IsMoving ||
+        public override bool IsAwaiting()
+        {
+            return Session.Camera.IsMoving ||
                                            (Session.Camera.Target != null && !Session.Camera.IsTargetFocused);
+        }
     }
 }

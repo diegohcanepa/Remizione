@@ -15,6 +15,9 @@
         }
 
         // IsAwaiting
-        public override bool IsAwaiting() => Session.ScriptProcessor.IsExecutingScript(routine) && !routine.IsCompleted;
+        public override bool IsAwaiting()
+        {
+            return Session.ScriptProcessor.IsExecutingScript(routine) && !routine.IsCompleted;
+        }
     }
 }

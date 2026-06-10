@@ -94,6 +94,9 @@ namespace Adberration.Scripting
         #endregion
 
         // IsAwaiting
-        public override bool IsAwaiting() => instance != null && instance.State == SoundState.Playing;
+        public override bool IsAwaiting()
+        {
+            return instance != null && instance.State == SoundState.Playing;
+        }
     }
 }

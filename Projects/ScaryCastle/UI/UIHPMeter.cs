@@ -28,7 +28,7 @@ namespace ScaryCastle
         public UIHPMeter(Vector2 margin)
         {
             imageGroups.Add(ConditionType.None, Atlases.UI.RedHearts);
-            imageGroups.Add(ConditionType.Bullying, Atlases.UI.PurpleHearts);
+            imageGroups.Add(ConditionType.Curse, Atlases.UI.PurpleHearts);
             imageGroups.Add(ConditionType.Poison, Atlases.UI.GreenHearts);
 
             this.icons = new Sprite[10];

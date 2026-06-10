@@ -34,7 +34,9 @@ namespace Adberration.Scripting
         #endregion
 
         // IsAwaiting
-        public override bool IsAwaiting() => Session.Camera.ShakeState == CameraShakeState.X;
-
+        public override bool IsAwaiting()
+        {
+            return Session.Camera.ShakeState == CameraShakeState.X;
+        }
     }
 }
