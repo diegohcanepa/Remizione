@@ -12,7 +12,7 @@ namespace ScaryCastle
             : base(session, name)
         {
             Collider = new Polygon("0,0;5,0;5,4;0,4");
-            DisplayNameKey = $"Item.{nameof(Coin)}.Name";
+            DisplayNameKey = "Prop.Coin";
             Hotspot = new Polygon("0,0;5,0;5,4;0,4");
             RenderLayer = RenderLayer.OverBackground;
 

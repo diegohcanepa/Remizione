@@ -75,7 +75,7 @@ namespace ScaryCastle
             {
                 if (value != field)
                 {
-                    field = int.Clamp(value, 0, Definition.IsStackable || Definition.IsDepletable ? 99 : 1);
+                    field = int.Clamp(value, 0, Definition.IsStackable || Definition.IsDepletable ? GameSettings.MaxItemAmount : 1);
                     isDisplayTextDiry = true;
                     if (field == 0)
                         Inventory.Remove(this);

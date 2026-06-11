@@ -117,10 +117,6 @@ namespace ScaryCastle
                 if (Session.ScriptLibrary.FindRoutine(CorridorLeftGateRoutineName) is Script script)
                     Session.AwaitScript(script);
             }
-            else if (Session.PreviousRoom is SideRoom)
-            {
-                Session.CloseCorridorDoor();
-            }
         }
 
         // OnLoad

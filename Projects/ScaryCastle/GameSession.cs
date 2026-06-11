@@ -516,6 +516,20 @@ namespace ScaryCastle
             (Room as CorridorRoom)?.CloseCorridorDoor();
         }
 
+        // Coins
+        [ScriptProperty]
+        public int Coins
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = Math.Max(0, value);
+                }
+            }
+        }
+
         // ComicTextPool
         public ObjectPool<ComicText> ComicTextPool { get; }
 

@@ -244,10 +244,10 @@ namespace ScaryCastle
             if (!PrecalculateLoot)
                 PrepareLoot();
 
-            if (Room is not ProceduralRoom room)
+            if (Session.Room is not ProceduralRoom room)
                 return;
 
-            if (ItemReward != null && CoinReward == 0)
+            if (ItemReward != null)
             {
                 Prop? loot;
                 if (AotTypeRegistry.Find(ItemReward.Name) is AotTypeEntry entry && typeof(PickableLoot).IsAssignableFrom(entry.Type))
@@ -500,11 +500,7 @@ namespace ScaryCastle
         {
             ItemReward = Session.LootGenerator.RollForLoot(this);
             if (ItemReward == null)
-            {
                 CoinReward = Session.LootGenerator.RollForCoin(this);
-                if (CoinReward > 0)
-                    ItemReward = ItemDefinition.Definitions.Find(nameof(Coin));
-            }
         }
 
         #endregion
@@ -758,7 +754,16 @@ namespace ScaryCastle
 
         // Faction
         [ScriptProperty]
-        public Faction Faction { get; set; }
+        public Faction Faction
+        {
+            get;
+            set
+            {
+                field = value;
+                if (field == Faction.Evil)
+                    IsHostile = true;
+            }
+        }
 
         // FloatingForce
         [ScriptProperty]
@@ -1009,6 +1014,17 @@ namespace ScaryCastle
 
         // IsEmittingLight
         public virtual bool IsEmittingLight => AttachedLight?.IsEmitting == true && !IgnoreAttachedLight;
+
+        // IsFacingTarget
+        public bool IsFacingTarget(GameThing target)
+        {
+            float directionToTarget = target.Position.X - this.Position.X;
+            if (directionToTarget == 0)
+                return true;
+
+            return (directionToTarget > 0 && this.Direction == FacingDirection.Right) ||
+                   (directionToTarget < 0 && this.Direction == FacingDirection.Left);
+        }
 
         // IsHittable
         [ScriptProperty]

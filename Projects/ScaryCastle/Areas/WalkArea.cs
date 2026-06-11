@@ -304,7 +304,7 @@ namespace ScaryCastle
         public RoomAreaReadOnlyCollection<HoleArea> Holes { get; }
 
         // InLineOfSight
-        public bool InLineOfSight(Vector2 value1, Vector2 value2)
+        public bool InLineOfSight(Vector2 value1, Vector2 value2, object? sender = null)
         {
             if ((value1 - value2).LengthSquared() < float.Epsilon)
                 return true;
@@ -314,7 +314,7 @@ namespace ScaryCastle
 
             for (var i = 0; i < holeAreas.Count; i++)
             {
-                if (!holeAreas[i].InLineOfSight(value1, value2))
+                if (holeAreas[i] != sender && !holeAreas[i].InLineOfSight(value1, value2))
                     return false;
             }
 

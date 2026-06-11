@@ -8,6 +8,7 @@
         internal const string Alarm = nameof(Alarm);
         internal const string Break = nameof(Break);
         internal const string CoinLoss = nameof(CoinLoss);
+        internal const string CollectCoin = nameof(CollectCoin);
         internal const string StatusEffectDamage = nameof(StatusEffectDamage);
         internal const string Error = nameof(Error);
         internal const string FootstepA = nameof(FootstepA);

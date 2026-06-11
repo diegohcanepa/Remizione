@@ -17,11 +17,11 @@ namespace ScaryCastle
         #region Private fields
 
         private Sprite? activeThrowableSprite;
+        private readonly Sprite alertIcon = new(Atlases.UI.AlertIcon) { PivotOrigin = RectanglePoint.Bottom };
         private int conditionTimer;
         private const int contactCooldown = 500;
         //private int contactTimer;
         private readonly List<AtlasImage>? customGuts;
-        private readonly Sprite dangerIcon = new(Atlases.UI.DangerIcon) { PivotOrigin = RectanglePoint.Bottom };
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
         private readonly AnimatedSprite headSprite;
@@ -261,6 +261,29 @@ namespace ScaryCastle
             footstepLastUsedFrame = Sprite.Player.Frame;
         }
 
+        // UpdatePatienceTimer
+        private void UpdatePatienceTimer(GameTime gameTime)
+        {
+            if (Session.IsAwaiting || IsPlayer || !IsHostile || PatienceCooldown == 0)
+                return;
+
+            if (!IsAlert)
+            {
+                if (Session.Player != null)
+                {
+                    if (!IsFacingTarget(Session.Player))
+                        return;
+
+                    if (Room?.WalkArea?.InLineOfSight(Session.Player.Position, Position, this) == true)
+                        IsAlert = true;
+                }
+            }
+            else if (PatienceTimer > 0)
+            {
+                PatienceTimer -= gameTime.ElapsedGameTime.Milliseconds;
+            }
+        }
+
         /*
         // UpdateReactionCounter
         private void UpdateReactionCounter(GameTime gameTime)
@@ -395,9 +418,7 @@ namespace ScaryCastle
             }
 
             ShowComicText(ComicTextKind.PlopRed);
-
-            if (!IsPlayer && Session.Player?.Condition == ConditionType.Curse && IsHostile && Faction == Faction.Evil)
-                ClearCondition();
+            ClearCondition();
         }
 
         // OnDraw
@@ -413,8 +434,8 @@ namespace ScaryCastle
 
             if (PatienceTimer <= 0 && IsHostile && IsStanding && ActiveThrowable == null && !HasSpeechBubble)
             {
-                dangerIcon.Position = GetOverheadPosition();
-                dangerIcon.Draw(gameTime);
+                alertIcon.Position = GetOverheadPosition();
+                alertIcon.Draw(gameTime);
             }
 
             if (activeThrowableSprite?.RenderImage != null)
@@ -548,7 +569,6 @@ namespace ScaryCastle
                 if (Definition?.DropTrigger == LootDropTrigger.OnImpact)
                     DropLoot();
 
-                Faction = Faction.Evil;
                 IsHostile = true;
                 PatienceTimer = 0;
             }
@@ -563,8 +583,7 @@ namespace ScaryCastle
         {
             base.OnUpdate(gameTime);
 
-            if (!Session.IsAwaiting && !IsPlayer && IsHostile && PatienceCooldown > 0 && PatienceTimer > 0)
-                PatienceTimer -= gameTime.ElapsedGameTime.Milliseconds;
+            UpdatePatienceTimer(gameTime);
 
             /*
             if (!UpdateContactIntent(gameTime))
@@ -586,14 +605,8 @@ namespace ScaryCastle
 
             if (!Session.IsAwaiting && !IsMoving)
             {
-                if (IsPlayer && ActiveThrowable != null && Session.IsCurrentScene && CanHandleInput)
-                {
-                    FaceToMouseCursor();
-                }
-                else if (Faction == Faction.Evil && Session.Player != null)
-                {
+                if (IsAlert && IsHostile && Session.Player != null)
                     FaceTo(Session.Player);
-                }
             }
         }
 
@@ -720,7 +733,7 @@ namespace ScaryCastle
                 }
 
                 if (Session.Player == this)
-                    Session.ObjectPools.FloatingTexts.Get()?.ShowAmount(this, ColorPalette.Condition.Bullying, amount);
+                    Session.ObjectPools.FloatingTexts.Get()?.ShowAmount(this, ColorPalette.Condition.Poison, amount);
             }
 
             // ComicText si hubo daño real
@@ -930,6 +943,9 @@ namespace ScaryCastle
         [ScriptProperty]
         public Sound? HurtVoice { get; set; }
 
+        // IsAlert
+        public bool IsAlert { get; set; }
+
         // IsInAttackLane
         public bool IsInAttackLane(GameThing target, int attackLaneThickness = 4)
         {
@@ -956,12 +972,6 @@ namespace ScaryCastle
 
         // IsStandingOrMoving
         public bool IsStandingOrMoving => BodyMachine.CurrentState is BodyStandState or BodyMoveState;
-
-        // IsTarget
-        public virtual bool IsTarget(GameThing other)
-        {
-            return this.Faction == Faction.Evil && other == Session.Player;
-        }
 
         // Lift
         public void Lift(Prop prop)
@@ -1091,6 +1101,9 @@ namespace ScaryCastle
             return true;
         }
 
+        // MoveToDestination
+        public Vector2? MoveToDestination => pendingPathNodes.Count == 0 ? null : pendingPathNodes[^1];
+
         // PatienceCooldown
         [ScriptProperty]
         public int PatienceCooldown
@@ -1171,7 +1184,7 @@ namespace ScaryCastle
 
                 if (ActiveThrowable != null)
                 {
-                    if (target.X < destination.X)
+                    if (target.X < X)
                         destination.X += 10;
                     else
                         destination.X -= 10;
@@ -1182,7 +1195,9 @@ namespace ScaryCastle
                 }
 
                 if (!MoveTo(destination))
+                {
                     HandlePendingInteraction();
+                }
             }
 
             return true;
@@ -1230,6 +1245,7 @@ namespace ScaryCastle
             if (ActiveThrowable is null)
                 return;
 
+            FaceTo(target);
             var state = BodyMachine.FindOrCreateState<ActorThrowObjectState>();
             state.Target = target;
             state.Prop = ActiveThrowable;

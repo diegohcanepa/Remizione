@@ -1,4 +1,5 @@
-﻿using Engendro.Input;
+﻿using Engendro;
+using Engendro.Input;
 
 namespace ScaryCastle
 {
@@ -11,6 +12,7 @@ namespace ScaryCastle
         public InteractionContext(GameSession session)
         {
             this.Session = session;
+            this.CoinDisplayName = TextRepository.GetValue("Prop.Coin");
         }
 
         #region Private members
@@ -55,6 +57,9 @@ namespace ScaryCastle
         }
 
         #endregion
+
+        // CoinDisplayName
+        public string CoinDisplayName { get; }
 
         // HeldItem
         public Item? HeldItem { get; set; }

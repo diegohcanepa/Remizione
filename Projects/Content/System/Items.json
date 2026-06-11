@@ -51,14 +51,6 @@
 			]
 		},
 		{
-			"name": "Coin",
-			"actionKind": "Script",
-			"category": "Money",
-			"deselectOnUse": true,
-			"isStackable": true,
-			"pickupSound": "CollectCoin"
-		},
-		{
 			"name": "Firecracker",
 			"areaOfEffect": 40,
 			"actionKind": "Self",
@@ -127,7 +119,7 @@
 		},
 		{
 			"name": "Pistol",
-			"initialAmount": 6,
+			"initialAmount": 5,
 			"category": "Misc",
 			"actionKind": "Projectile",
 			"soundTrigger": "Pistol",

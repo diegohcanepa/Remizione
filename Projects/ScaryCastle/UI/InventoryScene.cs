@@ -13,13 +13,13 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly TextSprite[] amounts;
-        private readonly Sprite[] gooIcons;
-        private readonly Sprite[] icons;
+        private readonly Sprite[] amounts = new Sprite[PlayerInventory.MaximumCapacity];
+        private readonly Sprite[] gooIcons = new Sprite[PlayerInventory.MaximumCapacity];
+        private readonly Sprite[] icons = new Sprite[PlayerInventory.MaximumCapacity];
         private readonly TextSprite itemName;
         private int lastSeenInventoryVersion = -1;
-        private readonly Sprite[] shadows;
-        private readonly Sprite[] slots;
+        private readonly Sprite[] shadows = new Sprite[PlayerInventory.MaximumCapacity];
+        private readonly Sprite[] slots = new Sprite[PlayerInventory.MaximumCapacity];
 
         #endregion
 
@@ -29,11 +29,6 @@ namespace ScaryCastle
         public InventoryScene(PlayerInventory inventory)
         {
             this.PausePreviousScenes = false;
-            this.amounts = new TextSprite[PlayerInventory.MaximumCapacity];
-            this.gooIcons = new Sprite[PlayerInventory.MaximumCapacity];
-            this.icons = new Sprite[PlayerInventory.MaximumCapacity];
-            this.shadows = new Sprite[PlayerInventory.MaximumCapacity];
-            this.slots = new Sprite[PlayerInventory.MaximumCapacity];
 
             // Slots
             for (var i = 0; i < slots.Length; i++)
@@ -66,13 +61,12 @@ namespace ScaryCastle
                     Y = slots[i].BoundingBox.Center.Y + 1
                 };
 
-                // Amount text
-                amounts[i] = new(Fonts.CommonOutline)
+                // Amount
+                amounts[i] = new Sprite()
                 {
-                    Color = ColorPalette.Text.Highlight,
                     PivotOrigin = RectanglePoint.Top,
-                    Y = slots[i].BoundingBox.Center.Y + 6,
-                    Scale = ScaleInfo.Text.Huge
+                    Y = slots[i].BoundingBox.Center.Y + 5,
+                    Scale = ScaleInfo.UIElement.Medium
                 };
             }
 
@@ -81,7 +75,7 @@ namespace ScaryCastle
             {
                 Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Bottom,
-                Y = slots[0].BoundingBox.Top - 3,
+                Y = slots[0].BoundingBox.Top - 2,
                 Scale = ScaleInfo.UISentence
             };
 
@@ -143,7 +137,7 @@ namespace ScaryCastle
                 icons[i].RenderImage = null;
                 gooIcons[i].RenderImage = null;
                 shadows[i].RenderImage = null;
-                amounts[i].Text = null;
+                amounts[i].RenderImage = null;
 
                 if (i < Inventory.Count)
                 {
@@ -162,7 +156,10 @@ namespace ScaryCastle
                     amounts[i].X = icons[i].X;
 
                     if (Inventory[i].Definition.IsStackable || Inventory[i].Definition.IsDepletable)
-                        amounts[i].Text = Inventory[i].Amount.ToString(CultureInfo.InvariantCulture);
+                    {
+                        if (Inventory[i].Amount.IsBetween(1, 5))
+                            amounts[i].RenderImage = Atlases.UI.InventoryItemAmounts[Inventory[i].Amount - 1];
+                    }
                 }
             }
         }

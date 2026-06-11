@@ -12,19 +12,21 @@ namespace ScaryCastle
         public UIAtlas()
             : base(EngendroGame.Instance.Content, "UI", ContentManagerExtension.EncodePath(ContentFolder.Atlases, "UI"), false)
         {
+            AlertIcon = this[nameof(AlertIcon)];
             BossMeter = this[nameof(BossMeter)];
             BossMeterAmount = this[nameof(BossMeterAmount)];
             CheckMark = this[nameof(CheckMark)];
             Coin = this[nameof(Coin)];
+            CoinIcon = this[nameof(CoinIcon)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
-            DangerIcon = this[nameof(DangerIcon)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
             DialogOptionBullet = this[nameof(DialogOptionBullet)];
             DiscardItemIcon = this[nameof(DiscardItemIcon)];
             GooIcon = this[nameof(GooIcon)];
             GooIcons = CreateReadOnlyCollection(nameof(GooIcons), 1, 2);
             GreenHearts = CreateReadOnlyCollection(nameof(GreenHearts), 1, 4);
+            InventoryItemAmounts = CreateReadOnlyCollection("InventoryItemAmount", 1, 5);
             InventoryItemSlot = this[nameof(InventoryItemSlot)];
             InventorySkillSlot = this[nameof(InventorySkillSlot)];
             MessageContainer = this[nameof(MessageContainer)];
@@ -45,6 +47,9 @@ namespace ScaryCastle
             UIButtonContainerPattern = this[nameof(UIButtonContainerPattern)];
         }
 
+        // AlertIcon
+        public AtlasImage AlertIcon { get; }
+
         // BossMeter
         public AtlasImage BossMeter { get; }
 
@@ -57,6 +62,9 @@ namespace ScaryCastle
         // Coin
         public AtlasImage Coin { get; }
 
+        // CoinIcon
+        public AtlasImage CoinIcon { get; }
+
         // ContextMenuOptionSelector
         public AtlasImage ContextMenuOptionSelector { get; }
 
@@ -65,9 +73,6 @@ namespace ScaryCastle
 
         // CreditsBar
         public AtlasImage CreditsBar { get; }
-
-        // DangerIcon
-        public AtlasImage DangerIcon { get; }
 
         // DialogArrowLarge
         public AtlasImage DialogArrowLarge { get; }
@@ -86,6 +91,9 @@ namespace ScaryCastle
 
         // GreenHearts
         public ReadOnlyCollection<AtlasImage> GreenHearts { get; }
+
+        // InventoryItemAmounts
+        public ReadOnlyCollection<AtlasImage> InventoryItemAmounts { get; }
 
         // InventoryItemSlot
         public AtlasImage InventoryItemSlot { get; }

@@ -44,9 +44,7 @@ namespace ScaryCastle
                 EnergyCost = 0;
 
             // InitialAmount
-            InitialAmount = element.GetInt32("initialAmount", 1);
-            if (InitialAmount < 1)
-                InitialAmount = 1;
+            InitialAmount = int.Clamp(element.GetInt32("initialAmount", 1), 1, GameSettings.MaxItemAmount);
 
             // InPlaceEffectType
             InPlaceEffectType = element.GetEnum("inPlaceEffectType", InPlaceEffectType.None);

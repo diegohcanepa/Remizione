@@ -1,4 +1,5 @@
-﻿using Engendro.Input;
+﻿using Engendro;
+using Engendro.Input;
 using ScaryCastle.Scripting;
 
 namespace ScaryCastle
@@ -79,6 +80,10 @@ namespace ScaryCastle
                     if (context.Target.ItemReward != null)
                     {
                         MouseCursor.SubText = context.Target.ItemReward.DisplayName;
+                    }
+                    else if (context.Target.CoinReward > 0)
+                    {
+                        MouseCursor.SubText = context.CoinDisplayName;
                     }
                     else if ((context.Target as IThingDefinition)?.Definition?.DropTrigger == LootDropTrigger.OnImpact)
                     {

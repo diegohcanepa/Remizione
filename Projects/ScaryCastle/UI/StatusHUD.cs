@@ -22,6 +22,7 @@ namespace ScaryCastle
         {
             this.session = session;
             this.hpMeter = new(new(5, 3));
+            this.CoinMeter = new(session);
             this.InventoryMeter = new(session.PlayerInventory);
             this.PassiveItems = new(session);
             this.BossMeter = new(session);
@@ -37,9 +38,9 @@ namespace ScaryCastle
             Game.SpriteBatch.Begin(Game.Camera);
             hpMeter.Draw(gameTime);
             GooMeter.Draw(gameTime);
+            CoinMeter.Draw(gameTime);
             InventoryMeter.Draw(gameTime);
             PassiveItems.Draw(gameTime);
-
             Game.SpriteBatch.End();
 
             if (session.IsCurrentScene)
@@ -52,6 +53,7 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            CoinMeter.Update(gameTime);
             PassiveItems.Update(gameTime);
             InventoryMeter.Update(gameTime);
             BossMeter.Update(gameTime);
@@ -63,6 +65,9 @@ namespace ScaryCastle
 
         // BossMeter
         public UIBossMeter BossMeter { get; }
+
+        // CoinMeter
+        public UICoinMeter CoinMeter { get; }
 
         // GooMeter
         public UIGooMeter GooMeter { get; } = new();

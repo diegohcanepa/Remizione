@@ -51,8 +51,6 @@
   <String Key="Item.BittenApple.Name">Manzana mordida</String>
   <String Key="Item.Chili.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</String>
   <String Key="Item.Chili.Name">Chile picante</String>
-  <String Key="Item.Coin.Description">El vil metal: La prueba física de que la moral y los principios tienen un precio.</String>
-  <String Key="Item.Coin.Name">Moneda</String>
   <String Key="Item.Duck.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Duck.Name">Patito de hule</String>
   <String Key="Item.Firecracker.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
@@ -319,11 +317,11 @@ Bla bla bla</String>
   <String Key="Prop.UnderRideEntrance">Inframundo</String>
   <String Key="Prop.VendingMachine">Máquina expendedora</String>
   <String Key="Prop.WC">Inodoro</String>
-  <String Key="Verb.Ellipsis"></String>
+  <String Key="Verb.Ellipsis" />
   <String Key="Verb.Enter">Entrar</String>
   <String Key="Verb.Exit">Salir</String>
   <String Key="Verb.Lift">Alzar</String>
-  <String Key="Verb.None"></String>
+  <String Key="Verb.None" />
   <String Key="Verb.Open">Abrir</String>
   <String Key="Verb.Pull">Accionar</String>
   <String Key="Verb.Take">Agarrar</String>

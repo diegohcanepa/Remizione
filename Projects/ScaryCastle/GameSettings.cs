@@ -38,6 +38,9 @@
         // LogFileName
         public const string LogFileName = "ErrorLog.txt";
 
+        // MaxItemAmount
+        public const int MaxItemAmount = 5;
+
         // MaxSkills
         public const int MaxSkills = 2;
 
