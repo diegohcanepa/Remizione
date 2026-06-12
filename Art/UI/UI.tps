@@ -206,6 +206,28 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Inventory-assets/InventoryItemAmount1.png</key>
+            <key type="filename">Inventory-assets/InventoryItemAmount2.png</key>
+            <key type="filename">Inventory-assets/InventoryItemAmount3.png</key>
+            <key type="filename">Inventory-assets/InventoryItemAmount4.png</key>
+            <key type="filename">Inventory-assets/InventoryItemAmount5.png</key>
+            <key type="filename">UIIcons-assets/GooIcon.png</key>
+            <key type="filename">UIIcons-assets/GooIcons1.png</key>
+            <key type="filename">UIIcons-assets/GooIcons2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,4,5</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,4,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Inventory-assets/InventoryItemSlot.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -267,38 +289,23 @@
                 <false/>
             </struct>
             <key type="filename">Items-assets/Apple.png</key>
-            <key type="filename">Items-assets/Battery.png</key>
-            <key type="filename">Items-assets/Chili.png</key>
-            <key type="filename">Items-assets/Duck.png</key>
-            <key type="filename">Items-assets/MissingItem.png</key>
-            <key type="filename">Items-assets/RottenApple.png</key>
-            <key type="filename">Items-assets/RustyLockpick.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>5,5,10,10</rect>
-                <key>scale9Paddings</key>
-                <rect>5,5,10,10</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Items-assets/BargainCross.png</key>
+            <key type="filename">Items-assets/Battery.png</key>
+            <key type="filename">Items-assets/BittenApple.png</key>
             <key type="filename">Items-assets/Burger.png</key>
+            <key type="filename">Items-assets/Chili.png</key>
             <key type="filename">Items-assets/Coin.png</key>
+            <key type="filename">Items-assets/Duck.png</key>
             <key type="filename">Items-assets/Firecracker.png</key>
             <key type="filename">Items-assets/GoldenKey.png</key>
             <key type="filename">Items-assets/GooBottle.png</key>
             <key type="filename">Items-assets/Headbutt.png</key>
             <key type="filename">Items-assets/Lantern.png</key>
-            <key type="filename">Items-assets/Lift.png</key>
             <key type="filename">Items-assets/Lockpick.png</key>
             <key type="filename">Items-assets/MagneticCard.png</key>
+            <key type="filename">Items-assets/MissingItem.png</key>
             <key type="filename">Items-assets/Pistol.png</key>
+            <key type="filename">Items-assets/RustyLockpick.png</key>
             <key type="filename">Items-assets/SodaCan.png</key>
             <key type="filename">Items-assets/SteelLockpick.png</key>
             <struct type="IndividualSpriteSettings">
@@ -315,6 +322,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Items-assets/Lift.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,3,5,7</rect>
+                <key>scale9Paddings</key>
+                <rect>3,3,5,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Items-assets/PickupShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -324,9 +346,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>2,1,3,1</rect>
+                <rect>2,1,5,1</rect>
                 <key>scale9Paddings</key>
-                <rect>2,1,3,1</rect>
+                <rect>2,1,5,1</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -807,6 +829,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">UIIcons-assets/AlertIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,2,1,3</rect>
+                <key>scale9Paddings</key>
+                <rect>1,2,1,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">UIIcons-assets/CoinIcon.png</key>
             <key type="filename">UIIcons-assets/Sack.png</key>
             <key type="filename">UIIcons-assets/SackIcon.png</key>
@@ -836,38 +873,6 @@
                 <rect>6,3,11,6</rect>
                 <key>scale9Paddings</key>
                 <rect>6,3,11,6</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UIIcons-assets/DangerIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,2,1,3</rect>
-                <key>scale9Paddings</key>
-                <rect>1,2,1,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UIIcons-assets/GooIcon.png</key>
-            <key type="filename">UIIcons-assets/GooIcons1.png</key>
-            <key type="filename">UIIcons-assets/GooIcons2.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,4,5</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,4,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

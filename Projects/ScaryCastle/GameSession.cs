@@ -429,9 +429,9 @@ namespace ScaryCastle
 
             if (Player != null && Player.ActiveThrowable == null)
             {
-                if (!IsAwaiting && IsCurrentScene && CurrentRun != null)
+                if (!IsAwaiting && IsCurrentScene && CurrentRun != null && InteractionContext.Target == null)
                 {
-                    if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
+                    if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 125)
                     {
                         Game.SceneManager.Push(inventoryScene);
                         return;
@@ -563,6 +563,7 @@ namespace ScaryCastle
             if (FindEntity<Hub>(nameof(Hub)) is Hub hubRoom)
                 hubRoom.Unload();
 
+            Coins = 0;
             PlayerInventory.Clear();
             PlayerStats.Reset();
             InteractionContext.Reset();

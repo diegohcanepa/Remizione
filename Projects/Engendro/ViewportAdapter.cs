@@ -131,7 +131,7 @@ namespace Engendro
         public Vector2 ToVirtual(Vector2 displayPosition)
         {
             if (!DestinationRectangle.Contains(displayPosition))
-                return Vector2.Zero;
+                return -Vector2.One;
 
             displayPosition.X -= DestinationRectangle.X;
             displayPosition.Y -= DestinationRectangle.Y;

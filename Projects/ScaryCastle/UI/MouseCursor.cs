@@ -15,11 +15,11 @@ namespace ScaryCastle
     {
         #region Private fields
 
+        private static readonly FloatTween crossOpacityTween = FloatTween.Create(TweenStyle.CubicInOut, 1, .5f, 500, -1);
+        private static readonly FloatTween customImageOpacityTween = FloatTween.Create(TweenStyle.CubicInOut, 1, .8f, 500, -1);
         private static readonly AtlasImage?[] cursorImages;
         private static readonly Sprite cursorSprite;
         private static readonly Vector2 defaultScale = ScaleInfo.UIElement.Large;
-        private static OutlineEffect? effect;
-        private static readonly FloatTween opacityTween = FloatTween.Create(TweenStyle.CubicInOut, 1, .5f, 500, -1);
         private static readonly Vector2Tween scaleTween = new();
         private static readonly FloatTween shakeTween = new();
         private static readonly TextSprite subTextSprite;
@@ -75,26 +75,26 @@ namespace ScaryCastle
             if (textSprite.IsEmpty)
                 return;
 
-            var offset = CustomImage == null ? 4 : 2;
+            var offset = CustomImage == null ? new Vector2(3, 7) : new Vector2(-2, 1);
 
-            textSprite.PivotOrigin = RectanglePoint.LeftTop;
-            textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, -offset, -offset);
+            textSprite.PivotOrigin = RectanglePoint.Left;
+            textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.Right, -offset.X, offset.Y);
 
             if (!subTextSprite.IsEmpty)
             {
                 subTextSprite.PivotOrigin = textSprite.PivotOrigin;
-                subTextSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -1.5f);
+                subTextSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom, .5f, 1.5f);
             }
 
             if (!textSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox))
             {
-                textSprite.PivotOrigin = RectanglePoint.RightTop;
-                textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom, offset, -offset);
+                textSprite.PivotOrigin = RectanglePoint.Right;
+                textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.Left, offset.X, offset.Y);
 
                 if (!subTextSprite.IsEmpty)
                 {
                     subTextSprite.PivotOrigin = textSprite.PivotOrigin;
-                    subTextSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -1.5f);
+                    subTextSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, .5f, -1.5f);
                 }
             }
 
@@ -147,7 +147,10 @@ namespace ScaryCastle
         // Draw
         public static void Draw(GameTime gameTime)
         {
-            EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera, SamplerState.PointClamp, effect?.Effect);
+            if (cursorSprite.Position.X < 0 || cursorSprite.Position.Y < 0)
+                return;
+
+            EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera, SamplerState.PointClamp);
             cursorSprite.X += shakeTween.IsRunning ? shakeTween.CurrentValue : 0;
             cursorSprite.Draw(gameTime);
             cursorSprite.X -= shakeTween.IsRunning ? shakeTween.CurrentValue : 0;
@@ -261,7 +264,8 @@ namespace ScaryCastle
         // Update
         public static void Update(GameTime gameTime)
         {
-            opacityTween.Update(gameTime);
+            crossOpacityTween.Update(gameTime);
+            customImageOpacityTween.Update(gameTime);
             cursorSprite.Position = InputManager.DefaultPlayer.Mouse.VirtualPosition;
             cursorSprite.Effects = FlipCustomImage && CustomImage != null ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
             cursorSprite.Update(gameTime);
@@ -270,15 +274,17 @@ namespace ScaryCastle
 
             if (IsEnabled)
             {
-                cursorSprite.Opacity = State == MouseCursorState.Cross && CustomImage == null ? opacityTween.CurrentValue : 1;
-
-                effect = CustomImage != null && HightlightColor.HasValue ? ScaryCastleGame.Effects.Outline : null;
-
-                if (effect != null && HightlightColor.HasValue && cursorSprite.RenderImage?.Atlas != null)
+                if (CustomImage != null)
                 {
-                    effect.Color.SetValue(HightlightColor.Value * opacityTween.CurrentValue);
-                    effect.TextureSize.SetValue(new Vector2(cursorSprite.RenderImage.Atlas.Texture.Width, cursorSprite.RenderImage.Atlas.Texture.Height));
-                    effect.Thickness.SetValue(1);
+                    cursorSprite.Opacity = float.Clamp(customImageOpacityTween.CurrentValue, .85f, 1);
+                }
+                else if (State == MouseCursorState.Cross)
+                {
+                    cursorSprite.Opacity = crossOpacityTween.CurrentValue;
+                }
+                else
+                {
+                    cursorSprite.Opacity = 1;
                 }
             }
         }
