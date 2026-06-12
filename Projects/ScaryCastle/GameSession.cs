@@ -243,8 +243,7 @@ namespace ScaryCastle
             Game.SpriteBatch.Draw(Game.RenderTargets.PreviousTarget, Vector2.Zero, Color.White);
             Game.SpriteBatch.End();
 
-            // Draw speech bubbles
-            SpeechBubble.DrawSpeechBubbles(gameTime);
+            SpeechText.DrawSpeechTexts(gameTime);
 
             if (IsHUDVisible)
                 TextHUD.Draw(gameTime);

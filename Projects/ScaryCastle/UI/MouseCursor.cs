@@ -16,7 +16,7 @@ namespace ScaryCastle
         #region Private fields
 
         private static readonly FloatTween crossOpacityTween = FloatTween.Create(TweenStyle.CubicInOut, 1, .5f, 500, -1);
-        private static readonly FloatTween customImageOpacityTween = FloatTween.Create(TweenStyle.CubicInOut, 1, .8f, 500, -1);
+        private static readonly ColorTween customImageColorTween = ColorTween.Create(TweenStyle.CubicInOut, Color.White, new(210, 210, 210), 500, -1);
         private static readonly AtlasImage?[] cursorImages;
         private static readonly Sprite cursorSprite;
         private static readonly Vector2 defaultScale = ScaleInfo.UIElement.Large;
@@ -264,7 +264,7 @@ namespace ScaryCastle
         public static void Update(GameTime gameTime)
         {
             crossOpacityTween.Update(gameTime);
-            customImageOpacityTween.Update(gameTime);
+            customImageColorTween.Update(gameTime);
             cursorSprite.Position = InputManager.DefaultPlayer.Mouse.VirtualPosition;
             cursorSprite.Effects = FlipCustomImage && CustomImage != null ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
             cursorSprite.Update(gameTime);
@@ -275,14 +275,17 @@ namespace ScaryCastle
             {
                 if (CustomImage != null)
                 {
-                    cursorSprite.Opacity = float.Clamp(customImageOpacityTween.CurrentValue, .85f, 1);
+                    cursorSprite.Color = customImageColorTween.CurrentValue;
+                    cursorSprite.Opacity = 1;
                 }
                 else if (State == MouseCursorState.Cross)
                 {
+                    cursorSprite.Color = Color.White;
                     cursorSprite.Opacity = crossOpacityTween.CurrentValue;
                 }
                 else
                 {
+                    cursorSprite.Color = Color.White;
                     cursorSprite.Opacity = 1;
                 }
             }

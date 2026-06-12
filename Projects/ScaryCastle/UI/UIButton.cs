@@ -54,7 +54,7 @@ namespace ScaryCastle
             this.label = new TextSprite(Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Default,
-                Scale = ScaleInfo.Text.VeryLarge * scaleFactor
+                Scale = ScaleInfo.Text.Large * scaleFactor
             };
 
             // Image
@@ -153,12 +153,12 @@ namespace ScaryCastle
             if (image.Pivot.AtRight)
             {
                 label.PivotOrigin = RectanglePoint.Right;
-                label.Position = image.BoundingBox.GetPoint(RectanglePoint.Left, -horzImagePadding, .7f);
+                label.Position = image.BoundingBox.GetPoint(RectanglePoint.Left, -horzImagePadding, .2f);
             }
             else
             {
                 label.PivotOrigin = RectanglePoint.Left;
-                label.Position = image.BoundingBox.GetPoint(RectanglePoint.Right, horzImagePadding, .7f);
+                label.Position = image.BoundingBox.GetPoint(RectanglePoint.Right, horzImagePadding, .2f);
             }
 
             containerPattern.ScaleX = label.BoundingBox.Width + (6 * scaleFactor);
@@ -202,16 +202,21 @@ namespace ScaryCastle
             }
 
             Game.SpriteBatch.Begin(Camera, SamplerState.PointClamp, shader);
-
+            
             if (HasText)
             {
                 containerPattern.Draw(gameTime);
                 containerEdgeLeft.Draw(gameTime);
-                label.Draw(gameTime);
             }
-
             image.Draw(gameTime);
+            
+            Game.SpriteBatch.End();
 
+            Game.SpriteBatch.Begin(Camera, SamplerState.LinearClamp, shader);
+            
+            if (HasText)
+                label.Draw(gameTime);
+            
             Game.SpriteBatch.End();
         }
 

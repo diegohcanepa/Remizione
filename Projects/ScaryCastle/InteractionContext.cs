@@ -20,8 +20,8 @@ namespace ScaryCastle
         // CanScanTarget
         private bool CanScanTarget()
         {
-            // Modal speech bubble active
-            if (SpeechBubble.ModalInstance != null)
+            // Modal speech text active
+            if (SpeechText.ModalInstance != null)
                 return false;
 
             // Session is awaiting script

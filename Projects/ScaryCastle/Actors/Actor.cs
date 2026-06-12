@@ -29,7 +29,7 @@ namespace ScaryCastle
         private readonly FloatTween moveBalancingTween = new();
         private readonly FloatTween moveVerticalTween = new();
         private readonly List<Vector2> pendingPathNodes = [];
-        private SpeechBubble? speechBubble;
+        private SpeechText? speechText;
 
         #endregion
 
@@ -432,7 +432,7 @@ namespace ScaryCastle
 
             base.OnDraw(gameTime);
 
-            if (PatienceTimer <= 0 && IsHostile && IsStanding && ActiveThrowable == null && !HasSpeechBubble)
+            if (PatienceTimer <= 0 && IsHostile && IsStanding && ActiveThrowable == null && !HasSpeechText)
             {
                 alertIcon.Position = GetOverheadPosition();
                 alertIcon.Draw(gameTime);
@@ -561,7 +561,7 @@ namespace ScaryCastle
                 {
                     this.Game.SceneManager.PopUntil(Session);
                     StopTalking();
-                    speechBubble?.Hide();
+                    speechText?.Hide();
                 }
             }
             else if (!IsDead)
@@ -595,7 +595,7 @@ namespace ScaryCastle
             if (AnimationSettings.DetachedHead)
                 headSprite.Update(gameTime);
 
-            speechBubble?.Update(gameTime);
+            speechText?.Update(gameTime);
             moveVerticalTween.Update(gameTime);
             moveBalancingTween.Update(gameTime);
             UpdateDirection();
@@ -936,8 +936,8 @@ namespace ScaryCastle
             return HandleInputResult.Unhandled;
         }
 
-        // HasSpeechBubble
-        public bool HasSpeechBubble => speechBubble != null && speechBubble.State != SpeechBubbleState.Hidden;
+        // HasSpeechText
+        public bool HasSpeechText => speechText != null && speechText.State != SpeechTextState.Hidden;
 
         // HurtVoice
         [ScriptProperty]
@@ -1206,8 +1206,7 @@ namespace ScaryCastle
         // Say
         public void Say(string text, bool awaitInput)
         {
-            speechBubble ??= new SpeechBubble(this);
-
+            speechText ??= new SpeechText(this);
 
             var color = SpeechColor;
             if (color == Color.Transparent)
@@ -1222,7 +1221,7 @@ namespace ScaryCastle
                 }
             }
 
-            speechBubble.Show(text, color, awaitInput);
+            speechText.Show(text, color, awaitInput);
         }
 
         // SpeechColor

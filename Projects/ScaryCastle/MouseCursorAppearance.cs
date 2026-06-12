@@ -37,8 +37,8 @@ namespace ScaryCastle
                 return;
             }
 
-            // Modal speech bubble active
-            if (SpeechBubble.ModalInstance != null)
+            // Modal speech text active
+            if (SpeechText.ModalInstance != null)
             {
                 MouseCursor.State = MouseCursorState.Arrow;
                 return;

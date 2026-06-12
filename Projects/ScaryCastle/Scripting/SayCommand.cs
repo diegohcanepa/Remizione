@@ -57,7 +57,7 @@ namespace ScaryCastle.Scripting
         // IsAwaiting
         public override bool IsAwaiting()
         {
-            return actor != null && actor.HasSpeechBubble;
+            return actor != null && actor.HasSpeechText;
         }
     }
 }

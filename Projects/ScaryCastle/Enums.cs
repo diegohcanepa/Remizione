@@ -176,8 +176,8 @@ namespace ScaryCastle
     // SpawnLocation
     public enum SpawnLocation { CorridorOrSideRoom, Corridor, SideRoom, Gate }
 
-    // SpeechBubbleState
-    public enum SpeechBubbleState { Hidden, Typing, Idle }
+    // SpeechTextState
+    public enum SpeechTextState { Hidden, Typing, Idle }
 
     // TestPolygon
     public enum TestPolygon { Hotspot, Collider }

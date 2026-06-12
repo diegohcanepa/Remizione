@@ -14,8 +14,8 @@ namespace ScaryCastle
     [Serializable]
     public struct UserSettingsData
     {
-        private const string SpeechBubbleTypingAttribute = "SpeechBubbleTyping";
-        private const string SpeechBubbleTypingSoundAttribute = "SpeechBubbleTypingSound";
+        private const string SpeechTextTypingAttribute = "SpeechTextTyping";
+        private const string SpeechTextTypingSoundAttribute = "SpeechTextTypingSound";
 
         // AllowVibration
         public bool AllowVibration { get; set; }
@@ -53,8 +53,8 @@ namespace ScaryCastle
             AudioManager.MasterVolume = data.MasterVolume;
             AudioManager.MusicCategory.Volume.Master = data.MusicVolume;
 
-            SpeechBubbleSettings.TextTyping = data.SpeechBubbleTyping;
-            SpeechBubbleSettings.TextTypingSound = data.SpeechBubbleTypingSound;
+            SpeechTextSettings.Typing = data.SpeechTextTyping;
+            SpeechTextSettings.TypingSound = data.SpeechTextTypingSound;
         }
 
         // FromDefaultValues
@@ -72,8 +72,8 @@ namespace ScaryCastle
                 LanguageTag = ltag,
                 MasterVolume = 1,
                 MusicVolume = 1,
-                SpeechBubbleTyping = true,
-                SpeechBubbleTypingSound = true
+                SpeechTextTyping = true,
+                SpeechTextTypingSound = true
             };
 
             return result;
@@ -91,8 +91,8 @@ namespace ScaryCastle
                 LanguageTag = TextRepository.LanguagePackage?.LanguageTag ?? string.Empty,
                 MasterVolume = AudioManager.MasterVolume,
                 MusicVolume = AudioManager.MusicCategory.Volume.Master,
-                SpeechBubbleTyping = SpeechBubbleSettings.TextTyping,
-                SpeechBubbleTypingSound = SpeechBubbleSettings.TextTypingSound
+                SpeechTextTyping = SpeechTextSettings.Typing,
+                SpeechTextTypingSound = SpeechTextSettings.TypingSound
             };
 
             return result;
@@ -133,11 +133,11 @@ namespace ScaryCastle
                         if (r.GetAttribute(nameof(MusicVolume)) is string musicVolumeValue)
                             data.MusicVolume = XmlConvert.ToSingle(musicVolumeValue);
 
-                        if (r.GetAttribute(nameof(SpeechBubbleTypingAttribute)) is string speechBubbleTypingValue)
-                            data.SpeechBubbleTyping = XmlConvert.ToBoolean(speechBubbleTypingValue);
+                        if (r.GetAttribute(nameof(SpeechTextTypingAttribute)) is string speechTextTypingValue)
+                            data.SpeechTextTyping = XmlConvert.ToBoolean(speechTextTypingValue);
 
-                        if (r.GetAttribute(nameof(SpeechBubbleTypingSoundAttribute)) is string speechBubbleTypingSoundValue)
-                            data.SpeechBubbleTypingSound = XmlConvert.ToBoolean(speechBubbleTypingSoundValue);
+                        if (r.GetAttribute(nameof(SpeechTextTypingSoundAttribute)) is string speechTextTypingSoundValue)
+                            data.SpeechTextTypingSound = XmlConvert.ToBoolean(speechTextTypingSoundValue);
                     }
 
                     return data;
@@ -194,8 +194,8 @@ namespace ScaryCastle
             w.WriteAttributeString(nameof(MasterVolume), XmlConvert.ToString(userSettings.MasterVolume));
             w.WriteAttributeString(nameof(MusicVolume), XmlConvert.ToString(userSettings.MusicVolume));
             w.WriteAttributeString(nameof(MusicVolume), XmlConvert.ToString(userSettings.MusicVolume));
-            w.WriteAttributeString(SpeechBubbleTypingAttribute, XmlConvert.ToString(userSettings.SpeechBubbleTyping));
-            w.WriteAttributeString(SpeechBubbleTypingSoundAttribute, XmlConvert.ToString(userSettings.SpeechBubbleTypingSound));
+            w.WriteAttributeString(SpeechTextTypingAttribute, XmlConvert.ToString(userSettings.SpeechTextTyping));
+            w.WriteAttributeString(SpeechTextTypingSoundAttribute, XmlConvert.ToString(userSettings.SpeechTextTypingSound));
             w.WriteEndElement();
             w.Flush();
 
@@ -203,10 +203,10 @@ namespace ScaryCastle
             game.PlatformBridge.FileSystem.WriteFile(GameSettings.UserSettingsFileName, output);
         }
 
-        // SpeechBubbleTyping
-        public bool SpeechBubbleTyping { get; set; }
+        // SpeechTextTyping
+        public bool SpeechTextTyping { get; set; }
 
-        // SpeechBubbleTypingSound
-        public bool SpeechBubbleTypingSound { get; set; }
+        // SpeechTextTypingSound
+        public bool SpeechTextTypingSound { get; set; }
     }
 }

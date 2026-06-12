@@ -60,13 +60,6 @@ namespace ScaryCastle
         // PopupTitle
         internal static Vector2 PopupTitle { get; } = new Vector2(.16f);
 
-        // SpeechBubble
-        internal static class SpeechBubble
-        {
-            internal static Vector2 Text { get; } = new(.08f);
-            internal static Vector2 Title { get; } = new(.06f);
-        }
-
         // TextControllerDisconnectedMessage
         internal static Vector2 TextControllerDisconnectedMessage { get; } = new Vector2(.12f);
 

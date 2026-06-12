@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ScaryCastle
 {
@@ -63,7 +64,7 @@ namespace ScaryCastle
             nounText.Position = verbText.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -2);
             nounText.Text = noun;
             icon.RenderImage = image;
-            icon.Position = nounText.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -2);
+            icon.Position = nounText.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 2, 2);
 
             iconShadow.Position = icon.Position;
             iconShadow.RenderImage = image;
@@ -83,11 +84,15 @@ namespace ScaryCastle
             if (!fadeTween.IsRunning)
                 return;
 
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
             verbText.Draw(gameTime);
             nounText.Draw(gameTime);
+            Game.SpriteBatch.End();
 
+            Game.SpriteBatch.Begin(Game.Camera);
             iconShadow.Draw(gameTime);
             icon.Draw(gameTime);
+            Game.SpriteBatch.End();
         }
 
         // OnUpdate

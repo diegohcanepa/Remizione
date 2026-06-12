@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ScaryCastle
 {
@@ -22,7 +23,7 @@ namespace ScaryCastle
             this.scale = scale;
 
             // Message text
-            this.messageText = new(Fonts.CommonOutline)
+            this.messageText = new(Fonts.Common)
             {
                 Color = ColorPalette.Text.Highlight,
                 MaximumWidth = (int)(Screen.HUDArea.Width * .7f),
@@ -39,9 +40,14 @@ namespace ScaryCastle
             if (!fadeTween.IsRunning)
                 return;
 
+            Game.SpriteBatch.Begin(Game.Camera);
             container.Draw(gameTime);
             icon.Draw(gameTime);
+            Game.SpriteBatch.End();
+
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
             messageText.Draw(gameTime);
+            Game.SpriteBatch.End();
         }
 
         // OnUpdate

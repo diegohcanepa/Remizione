@@ -17,7 +17,7 @@ namespace ScaryCastle
         public TextHUD(GameSession session)
         {
             this.session = session;
-            this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5), ScaleInfo.Text.ExtraLarge);
+            this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5), ScaleInfo.Text.Large);
         }
 
         #endregion
@@ -27,10 +27,8 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            Game.SpriteBatch.Begin(Game.Camera);
             Log.Draw(gameTime);
             Message.Draw(gameTime);
-            Game.SpriteBatch.End();
         }
 
         // OnUpdate

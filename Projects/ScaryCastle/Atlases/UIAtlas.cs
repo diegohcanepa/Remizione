@@ -42,7 +42,6 @@ namespace ScaryCastle
             SavingIcon = this[nameof(SavingIcon)];
             SkullIcon = this[nameof(SkullIcon)];
             SpeechBubbleCloseArrow = this[nameof(SpeechBubbleCloseArrow)];
-            SpeechBubblePipe = this[nameof(SpeechBubblePipe)];
             UIButtonContainerEdge = this[nameof(UIButtonContainerEdge)];
             UIButtonContainerPattern = this[nameof(UIButtonContainerPattern)];
         }
@@ -136,9 +135,6 @@ namespace ScaryCastle
 
         // SpeechBubbleCloseArrow
         public AtlasImage SpeechBubbleCloseArrow { get; }
-
-        // SpeechBubblePipe
-        public AtlasImage SpeechBubblePipe { get; }
 
         // UIButtonContainerEdge
         public AtlasImage UIButtonContainerEdge { get; }

@@ -8,9 +8,9 @@ using System.Collections.ObjectModel;
 namespace ScaryCastle
 {
     /// <summary>
-    /// SpeechBubble
+    /// SpeechText
     /// </summary>
-    public sealed class SpeechBubble : GameObject
+    public sealed class SpeechText : GameObject
     {
         #region Constants
 
@@ -23,19 +23,19 @@ namespace ScaryCastle
 
         #region Private fields
 
-        private static readonly List<SpeechBubble> activeBubbles = [];
+        private static readonly List<SpeechText> activeTexts = [];
         private int autoHideCooldown;
-        private RectangleF bubbleArea;
         private int inputCooldown;
         private readonly Vector2Tween shakeTween = new();
         private readonly TextSprite text;
+        private RectangleF textArea;
 
         #endregion
 
         #region Constructor
 
         // Constructor
-        public SpeechBubble(Actor actor)
+        public SpeechText(Actor actor)
         {
             this.Actor = actor;
 
@@ -51,8 +51,8 @@ namespace ScaryCastle
 
         #region Private members
 
-        // CalculateBubbleArea
-        private RectangleF CalculateBubbleArea(ref Vector2 origin)
+        // CalculateTextArea
+        private RectangleF CalculateTextArea(ref Vector2 origin)
         {
             float w = text.BoundingBox.Width;
             float h = text.MeasureDisplayText().Y + 2;
@@ -70,25 +70,25 @@ namespace ScaryCastle
             var origin = Actor.GetOverheadPosition();
             origin.Y -= 1;
 
-            bubbleArea = CalculateBubbleArea(ref origin);
+            textArea = CalculateTextArea(ref origin);
 
             // Test overlapping (left side)
-            if (bubbleArea.Left < vp.Left)
-                bubbleArea.X = vp.X;
+            if (textArea.Left < vp.Left)
+                textArea.X = vp.X;
 
             // Test overlapping (right side)
-            else if (bubbleArea.Right > vp.Right)
-                bubbleArea.X = vp.Right - bubbleArea.Width;
+            else if (textArea.Right > vp.Right)
+                textArea.X = vp.Right - textArea.Width;
 
             // Test overlapping (top side)
-            if (bubbleArea.Top < vp.Top)
-                bubbleArea.Y = vp.Y;
+            if (textArea.Top < vp.Top)
+                textArea.Y = vp.Y;
 
             // Test overlapping (bottom side)
-            else if (bubbleArea.Bottom > vp.Bottom)
-                bubbleArea.Y = vp.Bottom - bubbleArea.Height;
+            else if (textArea.Bottom > vp.Bottom)
+                textArea.Y = vp.Bottom - textArea.Height;
 
-            text.Position = bubbleArea.GetPoint(RectanglePoint.LeftTop, 2, -2);
+            text.Position = textArea.GetPoint(RectanglePoint.LeftTop, 2, -2);
         }
 
         // Shake
@@ -116,26 +116,26 @@ namespace ScaryCastle
         // UpdateState
         private void UpdateState(GameTime gameTime)
         {
-            if (State == SpeechBubbleState.Typing)
+            if (State == SpeechTextState.Typing)
             {
                 if (text.TypingState == RunningState.Stopped)
                 {
                     Actor.StopTalking();
-                    State = SpeechBubbleState.Idle;
+                    State = SpeechTextState.Idle;
                 }
-                else if (AwaitInput && (InputBindings.SpeechBubble.IsPressed(0) || InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed()) && inputCooldown <= 0)
+                else if (AwaitInput && (InputBindings.SpeechText.IsPressed(0) || InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed()) && inputCooldown <= 0)
                 {
                     if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
                         MouseCursor.PerformClick();
 
-                    State = SpeechBubbleState.Idle;
+                    State = SpeechTextState.Idle;
                     text.StopTyping();
                     Actor.StopTalking();
                     Layout();
                 }
             }
 
-            else if (State == SpeechBubbleState.Idle)
+            else if (State == SpeechTextState.Idle)
             {
                 if (autoHideCooldown > 0)
                 {
@@ -143,7 +143,7 @@ namespace ScaryCastle
                     if (autoHideCooldown <= 0)
                         Hide();
                 }
-                else if (AwaitInput && (InputBindings.SpeechBubble.IsPressed(0) || InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed()))
+                else if (AwaitInput && (InputBindings.SpeechText.IsPressed(0) || InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed()))
                 {
                     if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
                         MouseCursor.PerformClick();
@@ -183,7 +183,7 @@ namespace ScaryCastle
             shakeTween.Update(gameTime);
             text.Update(gameTime);
 
-            if (State == SpeechBubbleState.Typing)
+            if (State == SpeechTextState.Typing)
                 Layout();
         }
 
@@ -195,19 +195,19 @@ namespace ScaryCastle
         // AwaitInput
         public bool AwaitInput { get; private set; }
 
-        // DrawSpeechBubbles
-        public static void DrawSpeechBubbles(GameTime gameTime)
+        // DrawSpeechTexts
+        public static void DrawSpeechTexts(GameTime gameTime)
         {
-            for (int i = 0; i < VisibleBubbles.Count; i++)
+            for (int i = 0; i < VisibleTexts.Count; i++)
             {
-                VisibleBubbles[i].Draw(gameTime);
+                VisibleTexts[i].Draw(gameTime);
             }
         }
 
         // Hide
         public void Hide()
         {
-            activeBubbles.Remove(this);
+            activeTexts.Remove(this);
 
             if (ModalInstance == this)
                 ModalInstance = null;
@@ -216,11 +216,11 @@ namespace ScaryCastle
             text.Clear();
             text.StopTyping();
             shakeTween.Stop();
-            State = SpeechBubbleState.Hidden;
+            State = SpeechTextState.Hidden;
         }
 
         // ModalInstance
-        public static SpeechBubble? ModalInstance { get; private set; }
+        public static SpeechText? ModalInstance { get; private set; }
 
         // Show
         public void Show(string text, Color color, bool awaitInput)
@@ -239,8 +239,8 @@ namespace ScaryCastle
             if (awaitInput)
                 ModalInstance = this;
 
-            if (!activeBubbles.Contains(this))
-                activeBubbles.Add(this);
+            if (!activeTexts.Contains(this))
+                activeTexts.Add(this);
 
             this.text.Text = text;
             this.text.Color = color;
@@ -250,17 +250,17 @@ namespace ScaryCastle
             else
                 autoHideCooldown = text.Length * this.text.TypingSpeed;
 
-            this.text.Scale = ScaleInfo.SpeechBubble.Text;
+            this.text.Scale = ScaleInfo.Text.Large;
 
             // Typing
-            if (SpeechBubbleSettings.TextTyping && awaitInput)
+            if (SpeechTextSettings.Typing && awaitInput)
             {
-                if (SpeechBubbleSettings.TextTypingSound)
+                if (SpeechTextSettings.TypingSound)
                     this.text.StartTyping(Actor.SpeechSound?.PopInstance());
                 else
                     this.text.StartTyping();
 
-                State = SpeechBubbleState.Typing;
+                State = SpeechTextState.Typing;
             }
 
             Layout();
@@ -273,12 +273,12 @@ namespace ScaryCastle
         }
 
         // State
-        public SpeechBubbleState State { get; private set; }
+        public SpeechTextState State { get; private set; }
 
         // Text
         public string? Text => text.Text;
 
-        // VisibleBubbles
-        public static ReadOnlyCollection<SpeechBubble> VisibleBubbles { get; } = new ReadOnlyCollection<SpeechBubble>(activeBubbles);
+        // VisibleTexts
+        public static ReadOnlyCollection<SpeechText> VisibleTexts { get; } = new ReadOnlyCollection<SpeechText>(activeTexts);
     }
 }
