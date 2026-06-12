@@ -554,6 +554,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/DrinkGoo.wav;Audio/FX/DrinkGoo
 
+#begin Audio/FX/EatPill.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/EatPill.wav;Audio/FX/EatPill
+
 #begin Audio/FX/EdmundHurt1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

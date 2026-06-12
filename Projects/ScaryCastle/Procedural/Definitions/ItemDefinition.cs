@@ -29,6 +29,9 @@ namespace ScaryCastle
             if (AreaOfEffect < 0)
                 AreaOfEffect = 0;
 
+            // Behavior
+            Behavior = element.GetEnum("behavior", ItemBehavior.Common);
+
             // Category
             Category = element.GetEnum("category", ItemCategory.Misc);
 
@@ -51,9 +54,6 @@ namespace ScaryCastle
 
             // IsDepletable
             IsDepletable = element.GetBool("isDepletable", true);
-
-            // IsSkill
-            IsSkill = element.GetBool("isSkill", false);
 
             // IsStackable
             IsStackable = element.GetBool("isStackable", false);
@@ -105,7 +105,7 @@ namespace ScaryCastle
 
             IsPassive = LightModifier != 0 || LuckModifier != 0;
 
-            if (IsSkill)
+            if (Behavior != ItemBehavior.Common)
             {
                 IsDepletable = false;
                 IsStackable = false;
@@ -127,6 +127,9 @@ namespace ScaryCastle
 
         // AreaOfEffect
         public int AreaOfEffect { get; }
+
+        // Behavior
+        public ItemBehavior Behavior { get; }
 
         // Category
         public ItemCategory Category { get; }
@@ -163,9 +166,6 @@ namespace ScaryCastle
 
         // IsPassive
         public bool IsPassive { get; }
-
-        // IsSkill
-        public bool IsSkill { get; }
 
         // IsStackable
         public bool IsStackable { get; }

@@ -328,9 +328,6 @@ namespace ScaryCastle
             if (ActiveThrowable != null)
                 result *= .7f;
 
-            if (IsPlayer)
-                result *= Session.PlayerStats.Speed.Value;
-
             return result;
         }
 
@@ -1002,7 +999,8 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = value;
-                    Energy = value;
+                    if (HP > field)
+                        HP = field;
                 }
             }
         }
@@ -1154,15 +1152,6 @@ namespace ScaryCastle
             if (!IsPlayer || IsDead)
                 return false;
 
-            // Is carrying something?
-            /*
-            if (ActiveThrowable != null)
-            {
-                Session.TextHUD.Message.Show(MessageKind.HandsFull);
-                return false;
-            }
-            */
-
             Session.InteractionData.Refresh(Session.InteractionContext);
             if (!Session.InteractionData.CanExecute)
             {
@@ -1180,7 +1169,7 @@ namespace ScaryCastle
             }
             else
             {
-                var destination = target.GetApproachPosition(this, Session.InteractionData.IsAttack ? ApproachBehavior.ClosestSide : null);
+                var destination = target.GetApproachPosition(this, Session.InteractionData.IsAttack || ActiveThrowable != null ? ApproachBehavior.ClosestSide : null);
 
                 if (ActiveThrowable != null)
                 {
@@ -1213,7 +1202,7 @@ namespace ScaryCastle
             {
                 if (IsPlayer)
                 {
-                    color = Color.White;
+                    color = ColorPalette.Text.Sentence;
                 }
                 else
                 {

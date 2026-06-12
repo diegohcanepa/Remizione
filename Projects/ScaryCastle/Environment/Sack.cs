@@ -6,7 +6,7 @@ namespace ScaryCastle
     /// <summary>
     /// Sack
     /// </summary>
-    public sealed class Sack : Prop, ILoot<ItemDefinition>, IPoolable
+    public sealed class Sack : Prop, ILootContainer<ItemDefinition>, IPoolable
     {
         // Constructor
         public Sack(GameSession session, string name)

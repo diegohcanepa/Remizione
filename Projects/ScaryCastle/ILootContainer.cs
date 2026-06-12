@@ -1,9 +1,9 @@
 ﻿namespace ScaryCastle
 {
     /// <summary>
-    /// ILoot
+    /// ILootContainer
     /// </summary>
-    public interface ILoot<T> where T : Definition
+    public interface ILootContainer<T> where T : Definition
     {
         T? Loot { get; set; }
     }

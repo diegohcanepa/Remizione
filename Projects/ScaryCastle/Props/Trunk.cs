@@ -8,7 +8,7 @@ namespace ScaryCastle
     /// <summary>
     /// Trunk
     /// </summary>
-    public class Trunk : Openable, ILoot<ItemDefinition>
+    public class Trunk : Openable, ILootContainer<ItemDefinition>
     {
         private int breakTimer = -1;
         private readonly Debris debris;

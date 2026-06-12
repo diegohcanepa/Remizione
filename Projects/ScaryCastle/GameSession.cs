@@ -85,7 +85,6 @@ namespace ScaryCastle
                 console.CommandList.Add("put PotteryA into $Room #at:120,75");
                 console.CommandList.Add("put Rat into $Room");
                 console.CommandList.Add("put GoldenTrunk into $Room #at:77,77");
-                console.CommandList.Add("add-item Coin");
                 console.CommandList.Add("add-item Lockpick");
 
                 roomEditor = new RoomEditor(this);
@@ -112,6 +111,7 @@ namespace ScaryCastle
         {
             AotTypeRegistry.Register(typeof(Actor));
             AotTypeRegistry.Register(typeof(BloodyEye));
+            AotTypeRegistry.Register(typeof(BluePill));
             AotTypeRegistry.Register(typeof(BreakableProp));
             AotTypeRegistry.Register(typeof(CloseUpRoom));
             AotTypeRegistry.Register(typeof(Coin));
@@ -132,6 +132,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(Pottery));
             AotTypeRegistry.Register(typeof(Prop));
             AotTypeRegistry.Register(typeof(Rat));
+            AotTypeRegistry.Register(typeof(RedPill));
             AotTypeRegistry.Register(typeof(RideCar));
             AotTypeRegistry.Register(typeof(RideDoor));
             AotTypeRegistry.Register(typeof(Sack));

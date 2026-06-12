@@ -81,6 +81,9 @@ namespace ScaryCastle
         // Add
         public Item? Add(ItemDefinition definition)
         {
+            if (definition.Behavior == ItemBehavior.Collectible)
+                return null;
+
             if (!HasSpace(definition))
                 return null;
 

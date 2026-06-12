@@ -108,23 +108,11 @@ namespace ScaryCastle
 
             if (context.Target != null)
             {
-                /*
-                if (context.Target.Faction == Faction.Evil && context.Target.IsHostile && context.HeldItem == null)
-                    MouseCursor.Color = ColorPalette.MouseCursor.HostileTarget;
-                */
-
-                //MouseCursor.IsEnabled = context.Session.Player?.ActiveThrowable == null;
-                MouseCursor.HightlightColor = ColorPalette.MouseCursor.HighlightWhite;
-
                 if (context.Session.Player != null && context.HeldItem?.Definition.ActionKind == ActionKind.Projectile)
                 {
                     var mousePos = InputManager.DefaultPlayer.Mouse.WorldPosition(context.Session.Camera);
                     MouseCursor.FlipCustomImage = mousePos.X < context.Session.Player.X;
                 }
-            }
-            else
-            {
-                MouseCursor.HightlightColor = null;
             }
         }
     }

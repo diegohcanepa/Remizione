@@ -51,7 +51,7 @@ namespace ScaryCastle
     public enum EffectContext { Contact, Attack, Update, Use, ProjectileHit }
 
     // EffectType
-    public enum EffectType { None, Condition, ComicText, Damage, Death, Energy, Heal }
+    public enum EffectType { None, Condition, ComicText, Damage, Death, Energy, ExtraEnergy, ExtraHeart, Heal }
 
     // EffectTarget
     public enum EffectTarget { Target, Self }
@@ -74,8 +74,11 @@ namespace ScaryCastle
     // InPlaceEffectType
     public enum InPlaceEffectType { None, Lightning }
 
+    // ItemBehavior
+    public enum ItemBehavior { Common, Skill, Collectible }
+
     // ItemCategory
-    public enum ItemCategory { Access, Explosive, Food, Luck, Medicine, Misc, Money, Sacred }
+    public enum ItemCategory { Access, Explosive, Food, Luck, Medicine, Misc, Money, Pills, Sacred }
 
     // KnockbackIntensity
     public enum KnockbackIntensity { Low, Medium, High }
@@ -123,7 +126,7 @@ namespace ScaryCastle
     }
 
     // MessageKind
-    public enum MessageKind { BackToHallway, CannotPlaceItem, HandsFull, InventoryFull, ItemDiscarded, LiftNotAllowed, NotEnoughCoins, NotEnoughGoo, OutOfReach, OutOfLine, PathCleared }
+    public enum MessageKind { BackToHallway, CannotPlaceItem, HandsFull, InventoryFull, ItemDiscarded, LiftNotAllowed, NotEnoughCoins, NotEnoughGoo, OutOfReach, OutOfLine, PathCleared, ExtraEnergy, ExtraHeart }
 
     // MouseCursorState
     public enum MouseCursorState { Arrow, Cross, Down, Hand, Left, Prohibition, Right, Skull, Up, Wait }

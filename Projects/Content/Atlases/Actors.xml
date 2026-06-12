@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:e3d8de71ae0d3e488dc4ff3ed2e1b424:742fcaec8a24780e691e839ce7398ccc:b23792595b5c0e9561078184f535bec7$ -->
+<!-- $TexturePacker:SmartUpdate:97b26da1b7f0507e70d86a17173b71d8:12c533cb5ed3b2bab672b4c49c4ed6ee:b23792595b5c0e9561078184f535bec7$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -101,6 +101,10 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Edmund-assets/DrinkGoo04.png" x="310" y="152" w="28" h="25"/>
     <sprite n="Edmund-assets/DrinkGoo05.png" x="340" y="152" w="28" h="25"/>
     <sprite n="Edmund-assets/DrinkGoo06.png" x="370" y="152" w="28" h="25"/>
+    <sprite n="Edmund-assets/EatPill01.png" x="220" y="140" w="28" h="25"/>
+    <sprite n="Edmund-assets/EatPill02.png" x="310" y="125" w="28" h="25"/>
+    <sprite n="Edmund-assets/EatPill03.png" x="250" y="149" w="28" h="25"/>
+    <sprite n="Edmund-assets/EatPill04.png" x="280" y="149" w="28" h="25"/>
     <sprite n="Edmund-assets/Fatigue01.png" x="400" y="152" w="28" h="25"/>
     <sprite n="Edmund-assets/Fatigue02.png" x="430" y="152" w="28" h="25"/>
     <sprite n="Edmund-assets/Fatigue03.png" x="460" y="161" w="28" h="25"/>

@@ -120,11 +120,11 @@ namespace ScaryCastle
         }
 
         // RollCoinAmount
-        private int RollCoinAmount(ThingDefinition thingDef, float chanceBonus)
+        private int RollCoinAmount(ThingDefinition thingDef)
         {
             // 1. Bloqueo rápido: Si el bonus es negativo o el modo de drop lo prohíbe, 0 monedas.
             // (Asumimos que el chequeo de DropMode se hace en TryDropCoins antes de llamar aquí)
-            if (chanceBonus < 0)
+            if (thingDef.DropCoinChanceBonus < 0)
                 return 0;
 
             // 2. Base por dificultad (Valores planos de probabilidad)
@@ -144,7 +144,7 @@ namespace ScaryCastle
             }
 
             // Bonus de la instancia (Si quieres un +30% de chances, pasas 0.3f)
-            chance += chanceBonus;
+            chance += thingDef.DropCoinChanceBonus;
 
             // 4. El Roll (Con un cap de 98% para dejar siempre un margen mínimo de error, 
             // a menos que el diseño pida 100% garantizado)
@@ -192,7 +192,7 @@ namespace ScaryCastle
                 return 0;
 
             // 2. Calculamos la cantidad pasando el multiplicador de la instancia
-            return RollCoinAmount(t.Definition, def.DropCoinChanceBonus);
+            return RollCoinAmount(t.Definition);
         }
 
         // RollForLoot

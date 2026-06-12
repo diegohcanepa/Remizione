@@ -3,7 +3,6 @@ using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ScaryCastle.Effects;
 using System;
 
 namespace ScaryCastle
@@ -53,6 +52,7 @@ namespace ScaryCastle
             textSprite = new(Fonts.CommonOutline)
             {
                 PivotOrigin = RectanglePoint.LeftTop,
+                Multiline = true,
                 Scale = ScaleInfo.UISentence
             };
 
@@ -165,9 +165,6 @@ namespace ScaryCastle
             }
         }
 
-        // HightlightColor
-        public static Vector4? HightlightColor { get; set; }
-
         // IsArrow
         public static bool IsArrow => State is MouseCursorState.Up or MouseCursorState.Down or
                                       MouseCursorState.Right or MouseCursorState.Left;
@@ -211,7 +208,6 @@ namespace ScaryCastle
             subTextSprite.Color = ColorPalette.Text.Gold;
             CustomImage = null;
             FlipCustomImage = false;
-            HightlightColor = null;
             IsEnabled = true;
             State = MouseCursorState.Arrow;
             Text = null;

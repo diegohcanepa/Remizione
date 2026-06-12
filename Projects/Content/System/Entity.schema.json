@@ -22,7 +22,7 @@
         "pools": { "type": "string" },
         "preferredLootCategory": {
           "type": "string",
-          "enum": ["Explosive", "Food", "Luck", "Medicine", "Misc"]
+          "enum": ["Explosive", "Food", "Luck", "Medicine", "Misc", "Pills"]
         },
         "preferredLootRealm": {
           "type": "string",

@@ -51,6 +51,20 @@
 			]
 		},
 		{
+			"name": "BluePill",
+			"behavior": "Collectible",
+			"actionKind": "Self",
+			"category": "Pills",
+			"effects": [
+				{
+					"context": "Use",
+					"effectType": "ExtraEnergy",
+					"amount": "1",
+					"target": "Self"
+				}
+			]			
+		},
+		{
 			"name": "Firecracker",
 			"areaOfEffect": 40,
 			"actionKind": "Self",
@@ -91,9 +105,9 @@
 		},
 		{
 			"name": "Headbutt",
+			"behavior": "Skill",
 			"actionKind": "Proximity",
-			"category": "Misc",
-			"isSkill": true
+			"category": "Misc"
 		},
 		{
 			"name": "Lantern",
@@ -104,9 +118,9 @@
 		},
 		{
 			"name": "Lift",
+			"behavior": "Skill",
 			"actionKind": "Proximity",
-			"category": "Misc",
-			"isSkill": true
+			"category": "Misc"
 		},
 		{
 			"name": "Lockpick",
@@ -141,6 +155,20 @@
 			},
 			"effects": [
 			]
+		},
+		{
+			"name": "RedPill",
+			"behavior": "Collectible",
+			"actionKind": "Self",
+			"category": "Pills",
+			"effects": [
+				{
+					"context": "Use",
+					"effectType": "ExtraHeart",
+					"amount": "2",
+					"target": "Self"
+				}
+			]			
 		},
 		{
 			"name": "RustyLockpick",

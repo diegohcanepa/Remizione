@@ -49,6 +49,8 @@
   <String Key="Item.Battery.Name">Battery</String>
   <String Key="Item.BittenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.BittenApple.Name">Bitten apple</String>
+  <String Key="Item.BluePill.Description">Gastric protein</String>
+  <String Key="Item.BluePill.Name">Pill</String>
   <String Key="Item.Chili.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</String>
   <String Key="Item.Chili.Name">Hot chili</String>
   <String Key="Item.Duck.Description">Official ride merch. Chuck ’em, pick ’em up, chuck ’em again — the circle of quack.</String>
@@ -75,6 +77,8 @@
   <String Key="Item.PieceOfWood.Name">Piece of wood</String>
   <String Key="Item.Pistol.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </String>
   <String Key="Item.Pistol.Name">Pistol</String>
+  <String Key="Item.RedPill.Description">Sports supplement</String>
+  <String Key="Item.RedPill.Name">Pill</String>
   <String Key="Item.RustyLockpick.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.RustyLockpick.Name">Rusty lockpick</String>
   <String Key="Item.SodaCan.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
@@ -198,6 +202,8 @@
   <String Key="MessageBox.Warning">Warning!</String>
   <String Key="MessageKind.BackToHallway">Back to hallway!</String>
   <String Key="MessageKind.CannotPlaceItem">There is not enough space on the ground.</String>
+  <String Key="MessageKind.ExtraEnergy">You can hold more goo!</String>
+  <String Key="MessageKind.ExtraHeart">You feel stronger!</String>
   <String Key="MessageKind.HandsFull">Your hands are full.</String>
   <String Key="MessageKind.InventoryFull">Inventory is full.</String>
   <String Key="MessageKind.ItemDiscarded">Item discarded.</String>

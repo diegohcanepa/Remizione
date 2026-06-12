@@ -81,6 +81,16 @@ namespace ScaryCastle
                 Sound.Play(SoundNames.Error);
             }
 
+            else if (message == MessageKind.ExtraEnergy)
+            {
+                icon.RenderImage = Atlases.UI.GooIcon;
+            }
+
+            else if (message == MessageKind.ExtraHeart)
+            {
+                icon.RenderImage = Atlases.UI.HeartIcon;
+            }
+
             else if (message == MessageKind.NotEnoughGoo)
             {
                 icon.RenderImage = Atlases.UI.GooIcon;

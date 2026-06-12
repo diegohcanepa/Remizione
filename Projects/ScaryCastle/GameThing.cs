@@ -261,7 +261,7 @@ namespace ScaryCastle
 
                 if (loot != null)
                 {
-                    (loot as ILoot<ItemDefinition>)?.Loot = ItemReward;
+                    (loot as ILootContainer<ItemDefinition>)?.Loot = ItemReward;
                     loot.Position = Position;
                     room.Children.Add(loot);
                 }
@@ -1059,7 +1059,14 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = value;
-                    HP = value;
+                    if (HP == 0)
+                    {
+                        HP = value;
+                    }
+                    else if (HP > field)
+                    {
+                        HP = field;
+                    }
                 }
             }
         }

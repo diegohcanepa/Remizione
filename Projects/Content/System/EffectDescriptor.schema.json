@@ -7,7 +7,7 @@
     "effectType": {
       "type": "string",
       "description": "El tipo de acción a ejecutar.",
-      "enum": [ "None", "Condition", "ComicText", "Damage", "Death", "Energy", "Heal" ] ,
+      "enum": [ "None", "Condition", "ComicText", "Damage", "Death", "Energy", "ExtraEnergy", "ExtraHeart", "Heal" ] ,
       "default": "None"
     },
     "amount": {

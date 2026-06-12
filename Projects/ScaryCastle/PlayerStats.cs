@@ -14,7 +14,6 @@ namespace ScaryCastle
         {
             AmbientLight = AddStat(1);
             Luck = AddStat(1);
-            Speed = AddStat(1);
         }
 
         #region Private members
@@ -40,7 +39,6 @@ namespace ScaryCastle
         {
             AmbientLight.RemoveModifiers(source);
             Luck.RemoveModifiers(source);
-            Speed.RemoveModifiers(source);
         }
 
         // Reset
@@ -51,8 +49,5 @@ namespace ScaryCastle
                 stat.Clear();
             }
         }
-
-        // Speed
-        public Stat Speed { get; }
     }
 }

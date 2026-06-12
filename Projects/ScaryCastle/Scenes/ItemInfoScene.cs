@@ -183,7 +183,7 @@ namespace ScaryCastle
         public void Show(Item item)
         {
             this.item = item;
-            this.allowDiscard = !item.Definition.IsSkill;
+            this.allowDiscard = item.Definition.Behavior == ItemBehavior.Common;
             this.itemNameText.Text = item.Definition.DisplayName;
             this.descriptionText.Text = item.Definition.Description;
             this.imageShadow.RenderImage = item.Definition.Image;

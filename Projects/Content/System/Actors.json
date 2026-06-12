@@ -22,7 +22,9 @@
       "dropSackChanceBonus": 0.1
     },
     {
-      "name": "Rat"
+      "name": "Rat",
+      "preferredLootCategory": "Pills",
+      "dropSackChanceBonus": 1
     },
     {
       "name": "LootDropper",

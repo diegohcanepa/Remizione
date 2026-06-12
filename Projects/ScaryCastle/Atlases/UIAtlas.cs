@@ -26,6 +26,7 @@ namespace ScaryCastle
             GooIcon = this[nameof(GooIcon)];
             GooIcons = CreateReadOnlyCollection(nameof(GooIcons), 1, 2);
             GreenHearts = CreateReadOnlyCollection(nameof(GreenHearts), 1, 4);
+            HeartIcon = this[nameof(HeartIcon)];
             InventoryItemAmounts = CreateReadOnlyCollection("InventoryItemAmount", 1, 5);
             InventoryItemSlot = this[nameof(InventoryItemSlot)];
             InventorySkillSlot = this[nameof(InventorySkillSlot)];
@@ -90,6 +91,9 @@ namespace ScaryCastle
 
         // GreenHearts
         public ReadOnlyCollection<AtlasImage> GreenHearts { get; }
+
+        // HeartIcon
+        public AtlasImage HeartIcon { get; }
 
         // InventoryItemAmounts
         public ReadOnlyCollection<AtlasImage> InventoryItemAmounts { get; }

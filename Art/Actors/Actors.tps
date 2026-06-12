@@ -274,6 +274,10 @@
             <key type="filename">Edmund-assets/DrinkGoo04.png</key>
             <key type="filename">Edmund-assets/DrinkGoo05.png</key>
             <key type="filename">Edmund-assets/DrinkGoo06.png</key>
+            <key type="filename">Edmund-assets/EatPill01.png</key>
+            <key type="filename">Edmund-assets/EatPill02.png</key>
+            <key type="filename">Edmund-assets/EatPill03.png</key>
+            <key type="filename">Edmund-assets/EatPill04.png</key>
             <key type="filename">Edmund-assets/Fatigue01.png</key>
             <key type="filename">Edmund-assets/Fatigue02.png</key>
             <key type="filename">Edmund-assets/Fatigue03.png</key>

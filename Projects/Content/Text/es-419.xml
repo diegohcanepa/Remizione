@@ -49,6 +49,8 @@
   <String Key="Item.Battery.Name">Batería</String>
   <String Key="Item.BittenApple.Description">Masa fétida que supura un almíbar con olor a pie descuidado. Recuperas salud por el shock, pero tu esófago tiene un 35% de chances de que le caiga mal.</String>
   <String Key="Item.BittenApple.Name">Manzana mordida</String>
+  <String Key="Item.BluePill.Description">Proteína gástrica</String>
+  <String Key="Item.BluePill.Name">Píldora</String>
   <String Key="Item.Chili.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</String>
   <String Key="Item.Chili.Name">Chile picante</String>
   <String Key="Item.Duck.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
@@ -75,6 +77,8 @@
   <String Key="Item.PieceOfWood.Name">Trozo de madera</String>
   <String Key="Item.Pistol.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </String>
   <String Key="Item.Pistol.Name">Pistola</String>
+  <String Key="Item.RedPill.Description">Suplemento deportivo</String>
+  <String Key="Item.RedPill.Name">Píldora</String>
   <String Key="Item.RustyLockpick.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.RustyLockpick.Name">Ganzúa herrumbrosa</String>
   <String Key="Item.SodaCan.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
@@ -198,6 +202,8 @@
   <String Key="MessageBox.Warning">¡Atención!</String>
   <String Key="MessageKind.BackToHallway">¡Vuelve al pasillo!</String>
   <String Key="MessageKind.CannotPlaceItem">No hay suficiente espacio en el terreno.</String>
+  <String Key="MessageKind.ExtraEnergy">¡Puedes retener más baba!</String>
+  <String Key="MessageKind.ExtraHeart">¡Te sientes más fuerte!</String>
   <String Key="MessageKind.HandsFull">Tienes las manos ocupadas.</String>
   <String Key="MessageKind.InventoryFull">El inventario está lleno.</String>
   <String Key="MessageKind.ItemDiscarded">Item descartado.</String>

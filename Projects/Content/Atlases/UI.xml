@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:282246bcf171cfa7dabf23417a3c957c:7a92a683e505c5a2ecdf02a6bc9e4cbe:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:214e0a065307c7e9b220163b82e9ae2b:89f4a2c00ca5d3416cbdaa377f239e19:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -58,6 +58,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Headbutt.png" x="423" y="214" w="13" h="12"/>
     <sprite n="HeartBlackFull.png" x="479" y="270" w="7" h="7"/>
     <sprite n="HeartBlackHalf.png" x="442" y="264" w="7" h="7"/>
+    <sprite n="HeartIcon.png" x="473" y="254" w="9" h="9"/>
     <sprite n="InventoryItemAmount1.png" x="142" y="239" w="8" h="9"/>
     <sprite n="InventoryItemAmount2.png" x="142" y="250" w="8" h="9"/>
     <sprite n="InventoryItemAmount3.png" x="142" y="261" w="8" h="9"/>
@@ -102,15 +103,15 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="PointingHand.png" x="438" y="273" w="7" h="6"/>
     <sprite n="PopupContainer.png" x="2" y="71" w="264" h="74"/>
     <sprite n="PopupContainerShadow.png" x="262" y="214" w="114" h="60"/>
-    <sprite n="ProhibitionIcon.png" x="473" y="254" w="9" h="9"/>
-    <sprite n="PurpleHearts1.png" x="484" y="259" w="9" h="9"/>
-    <sprite n="PurpleHearts2.png" x="495" y="263" w="9" h="9"/>
-    <sprite n="PurpleHearts3.png" x="431" y="243" w="9" h="9"/>
-    <sprite n="PurpleHearts4.png" x="431" y="254" w="9" h="9"/>
-    <sprite n="RedHearts1.png" x="484" y="259" w="9" h="9"/>
-    <sprite n="RedHearts2.png" x="418" y="255" w="9" h="9"/>
-    <sprite n="RedHearts3.png" x="405" y="256" w="9" h="9"/>
-    <sprite n="RedHearts4.png" x="405" y="256" w="9" h="9"/>
+    <sprite n="ProhibitionIcon.png" x="484" y="259" w="9" h="9"/>
+    <sprite n="PurpleHearts1.png" x="495" y="263" w="9" h="9"/>
+    <sprite n="PurpleHearts2.png" x="431" y="243" w="9" h="9"/>
+    <sprite n="PurpleHearts3.png" x="431" y="254" w="9" h="9"/>
+    <sprite n="PurpleHearts4.png" x="418" y="255" w="9" h="9"/>
+    <sprite n="RedHearts1.png" x="495" y="263" w="9" h="9"/>
+    <sprite n="RedHearts2.png" x="405" y="256" w="9" h="9"/>
+    <sprite n="RedHearts3.png" x="473" y="254" w="9" h="9"/>
+    <sprite n="RedHearts4.png" x="473" y="254" w="9" h="9"/>
     <sprite n="RustyLockpick.png" x="188" y="202" w="16" h="15"/>
     <sprite n="Sack.png" x="476" y="228" w="11" h="10"/>
     <sprite n="SackIcon.png" x="469" y="265" w="8" h="8"/>

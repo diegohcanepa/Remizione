@@ -49,6 +49,7 @@
 	<FX Name="Drink" />
 	<FX Name="DrinkFromBottle" />
 	<FX Name="DrinkGoo" />
+	<FX Name="EatPill" />
 	<FX Name="EdmundHurt" Sounds="1..2" />
 	<FX Name="ElectricZapStrong" />
 	<FX Name="EnergyBolt" Sounds="1..3" />

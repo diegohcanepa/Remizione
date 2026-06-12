@@ -47,12 +47,22 @@
                 "Luck",
                 "Medicine",
                 "Money",
-                "Misc"
+                "Misc",
+                "Pills"
               ]
             },
             "areaOfEffect": {
               "type": "integer",
               "default": 0
+            },
+            "behavior": {
+              "type": "string",
+              "enum": [
+                "Common",
+                "Skill",
+                "Collectible"
+              ],
+              "default": "Common"
             },
             "consumeVerb": {
               "type": "string",
@@ -72,9 +82,6 @@
               "default": false
             },
             "isDepletable": {
-              "type": "boolean"
-            },
-            "isSkill": {
               "type": "boolean"
             },
             "isStackable": {

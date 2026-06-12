@@ -6,7 +6,7 @@ namespace ScaryCastle
     /// <summary>
     /// PickableLoot
     /// </summary>
-    public abstract class PickableLoot : Prop, ILoot<ItemDefinition>
+    public abstract class PickableLoot : Prop, ILootContainer<ItemDefinition>
     {
         // Constructor
         protected PickableLoot(GameSession session, string name)

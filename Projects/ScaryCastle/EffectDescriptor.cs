@@ -92,6 +92,18 @@ namespace ScaryCastle
                         (realTarget as Actor)?.Energy += amount;
                         break;
 
+                    // ExtraEnergy
+                    case EffectType.ExtraEnergy:
+                        (realTarget as Actor)?.MaxEnergy += amount;
+                        source.Session.TextHUD.Message.Show(MessageKind.ExtraEnergy);
+                        break;
+
+                    // ExtraHeart
+                    case EffectType.ExtraHeart:
+                        realTarget?.MaxHP += amount;
+                        source.Session.TextHUD.Message.Show(MessageKind.ExtraHeart);
+                        break;
+
                     // Heal
                     case EffectType.Heal:
                         realTarget?.HP += amount;
