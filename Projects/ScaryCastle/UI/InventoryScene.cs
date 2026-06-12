@@ -2,6 +2,7 @@
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System.Globalization;
 
 namespace ScaryCastle
@@ -175,7 +176,6 @@ namespace ScaryCastle
                 return;
 
             Game.SpriteBatch.Begin(Game.Camera);
-
             for (var i = 0; i < Inventory.Capacity; i++)
             {
                 slots[i].Draw(gameTime);
@@ -191,9 +191,10 @@ namespace ScaryCastle
                 gooIcons[i].Draw(gameTime);
                 amounts[i].Draw(gameTime);
             }
+            Game.SpriteBatch.End();
 
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
             itemName.Draw(gameTime);
-
             Game.SpriteBatch.End();
         }
 

@@ -33,7 +33,7 @@ namespace ScaryCastle
 
             CommonOutline.SpriteFont = assets[CommonOutlineAssetName];
             CommonOutline.SpriteFont.LineSpacing += 2;
-            CommonOutline.SpriteFont.Spacing = -5;
+            CommonOutline.SpriteFont.Spacing = -7;
         }
 
         #endregion
@@ -55,6 +55,7 @@ namespace ScaryCastle
 
         // Common
         // SB Navigator, Regular, 48, Antialiased
+        // Bubblegum Sans, Regular, 48, Antialiased, Outline 6
         public static Font Common { get; } = new Font();
 
         // CommonAssetName
@@ -62,6 +63,7 @@ namespace ScaryCastle
 
         // CommonOutine
         // SB Navigator, Regular, 48, Antialiased, Outline 6
+        // Bubblegum Sans, Regular, 48, Antialiased, Outline 6
         public static Font CommonOutline { get; } = new Font();
 
         // CommonOutlineAssetName

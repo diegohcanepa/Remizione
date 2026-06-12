@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ScaryCastle
 {
@@ -38,10 +39,11 @@ namespace ScaryCastle
             Game.SpriteBatch.Begin(Game.Camera);
             hpMeter.Draw(gameTime);
             GooMeter.Draw(gameTime);
-            CoinMeter.Draw(gameTime);
-            InventoryMeter.Draw(gameTime);
             PassiveItems.Draw(gameTime);
             Game.SpriteBatch.End();
+
+            InventoryMeter.Draw(gameTime);
+            CoinMeter.Draw(gameTime);
 
             if (session.IsCurrentScene)
             {

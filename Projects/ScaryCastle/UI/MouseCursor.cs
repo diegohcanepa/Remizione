@@ -94,7 +94,7 @@ namespace ScaryCastle
                 if (!subTextSprite.IsEmpty)
                 {
                     subTextSprite.PivotOrigin = textSprite.PivotOrigin;
-                    subTextSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, .5f, -1.5f);
+                    subTextSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, .5f, 1.5f);
                 }
             }
 
@@ -156,12 +156,11 @@ namespace ScaryCastle
             cursorSprite.X -= shakeTween.IsRunning ? shakeTween.CurrentValue : 0;
             EngendroGame.Instance.SpriteBatch.End();
 
-            //if (State == MouseCursorState.Cross || CustomImage != null)
+            if (State == MouseCursorState.Cross || CustomImage != null)
             {
-                EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera);
+                EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera, SamplerState.LinearClamp);
                 textSprite.Draw(gameTime);
                 subTextSprite.Draw(gameTime);
-
                 EngendroGame.Instance.SpriteBatch.End();
             }
         }

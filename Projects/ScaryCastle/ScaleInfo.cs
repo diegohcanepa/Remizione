@@ -64,6 +64,7 @@ namespace ScaryCastle
         internal static class SpeechBubble
         {
             internal static Vector2 Text { get; } = new(.08f);
+            internal static Vector2 Title { get; } = new(.06f);
         }
 
         // TextControllerDisconnectedMessage
@@ -104,6 +105,6 @@ namespace ScaryCastle
         }
 
         // UISentence
-        internal static Vector2 UISentence { get; } = new Vector2(.11f);
+        internal static Vector2 UISentence { get; } = new Vector2(.1f);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ScaryCastle
 {
@@ -37,7 +38,7 @@ namespace ScaryCastle
                 Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Right,
                 Position = icon.BoundingBox.GetPoint(RectanglePoint.Left, -1, 1),
-                Scale = ScaleInfo.Text.ExtraGiant
+                Scale = ScaleInfo.Text.VeryLarge
             };
         }
 
@@ -46,8 +47,13 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
+            Game.SpriteBatch.Begin(Game.Camera);
             icon.Draw(gameTime);
+            Game.SpriteBatch.End();
+
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
             valueText.Draw(gameTime);
+            Game.SpriteBatch.End();
         }
 
         // OnUpdate

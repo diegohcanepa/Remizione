@@ -74,7 +74,7 @@ namespace ScaryCastle
                 PauseOnPunctuationMarks = false,
                 PivotOrigin = RectanglePoint.LeftTop,
                 Position = container.BoundingBox.GetPoint(RectanglePoint.LeftTop, 6, 23),
-                Scale = ScaleInfo.Text.ExtraLarge,
+                Scale = ScaleInfo.Text.Large,
                 ShadowOffset = new(.5f),
                 TypingSpeed = 20
             };
@@ -126,6 +126,9 @@ namespace ScaryCastle
             container.Draw(gameTime);
             imageShadow.Draw(gameTime);
             image.Draw(gameTime);
+            Game.SpriteBatch.End();
+
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
             itemNameText.Draw(gameTime);
             descriptionText.Draw(gameTime);
             Game.SpriteBatch.End();

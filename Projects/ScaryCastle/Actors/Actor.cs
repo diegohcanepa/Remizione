@@ -1207,12 +1207,30 @@ namespace ScaryCastle
         public void Say(string text, bool awaitInput)
         {
             speechBubble ??= new SpeechBubble(this);
-            speechBubble.Show(DisplayName, text, awaitInput);
+
+
+            var color = SpeechColor;
+            if (color == Color.Transparent)
+            {
+                if (IsPlayer)
+                {
+                    color = Color.White;
+                }
+                else
+                {
+                    color = Faction == Faction.Evil ? ColorPalette.Text.TerraLight : ColorPalette.Text.Default;
+                }
+            }
+
+            speechBubble.Show(text, color, awaitInput);
         }
 
-        // SpeechBubbleSound
+        // SpeechColor
+        public Color SpeechColor { get; set; } = Color.Transparent;
+
+        // SpeechSound
         [ScriptProperty(CodingContext.EntityDeclaration)]
-        public Sound? SpeechBubbleSound { get; set; }
+        public Sound? SpeechSound { get; set; }
 
         // Stand
         [ScriptMethod()]

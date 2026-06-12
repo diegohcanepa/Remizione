@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -41,7 +42,7 @@ namespace ScaryCastle
                 Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = meter.BoundingBox.GetPoint(RectanglePoint.Top, 0, .25f),
-                Scale = ScaleInfo.Text.ExtraLarge
+                Scale = ScaleInfo.Text.Large
             };
 
             this.amountContainer = new(Atlases.UI.BossMeterAmount)
@@ -55,7 +56,7 @@ namespace ScaryCastle
                 Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Center,
                 Position = amountContainer.BoundingBox.GetPoint(RectanglePoint.Center),
-                Scale = ScaleInfo.Text.Giant,
+                Scale = ScaleInfo.Text.ExtraLarge,
                 ShadowColor = ColorPalette.SceneShade,
                 ShadowOffset = new(0, 1)
             };
@@ -81,6 +82,9 @@ namespace ScaryCastle
             meter.Draw(gameTime);
             icon.Draw(gameTime);
             amountContainer.Draw(gameTime);
+            Game.SpriteBatch.End();
+
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
             labelText.Draw(gameTime);
             amountText.X += shakeTween.CurrentValue;
             amountText.Draw(gameTime);
