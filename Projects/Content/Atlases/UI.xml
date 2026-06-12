@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:ef0f398df1b8674925e798de09a2da24:071855e66793f529dfd4a9349dd0e00f:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:282246bcf171cfa7dabf23417a3c957c:7a92a683e505c5a2ecdf02a6bc9e4cbe:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -96,7 +96,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="MouseCursorSkull.png" x="450" y="241" w="10" h="10"/>
     <sprite n="MouseCursorUp.png" x="405" y="242" w="11" h="12"/>
     <sprite n="MouseCursorWait.png" x="476" y="240" w="10" h="12"/>
-    <sprite n="PickupShadow.png" x="268" y="71" w="9" h="3"/>
+    <sprite n="PickupShadow.png" x="275" y="71" w="9" h="3"/>
     <sprite n="Pistol.png" x="484" y="26" w="19" h="15"/>
     <sprite n="Pixel.png" x="508" y="15" w="1" h="1"/>
     <sprite n="PointingHand.png" x="438" y="273" w="7" h="6"/>
@@ -117,7 +117,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="SavingIcon.png" x="463" y="228" w="11" h="11"/>
     <sprite n="SkullIcon.png" x="500" y="250" w="10" h="11"/>
     <sprite n="SodaCan.png" x="168" y="237" w="14" h="15"/>
-    <sprite n="SpeechBubbleCloseArrow.png" x="279" y="71" w="3" h="2"/>
+    <sprite n="SpeechTextArrow.png" x="268" y="71" w="5" h="4"/>
     <sprite n="SteelLockpick.png" x="206" y="202" w="16" h="15"/>
     <sprite n="TipBalloon.png" x="248" y="266" w="12" h="13"/>
     <sprite n="UIButtonContainerEdge.png" x="505" y="26" w="5" h="11"/>

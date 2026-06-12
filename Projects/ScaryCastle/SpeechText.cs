@@ -25,6 +25,8 @@ namespace ScaryCastle
 
         private static readonly List<SpeechText> activeTexts = [];
         private int autoHideCooldown;
+        private readonly Sprite arrowImage;
+        private readonly FloatTween arrowTween = new();
         private int inputCooldown;
         private readonly Vector2Tween shakeTween = new();
         private readonly TextSprite text;
@@ -38,6 +40,12 @@ namespace ScaryCastle
         public SpeechText(Actor actor)
         {
             this.Actor = actor;
+
+            // Arrow
+            this.arrowImage = new Sprite(Atlases.UI.SpeechTextArrow)
+            {
+                Scale = ScaleInfo.UIElement.Medium
+            };
 
             // Text
             this.text = new TextSprite(Fonts.CommonOutline)
@@ -171,6 +179,13 @@ namespace ScaryCastle
                 text.Position -= shakeTween.CurrentValue;
 
             Game.SpriteBatch.End();
+
+            if (!text.IsTyping)
+            {
+                Game.SpriteBatch.Begin(Actor.Session.Camera);
+                arrowImage.Draw(gameTime);
+                Game.SpriteBatch.End();
+            }
         }
 
         // OnUpdate
@@ -178,13 +193,20 @@ namespace ScaryCastle
         {
             if (inputCooldown > 0)
                 inputCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-
+            
+            arrowTween.Update(gameTime);
             UpdateState(gameTime);
             shakeTween.Update(gameTime);
             text.Update(gameTime);
 
             if (State == SpeechTextState.Typing)
                 Layout();
+
+            if (!text.IsTyping)
+            {
+                arrowImage.Position = text.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -arrowTween.CurrentValue);
+                arrowImage.X = Actor.GetOverheadPosition().X;
+            }
         }
 
         #endregion
@@ -213,6 +235,7 @@ namespace ScaryCastle
                 ModalInstance = null;
 
             AwaitInput = false;
+            arrowTween.Stop();
             text.Clear();
             text.StopTyping();
             shakeTween.Stop();
@@ -227,6 +250,10 @@ namespace ScaryCastle
         {
             if (string.IsNullOrWhiteSpace(text))
                 return;
+
+            arrowImage.Color = color;
+
+            arrowTween.Start(TweenStyle.QuinticIn, 0, .3f, 150, -1);
 
             if (awaitInput && ModalInstance != null)
             {
