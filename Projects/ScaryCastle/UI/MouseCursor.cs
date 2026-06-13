@@ -59,7 +59,7 @@ namespace ScaryCastle
             // Text sprite 2
             subTextSprite = new(Fonts.CommonOutline)
             {
-                Scale = ScaleInfo.Text.Large
+                Scale = ScaleInfo.Text.Medium
             };
 
             Reset();
@@ -83,7 +83,7 @@ namespace ScaryCastle
             if (!subTextSprite.IsEmpty)
             {
                 subTextSprite.PivotOrigin = textSprite.PivotOrigin;
-                subTextSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom, .5f, 1.5f);
+                subTextSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom, .5f, 2);
             }
 
             if (!textSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox))
@@ -94,7 +94,7 @@ namespace ScaryCastle
                 if (!subTextSprite.IsEmpty)
                 {
                     subTextSprite.PivotOrigin = textSprite.PivotOrigin;
-                    subTextSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, .5f, 1.5f);
+                    subTextSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, .5f, 2);
                 }
             }
 
@@ -276,7 +276,6 @@ namespace ScaryCastle
                 }
                 else if (State == MouseCursorState.Cross)
                 {
-                    cursorSprite.Color = Color.White;
                     cursorSprite.Opacity = crossOpacityTween.CurrentValue;
                 }
                 else

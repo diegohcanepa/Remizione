@@ -1160,8 +1160,8 @@ namespace ScaryCastle
             }
 
             var approachToTarget = ActiveThrowable != null;
-            if (!approachToTarget)
-                approachToTarget = item is null ? target.ApproachOnDefaultOutcome : item.Definition.ActionKind is ActionKind.Proximity or ActionKind.Projectile;
+            if (!approachToTarget && item != null)
+                approachToTarget = item.Definition.ActionKind is ActionKind.Proximity or ActionKind.Projectile;
 
             if (!approachToTarget)
             {

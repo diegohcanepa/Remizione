@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Engendro.Input;
+using Microsoft.Xna.Framework;
 using ScaryCastle.Scripting;
 
 namespace ScaryCastle
@@ -106,8 +107,13 @@ namespace ScaryCastle
             RefreshCursor(context);
             RefreshText(context);
 
+            MouseCursor.Color = Color.White;
+
             if (context.Target != null)
             {
+                if (context.Target.IsHostile && context.HeldItem == null)
+                    MouseCursor.Color = ColorPalette.MouseCursor.HostileTarget;
+
                 if (context.Session.Player != null && context.HeldItem?.Definition.ActionKind == ActionKind.Projectile)
                 {
                     var mousePos = InputManager.DefaultPlayer.Mouse.WorldPosition(context.Session.Camera);

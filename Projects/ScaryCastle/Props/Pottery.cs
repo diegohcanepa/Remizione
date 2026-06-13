@@ -14,12 +14,10 @@ namespace ScaryCastle
             : base(session, name)
         {
             ApproachBehavior = ApproachBehavior.ClosestSide;
-            ApproachOnDefaultOutcome = false;
             IsHittable = true;
             DeathSound = Sound.Find(SoundNames.PotteryBreak);
             DepthOffset = -2;
             DisplayNameKey = "Prop.Pottery";
-            Faction = Faction.Evil;
             //HurtSound = Sound.Find(SoundNames.ImpactA);
             IsLiftable = true;
             MaxHP = 1;

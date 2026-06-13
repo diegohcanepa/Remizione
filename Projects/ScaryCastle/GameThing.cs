@@ -517,9 +517,6 @@ namespace ScaryCastle
         [ScriptProperty]
         public ApproachBehavior ApproachBehavior { get; set; }
 
-        // ApproachOnDefaultOutcome
-        public bool ApproachOnDefaultOutcome { get; set; } = true;
-
         // ApproachPosition
         [ScriptProperty]
         public Vector2 ApproachPosition { get; set; }
