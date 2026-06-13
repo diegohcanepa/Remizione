@@ -542,6 +542,12 @@ namespace ScaryCastle
                 playerLight.TurnOn();
         }
 
+        // IsIlluminated
+        public bool IsIlluminated(GameThing target)
+        {
+            return HasAmbientLightSources ? true : playerLight.BoundingBox.Contains(target.Position);
+        }
+
         // IsProcedural
         [ScriptProperty]
         public virtual bool IsProcedural => false;

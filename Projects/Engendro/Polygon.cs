@@ -8,6 +8,8 @@ namespace Engendro
     /// </summary>
     public sealed class Polygon : ReadOnlyPolygon
     {
+        #region Constructors
+
         // Constructor
         public Polygon()
             : base([])
@@ -25,6 +27,8 @@ namespace Engendro
             : base(points, inflate)
         {
         }
+
+        #endregion
 
         #region Private fields
 

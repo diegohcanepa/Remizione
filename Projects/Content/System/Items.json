@@ -119,7 +119,7 @@
 		},
 		{
 			"name": "Headbutt",
-			"behavior": "Skill",
+			"behavior": "PlayerAction",
 			"actionKind": "Proximity",
 			"category": "Misc"
 		},
@@ -132,7 +132,7 @@
 		},
 		{
 			"name": "Lift",
-			"behavior": "Skill",
+			"behavior": "PlayerAction",
 			"actionKind": "Proximity",
 			"category": "Misc"
 		},

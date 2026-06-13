@@ -46,11 +46,17 @@ namespace ScaryCastle
             for (int i = Session.Room.CulledThings.Count - 1; i >= 0; i--)
             {
                 // Exclude player when HeldItem is null
-                if (Session.Room.CulledThings[i] == Session.Player && HeldItem == null)
-                    continue;
+                if (Session.Room.CulledThings[i] == Session.Player)
+                {
+                    if (HeldItem == null || HeldItem.Definition.Behavior == ItemBehavior.PlayerAction)
+                        continue;
+                }
 
-                if (Session.Room.CulledThings[i] is GameThing target && target.CanInteract() && target.RuntimeHotspot.Contains(mousePos))
-                    return target;
+                if (Session.Room.CulledThings[i] is GameThing target && Session.Room.IsIlluminated(target))
+                {
+                    if (target.CanInteract() && target.RuntimeHotspot.Contains(mousePos))
+                        return target;
+                }
             }
 
             return null;

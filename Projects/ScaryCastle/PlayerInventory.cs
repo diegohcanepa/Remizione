@@ -81,7 +81,7 @@ namespace ScaryCastle
         // Add
         public Item? Add(ItemDefinition definition)
         {
-            if (definition.Behavior is not ItemBehavior.Common and not ItemBehavior.Skill)
+            if (definition.Behavior is not ItemBehavior.Common and not ItemBehavior.PlayerAction)
                 return null;
 
             if (!HasSpace(definition))

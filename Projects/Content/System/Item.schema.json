@@ -60,7 +60,7 @@
               "enum": [
                 "Common",
                 "Currency",
-                "Skill",
+                "PlayerAction",
                 "StatModifier"
               ],
               "default": "Common"

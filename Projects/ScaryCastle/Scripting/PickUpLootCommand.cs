@@ -31,7 +31,7 @@ namespace ScaryCastle.Scripting
                         session.StatusHUD.InventoryMeter.Animate();
                         session.TextHUD.Log.Show(LogVerb.Found, lootProvider.Loot);
                     }
-                    else if (lootProvider.Loot.Behavior != ItemBehavior.Skill && session.Player != null)
+                    else if (lootProvider.Loot.Behavior != ItemBehavior.PlayerAction && session.Player != null)
                     {
                         EffectDescriptor.Apply(lootProvider.Loot.EffectDescriptors, session.Player, null, EffectContext.Collect);
                     }

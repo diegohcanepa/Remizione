@@ -75,7 +75,7 @@ namespace ScaryCastle
     public enum InPlaceEffectType { None, Lightning }
 
     // ItemBehavior
-    public enum ItemBehavior { Common, Currency, Skill, StatModifier }
+    public enum ItemBehavior { Common, Currency, PlayerAction, StatModifier }
 
     // ItemCategory
     public enum ItemCategory { Access, Explosive, Food, Luck, Medicine, Misc, Money, Pills, Sacred }
