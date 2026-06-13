@@ -72,6 +72,11 @@ namespace ScaryCastle
                             realTarget?.ShowComicText(effect.ComicText);
                         break;
 
+                    // Coin
+                    case EffectType.Coin:
+                        source.Session.Coins += amount;
+                        break;
+
                     // Condition
                     case EffectType.Condition:
                         (realTarget as Actor)?.ApplyCondition(effect.Condition, amount, effect.ComicText);

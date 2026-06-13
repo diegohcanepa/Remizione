@@ -139,9 +139,7 @@ namespace ScaryCastle
             // 3. Suma de modificadores
             // Suerte: Cada punto de Luck suma un +10% de probabilidad de encontrar monedas
             if (session.CurrentRun != null)
-            {
                 chance += session.PlayerStats.Luck.Value * 0.1f;
-            }
 
             // Bonus de la instancia (Si quieres un +30% de chances, pasas 0.3f)
             chance += thingDef.DropCoinChanceBonus;
@@ -154,7 +152,6 @@ namespace ScaryCastle
                 return 0;
 
             // 5. Cantidad de monedas (Lógica de cantidad según dificultad)
-            // Se mantiene la precisión de Cero LINQ y switch expressions de C# 13
             return thingDef.Difficulty switch
             {
                 Difficulty.Easy => 1,
@@ -227,9 +224,7 @@ namespace ScaryCastle
                 // 4. Suma de modificadores (Simple y sólido)
                 // Suerte: Cada punto de Luck es un +5% plano
                 if (session.CurrentRun != null)
-                {
                     chance += session.PlayerStats.Luck.Value * 0.05f;
-                }
 
                 // Bonus de la instancia (Aquí es donde sumas tu 0.30f si quieres un +30%)
                 // IMPORTANTE: Cambia mentalmente 'Multiplier' por 'Bonus'
@@ -237,7 +232,7 @@ namespace ScaryCastle
 
                 // 5. El "Roll" con Cap
                 // Nunca dejamos que sea 100% a menos que sea guaranteeDrop explícito
-                float finalChance = MathHelper.Clamp(chance, 0.0f, 0.95f);
+                float finalChance = MathHelper.Clamp(chance, 0, .95f);
 
                 if (session.Random.NextDouble() > finalChance)
                     return null;

@@ -59,8 +59,9 @@
               "type": "string",
               "enum": [
                 "Common",
+                "Currency",
                 "Skill",
-                "Collectible"
+                "StatModifier"
               ],
               "default": "Common"
             },

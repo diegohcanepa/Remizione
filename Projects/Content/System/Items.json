@@ -52,13 +52,27 @@
 		},
 		{
 			"name": "BluePill",
-			"behavior": "Collectible",
+			"behavior": "StatModifier",
 			"actionKind": "Self",
 			"category": "Pills",
 			"effects": [
 				{
-					"context": "Use",
+					"context": "Collect",
 					"effectType": "ExtraEnergy",
+					"amount": "1",
+					"target": "Self"
+				}
+			]			
+		},
+		{
+			"name": "Coin",
+			"behavior": "Currency",
+			"actionKind": "Self",
+			"category": "Money",
+			"effects": [
+				{
+					"context": "Collect",
+					"effectType": "Coin",
 					"amount": "1",
 					"target": "Self"
 				}
@@ -158,12 +172,12 @@
 		},
 		{
 			"name": "RedPill",
-			"behavior": "Collectible",
+			"behavior": "StatModifier",
 			"actionKind": "Self",
 			"category": "Pills",
 			"effects": [
 				{
-					"context": "Use",
+					"context": "Collect",
 					"effectType": "ExtraHeart",
 					"amount": "2",
 					"target": "Self"

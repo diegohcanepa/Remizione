@@ -48,10 +48,10 @@ namespace ScaryCastle
     public enum DustParticleKind { None, Dust, Ash }
 
     // EffectContext
-    public enum EffectContext { Contact, Attack, Update, Use, ProjectileHit }
+    public enum EffectContext { Collect, Contact, Attack, Update, Use, ProjectileHit }
 
     // EffectType
-    public enum EffectType { None, Condition, ComicText, Damage, Death, Energy, ExtraEnergy, ExtraHeart, Heal }
+    public enum EffectType { None, Coin, Condition, ComicText, Damage, Death, Energy, ExtraEnergy, ExtraHeart, Heal }
 
     // EffectTarget
     public enum EffectTarget { Target, Self }
@@ -75,7 +75,7 @@ namespace ScaryCastle
     public enum InPlaceEffectType { None, Lightning }
 
     // ItemBehavior
-    public enum ItemBehavior { Common, Skill, Collectible }
+    public enum ItemBehavior { Common, Currency, Skill, StatModifier }
 
     // ItemCategory
     public enum ItemCategory { Access, Explosive, Food, Luck, Medicine, Misc, Money, Pills, Sacred }

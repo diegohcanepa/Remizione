@@ -1159,11 +1159,7 @@ namespace ScaryCastle
                 return false;
             }
 
-            var approachToTarget = ActiveThrowable != null;
-            if (!approachToTarget && item != null)
-                approachToTarget = item.Definition.ActionKind is ActionKind.Proximity or ActionKind.Projectile;
-
-            if (!approachToTarget)
+            if (item?.Definition.ActionKind is ActionKind.InPlace or ActionKind.Self)
             {
                 HandlePendingInteraction();
             }
