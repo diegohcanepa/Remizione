@@ -69,7 +69,7 @@ namespace ScaryCastle
             healthTextSprite = new(Fonts.CommonOutline)
             {
                 PivotOrigin = RectanglePoint.Left,
-                Scale = ScaleInfo.Text.Medium
+                Scale = ScaleInfo.Text.Small
             };
 
             Reset();
@@ -102,7 +102,7 @@ namespace ScaryCastle
                 heartIcon.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.Right, 1, 0);
 
                 healthTextSprite.PivotOrigin = textSprite.PivotOrigin;
-                healthTextSprite.Position = heartIcon.BoundingBox.GetPoint(RectanglePoint.Right, 1, 0);
+                healthTextSprite.Position = heartIcon.BoundingBox.GetPoint(RectanglePoint.Right, .5f, 0);
             }
 
             if (!textSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox) ||
@@ -124,7 +124,7 @@ namespace ScaryCastle
                     heartIcon.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.Left, -1, 0);
 
                     healthTextSprite.PivotOrigin = textSprite.PivotOrigin;
-                    healthTextSprite.Position = heartIcon.BoundingBox.GetPoint(RectanglePoint.Left, -1, 0);
+                    healthTextSprite.Position = heartIcon.BoundingBox.GetPoint(RectanglePoint.Left, -.5f, 0);
                 }
             }
 
@@ -262,6 +262,7 @@ namespace ScaryCastle
             cursorSprite.Color = Color.White;
             textSprite.Color = ColorPalette.Text.Sentence;
             subTextSprite.Color = ColorPalette.Text.Highlight;
+            healthTextSprite.Color = ColorPalette.Text.Highlight;
             CustomImage = null;
             FlipCustomImage = false;
             HealthAmount = 0;

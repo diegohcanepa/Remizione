@@ -48,7 +48,7 @@ namespace ScaryCastle
                 // Exclude player when HeldItem is null
                 if (Session.Room.CulledThings[i] == Session.Player)
                 {
-                    if (HeldItem == null || HeldItem.Definition.Behavior == ItemBehavior.PlayerAction)
+                    if (HeldItem?.Definition.Behavior == ItemBehavior.PlayerAction)
                         continue;
                 }
 

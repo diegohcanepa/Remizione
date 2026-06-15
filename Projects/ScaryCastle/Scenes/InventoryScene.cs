@@ -42,8 +42,10 @@ namespace ScaryCastle
                 icons[i] = new()
                 {
                     PivotOrigin = RectanglePoint.Center,
-                    Y = slots[i].BoundingBox.Center.Y - 1
+                    Y = slots[i].BoundingBox.Center.Y
                 };
+                if (i >= GameSettings.MaxPlayerActions)
+                    icons[i].Y -= 1;
 
                 gooIcons[i] = new()
                 {
@@ -58,7 +60,7 @@ namespace ScaryCastle
                     Opacity = ColorPalette.ShadowOpacity,
                     PivotOrigin = RectanglePoint.Center,
                     Scale = ScaleInfo.UIElement.Medium,
-                    Y = slots[i].BoundingBox.Center.Y + 1
+                    Y = slots[i].BoundingBox.Center.Y + .5f
                 };
 
                 // Amount
@@ -150,7 +152,7 @@ namespace ScaryCastle
                         gooIcons[i].RenderImage = Atlases.UI.GooIcon;
                     }
 
-                    shadows[i].X = icons[i].X - 1;
+                    shadows[i].X = icons[i].X - .5f;
                     shadows[i].RenderImage = Inventory[i].Definition.Image;
 
                     amounts[i].X = icons[i].X;
@@ -185,7 +187,9 @@ namespace ScaryCastle
                         continue;
                 }
 
-                shadows[i].Draw(gameTime);
+                if (i >= GameSettings.MaxPlayerActions)
+                    shadows[i].Draw(gameTime);
+
                 icons[i].Draw(gameTime);
                 gooIcons[i].Draw(gameTime);
                 amounts[i].Draw(gameTime);
