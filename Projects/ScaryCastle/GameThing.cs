@@ -206,6 +206,12 @@ namespace ScaryCastle
             isCollisionDirty = true;
         }
 
+        // RefreshDisplayInfo
+        private void RefreshDisplayInfo()
+        {
+            DisplayInfo = GetDisplayInfo();
+        }
+
         // RefreshDisplayName
         private void RefreshDisplayName()
         {
@@ -284,6 +290,12 @@ namespace ScaryCastle
                     }
                 }
             }
+        }
+
+        // GetDisplayInfo
+        protected virtual string GetDisplayInfo()
+        {
+            return string.Empty;
         }
 
         // GetDisplayName
@@ -558,7 +570,18 @@ namespace ScaryCastle
         }
 
         // CoinReward
-        public int CoinReward { get; private set; }
+        public int CoinReward
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    RefreshDisplayInfo();
+                }
+            }
+        }
 
         // Collider
         [ScriptProperty]
@@ -645,6 +668,9 @@ namespace ScaryCastle
 
             OnDeath();
 
+            if (FaithReward > 0)
+                Session.ObjectPools.FloatingTexts.Get()?.Show(GetOverheadPosition(), $"+{FaithReward} {Localization.GetValue(StatName.Faith)}", ColorPalette.Text.Highlight, ScaleInfo.Text.VeryLarge.X, 2000);
+
             DropLoot();
         }
 
@@ -688,6 +714,9 @@ namespace ScaryCastle
         // DeathSound
         [ScriptProperty]
         public Sound? DeathSound { get; set; }
+
+        // DisplayInfo
+        public string DisplayInfo { get; private set; } = string.Empty;
 
         // DisplayName
         public string DisplayName { get; private set; } = string.Empty;
@@ -759,6 +788,21 @@ namespace ScaryCastle
                 field = value;
                 if (field == Faction.Evil)
                     IsHostile = true;
+            }
+        }
+
+        // FaithReward
+        [ScriptProperty]
+        public int FaithReward
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = Math.Max(0, value);
+                    RefreshDisplayInfo();
+                }
             }
         }
 
@@ -1148,7 +1192,18 @@ namespace ScaryCastle
         } = new();
 
         // ItemReward
-        public ItemDefinition? ItemReward { get; private set; }
+        public ItemDefinition? ItemReward
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    RefreshDisplayInfo();
+                }
+            }
+        }
 
         // Session
         public new GameSession Session { get; }

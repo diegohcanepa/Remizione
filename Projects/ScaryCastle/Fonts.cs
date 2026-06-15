@@ -33,7 +33,11 @@ namespace ScaryCastle
 
             CommonOutline.SpriteFont = assets[CommonOutlineAssetName];
             CommonOutline.SpriteFont.LineSpacing += 2;
-            CommonOutline.SpriteFont.Spacing = -7;
+            CommonOutline.SpriteFont.Spacing = -9;
+
+            Monitor.SpriteFont = assets[MonitorAssetName];
+            Monitor.SpriteFont.LineSpacing += 2;
+            Monitor.SpriteFont.Spacing = 3;
         }
 
         #endregion
@@ -49,24 +53,30 @@ namespace ScaryCastle
         {
             assets[CommonAssetName] = LoadFont(content, CommonAssetName);
             assets[CommonOutlineAssetName] = LoadFont(content, CommonOutlineAssetName);
+            assets[MonitorAssetName] = LoadFont(content, MonitorAssetName);
 
             TextRepository.Loaded += OnTextRepositoryLoaded;
         }
 
         // Common
-        // SB Navigator, Regular, 48, Antialiased
         // Bubblegum Sans, Regular, 48, Antialiased, Outline 6
-        public static Font Common { get; } = new Font();
+        public static Font Common { get; } = new();
 
         // CommonAssetName
         public const string CommonAssetName = "Common";
 
-        // CommonOutine
-        // SB Navigator, Regular, 48, Antialiased, Outline 6
+        // CommonOutline
         // Bubblegum Sans, Regular, 48, Antialiased, Outline 6
-        public static Font CommonOutline { get; } = new Font();
+        public static Font CommonOutline { get; } = new();
 
         // CommonOutlineAssetName
         public const string CommonOutlineAssetName = "CommonOutline";
+
+        // Monitor
+        // SB Navigator, Regular, 48
+        public static Font Monitor { get; } = new();
+
+        // MonitorAssetName
+        public const string MonitorAssetName = "Monitor";
     }
 }

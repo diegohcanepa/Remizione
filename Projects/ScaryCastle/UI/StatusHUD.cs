@@ -11,7 +11,10 @@ namespace ScaryCastle
     {
         #region Private fields
 
+        private readonly UICoinMeter coinMeter;
+        private readonly UIGooMeter gooMeter = new();
         private readonly UIHPMeter hpMeter;
+        private readonly UIPassiveItems passiveItems;
         private readonly GameSession session;
 
         #endregion
@@ -23,9 +26,9 @@ namespace ScaryCastle
         {
             this.session = session;
             this.hpMeter = new(new(5, 3));
-            this.CoinMeter = new(session);
+            this.coinMeter = new(session);
             this.InventoryMeter = new(session.PlayerInventory);
-            this.PassiveItems = new(session);
+            this.passiveItems = new(session);
             this.BossMeter = new(session);
         }
 
@@ -38,12 +41,13 @@ namespace ScaryCastle
         {
             Game.SpriteBatch.Begin(Game.Camera);
             hpMeter.Draw(gameTime);
-            GooMeter.Draw(gameTime);
-            PassiveItems.Draw(gameTime);
+            passiveItems.Draw(gameTime);
             Game.SpriteBatch.End();
 
+            gooMeter.Draw(gameTime);
+            FaithMeter.Draw(gameTime);
             InventoryMeter.Draw(gameTime);
-            CoinMeter.Draw(gameTime);
+            coinMeter.Draw(gameTime);
 
             if (session.IsCurrentScene)
             {
@@ -55,12 +59,13 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            CoinMeter.Update(gameTime);
-            PassiveItems.Update(gameTime);
+            coinMeter.Update(gameTime);
+            passiveItems.Update(gameTime);
             InventoryMeter.Update(gameTime);
             BossMeter.Update(gameTime);
             hpMeter.Update(gameTime);
-            GooMeter.Update(gameTime);
+            FaithMeter.Update(gameTime);
+            gooMeter.Update(gameTime);
         }
 
         #endregion
@@ -68,23 +73,17 @@ namespace ScaryCastle
         // BossMeter
         public UIBossMeter BossMeter { get; }
 
-        // CoinMeter
-        public UICoinMeter CoinMeter { get; }
-
-        // GooMeter
-        public UIGooMeter GooMeter { get; } = new();
+        // FaithMeter
+        public UIFaithMeter FaithMeter { get; } = new();
 
         // InventoryMeter
         public UIInventoryMeter InventoryMeter { get; }
-
-        // PassiveItems
-        public UIPassiveItems PassiveItems { get; }
 
         // Reset
         public void Reset()
         {
             hpMeter.Actor = session.Player;
-            GooMeter.Actor = session.Player;
+            gooMeter.Actor = session.Player;
             BossMeter.Reset();
         }
     }

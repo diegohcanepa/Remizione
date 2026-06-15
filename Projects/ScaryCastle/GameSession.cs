@@ -488,6 +488,8 @@ namespace ScaryCastle
 
             CurrentRun = new Run(Seed, 6);
 
+            StatusHUD.FaithMeter.Run = CurrentRun;
+
             PlayerInventory.Add(ItemNames.Headbutt);
             PlayerInventory.Add(ItemNames.Lift);
             PlayerInventory.Add(ItemNames.BargainCross);
@@ -559,6 +561,8 @@ namespace ScaryCastle
                 return;
 
             CurrentRun = null;
+
+            StatusHUD.FaithMeter.Run = null;
 
             if (FindEntity<Hub>(nameof(Hub)) is Hub hubRoom)
                 hubRoom.Unload();

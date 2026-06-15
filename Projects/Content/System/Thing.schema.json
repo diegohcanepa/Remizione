@@ -13,13 +13,13 @@
           "default": 0,
           "minimum": 0.0,
           "maximum": 1.0
-        },        
+        },
         "dropSackChanceBonus": {
           "type": "number",
           "default": 0,
           "minimum": 0.0,
           "maximum": 1.0
-        },        
+        },
         "dropMode": {
           "type": "string",
           "enum": [
@@ -45,11 +45,12 @@
             "Good",
             "Evil"
           ]
-        },        
+        },
         "maxPerRoom": {
           "type": "integer",
           "default": -1
-        },        "requiresDeadEnd": {
+        },
+        "requiresDeadEnd": {
           "type": "boolean"
         },
         "minProgress": {
@@ -73,7 +74,12 @@
             "Gate"
           ],
           "default": "CorridorOrSideRoom"
-        }        
+        },
+        "xp": {
+          "type": "integer",
+          "default": 0,
+          "minimum": 1
+        }
       }
     }
   ]

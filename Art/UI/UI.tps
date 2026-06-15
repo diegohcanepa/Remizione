@@ -189,6 +189,7 @@
                 <false/>
             </struct>
             <key type="filename">BossMeter-assets/BossMeterAmount.png</key>
+            <key type="filename">Inventory-assets/InventoryActionSlot.png</key>
             <key type="filename">UIIcons-assets/Dice.png</key>
             <key type="filename">XboxControls-assets/XboxA.png</key>
             <key type="filename">XboxControls-assets/XboxB.png</key>
@@ -240,21 +241,6 @@
                 <rect>4,4,7,8</rect>
                 <key>scale9Paddings</key>
                 <rect>4,4,7,8</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Inventory-assets/InventorySkillSlot.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>5,5,9,9</rect>
-                <key>scale9Paddings</key>
-                <rect>5,5,9,9</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -552,6 +538,7 @@
             <key type="filename">UI-assets/EdmundIcon.png</key>
             <key type="filename">UI-assets/FearIcon.png</key>
             <key type="filename">UIIcons-assets/CorridorDoorIcon.png</key>
+            <key type="filename">UIIcons-assets/FaithIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

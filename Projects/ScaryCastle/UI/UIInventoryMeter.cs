@@ -39,8 +39,8 @@ namespace ScaryCastle
             {
                 Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Right,
-                Position = icon.BoundingBox.GetPoint(RectanglePoint.Left, -1, 1),
-                Scale = ScaleInfo.Text.VeryLarge,
+                Position = icon.BoundingBox.GetPoint(RectanglePoint.Left, -.5f, 1),
+                Scale = ScaleInfo.Text.ExtraLarge,
                 Spacing = -6
             };
         }
@@ -69,7 +69,8 @@ namespace ScaryCastle
             if (lastKnownCount != inventory.Count)
             {
                 lastKnownCount = inventory.Count;
-                amountText.Text = $"{inventory.Count - GameSettings.MaxSkills}/{inventory.Capacity - GameSettings.MaxSkills}";
+                amountText.Text = $"{inventory.Count - GameSettings.MaxPlayerActions}";
+                amountText.Color = inventory.IsFull ? ColorPalette.Text.Terra : ColorPalette.Text.Highlight;
             }
         }
 

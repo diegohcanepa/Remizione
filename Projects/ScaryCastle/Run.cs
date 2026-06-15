@@ -206,6 +206,12 @@ namespace ScaryCastle
         // CurrentCorridor
         public RoomNode? CurrentCorridor { get; private set; }
 
+        // CurrentFaith
+        public int CurrentFaith { get; set; }
+
+        // FaithThreshold
+        public int FaithThreshold { get; private set; } = 100;
+
         // Intensity
         public float Intensity
         {

@@ -1,13 +1,14 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ScaryCastle.UI;
 
 namespace ScaryCastle
 {
     /// <summary>
-    /// UIGooMeter
+    /// UIFaithMeter
     /// </summary>
-    public sealed class UIGooMeter : GameObject
+    public sealed class UIFaithMeter : GameObject
     {
         #region Private fields
 
@@ -18,25 +19,24 @@ namespace ScaryCastle
         private readonly FloatTween rotationTween = new();
         private readonly Vector2Tween scaleTween = new();
 
-
         #endregion
 
         #region Constructor
 
         // Constructor
-        public UIGooMeter()
+        public UIFaithMeter()
         {
             float x = 10;
         
-            icon = new(Atlases.UI.GooIcon)
+            icon = new(Atlases.UI.FaithIcon)
             {
                 PivotOrigin = RectanglePoint.Center,
-                Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom, x, -8)
+                Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom, x, -18)
             };
 
             amountDisplay = new()
             {
-                Position = icon.BoundingBox.GetPoint(RectanglePoint.Right, 2.5f, 0),
+                Position = icon.BoundingBox.GetPoint(RectanglePoint.Right, 1, 0),
             };
         }
 
@@ -57,11 +57,11 @@ namespace ScaryCastle
         // Refresh
         private void Refresh()
         {
-            if (Actor == null)
+            if (Run == null)
                 return;
 
-            lastKnownValue = Actor.Energy;
-            lastKnownMaxValue = Actor.MaxEnergy;
+            lastKnownValue = Run.CurrentFaith;
+            lastKnownMaxValue = Run.FaithThreshold;
 
             amountDisplay.Current = lastKnownValue;
             amountDisplay.Maximum = lastKnownMaxValue;
@@ -76,7 +76,7 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (Actor == null)
+            if (Run == null)
                 return;
 
             Game.SpriteBatch.Begin(Game.Camera);
@@ -89,19 +89,19 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (Actor == null)
+            if (Run == null)
                 return;
 
             icon.Update(gameTime);
 
-            if (lastKnownValue != Actor.Energy || lastKnownMaxValue != Actor.MaxEnergy)
+            if (lastKnownValue != Run.CurrentFaith || lastKnownMaxValue != Run.FaithThreshold)
                 Refresh();
         }
 
         #endregion
 
-        // Actor
-        public Actor? Actor
+        // Run
+        public Run? Run
         {
             get;
             set

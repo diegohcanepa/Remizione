@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ScaryCastle
 {
@@ -39,7 +40,7 @@ namespace ScaryCastle
         // CreateText
         private static TextSprite CreateText(string? text = null)
         {
-            return new(Fonts.Common)
+            return new(Fonts.Monitor)
             {
                 Color = Color.White,
                 Opacity = .9f,
@@ -70,7 +71,7 @@ namespace ScaryCastle
         {
             base.OnDraw(gameTime);
 
-            Game.SpriteBatch.Begin(Game.Camera);
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
 
             title.Draw(gameTime);
             subtitle.Draw(gameTime);

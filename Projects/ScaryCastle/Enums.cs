@@ -182,6 +182,9 @@ namespace ScaryCastle
     // SpeechTextState
     public enum SpeechTextState { Hidden, Typing, Idle }
 
+    // StatName
+    public enum StatName { Faith, HP }
+
     // TestPolygon
     public enum TestPolygon { Hotspot, Collider }
 

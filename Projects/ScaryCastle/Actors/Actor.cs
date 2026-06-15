@@ -337,6 +337,35 @@ namespace ScaryCastle
             return !IsFollowingPath && base.CanCheckCollisions();
         }
 
+        // GetDisplayInfo
+        protected override string GetDisplayInfo()
+        {
+            const string surpriseLoot = "[?]";
+
+            var result = string.Empty;
+
+            if (Definition?.DropTrigger == LootDropTrigger.OnImpact)
+            {
+                result = surpriseLoot;
+            }
+            else if (ItemReward != null)
+            {
+                result = ItemReward.DisplayName;
+            }
+            else if (CoinReward > 0)
+            {
+                result = ItemDefinition.Definitions.Get(ItemNames.Coin).DisplayName;
+            }
+
+            if (FaithReward > 0)
+            {
+                var faithDisplayName = Localization.GetValue(StatName.Faith);
+                result += result.Length == 0 ? $"+{FaithReward} {faithDisplayName}" : $"  |  +{FaithReward} {faithDisplayName}";
+            }
+            
+            return result;
+        }
+
         // GetKnockbackMultiplier
         protected override float GetKnockbackMultiplier(GameThing target)
         {
@@ -414,6 +443,7 @@ namespace ScaryCastle
                 BodyMachine.ChangeState(deathState.GetType());
             }
 
+            Session.CurrentRun?.CurrentFaith += FaithReward;
             ShowComicText(ComicTextKind.PlopRed);
             ClearCondition();
         }

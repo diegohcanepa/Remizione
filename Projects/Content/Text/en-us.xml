@@ -61,7 +61,7 @@
   <String Key="Item.Gold.Name">Gold dust</String>
   <String Key="Item.GoldenKey.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.GoldenKey.Name">Golden key</String>
-  <String Key="Item.GooBottle.Description">Fresh Goo straight from the Supreme. Hydrates you with faith to the brim.</String>
+  <String Key="Item.GooBottle.Description">Fresh saliva from the Supreme. It hydrates you with fanaticism to the max.</String>
   <String Key="Item.GooBottle.Name">Goo bottle</String>
   <String Key="Item.Headbutt.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Headbutt.Name">Headbutt</String>
@@ -323,6 +323,8 @@ Bla bla bla</String>
   <String Key="Prop.UnderRideEntrance">Under ride</String>
   <String Key="Prop.VendingMachine">Vending machine</String>
   <String Key="Prop.WC">W.C.</String>
+  <String Key="StatName.Faith">Faith</String>
+  <String Key="StatName.HP">Health</String>
   <String Key="Verb.Ellipsis" />
   <String Key="Verb.Enter">Enter</String>
   <String Key="Verb.Exit">Exit</String>

@@ -202,7 +202,7 @@ namespace ScaryCastle
 
             Game.GraphicsDevice.SetRenderTarget(renderTarget);
 
-            Game.GraphicsDevice.Clear(LightMapColor);
+            Game.GraphicsDevice.Clear(HasAmbientLightSources ? LightMapColor : Color.Black);
 
             Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
 
@@ -525,7 +525,9 @@ namespace ScaryCastle
         // InvalidateAmbientLightSources
         public void InvalidateAmbientLightSources()
         {
-            HasAmbientLightSources = false;
+            HasAmbientLightSources = !IsProcedural;
+            if (HasAmbientLightSources)
+                return;
 
             for (var i = 0; i < Children.Count; i++)
             {
@@ -545,7 +547,7 @@ namespace ScaryCastle
         // IsIlluminated
         public bool IsIlluminated(GameThing target)
         {
-            return HasAmbientLightSources ? true : playerLight.BoundingBox.Contains(target.Position);
+            return HasAmbientLightSources || playerLight.BoundingBox.Contains(target.Position);
         }
 
         // IsProcedural

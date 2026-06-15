@@ -23,13 +23,14 @@ namespace ScaryCastle
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
             DialogOptionBullet = this[nameof(DialogOptionBullet)];
             DiscardItemIcon = this[nameof(DiscardItemIcon)];
+            FaithIcon = this[nameof(FaithIcon)];
             GooIcon = this[nameof(GooIcon)];
             GooIcons = CreateReadOnlyCollection(nameof(GooIcons), 1, 2);
             GreenHearts = CreateReadOnlyCollection(nameof(GreenHearts), 1, 4);
             HeartIcon = this[nameof(HeartIcon)];
+            InventoryActionSlot = this[nameof(InventoryActionSlot)];
             InventoryItemAmounts = CreateReadOnlyCollection("InventoryItemAmount", 1, 5);
             InventoryItemSlot = this[nameof(InventoryItemSlot)];
-            InventorySkillSlot = this[nameof(InventorySkillSlot)];
             MessageContainer = this[nameof(MessageContainer)];
             PickupShadow = this[nameof(PickupShadow)];
             Pixel = this[nameof(Pixel)];
@@ -83,6 +84,9 @@ namespace ScaryCastle
         // DiscardItemIcon
         public AtlasImage DiscardItemIcon { get; }
 
+        // FaithIcon
+        public AtlasImage FaithIcon { get; }
+
         // GooIcon
         public AtlasImage GooIcon { get; }
 
@@ -101,8 +105,8 @@ namespace ScaryCastle
         // InventoryItemSlot
         public AtlasImage InventoryItemSlot { get; }
 
-        // InventorySkillSlot
-        public AtlasImage InventorySkillSlot { get; }
+        // InventoryActionSlot
+        public AtlasImage InventoryActionSlot { get; }
 
         // MessageContainer
         public AtlasImage MessageContainer { get; }

@@ -1,5 +1,4 @@
-﻿using Engendro;
-using Engendro.Input;
+﻿using Engendro.Input;
 using Microsoft.Xna.Framework;
 using ScaryCastle.Scripting;
 
@@ -76,20 +75,10 @@ namespace ScaryCastle
 
             if (context.Target != null)
             {
-                if (context.Target.Faction == Faction.Evil && context.Target is Actor)
+                if (context.Target.Faction == Faction.Evil)
                 {
-                    if (context.Target.ItemReward != null)
-                    {
-                        MouseCursor.SubText = context.Target.ItemReward.DisplayName;
-                    }
-                    else if (context.Target.CoinReward > 0)
-                    {
-                        MouseCursor.SubText = context.CoinDisplayName;
-                    }
-                    else if ((context.Target as IThingDefinition)?.Definition?.DropTrigger == LootDropTrigger.OnImpact)
-                    {
-                        MouseCursor.SubText = "[?]";
-                    }
+                    MouseCursor.SubText = context.Target.DisplayInfo;
+                    MouseCursor.HealthAmount = context.Target.HP;
                 }
 
                 // No item 
@@ -111,7 +100,7 @@ namespace ScaryCastle
 
             if (context.Target != null)
             {
-                if (context.Target.IsHostile && context.HeldItem == null)
+                if (context.HeldItem == null && context.Target is Actor actor && actor.IsHostile && actor.IsAlert)
                     MouseCursor.Color = ColorPalette.MouseCursor.HostileTarget;
 
                 if (context.Session.Player != null && context.HeldItem?.Definition.ActionKind == ActionKind.Projectile)

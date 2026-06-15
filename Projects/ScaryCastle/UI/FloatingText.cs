@@ -108,7 +108,7 @@ namespace ScaryCastle
             var deltaX = Random.Shared.Next(3, 6);
             var horzDirection = source.Direction == FacingDirection.Left ? deltaX : -deltaX;
 
-            ShowCore(origin, amount.ToString(CultureInfo.InvariantCulture), color, new(horzDirection, -10), ScaleInfo.Text.Giant.X, 1700);
+            ShowCore(origin, amount.ToString(CultureInfo.InvariantCulture), color, new(horzDirection, -10), ScaleInfo.Text.VeryLarge.X, 1700);
         }
     }
 }

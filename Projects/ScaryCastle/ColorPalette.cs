@@ -65,7 +65,7 @@ namespace ScaryCastle
         internal static class MouseCursor
         {
             // HostileTarget
-            internal static Color HostileTarget { get; } = Text.TerraLight;
+            internal static Color HostileTarget { get; } = Text.OrangeLight;
         }
 
         // OutdoorLight
