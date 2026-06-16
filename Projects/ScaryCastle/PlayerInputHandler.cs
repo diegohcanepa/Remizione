@@ -124,14 +124,6 @@ namespace ScaryCastle
                 Actor.Session.InteractionData.Clear();
                 Actor.StopMoving();
             }
-            else if (!Actor.Session.AutoHideInventory)
-            {
-                Actor.Session.ShowInventory();
-            }
-            else
-            {
-                MouseCursor.Shake();
-            }
 
             return true;
         }
