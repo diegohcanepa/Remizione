@@ -55,7 +55,7 @@ namespace ScaryCastle
             }
 
             // 2. Outcome interaction: Approach and interact with target
-            if (context.HeldItem == null || MouseCursor.IsArrow)
+            if (context.HeldItem == null || context.Target.HasArrowCursor)
             {
                 Actor.ResolveInteraction(context.Target, null);
                 return;

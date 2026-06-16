@@ -200,10 +200,10 @@
   <String Key="MessageBox.QuitToMenu">Quit to main menu?</String>
   <String Key="MessageBox.SlotDeleted">The slot has been deleted.</String>
   <String Key="MessageBox.Warning">Warning!</String>
-  <String Key="MessageKind.BackToHallway">Back to hallway!</String>
   <String Key="MessageKind.CannotPlaceItem">There is not enough space on the ground.</String>
   <String Key="MessageKind.ExtraEnergy">You can hold more goo!</String>
   <String Key="MessageKind.ExtraHeart">You feel stronger!</String>
+  <String Key="MessageKind.FullGoo">The Supreme's Goo flows through your veins.</String>
   <String Key="MessageKind.HandsFull">Your hands are full.</String>
   <String Key="MessageKind.InventoryFull">Inventory is full.</String>
   <String Key="MessageKind.ItemDiscarded">Item discarded.</String>

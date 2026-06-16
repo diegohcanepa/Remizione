@@ -918,6 +918,10 @@ namespace ScaryCastle
             return 1;
         }
 
+        // HasArrowCursor
+        public bool HasArrowCursor => Cursor is MouseCursorState.Left or MouseCursorState.Right or
+                                                MouseCursorState.Up or MouseCursorState.Down;
+
         // HitTest
         public bool HitTest(Vector2 value)
         {

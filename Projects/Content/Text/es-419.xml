@@ -200,10 +200,10 @@
   <String Key="MessageBox.QuitToMenu">¿Salir al menú principal?</String>
   <String Key="MessageBox.SlotDeleted">La ranura ha sido eliminada.</String>
   <String Key="MessageBox.Warning">¡Atención!</String>
-  <String Key="MessageKind.BackToHallway">¡Vuelve al pasillo!</String>
   <String Key="MessageKind.CannotPlaceItem">No hay suficiente espacio en el terreno.</String>
   <String Key="MessageKind.ExtraEnergy">¡Puedes retener más baba!</String>
   <String Key="MessageKind.ExtraHeart">¡Te sientes más fuerte!</String>
+  <String Key="MessageKind.FullGoo">La baba del Supremo corre por tus venas. </String>
   <String Key="MessageKind.HandsFull">Tienes las manos ocupadas.</String>
   <String Key="MessageKind.InventoryFull">El inventario está lleno.</String>
   <String Key="MessageKind.ItemDiscarded">Item descartado.</String>

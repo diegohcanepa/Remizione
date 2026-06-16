@@ -115,7 +115,7 @@ namespace ScaryCastle
         // HandlePendingInteraction
         private void HandlePendingInteraction()
         {
-            if (!IsPlayer || !IsInCurrentRoom || IsDead)
+        if (!IsPlayer || !IsInCurrentRoom || IsDead)
                 return;
 
             // Session is busy
@@ -539,13 +539,6 @@ namespace ScaryCastle
             }
         }
 
-        // OnParentChanged
-        protected override void OnParentChanged(Entity? previousParent)
-        {
-            base.OnParentChanged(previousParent);
-            ActiveThrowable = null;
-        }
-
         // OnStartMoving
         protected override void OnStartMoving()
         {
@@ -963,6 +956,10 @@ namespace ScaryCastle
             return HandleInputResult.Unhandled;
         }
 
+        // HasThrowable
+        [ScriptProperty]
+        public bool HasThrowable => ActiveThrowable != null;
+
         // HasSpeechText
         public bool HasSpeechText => speechText != null && speechText.State != SpeechTextState.Hidden;
 
@@ -1189,7 +1186,7 @@ namespace ScaryCastle
                 return false;
             }
 
-            if (item?.Definition.ActionKind is ActionKind.InPlace or ActionKind.Self)
+            if ((item == null && target == this) || (item?.Definition.ActionKind is ActionKind.InPlace or ActionKind.Self))
             {
                 HandlePendingInteraction();
             }

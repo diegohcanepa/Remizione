@@ -19,7 +19,7 @@
             "Proximity",            
             "Self"
           ],
-          "default": "ProximityAction"
+          "default": "Proximity"
         },
         "animationName": {
           "type": "string"
@@ -54,7 +54,7 @@
         }
       },
       "required": [
-        "usageMode"
+        "actionKind"
       ]
     }
   ],

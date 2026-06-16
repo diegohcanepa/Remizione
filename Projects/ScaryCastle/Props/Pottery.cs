@@ -20,7 +20,6 @@ namespace ScaryCastle
             DisplayNameKey = "Prop.Pottery";
             //HurtSound = Sound.Find(SoundNames.ImpactA);
             IsLiftable = true;
-            MaxHP = 1;
         }
 
         // OnTakeDamage

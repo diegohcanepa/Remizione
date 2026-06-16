@@ -46,7 +46,7 @@ namespace ScaryCastle
                 session.Player.ExecuteAction(combatIntent, target);
                 result = true;
             }
-            else if (throwable != null)
+            else if (throwable != null && target.Cursor == MouseCursorState.Cross)
             {
                 session.Player.StopMoving();
                 session.Player.ThrowActiveTrowable(target);
@@ -73,7 +73,7 @@ namespace ScaryCastle
                     }
                 }
             }
-            else if (item != null && !MouseCursor.IsArrow)
+            else if (item != null && target.Cursor == MouseCursorState.Cross)
             {
                 if (item.Name == ItemNames.Lift)
                 {
@@ -124,7 +124,7 @@ namespace ScaryCastle
 
             if (context.HeldItem == null)
             {
-                if (context.Session.Player?.ActiveThrowable is Prop activeThrowable)
+                if (context.Session.Player?.ActiveThrowable is Prop activeThrowable && !target.HasArrowCursor)
                     this.throwable = activeThrowable;
                 else
                     this.script = target.OutcomeScript;
