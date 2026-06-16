@@ -957,7 +957,7 @@ namespace ScaryCastle
             if (InputHandler == null || Session.IsAwaiting || !IsPlayer || !CanHandleInput)
                 return HandleInputResult.Unhandled;
 
-            if (InputHandler != null)
+            if (InputHandler != null && Session.IsCurrentScene)
                 return InputHandler.HandleInput();
 
             return HandleInputResult.Unhandled;

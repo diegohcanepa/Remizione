@@ -92,8 +92,8 @@ namespace ScaryCastle
         // TestMouseLeftButtonClick
         private bool TestMouseLeftButtonClick()
         {
-            if (MouseCursor.State == MouseCursorState.Hand && MouseCursor.CustomImage == null)
-                return false;
+            //if (MouseCursor.State == MouseCursorState.Hand && MouseCursor.CustomImage == null)
+              //  return false;
 
             if (!InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
                 return false;
@@ -109,6 +109,8 @@ namespace ScaryCastle
             if (!InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
                 return false;
 
+            MouseCursor.PerformClick();
+
             // Drop throwable
             if (Actor.ActiveThrowable != null)
             {
@@ -116,13 +118,18 @@ namespace ScaryCastle
                 return true;
             }
 
+            Actor.StopMoving();
+
             // Drop held item
             if (Actor.Session.InteractionContext.HeldItem != null)
             {
                 Sound.Play(SoundNames.Interact);
                 Actor.Session.InteractionContext.HeldItem = null;
                 Actor.Session.InteractionData.Clear();
-                Actor.StopMoving();
+            }
+            else
+            {
+                Actor.Session.ShowActions();
             }
 
             return true;

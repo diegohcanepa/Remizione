@@ -23,13 +23,6 @@ namespace ScaryCastle
                 }
             }
 
-            // Inventory
-            if (context.Session.Game.SceneManager.CurrentScene is InventoryScene)
-            {
-                MouseCursor.State = MouseCursorState.Hand;
-                return;
-            }
-
             // DialogOption
             if (context.Session.Game.SceneManager.CurrentScene is DialogBlockScene)
             {
@@ -98,9 +91,9 @@ namespace ScaryCastle
 
             MouseCursor.Color = Color.White;
 
-            if (context.Target != null)
+            if (context.Target is Actor actor)
             {
-                if (context.HeldItem == null && context.Target is Actor actor && actor.IsHostile && actor.IsAlert)
+                if (context.HeldItem == null && actor.IsHostile && actor.IsAlert)
                     MouseCursor.Color = ColorPalette.MouseCursor.HostileTarget;
 
                 if (context.Session.Player != null && context.HeldItem?.Definition.ActionKind == ActionKind.Projectile)

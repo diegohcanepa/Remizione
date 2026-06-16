@@ -41,9 +41,6 @@
         // MaxItemAmount
         public const int MaxItemAmount = 5;
 
-        // MaxPlayerActions
-        public const int MaxPlayerActions = 2;
-
         // SteamAppID
         public const int SteamAppID = 480;
 

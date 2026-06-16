@@ -21,6 +21,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
+        private readonly ActionsScene actionsScene;
         private readonly ScriptConsole? console;
         private readonly FloatTween chromaticAberrationTween = new();
         private readonly InventoryScene inventoryScene;
@@ -50,6 +51,7 @@ namespace ScaryCastle
             : base(game, new ScaryCastlePersistenceModel(), ContentManagerExtension.EncodePath(game.Content, ContentFolder.System, "ScriptLibrary.esl"), slotNumber)
         {
             this.Game = game;
+            this.PlayerActions = new(this);
             this.PlayerInventory = new(this);
             this.Environment = new Environment(this);
             this.LootGenerator = new(this);
@@ -58,6 +60,7 @@ namespace ScaryCastle
             this.InteractionContext = new(this);
             this.DeclaredThings = new(proceduralThings);
             this.Random = new Random(Seed);
+            this.actionsScene = new(PlayerActions);
             this.inventoryScene = new(PlayerInventory);
 
             ObjectPools = new ObjectPools(this);
@@ -425,19 +428,19 @@ namespace ScaryCastle
                 }
             }
 
-            InteractionContext.Refresh();
-
             if (Player != null && Player.ActiveThrowable == null)
             {
                 if (!IsAwaiting && IsCurrentScene && CurrentRun != null && InteractionContext.Target == null)
                 {
                     if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 125)
                     {
-                        Game.SceneManager.Push(inventoryScene);
+                        ShowInventory();
                         return;
                     }
                 }
             }
+
+            InteractionContext.Refresh();
         }
 
         // OnWrite
@@ -490,8 +493,9 @@ namespace ScaryCastle
 
             StatusHUD.FaithMeter.Run = CurrentRun;
 
-            PlayerInventory.Add(ItemNames.Headbutt);
-            PlayerInventory.Add(ItemNames.Lift);
+            PlayerActions.Add(ItemNames.Headbutt);
+            PlayerActions.Add(ItemNames.Lift);
+
             PlayerInventory.Add(ItemNames.BargainCross);
 
             if (RunCount == 0)
@@ -568,6 +572,7 @@ namespace ScaryCastle
                 hubRoom.Unload();
 
             Coins = 0;
+            PlayerActions.Clear();
             PlayerInventory.Clear();
             PlayerStats.Reset();
             InteractionContext.Reset();
@@ -736,8 +741,11 @@ namespace ScaryCastle
             }
         }
 
+        // PlayerActions
+        public ItemContainer PlayerActions { get; }
+
         // PlayerInventory
-        public PlayerInventory PlayerInventory { get; }
+        public ItemContainer PlayerInventory { get; }
 
         // PlayerStats
         public PlayerStats PlayerStats { get; } = new();
@@ -808,12 +816,24 @@ namespace ScaryCastle
                 Camera.Shake(TweenStyle.Linear, new Vector2(3.4f), 50, 4);
         }
 
+        // ShowActions
+        public void ShowActions()
+        {
+            Game.SceneManager.Push(actionsScene);
+        }
+
         // ShowDialogMenu
         public void ShowDialogMenu(DialogBlock dialogBlock)
         {
             DialogOptionId = -1;
             var scene = new DialogBlockScene(this, dialogBlock);
             Game.SceneManager.Push(scene);
+        }
+
+        // ShowInventory
+        public void ShowInventory()
+        {
+            Game.SceneManager.Push(inventoryScene);
         }
 
         // ShowItemInfo

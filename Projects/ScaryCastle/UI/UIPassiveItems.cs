@@ -21,7 +21,7 @@ namespace ScaryCastle
         {
             this.session = session;
 
-            this.icons = new Sprite[PlayerInventory.MaximumCapacity];
+            this.icons = new Sprite[ItemContainer.MaximumCapacity];
 
             for (var i = 0; i < icons.Length; i++)
             {

@@ -6,14 +6,14 @@ using System.Collections.ObjectModel;
 namespace ScaryCastle
 {
     /// <summary>
-    /// PlayerInventory
+    /// ItemContainer
     /// </summary>
-    public sealed class PlayerInventory : Collection<Item>
+    public sealed class ItemContainer : Collection<Item>
     {
         #region Constructor
 
         // Constructor
-        public PlayerInventory(GameSession session)
+        public ItemContainer(GameSession session)
             : base()
         {
             this.Session = session;

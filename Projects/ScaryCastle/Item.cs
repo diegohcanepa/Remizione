@@ -19,7 +19,7 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public Item(PlayerInventory inventory, ItemDefinition definition)
+        public Item(ItemContainer inventory, ItemDefinition definition)
         {
             this.Inventory = inventory;
             this.Definition = definition;
@@ -129,7 +129,7 @@ namespace ScaryCastle
         public int Index => Inventory.IndexOf(this);
 
         // Inventory
-        public PlayerInventory Inventory { get; }
+        public ItemContainer Inventory { get; }
 
         // Name
         public string Name => Definition.Name;

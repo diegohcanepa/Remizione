@@ -13,7 +13,7 @@ namespace ScaryCastle
 
         private readonly TextSprite amountText;
         private readonly Sprite icon;
-        private readonly PlayerInventory inventory;
+        private readonly ItemContainer inventory;
         private int lastKnownCount = -1;
         private readonly FloatTween rotationTween = new();
         private readonly Vector2Tween scaleTween = new();
@@ -23,7 +23,7 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public UIInventoryMeter(PlayerInventory inventory)
+        public UIInventoryMeter(ItemContainer inventory)
         {
             this.inventory = inventory;
 
@@ -69,7 +69,7 @@ namespace ScaryCastle
             if (lastKnownCount != inventory.Count)
             {
                 lastKnownCount = inventory.Count;
-                amountText.Text = $"{inventory.Count - GameSettings.MaxPlayerActions}";
+                amountText.Text = $"{inventory.Count}/{inventory.Capacity}";
                 amountText.Color = inventory.IsFull ? ColorPalette.Text.Terra : ColorPalette.Text.Highlight;
             }
         }
