@@ -11,7 +11,7 @@ namespace ScaryCastle.Effects
     {
         // Constrcutor
         public LightingEffect()
-            : base("Effects/Lighting")
+            : base("Shaders/Lighting")
         {
             LightMask = Effect.Parameters["lightMask"] ?? throw new InvalidOperationException();
         }

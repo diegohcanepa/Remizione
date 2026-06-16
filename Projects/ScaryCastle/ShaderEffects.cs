@@ -3,9 +3,9 @@
 namespace ScaryCastle
 {
     /// <summary>
-    /// GameEffects
+    /// ShaderEffects
     /// </summary>
-    public sealed class GameEffects
+    public sealed class ShaderEffects
     {
         // ColorReduction
         public ColorReductionEffect ColorReduction { get; } = new();
@@ -18,8 +18,5 @@ namespace ScaryCastle
 
         // Lighting
         public LightingEffect Lighting { get; } = new();
-
-        // Outline
-        public OutlineEffect Outline { get; } = new();
     }
 }

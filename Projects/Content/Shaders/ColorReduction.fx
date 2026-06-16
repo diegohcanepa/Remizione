@@ -35,6 +35,6 @@ technique colorReduction
 			PixelShader = compile ps_3_0 PixelShaderColorReduction();
 		#else
 			PixelShader = compile ps_2_0 PixelShaderColorReduction();
-		#endif;
+		#endif
 	}
 }

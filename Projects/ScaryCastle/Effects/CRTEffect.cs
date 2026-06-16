@@ -14,7 +14,7 @@ namespace ScaryCastle.Effects
 
         // Constructor
         public CRTEffect()
-            : base("Effects/CRT")
+            : base("Shaders/CRT")
         {
         }
 

@@ -1376,54 +1376,6 @@
 /processorParam:Quality=Best
 /build:Audio/Music/Toilet.wav;Audio/Music/Toilet
 
-#begin Effects/Blur.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:Effects/Blur.fx
-
-#begin Effects/ColorReduction.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:Effects/ColorReduction.fx
-
-#begin Effects/ColorSaturation.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:Effects/ColorSaturation.fx
-
-#begin Effects/CRT.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:Effects/CRT.fx
-
-#begin Effects/Lighting.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:Effects/Lighting.fx
-
-#begin Effects/Outline.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:Effects/Outline.fx
-
-#begin Effects/PlaneDeformation.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:Effects/PlaneDeformation.fx
-
-#begin Effects/Sepia.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:Effects/Sepia.fx
-
 #begin Fonts/Common.bmp
 /importer:LocalizedFontTextureImporter
 /processor:LocalizedFontTextureProcessor
@@ -1450,6 +1402,48 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Color
 /build:Fonts/Monitor.bmp
+
+#begin Shaders/Blur.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Shaders/Blur.fx
+
+#begin Shaders/ColorReduction.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Shaders/ColorReduction.fx
+
+#begin Shaders/ColorSaturation.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Shaders/ColorSaturation.fx
+
+#begin Shaders/CRT.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Shaders/CRT.fx
+
+#begin Shaders/Lighting.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Shaders/Lighting.fx
+
+#begin Shaders/PlaneDeformation.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Shaders/PlaneDeformation.fx
+
+#begin Shaders/Sepia.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Shaders/Sepia.fx
 
 #begin System/Actors.json
 /copy:System/Actors.json

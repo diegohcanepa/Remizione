@@ -212,7 +212,7 @@ namespace ScaryCastle
         public GameSession? CurrentSession { get; private set; }
 
         // Effects
-        public static GameEffects Effects { get; private set; } = null!;
+        public static ShaderEffects Effects { get; private set; } = null!;
 
         // Play
         public void Play(int slotNumber)

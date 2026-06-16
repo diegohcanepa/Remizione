@@ -17,7 +17,7 @@ namespace ScaryCastle.Effects
 
         // Constrcutor
         public ColorSaturationEffect()
-            : base("Effects/ColorSaturation")
+            : base("Shaders/ColorSaturation")
         {
             rParameter = Effect.Parameters["r"] ?? throw new InvalidOperationException();
             gParameter = Effect.Parameters["g"] ?? throw new InvalidOperationException();

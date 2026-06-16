@@ -251,6 +251,7 @@ namespace ScaryCastle
 
             if (GetSelectedItem() is Item item)
             {
+                itemName.Color = item.Definition.Behavior == ItemBehavior.PlayerAction ? ColorPalette.Text.Terra : ColorPalette.Text.Highlight;
                 itemName.Text = item.Definition.DisplayName;
                 itemName.X = slots[item.Index].BoundingBox.Center.X;
                 icons[item.Index].Scale = ScaleInfo.InventoryHeldItem;

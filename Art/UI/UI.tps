@@ -189,6 +189,7 @@
                 <false/>
             </struct>
             <key type="filename">BossMeter-assets/BossMeterAmount.png</key>
+            <key type="filename">Inventory-assets/InventoryActionSlot.png</key>
             <key type="filename">UIIcons-assets/Dice.png</key>
             <key type="filename">XboxControls-assets/XboxA.png</key>
             <key type="filename">XboxControls-assets/XboxB.png</key>

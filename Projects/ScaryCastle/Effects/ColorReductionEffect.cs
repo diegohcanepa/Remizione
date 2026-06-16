@@ -17,7 +17,7 @@ namespace ScaryCastle.Effects
 
         // Constrcutor
         public ColorReductionEffect()
-            : base("Effects/ColorReduction")
+            : base("Shaders/ColorReduction")
         {
             rParameter = Effect.Parameters["r"] ?? throw new InvalidOperationException();
             gParameter = Effect.Parameters["g"] ?? throw new InvalidOperationException();
