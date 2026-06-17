@@ -28,7 +28,7 @@ namespace ScaryCastle
 
             for (var i = 0; i < slots.Length; i++)
             {
-                slots[i] = new(Atlases.UI.InventoryItemSlot)
+                slots[i] = new(Atlases.UI.InventoryActionSlot)
                 {
                     Opacity = .7f,
                     PivotOrigin = RectanglePoint.Center,

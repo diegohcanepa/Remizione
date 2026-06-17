@@ -59,17 +59,17 @@ namespace ScaryCastle
                 Scale = ScaleInfo.UISentence
             };
 
-            // Text sprite 2
+            // Subtext sprite
             subTextSprite = new(Fonts.CommonOutline)
             {
-                Scale = ScaleInfo.Text.Medium
+                Scale = ScaleInfo.Text.Large
             };
 
             // Health sprite
             healthTextSprite = new(Fonts.CommonOutline)
             {
                 PivotOrigin = RectanglePoint.Left,
-                Scale = ScaleInfo.Text.Small
+                Scale = ScaleInfo.Text.Medium
             };
 
             Reset();
@@ -93,7 +93,7 @@ namespace ScaryCastle
             if (!subTextSprite.IsEmpty)
             {
                 subTextSprite.PivotOrigin = textSprite.PivotOrigin;
-                subTextSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 2);
+                subTextSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 3);
             }
 
             if (HealthAmount > 0)
@@ -115,7 +115,7 @@ namespace ScaryCastle
                 if (!subTextSprite.IsEmpty)
                 {
                     subTextSprite.PivotOrigin = textSprite.PivotOrigin;
-                    subTextSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, .5f, 2);
+                    subTextSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, .5f, 3);
                 }
 
                 if (HealthAmount > 0)

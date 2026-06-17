@@ -98,6 +98,6 @@ namespace ScaryCastle
         }
 
         // UISentence
-        internal static Vector2 UISentence { get; } = Text.Large;
+        internal static Vector2 UISentence { get; } = Text.VeryLarge;
     }
 }
