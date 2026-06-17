@@ -32,8 +32,8 @@
         // GameFolder
         public const string GameFolder = "Scary Castle";
 
-        // InitialBibleCapacity
-        public const int InitialBibleCapacity = 20;
+        // InitialInventoryCapacity
+        public const int InitialInventoryCapacity = 5;
 
         // LogFileName
         public const string LogFileName = "ErrorLog.txt";

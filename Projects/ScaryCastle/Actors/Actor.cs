@@ -360,7 +360,7 @@ namespace ScaryCastle
             if (FaithReward > 0)
             {
                 var faithDisplayName = Localization.GetValue(StatName.Faith);
-                result += result.Length == 0 ? $"+{FaithReward} {faithDisplayName}" : $"  |  +{FaithReward} {faithDisplayName}";
+                result += result.Length == 0 ? $"+{FaithReward} {faithDisplayName}" : $"/+{FaithReward} {faithDisplayName}";
             }
             
             return result;
@@ -467,7 +467,7 @@ namespace ScaryCastle
 
             if (activeThrowableSprite?.RenderImage != null)
             {
-                activeThrowableSprite.Position = RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, 1);
+                activeThrowableSprite.Position = RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, 3);
                 activeThrowableSprite.Draw(gameTime);
             }
 

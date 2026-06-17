@@ -61,7 +61,7 @@ namespace ScaryCastle
                 Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Left,
                 Position = container.BoundingBox.GetPoint(RectanglePoint.LeftTop, 22, 13),
-                Scale = ScaleInfo.Text.ExtraLarge,
+                Scale = ScaleInfo.Text.Large,
                 ShadowOffset = new(.5f)
             };
 
@@ -74,7 +74,7 @@ namespace ScaryCastle
                 PauseOnPunctuationMarks = false,
                 PivotOrigin = RectanglePoint.LeftTop,
                 Position = container.BoundingBox.GetPoint(RectanglePoint.LeftTop, 6, 23),
-                Scale = ScaleInfo.Text.Large,
+                Scale = ScaleInfo.Text.Medium,
                 ShadowOffset = new(.5f),
                 TypingSpeed = 20
             };

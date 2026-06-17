@@ -902,11 +902,17 @@ namespace ScaryCastle
         // GetOverheadPosition
         public Vector2 GetOverheadPosition()
         {
+            return GetOverheadPosition(Vector2.Zero);
+        }
+
+        // GetOverheadPosition
+        public Vector2 GetOverheadPosition(Vector2 offset)
+        {
             // Origin
             if (OverheadOrigin == Vector2.Zero)
-                return BoundingBox.GetPoint(RectanglePoint.Top);
+                return BoundingBox.GetPoint(RectanglePoint.Top, offset);
             else
-                return this.GetAnchoredPosition(OverheadOrigin);
+                return this.GetAnchoredPosition(OverheadOrigin + offset);
         }
 
         // GetResistanceModifier

@@ -43,6 +43,12 @@ namespace ScaryCastle
 
             MouseCursor.PerformClick();
 
+            if (context.Target == Actor && context.HeldItem == null)
+            {
+                context.Session.ShowActions();
+                return;
+            }
+
             var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
 
             // 1. Walk to
@@ -92,9 +98,6 @@ namespace ScaryCastle
         // TestMouseLeftButtonClick
         private bool TestMouseLeftButtonClick()
         {
-            //if (MouseCursor.State == MouseCursorState.Hand && MouseCursor.CustomImage == null)
-              //  return false;
-
             if (!InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
                 return false;
 
@@ -129,7 +132,7 @@ namespace ScaryCastle
             }
             else
             {
-                Actor.Session.ShowActions();
+                Actor.Session.ShowInventory();
             }
 
             return true;

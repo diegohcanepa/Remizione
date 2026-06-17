@@ -17,7 +17,7 @@ namespace ScaryCastle
         private const string exclamationLow = "!";
         private const string exclamationMedium = "!!";
         private const string exclamationHigh = "!!!";
-        private const int maxWidth = 80;
+        private const int maxWidth = 90;
 
         #endregion
 

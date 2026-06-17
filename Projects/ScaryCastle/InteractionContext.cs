@@ -54,7 +54,7 @@ namespace ScaryCastle
 
                 if (Session.Room.CulledThings[i] is GameThing target && Session.Room.IsIlluminated(target))
                 {
-                    if (target.CanInteract() && target.RuntimeHotspot.Contains(mousePos))
+                    if (!target.IsMoving && target.CanInteract() && target.RuntimeHotspot.Contains(mousePos))
                         return target;
                 }
             }

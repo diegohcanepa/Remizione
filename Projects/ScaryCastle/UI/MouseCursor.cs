@@ -93,7 +93,7 @@ namespace ScaryCastle
             if (!subTextSprite.IsEmpty)
             {
                 subTextSprite.PivotOrigin = textSprite.PivotOrigin;
-                subTextSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom, .5f, 2);
+                subTextSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 2);
             }
 
             if (HealthAmount > 0)

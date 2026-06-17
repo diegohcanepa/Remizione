@@ -14,6 +14,7 @@ namespace ScaryCastle
         // RefreshCursor
         private static void RefreshCursor(InteractionContext context)
         {
+            /*
             if (context.HeldItem?.Definition.ActionKind == ActionKind.Projectile)
             {
                 if (context.Session.Player != null)
@@ -22,6 +23,7 @@ namespace ScaryCastle
                     MouseCursor.FlipCustomImage = mousePos.X < context.Session.Player.X;
                 }
             }
+            */
 
             // DialogOption
             if (context.Session.Game.SceneManager.CurrentScene is DialogBlockScene)
@@ -96,11 +98,13 @@ namespace ScaryCastle
                 if (context.HeldItem == null && actor.IsHostile && actor.IsAlert)
                     MouseCursor.Color = ColorPalette.MouseCursor.HostileTarget;
 
+                /*
                 if (context.Session.Player != null && context.HeldItem?.Definition.ActionKind == ActionKind.Projectile)
                 {
                     var mousePos = InputManager.DefaultPlayer.Mouse.WorldPosition(context.Session.Camera);
                     MouseCursor.FlipCustomImage = mousePos.X < context.Session.Player.X;
                 }
+                */
             }
         }
     }
