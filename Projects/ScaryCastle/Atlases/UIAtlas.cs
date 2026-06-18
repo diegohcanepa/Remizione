@@ -30,6 +30,9 @@ namespace ScaryCastle
             GreenHearts = CreateReadOnlyCollection(nameof(GreenHearts), 1, 4);
             HeartIcon = this[nameof(HeartIcon)];
             InventoryActionSlot = this[nameof(InventoryActionSlot)];
+            InventoryGiftActionSlot = this[nameof(InventoryGiftActionSlot)];
+            InventoryHeadbuttActionSlot = this[nameof(InventoryHeadbuttActionSlot)];
+            InventoryLiftActionSlot = this[nameof(InventoryLiftActionSlot)];
             InventoryItemAmounts = CreateReadOnlyCollection("InventoryItemAmount", 1, 5);
             InventoryItemSlot = this[nameof(InventoryItemSlot)];
             MessageContainer = this[nameof(MessageContainer)];
@@ -111,6 +114,15 @@ namespace ScaryCastle
 
         // InventoryActionSlot
         public AtlasImage InventoryActionSlot { get; }
+
+        // InventoryGiftActionSlot
+        public AtlasImage InventoryGiftActionSlot { get; }
+
+        // InventoryHeadbuttActionSlot
+        public AtlasImage InventoryHeadbuttActionSlot { get; }
+
+        // InventoryLiftActionSlot
+        public AtlasImage InventoryLiftActionSlot { get; }
 
         // MessageContainer
         public AtlasImage MessageContainer { get; }

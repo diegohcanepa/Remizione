@@ -1,7 +1,5 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using ScaryCastle.UI;
 
 namespace ScaryCastle
 {
@@ -27,7 +25,7 @@ namespace ScaryCastle
         public UIFaithMeter()
         {
             float x = 10;
-        
+
             icon = new(Atlases.UI.FaithIcon)
             {
                 PivotOrigin = RectanglePoint.Center,

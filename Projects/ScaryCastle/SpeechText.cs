@@ -193,7 +193,7 @@ namespace ScaryCastle
         {
             if (inputCooldown > 0)
                 inputCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-            
+
             arrowTween.Update(gameTime);
             UpdateState(gameTime);
             shakeTween.Update(gameTime);

@@ -17,7 +17,7 @@ namespace ScaryCastle
         public TextHUD(GameSession session)
         {
             this.session = session;
-            this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 5), ScaleInfo.Text.Large);
+            this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 10), ScaleInfo.Text.Medium);
         }
 
         #endregion

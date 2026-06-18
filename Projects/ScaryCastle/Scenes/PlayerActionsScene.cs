@@ -14,6 +14,7 @@ namespace ScaryCastle
 
         private readonly Sprite[] icons = new Sprite[3];
         private readonly ItemContainer itemContainer;
+        private readonly Sprite[] shadows = new Sprite[3];
         private readonly Sprite[] slots = new Sprite[3];
 
         #endregion
@@ -28,19 +29,31 @@ namespace ScaryCastle
 
             for (var i = 0; i < slots.Length; i++)
             {
-                slots[i] = new(Atlases.UI.InventoryActionSlot)
+                slots[i] = new()
                 {
-                    Opacity = .7f,
+                    Opacity = .9f,
                     PivotOrigin = RectanglePoint.Center,
-                    Scale = new(.8f)
+                    Scale = new(.9f)
                 };
 
                 icons[i] = new()
                 {
                     PivotOrigin = RectanglePoint.Center,
-                    //Scale = new(.8f)
+                    Scale = new(.8f)
+                };
+
+                shadows[i] = new()
+                {
+                    Color = Color.Black,
+                    Opacity = ColorPalette.ShadowOpacity,
+                    PivotOrigin = RectanglePoint.Center,
+                    Scale = ScaleInfo.UIElement.Medium,
                 };
             }
+
+            slots[0].RenderImage = Atlases.UI.InventoryLiftActionSlot;
+            slots[1].RenderImage = Atlases.UI.InventoryHeadbuttActionSlot;
+            slots[2].RenderImage = Atlases.UI.InventoryGiftActionSlot;
         }
 
         #region Private members
@@ -98,11 +111,16 @@ namespace ScaryCastle
             for (int i = 0; i < icons.Length; i++)
             {
                 icons[i].RenderImage = null;
+                shadows[i].RenderImage = null;
 
                 if (i < itemContainer.Count)
                 {
                     icons[i].Position = slots[i].BoundingBox.GetPoint(RectanglePoint.Center);
                     icons[i].RenderImage = itemContainer[i].Definition.Image;
+
+                    shadows[i].Y = slots[i].BoundingBox.Center.Y + .5f;
+                    shadows[i].X = icons[i].X - .5f;
+                    shadows[i].RenderImage = itemContainer[i].Definition.Image;
                 }
             }
         }
@@ -126,6 +144,7 @@ namespace ScaryCastle
             for (var i = 0; i < itemContainer.Capacity; i++)
             {
                 slots[i].Draw(gameTime);
+                shadows[i].Draw(gameTime);
                 icons[i].Draw(gameTime);
             }
 

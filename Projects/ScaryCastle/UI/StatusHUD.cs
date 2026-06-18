@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using Engendro.Input;
 using Microsoft.Xna.Framework;
 
 namespace ScaryCastle
@@ -25,7 +24,7 @@ namespace ScaryCastle
         public StatusHUD(GameSession session)
         {
             this.session = session;
-            this.hpMeter = new(new(15, 3));
+            this.hpMeter = new(new(14, 3));
             this.coinMeter = new(session);
             this.InventoryMeter = new(session.PlayerInventory);
             this.passiveItems = new(session);

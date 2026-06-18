@@ -231,6 +231,38 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">GooMeter-assets/GooMeter7.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,6,3,11</rect>
+                <key>scale9Paddings</key>
+                <rect>2,6,3,11</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Inventory-assets/InventoryGiftActionSlot.png</key>
+            <key type="filename">Inventory-assets/InventoryHeadbuttActionSlot.png</key>
+            <key type="filename">Inventory-assets/InventoryLiftActionSlot.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,4,8,8</rect>
+                <key>scale9Paddings</key>
+                <rect>4,4,8,8</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Inventory-assets/InventoryItemAmount1.png</key>
             <key type="filename">Inventory-assets/InventoryItemAmount2.png</key>
             <key type="filename">Inventory-assets/InventoryItemAmount3.png</key>
@@ -267,21 +299,6 @@
                 <rect>4,4,7,8</rect>
                 <key>scale9Paddings</key>
                 <rect>4,4,7,8</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Inventory-assets/PlayerActionsContainer.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>13,7,26,13</rect>
-                <key>scale9Paddings</key>
-                <rect>13,7,26,13</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -380,9 +397,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>3,4,5,9</rect>
+                <rect>2,4,5,7</rect>
                 <key>scale9Paddings</key>
-                <rect>3,4,5,9</rect>
+                <rect>2,4,5,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

@@ -202,21 +202,21 @@ namespace ScaryCastle
             }
 
             Game.SpriteBatch.Begin(Camera, SamplerState.PointClamp, shader);
-            
+
             if (HasText)
             {
                 containerPattern.Draw(gameTime);
                 containerEdgeLeft.Draw(gameTime);
             }
             image.Draw(gameTime);
-            
+
             Game.SpriteBatch.End();
 
             Game.SpriteBatch.Begin(Camera, SamplerState.LinearClamp, shader);
-            
+
             if (HasText)
                 label.Draw(gameTime);
-            
+
             Game.SpriteBatch.End();
         }
 

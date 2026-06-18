@@ -115,7 +115,7 @@ namespace ScaryCastle
         // HandlePendingInteraction
         private void HandlePendingInteraction()
         {
-        if (!IsPlayer || !IsInCurrentRoom || IsDead)
+            if (!IsPlayer || !IsInCurrentRoom || IsDead)
                 return;
 
             // Session is busy
@@ -362,7 +362,7 @@ namespace ScaryCastle
                 var faithDisplayName = Localization.GetValue(StatName.Faith);
                 result += result.Length == 0 ? $"+{FaithReward} {faithDisplayName}" : $"/+{FaithReward} {faithDisplayName}";
             }
-            
+
             return result;
         }
 

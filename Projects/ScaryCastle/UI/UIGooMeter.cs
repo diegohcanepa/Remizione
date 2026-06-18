@@ -29,7 +29,7 @@ namespace ScaryCastle
             {
                 Position = Screen.Area.GetPoint(RectanglePoint.LeftTop, 6, 2)
             };
-            
+
             currentDisplayedIndex = 0;
         }
 
@@ -82,7 +82,7 @@ namespace ScaryCastle
                 return;
 
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            
+
             container.Update(gameTime);
 
             float targetValue = Actor.Energy;
