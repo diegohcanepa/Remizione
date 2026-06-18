@@ -31,7 +31,7 @@ namespace ScaryCastle
             icon = new(Atlases.UI.FaithIcon)
             {
                 PivotOrigin = RectanglePoint.Center,
-                Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom, x, -18)
+                Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom, x, -9)
             };
 
             amountDisplay = new()

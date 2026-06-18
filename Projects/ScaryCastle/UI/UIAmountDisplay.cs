@@ -43,6 +43,13 @@ namespace ScaryCastle
             currentText.Position = Position;
             currentText.Text = Current.ToString(CultureInfo.InvariantCulture);
 
+            if (Current == 0)
+                currentText.Color = ColorPalette.Text.Terra;
+            else if (Current == Maximum)
+                currentText.Color = ColorPalette.Text.Green;
+            else
+                currentText.Color = ColorPalette.Text.Highlight;
+
             maximumText.Position = currentText.BoundingBox.GetPoint(RectanglePoint.RightBottom, -.5f, -1);
             maximumText.Text = $" | {Maximum}";
         }

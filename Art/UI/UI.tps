@@ -190,6 +190,9 @@
             </struct>
             <key type="filename">BossMeter-assets/BossMeterAmount.png</key>
             <key type="filename">Inventory-assets/InventoryActionSlot.png</key>
+            <key type="filename">Items-assets/Burger.png</key>
+            <key type="filename">Items-assets/Coin.png</key>
+            <key type="filename">Items-assets/SodaCan.png</key>
             <key type="filename">UIIcons-assets/Dice.png</key>
             <key type="filename">XboxControls-assets/XboxA.png</key>
             <key type="filename">XboxControls-assets/XboxB.png</key>
@@ -204,6 +207,27 @@
                 <rect>4,4,7,7</rect>
                 <key>scale9Paddings</key>
                 <rect>4,4,7,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">GooMeter-assets/GooMeter0.png</key>
+            <key type="filename">GooMeter-assets/GooMeter1.png</key>
+            <key type="filename">GooMeter-assets/GooMeter2.png</key>
+            <key type="filename">GooMeter-assets/GooMeter3.png</key>
+            <key type="filename">GooMeter-assets/GooMeter4.png</key>
+            <key type="filename">GooMeter-assets/GooMeter5.png</key>
+            <key type="filename">GooMeter-assets/GooMeter6.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,5,3,9</rect>
+                <key>scale9Paddings</key>
+                <rect>2,5,3,9</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -230,6 +254,8 @@
                 <false/>
             </struct>
             <key type="filename">Inventory-assets/InventoryItemSlot.png</key>
+            <key type="filename">Items-assets/GoldenKey.png</key>
+            <key type="filename">Items-assets/GooBottle.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -293,21 +319,13 @@
             <key type="filename">Items-assets/BargainCross.png</key>
             <key type="filename">Items-assets/Battery.png</key>
             <key type="filename">Items-assets/BittenApple.png</key>
-            <key type="filename">Items-assets/Burger.png</key>
             <key type="filename">Items-assets/Chili.png</key>
-            <key type="filename">Items-assets/Coin.png</key>
             <key type="filename">Items-assets/Duck.png</key>
-            <key type="filename">Items-assets/Firecracker.png</key>
-            <key type="filename">Items-assets/GoldenKey.png</key>
-            <key type="filename">Items-assets/GooBottle.png</key>
-            <key type="filename">Items-assets/Headbutt.png</key>
             <key type="filename">Items-assets/Lantern.png</key>
             <key type="filename">Items-assets/Lockpick.png</key>
             <key type="filename">Items-assets/MagneticCard.png</key>
             <key type="filename">Items-assets/MissingItem.png</key>
-            <key type="filename">Items-assets/Pistol.png</key>
             <key type="filename">Items-assets/RustyLockpick.png</key>
-            <key type="filename">Items-assets/SodaCan.png</key>
             <key type="filename">Items-assets/SteelLockpick.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -323,6 +341,36 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Items-assets/Firecracker.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,4,7,9</rect>
+                <key>scale9Paddings</key>
+                <rect>4,4,7,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Items-assets/Headbutt.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,3,7,6</rect>
+                <key>scale9Paddings</key>
+                <rect>4,3,7,6</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Items-assets/Lift.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -332,9 +380,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>3,3,5,7</rect>
+                <rect>3,4,5,9</rect>
                 <key>scale9Paddings</key>
-                <rect>3,3,5,7</rect>
+                <rect>3,4,5,9</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -350,6 +398,22 @@
                 <rect>2,1,5,1</rect>
                 <key>scale9Paddings</key>
                 <rect>2,1,5,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Items-assets/Pistol.png</key>
+            <key type="filename">KeyboardControls-assets/KeyboardDelete.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,4,9,7</rect>
+                <key>scale9Paddings</key>
+                <rect>5,4,9,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -375,21 +439,6 @@
                 <rect>3,3,6,6</rect>
                 <key>scale9Paddings</key>
                 <rect>3,3,6,6</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">KeyboardControls-assets/KeyboardDelete.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>5,4,9,7</rect>
-                <key>scale9Paddings</key>
-                <rect>5,4,9,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -913,6 +962,7 @@
                     <filename>MonitorFrame-assets</filename>
                     <filename>ItemInfo-assets</filename>
                     <filename>BossMeter-assets</filename>
+                    <filename>GooMeter-assets</filename>
                 </array>
             </struct>
         </map>

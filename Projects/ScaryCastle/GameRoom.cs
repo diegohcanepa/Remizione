@@ -20,7 +20,7 @@ namespace ScaryCastle
         private Color brightnessColor;
         private int currentDrawIndex;
         private readonly Color defaultPlayerLightColor = new(240, 181, 65);
-        private readonly Vector2 defaultPlayerLightScale = new(3.5f);
+        private readonly Vector2 defaultPlayerLightScale = new(5);
         private static DustEmitter dustEmitter = null!;
         private static FireflyEmitter fireflyEmitter = null!;
         private RenderTarget2D? lightMapTarget;
@@ -547,7 +547,17 @@ namespace ScaryCastle
         // IsIlluminated
         public bool IsIlluminated(GameThing target)
         {
-            return HasAmbientLightSources || playerLight.BoundingBox.Contains(target.Position);
+            if (HasAmbientLightSources)
+                return true;
+
+            if (!target.RuntimeHotspot.IsEmpty)
+            {
+                return playerLight.BoundingBox.Intersects(target.RuntimeHotspot.BoundingRectangleF);
+            }
+            else
+            {
+                return playerLight.BoundingBox.Contains(target.Position);
+            }
         }
 
         // IsProcedural
