@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
 
 namespace ScaryCastle
 {
@@ -9,55 +10,32 @@ namespace ScaryCastle
     /// </summary>
     public sealed class UIGooMeter : GameObject
     {
+        private enum GooMeterPart { TopEmpty, MiddleEmpty, BottomEmpty, TopFilled, MiddleFilled, BottomFilled };
+
         #region Private fields
 
-        private readonly Sprite container;
-        private int currentDisplayedIndex;
-        private const float fillSpeed = 5f;
-        private readonly FloatTween rotationTween = new();
-        private readonly Vector2Tween scaleTween = new();
+        private const float fillSpeed = 8;
+        private readonly List<Sprite> parts = [];
+        private readonly Vector2 position = new(6, 2);
         private float visualValue;
-
-        #endregion
-
-        #region Constructor
-
-        // Constructor
-        public UIGooMeter()
-        {
-            container = new(Atlases.UI.GooMeter[0])
-            {
-                Position = Screen.Area.GetPoint(RectanglePoint.LeftTop, 6, 2)
-            };
-
-            currentDisplayedIndex = 0;
-        }
 
         #endregion
 
         #region Private members
 
-        // AnimateJuice
-        private void AnimateJuice()
+        // Refresh
+        private void Refresh()
         {
-            rotationTween.Start(TweenStyle.QuadraticInOut, 0, 3, 50, 6);
-            scaleTween.Start(TweenStyle.QuadraticInOut, Vector2.One, Vector2.One * 1.1f, 150, 2);
+            parts.Clear();
 
-            container.Tweens.RotationTween = rotationTween;
-            container.Tweens.ScaleTween = scaleTween;
-        }
+            if (Actor == null)
+                return;
 
-        // UpdateSpriteIndex
-        private void UpdateSpriteIndex(int newIndex)
-        {
-            // Asegurar que no nos salgamos del rango de texturas disponibles
-            int clampedIndex = MathHelper.Clamp(newIndex, 0, Atlases.UI.GooMeter.Count - 1);
+            visualValue = Actor.Energy;
 
-            if (currentDisplayedIndex != clampedIndex)
+            while (parts.Count < Actor.MaxEnergy)
             {
-                currentDisplayedIndex = clampedIndex;
-                container.RenderImage = Atlases.UI.GooMeter[currentDisplayedIndex];
-                AnimateJuice();
+                parts.Add(new Sprite(Atlases.UI.GooMeter[(int)GooMeterPart.MiddleEmpty]) { X = position.X } );
             }
         }
 
@@ -68,10 +46,44 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (Actor == null) return;
+            if (Actor == null || parts.Count == 0)
+                return;
 
             Game.SpriteBatch.Begin(Game.Camera);
-            container.Draw(gameTime);
+
+            float currentLocalY = 0;
+
+            for (int i = 0; i < parts.Count; i++)
+            {
+                var segment = parts[i];
+
+                // Invertimos la evaluación: los índices más altos (el fondo) se llenan primero.
+                int fillIndex = parts.Count - 1 - i;
+                bool isSegmentFilled = visualValue > fillIndex;
+
+                // Determinar la parte del enum correspondiente
+                GooMeterPart part;
+
+                if (i == 0)
+                {
+                    part = isSegmentFilled ? GooMeterPart.TopFilled : GooMeterPart.TopEmpty;
+                }
+                else if (i == parts.Count - 1)
+                {
+                    part = isSegmentFilled ? GooMeterPart.BottomFilled : GooMeterPart.BottomEmpty;
+                }
+                else
+                {
+                    part = isSegmentFilled ? GooMeterPart.MiddleFilled : GooMeterPart.MiddleEmpty;
+                }
+
+                segment.RenderImage = Atlases.UI.GooMeter[(int)part];
+                segment.Y = position.Y + currentLocalY;
+                segment.Draw(gameTime);
+
+                currentLocalY += segment.BoundingBox.Height - 1;
+            }
+
             Game.SpriteBatch.End();
         }
 
@@ -81,14 +93,13 @@ namespace ScaryCastle
             if (Actor == null)
                 return;
 
-            float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (Actor.MaxEnergy != parts.Count)
+                Refresh();
 
-            container.Update(gameTime);
+            float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             float targetValue = Actor.Energy;
 
-            // Comparación directa (segura acá por el Clamping inferior) 
-            // o podés usar: if (Math.Abs(visualValue - targetValue) > 0.001f)
             if (visualValue != targetValue)
             {
                 if (visualValue < targetValue)
@@ -99,9 +110,6 @@ namespace ScaryCastle
                 {
                     visualValue = Math.Max(visualValue - (fillSpeed * dt), targetValue);
                 }
-
-                int targetIndex = (int)Math.Round(visualValue);
-                UpdateSpriteIndex(targetIndex);
             }
         }
 
@@ -116,12 +124,8 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = value;
-
                     if (field != null)
-                    {
-                        visualValue = field.Energy;
-                        UpdateSpriteIndex(field.Energy);
-                    }
+                        Refresh();
                 }
             }
         }

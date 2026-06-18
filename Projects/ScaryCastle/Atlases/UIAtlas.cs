@@ -25,8 +25,7 @@ namespace ScaryCastle
             DiscardItemIcon = this[nameof(DiscardItemIcon)];
             FaithIcon = this[nameof(FaithIcon)];
             GooIcon = this[nameof(GooIcon)];
-            GooIcons = CreateReadOnlyCollection(nameof(GooIcons), 1, 2);
-            GooMeter = CreateReadOnlyCollection("GooMeter", 0, 6);
+            GooMeter = CreateReadOnlyCollection("GooMeter", 0, 5);
             GreenHearts = CreateReadOnlyCollection(nameof(GreenHearts), 1, 4);
             HeartIcon = this[nameof(HeartIcon)];
             InventoryActionSlot = this[nameof(InventoryActionSlot)];
@@ -93,9 +92,6 @@ namespace ScaryCastle
 
         // GooIcon
         public AtlasImage GooIcon { get; }
-
-        // GooIcons
-        public ReadOnlyCollection<AtlasImage> GooIcons { get; }
 
         // GooMeter
         public ReadOnlyCollection<AtlasImage> GooMeter { get; }
