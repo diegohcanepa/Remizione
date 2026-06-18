@@ -838,7 +838,7 @@ namespace ScaryCastle
         public void StartGatePhase()
         {
             if (Boss != null)
-                StatusHUD.BossMeter.SetTargets(Bosses);
+                StatusHUD.BossMeter.SetTargets(Bosses.ToArray());
         }
 
         // StatusHUD

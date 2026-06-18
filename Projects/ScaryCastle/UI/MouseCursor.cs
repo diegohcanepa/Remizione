@@ -21,10 +21,9 @@ namespace ScaryCastle
         private static readonly Sprite cursorSprite;
         private static readonly Vector2 defaultScale = ScaleInfo.UIElement.Large;
         private static readonly TextSprite healthTextSprite;
-        private static readonly Sprite heartIcon = new(Atlases.UI.HeartIcon) { PivotOrigin = RectanglePoint.Left, Scale = new(.5f) };
+        private static readonly Sprite heartIcon = new(Atlases.UI.HeartIcon) { PivotOrigin = RectanglePoint.LeftTop, Scale = ScaleInfo.UIElement.Small };
         private static readonly Vector2Tween scaleTween = new();
         private static readonly FloatTween shakeTween = new();
-        private static readonly TextSprite subTextSprite;
         private static readonly TextSprite textSprite;
 
         #endregion
@@ -59,12 +58,6 @@ namespace ScaryCastle
                 Scale = ScaleInfo.UISentence
             };
 
-            // Subtext sprite
-            subTextSprite = new(Fonts.CommonOutline)
-            {
-                Scale = ScaleInfo.Text.Large
-            };
-
             // Health sprite
             healthTextSprite = new(Fonts.CommonOutline)
             {
@@ -79,8 +72,8 @@ namespace ScaryCastle
 
         #region Private members
 
-        // ClampTextToScreen
-        private static void ClampTextToScreen()
+        // ClampToScreen
+        private static void ClampToScreen()
         {
             if (textSprite.IsEmpty)
                 return;
@@ -90,45 +83,30 @@ namespace ScaryCastle
             textSprite.PivotOrigin = RectanglePoint.Left;
             textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.Right, -offset.X, offset.Y);
 
-            if (!subTextSprite.IsEmpty)
-            {
-                subTextSprite.PivotOrigin = textSprite.PivotOrigin;
-                subTextSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, 3);
-            }
-
             if (HealthAmount > 0)
             {
-                heartIcon.PivotOrigin = textSprite.PivotOrigin;
-                heartIcon.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.Right, 1, 0);
-
+                heartIcon.PivotOrigin = RectanglePoint.LeftTop;
+                heartIcon.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -.5f);
                 healthTextSprite.PivotOrigin = textSprite.PivotOrigin;
-                healthTextSprite.Position = heartIcon.BoundingBox.GetPoint(RectanglePoint.Right, .5f, 0);
+                healthTextSprite.Position = heartIcon.BoundingBox.GetPoint(RectanglePoint.Right, .5f, .5f);
             }
 
-            if (!textSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox) ||
-                !subTextSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox) ||
-                !healthTextSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox))
+            if (!textSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox))
             {
                 textSprite.PivotOrigin = RectanglePoint.Right;
                 textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.Left, offset.X, offset.Y);
 
-                if (!subTextSprite.IsEmpty)
-                {
-                    subTextSprite.PivotOrigin = textSprite.PivotOrigin;
-                    subTextSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, .5f, 3);
-                }
-
                 if (HealthAmount > 0)
                 {
-                    heartIcon.PivotOrigin = textSprite.PivotOrigin;
-                    heartIcon.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.Left, -1, 0);
+                    heartIcon.PivotOrigin = RectanglePoint.RightTop;
+                    heartIcon.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, -1, 0);
 
                     healthTextSprite.PivotOrigin = textSprite.PivotOrigin;
-                    healthTextSprite.Position = heartIcon.BoundingBox.GetPoint(RectanglePoint.Left, -.5f, 0);
+                    healthTextSprite.Position = heartIcon.BoundingBox.GetPoint(RectanglePoint.Right, -.5f, 0);
                 }
             }
 
-            if (textSprite.BoundingBox.Bottom >= Screen.NativeHeight || subTextSprite.BoundingBox.Bottom >= Screen.NativeHeight)
+            if (textSprite.BoundingBox.Bottom >= Screen.NativeHeight)
             {
                 textSprite.Y -= 10;
                 if (HealthAmount > 0)
@@ -136,9 +114,6 @@ namespace ScaryCastle
                     heartIcon.Y -= 10;
                     healthTextSprite.Y -= 10;
                 }
-
-                if (!subTextSprite.IsEmpty)
-                    subTextSprite.Y -= 7 + textSprite.BoundingBox.Height + subTextSprite.BoundingBox.Height;
             }
         }
 
@@ -193,7 +168,6 @@ namespace ScaryCastle
             {
                 EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera, SamplerState.LinearClamp);
                 textSprite.Draw(gameTime);
-                subTextSprite.Draw(gameTime);
                 if (HealthAmount > 0)
                     healthTextSprite.Draw(gameTime);
                 EngendroGame.Instance.SpriteBatch.End();
@@ -222,7 +196,6 @@ namespace ScaryCastle
                     field = value;
                     cursorSprite.Opacity = value ? 1 : .4f;
                     textSprite.Opacity = cursorSprite.Opacity;
-                    subTextSprite.Opacity = cursorSprite.Opacity;
                 }
             }
         } = true;
@@ -261,7 +234,6 @@ namespace ScaryCastle
         {
             cursorSprite.Color = Color.White;
             textSprite.Color = ColorPalette.Text.Sentence;
-            subTextSprite.Color = ColorPalette.Text.Highlight;
             healthTextSprite.Color = ColorPalette.Text.Highlight;
             CustomImage = null;
             FlipCustomImage = false;
@@ -269,7 +241,6 @@ namespace ScaryCastle
             IsEnabled = true;
             State = MouseCursorState.Arrow;
             Text = null;
-            SubText = null;
         }
 
         // Shake
@@ -291,13 +262,6 @@ namespace ScaryCastle
                     InvalidateCursorImage();
                 }
             }
-        }
-
-        // SubText
-        public static string? SubText
-        {
-            get => subTextSprite.Text;
-            set => subTextSprite.Text = value;
         }
 
         // Text
@@ -323,7 +287,7 @@ namespace ScaryCastle
             cursorSprite.Effects = FlipCustomImage && CustomImage != null ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
             cursorSprite.Update(gameTime);
             shakeTween.Update(gameTime);
-            ClampTextToScreen();
+            ClampToScreen();
 
             if (IsEnabled)
             {

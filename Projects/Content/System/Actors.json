@@ -23,7 +23,6 @@
     },
     {
       "name": "Rat",
-      "preferredLootCategory": "Pills",
       "dropSackChanceBonus": 1
     },
     {

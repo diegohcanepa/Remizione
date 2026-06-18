@@ -69,14 +69,22 @@ namespace ScaryCastle
 
             if (context.Target != null)
             {
-                if (context.Target.Faction == Faction.Evil)
+                if (context.Target.Faction == Faction.Evil && context.Target is Actor actor)
                 {
-                    MouseCursor.SubText = context.Target.DisplayInfo;
-                    MouseCursor.HealthAmount = context.Target.HP;
+                    MouseCursor.HealthAmount = actor.HP;
+
+                    if (actor != context.Session.Player)
+                        context.Session.StatusHUD.ThingInfo.Actor = actor;
+                    else
+                        context.Session.StatusHUD.ThingInfo.Actor = null;
                 }
 
                 // No item 
                 MouseCursor.Text = context.Target.DisplaySentence;
+            }
+            else
+            {
+                context.Session.StatusHUD.ThingInfo.Actor = null;
             }
         }
 

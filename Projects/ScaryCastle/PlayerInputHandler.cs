@@ -43,7 +43,7 @@ namespace ScaryCastle
 
             MouseCursor.PerformClick();
 
-            if (context.Target == Actor && context.HeldItem == null)
+            if (context.Target == Actor && context.HeldItem == null && Actor.Room?.IsProcedural == true)
             {
                 context.Session.ShowActions();
                 return;

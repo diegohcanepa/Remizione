@@ -206,12 +206,6 @@ namespace ScaryCastle
             isCollisionDirty = true;
         }
 
-        // RefreshDisplayInfo
-        private void RefreshDisplayInfo()
-        {
-            DisplayInfo = GetDisplayInfo();
-        }
-
         // RefreshDisplayName
         private void RefreshDisplayName()
         {
@@ -290,12 +284,6 @@ namespace ScaryCastle
                     }
                 }
             }
-        }
-
-        // GetDisplayInfo
-        protected virtual string GetDisplayInfo()
-        {
-            return string.Empty;
         }
 
         // GetDisplayName
@@ -570,18 +558,7 @@ namespace ScaryCastle
         }
 
         // CoinReward
-        public int CoinReward
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    RefreshDisplayInfo();
-                }
-            }
-        }
+        public int CoinReward { get; set; }
 
         // Collider
         [ScriptProperty]
@@ -715,9 +692,6 @@ namespace ScaryCastle
         [ScriptProperty]
         public Sound? DeathSound { get; set; }
 
-        // DisplayInfo
-        public string DisplayInfo { get; private set; } = string.Empty;
-
         // DisplayName
         public string DisplayName { get; private set; } = string.Empty;
 
@@ -801,7 +775,6 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = Math.Max(0, value);
-                    RefreshDisplayInfo();
                 }
             }
         }
@@ -1202,18 +1175,7 @@ namespace ScaryCastle
         } = new();
 
         // ItemReward
-        public ItemDefinition? ItemReward
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    RefreshDisplayInfo();
-                }
-            }
-        }
+        public ItemDefinition? ItemReward { get; set; }
 
         // Session
         public new GameSession Session { get; }

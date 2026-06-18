@@ -29,6 +29,7 @@ namespace ScaryCastle
             this.InventoryMeter = new(session.PlayerInventory);
             this.passiveItems = new(session);
             this.BossMeter = new(session);
+            this.ThingInfo = new();
         }
 
         #endregion
@@ -47,6 +48,7 @@ namespace ScaryCastle
             FaithMeter.Draw(gameTime);
             InventoryMeter.Draw(gameTime);
             coinMeter.Draw(gameTime);
+            ThingInfo.Draw(gameTime);
 
             if (session.IsCurrentScene)
             {
@@ -62,6 +64,7 @@ namespace ScaryCastle
             passiveItems.Update(gameTime);
             InventoryMeter.Update(gameTime);
             BossMeter.Update(gameTime);
+            ThingInfo.Update(gameTime);
             hpMeter.Update(gameTime);
             FaithMeter.Update(gameTime);
             gooMeter.Update(gameTime);
@@ -84,6 +87,10 @@ namespace ScaryCastle
             hpMeter.Actor = session.Player;
             gooMeter.Actor = session.Player;
             BossMeter.Reset();
+            ThingInfo.Actor = null;
         }
+
+        // ThingInfo
+        public UIItemLoot ThingInfo { get; }
     }
 }
