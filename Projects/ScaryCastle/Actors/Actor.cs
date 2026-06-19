@@ -414,7 +414,6 @@ namespace ScaryCastle
                 BodyMachine.ChangeState(deathState.GetType());
             }
 
-            Session.CurrentRun?.CurrentFaith += FaithReward;
             ShowComicText(ComicTextKind.PlopRed);
             ClearCondition();
         }

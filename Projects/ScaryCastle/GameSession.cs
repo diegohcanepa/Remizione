@@ -479,8 +479,6 @@ namespace ScaryCastle
 
             CurrentRun = new Run(Seed, 6);
 
-            StatusHUD.FaithMeter.Run = CurrentRun;
-
             PlayerInventory.Capacity = GameSettings.InitialInventoryCapacity;
 
             PlayerActions.Add(ItemNames.Lift);
@@ -555,8 +553,6 @@ namespace ScaryCastle
                 return;
 
             CurrentRun = null;
-
-            StatusHUD.FaithMeter.Run = null;
 
             if (FindEntity<Hub>(nameof(Hub)) is Hub hubRoom)
                 hubRoom.Unload();

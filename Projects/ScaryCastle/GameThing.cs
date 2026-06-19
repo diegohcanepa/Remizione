@@ -645,9 +645,6 @@ namespace ScaryCastle
 
             OnDeath();
 
-            if (FaithReward > 0)
-                Session.ObjectPools.FloatingTexts.Get()?.Show(GetOverheadPosition(), $"+{FaithReward} {Localization.GetValue(StatName.Faith)}", ColorPalette.Text.Highlight, ScaleInfo.Text.VeryLarge.X, 2000);
-
             DropLoot();
         }
 
@@ -762,20 +759,6 @@ namespace ScaryCastle
                 field = value;
                 if (field == Faction.Evil)
                     IsHostile = true;
-            }
-        }
-
-        // FaithReward
-        [ScriptProperty]
-        public int FaithReward
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = Math.Max(0, value);
-                }
             }
         }
 
@@ -1344,5 +1327,17 @@ namespace ScaryCastle
                 }
             }
         } = string.Empty;
+
+        // XPReward
+        [ScriptProperty]
+        public int XPReward
+        {
+            get;
+            set
+            {
+                if (value != field)
+                    field = Math.Max(0, value);
+            }
+        }
     }
 }
