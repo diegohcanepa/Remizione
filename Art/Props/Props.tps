@@ -656,6 +656,8 @@
             <key type="filename">RideDoorRight-assets/RideDoorRightLock.png</key>
             <key type="filename">RideDoorRight-assets/RideDoor_Castle_Generic_Right_Closed.png</key>
             <key type="filename">RideDoorRight-assets/RideDoor_Castle_Generic_Right_Open.png</key>
+            <key type="filename">RideDoorRight-assets/RideDoor_Castle_Right_Closed.png</key>
+            <key type="filename">RideDoorRight-assets/RideDoor_Castle_Right_Open.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 
@@ -9,274 +10,365 @@ namespace ScaryCastle
     /// </summary>
     public sealed class Run
     {
+        #region Private fields
+
+        private readonly int maxRooms;
         private readonly RoomRegistry registry = new();
         private readonly int seed;
 
+        #endregion
+
+        #region Constructor
+
         // Constructor
-        public Run(int seed, int maxCorridors)
+        public Run(int seed, int maxRooms)
         {
-            CodeContract.GreaterThanZero(maxCorridors, nameof(maxCorridors));
+            CodeContract.GreaterThanZero(maxRooms, nameof(maxRooms));
 
             this.seed = seed;
-            this.MaxCorridors = maxCorridors;
+            this.maxRooms = maxRooms;
         }
+
+        #endregion
 
         #region Private members
 
-        // AssignDefinition
-        private void AssignDefinition(RoomNode node, Difficulty diff, Random rng)
+        // ConnectNodes
+        private static void ConnectNodes(RoomNode a, RoomNode b, Point directionFromAToB)
         {
-            if (registry.GetValidDefinition(node, diff, this.Spawns, rng) is not RoomDefinition def)
+            if (directionFromAToB == new Point(0, -1)) { a.Up = b; b.Down = a; }
+            else if (directionFromAToB == new Point(0, 1)) { a.Down = b; b.Up = a; }
+            else if (directionFromAToB == new Point(-1, 0)) { a.Left = b; b.Right = a; }
+            else if (directionFromAToB == new Point(1, 0)) { a.Right = b; b.Left = a; }
+        }
+
+        // DisconnectNodes - Helper vital para el Plan A Rígido
+        private static void DisconnectNodes(RoomNode a, RoomNode b, Point directionFromAToB)
+        {
+            if (directionFromAToB == new Point(0, -1)) { a.Up = null; b.Down = null; }
+            else if (directionFromAToB == new Point(0, 1)) { a.Down = null; b.Up = null; }
+            else if (directionFromAToB == new Point(-1, 0)) { a.Left = null; b.Right = null; }
+            else if (directionFromAToB == new Point(1, 0)) { a.Right = null; b.Left = null; }
+        }
+
+        // CountExistingNeighbors
+        private int CountExistingNeighbors(Point p)
+        {
+            int count = 0;
+
+            if (FloorMap.ContainsKey(p + new Point(0, -1))) count++;
+            if (FloorMap.ContainsKey(p + new Point(0, 1))) count++;
+            if (FloorMap.ContainsKey(p + new Point(-1, 0))) count++;
+            if (FloorMap.ContainsKey(p + new Point(1, 0))) count++;
+
+            return count;
+        }
+
+        // ExecutePhase1_Layout
+        private void ExecutePhase1_Layout(Random rng)
+        {
+            var startNode = new RoomNode(FloorMap.Count, Point.Zero);
+            FloorMap[Point.Zero] = startNode;
+
+            List<RoomNode> activeNodes = [startNode];
+            Point[] directions = [new(0, -1), new(0, 1), new(-1, 0), new(1, 0)]; // Up, Down, Left, Right
+
+            while (FloorMap.Count < this.maxRooms)
             {
-                throw new InvalidOperationException($"ERROR: No assets found for {node.RoomType}/{node.SideRoomCategory} in {diff}");
-            }
-            else
-            {
-                node.Definition = def;
-                this.Spawns.Increment(def.Name);
+                var currentNode = activeNodes[rng.Next(activeNodes.Count)];
+                Point dir = directions[rng.Next(directions.Length)];
+
+                // --- REGLA STRICTA DE SEGURIDAD PARA START ROOM ---
+                // Si el nodo actual es el Start (0,0) y el dado eligió ir hacia Abajo (0,1), cancelamos el intento.
+                if (currentNode.GridPosition == Point.Zero && dir == new Point(0, 1))
+                    continue;
+                // --------------------------------------------------
+
+                Point newPos = currentNode.GridPosition + dir;
+
+                if (FloorMap.ContainsKey(newPos))
+                    continue;
+
+                // Además, protegemos el casillero (0,1) para que ninguna OTRA habitación crezca ahí desde los lados
+                if (newPos == new Point(0, 1))
+                    continue;
+
+                if (CountExistingNeighbors(newPos) >= 3)
+                    continue;
+
+                var newNode = new RoomNode(FloorMap.Count, newPos);
+                FloorMap[newPos] = newNode;
+                activeNodes.Add(newNode);
+
+                ConnectNodes(currentNode, newNode, dir);
             }
         }
 
-        // CleanUpCurrentCorridor
-        private void CleanUpCurrentCorridor()
+        // ExecutePhase2_Labeling
+        private void ExecutePhase2_Labeling(Random rng)
         {
-            if (CurrentCorridor != null)
+            FloorMap[Point.Zero].Category = RoomCategory.Start;
+
+            var deadEnds = new List<RoomNode>();
+            foreach (var node in FloorMap.Values)
             {
-                foreach (var r in CurrentCorridor.GetAllNodes())
+                if (node.ConnectionCount() == 1 && node.Category == RoomCategory.Standard)
                 {
-                    r.RideRoom?.Children.Clear();
-                }
-
-                CurrentCorridor = null;
-            }
-        }
-
-        // GenerateTrident
-        private static void GenerateTrident(RoomNode corridor, ref int nodeCounter, Random rng)
-        {
-            // 1. El Nexo (Siempre arriba del corredor)
-            var nexo = new RoomNode(nodeCounter++, corridor.X, 1, RoomType.SideRoom, SideRoomCategory.Hub);
-            corridor.Up = nexo;
-            nexo.Down = corridor;
-
-            // 2. Chance de que aparezca la Hoja (Premio)
-            if (rng.NextDouble() < 0.3)
-            {
-                var category = rng.NextDouble() < 0.5 ? SideRoomCategory.Treasure : SideRoomCategory.Save;
-
-                // 3. Sorteo de dirección (0: Left, 1: Up, 2: Right)
-                int dir = rng.Next(0, 3);
-
-                // Creamos la hoja ajustando X e Y según la dirección
-                RoomNode leaf;
-                switch (dir)
-                {
-                    case 0: // Izquierda
-                        leaf = new RoomNode(nodeCounter++, nexo.X - 1, nexo.Y, RoomType.SideRoom, category);
-                        nexo.Left = leaf;
-                        leaf.Right = nexo;
-                        break;
-                    case 1: // Arriba
-                        leaf = new RoomNode(nodeCounter++, nexo.X, nexo.Y + 1, RoomType.SideRoom, category);
-                        nexo.Up = leaf;
-                        leaf.Down = nexo;
-                        break;
-                    default: // Derecha
-                        leaf = new RoomNode(nodeCounter++, nexo.X + 1, nexo.Y, RoomType.SideRoom, category);
-                        nexo.Right = leaf;
-                        leaf.Left = nexo;
-                        break;
-                }
-            }
-        }
-
-        // GetDifficultyTier
-        private static Difficulty GetDifficultyTier(int x, int max)
-        {
-            // Calculamos el progreso normalizado (0.0 a 1.0)
-            float progress = (float)(x + 1) / max;
-
-            if (progress <= .33f)
-                return Difficulty.Easy;   // Primer tercio
-
-            if (progress <= .66f)
-                return Difficulty.Normal; // Segundo tercio
-
-            return Difficulty.Hard;
-        }
-
-        // Populate
-        private void Populate(RoomNode corridor, Difficulty diff, Random rng)
-        {
-            // 1. Asignar al Corredor
-            this.AssignDefinition(corridor, diff, rng);
-
-            // 2. Si hay Nexo, asignarlo y buscar la Hoja en sus 3 lados
-            if (corridor.Up != null)
-            {
-                var nexo = corridor.Up;
-
-                this.AssignDefinition(nexo, diff, rng);
-
-                // Solo uno de estos será distinto de null según el azar de GenerateTrident
-                if (nexo.Left != null)
-                    this.AssignDefinition(nexo.Left, diff, rng);
-
-                if (nexo.Up != null)
-                    this.AssignDefinition(nexo.Up, diff, rng);
-
-                if (nexo.Right != null)
-                    this.AssignDefinition(nexo.Right, diff, rng);
-            }
-        }
-
-        // SetupDarkness
-        private void SetupDarkness(Random rng)
-        {
-            if (CurrentCorridor == null)
-                return;
-
-            int darkRoll = rng.Next(1, 101);
-
-            // A mayor Intensity, más chances de apagón general (va de 5% al inicio a 25% al final)
-            var stageDarknessChance = float.Lerp(5, 25, this.Intensity);
-
-            // Chance de side rooms oscuros pero pasillo con luz (va de 15% al inicio a 35% al final)
-            var isolatedDarknessChance = float.Lerp(15, 35, this.Intensity);
-
-            if (darkRoll <= stageDarknessChance)
-            {
-                foreach (var roomNode in CurrentCorridor.GetAllNodes())
-                {
-                    roomNode.RideRoom?.TurnOffLights();
+                    deadEnds.Add(node);
                 }
             }
-            else if (darkRoll <= stageDarknessChance + isolatedDarknessChance)
+
+            deadEnds.Sort((a, b) =>
             {
-                foreach (var roomNode in CurrentCorridor.GetAllNodes())
+                int distA = GetManhattanDistance(Point.Zero, a.GridPosition);
+                int distB = GetManhattanDistance(Point.Zero, b.GridPosition);
+                return distB.CompareTo(distA);
+            });
+
+            if (deadEnds.Count > 0)
+            {
+                deadEnds[0].Category = RoomCategory.Boss;
+                deadEnds.RemoveAt(0);
+            }
+
+            if (deadEnds.Count > 0)
+            {
+                deadEnds[0].Category = RoomCategory.Treasure;
+                deadEnds.RemoveAt(0);
+            }
+
+            if (deadEnds.Count > 0)
+            {
+                deadEnds[0].Category = RoomCategory.Save;
+                deadEnds.RemoveAt(0);
+            }
+
+            if (rng.NextDouble() <= 0.15)
+            {
+                var standardRooms = new List<RoomNode>();
+                foreach (var node in FloorMap.Values)
                 {
-                    if (roomNode.RoomType != RoomType.Corridor)
-                        roomNode.RideRoom?.TurnOffLights();
+                    if (node.Category == RoomCategory.Standard)
+                        standardRooms.Add(node);
+                }
+
+                if (standardRooms.Count > 0)
+                {
+                    var specialCandidate = standardRooms[rng.Next(standardRooms.Count)];
+                    specialCandidate.Category = RoomCategory.Special;
                 }
             }
         }
 
-        // SpawnGoo
-        private void SpawnGoo(Random rng)
+        // ExecutePhase3_AssignAssets
+        private void ExecutePhase3_AssignAssets(Random rng)
         {
-            if (CurrentCorridor == null)
-                return;
+            int maxDistance = GetMaxFloorDistance();
 
-            var roomList = new List<RideRoom>();
-            foreach (var node in CurrentCorridor.GetAllNodes())
+            foreach (var node in FloorMap.Values)
             {
-                if (node.RideRoom != null)
-                    roomList.Add(node.RideRoom);
-            }
+                Difficulty localRoomDiff = GetProgressiveDifficulty(node.GridPosition, maxDistance);
+                node.TopographicDifficulty = localRoomDiff;
 
-            if (roomList.Count == 0)
-                return;
+                var def = registry.GetValidDefinition(node, localRoomDiff, Spawns, rng);
 
-            // Calculamos una chance que decrece con la intensidad. 
-            // Al principio (Intensity 0): 85% de chance.
-            // Al final (Intensity 1): 20% de chance (Un milagro absoluto).
-            float spawnChance = float.Lerp(.85f, .20f, this.Intensity);
+                // --- SISTEMA DE FALLBACK SEGURO ---
 
-            if (rng.NextDouble() <= spawnChance)
-            {
-                int luckyRoomIndex = rng.Next(0, roomList.Count);
-                var room = roomList[luckyRoomIndex];
-
-                if (room.WalkArea != null)
+                // Caso A: Es una sala Especial y no encaja -> Se degrada a común respetando la dificultad
+                if (def == null && node.Category == RoomCategory.Special)
                 {
-                    if (room.CreateThingClone<Goo>(nameof(Goo)) is Goo goo)
+                    node.Category = RoomCategory.Standard;
+                    def = registry.GetValidDefinition(node, localRoomDiff, Spawns, rng);
+                }
+
+                // Caso B: Es una sala Mandatoria y no encuentra asset en esta dificultad -> Degradación escalonada
+                if (def == null)
+                {
+                    if (node.Category is RoomCategory.Treasure or RoomCategory.Save or RoomCategory.Boss)
                     {
-                        goo.Position = room.WalkArea.RandomWalkablePoint(10);
-                        room.Children.Add(goo);
+                        // Si era Hard, probamos en Normal
+                        if (localRoomDiff == Difficulty.Hard)
+                        {
+                            def = registry.GetValidDefinition(node, Difficulty.Normal, Spawns, rng);
+                        }
+
+                        // Si sigue siendo null (o si originalmente era Normal), probamos en Easy
+                        if (def == null)
+                        {
+                            def = registry.GetValidDefinition(node, Difficulty.Easy, Spawns, rng);
+                        }
+                    }
+
+                    // --- PLAN B RÍGIDO: SALVAGUARDA DE DISEÑO ---
+                    // Si la degradación total falló (no tenés ningún asset de ese rol en el JSON),
+                    // sacrificamos el rol mandatorio convirtiéndolo en Standard para evitar el crash.
+                    if (def == null)
+                    {
+                        node.Category = RoomCategory.Standard;
+                        def = registry.GetValidDefinition(node, localRoomDiff, Spawns, rng);
+                    }
+                }
+
+                // ----------------------------------
+
+                if (def == null)
+                    throw new InvalidOperationException($"ERROR Crítico de Generación: No se encontró ningún asset en el JSON para el rol {node.Category} en la posición {node.GridPosition} (incluso tras intentar degradación de dificultad) que admita sus conexiones físicas.");
+
+                node.Definition = def;
+                Spawns.Increment(def.Name);
+            }
+        }
+
+        // ExecutePhase4_InjectSecrets
+        private void ExecutePhase4_InjectSecrets(Random rng)
+        {
+            int targetSecrets = rng.Next(0, 4);
+            int secretsGenerated = 0;
+
+            int maxDistance = GetMaxFloorDistance();
+
+            var existingNodes = new List<RoomNode>(FloorMap.Count);
+            foreach (var node in FloorMap.Values)
+            {
+                existingNodes.Add(node);
+            }
+
+            for (int i = existingNodes.Count - 1; i > 0; i--)
+            {
+                int j = rng.Next(i + 1);
+                var temp = existingNodes[i];
+                existingNodes[i] = existingNodes[j];
+                existingNodes[j] = temp;
+            }
+
+            for (int i = 0; i < existingNodes.Count; i++)
+            {
+                if (secretsGenerated >= targetSecrets)
+                    break;
+
+                var node = existingNodes[i];
+
+                // Intento Izquierda
+                Point leftPos = node.GridPosition + new Point(-1, 0);
+                if (node.Left == null && node.Definition.DoorLeft != null && !FloorMap.ContainsKey(leftPos))
+                {
+                    Difficulty secretDiff = GetProgressiveDifficulty(leftPos, maxDistance);
+                    if (InjectSecretNode(leftPos, node, new Point(1, 0), secretDiff, rng))
+                    {
+                        secretsGenerated++;
+                    }
+                    continue;
+                }
+
+                // Intento Derecha
+                Point rightPos = node.GridPosition + new Point(1, 0);
+                if (node.Right == null && node.Definition.DoorRight != null && !FloorMap.ContainsKey(rightPos))
+                {
+                    Difficulty secretDiff = GetProgressiveDifficulty(rightPos, maxDistance);
+                    if (InjectSecretNode(rightPos, node, new Point(-1, 0), secretDiff, rng))
+                    {
+                        secretsGenerated++;
                     }
                 }
             }
         }
 
-        #endregion
-
-        // CorridorIndex
-        public int CorridorIndex { get; private set; } = -1;
-
-        // CurrentCorridor
-        public RoomNode? CurrentCorridor { get; private set; }
-
-        // Intensity
-        public float Intensity
+        // GetManhattanDistance
+        private static int GetManhattanDistance(Point a, Point b)
         {
-            get
-            {
-                if (MaxCorridors <= 1)
-                    return 0;
-
-                float progress = (float)CorridorIndex / MaxCorridors;
-
-                return (float)Math.Pow(Math.Clamp(progress, 0f, 1f), 1.2f);
-            }
+            return Math.Abs(a.X - b.X) + Math.Abs(a.Y - b.Y);
         }
 
-        // LoadNextCorridor
-        public bool LoadNextCorridor(GameSession session)
+        // GetProgressiveDifficulty
+        private static Difficulty GetProgressiveDifficulty(Point position, int maxDistance)
         {
-            CleanUpCurrentCorridor();
+            if (maxDistance == 0)
+                return Difficulty.Easy;
 
-            this.CorridorIndex++;
+            int currentDistance = GetManhattanDistance(Point.Zero, position);
+            float ratio = (float)currentDistance / maxDistance;
 
-            // Fin de la Run
-            if (this.CorridorIndex >= this.MaxCorridors)
+            if (ratio < 0.33f)
+                return Difficulty.Easy;
+
+            if (ratio < 0.66f)
+                return Difficulty.Normal;
+
+            return Difficulty.Hard;
+        }
+
+        // GetMaxFloorDistance
+        private int GetMaxFloorDistance()
+        {
+            int max = 0;
+            foreach (var node in FloorMap.Values)
             {
-                this.CurrentCorridor = null;
+                int dist = GetManhattanDistance(Point.Zero, node.GridPosition);
+                if (dist > max) max = dist;
+            }
+            return max;
+        }
+
+        // InjectSecretNode - Ahora devuelve bool y maneja el descarte seguro del Plan A
+        private bool InjectSecretNode(Point secretPos, RoomNode originNode, Point dirFromSecretToOrigin, Difficulty runDiff, Random rng)
+        {
+            var secretNode = new RoomNode(FloorMap.Count, secretPos)
+            {
+                Category = RoomCategory.Secret,
+                TopographicDifficulty = runDiff
+            };
+
+            // Conectamos temporalmente para que Fits() evalúe la topología de forma correcta
+            ConnectNodes(secretNode, originNode, dirFromSecretToOrigin);
+
+            var def = registry.GetValidDefinition(secretNode, runDiff, this.Spawns, rng);
+            if (def == null)
+            {
+                // Rollback total: Desconectamos los punteros y no agregamos nada al diccionario
+                DisconnectNodes(secretNode, originNode, dirFromSecretToOrigin);
                 return false;
             }
 
-            // 1. Esqueleto (Nodos)
-            // Usamos corridorIndex para la semilla, garantizando determinismo
-            var rng = new Random(this.seed + this.CorridorIndex);
-            int localIndex = 0;
-
-            // El RoomNode sigue necesitando X para la lógica de dificultad/posicionamiento
-            var corridor = new RoomNode(localIndex++, this.CorridorIndex, 0, RoomType.Corridor, SideRoomCategory.None);
-
-            // 2. Tridente (Nexo + Hojas)
-            GenerateTrident(corridor, ref localIndex, rng);
-
-            // 3. Población (Asignación de assets según dificultad)
-            Difficulty diff = GetDifficultyTier(this.CorridorIndex, this.MaxCorridors);
-            this.Populate(corridor, diff, rng);
-
-            // 4. Actualizar estado
-            this.CurrentCorridor = corridor;
-
-            // Build rooms
-            foreach (var roomNode in corridor.GetAllNodes())
-            {
-                roomNode.RideRoom = RideRoom.CreateInstance(session, roomNode);
-            }
-
-            foreach (var roomNode in corridor.GetAllNodes())
-            {
-                roomNode.RideRoom.Load();
-            }
-
-            SpawnGoo(rng);
-
-            SetupDarkness(rng);
+            // Si pasa el filtro, consolidamos el nodo físicamente en el mapa
+            secretNode.Definition = def;
+            FloorMap[secretPos] = secretNode;
+            this.Spawns.Increment(def.Name);
 
             return true;
         }
 
-        // MaxCorridors
-        public int MaxCorridors { get; }
+        #endregion
 
-        // Progress
-        public Ratio Progress => CorridorIndex < 0 ? 0 : (float)CorridorIndex / MaxCorridors;
+        // FloorMap
+        public Dictionary<Point, RoomNode> FloorMap { get; } = [];
+
+        // Generate
+        public void Generate(GameSession session)
+        {
+            var rng = new Random(seed);
+
+            this.ExecutePhase1_Layout(rng);
+            this.ExecutePhase2_Labeling(rng);
+            this.ExecutePhase3_AssignAssets(rng);
+            this.ExecutePhase4_InjectSecrets(rng);
+
+            foreach (var node in FloorMap.Values)
+            {
+                node.RideRoom = RideRoom.CreateInstance(session, node);
+            }
+
+            foreach (var node in FloorMap.Values)
+            {
+                node.RideRoom.Load();
+            }
+
+            StartNode = FloorMap[Point.Zero];
+        }
 
         // Spawns
         public CounterBank Spawns { get; } = new();
+
+        // StartNode
+        public RoomNode? StartNode { get; private set; }
     }
 }

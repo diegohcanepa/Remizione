@@ -9,19 +9,17 @@ namespace ScaryCastle
     /// </summary>
     public sealed class RoomRegistry
     {
-        private readonly List<RoomDefinition> corridors = [];
-        private readonly Dictionary<SideRoomCategory, List<RoomDefinition>> sideRooms = [];
+        private readonly Dictionary<RoomCategory, List<RoomDefinition>> buckets = [];
 
         #region Constructor
 
         // Constructor
         public RoomRegistry()
         {
-            // 1. Inicialización dinámica de categorías
-            foreach (var category in Enum.GetValues<SideRoomCategory>())
+            // 1. Inicialización dinámica de todas las categorías
+            foreach (var category in Enum.GetValues<RoomCategory>())
             {
-                if (category != SideRoomCategory.None)
-                    this.sideRooms[category] = [];
+                this.buckets[category] = [];
             }
 
             // 2. Clasificación de definiciones cargadas
@@ -30,16 +28,9 @@ namespace ScaryCastle
             {
                 var def = all[i];
 
-                if (def.RoomType == RoomType.Corridor)
+                if (this.buckets.TryGetValue(def.RoomCategory, out var bucket))
                 {
-                    this.corridors.Add(def);
-                }
-                else if (def.RoomType == RoomType.SideRoom)
-                {
-                    if (this.sideRooms.TryGetValue(def.SideRoomCategory, out var bucket))
-                    {
-                        bucket.Add(def);
-                    }
+                    bucket.Add(def);
                 }
             }
         }
@@ -77,15 +68,13 @@ namespace ScaryCastle
         // GetValidDefinition
         public RoomDefinition? GetValidDefinition(RoomNode node, Difficulty runDiff, CounterBank counters, Random rng)
         {
-            // Seleccionar el pool de búsqueda
-            List<RoomDefinition> pool = node.RoomType == RoomType.Corridor
-                ? this.corridors
-                : this.sideRooms.GetValueOrDefault(node.SideRoomCategory) ?? [];
+            // Seleccionar el pool usando estrictamente la categoría asignada en la Fase 2 (Etiquetado)
+            List<RoomDefinition> pool = this.buckets.GetValueOrDefault(node.Category) ?? [];
 
             if (pool.Count == 0)
                 return null;
 
-            // Preparar pesos (AOT Friendly: stackalloc para evitar allocations)
+            // Preparar pesos (AOT Friendly: stackalloc previene activaciones del Garbage Collector)
             Span<int> weights = stackalloc int[pool.Count];
             int totalWeight = 0;
 
@@ -94,6 +83,7 @@ namespace ScaryCastle
                 var def = pool[i];
 
                 // Filtros de exclusión (Hard Constraints)
+                // node.Fits() ahora se encarga de la topología estricta (Puertas y ExactMatch)
                 if (!node.Fits(def) || !def.PassesMaxPerRunConstraint(counters.GetCount(def.Name)))
                 {
                     weights[i] = 0;

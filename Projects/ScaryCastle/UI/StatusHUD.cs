@@ -30,6 +30,7 @@ namespace ScaryCastle
             this.passiveItems = new(session);
             this.BossMeter = new(session);
             this.ThingInfo = new();
+            this.MiniMap = new();
         }
 
         #endregion
@@ -48,10 +49,11 @@ namespace ScaryCastle
             InventoryMeter.Draw(gameTime);
             coinMeter.Draw(gameTime);
             ThingInfo.Draw(gameTime);
+            MiniMap.Draw(gameTime);
 
             if (session.IsCurrentScene)
             {
-                if (session.Room is RideRoom rideRoom && rideRoom.RoomNode.RoomType == RoomType.Corridor)
+                if (session.Room is RideRoom rideRoom && rideRoom.RoomNode.Category == RoomCategory.Boss)
                     BossMeter.Draw(gameTime);
             }
         }
@@ -66,6 +68,7 @@ namespace ScaryCastle
             ThingInfo.Update(gameTime);
             hpMeter.Update(gameTime);
             gooMeter.Update(gameTime);
+            MiniMap.Update(gameTime);
         }
 
         #endregion
@@ -75,6 +78,9 @@ namespace ScaryCastle
 
         // InventoryMeter
         public UIInventoryMeter InventoryMeter { get; }
+
+        // MiniMap
+        public UIMiniMap MiniMap { get; }
 
         // Reset
         public void Reset()

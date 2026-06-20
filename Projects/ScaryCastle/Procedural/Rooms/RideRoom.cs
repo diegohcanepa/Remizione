@@ -9,7 +9,7 @@ namespace ScaryCastle
     /// <summary>
     /// RideRoom
     /// </summary>
-    public abstract class RideRoom : ProceduralRoom
+    public class RideRoom : ProceduralRoom
     {
         private readonly List<RideDoor> doors = [];
         private readonly Prop foreground;
@@ -17,7 +17,7 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        protected RideRoom(GameSession session, RoomNode roomNode)
+        public RideRoom(GameSession session, RoomNode roomNode)
             : base(session, string.Empty, roomNode)
         {
             Zoom = 1.15f;
@@ -103,6 +103,17 @@ namespace ScaryCastle
 
         #region Protected members
 
+        // OnActivate
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+
+            if (!RoomNode.Visited)
+                RoomNode.Visited = true;
+
+            Session.StatusHUD.MiniMap.CurrentRoom = RoomNode;                ;
+        }
+
         // OnLoad
         protected override void OnLoad()
         {
@@ -165,10 +176,8 @@ namespace ScaryCastle
         // CreateInstance
         public static RideRoom CreateInstance(GameSession session, RoomNode roomNode)
         {
-            var roomType = roomNode.RoomType == RoomType.Corridor ? typeof(CorridorRoom) : typeof(SideRoom);
-
             // Get type from AOT registry
-            if (Activator.CreateInstance(roomType, session, roomNode) is not RideRoom result)
+            if (Activator.CreateInstance(typeof(RideRoom), session, roomNode) is not RideRoom result)
                 throw new InvalidOperationException($"Cannot create instance [{roomNode.Definition.Name}]");
 
             return result;

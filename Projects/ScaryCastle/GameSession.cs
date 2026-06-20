@@ -126,7 +126,6 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(GoldenKey));
             AotTypeRegistry.Register(typeof(Goo));
             AotTypeRegistry.Register(typeof(HellGoat));
-            AotTypeRegistry.Register(typeof(Hub));
             AotTypeRegistry.Register(typeof(Monitor));
             AotTypeRegistry.Register(typeof(EnviousEye));
             AotTypeRegistry.Register(typeof(NumberSix));
@@ -459,14 +458,6 @@ namespace ScaryCastle
         [ScriptProperty]
         public Actor? ActiveNPC { get; private set; }
 
-        // AddCorridorExit
-        [ScriptMethod]
-        public void AddCorridorExit()
-        {
-            Bosses.Clear();
-            (Room as CorridorRoom)?.AddCorridorExit();
-        }
-
         // BeginRun
         [ScriptMethod]
         public void BeginRun()
@@ -477,10 +468,9 @@ namespace ScaryCastle
             if (Seed == 0)
                 Seed = System.Environment.TickCount;
 
-            CurrentRun = new Run(Seed, 6);
+            CurrentRun = new Run(Seed, 10);
 
             PlayerInventory.Capacity = GameSettings.InitialInventoryCapacity;
-
             PlayerActions.Add(ItemNames.Lift);
             PlayerActions.Add(ItemNames.Headbutt);
 
@@ -493,7 +483,19 @@ namespace ScaryCastle
                 Player?.Energy = 0;
             }
 
-            LoadNextCorridor();
+            CurrentRun.Generate(this);
+
+            if (Player != null)
+            {
+                Player.Reheal();
+
+                var startRoom = CurrentRun.FloorMap[new(0, 0)].RideRoom;
+                startRoom.Children.Add(Player);
+                if (startRoom.WalkArea != null)
+                    Player.Position = startRoom.WalkArea.Polygon.BoundingRectangleF.Center;
+                Camera.Follow(Player, true);
+                EnterRoom(startRoom);
+            }
         }
 
         // Boss
@@ -502,13 +504,6 @@ namespace ScaryCastle
 
         // Bosses
         public List<Actor> Bosses { get; } = [];
-
-        // CloseCorridorDoor
-        [ScriptMethod]
-        public void CloseCorridorDoor()
-        {
-            (Room as CorridorRoom)?.CloseCorridorDoor();
-        }
 
         // Coins
         [ScriptProperty]
@@ -554,9 +549,9 @@ namespace ScaryCastle
 
             CurrentRun = null;
 
-            if (FindEntity<Hub>(nameof(Hub)) is Hub hubRoom)
-                hubRoom.Unload();
-
+            Bosses.Clear();
+            StatusHUD.BossMeter.Reset();
+            CleanUpRuntimeEntities();
             Coins = 0;
             PlayerActions.Clear();
             PlayerInventory.Clear();
@@ -590,13 +585,14 @@ namespace ScaryCastle
             Save();
         }
 
+        /*
         // EnterCorridor
-        [ScriptMethod]
         public void EnterCorridor()
         {
             if (CurrentRun?.CurrentCorridor?.RideRoom is CorridorRoom cr)
                 EnterRoom(cr);
         }
+        */
 
         // Environment
         public Environment Environment { get; }
@@ -644,43 +640,6 @@ namespace ScaryCastle
         // LightingSystem
         [ScriptProperty]
         public bool LightingSystem { get; set; } = true;
-
-        // LoadNextCorridor
-        [ScriptMethod]
-        public void LoadNextCorridor()
-        {
-            if (CurrentRun == null)
-                return;
-
-            CleanUpRuntimeEntities();
-
-            Bosses.Clear();
-            StatusHUD.BossMeter.Reset();
-
-            if (!CurrentRun.LoadNextCorridor(this))
-            {
-                CompleteRun();
-                return;
-            }
-
-            if (CurrentRun.CurrentCorridor == null)
-                throw new InvalidOperationException("Corridor generation failed.");
-
-            if (Player != null)
-            {
-                var rideRoom = CurrentRun.CurrentCorridor.RideRoom;
-
-                if (CurrentRun.CorridorIndex == 0)
-                    Player.Reheal();
-
-                rideRoom.Children.Add(Player);
-                if (rideRoom.WalkArea != null)
-                    Player.Position = CurrentRun.CurrentCorridor.Definition.PlayerPosition;
-                Player.Direction = FacingDirection.Right;
-                Camera.Follow(Player, true);
-                EnterRoom(rideRoom);
-            }
-        }
 
         // LootGenerator
         public LootGenerator LootGenerator { get; }

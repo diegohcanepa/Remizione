@@ -53,27 +53,11 @@
         "requiresDeadEnd": {
           "type": "boolean"
         },
-        "minProgress": {
-          "type": "number",
-          "default": 0.0,
-          "minimum": 0.0,
-          "maximum": 1.0
-        },
         "roomTheme": {
           "type": "string",
           "enum": [
             "Castle"
           ]
-        },
-        "spawnLocation": {
-          "type": "string",
-          "enum": [
-            "CorridorOrSideRoom",
-            "Corridor",
-            "SideRoom",
-            "Gate"
-          ],
-          "default": "CorridorOrSideRoom"
         },
         "xp": {
           "type": "integer",

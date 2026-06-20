@@ -42,19 +42,11 @@ namespace ScaryCastle
             if (MaxPerRoom < 0)
                 MaxPerRoom = -1;
 
-            // MinProgress
-            MinProgress = element.GetFloat("minProgress", 0);
-            if (MinProgress < 0)
-                MinProgress = 0;
-
             // RequiresDeadEnd
             RequiresDeadEnd = element.GetBool("requiresDeadEnd", false);
 
             // RoomTheme
             RoomTheme = element.GetEnum<RoomTheme>("roomTheme");
-
-            // SpawnLocation
-            SpawnLocation = element.GetEnum("spawnLocation", SpawnLocation.CorridorOrSideRoom);
 
             if (element.TryGetProperty("effects", out JsonElement effectsArray))
             {
@@ -98,9 +90,6 @@ namespace ScaryCastle
         // MaxPerRoom
         public int MaxPerRoom { get; }
 
-        // MinProgress
-        public Ratio MinProgress { get; }
-
         // PassesMaxPerRoomConstraint
         public bool PassesMaxPerRoomConstraint(int instanceCount)
         {
@@ -112,8 +101,5 @@ namespace ScaryCastle
 
         // RoomTheme
         public RoomTheme? RoomTheme { get; }
-
-        // SpawnLocation
-        public SpawnLocation SpawnLocation { get; }
     }
 }

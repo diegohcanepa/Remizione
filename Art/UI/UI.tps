@@ -492,7 +492,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">MonitorFrame-assets/MonitorFrame.png</key>
+            <key type="filename">MiniMap-assets/UIMiniMapContainer.png</key>
+            <key type="filename">MiniMap-assets/UIMiniMapContainerBorder.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -501,12 +502,13 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>60,34,120,67</rect>
+                <rect>7,5,15,11</rect>
                 <key>scale9Paddings</key>
-                <rect>60,34,120,67</rect>
+                <rect>7,5,15,11</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">MiniMap-assets/UIMiniMapMarkerCoin.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorArrow.png</key>
             <key type="filename">UI-assets/CheckMark.png</key>
             <key type="filename">UI-assets/PointingHand.png</key>
@@ -531,6 +533,86 @@
                 <rect>2,2,3,3</rect>
                 <key>scale9Paddings</key>
                 <rect>2,2,3,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">MiniMap-assets/UIMiniMapMarkerHeart.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,3,3</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,3,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">MiniMap-assets/UIMiniMapMarkerLoot.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,2,3,3</rect>
+                <key>scale9Paddings</key>
+                <rect>1,2,3,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">MiniMap-assets/UIMiniMapMarkerStart.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,0,3,1</rect>
+                <key>scale9Paddings</key>
+                <rect>1,0,3,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">MiniMap-assets/UIMiniMapRoom0.png</key>
+            <key type="filename">MiniMap-assets/UIMiniMapRoom1.png</key>
+            <key type="filename">MiniMap-assets/UIMiniMapRoom2.png</key>
+            <key type="filename">UIIcons-assets/CoinIcon.png</key>
+            <key type="filename">UIIcons-assets/Sack.png</key>
+            <key type="filename">UIIcons-assets/SackIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,4,4</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,4,4</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">MonitorFrame-assets/MonitorFrame.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>60,34,120,67</rect>
+                <key>scale9Paddings</key>
+                <rect>60,34,120,67</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -880,23 +962,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UIIcons-assets/CoinIcon.png</key>
-            <key type="filename">UIIcons-assets/Sack.png</key>
-            <key type="filename">UIIcons-assets/SackIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,4,4</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,4,4</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">UIIcons-assets/CountdownSkullIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -962,6 +1027,7 @@
                     <filename>ItemInfo-assets</filename>
                     <filename>BossMeter-assets</filename>
                     <filename>GooMeter-assets</filename>
+                    <filename>MiniMap-assets</filename>
                 </array>
             </struct>
         </map>

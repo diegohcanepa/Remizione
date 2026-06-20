@@ -39,7 +39,7 @@ namespace ScaryCastle
             RoomDefinition def = node.Definition;
 
             // Integración de diseño: Los tesoros mejoran el qualityBoost
-            if (node.RoomType == RoomType.SideRoom && node.SideRoomCategory == SideRoomCategory.Treasure)
+            if (node.Category == RoomCategory.Treasure)
                 qualityBoost += 2;
 
             int maxQ = Math.Clamp(((int)def.Difficulty * 2) + 1 + qualityBoost, 0, 5);

@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json;
@@ -57,8 +58,12 @@ namespace ScaryCastle
                 RightGatePosition = DataConvert.ToVector2(rightGatePositionValue);
 
             RequiresDeadEnd = element.GetBool("requiresDeadEnd", false);
-            RoomType = element.GetEnum("roomType", RoomType.SideRoom);
-            SideRoomCategory = element.GetEnum("sideRoomCategory", SideRoomCategory.None);
+            
+            if (element.GetEnum<RoomCategory>("roomCategory") is not RoomCategory roomCategory)
+                throw new InvalidOperationException("Missing roomCategory property.");
+            else
+                this.RoomCategory = roomCategory;
+
             Theme = element.GetEnum("theme", RoomTheme.Castle);
 
             // Placeholders
@@ -107,24 +112,6 @@ namespace ScaryCastle
         // Validate
         private void Validate()
         {
-            if (RoomType == RoomType.Corridor)
-            {
-                if (LeftGatePosition == Vector2.Zero || RightGatePosition == Vector2.Zero)
-                    RaiseValidationError(this, $"Corridors must define gate positions.");
-
-                if (ExitApproachPosition == Vector2.Zero)
-                    RaiseValidationError(this, $"Undefined exit approach position.", nameof(ExitApproachPosition));
-
-                if (string.IsNullOrWhiteSpace(ExitHotspot))
-                    RaiseValidationError(this, $"Undefined exit hotspot.", nameof(ExitHotspot));
-            }
-
-            if (RoomType != RoomType.SideRoom && SideRoomCategory != SideRoomCategory.None)
-                RaiseValidationError(this, $"Side room category cannot be specified due to the current room type.");
-
-            if (RoomType == RoomType.SideRoom && SideRoomCategory == SideRoomCategory.None)
-                RaiseValidationError(this, $"Side rooms must have a SideRoomCategory.");
-
             if (DoorLeft == null && DoorDown == null && DoorRight == null && DoorUp == null)
                 RaiseValidationError(this, $"Must have at least one door.");
         }
@@ -203,14 +190,11 @@ namespace ScaryCastle
         // RightGatePosition
         public Vector2 RightGatePosition { get; }
 
-        // RoomType
-        public RoomType RoomType { get; }
+        // RoomCategory
+        public RoomCategory RoomCategory { get; }
 
         // Scope
         public TagScope Scope { get; }
-
-        // SideRoomCategory
-        public SideRoomCategory SideRoomCategory { get; }
 
         // Theme
         public RoomTheme Theme { get; }

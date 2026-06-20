@@ -74,37 +74,22 @@
             "requiresDeadEnd": {
               "type": "boolean"
             },
-            "roomType": {
+            "roomCategory": {
               "type": "string",
-              "default": "Corridor",
+              "default": "Standard",
               "enum": [
-                "Corridor",
-                "SideRoom"
-              ]
-            },
-            "sideRoomCategory": {
-              "type": "string",
-              "default": "None",
-              "enum": [
-                "None",
-                "Generic",
-                "Hub",
+                "Start",
+                "Boss",
+                "Treasure",
                 "Save",
-                "Treasure"
+                "Special",
+                "Secret",
+                "Standard"
               ]
             },
             "allowEnemies": {
               "type": "boolean",
               "default": true
-            },
-            "bossPosition": {
-              "type": "string"
-            },
-            "leftGatePosition": {
-              "type": "string"
-            },
-            "rightGatePosition": {
-              "type": "string"
             },
             "interactiveActorPosition": {
               "type": "string"
@@ -173,7 +158,7 @@
             }
           },
           "required": [
-            "roomType",
+            "roomCategory",
             "walkArea"
           ]
         }

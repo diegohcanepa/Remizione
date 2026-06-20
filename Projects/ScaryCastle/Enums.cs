@@ -170,14 +170,8 @@ namespace ScaryCastle
     // RoomTheme
     public enum RoomTheme { Castle }
 
-    // RoomType
-    public enum RoomType { Corridor, SideRoom }
-
-    // SideRoomCategory
-    public enum SideRoomCategory { None, Hub, Generic, Save, Treasure }
-
-    // SpawnLocation
-    public enum SpawnLocation { CorridorOrSideRoom, Corridor, SideRoom, Gate }
+    // RoomCategory
+    public enum RoomCategory { Start, Boss, Treasure, Save, Special, Secret, Standard }
 
     // SpeechTextState
     public enum SpeechTextState { Hidden, Typing, Idle }

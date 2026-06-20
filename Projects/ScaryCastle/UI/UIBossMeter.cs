@@ -115,7 +115,8 @@ namespace ScaryCastle
             if (allDead)
             {
                 targetList.Clear();
-                session.AddCorridorExit();
+                // Call end of run script
+                //?session.AddCorridorExit();
             }
             else if (meter.Value != currentTotalHP)
             {

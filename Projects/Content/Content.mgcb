@@ -59,36 +59,6 @@
 #begin Atlases/Castle_Std_Common_02.xml
 /copy:Atlases/Castle_Std_Common_02.xml
 
-#begin Atlases/Castle_Std_Corridor_01.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Atlases/Castle_Std_Corridor_01.png
-
-#begin Atlases/Castle_Std_Corridor_01.xml
-/copy:Atlases/Castle_Std_Corridor_01.xml
-
-#begin Atlases/Castle_Std_Corridor_02.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Atlases/Castle_Std_Corridor_02.png
-
-#begin Atlases/Castle_Std_Corridor_02.xml
-/copy:Atlases/Castle_Std_Corridor_02.xml
-
 #begin Atlases/Castle_Std_Pit_01.png
 /importer:TextureImporter
 /processor:TextureProcessor

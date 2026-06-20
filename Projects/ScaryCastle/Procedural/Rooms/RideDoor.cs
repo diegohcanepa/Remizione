@@ -49,7 +49,6 @@ namespace ScaryCastle
 
             CollisionDetection = false;
             DisplayNameKey = "Prop.Door";
-            Verb = Verb.Open;
 
             this.lockImage = new(Atlas?.FindImage($"{DeclaredName}Lock"));
         }
@@ -75,22 +74,7 @@ namespace ScaryCastle
         // GetVisualAssetName
         private static string GetVisualAssetName(RoomNode current, RoomNode neighbor)
         {
-            if (neighbor == null)
-                return string.Empty;
-
-            SideRoomCategory category;
-            if (current.RoomType == RoomType.Corridor)
-            {
-                category = SideRoomCategory.Hub;
-            }
-            else
-            {
-                category = neighbor.SideRoomCategory;
-                if (neighbor.RoomType == RoomType.Corridor || category == SideRoomCategory.Hub)
-                    category = SideRoomCategory.Generic;
-            }
-
-            return $"{current.Definition.Theme}_{category}";
+            return $"{current.Definition.Theme}_{neighbor.Category}";
         }
 
         #endregion
@@ -184,16 +168,8 @@ namespace ScaryCastle
                     assetPrefix = GetVisualAssetName(rideRoom.RoomNode, rideRoom.RoomNode.Left);
                 }
 
-                if (rideRoom.RoomNode.RoomType == RoomType.Corridor)
-                {
-                    CloseSound = Sound.Find($"DoorGateClose");
-                    OpenSound = Sound.Find($"DoorGateOpen");
-                }
-                else
-                {
-                    CloseSound = Sound.Find($"Door{assetPrefix}Close");
-                    OpenSound = Sound.Find($"Door{assetPrefix}Open");
-                }
+                CloseSound = Sound.Find(SoundNames.DoorGenericClose);
+                OpenSound = Sound.Find(SoundNames.DoorGenericOpen);
 
                 var prefix = $"RideDoor_{assetPrefix}_{DoorDirection}_";
 

@@ -2,103 +2,8 @@
   "$schema": "./Room.schema.json",
   "data": [
     {
-      "name": "Castle_Std_Corridor_01",
-      "roomType": "Corridor",
-      "doorUp": "130,72",
-      "leverPosition": "207,71",
-      "exitApproachPosition": "232,90",
-      "exitHotspot": "231,35;231,85;244,95;244,41",
-      "leftGatePosition": "16,34",
-      "rightGatePosition": "232,34",
-      "bossPosition": "260,90",
-      "playerPosition": "30,90",
-      "placeholders": [
-        {
-          "position": "70,50",
-          "placement": "WallFrontHang",
-          "allowTags": "Torch"
-        },
-        {
-          "position": "188,50",
-          "placement": "WallFrontHang",
-          "allowTags": "Torch"
-        },
-        {
-          "position": "56,76",
-          "placement": "Floor",
-          "fillChance": 0.3,
-          "allowTags": "Pottery"
-        },
-        {
-          "position": "70,95",
-          "placement": "Floor",
-          "fillChance": 0.1,
-          "allowTags": "Trap"
-        },
-        {
-          "position": "131,82",
-          "placement": "Floor",
-          "fillChance": 0.2,
-          "allowTags": "Trap"
-        }
-      ],
-      "walkArea": "218,76;255,111;8,111;40,76",
-      "walls": [
-        "36,0;36,71;0,108;0,0",
-        "220,0;220,74;260,111;260,0"
-      ]
-    },
-    {
-      "name": "Castle_Std_Corridor_02",
-      "roomType": "Corridor",
-      "doorUp": "90,72",
-      "leverPosition": "178,71",
-      "exitApproachPosition": "232,90",
-      "exitHotspot": "231,35;231,85;244,95;244,41",
-      "leftGatePosition": "16,34",
-      "rightGatePosition": "232,34",
-      "bossPosition": "260,90",
-      "playerPosition": "30,90",
-      "placeholders": [
-        {
-          "position": "53,47",
-          "placement": "WallFrontHang",
-          "allowTags": "Torch"
-        },
-        {
-          "position": "130,57",
-          "fillChance": 0.3,
-          "placement": "WallFrontHang",
-          "allowTags": "WallDecoration"
-        },
-        {
-          "position": "193,44",
-          "fillChance": 0.3,
-          "placement": "WallFrontHang",
-          "allowTags": "WallDecoration"
-        },
-        {
-          "position": "162,47",
-          "placement": "WallFrontHang",
-          "allowTags": "Torch"
-        },
-        {
-          "position": "162,76",
-          "placement": "Floor",
-          "fillChance": 0.3,
-          "allowTags": "Pottery"
-        }
-      ],
-      "walkArea": "218,76;255,111;8,111;40,76",
-      "walls": [
-        "36,0;36,71;0,108;0,0",
-        "220,0;220,74;260,111;260,0"
-      ]
-    },
-    {
       "name": "Castle_Std_Common_01",
-      "roomType": "SideRoom",
-      "sideRoomCategory": "Hub",
+      "roomCategory": "Start",
       "doorUp": "126,41",
       "doorLeft": "21,80",
       "doorRight": "220,80",
@@ -139,8 +44,7 @@
     },
     {
       "name": "Castle_Std_Common_02",
-      "roomType": "SideRoom",
-      "sideRoomCategory": "Treasure",
+      "roomCategory": "Treasure",
       "doorUp": "150,54",
       "doorLeft": "21,126",
       "doorRight": "206,98",
@@ -186,8 +90,7 @@
     },
     {
       "name": "Castle_Std_Pit_01",
-      "roomType": "SideRoom",
-      "sideRoomCategory": "Hub",
+      "roomCategory": "Boss",
       "doorLeft": "21,80",
       "doorRight": "220,80",
       "exactMatch": true,
@@ -206,8 +109,7 @@
     },
     {
       "name": "Castle_Wide_Common_01",
-      "roomType": "SideRoom",
-      "sideRoomCategory": "Hub",
+      "roomCategory": "Standard",
       "doorUp": "126,41",
       "doorLeft": "21,80",
       "doorRight": "281,82",
