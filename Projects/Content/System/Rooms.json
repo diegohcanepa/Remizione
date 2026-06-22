@@ -2,8 +2,29 @@
   "$schema": "./Room.schema.json",
   "data": [
     {
-      "name": "Castle_Std_Common_01",
+      "name": "Castle_Start",
+      "difficulty": "Easy",
       "roomCategory": "Start",
+      "doorUp": "126,41",
+      "doorLeft": "21,80",
+      "doorRight": "220,80",
+      "placeholders": [
+        {
+          "position": "69,22",
+          "placement": "WallFrontHang",
+          "allowTags": "Torch"
+        },
+        {
+          "position": "170,22",
+          "placement": "WallFrontHang",
+          "allowTags": "Torch"
+        }
+      ],
+      "walkArea": "210,53;221,75;199,101;232,101;237,109;5,109;37,46;47,46;48,56;64,60;87,44;156,44;160,58;186,58;189,53"
+    },
+    {
+      "name": "Castle_Std_Common_01",
+      "roomCategory": "Standard",
       "doorUp": "126,41",
       "doorLeft": "21,80",
       "doorRight": "220,80",

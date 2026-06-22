@@ -36,14 +36,14 @@ namespace ScaryCastle
             container = new Sprite(Atlases.UI.GetImage("UIMiniMapContainer"))
             {
                 PivotOrigin = RectanglePoint.RightTop,
-                Position = new(234, 2)
+                Position = new(236, 4)
             };
 
             // ContainerBorder
             containerBorder = new Sprite(Atlases.UI.GetImage("UIMiniMapContainerBorder"))
             {
                 PivotOrigin = RectanglePoint.RightTop,
-                Position = new(234, 2)
+                Position = new(236, 4)
             };
 
             containerCenter = container.BoundingBox.Center;
@@ -88,15 +88,21 @@ namespace ScaryCastle
 
             // Current
             if (roomNode == CurrentRoom)
+            {
                 image = roomImages[(int)RoomImage.Current];
+            }
 
             // Visited
             else if (roomNode.Visited)
+            {
                 image = roomImages[(int)RoomImage.Visited];
+            }
 
             // Not visited
             else
+            {
                 image = roomImages[(int)RoomImage.NotVisited];
+            }
 
             image.Opacity = roomNode == CurrentRoom ? opacityTween.CurrentValue : 1;
             image.Position = position;

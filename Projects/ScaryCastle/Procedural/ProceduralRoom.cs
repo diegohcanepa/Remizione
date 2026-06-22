@@ -127,7 +127,7 @@ namespace ScaryCastle
             foreach (var c in candidates)
             {
                 // Intensidad eliminada. Ajuste puro por choque de dificultades.
-                var finalWeight = AdjustWeight(RoomNode.TopographicDifficulty, c.Difficulty, c.SpawnWeight);
+                var finalWeight = AdjustWeight(RoomNode.TopographicDifficulty, c.Difficulty, c.SpawnWeight, c.Rank);
                 table.Add(c.Name, finalWeight);
             }
 
@@ -229,7 +229,7 @@ namespace ScaryCastle
                         continue;
 
                     // Intensidad eliminada.
-                    var finalWeight = AdjustWeight(RoomNode.TopographicDifficulty, def.Difficulty, def.SpawnWeight);
+                    var finalWeight = AdjustWeight(RoomNode.TopographicDifficulty, def.Difficulty, def.SpawnWeight, null);
                     table.Add(def.Name, finalWeight);
                 }
 
@@ -261,25 +261,49 @@ namespace ScaryCastle
         }
 
         // AdjustWeight
-        protected static float AdjustWeight(Difficulty roomDiff, Difficulty thingDiff, float baseWeight)
+        protected static float AdjustWeight(Difficulty roomDiff, Difficulty thingDiff, float baseWeight, ActorRank? rank)
         {
             int distance = (int)roomDiff - (int)thingDiff;
 
+            // 1. Modificador por choque de dificultades (Topografía vs Definición)
             float roomMultiplier = distance switch
             {
-                2 => 0.05f,   // Ej: Sala Hard (2), Enemigo Easy (0) -> Desalentamos apariciones tontas en el final
-                1 => 0.25f,   // Ej: Sala Normal (1), Enemigo Easy (0)
-                0 => 1.0f,    // Matching perfecto
-                -1 => 0.10f,  // Out of Depth leve: Sala Easy, Enemigo Normal -> Sorpresa controlada
-                -2 => 0.02f,  // Out of Depth severo: Sala Easy, Enemigo Hard -> Rareza extrema ("salvajada")
+                2 => 0.05f,   // Sala Hard, Enemigo Easy -> Desalentamos masillas en el clímax
+                1 => 0.25f,   // Sala Normal, Enemigo Easy
+                0 => 1.0f,    // Calce ideal
+                -1 => 0.10f,  // Out of Depth leve: Sala Easy, Enemigo Normal -> 10% de chances base
+                -2 => 0.02f,  // Out of Depth severo: Sala Easy, Enemigo Hard -> 2% de chances base
                 _ => 1.0f
             };
 
-            return baseWeight * roomMultiplier;
+            // 2. Modificador por jerarquía de combate (El filtro salvaje)
+            float rankMultiplier = 1.0f;
+            if (rank.HasValue)
+            {
+                rankMultiplier = rank.Value switch
+                {
+                    // El Boss real tiene peso plano porque ya está blindado por su filtro de sala dedicado
+                    ActorRank.Boss => 1.0f,
+
+                    // Si es un MiniBoss y está queriendo irrumpir en una zona que no es Hard, 
+                    // le pegamos un hachazo drástico a su peso para que sea una rareza absoluta.
+                    ActorRank.MiniBoss => roomDiff switch
+                    {
+                        Difficulty.Easy => 0.10f,   // Hachazo del 90%. Combinado con el -2 de arriba, da un 0.002% real. Épico si sale.
+                        Difficulty.Normal => 0.30f, // Hachazo del 70%. Aparece a mitad de camino de forma muy esporádica.
+                        Difficulty.Hard => 1.0f,   // Peso completo: es su hábitat natural.
+                        _ => 1.0f
+                    },
+
+                    _ => 1.0f
+                };
+            }
+
+            return baseWeight * roomMultiplier * rankMultiplier;
         }
 
         // GetCandidateDefinitions
-        protected List<TDefinition> GetCandidateDefinitions<TDefinition, TThing>(IList<TDefinition> definitions, Func<TDefinition, bool>? predicate = null)
+        protected List<TDefinition> GetCandidateDefinitions<TDefinition, TThing>(IList<TDefinition> definitions)
             where TDefinition : ThingDefinition where TThing : GameThing
         {
             var outList = new List<TDefinition>();
@@ -288,8 +312,16 @@ namespace ScaryCastle
 
             foreach (var definition in definitions)
             {
-                if (predicate != null && !predicate(definition))
-                    continue;
+                if (definition is ActorDefinition actorDefinition)
+                {
+                    // Si es un Boss real, SOLO puede aparecer en la habitación etiquetada como Boss
+                    if (actorDefinition.Rank == ActorRank.Boss && RoomNode.Category != RoomCategory.Boss)
+                        continue;
+
+                    // Y viceversa: en la sala del Boss no queremos que spawneen murciélagos comunes como plato principal
+                    if (RoomNode.Category == RoomCategory.Boss && actorDefinition.Rank != ActorRank.Boss)
+                        continue;
+                }
 
                 if (definition.RoomTheme.HasValue && definition.RoomTheme != RoomNode.Definition.Theme)
                     continue;

@@ -19,7 +19,7 @@ namespace ScaryCastle
                 LightKind = LightKind.Ambient,
                 PivotOrigin = RectanglePoint.Center,
                 Position = new(9),
-                Scale = new(15)
+                Scale = new(18)
             };
 
             AttachedLightPosition = new(9);

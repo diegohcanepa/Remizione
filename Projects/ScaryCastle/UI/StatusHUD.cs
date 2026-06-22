@@ -28,7 +28,7 @@ namespace ScaryCastle
             this.coinMeter = new(session);
             this.InventoryMeter = new(session.PlayerInventory);
             this.passiveItems = new(session);
-            this.BossMeter = new(session);
+            this.BossMeter = new();
             this.ThingInfo = new();
             this.MiniMap = new();
         }

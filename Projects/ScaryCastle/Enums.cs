@@ -5,6 +5,9 @@ namespace ScaryCastle
     // ActionKind
     public enum ActionKind { Script, Proximity, InPlace, Projectile, Self }
 
+    // ActorRank
+    public enum ActorRank { Common, MiniBoss, Boss }
+
     // ApproachBehavior
     public enum ApproachBehavior
     {

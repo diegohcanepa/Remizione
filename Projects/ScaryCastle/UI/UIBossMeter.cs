@@ -18,7 +18,6 @@ namespace ScaryCastle
         private readonly Sprite icon;
         private readonly TextSprite labelText;
         private readonly Meter meter;
-        private readonly GameSession session;
         private readonly FloatTween shakeTween = new();
         private readonly List<Actor> targetList = [];
 
@@ -27,11 +26,9 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public UIBossMeter(GameSession session)
+        public UIBossMeter()
             : base()
         {
-            this.session = session;
-
             this.meter = new Meter(ColorPalette.BossMeter.Back, ColorPalette.BossMeter.Fore, ColorPalette.BossMeter.Diff, new(60, 6), 1)
             {
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -10)

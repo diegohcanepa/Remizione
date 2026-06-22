@@ -22,6 +22,9 @@ namespace ScaryCastle
             // MaxPackSize
             MaxPackSize = element.GetInt32("maxPackSize", 1);
 
+            // Rank
+            Rank = element.GetEnum("rank", ActorRank.Common);
+
             // Name cannot be a category
             if (MinPackSize > MaxPackSize)
                 RaiseValidationError(this, $"Minimum pack size exceeds the maximum pack size.");
@@ -37,6 +40,9 @@ namespace ScaryCastle
 
         // MaxPackSize
         public int MaxPackSize { get; }
+
+        // Rank
+        public ActorRank Rank { get; }
 
         // RollPackSize
         public int RollPackSize(Random rng)
