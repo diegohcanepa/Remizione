@@ -24,7 +24,7 @@ namespace ScaryCastle
         {
             if (target.CanBeHit() && Owner.AnimationPlayer.Frame?.IsTrigger == true)
             {
-                //if (Owner.IsInAttackLane(target))
+                if (Owner.IsInAttackLane(target))
                 {
                     //if (Owner.AnimationPlayer.GetFrameSubArea().Intersects(target.RuntimeHotspot.BoundingRectangleF))
                     return true;
@@ -70,7 +70,7 @@ namespace ScaryCastle
             if (Target != null && CanInflictDamage(Target))
             {
                 EffectDescriptor.Apply(action.EffectDescriptors, Owner, Target, EffectContext.Attack);
-                Owner.Session.InterruptAwaitingScript();
+                //Owner.Session.InterruptAwaitingScript();
             }
         }
 
@@ -113,7 +113,9 @@ namespace ScaryCastle
             base.Exit();
             Action = null;
             Target = null;
-            Owner.Session.ProcessTurn();
+
+            if (Owner.IsPlayer)
+                Owner.Session.ProcessTurn();
         }
 
         // Target

@@ -89,6 +89,8 @@ namespace ScaryCastle
             }
 
             ShadowSpotSize = 6;
+
+            ResetRemainingTurns();
         }
 
         #endregion
@@ -153,6 +155,16 @@ namespace ScaryCastle
         {
             headTween.Start(TweenStyle.CubicInOut, 0, .25f, 400, -1);
             headTween.RandomizeTime();
+        }
+
+        // ResetRemainingTurns
+        [ScriptMethod]
+        private void ResetRemainingTurns(bool random = false)
+        {
+            if (Definition != null)
+                RemainingTurns = random ? Random.Shared.Next(1, Definition.TurnInterval + 1) : Definition.TurnInterval;
+            else
+                RemainingTurns = -1;
         }
 
         // SyncHeadAnimation
@@ -259,29 +271,6 @@ namespace ScaryCastle
 
             PlaySound(SoundNames.FootstepA);
             footstepLastUsedFrame = Sprite.Player.Frame;
-        }
-
-        // UpdatePatienceTimer
-        private void UpdatePatienceTimer(GameTime gameTime)
-        {
-            if (Session.IsAwaiting || IsPlayer || !IsHostile || PatienceCooldown == 0)
-                return;
-
-            if (!IsAlert)
-            {
-                if (Session.Player != null)
-                {
-                    if (!IsFacingTarget(Session.Player))
-                        return;
-
-                    if (Room?.WalkArea?.InLineOfSight(Session.Player.Position, Position, this) == true)
-                        IsAlert = true;
-                }
-            }
-            else if (PatienceTimer > 0)
-            {
-                PatienceTimer -= gameTime.ElapsedGameTime.Milliseconds;
-            }
         }
 
         /*
@@ -429,10 +418,10 @@ namespace ScaryCastle
 
             base.OnDraw(gameTime);
 
-            if (PatienceTimer <= 0 && IsHostile && IsStanding && ActiveThrowable == null && !HasSpeechText)
+            if (RemainingTurns < 1 && IsHostile && IsStanding && ActiveThrowable == null && !HasSpeechText)
             {
                 alertIcon.Position = GetOverheadPosition();
-                alertIcon.Draw(gameTime);
+                //alertIcon.Draw(gameTime);
             }
 
             if (activeThrowableSprite?.RenderImage != null)
@@ -489,7 +478,8 @@ namespace ScaryCastle
         protected override void OnLoad()
         {
             base.OnLoad();
-            PatienceTimer = PatienceCooldown;
+            IsAlert = true;
+            ResetRemainingTurns(true);
             OpacityFactor = 1;
             Stand();
         }
@@ -547,7 +537,7 @@ namespace ScaryCastle
 
             if (IsPlayer)
             {
-                if (Session.InterruptAwaitingScript())
+                if (Session.ActiveNPC == null && Session.InterruptAwaitingScript())
                 {
                     this.Game.SceneManager.PopUntil(Session);
                     StopTalking();
@@ -560,7 +550,7 @@ namespace ScaryCastle
                     DropLoot();
 
                 IsHostile = true;
-                PatienceTimer = 0;
+                RemainingTurns = 0;
             }
 
             Session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);
@@ -572,8 +562,6 @@ namespace ScaryCastle
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
-
-            UpdatePatienceTimer(gameTime);
 
             /*
             if (!UpdateContactIntent(gameTime))
@@ -739,14 +727,14 @@ namespace ScaryCastle
         // BeginTurn
         public Script? BeginTurn()
         {
-            if (IsPlayer || !IsHostile || Session.IsAwaiting)
+            if (IsPlayer || !IsHostile || Session.IsAwaiting || RemainingTurns == -1)
                 return null;
 
             if (OutcomeScript != null && Brain.Decide(this, Session.Player) is CombatDecision decision)
             {
                 CombatDecision = decision;
                 CombatDecisionType = decision.Type;
-                PatienceTimer = PatienceCooldown;
+                ResetRemainingTurns();
                 return OutcomeScript;
             }
             else
@@ -941,7 +929,7 @@ namespace ScaryCastle
         public bool IsAlert { get; set; }
 
         // IsInAttackLane
-        public bool IsInAttackLane(GameThing target, int attackLaneThickness = 4)
+        public bool IsInAttackLane(GameThing target, int attackLaneThickness = 5)
         {
             float dy = Math.Abs(Position.Y - target.Y);
             return dy <= attackLaneThickness;
@@ -1099,32 +1087,6 @@ namespace ScaryCastle
         // MoveToDestination
         public Vector2? MoveToDestination => pendingPathNodes.Count == 0 ? null : pendingPathNodes[^1];
 
-        // PatienceCooldown
-        [ScriptProperty]
-        public int PatienceCooldown
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    PatienceTimer = value;
-                }
-            }
-        } = 10000;
-
-        // PatienceTimer
-        public int PatienceTimer
-        {
-            get;
-            set
-            {
-                if (value != field)
-                    field = int.Clamp(value, 0, PatienceCooldown);
-            }
-        }
-
         // PlayerNumber
         [ScriptProperty]
         public PlayerNumber PlayerNumber
@@ -1142,6 +1104,9 @@ namespace ScaryCastle
                 }
             }
         } = PlayerNumber.None;
+
+        // RemainingTurns
+        public int RemainingTurns { get; private set; }
 
         // ResolveInteraction
         public bool ResolveInteraction(GameThing target, Item? item)
@@ -1250,6 +1215,29 @@ namespace ScaryCastle
             state.Prop = ActiveThrowable;
             ActiveThrowable = null;
             BodyMachine.ChangeState(state.GetType());
+        }
+
+        // UpdatePatience
+        public void UpdatePatience()
+        {
+            if (IsPlayer || !IsHostile || RemainingTurns <= 0)
+                return;
+
+            if (!IsAlert)
+            {
+                if (Session.Player != null)
+                {
+                    if (!IsFacingTarget(Session.Player))
+                        return;
+
+                    //if (Room?.WalkArea?.InLineOfSight(Session.Player.Position, Position, this) == true)
+                        IsAlert = true;
+                }
+            }
+            else if (RemainingTurns > 0)
+            {
+                RemainingTurns -= 1;
+            }
         }
 
         /// <summary>

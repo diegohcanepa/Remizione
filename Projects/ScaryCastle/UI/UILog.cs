@@ -40,7 +40,7 @@ namespace ScaryCastle
             {
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.LeftTop,
-                Scale = ScaleInfo.Text.Giant
+                Scale = ScaleInfo.Text.VeryLarge
             };
 
             // Noun
@@ -48,7 +48,7 @@ namespace ScaryCastle
             {
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.LeftTop,
-                Scale = ScaleInfo.Text.VeryLarge
+                Scale = ScaleInfo.Text.Large
             };
         }
 
@@ -58,13 +58,13 @@ namespace ScaryCastle
         private void ShowCore(string verb, string noun, bool isWarning, AtlasImage? image)
         {
             verbText.Color = isWarning ? ColorPalette.Text.Terra : ColorPalette.Text.Green;
-            verbText.Position = new Vector2(11, 17);
+            verbText.Position = new Vector2(11, 95);
             verbText.Text = verb;
 
             nounText.Position = verbText.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -2);
             nounText.Text = noun;
             icon.RenderImage = image;
-            icon.Position = nounText.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 2, 2);
+            icon.Position = nounText.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 2, 0);
 
             iconShadow.Position = icon.Position;
             iconShadow.RenderImage = image;

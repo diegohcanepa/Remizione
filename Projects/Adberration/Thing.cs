@@ -278,6 +278,7 @@ namespace Adberration
         [ScriptProperty]
         public Vector2 ParallaxFactor { get; set; } = Vector2.One;
 
+        /*
         // PerformOutcome
         [ScriptMethod]
         public Script? PerformOutcome()
@@ -292,6 +293,7 @@ namespace Adberration
 
             return OutcomeScript;
         }
+        */
 
         // Room
         public virtual Room? Room => Parent as Room;

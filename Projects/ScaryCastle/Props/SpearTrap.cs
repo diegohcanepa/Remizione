@@ -121,7 +121,7 @@ namespace ScaryCastle
             // Prepared
             if (state == SpearState.Prepared)
             {
-                if (!Session.IsAwaiting && cooldown > 0)
+                if (!Session.IsAwaiting && cooldown >= 0)
                 {
                     cooldown -= gameTime.ElapsedGameTime.Milliseconds;
                     if (cooldown <= 0)

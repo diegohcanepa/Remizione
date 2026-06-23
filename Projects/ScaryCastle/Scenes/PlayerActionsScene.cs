@@ -143,7 +143,7 @@ namespace ScaryCastle
 
             for (var i = 0; i < itemContainer.Capacity; i++)
             {
-                slots[i].Draw(gameTime);
+                //slots[i].Draw(gameTime);
                 shadows[i].Draw(gameTime);
                 icons[i].Draw(gameTime);
             }

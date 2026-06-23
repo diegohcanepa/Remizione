@@ -459,7 +459,7 @@ namespace Adberration
 
             if (!IsAwaiting)
             {
-                if (outcomeScript != null)// && outcomeScript.IsCompleted)
+                if (outcomeScript != null && outcomeScript.IsCompleted)
                     EndOutcome();
 
                 if (pendingSave)

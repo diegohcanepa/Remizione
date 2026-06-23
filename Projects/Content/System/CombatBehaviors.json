@@ -8,7 +8,7 @@
         {
           "name": "Headbutt",
           "soundStart": "WhooshA",
-          "actionKind": "ProximityAction",
+          "actionKind": "Proximity",
           "effects": [
             {
               "context": "Attack",
@@ -27,7 +27,7 @@
       "intents": [
         {
           "name": "Contact",
-          "actionKind": "ProximityAction",
+          "actionKind": "Proximity",
           "effects": [
             {
               "context": "Contact",
@@ -52,7 +52,7 @@
         {
           "name": "Contact",
           "soundTrigger": "RatAttack",
-          "actionKind": "ProximityAction",
+          "actionKind": "Proximity",
           "effects": [
             {
               "context": "Contact",
@@ -77,7 +77,7 @@
         {
           "name": "Contact",
           "soundTrigger": "RatAttack",
-          "actionKind": "ProximityAction",
+          "actionKind": "Proximity",
           "effects": [
             {
               "context": "Contact",
@@ -101,7 +101,7 @@
       "intents": [
         {
           "name": "Contact",
-          "actionKind": "ProximityAction",
+          "actionKind": "Proximity",
           "effects": [
             {
               "context": "Contact",
@@ -125,7 +125,7 @@
         {
           "name": "Bite",
           "soundTrigger": "RatAttack",
-          "actionKind": "ProximityAction",
+          "actionKind": "Proximity",
           "effects": [
             {
               "context": "Attack",
@@ -144,14 +144,14 @@
         {
           "name": "Headbutt",
           "category": "Basic",
-          "actionKind": "ProximityAction",
+          "actionKind": "Proximity",
           "effects": [
             {
               "context": "Attack",
               "effectType": "Damage",
               "amount": "2",
               "sound": "ImpactA",
-              "comicText": "OuchBlue"
+              "comicText": "AghRed"
             }
           ]
         }
@@ -164,7 +164,7 @@
         {
           "name": "Contact",
           "soundTrigger": "RatAttack",
-          "actionKind": "ProximityAction",
+          "actionKind": "Proximity",
           "effects": [
             {
               "context": "Contact",

@@ -77,6 +77,8 @@ namespace ScaryCastle
         // Projectile
         public ProjectileDescriptor? Projectile { get; }
 
+        // Range
+
         // SoundStart
         public Sound? SoundStart { get; }
 

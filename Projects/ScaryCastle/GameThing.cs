@@ -551,8 +551,10 @@ namespace ScaryCastle
             if (IsDead)
                 return false;
 
+            /*
             if (Session.Player == this && blinker.IsRunning)
                 return false;
+            */
 
             return true;
         }

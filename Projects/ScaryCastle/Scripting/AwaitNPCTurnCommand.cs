@@ -28,15 +28,17 @@ namespace ScaryCastle.Scripting
             if (actor == null || actor.CombatDecision is not { } decision)
                 return;
 
-            if (decision.Type is CombatDecisionType.None or CombatDecisionType.Bullying)
+            if (decision.Type is CombatDecisionType.None or CombatDecisionType.Curse)
                 return;
 
-            awaitMove = true;
+            awaitAttack = false;
+            awaitMove = false;
 
             if (decision.Type == CombatDecisionType.Attack)
             {
                 if (decision.Target != null)
                 {
+                    awaitMove = true;
                     var pos = decision.Target.GetApproachPosition(actor, ApproachBehavior.ClosestSide);
                     actor.MoveTo(pos);
                 }
@@ -44,7 +46,10 @@ namespace ScaryCastle.Scripting
             else if (decision.Type == CombatDecisionType.Charge)
             {
                 if (decision.Target != null)
+                {
+                    awaitMove = true;
                     actor.Charge(decision.Target.Position);
+                }
             }
             else if (decision.Type == CombatDecisionType.Flee)
             {
@@ -61,12 +66,6 @@ namespace ScaryCastle.Scripting
             }
         }
 
-        // OnUpdate
-        protected override void OnUpdate(GameTime gameTime)
-        {
-            base.OnUpdate(gameTime);
-        }
-
         #endregion
 
         // IsAwaiting
@@ -80,7 +79,7 @@ namespace ScaryCastle.Scripting
                 if (!actor.IsMoving)
                 {
                     awaitMove = false;
-                    awaitAttack = actor.CombatDecisionType is CombatDecisionType.Attack;
+                    awaitAttack = actor.CombatDecisionType is CombatDecisionType.Attack or CombatDecisionType.Charge;
                     if (awaitAttack && actor.CombatDecision?.Intent is { } intent)
                         actor.ExecuteAction(intent, actor.CombatDecision.Target);
                 }
@@ -89,9 +88,16 @@ namespace ScaryCastle.Scripting
             }
 
             if (awaitAttack)
-                return !actor.IsStanding;
-
-            return false;
+            {
+                if (actor.IsPerformingAction)
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

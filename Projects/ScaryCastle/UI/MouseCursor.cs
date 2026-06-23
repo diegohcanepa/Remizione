@@ -102,7 +102,7 @@ namespace ScaryCastle
                     heartIcon.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, -1, 0);
 
                     healthTextSprite.PivotOrigin = textSprite.PivotOrigin;
-                    healthTextSprite.Position = heartIcon.BoundingBox.GetPoint(RectanglePoint.Right, -.5f, 0);
+                    healthTextSprite.Position = heartIcon.BoundingBox.GetPoint(RectanglePoint.Left, -.5f, 0);
                 }
             }
 

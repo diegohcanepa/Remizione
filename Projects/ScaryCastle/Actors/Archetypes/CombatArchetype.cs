@@ -52,7 +52,7 @@ namespace ScaryCastle
         }
 
         // MeleeAttackRange
-        public virtual int MeleeAttackRange => 20;
+        public virtual int MeleeAttackRange => 30;
 
         // SelectIntent
         // Selecciona un ataque de la lista disponible basándose en pesos y distancia.

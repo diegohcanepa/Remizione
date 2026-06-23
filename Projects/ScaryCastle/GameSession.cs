@@ -707,7 +707,7 @@ namespace ScaryCastle
 
             for (var i = 0; i < room.Children.Count; i++)
             {
-                if (room.Children[i] is Actor actor && !actor.IsPlayer && actor.PatienceTimer == 0)
+                if (room.Children[i] is Actor actor && !actor.IsPlayer && actor.RemainingTurns == 0)
                 {
                     if (actor.BeginTurn() is { } script)
                     {
@@ -715,6 +715,14 @@ namespace ScaryCastle
                         BeginOutcome(script, actor);
                         return;
                     }
+                }
+            }
+
+            for (var i = 0; i < room.Children.Count; i++)
+            {
+                if (room.Children[i] is Actor actor && !actor.IsPlayer)
+                {
+                    actor.UpdatePatience();
                 }
             }
 

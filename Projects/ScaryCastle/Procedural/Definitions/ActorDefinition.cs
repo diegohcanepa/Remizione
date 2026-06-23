@@ -25,6 +25,9 @@ namespace ScaryCastle
             // Rank
             Rank = element.GetEnum("rank", ActorRank.Common);
 
+            // TurnInterval
+            TurnInterval = element.GetInt32("turnInterval", 2);
+
             // Name cannot be a category
             if (MinPackSize > MaxPackSize)
                 RaiseValidationError(this, $"Minimum pack size exceeds the maximum pack size.");
@@ -49,5 +52,8 @@ namespace ScaryCastle
         {
             return rng.Next(MinPackSize, MaxPackSize + 1);
         }
+
+        // TurnInterval
+        public int TurnInterval { get; }
     }
 }

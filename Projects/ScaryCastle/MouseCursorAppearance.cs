@@ -42,11 +42,21 @@ namespace ScaryCastle
             if (context.Session.IsAwaiting)
             {
                 if (context.Session.AwaitingScript?.CurrentStatement is AwaitInputCommand)
+                {
                     MouseCursor.State = MouseCursorState.Hand;
+                }
                 else if (context.Session.AwaitingScript?.CurrentStatement is SayCommand)
+                {
                     MouseCursor.State = MouseCursorState.Arrow;
-                else
-                    MouseCursor.State = context.Session.ActiveNPC == null ? MouseCursorState.Wait : MouseCursorState.Skull;
+                }
+                else if (context.Session.ActiveNPC == null)
+                {
+                    MouseCursor.State = MouseCursorState.Wait;
+                }
+                else if (context.Session.IsAwaiting)
+                {
+                    MouseCursor.State = MouseCursorState.Skull;
+                }
 
                 return;
             }
