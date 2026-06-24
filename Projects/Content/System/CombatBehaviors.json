@@ -37,7 +37,7 @@
             },
             {
               "context": "Contact",
-              "amount": "2",
+              "amount": "1",
               "effectType": "Condition",
               "conditionType": "ChromaticAberration"
             }            
@@ -82,7 +82,7 @@
             {
               "context": "Contact",
               "effectType": "Damage",
-              "amount": "2",
+              "amount": "1",
               "comicText": "AghRed"
             },
             {
@@ -106,7 +106,7 @@
             {
               "context": "Contact",
               "effectType": "Damage",
-              "amount": "2",
+              "amount": "1",
               "comicText": "AghRed"
             },
             {
@@ -149,7 +149,7 @@
             {
               "context": "Attack",
               "effectType": "Damage",
-              "amount": "2",
+              "amount": "1",
               "sound": "ImpactA",
               "comicText": "AghRed"
             }

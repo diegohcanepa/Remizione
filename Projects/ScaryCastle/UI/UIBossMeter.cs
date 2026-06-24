@@ -29,7 +29,7 @@ namespace ScaryCastle
         public UIBossMeter()
             : base()
         {
-            this.meter = new Meter(ColorPalette.BossMeter.Back, ColorPalette.BossMeter.Fore, ColorPalette.BossMeter.Diff, new(60, 6), 1)
+            this.meter = new Meter(ColorPalette.BossMeter.Back, ColorPalette.BossMeter.Fore, ColorPalette.BossMeter.Diff, new(40, 6), 1)
             {
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -10)
             };

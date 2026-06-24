@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
+using ScaryCastle.UI;
 
 namespace ScaryCastle
 {
@@ -17,6 +18,7 @@ namespace ScaryCastle
         public TextHUD(GameSession session)
         {
             this.session = session;
+            this.BossMeter = new();
             this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 10), ScaleInfo.Text.Medium);
         }
 
@@ -29,16 +31,29 @@ namespace ScaryCastle
         {
             Log.Draw(gameTime);
             Message.Draw(gameTime);
+
+            if (session.IsCurrentScene)
+            {
+                Sentence.Draw(gameTime);
+
+                if (session.Room is RideRoom rideRoom && rideRoom.RoomNode.Category == RoomCategory.Boss)
+                    BossMeter.Draw(gameTime);
+            }
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            BossMeter.Update(gameTime);
             Log.Update(gameTime);
             Message.Update(gameTime);
+            Sentence.Update(gameTime);
         }
 
         #endregion
+
+        // BossMeter
+        public UIBossMeter BossMeter { get; }
 
         // HandleInput
         public HandleInputResult HandleInput()
@@ -61,8 +76,12 @@ namespace ScaryCastle
         // Reset
         public void Reset()
         {
+            BossMeter.Reset();
             Message.Hide();
             Log.Hide();
         }
+
+        // Sentence
+        public UISentence Sentence { get; } = new();
     }
 }

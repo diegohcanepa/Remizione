@@ -100,6 +100,7 @@
 			<Word>await-monitor-text</Word>
 			<Word>await-move</Word>
 			<Word>await-music</Word>
+			<Word>await-npc-turn</Word>
 			<Word>await-opacity-tween</Word>
 			<Word>await-option-menu</Word>
 			<Word>await-outcome-completion</Word>

@@ -77,6 +77,9 @@ namespace ScaryCastle
     // InPlaceEffectType
     public enum InPlaceEffectType { None, Lightning }
 
+    // InteractionKind
+    public enum InteractionKind { Use, Examine, Talk, Attack, Lift, GoLeft, GoRight, GoUp, GoDown }
+
     // ItemBehavior
     public enum ItemBehavior { Common, Currency, PlayerAction, StatModifier }
 
@@ -132,7 +135,7 @@ namespace ScaryCastle
     public enum MessageKind { CannotPlaceItem, FullGoo, HandsFull, InventoryFull, ItemDiscarded, LiftNotAllowed, NotEnoughCoins, NotEnoughGoo, OutOfReach, OutOfLine, PathCleared, ExtraEnergy, ExtraHeart }
 
     // MouseCursorState
-    public enum MouseCursorState { Arrow, Cross, Down, Hand, Left, Prohibition, Right, Skull, Up, Wait }
+    public enum MouseCursorState { Cross, Attack, Down, Examine, Hand, Left, Lift, Right, Skull, Talk, Up, Wait }
 
     // PlacementType
     public enum PlacementType
@@ -189,7 +192,7 @@ namespace ScaryCastle
     public enum UIControlGroupLayoutStyle { Vertically, Horizontally }
 
     // Verb
-    public enum Verb { None, Ellipsis, Enter, Exit, Lift, Open, Pull, Take, TalkTo, Throw, Use }
+    public enum Verb { None, Attack, Ellipsis, Enter, Exit, Lift, Open, Pull, Take, TalkTo, Throw, Use }
 
     // VolumeCategory
     public enum VolumeCategory { Ambient, FX, Music, Voice, Master }

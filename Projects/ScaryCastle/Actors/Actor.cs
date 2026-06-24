@@ -46,6 +46,7 @@ namespace ScaryCastle
             this.DisplayNameKey = $"Actor.{DeclaredName}";
             this.HitEffect = HitEffect.Blink;
             this.IgnoreWalkArea = false;
+            this.Interaction = InteractionKind.Talk;
             this.Faction = Definition == null ? Faction.Good : Definition.Faction;
             this.PrecalculateLoot = true;
             this.CombatBehavior = CombatBehavior.Behaviors.Find(DeclaredName);
@@ -454,6 +455,14 @@ namespace ScaryCastle
         // OnEnergyChanged
         protected virtual void OnEnergyChanged(int previousValue)
         {
+        }
+
+        // OnFactionChanged
+        protected override void OnFactionChanged()
+        {
+            base.OnFactionChanged();
+            if (Faction == Faction.Evil)
+                Interaction = InteractionKind.Attack;
         }
 
         // OnHPChanged
@@ -1114,7 +1123,7 @@ namespace ScaryCastle
             if (!IsPlayer || IsDead)
                 return false;
 
-            Session.InteractionData.Refresh(Session.InteractionContext);
+            Session.InteractionData.Prepare(Session.InteractionContext);
             if (!Session.InteractionData.CanExecute)
             {
                 MouseCursor.Shake();

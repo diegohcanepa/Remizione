@@ -325,6 +325,7 @@ Bla bla bla</String>
   <String Key="Prop.WC">Inodoro</String>
   <String Key="StatName.Faith">Fe</String>
   <String Key="StatName.HP">Salud</String>
+  <String Key="Verb.Attack">Atacar</String>
   <String Key="Verb.Ellipsis" />
   <String Key="Verb.Enter">Entrar</String>
   <String Key="Verb.Exit">Salir</String>

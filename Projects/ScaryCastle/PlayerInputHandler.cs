@@ -43,12 +43,6 @@ namespace ScaryCastle
 
             MouseCursor.PerformClick();
 
-            if (context.Target == Actor && context.HeldItem == null && Actor.Room?.IsProcedural == true)
-            {
-                context.Session.ShowActions();
-                return;
-            }
-
             var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
 
             // 1. Walk to
@@ -61,7 +55,7 @@ namespace ScaryCastle
             }
 
             // 2. Outcome interaction: Approach and interact with target
-            if (context.HeldItem == null || context.Target.HasArrowCursor)
+            if (context.HeldItem == null || context.Target.IsGoToInteraction)
             {
                 Actor.ResolveInteraction(context.Target, null);
                 return;

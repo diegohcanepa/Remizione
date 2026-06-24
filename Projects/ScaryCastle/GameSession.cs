@@ -2,6 +2,7 @@
 using Adberration.Scripting;
 using Engendro;
 using Engendro.Audio;
+using Engendro.Input;
 using Microsoft.Xna.Framework;
 using ScaryCastle.Props;
 using ScaryCastle.Scripting;
@@ -20,7 +21,6 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly PlayerActionsScene actionsScene;
         private readonly ScriptConsole? console;
         private readonly FloatTween chromaticAberrationTween = new();
         private readonly InventoryScene inventoryScene;
@@ -59,7 +59,6 @@ namespace ScaryCastle
             this.InteractionContext = new(this);
             this.DeclaredThings = new(proceduralThings);
             this.Random = new Random(Seed);
-            this.actionsScene = new(PlayerActions);
             this.inventoryScene = new(PlayerInventory);
 
             ObjectPools = new ObjectPools(this);
@@ -247,7 +246,7 @@ namespace ScaryCastle
 
             SpeechText.DrawSpeechTexts(gameTime);
 
-            if (IsHUDVisible)
+            //if (IsHUDVisible)
                 TextHUD.Draw(gameTime);
         }
 
@@ -428,6 +427,20 @@ namespace ScaryCastle
 
             if (IsCurrentScene)
                 InteractionContext.Refresh();
+
+            /*
+            if (Player != null && Player.ActiveThrowable == null)
+            {
+                if (!IsAwaiting && IsCurrentScene && CurrentRun != null)
+                {
+                    if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
+                    {
+                        ShowInventory();
+                        return;
+                    }
+                }
+            }
+            */
         }
 
         // OnWrite
@@ -550,7 +563,7 @@ namespace ScaryCastle
             CurrentRun = null;
 
             Bosses.Clear();
-            StatusHUD.BossMeter.Reset();
+            TextHUD.BossMeter.Reset();
             CleanUpRuntimeEntities();
             Coins = 0;
             PlayerActions.Clear();
@@ -769,12 +782,6 @@ namespace ScaryCastle
                 Camera.Shake(TweenStyle.Linear, new Vector2(3.4f), 50, 4);
         }
 
-        // ShowActions
-        public void ShowActions()
-        {
-            Game.SceneManager.Push(actionsScene);
-        }
-
         // ShowDialogMenu
         public void ShowDialogMenu(DialogBlock dialogBlock)
         {
@@ -794,14 +801,6 @@ namespace ScaryCastle
         {
             itemInfoScene.Show(item);
             Game.SceneManager.Push(itemInfoScene);
-        }
-
-        // StartGatePhase
-        [ScriptMethod]
-        public void StartGatePhase()
-        {
-            if (Boss != null)
-                StatusHUD.BossMeter.SetTargets(Bosses.ToArray());
         }
 
         // StatusHUD

@@ -218,10 +218,6 @@ namespace ScaryCastle
                 DisplayName += ellipsis;
                 DisplaySentence = DisplayName;
             }
-            else if (Verb != Verb.None)
-            {
-                DisplaySentence = Localization.GetValue(Verb) + " " + DisplayName;
-            }
             else
             {
                 DisplaySentence = DisplayName;
@@ -620,10 +616,6 @@ namespace ScaryCastle
         [ScriptProperty]
         public int CollisionHeight { get; set; }
 
-        // Cursor
-        [ScriptProperty]
-        public MouseCursorState Cursor { get; set; } = MouseCursorState.Cross;
-
         // CustomDropName
         [ScriptProperty]
         public string CustomDropName { get; set; } = string.Empty;
@@ -758,9 +750,13 @@ namespace ScaryCastle
             get;
             set
             {
-                field = value;
-                if (field == Faction.Evil)
-                    IsHostile = true;
+                if (field != value)
+                {
+                    field = value;
+                    if (field == Faction.Evil)
+                        IsHostile = true;
+                    OnFactionChanged();
+                }
             }
         }
 
@@ -882,10 +878,6 @@ namespace ScaryCastle
             return 1;
         }
 
-        // HasArrowCursor
-        public bool HasArrowCursor => Cursor is MouseCursorState.Left or MouseCursorState.Right or
-                                                MouseCursorState.Up or MouseCursorState.Down;
-
         // HitTest
         public bool HitTest(Vector2 value)
         {
@@ -974,6 +966,21 @@ namespace ScaryCastle
         [ScriptProperty]
         public bool IgnoreWalkArea { get; set; } = true;
 
+        // Interaction
+        [ScriptProperty]
+        public InteractionKind Interaction
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    RefreshDisplayName();
+                }
+            }
+        }
+
         // IsBehind
         public bool IsBehind(GameThing thing)
         {
@@ -1023,6 +1030,10 @@ namespace ScaryCastle
 
         // IsEmittingLight
         public virtual bool IsEmittingLight => AttachedLight?.IsEmitting == true && !IgnoreAttachedLight;
+
+        // IsGoToInteraction
+        public bool IsGoToInteraction => Interaction is InteractionKind.GoLeft or InteractionKind.GoRight or
+                                                InteractionKind.GoUp or InteractionKind.GoDown;
 
         // IsFacingTarget
         public bool IsFacingTarget(GameThing target)

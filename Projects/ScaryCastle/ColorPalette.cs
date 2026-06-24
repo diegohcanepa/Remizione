@@ -75,7 +75,7 @@ namespace ScaryCastle
         internal static Color PopupTitle { get; } = new(116, 95, 75);
 
         // SceneShade
-        internal static Color SceneShade { get; } = Color.Black * .5f;
+        internal static Color SceneShade { get; } = Color.Black * .3f;
 
         // ShadowOpacity
         public const float ShadowOpacity = .4f;
@@ -102,7 +102,7 @@ namespace ScaryCastle
             internal static Color Gold { get; } = new(240, 181, 65);
             internal static Color Green { get; } = new(59, 125, 79);
             internal static Color GreenLight { get; } = new(99, 171, 63);
-            internal static Color Highlight { get; } = new(190, 170, 150);
+            internal static Color Highlight { get; } = new(178, 174, 148);
             internal static Color Hover { get; } = new(167, 143, 145);
             internal static Color Light { get; } = new(200, 165, 138);
             internal static Color Orange { get; } = new(171, 81, 48);

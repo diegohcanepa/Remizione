@@ -11,7 +11,6 @@ namespace ScaryCastle
     /// </summary>
     public class RideDoor : Openable
     {
-        private readonly MouseCursorState arrowCursor;
         private readonly Sprite lockImage;
 
         #region Constructor
@@ -25,22 +24,18 @@ namespace ScaryCastle
             if (name.StartsWith("RideDoorUp", StringComparison.OrdinalIgnoreCase))
             {
                 DoorDirection = RideDoorDirection.Up;
-                arrowCursor = MouseCursorState.Up;
             }
             else if (name.StartsWith("RideDoorDown", StringComparison.OrdinalIgnoreCase))
             {
                 DoorDirection = RideDoorDirection.Down;
-                arrowCursor = MouseCursorState.Down;
             }
             else if (name.StartsWith("RideDoorLeft", StringComparison.OrdinalIgnoreCase))
             {
                 DoorDirection = RideDoorDirection.Left;
-                arrowCursor = MouseCursorState.Left;
             }
             else if (name.StartsWith("RideDoorRight", StringComparison.OrdinalIgnoreCase))
             {
                 DoorDirection = RideDoorDirection.Right;
-                arrowCursor = MouseCursorState.Right;
             }
             else
             {
@@ -49,6 +44,7 @@ namespace ScaryCastle
 
             CollisionDetection = false;
             DisplayNameKey = "Prop.Door";
+            Interaction = InteractionKind.Use;
 
             this.lockImage = new(Atlas?.FindImage($"{DeclaredName}Lock"));
         }
@@ -88,7 +84,33 @@ namespace ScaryCastle
                 Bounce();
 
             if (IsOpen)
-                Cursor = arrowCursor;
+            {
+                switch (DoorDirection)
+                {
+                    // Up
+                    case RideDoorDirection.Up:
+                        Interaction = InteractionKind.GoUp;
+                        break;
+                 
+                    // Right
+                    case RideDoorDirection.Right:
+                        Interaction = InteractionKind.GoRight;
+                        break;
+                    
+                    // Down
+                    case RideDoorDirection.Down:
+                        Interaction = InteractionKind.GoDown;
+                        break;
+                    
+                    // Left
+                    case RideDoorDirection.Left:
+                        Interaction = InteractionKind.GoLeft;
+                        break;
+                    
+                    default:
+                        break;
+                }
+            }
         }
 
         // OnDraw

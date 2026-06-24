@@ -320,9 +320,7 @@
             <key type="filename">Items-assets/BittenApple.png</key>
             <key type="filename">Items-assets/Chili.png</key>
             <key type="filename">Items-assets/Duck.png</key>
-            <key type="filename">Items-assets/Lantern.png</key>
             <key type="filename">Items-assets/Lockpick.png</key>
-            <key type="filename">Items-assets/MagneticCard.png</key>
             <key type="filename">Items-assets/MissingItem.png</key>
             <key type="filename">Items-assets/RustyLockpick.png</key>
             <key type="filename">Items-assets/SteelLockpick.png</key>
@@ -370,6 +368,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Items-assets/Lantern.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,4,7,8</rect>
+                <key>scale9Paddings</key>
+                <rect>3,4,7,8</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Items-assets/Lift.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -379,9 +392,26 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>2,4,5,7</rect>
+                <rect>3,4,5,9</rect>
                 <key>scale9Paddings</key>
-                <rect>2,4,5,7</rect>
+                <rect>3,4,5,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Items-assets/MagneticCard.png</key>
+            <key type="filename">Items-assets/Pistol.png</key>
+            <key type="filename">KeyboardControls-assets/KeyboardDelete.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,4,9,7</rect>
+                <key>scale9Paddings</key>
+                <rect>5,4,9,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -397,22 +427,6 @@
                 <rect>2,1,5,1</rect>
                 <key>scale9Paddings</key>
                 <rect>2,1,5,1</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Items-assets/Pistol.png</key>
-            <key type="filename">KeyboardControls-assets/KeyboardDelete.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>5,4,9,7</rect>
-                <key>scale9Paddings</key>
-                <rect>5,4,9,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -509,7 +523,6 @@
                 <false/>
             </struct>
             <key type="filename">MiniMap-assets/UIMiniMapMarkerCoin.png</key>
-            <key type="filename">MouseCursors-assets/MouseCursorArrow.png</key>
             <key type="filename">UI-assets/CheckMark.png</key>
             <key type="filename">UI-assets/PointingHand.png</key>
             <key type="filename">UIIcons-assets/GreenHearts1.png</key>
@@ -616,7 +629,28 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">MouseCursors-assets/MouseCursorAttack.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorCross.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorLift.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorSkull.png</key>
+            <key type="filename">UI-assets/EdmundIcon.png</key>
+            <key type="filename">UI-assets/FearIcon.png</key>
+            <key type="filename">UIIcons-assets/CorridorDoorIcon.png</key>
+            <key type="filename">UIIcons-assets/FaithIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,3,5,5</rect>
+                <key>scale9Paddings</key>
+                <rect>3,3,5,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">MouseCursors-assets/MouseCursorDown.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorUp.png</key>
             <struct type="IndividualSpriteSettings">
@@ -630,6 +664,21 @@
                 <rect>2,3,5,5</rect>
                 <key>scale9Paddings</key>
                 <rect>2,3,5,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">MouseCursors-assets/MouseCursorExamine.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,2,6,5</rect>
+                <key>scale9Paddings</key>
+                <rect>3,2,6,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -650,6 +699,7 @@
             </struct>
             <key type="filename">MouseCursors-assets/MouseCursorLeft.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorRight.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorTalk.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -661,40 +711,6 @@
                 <rect>3,2,5,5</rect>
                 <key>scale9Paddings</key>
                 <rect>3,2,5,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">MouseCursors-assets/MouseCursorProhibition.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,3,7,7</rect>
-                <key>scale9Paddings</key>
-                <rect>3,3,7,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">MouseCursors-assets/MouseCursorSkull.png</key>
-            <key type="filename">UI-assets/EdmundIcon.png</key>
-            <key type="filename">UI-assets/FearIcon.png</key>
-            <key type="filename">UIIcons-assets/CorridorDoorIcon.png</key>
-            <key type="filename">UIIcons-assets/FaithIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,3,5,5</rect>
-                <key>scale9Paddings</key>
-                <rect>3,3,5,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -707,9 +723,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>3,4,7,7</rect>
+                <rect>3,3,5,6</rect>
                 <key>scale9Paddings</key>
-                <rect>3,4,7,7</rect>
+                <rect>3,3,5,6</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

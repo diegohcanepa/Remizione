@@ -46,11 +46,19 @@ namespace ScaryCastle
                 session.Player.ExecuteAction(combatIntent, target);
                 result = true;
             }
-            else if (throwable != null && target.Cursor == MouseCursorState.Cross)
+            else if (throwable != null && target.Interaction == InteractionKind.Attack)
             {
                 session.Player.StopMoving();
                 session.Player.ThrowActiveTrowable(target);
                 result = true;
+            }
+            else if (target.Interaction == InteractionKind.Lift)
+            {
+                if (target is Prop prop && prop.IsLiftable)
+                {
+                    session.Player.Lift(prop);
+                    result = true;
+                }
             }
             else if (script != null)
             {
@@ -73,21 +81,10 @@ namespace ScaryCastle
                     }
                 }
             }
-            else if (item != null && target.Cursor == MouseCursorState.Cross)
+            else if (item != null)
             {
-                if (item.Name == ItemNames.Lift)
-                {
-                    if (target is Prop prop && prop.IsLiftable)
-                    {
-                        session.Player.Lift(prop);
-                        result = true;
-                    }
-                }
-                else
-                {
-                    session.Player.ExecuteAction(item, target);
-                    result = true;
-                }
+                session.Player.ExecuteAction(item, target);
+                result = true;
             }
 
             Clear();
@@ -98,15 +95,15 @@ namespace ScaryCastle
         // IsAttack
         public bool IsAttack => combatIntent != null;
 
-        // Refresh
-        public void Refresh(InteractionContext context)
+        // Prepare
+        public void Prepare(InteractionContext context)
         {
             Clear();
 
             if (context.Target == null)
                 return;
 
-            if (context.HeldItem != null && context.Target.Cursor == MouseCursorState.Cross)
+            if (context.HeldItem != null)// && context.Target.Cursor == MouseCursorState.Cross)
             {
                 if (context.Session.Player == context.Target)
                 {
@@ -124,10 +121,23 @@ namespace ScaryCastle
 
             if (context.HeldItem == null)
             {
-                if (context.Session.Player?.ActiveThrowable is Prop activeThrowable && !target.HasArrowCursor)
+                if (context.Session.Player?.ActiveThrowable is Prop activeThrowable && !target.IsGoToInteraction)
+                {
                     this.throwable = activeThrowable;
+                }
+                else if (target.Interaction == InteractionKind.Attack)
+                {
+                    // TODO: touch this if player can use different intents.
+                    this.combatIntent = context.Session.Player?.CombatBehavior?.Intents[0];
+                }
+                else if (target.Interaction == InteractionKind.Lift)
+                {
+                    this.throwable = target as Prop;
+                }
                 else
+                {
                     this.script = target.OutcomeScript;
+                }
             }
             else
             {

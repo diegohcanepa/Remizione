@@ -188,7 +188,6 @@ namespace ScaryCastle
             this.descriptionText.Text = item.Definition.Description;
             this.imageShadow.RenderImage = item.Definition.Image;
             this.image.RenderImage = item.Definition.Image;
-            MouseCursor.State = MouseCursorState.Arrow;
         }
     }
 }

@@ -14,6 +14,7 @@ namespace ScaryCastle
             : base(session, name)
         {
             ApproachBehavior = ApproachBehavior.ClosestSide;
+            Interaction = InteractionKind.Attack;
             IsHittable = true;
             DeathSound = Sound.Find(SoundNames.PotteryBreak);
             DepthOffset = -2;

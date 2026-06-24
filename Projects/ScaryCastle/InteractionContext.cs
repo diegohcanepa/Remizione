@@ -48,7 +48,7 @@ namespace ScaryCastle
                 // Exclude player when HeldItem is null
                 if (Session.Room.CulledThings[i] == Session.Player)
                 {
-                    if (HeldItem?.Definition.Behavior == ItemBehavior.PlayerAction)
+                    if (HeldItem == null || HeldItem.Definition.Behavior == ItemBehavior.PlayerAction)
                         continue;
                 }
 
@@ -82,6 +82,8 @@ namespace ScaryCastle
             Target = CanScanTarget() ? ScanTarget() : null;
             if (HeldItem?.Amount == 0)
                 HeldItem = null;
+
+            Session.TextHUD.Sentence.Target = Target;
 
             MouseCursorAppearance.Refresh(this);
         }

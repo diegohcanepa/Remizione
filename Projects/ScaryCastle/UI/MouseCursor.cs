@@ -15,16 +15,12 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private static readonly FloatTween crossOpacityTween = FloatTween.Create(TweenStyle.CubicInOut, 1, .7f, 500, -1);
         private static readonly ColorTween customImageColorTween = ColorTween.Create(TweenStyle.CubicInOut, Color.White, new(210, 210, 210), 500, -1);
         private static readonly AtlasImage?[] cursorImages;
         private static readonly Sprite cursorSprite;
         private static readonly Vector2 defaultScale = ScaleInfo.UIElement.Large;
-        private static readonly TextSprite healthTextSprite;
-        private static readonly Sprite heartIcon = new(Atlases.UI.HeartIcon) { PivotOrigin = RectanglePoint.LeftTop, Scale = ScaleInfo.UIElement.Small };
         private static readonly Vector2Tween scaleTween = new();
         private static readonly FloatTween shakeTween = new();
-        private static readonly TextSprite textSprite;
 
         #endregion
 
@@ -50,79 +46,21 @@ namespace ScaryCastle
                 cursorImages[i] = Atlases.UI.GetImage(imageName);
             }
 
-            // Text sprite
-            textSprite = new(Fonts.CommonOutline)
-            {
-                PivotOrigin = RectanglePoint.LeftTop,
-                Multiline = true,
-                Scale = ScaleInfo.UISentence
-            };
-
-            // Health sprite
-            healthTextSprite = new(Fonts.CommonOutline)
-            {
-                PivotOrigin = RectanglePoint.Left,
-                Scale = ScaleInfo.Text.Medium
-            };
-
             Reset();
+
+            InvalidateCursorImage();
         }
 
         #endregion
 
         #region Private members
 
-        // ClampToScreen
-        private static void ClampToScreen()
-        {
-            if (textSprite.IsEmpty)
-                return;
-
-            var offset = CustomImage == null ? new Vector2(3, 7) : new Vector2(-2, 1);
-
-            textSprite.PivotOrigin = RectanglePoint.Left;
-            textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.Right, -offset.X, offset.Y);
-
-            if (HealthAmount > 0)
-            {
-                heartIcon.PivotOrigin = RectanglePoint.LeftTop;
-                heartIcon.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -.5f);
-                healthTextSprite.PivotOrigin = textSprite.PivotOrigin;
-                healthTextSprite.Position = heartIcon.BoundingBox.GetPoint(RectanglePoint.Right, .5f, .5f);
-            }
-
-            if (!textSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox))
-            {
-                textSprite.PivotOrigin = RectanglePoint.Right;
-                textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.Left, offset.X, offset.Y);
-
-                if (HealthAmount > 0)
-                {
-                    heartIcon.PivotOrigin = RectanglePoint.RightTop;
-                    heartIcon.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, -1, 0);
-
-                    healthTextSprite.PivotOrigin = textSprite.PivotOrigin;
-                    healthTextSprite.Position = heartIcon.BoundingBox.GetPoint(RectanglePoint.Left, -.5f, 0);
-                }
-            }
-
-            if (textSprite.BoundingBox.Bottom >= Screen.NativeHeight)
-            {
-                textSprite.Y -= 10;
-                if (HealthAmount > 0)
-                {
-                    heartIcon.Y -= 10;
-                    healthTextSprite.Y -= 10;
-                }
-            }
-        }
-
         // InvalidateCursorImage
         private static void InvalidateCursorImage()
         {
             cursorSprite.RenderImage = CustomImage ?? cursorImages[(int)State];
             cursorSprite.Scale = CustomImage != null ? ScaleInfo.InventoryHeldItem : defaultScale;
-            cursorSprite.PivotOrigin = (State is MouseCursorState.Arrow or MouseCursorState.Hand) && CustomImage == null ? RectanglePoint.LeftTop : RectanglePoint.Center;
+            cursorSprite.PivotOrigin = (State is MouseCursorState.Hand) && CustomImage == null ? RectanglePoint.LeftTop : RectanglePoint.Center;
         }
 
         #endregion
@@ -164,6 +102,7 @@ namespace ScaryCastle
             cursorSprite.X -= shakeTween.IsRunning ? shakeTween.CurrentValue : 0;
             EngendroGame.Instance.SpriteBatch.End();
 
+            /*
             if (State == MouseCursorState.Cross || CustomImage != null)
             {
                 EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera, SamplerState.LinearClamp);
@@ -179,6 +118,7 @@ namespace ScaryCastle
                     EngendroGame.Instance.SpriteBatch.End();
                 }
             }
+            */
         }
 
         // IsArrow
@@ -195,27 +135,12 @@ namespace ScaryCastle
                 {
                     field = value;
                     cursorSprite.Opacity = value ? 1 : .4f;
-                    textSprite.Opacity = cursorSprite.Opacity;
                 }
             }
         } = true;
 
         // FlipCustomImage
         public static bool FlipCustomImage { get; set; }
-
-        // HealthAmount
-        public static int HealthAmount
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    healthTextSprite.Text = field <= 0 ? null : field.ToString(CultureInfo.InvariantCulture);
-                }
-            }
-        }
 
         // PerformClick
         public static void PerformClick(bool animate = true)
@@ -233,14 +158,10 @@ namespace ScaryCastle
         public static void Reset()
         {
             cursorSprite.Color = Color.White;
-            textSprite.Color = ColorPalette.Text.Sentence;
-            healthTextSprite.Color = ColorPalette.Text.Highlight;
             CustomImage = null;
             FlipCustomImage = false;
-            HealthAmount = 0;
             IsEnabled = true;
-            State = MouseCursorState.Arrow;
-            Text = null;
+            State = MouseCursorState.Cross;
         }
 
         // Shake
@@ -264,30 +185,14 @@ namespace ScaryCastle
             }
         }
 
-        // Text
-        public static string? Text
-        {
-            get => textSprite.Text;
-            set => textSprite.Text = value;
-        }
-
-        // TextColor
-        public static Color TextColor
-        {
-            get => textSprite.Color;
-            set => textSprite.Color = value;
-        }
-
         // Update
         public static void Update(GameTime gameTime)
         {
-            crossOpacityTween.Update(gameTime);
             customImageColorTween.Update(gameTime);
             cursorSprite.Position = InputManager.DefaultPlayer.Mouse.VirtualPosition;
             cursorSprite.Effects = FlipCustomImage && CustomImage != null ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
             cursorSprite.Update(gameTime);
             shakeTween.Update(gameTime);
-            ClampToScreen();
 
             if (IsEnabled)
             {
@@ -295,10 +200,6 @@ namespace ScaryCastle
                 {
                     cursorSprite.Color = customImageColorTween.CurrentValue;
                     cursorSprite.Opacity = 1;
-                }
-                else if (State == MouseCursorState.Cross)
-                {
-                    cursorSprite.Opacity = crossOpacityTween.CurrentValue;
                 }
                 else
                 {

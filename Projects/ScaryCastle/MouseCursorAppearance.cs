@@ -13,47 +13,25 @@ namespace ScaryCastle
         // RefreshCursor
         private static void RefreshCursor(InteractionContext context)
         {
-            /*
-            if (context.HeldItem?.Definition.ActionKind == ActionKind.Projectile)
-            {
-                if (context.Session.Player != null)
-                {
-                    var mousePos = InputManager.DefaultPlayer.Mouse.WorldPosition(context.Session.Camera);
-                    MouseCursor.FlipCustomImage = mousePos.X < context.Session.Player.X;
-                }
-            }
-            */
-
-            // DialogOption
-            if (context.Session.Game.SceneManager.CurrentScene is DialogBlockScene)
-            {
-                MouseCursor.State = MouseCursorState.Arrow;
+            if (context.Target == context.Session.Player)
                 return;
-            }
 
             // Modal speech text active
             if (SpeechText.ModalInstance != null)
-            {
-                MouseCursor.State = MouseCursorState.Arrow;
                 return;
-            }
 
             // Session is awaiting script
             if (context.Session.IsAwaiting)
             {
-                if (context.Session.AwaitingScript?.CurrentStatement is AwaitInputCommand)
+                if (context.Session.AwaitingScript?.CurrentStatement is SayCommand)
+                    return;
+
+                if (context.Session.ActiveNPC == null)
                 {
-                    MouseCursor.State = MouseCursorState.Hand;
+                    if (context.Session.IsCurrentScene)
+                        MouseCursor.State = MouseCursorState.Wait;
                 }
-                else if (context.Session.AwaitingScript?.CurrentStatement is SayCommand)
-                {
-                    MouseCursor.State = MouseCursorState.Arrow;
-                }
-                else if (context.Session.ActiveNPC == null)
-                {
-                    MouseCursor.State = MouseCursorState.Wait;
-                }
-                else if (context.Session.IsAwaiting)
+                else if (context.Session.ActiveNPC.CombatDecisionType is CombatDecisionType.Attack or CombatDecisionType.Charge or CombatDecisionType.Curse)
                 {
                     MouseCursor.State = MouseCursorState.Skull;
                 }
@@ -61,40 +39,71 @@ namespace ScaryCastle
                 return;
             }
 
-            if (context.HeldItem != null && (context.Target == null || context.Target.Cursor == MouseCursorState.Cross))
+            if (context.HeldItem != null)
             {
                 MouseCursor.CustomImage = context.HeldItem.Definition.Image;
             }
             else
             {
-                MouseCursor.State = context.Target != null ? context.Target.Cursor : MouseCursorState.Cross;
+                if (context.Target != null)
+                    SyncMouseCursor(context.Target.Interaction);
+                else
+                    MouseCursor.State = MouseCursorState.Cross;
             }
         }
 
-        // RefreshText
-        private static void RefreshText(InteractionContext context)
+        // SyncMouseCursor
+        private static void SyncMouseCursor(InteractionKind interactionKind)
         {
-            if (MouseCursor.IsArrow)
-                return;
-
-            if (context.Target != null)
+            switch (interactionKind)
             {
-                if (context.Target.Faction == Faction.Evil && context.Target is Actor actor)
-                {
-                    MouseCursor.HealthAmount = actor.HP;
+                // Attack
+                case InteractionKind.Attack:
+                    MouseCursor.State = MouseCursorState.Attack;
+                    break;
 
-                    if (actor != context.Session.Player)
-                        context.Session.StatusHUD.ThingInfo.Actor = actor;
-                    else
-                        context.Session.StatusHUD.ThingInfo.Actor = null;
-                }
+                // Examine
+                case InteractionKind.Examine:
+                    MouseCursor.State = MouseCursorState.Examine;
+                    break;
 
-                // No item 
-                MouseCursor.Text = context.Target.DisplaySentence;
-            }
-            else
-            {
-                context.Session.StatusHUD.ThingInfo.Actor = null;
+                // GoDown
+                case InteractionKind.GoDown:
+                    MouseCursor.State = MouseCursorState.Down;
+                    break;
+
+                // GoLeft
+                case InteractionKind.GoLeft:
+                    MouseCursor.State = MouseCursorState.Left;
+                    break;
+
+                // GoRight
+                case InteractionKind.GoRight:
+                    MouseCursor.State = MouseCursorState.Right;
+                    break;
+
+                // GoUp
+                case InteractionKind.GoUp:
+                    MouseCursor.State = MouseCursorState.Up;
+                    break;
+
+                // Lift
+                case InteractionKind.Lift:
+                    MouseCursor.State = MouseCursorState.Lift;
+                    break;
+
+                // Talk
+                case InteractionKind.Talk:
+                    MouseCursor.State = MouseCursorState.Talk;
+                    break;
+
+                // Use
+                case InteractionKind.Use:
+                    MouseCursor.State = MouseCursorState.Hand;
+                    break;
+
+                default:
+                    break;
             }
         }
 
@@ -106,7 +115,6 @@ namespace ScaryCastle
             MouseCursor.Reset();
 
             RefreshCursor(context);
-            RefreshText(context);
 
             MouseCursor.Color = Color.White;
 

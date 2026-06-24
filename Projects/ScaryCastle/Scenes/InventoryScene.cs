@@ -2,6 +2,7 @@
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ScaryCastle
 {
@@ -17,6 +18,7 @@ namespace ScaryCastle
         private const int autoHideThreshold = 105;
         private readonly Sprite[] gooIcons = new Sprite[ItemContainer.MaximumCapacity];
         private readonly Sprite[] icons = new Sprite[ItemContainer.MaximumCapacity];
+        private readonly TextSprite itemLabel;
         private int lastSeenContainerVersion = -1;
         private readonly Sprite[] shadows = new Sprite[ItemContainer.MaximumCapacity];
         private readonly Sprite[] slots = new Sprite[ItemContainer.MaximumCapacity];
@@ -73,6 +75,15 @@ namespace ScaryCastle
             }
 
             this.ItemContainer = itemContainer;
+
+            // Item name
+            itemLabel = new(Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.Highlight,
+                PivotOrigin = RectanglePoint.Bottom,
+                Position = slots[0].BoundingBox.GetPoint(RectanglePoint.Top, 0, -2),
+                Scale = ScaleInfo.Text.Large
+            };
         }
 
         #endregion
@@ -184,7 +195,6 @@ namespace ScaryCastle
                 return;
 
             Game.SpriteBatch.Begin(Game.Camera);
-
             for (var i = 0; i < ItemContainer.Capacity; i++)
             {
                 slots[i].Draw(gameTime);
@@ -200,6 +210,10 @@ namespace ScaryCastle
                 gooIcons[i].Draw(gameTime);
                 amounts[i].Draw(gameTime);
             }
+            Game.SpriteBatch.End();
+
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            itemLabel.Draw(gameTime);
             Game.SpriteBatch.End();
         }
 
@@ -255,12 +269,13 @@ namespace ScaryCastle
 
             if (GetSelectedItem() is Item item)
             {
-                MouseCursor.Text = item.Definition.DisplayName;
+                itemLabel.X = slots[item.Index].BoundingBox.Center.X;
+                itemLabel.Text = item.Definition.DisplayName;
                 icons[item.Index].Scale = ScaleInfo.InventoryHeldItem;
             }
             else
             {
-                MouseCursor.Text = null;
+                itemLabel.Text = null;
             }
         }
 
