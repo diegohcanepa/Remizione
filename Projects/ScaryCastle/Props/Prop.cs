@@ -121,6 +121,12 @@ namespace ScaryCastle
             BounceCore(.95f, 2);
         }
 
+        // CanInteract
+        public override bool CanInteract()
+        {
+            return !bounceScaleTween.IsRunning && base.CanInteract();
+        }
+
         // Definition
         public PropDefinition? Definition { get; }
 

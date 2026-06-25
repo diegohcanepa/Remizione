@@ -15,8 +15,5 @@ namespace ScaryCastle
 
         // Projectiles
         public ObjectPool<Projectile> Projectiles { get; } = new ObjectPool<Projectile>(() => new Projectile(session), 30);
-
-        // Sacks
-        public ObjectPool<Sack> Sacks { get; } = new ObjectPool<Sack>(() => new Sack(session, string.Empty), 30);
     }
 }

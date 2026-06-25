@@ -13,6 +13,7 @@ namespace ScaryCastle.UI
     {
         private readonly Sprite heartIcon = new(Atlases.UI.HeartIcon) { PivotOrigin = RectanglePoint.Top, Scale = ScaleInfo.UIElement.Medium };
         private readonly TextSprite hpText;
+        private readonly Sprite lootIcon = new() { PivotOrigin = RectanglePoint.Left, Scale = ScaleInfo.UIElement.Medium };
         private readonly TextSprite text;
 
         // Constructor
@@ -38,6 +39,7 @@ namespace ScaryCastle.UI
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera);
+            lootIcon.Draw(gameTime);
             text.Draw(gameTime);
 
             if (!hpText.IsEmpty)
@@ -62,6 +64,9 @@ namespace ScaryCastle.UI
                     hpText.Text = field is Actor actor && actor.MaxHP > 0 ? $"{field.HP}" : null;
                     heartIcon.Position = text.BoundingBox.GetPoint(RectanglePoint.Bottom, -heartIcon.BoundingBox.Width / 2, 0);
                     hpText.Position = heartIcon.BoundingBox.GetPoint(RectanglePoint.Right);
+
+                    lootIcon.Position = text.BoundingBox.GetPoint(RectanglePoint.Right, 2, -1);
+                    lootIcon.RenderImage = field is Sack and ILootContainer<ItemDefinition> lootContainer ? lootContainer.Loot?.Image : null;
                 }
             }
         }

@@ -29,7 +29,7 @@ namespace ScaryCastle.Scripting
                     {
                         session.PlayerInventory.Add(lootProvider.Loot);
                         session.StatusHUD.InventoryMeter.Animate();
-                        session.TextHUD.Log.Show(LogVerb.Found, lootProvider.Loot);
+                        //session.TextHUD.Log.Show(LogVerb.Found, lootProvider.Loot);
                     }
                     else if (lootProvider.Loot.Behavior != ItemBehavior.PlayerAction && session.Player != null)
                     {

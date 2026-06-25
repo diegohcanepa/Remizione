@@ -6,7 +6,7 @@ namespace ScaryCastle
     /// <summary>
     /// Sack
     /// </summary>
-    public sealed class Sack : Prop, ILootContainer<ItemDefinition>, IPoolable
+    public sealed class Sack : PickableLoot
     {
         // Constructor
         public Sack(GameSession session, string name)
@@ -15,18 +15,10 @@ namespace ScaryCastle
             ApproachBehavior = ApproachBehavior.ClosestSide;
             Atlas = Atlases.Props;
             DepthOffset = -2;
+            DisplayNameKey = "Prop.Sack";
             Hotspot = new Polygon("0,0;7,0;7,7;0,7");
+            RenderLayer = RenderLayer.Default;
         }
-
-        #region IPoolable interface
-
-        // Reset
-        void IPoolable.Reset()
-        {
-            Loot = null;
-        }
-
-        #endregion
 
         #region Protected members
 
@@ -51,33 +43,12 @@ namespace ScaryCastle
                 Unload();
         }
 
-        // OnUnload
-        protected override void OnUnload()
-        {
-            base.OnUnload();
-            Session.ObjectPools.Sacks.Return(this);
-        }
-
         #endregion
 
         // Bounce
         public override void Bounce()
         {
             BounceCore(.75f, 8);
-        }
-
-        // Loot
-        public ItemDefinition? Loot
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    DisplayNameKey = Loot != null ? $"Item.{Loot.Name}.Name" : string.Empty;
-                }
-            }
         }
     }
 }

@@ -71,7 +71,7 @@ namespace ScaryCastle.Scripting
         // IsAwaiting
         public override bool IsAwaiting()
         {
-            if (actor == null)
+            if (actor == null || actor.IsDead)
                 return false;
 
             if (awaitMove)
