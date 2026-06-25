@@ -50,9 +50,25 @@ namespace ScaryCastle
             }
         }
 
+        // OnLootChanged
+        protected virtual void OnLootChanged()
+        {
+        }
+
         #endregion
 
         // Loot
-        public ItemDefinition? Loot { get; set; }
+        public ItemDefinition? Loot
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    OnLootChanged();
+                }
+            }
+        }
     }
 }

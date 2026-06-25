@@ -35,6 +35,13 @@ namespace ScaryCastle
             Bounce();
         }
 
+        // OnLootChanged
+        protected override void OnLootChanged()
+        {
+            base.OnLootChanged();
+            DisplayNameKey = Loot != null ? $"Item.{Loot.Name}.Name" : string.Empty;
+        }
+
         // OnParentChanged
         protected override void OnParentChanged(Entity? previousParent)
         {

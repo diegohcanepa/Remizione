@@ -69,16 +69,16 @@ namespace ScaryCastle
         // Text
         internal static class Text
         {
-            internal static Vector2 Tiny { get; } = new(.10f);
-            internal static Vector2 Small { get; } = new(.11f);
-            internal static Vector2 Medium { get; } = new(.12f);
-            internal static Vector2 Large { get; } = new(.13f);
-            internal static Vector2 VeryLarge { get; } = new(.14f);
-            internal static Vector2 ExtraLarge { get; } = new(.15f);
-            internal static Vector2 Huge { get; } = new(.16f);
-            internal static Vector2 Giant { get; } = new(.17f);
-            internal static Vector2 ExtraGiant { get; } = new(.19f);
-            internal static Vector2 Galactus { get; } = new(.22f);
+            internal static Vector2 Tiny { get; } = new(.06f);
+            internal static Vector2 Small { get; } = new(.07f);
+            internal static Vector2 Medium { get; } = new(.08f);
+            internal static Vector2 Large { get; } = new(.09f);
+            internal static Vector2 VeryLarge { get; } = new(.1f);
+            internal static Vector2 ExtraLarge { get; } = new(.11f);
+            internal static Vector2 Huge { get; } = new(.12f);
+            internal static Vector2 Giant { get; } = new(.13f);
+            internal static Vector2 ExtraGiant { get; } = new(.14f);
+            internal static Vector2 Galactus { get; } = new(.18f);
         }
 
         // TextMenuContainerTitle

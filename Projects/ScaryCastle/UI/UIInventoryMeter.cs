@@ -69,7 +69,7 @@ namespace ScaryCastle
             if (lastKnownCount != inventory.Count)
             {
                 lastKnownCount = inventory.Count;
-                amountText.Text = $"{inventory.Count}/{inventory.Capacity}";
+                amountText.Text = $"{inventory.Count} | {inventory.Capacity}";
                 amountText.Color = inventory.IsFull ? ColorPalette.Text.Terra : ColorPalette.Text.Highlight;
             }
         }
