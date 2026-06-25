@@ -77,9 +77,6 @@ namespace ScaryCastle
     // InPlaceEffectType
     public enum InPlaceEffectType { None, Lightning }
 
-    // InteractionKind
-    public enum InteractionKind { Use, Examine, Talk, Attack, Lift, GoLeft, GoRight, GoUp, GoDown }
-
     // ItemBehavior
     public enum ItemBehavior { Common, Currency, PlayerAction, StatModifier }
 
@@ -192,7 +189,7 @@ namespace ScaryCastle
     public enum UIControlGroupLayoutStyle { Vertically, Horizontally }
 
     // Verb
-    public enum Verb { None, Attack, Ellipsis, Enter, Exit, Lift, Open, Pull, Take, TalkTo, Throw, Use }
+    public enum Verb { Use, Examine, Talk, Attack, Lift, GoLeft, GoRight, GoUp, GoDown }
 
     // VolumeCategory
     public enum VolumeCategory { Ambient, FX, Music, Voice, Master }

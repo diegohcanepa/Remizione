@@ -46,13 +46,13 @@ namespace ScaryCastle
                 session.Player.ExecuteAction(combatIntent, target);
                 result = true;
             }
-            else if (throwable != null && target.Interaction == InteractionKind.Attack)
+            else if (throwable != null && target.Verb == Verb.Attack)
             {
                 session.Player.StopMoving();
                 session.Player.ThrowActiveTrowable(target);
                 result = true;
             }
-            else if (target.Interaction == InteractionKind.Lift)
+            else if (target.Verb == Verb.Lift)
             {
                 if (target is Prop prop && prop.IsLiftable)
                 {
@@ -121,16 +121,16 @@ namespace ScaryCastle
 
             if (context.HeldItem == null)
             {
-                if (context.Session.Player?.ActiveThrowable is Prop activeThrowable && !target.IsGoToInteraction)
+                if (context.Session.Player?.ActiveThrowable is Prop activeThrowable && !target.IsGoToVerb)
                 {
                     this.throwable = activeThrowable;
                 }
-                else if (target.Interaction == InteractionKind.Attack)
+                else if (target.Verb == Verb.Attack)
                 {
                     // TODO: touch this if player can use different intents.
                     this.combatIntent = context.Session.Player?.CombatBehavior?.Intents[0];
                 }
-                else if (target.Interaction == InteractionKind.Lift)
+                else if (target.Verb == Verb.Lift)
                 {
                     this.throwable = target as Prop;
                 }

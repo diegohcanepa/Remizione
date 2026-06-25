@@ -11,6 +11,8 @@ namespace ScaryCastle.UI
     /// </summary>
     public sealed class UISentence : GameObject
     {
+        private readonly Sprite heartIcon = new(Atlases.UI.HeartIcon) { PivotOrigin = RectanglePoint.Top, Scale = ScaleInfo.UIElement.Medium };
+        private readonly TextSprite hpText;
         private readonly TextSprite text;
 
         // Constructor
@@ -20,8 +22,15 @@ namespace ScaryCastle.UI
             {
                 Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -5),
-                Scale = ScaleInfo.Text.VeryLarge
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -9),
+                Scale = ScaleInfo.Text.Huge
+            };
+
+            hpText = new(Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.Highlight,
+                PivotOrigin = RectanglePoint.Left,
+                Scale = ScaleInfo.Text.Large
             };
         }
 
@@ -30,19 +39,14 @@ namespace ScaryCastle.UI
         {
             Game.SpriteBatch.Begin(Game.Camera);
             text.Draw(gameTime);
-            Game.SpriteBatch.End();
-        }
 
-        // OnUpdate
-        protected override void OnUpdate(GameTime gameTime)
-        {
-            base.OnUpdate(gameTime);
-
-            if (Target != null)
+            if (!hpText.IsEmpty)
             {
-                if (text.Text != Target.DisplaySentence)
-                    text.Text = Target.DisplaySentence;
+                heartIcon.Draw(gameTime);
+                hpText.Draw(gameTime);
             }
+
+            Game.SpriteBatch.End();
         }
 
         // Target
@@ -54,7 +58,10 @@ namespace ScaryCastle.UI
                 if (value != field)
                 {
                     field = value;
-                    text.Text = field?.DisplaySentence;
+                    text.Text = field?.DisplayName;
+                    hpText.Text = field is Actor actor && actor.MaxHP > 0 ? $"{field.HP}" : null;
+                    heartIcon.Position = text.BoundingBox.GetPoint(RectanglePoint.Bottom, -heartIcon.BoundingBox.Width / 2, 0);
+                    hpText.Position = heartIcon.BoundingBox.GetPoint(RectanglePoint.Right);
                 }
             }
         }

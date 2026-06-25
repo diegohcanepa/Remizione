@@ -46,9 +46,8 @@ namespace ScaryCastle
             this.DisplayNameKey = $"Actor.{DeclaredName}";
             this.HitEffect = HitEffect.Blink;
             this.IgnoreWalkArea = false;
-            this.Interaction = InteractionKind.Talk;
+            this.Verb = Verb.Talk;
             this.Faction = Definition == null ? Faction.Good : Definition.Faction;
-            this.PrecalculateLoot = true;
             this.CombatBehavior = CombatBehavior.Behaviors.Find(DeclaredName);
             this.ContactIntent = CombatBehavior?.Intents.Find(EffectContext.Contact.ToString());
 
@@ -462,7 +461,7 @@ namespace ScaryCastle
         {
             base.OnFactionChanged();
             if (Faction == Faction.Evil)
-                Interaction = InteractionKind.Attack;
+                Verb = Verb.Attack;
         }
 
         // OnHPChanged

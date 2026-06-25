@@ -58,6 +58,9 @@ namespace ScaryCastle
             messageText.Opacity = fadeTween.IsRunning ? fadeTween.CurrentValue : 1;
             icon.Opacity = fadeTween.CurrentValue;
             icon.Position = messageText.BoundingBox.GetPoint(RectanglePoint.Left, -1, -1);
+
+            if (IsVisible && !fadeTween.IsRunning)
+                IsVisible = false;
         }
 
         #endregion
@@ -66,7 +69,11 @@ namespace ScaryCastle
         public void Hide()
         {
             fadeTween.Stop();
+            IsVisible = false;
         }
+
+        // IsVisible
+        public bool IsVisible { get; private set; }
 
         // Show
         public void Show(MessageKind message, int duration = 2000)
@@ -127,6 +134,7 @@ namespace ScaryCastle
             messageText.Tweens.ScaleTween = scaleTween;
             container.Position = messageText.Position;
             container.Y += 3;
+            IsVisible = true;
         }
     }
 }

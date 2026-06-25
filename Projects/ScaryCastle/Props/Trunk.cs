@@ -60,7 +60,6 @@ namespace ScaryCastle
                 {
                     this.Loot = loot;
                     DisplayNameKey = $"Item.{loot.Name}.Name";
-                    Verb = Verb.None;
                 }
 
                 if (actionInProgress)

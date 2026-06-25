@@ -206,24 +206,6 @@ namespace ScaryCastle
             isCollisionDirty = true;
         }
 
-        // RefreshDisplayName
-        private void RefreshDisplayName()
-        {
-            const string ellipsis = "...";
-
-            DisplayName = GetDisplayName();
-
-            if (Verb == Verb.Ellipsis)
-            {
-                DisplayName += ellipsis;
-                DisplaySentence = DisplayName;
-            }
-            else
-            {
-                DisplaySentence = DisplayName;
-            }
-        }
-
         #endregion
 
         #region Protected members
@@ -237,11 +219,10 @@ namespace ScaryCastle
         // DropLoot
         protected void DropLoot()
         {
-            if (!PrecalculateLoot)
-                PrepareLoot();
-
             if (Session.Room is not ProceduralRoom room)
                 return;
+
+            PrepareLoot();
 
             if (ItemReward != null)
             {
@@ -301,21 +282,6 @@ namespace ScaryCastle
                 return hurtShakeTween.CurrentValue;
             else
                 return Vector2.Zero;
-        }
-
-        // OnActivate
-        protected override void OnActivate()
-        {
-            base.OnActivate();
-
-            if (PrecalculateLoot && Session.Player != this)
-            {
-                if (ItemReward == null && CoinReward == 0)
-                {
-                    PrepareLoot();
-                    RefreshDisplayName();
-                }
-            }
         }
 
         // OnApplyCondition
@@ -696,13 +662,10 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = value;
-                    RefreshDisplayName();
+                    DisplayName = GetDisplayName();
                 }
             }
         } = string.Empty;
-
-        // DisplaySentence
-        public string DisplaySentence { get; private set; } = string.Empty;
 
         // DrawLights
         public void DrawLights(GameTime gameTime)
@@ -966,21 +929,6 @@ namespace ScaryCastle
         [ScriptProperty]
         public bool IgnoreWalkArea { get; set; } = true;
 
-        // Interaction
-        [ScriptProperty]
-        public InteractionKind Interaction
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    RefreshDisplayName();
-                }
-            }
-        }
-
         // IsBehind
         public bool IsBehind(GameThing thing)
         {
@@ -1031,9 +979,8 @@ namespace ScaryCastle
         // IsEmittingLight
         public virtual bool IsEmittingLight => AttachedLight?.IsEmitting == true && !IgnoreAttachedLight;
 
-        // IsGoToInteraction
-        public bool IsGoToInteraction => Interaction is InteractionKind.GoLeft or InteractionKind.GoRight or
-                                                InteractionKind.GoUp or InteractionKind.GoDown;
+        // IsGoToVerb
+        public bool IsGoToVerb => Verb is Verb.GoLeft or Verb.GoRight or Verb.GoUp or Verb.GoDown;
 
         // IsFacingTarget
         public bool IsFacingTarget(GameThing target)
@@ -1094,10 +1041,6 @@ namespace ScaryCastle
         // OverheadOrigin
         [ScriptProperty]
         public Vector2 OverheadOrigin { get; set; }
-
-        // PrecalculateLoot
-        [ScriptProperty]
-        public bool PrecalculateLoot { get; set; }
 
         // Reheal
         [ScriptMethod]
@@ -1311,18 +1254,7 @@ namespace ScaryCastle
 
         // Verb
         [ScriptProperty]
-        public Verb Verb
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    RefreshDisplayName();
-                }
-            }
-        }
+        public Verb Verb { get; set; }
 
         // WalkArea
         public WalkArea? WalkArea { get => field ?? Room?.WalkArea; private set; }

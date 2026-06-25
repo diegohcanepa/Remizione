@@ -46,59 +46,59 @@ namespace ScaryCastle
             else
             {
                 if (context.Target != null)
-                    SyncMouseCursor(context.Target.Interaction);
+                    SyncMouseCursor(context.Target.Verb);
                 else
                     MouseCursor.State = MouseCursorState.Cross;
             }
         }
 
         // SyncMouseCursor
-        private static void SyncMouseCursor(InteractionKind interactionKind)
+        private static void SyncMouseCursor(Verb verb)
         {
-            switch (interactionKind)
+            switch (verb)
             {
                 // Attack
-                case InteractionKind.Attack:
+                case Verb.Attack:
                     MouseCursor.State = MouseCursorState.Attack;
                     break;
 
                 // Examine
-                case InteractionKind.Examine:
+                case Verb.Examine:
                     MouseCursor.State = MouseCursorState.Examine;
                     break;
 
                 // GoDown
-                case InteractionKind.GoDown:
+                case Verb.GoDown:
                     MouseCursor.State = MouseCursorState.Down;
                     break;
 
                 // GoLeft
-                case InteractionKind.GoLeft:
+                case Verb.GoLeft:
                     MouseCursor.State = MouseCursorState.Left;
                     break;
 
                 // GoRight
-                case InteractionKind.GoRight:
+                case Verb.GoRight:
                     MouseCursor.State = MouseCursorState.Right;
                     break;
 
                 // GoUp
-                case InteractionKind.GoUp:
+                case Verb.GoUp:
                     MouseCursor.State = MouseCursorState.Up;
                     break;
 
                 // Lift
-                case InteractionKind.Lift:
+                case Verb.Lift:
                     MouseCursor.State = MouseCursorState.Lift;
                     break;
 
                 // Talk
-                case InteractionKind.Talk:
+                case Verb.Talk:
                     MouseCursor.State = MouseCursorState.Talk;
                     break;
 
                 // Use
-                case InteractionKind.Use:
+                case Verb.Use:
                     MouseCursor.State = MouseCursorState.Hand;
                     break;
 

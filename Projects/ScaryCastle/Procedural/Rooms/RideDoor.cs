@@ -44,7 +44,7 @@ namespace ScaryCastle
 
             CollisionDetection = false;
             DisplayNameKey = "Prop.Door";
-            Interaction = InteractionKind.Use;
+            Verb = Verb.Use;
 
             this.lockImage = new(Atlas?.FindImage($"{DeclaredName}Lock"));
         }
@@ -89,22 +89,22 @@ namespace ScaryCastle
                 {
                     // Up
                     case RideDoorDirection.Up:
-                        Interaction = InteractionKind.GoUp;
+                        Verb = Verb.GoUp;
                         break;
                  
                     // Right
                     case RideDoorDirection.Right:
-                        Interaction = InteractionKind.GoRight;
+                        Verb = Verb.GoRight;
                         break;
                     
                     // Down
                     case RideDoorDirection.Down:
-                        Interaction = InteractionKind.GoDown;
+                        Verb = Verb.GoDown;
                         break;
                     
                     // Left
                     case RideDoorDirection.Left:
-                        Interaction = InteractionKind.GoLeft;
+                        Verb = Verb.GoLeft;
                         break;
                     
                     default:

@@ -55,7 +55,7 @@ namespace ScaryCastle
             }
 
             // 2. Outcome interaction: Approach and interact with target
-            if (context.HeldItem == null || context.Target.IsGoToInteraction)
+            if (context.HeldItem == null || context.Target.IsGoToVerb)
             {
                 Actor.ResolveInteraction(context.Target, null);
                 return;

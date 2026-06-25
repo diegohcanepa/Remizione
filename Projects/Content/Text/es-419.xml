@@ -242,6 +242,7 @@ Bla bla bla</String>
   <String Key="Misc.DisclaimerMessage">Algunas escenas e imágenes pueden herir la sensibilidad. La siguiente historia es ficticia y no representa a ninguna persona o evento real.</String>
   <String Key="Misc.DisclaimerTitle">ADVERTENCIA</String>
   <String Key="Misc.DollarSign">$</String>
+  <String Key="Misc.Enter">Entrar</String>
   <String Key="Misc.EnterTunnel">Ir al túnel</String>
   <String Key="Misc.FearSyncope">Síncope de miedo</String>
   <String Key="Misc.Here">Aquí</String>
@@ -325,16 +326,4 @@ Bla bla bla</String>
   <String Key="Prop.WC">Inodoro</String>
   <String Key="StatName.Faith">Fe</String>
   <String Key="StatName.HP">Salud</String>
-  <String Key="Verb.Attack">Atacar</String>
-  <String Key="Verb.Ellipsis" />
-  <String Key="Verb.Enter">Entrar</String>
-  <String Key="Verb.Exit">Salir</String>
-  <String Key="Verb.Lift">Alzar</String>
-  <String Key="Verb.None" />
-  <String Key="Verb.Open">Abrir</String>
-  <String Key="Verb.Pull">Accionar</String>
-  <String Key="Verb.Take">Agarrar</String>
-  <String Key="Verb.TalkTo">Hablar con</String>
-  <String Key="Verb.Throw">Lanzar</String>
-  <String Key="Verb.Use">Usar</String>
 </Strings>

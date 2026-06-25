@@ -66,7 +66,7 @@ namespace ScaryCastle
             {
                 var itemDef = ItemDefinition.Definitions.All[i];
 
-                if (itemDef.Name == nameof(Coin))
+                if (itemDef.Name == nameof(Coin) || itemDef.Behavior == ItemBehavior.PlayerAction)
                     continue;
 
                 if (IsDenied(itemDef.Category, denyCategories))

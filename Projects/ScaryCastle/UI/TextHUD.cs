@@ -29,8 +29,10 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            Log.Draw(gameTime);
             Message.Draw(gameTime);
+
+            if (!Message.IsVisible)
+                Log.Draw(gameTime);
 
             if (session.IsCurrentScene)
             {

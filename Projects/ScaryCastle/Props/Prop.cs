@@ -25,7 +25,7 @@ namespace ScaryCastle
             : base(session, name)
         {
             this.IgnoreKnockback = true;
-            this.Interaction = InteractionKind.Use;
+            this.Verb = Verb.Use;
             this.IsHittable = false;
             this.Definition = PropDefinition.Definitions.Find(DeclaredName);
 
