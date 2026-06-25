@@ -109,6 +109,11 @@ namespace ScaryCastle
                 Sound.Play(SoundNames.Error);
             }
 
+            else if (message == MessageKind.InventoryFull)
+            {
+                icon.RenderImage = Atlases.UI.Sack;
+            }
+
             else
             {
                 Sound.Play(SoundNames.Error);

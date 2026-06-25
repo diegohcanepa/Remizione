@@ -58,7 +58,7 @@ namespace ScaryCastle
                 RightGatePosition = DataConvert.ToVector2(rightGatePositionValue);
 
             RequiresDeadEnd = element.GetBool("requiresDeadEnd", false);
-            
+
             if (element.GetEnum<RoomCategory>("roomCategory") is not RoomCategory roomCategory)
                 throw new InvalidOperationException("Missing roomCategory property.");
             else

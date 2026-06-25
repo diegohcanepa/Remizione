@@ -111,7 +111,7 @@ namespace ScaryCastle
             if (!RoomNode.Visited)
                 RoomNode.Visited = true;
 
-            Session.StatusHUD.MiniMap.CurrentRoom = RoomNode;                ;
+            Session.StatusHUD.MiniMap.CurrentRoom = RoomNode; ;
         }
 
         // OnLoad

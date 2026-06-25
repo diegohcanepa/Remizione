@@ -27,7 +27,7 @@ namespace Adberration
             }
 
             // Check characters
-            if (Regex.Matches(name, @"[0-9a-zA-Z-_]").Count < name.Length)
+            if (Regex.Count(name, @"[0-9a-zA-Z-_]") < name.Length)
             {
                 return NameValidationError.InvalidCharacters;
             }

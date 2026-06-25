@@ -33,7 +33,7 @@ namespace ScaryCastle
 
             CommonOutline.SpriteFont = assets[CommonOutlineAssetName];
             CommonOutline.SpriteFont.LineSpacing -= 5;
-            CommonOutline.SpriteFont.Spacing = -6;
+            CommonOutline.SpriteFont.Spacing = -8;
 
             Monitor.SpriteFont = assets[MonitorAssetName];
             Monitor.SpriteFont.LineSpacing += 2;

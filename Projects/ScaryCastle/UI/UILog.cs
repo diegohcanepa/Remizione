@@ -64,7 +64,7 @@ namespace ScaryCastle
             nounText.Position = verbText.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, -2);
             nounText.Text = noun;
             icon.RenderImage = image;
-            icon.Position = nounText.BoundingBox.GetPoint(RectanglePoint.Bottom, 2, 0);
+            icon.Position = nounText.BoundingBox.GetPoint(RectanglePoint.Bottom, 2, -1);
 
             iconShadow.Position = icon.BoundingBox.Center;
             iconShadow.RenderImage = image;

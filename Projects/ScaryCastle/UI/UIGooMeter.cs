@@ -35,7 +35,7 @@ namespace ScaryCastle
 
             while (parts.Count < Actor.MaxEnergy)
             {
-                parts.Add(new Sprite(Atlases.UI.GooMeter[(int)GooMeterPart.MiddleEmpty]) { X = position.X } );
+                parts.Add(new Sprite(Atlases.UI.GooMeter[(int)GooMeterPart.MiddleEmpty]) { X = position.X });
             }
         }
 

@@ -10,7 +10,7 @@ namespace ScaryCastle.Effects
     {
         // Constrcutor
         public OutlineEffect()
-            : base("Effects/Outline")
+            : base("Shaders/Outline")
         {
             Color = Effect.Parameters["outlineColor"];
             TextureSize = Effect.Parameters["textureSize"];

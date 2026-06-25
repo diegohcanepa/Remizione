@@ -1418,6 +1418,12 @@
 /processorParam:DebugMode=Auto
 /build:Shaders/Lighting.fx
 
+#begin Shaders/Outline.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Shaders/Outline.fx
+
 #begin Shaders/PlaneDeformation.fx
 /importer:EffectImporter
 /processor:EffectProcessor

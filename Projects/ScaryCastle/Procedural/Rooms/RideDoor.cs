@@ -91,22 +91,22 @@ namespace ScaryCastle
                     case RideDoorDirection.Up:
                         Verb = Verb.GoUp;
                         break;
-                 
+
                     // Right
                     case RideDoorDirection.Right:
                         Verb = Verb.GoRight;
                         break;
-                    
+
                     // Down
                     case RideDoorDirection.Down:
                         Verb = Verb.GoDown;
                         break;
-                    
+
                     // Left
                     case RideDoorDirection.Left:
                         Verb = Verb.GoLeft;
                         break;
-                    
+
                     default:
                         break;
                 }

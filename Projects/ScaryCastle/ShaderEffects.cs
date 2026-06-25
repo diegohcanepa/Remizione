@@ -18,5 +18,8 @@ namespace ScaryCastle
 
         // Lighting
         public LightingEffect Lighting { get; } = new();
+
+        // Outline
+        public OutlineEffect Outline { get; } = new();
     }
 }

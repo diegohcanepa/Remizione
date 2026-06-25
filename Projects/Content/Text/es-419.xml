@@ -205,7 +205,7 @@
   <String Key="MessageKind.ExtraHeart">¡Te sientes más fuerte!</String>
   <String Key="MessageKind.FullGoo">La baba del Supremo corre por tus venas. </String>
   <String Key="MessageKind.HandsFull">Tienes las manos ocupadas.</String>
-  <String Key="MessageKind.InventoryFull">El inventario está lleno.</String>
+  <String Key="MessageKind.InventoryFull">No te queda espacio.</String>
   <String Key="MessageKind.ItemDiscarded">Item descartado.</String>
   <String Key="MessageKind.LiftNotAllowed">No puedes alzar eso.</String>
   <String Key="MessageKind.NotEnoughCoins">No tienes monedas suficientes.</String>

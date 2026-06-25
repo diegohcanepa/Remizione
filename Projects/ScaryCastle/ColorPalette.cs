@@ -64,6 +64,9 @@ namespace ScaryCastle
         // MouseCursor
         internal static class MouseCursor
         {
+            // Highlight
+            internal static Vector4 Highlight { get; } = (Color.WhiteSmoke * .6f).ToVector4();
+
             // HostileTarget
             internal static Color HostileTarget { get; } = Text.OrangeLight;
         }

@@ -193,10 +193,7 @@ namespace ScaryCastle
                         }
 
                         // Si sigue siendo null (o si originalmente era Normal), probamos en Easy
-                        if (def == null)
-                        {
-                            def = registry.GetValidDefinition(node, Difficulty.Easy, Spawns, rng);
-                        }
+                        def ??= registry.GetValidDefinition(node, Difficulty.Easy, Spawns, rng);
                     }
 
                     // --- PLAN B RÍGIDO: SALVAGUARDA DE DISEÑO ---

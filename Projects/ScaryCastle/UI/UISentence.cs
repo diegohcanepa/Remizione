@@ -1,8 +1,5 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ScaryCastle.UI
 {
@@ -11,7 +8,7 @@ namespace ScaryCastle.UI
     /// </summary>
     public sealed class UISentence : GameObject
     {
-        private readonly Sprite heartIcon = new(Atlases.UI.HeartIcon) { PivotOrigin = RectanglePoint.Top, Scale = ScaleInfo.UIElement.Medium };
+        private readonly Sprite heartIcon = new(Atlases.UI.HeartIcon) { PivotOrigin = RectanglePoint.Bottom, Scale = ScaleInfo.UIElement.Medium };
         private readonly TextSprite hpText;
         private readonly TextSprite text;
 
@@ -22,7 +19,7 @@ namespace ScaryCastle.UI
             {
                 Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -12),
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -7),
                 Scale = ScaleInfo.Text.ExtraLarge
             };
 
@@ -60,7 +57,7 @@ namespace ScaryCastle.UI
                     field = value;
                     text.Text = field?.DisplayName;
                     hpText.Text = field is Actor actor && actor.MaxHP > 0 ? $"{field.HP}" : null;
-                    heartIcon.Position = text.BoundingBox.GetPoint(RectanglePoint.Bottom, -heartIcon.BoundingBox.Width / 2, 0);
+                    heartIcon.Position = text.BoundingBox.GetPoint(RectanglePoint.Top, -heartIcon.BoundingBox.Width / 2, 0);
                     hpText.Position = heartIcon.BoundingBox.GetPoint(RectanglePoint.Right);
                 }
             }

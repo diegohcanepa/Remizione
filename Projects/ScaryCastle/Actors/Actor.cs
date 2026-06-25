@@ -1239,7 +1239,7 @@ namespace ScaryCastle
                         return;
 
                     //if (Room?.WalkArea?.InLineOfSight(Session.Player.Position, Position, this) == true)
-                        IsAlert = true;
+                    IsAlert = true;
                 }
             }
             else if (RemainingTurns > 0)

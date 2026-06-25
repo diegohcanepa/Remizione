@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using ScaryCastle.Scripting;
+﻿using ScaryCastle.Scripting;
 
 namespace ScaryCastle
 {
@@ -13,7 +12,7 @@ namespace ScaryCastle
         // RefreshCursor
         private static void RefreshCursor(InteractionContext context)
         {
-            if (context.Target == context.Session.Player)
+            if (context.Target == context.Session.Player && context.HeldItem == null)
                 return;
 
             // Modal speech text active
@@ -42,6 +41,7 @@ namespace ScaryCastle
             if (context.HeldItem != null)
             {
                 MouseCursor.CustomImage = context.HeldItem.Definition.Image;
+                MouseCursor.HightlightColor = context.Target == null ? null : ColorPalette.MouseCursor.Highlight;
             }
             else
             {
@@ -116,20 +116,10 @@ namespace ScaryCastle
 
             RefreshCursor(context);
 
-            MouseCursor.Color = Color.White;
-
             if (context.Target is Actor actor)
             {
                 if (context.HeldItem == null && actor.IsHostile && actor.IsAlert)
                     MouseCursor.Color = ColorPalette.MouseCursor.HostileTarget;
-
-                /*
-                if (context.Session.Player != null && context.HeldItem?.Definition.ActionKind == ActionKind.Projectile)
-                {
-                    var mousePos = InputManager.DefaultPlayer.Mouse.WorldPosition(context.Session.Camera);
-                    MouseCursor.FlipCustomImage = mousePos.X < context.Session.Player.X;
-                }
-                */
             }
         }
     }
