@@ -190,6 +190,7 @@
             </struct>
             <key type="filename">BossMeter-assets/BossMeterAmount.png</key>
             <key type="filename">Inventory-assets/InventoryActionSlot.png</key>
+            <key type="filename">Items-assets/AppleOn.png</key>
             <key type="filename">Items-assets/Burger.png</key>
             <key type="filename">Items-assets/Coin.png</key>
             <key type="filename">Items-assets/SodaCan.png</key>
@@ -353,21 +354,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Items-assets/Headbutt.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>4,3,7,6</rect>
-                <key>scale9Paddings</key>
-                <rect>4,3,7,6</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Items-assets/Lantern.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -380,21 +366,6 @@
                 <rect>3,4,7,8</rect>
                 <key>scale9Paddings</key>
                 <rect>3,4,7,8</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Items-assets/Lift.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,4,5,9</rect>
-                <key>scale9Paddings</key>
-                <rect>3,4,5,9</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -668,6 +639,9 @@
                 <false/>
             </struct>
             <key type="filename">MouseCursors-assets/MouseCursorExamine.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorLeft.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorRight.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorTalk.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -676,9 +650,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>3,2,6,5</rect>
+                <rect>3,2,5,5</rect>
                 <key>scale9Paddings</key>
-                <rect>3,2,6,5</rect>
+                <rect>3,2,5,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -694,23 +668,6 @@
                 <rect>3,4,5,7</rect>
                 <key>scale9Paddings</key>
                 <rect>3,4,5,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">MouseCursors-assets/MouseCursorLeft.png</key>
-            <key type="filename">MouseCursors-assets/MouseCursorRight.png</key>
-            <key type="filename">MouseCursors-assets/MouseCursorTalk.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,2,5,5</rect>
-                <key>scale9Paddings</key>
-                <rect>3,2,5,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

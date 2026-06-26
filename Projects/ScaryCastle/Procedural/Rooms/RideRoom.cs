@@ -28,6 +28,18 @@ namespace ScaryCastle
 
             AddWalkArea("WalkArea", roomNode.Definition.WalkArea);
 
+            // Add lights
+            var index = 0;
+            foreach (var lightDescriptor in roomNode.Definition.Lights)
+            {
+                var light = AddLight($"Light{index}");
+                light.Color = lightDescriptor.Color;
+                light.LightKind = LightKind.Ambient;
+                light.Position = lightDescriptor.Position;
+                light.Scale = lightDescriptor.Scale;
+                index++;
+            }
+
             // Add placeholders
             foreach (var placeholder in roomNode.Definition.Placeholders)
             {

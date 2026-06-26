@@ -53,12 +53,6 @@
               "type": "boolean",
               "default": false
             },
-            "exitApproachPosition": {
-              "type": "string"
-            },
-            "exitHotspot": {
-              "type": "string"
-            },            
             "isMandatory": {
               "type": "boolean",
               "default": false
@@ -100,6 +94,28 @@
             "leverPosition": {
               "type": "string"
             },
+            "lights": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "color": {
+                    "type": "string"
+                  },
+                  "position": {
+                    "type": "string"
+                  },
+                  "scale": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "position",
+                  "scale"
+                ],
+                "additionalProperties": false
+              }
+            },            
             "musicTag": {
               "type": "string"
             },

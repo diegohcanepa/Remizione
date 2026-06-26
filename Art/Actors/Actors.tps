@@ -184,6 +184,9 @@
             <key type="filename">Rat-assets/Bite01.png</key>
             <key type="filename">Rat-assets/Bite02.png</key>
             <key type="filename">Rat-assets/Bite03.png</key>
+            <key type="filename">StinkyRat-assets/Bite01.png</key>
+            <key type="filename">StinkyRat-assets/Bite02.png</key>
+            <key type="filename">StinkyRat-assets/Bite03.png</key>
             <key type="filename">StinkyRat-assets/Move01.png</key>
             <key type="filename">StinkyRat-assets/Move02.png</key>
             <key type="filename">StinkyRat-assets/Move03.png</key>
@@ -875,6 +878,8 @@
             <key type="filename">Skeleton-assets/Stand01.png</key>
             <key type="filename">Skeleton-assets/StandHead01.png</key>
             <key type="filename">Skeleton-assets/StandHead02.png</key>
+            <key type="filename">Skeleton-assets/TalkHead01.png</key>
+            <key type="filename">Skeleton-assets/TalkHead02.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

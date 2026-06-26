@@ -40,7 +40,7 @@
               "amount": "1",
               "effectType": "Condition",
               "conditionType": "ChromaticAberration"
-            }            
+            }
           ]
         }
       ]
@@ -63,13 +63,12 @@
           ]
         }
       ]
-    },    
+    },
     {
       "name": "LootDropper",
       "archetype": "Lurker",
-      "intents": [
-      ]
-    },    
+      "intents": []
+    },
     {
       "name": "AnabolicRat",
       "archetype": "Lurker",
@@ -90,7 +89,7 @@
               "amount": "1",
               "effectType": "Condition",
               "conditionType": "CoinLoss"
-            }            
+            }
           ]
         }
       ]
@@ -117,7 +116,7 @@
           ]
         }
       ]
-    },    
+    },
     {
       "name": "Rat",
       "archetype": "Lurker",
@@ -162,21 +161,21 @@
       "archetype": "Lurker",
       "intents": [
         {
-          "name": "Contact",
+          "name": "Bite",
           "soundTrigger": "RatAttack",
           "actionKind": "Proximity",
           "effects": [
             {
-              "context": "Contact",
-              "comicText": "AghGreen",
+              "context": "Attack",
               "effectType": "Damage",
-              "sound": "RatAttack"
+              "amount": "0"
             },
             {
-              "context": "Contact",
-              "amount": "2",
+              "context": "Attack",
               "effectType": "Condition",
-              "conditionType": "Poison"
+              "conditionType": "Poison",
+              "amount": "1",
+              "comicText": "AghGreen"
             }
           ]
         }

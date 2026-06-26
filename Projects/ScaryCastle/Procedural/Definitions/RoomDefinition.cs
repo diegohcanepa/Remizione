@@ -12,6 +12,7 @@ namespace ScaryCastle
     /// </summary>
     public sealed class RoomDefinition : EntityDefinition
     {
+        private readonly List<LightDescriptor> lights = [];
         private readonly List<Placeholder> placeholders = [];
         private readonly List<string> walls = [];
 
@@ -66,6 +67,15 @@ namespace ScaryCastle
 
             Theme = element.GetEnum("theme", RoomTheme.Castle);
 
+            // Lights
+            if (element.TryGetProperty("lights", out JsonElement lightsElement))
+            {
+                foreach (var lightElement in lightsElement.EnumerateArray())
+                {
+                    lights.Add(new(lightElement));
+                }
+            }
+
             // Placeholders
             if (element.TryGetProperty("placeholders", out JsonElement placeholdersElement))
             {
@@ -99,6 +109,7 @@ namespace ScaryCastle
 
             Validate();
 
+            Lights = lights.AsReadOnly();
             Placeholders = placeholders.AsReadOnly();
             Walls = walls.AsReadOnly();
 
@@ -171,6 +182,9 @@ namespace ScaryCastle
 
         // LeverPosition
         public Vector2? LeverPosition { get; }
+
+        // Lights
+        public ReadOnlyCollection<LightDescriptor> Lights { get; }
 
         // LockType
         public LockType LockType { get; }

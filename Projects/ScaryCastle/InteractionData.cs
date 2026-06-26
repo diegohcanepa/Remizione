@@ -103,7 +103,7 @@ namespace ScaryCastle
             if (context.Target == null)
                 return;
 
-            if (context.HeldItem != null)// && context.Target.Cursor == MouseCursorState.Cross)
+            if (context.HeldItem != null && !context.Target.IsGoToVerb)// && context.Target.Cursor == MouseCursorState.Cross)
             {
                 if (context.Session.Player == context.Target)
                 {
@@ -127,7 +127,7 @@ namespace ScaryCastle
                 }
                 else if (target.Verb == Verb.Attack)
                 {
-                    // TODO: touch this if player can use different intents.
+                    // TODO: update here if player can use different intents.
                     this.combatIntent = context.Session.Player?.CombatBehavior?.Intents[0];
                 }
                 else if (target.Verb == Verb.Lift)
@@ -141,7 +141,7 @@ namespace ScaryCastle
             }
             else
             {
-                if (MouseCursor.IsArrow)
+                if (target.IsGoToVerb)
                 {
                     this.script = target.OutcomeScript;
                 }

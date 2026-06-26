@@ -38,7 +38,7 @@ namespace ScaryCastle
                 return;
             }
 
-            if (context.HeldItem != null)
+            if (context.HeldItem != null && (context.Target == null || !context.Target.IsGoToVerb))
             {
                 MouseCursor.CustomImage = context.HeldItem.Definition.Image;
                 MouseCursor.HightlightColor = context.Target == null ? null : ColorPalette.MouseCursor.Highlight;

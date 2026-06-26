@@ -19,8 +19,6 @@ namespace ScaryCastle
         private Sprite? activeThrowableSprite;
         private readonly Sprite alertIcon = new(Atlases.UI.AlertIcon) { PivotOrigin = RectanglePoint.Bottom };
         private int conditionTimer;
-        private const int contactCooldown = 500;
-        //private int contactTimer;
         private readonly List<AtlasImage>? customGuts;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
@@ -44,12 +42,10 @@ namespace ScaryCastle
             this.ApproachBehavior = ApproachBehavior.FaceToFace;
             this.DeathWord = ComicTextKind.PlopRed;
             this.DisplayNameKey = $"Actor.{DeclaredName}";
-            this.HitEffect = HitEffect.Blink;
             this.IgnoreWalkArea = false;
             this.Verb = Verb.Talk;
             this.Faction = Definition == null ? Faction.Good : Definition.Faction;
             this.CombatBehavior = CombatBehavior.Behaviors.Find(DeclaredName);
-            this.ContactIntent = CombatBehavior?.Intents.Find(EffectContext.Contact.ToString());
 
             headSprite = new AnimatedSprite()
             {
@@ -179,20 +175,13 @@ namespace ScaryCastle
             }
         }
 
-        // TryInflictContactDamage
-        protected virtual void TryInflictContactDamage(GameThing target)
-        {
-            if (ContactIntent != null)
-                EffectDescriptor.Apply(ContactIntent.EffectDescriptors, this, target, EffectContext.Contact);
-        }
-
         // UpdateCondition
         private void UpdateCondition(GameTime gameTime)
         {
             if (Condition == ConditionType.None)
                 return;
 
-            if (conditionTimer > 0)
+            if (conditionTimer >= 0)
             {
                 conditionTimer -= gameTime.ElapsedGameTime.Milliseconds;
 
@@ -523,7 +512,6 @@ namespace ScaryCastle
         protected override void OnStopMoving()
         {
             base.OnStopMoving();
-            //contactTimer = contactCooldown;
             FastMove = false;
             moveVerticalTween.Stop();
             moveBalancingTween.Stop();
@@ -571,10 +559,8 @@ namespace ScaryCastle
         {
             base.OnUpdate(gameTime);
 
-            /*
-            if (!UpdateContactIntent(gameTime))
+            if (!HasSpeechText)
                 UpdateCondition(gameTime);
-            */
 
             headTween.Update(gameTime);
 
@@ -801,7 +787,7 @@ namespace ScaryCastle
         public CombatBehavior? CombatBehavior { get; }
 
         // CombatDecision
-        public CombatDecision? CombatDecision;
+        public CombatDecision? CombatDecision { get; set; }
 
         // CombatDecisionType
         [ScriptProperty]
@@ -825,9 +811,6 @@ namespace ScaryCastle
                 }
             }
         }
-
-        // ContactIntent
-        public CombatIntent? ContactIntent { get; }
 
         // DiscardActiveThrowable
         [ScriptMethod]
@@ -1172,7 +1155,7 @@ namespace ScaryCastle
                 }
                 else
                 {
-                    color = Faction == Faction.Evil ? ColorPalette.Text.TerraLight : ColorPalette.Text.Default;
+                    color = Faction == Faction.Evil ? ColorPalette.Text.Yellow : ColorPalette.Text.Default;
                 }
             }
 

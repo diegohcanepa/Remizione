@@ -8,16 +8,11 @@
       "doorUp": "126,41",
       "doorLeft": "21,80",
       "doorRight": "220,80",
-      "placeholders": [
+      "lights": [
         {
-          "position": "69,22",
-          "placement": "WallFrontHang",
-          "allowTags": "Torch"
-        },
-        {
-          "position": "170,22",
-          "placement": "WallFrontHang",
-          "allowTags": "Torch"
+          "color": "255,248,183",
+          "position": "120,20",
+          "scale": "16,5"
         }
       ],
       "walkArea": "210,53;221,75;199,101;232,101;237,109;5,109;37,46;47,46;48,56;64,60;87,44;156,44;160,58;186,58;189,53"

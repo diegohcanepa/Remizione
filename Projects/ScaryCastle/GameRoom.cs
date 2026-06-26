@@ -173,17 +173,8 @@ namespace ScaryCastle
                 }
                 else if (CulledThings[i] is GameThing thing)
                 {
-                    ShaderEffect? effect = null;
-
-                    if (thing.IsBlinking && thing != Session.Player)
-                    {
-                        ScaryCastleGame.Effects.ColorReduction.SetColor(1, 0, 0, 1);
-                        effect = ScaryCastleGame.Effects.ColorReduction;
-                    }
-
                     var matrix = Session.Camera.GetViewMatrix(thing.ParallaxFactor);
-
-                    Game.SpriteBatch.Begin(matrix, SamplerState.PointClamp, BlendState.AlphaBlend, effect?.Effect);
+                    Game.SpriteBatch.Begin(matrix, SamplerState.PointClamp, BlendState.AlphaBlend, null);
                     thing.Draw(gameTime);
                     Game.SpriteBatch.End();
                     currentDrawIndex++;
@@ -528,6 +519,15 @@ namespace ScaryCastle
             HasAmbientLightSources = !IsProcedural;
             if (HasAmbientLightSources)
                 return;
+
+            for (var i = 0; i < Lights.Count; i++)
+            {
+                if (Lights[i].LightKind == LightKind.Ambient && Lights[i].IsEmitting)
+                {
+                    HasAmbientLightSources = true;
+                    break;
+                }
+            }
 
             for (var i = 0; i < Children.Count; i++)
             {

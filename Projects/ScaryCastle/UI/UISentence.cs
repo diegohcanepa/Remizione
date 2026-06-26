@@ -34,6 +34,9 @@ namespace ScaryCastle.UI
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
+            if (Target?.IsGoToVerb == true)
+                return;
+
             Game.SpriteBatch.Begin(Game.Camera);
             text.Draw(gameTime);
 

@@ -91,7 +91,7 @@ namespace ScaryCastle
         // Reset
         public void Reset()
         {
-            if (Target != null)
+            if (Target != null && !Target.IsGoToVerb)
             {
                 if (HeldItem?.Definition.DeselectOnUse == true)
                     HeldItem = null;

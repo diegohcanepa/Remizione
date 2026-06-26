@@ -17,7 +17,6 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly Blinker<bool> blinker = new(false, true);
         private bool dieCalled;
         private FloatTween? floatingTween;
         private readonly Polygon holePoly = new();
@@ -311,9 +310,6 @@ namespace ScaryCastle
             if (floatingTween != null && floatingTween.IsRunning)
                 Altitude += floatingTween.CurrentValue;
 
-            if (HitEffect == HitEffect.Blink && hurtTween != null && hurtTween.IsRunning)
-                Altitude += hurtTween.CurrentValue;
-
             if (hurtShakeTween != null && hurtShakeTween.IsRunning)
                 Position += hurtShakeTween.CurrentValue;
 
@@ -321,9 +317,6 @@ namespace ScaryCastle
 
             if (floatingTween != null && floatingTween.IsRunning)
                 Altitude -= floatingTween.CurrentValue;
-
-            if (HitEffect == HitEffect.Blink && hurtTween != null && hurtTween.IsRunning)
-                Altitude -= hurtTween.CurrentValue;
 
             if (hurtShakeTween != null && hurtShakeTween.IsRunning)
                 Position -= hurtShakeTween.CurrentValue;
@@ -368,7 +361,6 @@ namespace ScaryCastle
             if (shadowSpot.Size > 0 && shadowSpot.AnchorPosition == Vector2.Zero && Sprite.RenderImage != null)
                 shadowSpot.AnchorPosition = new Vector2(Sprite.Width / 2, Sprite.Height - .5f);
 
-            blinker.Stop();
             isCollisionDirty = true;
             InvalidateCollisionPolygons();
             InvalidateWalkArea();
@@ -446,9 +438,6 @@ namespace ScaryCastle
             }
 
             AttachedLight?.Update(gameTime);
-
-            if (blinker.IsRunning)
-                blinker.Update(gameTime);
         }
 
         // OnUpdateEmittingSound
@@ -510,15 +499,7 @@ namespace ScaryCastle
         // CanTakeDamage
         public virtual bool CanTakeDamage()
         {
-            if (IsDead)
-                return false;
-
-            /*
-            if (Session.Player == this && blinker.IsRunning)
-                return false;
-            */
-
-            return true;
+            return !IsDead;
         }
 
         // CoinReward
@@ -850,10 +831,6 @@ namespace ScaryCastle
                 return (this as IHoleArea).Contains(value);
         }
 
-        // HitEffect
-        [ScriptProperty]
-        public HitEffect HitEffect { get; init; } = HitEffect.Shake;
-
         // HitTestPolygon
         [ScriptProperty]
         public TestPolygon HitTestPolygon { get; set; }
@@ -941,9 +918,6 @@ namespace ScaryCastle
             else
                 return false;
         }
-
-        // IsBlinking
-        public bool IsBlinking => blinker.IsRunning && blinker.CurrentValue;
 
         // IsCornered
         public bool IsCornered(GameThing target)
@@ -1158,11 +1132,8 @@ namespace ScaryCastle
                 PlaySound(HurtSound);
 
             // Shake: El objeto tiembla por el golpe (incluso una pared dura puede vibrar)
-            if (HitEffect == HitEffect.Shake)
-            {
-                hurtShakeTween ??= new();
-                hurtShakeTween.Start(TweenStyle.Linear, Vector2.Zero, hurtShakeForce, 40, 4);
-            }
+            hurtShakeTween ??= new();
+            hurtShakeTween.Start(TweenStyle.Linear, Vector2.Zero, hurtShakeForce, 40, 4);
 
             // ---------------------------------------------------------
             // 2. LÓGICA DE SALUD (Solo si es Destructible)
@@ -1191,12 +1162,6 @@ namespace ScaryCastle
                     {
                         hurtTween ??= new();
                         hurtTween.Start(TweenStyle.Linear, 0, 1, 150, 2);
-
-                        // Invulnerabilidad post-daño
-                        if (HitEffect == HitEffect.Blink)
-                            blinker.Start(40, 15);
-                        else
-                            blinker.Stop();
                     }
 
                     OnTakeDamage(attacker, amount, damageType);

@@ -68,9 +68,6 @@ namespace ScaryCastle
     // GateEventType
     public enum GateEventType { Nothing, Good, Bad }
 
-    // HitEffect
-    public enum HitEffect { None, Shake, Blink }
-
     // ImpactType
     public enum ImpactType { Low, Medium, High }
 
