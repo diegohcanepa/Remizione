@@ -137,7 +137,7 @@ namespace ScaryCastle
         }
 
         // IsAmbientLight
-        public bool IsAmbientLight => AttachedLight != null && AttachedLight.LightKind == LightKind.Ambient;
+        public bool IsAmbientLight => AttachedLight != null && AttachedLight.Ambient;
 
         // IsLiftable
         [ScriptProperty]

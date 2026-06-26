@@ -37,6 +37,9 @@ namespace ScaryCastle
                 ReadOnlyPolygon.GetVertices(ExitHotspot);
 
             IsMandatory = element.GetBool("isMandatory", false);
+
+            LightMapColor = element.GetColor("lightMapColor", new Color(20, 20, 20));
+
             LockType = element.GetEnum("lockType", LockType.None);
             MusicTag = element.GetString("musicTag");
 
@@ -182,6 +185,9 @@ namespace ScaryCastle
 
         // LeverPosition
         public Vector2? LeverPosition { get; }
+
+        // LightMapColor
+        public Color LightMapColor { get; }
 
         // Lights
         public ReadOnlyCollection<LightDescriptor> Lights { get; }

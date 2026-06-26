@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 
@@ -17,6 +18,15 @@ namespace ScaryCastle
         // Probabilidad (0 a 1) de que el NPC intente un ataque en su turno.
         // Un valor bajo (0.2) crea un comportamiento de "acecho".
         public abstract Ratio AttackChance { get; }
+
+        // DistanceToTarget
+        public static float DistanceToTarget(GameThing source, GameThing target)
+        {
+            if (target.X < source.X)
+                return Vector2.Distance(target.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.RightBottom), source.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.LeftBottom));
+            else
+                return Vector2.Distance(target.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.LeftBottom), source.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.RightBottom));
+        }
 
         // FleeChance
         // Probabilidad de que efectivamente huya una vez herido.
@@ -45,14 +55,20 @@ namespace ScaryCastle
             // 2. Si es cuerpo a cuerpo, solo tiene peso si el jugador entró en el rango operativo de Melee.
             if (intent.ActionKind == ActionKind.Proximity)
             {
-                return distance > MeleeAttackRange ? 0 : intent.SpawnWeight;
+                return distance > MeleeRange ? 0 : intent.SpawnWeight;
             }
 
             return 0;
         }
 
-        // MeleeAttackRange
-        public virtual int MeleeAttackRange => 30;
+        // IsInMeleeRange
+        public bool IsInMeleeRange(GameThing source, GameThing target)
+        {
+            return DistanceToTarget(source, target) <= MeleeRange;
+        }
+
+        // MeleeRange
+        public virtual int MeleeRange => 30;
 
         // SelectIntent
         // Selecciona un ataque de la lista disponible basándose en pesos y distancia.

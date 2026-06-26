@@ -277,7 +277,7 @@ namespace ScaryCastle
             else
                 autoHideCooldown = text.Length * this.text.TypingSpeed;
 
-            this.text.Scale = ScaleInfo.Text.Medium;
+            this.text.Scale = ScaleInfo.Text.VeryLarge;
 
             // Typing
             if (SpeechTextSettings.Typing && awaitInput)

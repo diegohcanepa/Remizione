@@ -20,7 +20,7 @@ namespace ScaryCastle
         // FleeChance
         public override Ratio FleeChance => 0.00f;
 
-        public override int MeleeAttackRange => 40;
+        public override int MeleeRange => 40;
 
         /// <summary>
         /// Opcional: Podrías definir que el Ojo no "salta" (Charge) 

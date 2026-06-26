@@ -65,9 +65,6 @@ namespace ScaryCastle
     // FloatingMessage
     public enum FloatingMessage { Failed, Success }
 
-    // GateEventType
-    public enum GateEventType { Nothing, Good, Bad }
-
     // ImpactType
     public enum ImpactType { Low, Medium, High }
 
@@ -84,7 +81,7 @@ namespace ScaryCastle
     public enum KnockbackIntensity { Low, Medium, High }
 
     // LightKind
-    public enum LightKind { Default, Ambient, Alarm, Lantern, Fire, Fireplace, MuzzleFlash, Outdoor, Player }
+    public enum LightKind { Default, Lantern, Fire, Fireplace, MuzzleFlash, Outdoor, Player }
 
     // LightState
     public enum LightState { Off, On, TurningOn, TurningOff }
@@ -129,7 +126,7 @@ namespace ScaryCastle
     public enum MessageKind { CannotPlaceItem, FullGoo, HandsFull, InventoryFull, ItemDiscarded, LiftNotAllowed, NotEnoughCoins, NotEnoughGoo, OutOfReach, OutOfLine, PathCleared, ExtraEnergy, ExtraHeart }
 
     // MouseCursorState
-    public enum MouseCursorState { Cross, Attack, Down, Examine, Hand, Left, Lift, Right, Skull, Talk, Up, Wait }
+    public enum MouseCursorState { Cross, Attack, Down, Eye, Hand, Left, Lift, Magnifier, Right, Skull, Talk, Up, Wait }
 
     // PlacementType
     public enum PlacementType

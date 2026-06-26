@@ -603,6 +603,7 @@
             <key type="filename">MouseCursors-assets/MouseCursorAttack.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorCross.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorLift.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorMagnifier.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorSkull.png</key>
             <key type="filename">UI-assets/EdmundIcon.png</key>
             <key type="filename">UI-assets/FearIcon.png</key>
@@ -638,7 +639,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">MouseCursors-assets/MouseCursorExamine.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorEye.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorLeft.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorRight.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorTalk.png</key>

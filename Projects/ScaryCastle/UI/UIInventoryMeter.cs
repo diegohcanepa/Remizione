@@ -40,7 +40,7 @@ namespace ScaryCastle
                 Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Right,
                 Position = icon.BoundingBox.GetPoint(RectanglePoint.Left, -1, 1),
-                Scale = ScaleInfo.Text.VeryLarge,
+                Scale = ScaleInfo.Text.Giant,
                 Spacing = -6
             };
         }
@@ -69,7 +69,7 @@ namespace ScaryCastle
             if (lastKnownCount != inventory.Count)
             {
                 lastKnownCount = inventory.Count;
-                amountText.Text = $"{inventory.Count} | {inventory.Capacity}";
+                amountText.Text = $"{inventory.Count}/{inventory.Capacity}";
                 amountText.Color = inventory.IsFull ? ColorPalette.Text.Terra : ColorPalette.Text.Highlight;
             }
         }

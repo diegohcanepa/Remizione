@@ -89,7 +89,6 @@ namespace ScaryCastle
         {
             return lightKind switch
             {
-                LightKind.Alarm => ColorTween.Create(TweenStyle.Linear, color, color * .3f, 500, -1),
                 LightKind.Fire => ColorTween.Create(TweenStyle.Linear, color, color * .9f, 90, -1),
                 LightKind.Fireplace => ColorTween.Create(TweenStyle.Linear, color, color * .96f, 90, -1),
                 LightKind.Lantern => ColorTween.Create(TweenStyle.Linear, color * .98f, color * .96f, 90, -1),

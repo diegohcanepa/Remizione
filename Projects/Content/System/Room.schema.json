@@ -94,6 +94,9 @@
             "leverPosition": {
               "type": "string"
             },
+            "lightMapColor": {
+              "type": "string"
+            },
             "lights": {
               "type": "array",
               "items": {

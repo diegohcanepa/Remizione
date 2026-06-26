@@ -379,15 +379,6 @@ namespace ScaryCastle
 
             lightMapTarget = Game.RenderTargets.AuxiliaryTargets[0];
             lightSources.Clear();
-
-            // Prepare lights
-            if (Atlas != null)
-            {
-                for (int i = 0; i < Lights.Count; i++)
-                {
-                    Lights[i].Prepare(Atlas);
-                }
-            }
         }
 
         // OnUnload
@@ -522,7 +513,7 @@ namespace ScaryCastle
 
             for (var i = 0; i < Lights.Count; i++)
             {
-                if (Lights[i].LightKind == LightKind.Ambient && Lights[i].IsEmitting)
+                if (Lights[i].Ambient && Lights[i].IsEmitting)
                 {
                     HasAmbientLightSources = true;
                     break;

@@ -82,7 +82,7 @@ namespace ScaryCastle
                 Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = slots[0].BoundingBox.GetPoint(RectanglePoint.Top, 0, -2),
-                Scale = ScaleInfo.Text.Large
+                Scale = ScaleInfo.Text.ExtraLarge
             };
         }
 
@@ -177,6 +177,17 @@ namespace ScaryCastle
             }
         }
 
+        // Reset
+        private void Reset()
+        {
+            itemLabel.Clear();
+
+            for (var i = 0; i < ItemContainer.Count; i++)
+            {
+                icons[i].Scale = ScaleInfo.UIElement.Medium;
+            }
+        }
+
         #endregion
 
         #region Protected members
@@ -246,6 +257,13 @@ namespace ScaryCastle
             }
         }
 
+        // OnUnloadContent
+        protected override void OnUnloadContent()
+        {
+            Reset();
+            base.OnUnloadContent();
+        }
+
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
@@ -262,20 +280,13 @@ namespace ScaryCastle
                 autoHide = InputManager.DefaultPlayer.Mouse.VirtualPosition.Y >= autoHideThreshold;
             }
 
-            for (var i = 0; i < ItemContainer.Count; i++)
-            {
-                icons[i].Scale = ScaleInfo.UIElement.Medium;
-            }
-
+            Reset();
+            
             if (GetSelectedItem() is Item item)
             {
                 itemLabel.X = slots[item.Index].BoundingBox.Center.X;
                 itemLabel.Text = item.Definition.DisplayName;
                 icons[item.Index].Scale = ScaleInfo.InventoryHeldItem;
-            }
-            else
-            {
-                itemLabel.Text = null;
             }
         }
 

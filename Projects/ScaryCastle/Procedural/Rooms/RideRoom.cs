@@ -23,7 +23,7 @@ namespace ScaryCastle
             Zoom = 1.15f;
             AtlasName = roomNode.Definition.Name ?? string.Empty;
             DefaultImageName = AtlasName;
-            LightMapColor = new(20, 20, 20);
+            LightMapColor = roomNode.Definition.LightMapColor;
             LightingSystem = true;
 
             AddWalkArea("WalkArea", roomNode.Definition.WalkArea);
@@ -32,9 +32,9 @@ namespace ScaryCastle
             var index = 0;
             foreach (var lightDescriptor in roomNode.Definition.Lights)
             {
-                var light = AddLight($"Light{index}");
+                var light = AddLight($"Light{index}__");
+                light.Ambient = true;
                 light.Color = lightDescriptor.Color;
-                light.LightKind = LightKind.Ambient;
                 light.Position = lightDescriptor.Position;
                 light.Scale = lightDescriptor.Scale;
                 index++;
@@ -111,26 +111,28 @@ namespace ScaryCastle
             }
         }
 
-        #endregion
-
-        #region Protected members
-
-        // OnActivate
-        protected override void OnActivate()
+        // PrepareLights
+        private void PrepareLights()
         {
-            base.OnActivate();
+            var light = AddLight("Main");
+            light.Ambient = true;
+            light.Color = new(255, 248, 183);
+            light.Position = BoundingBox.Center;
+            light.Scale = new(BoundingBox.Width / 12, BoundingBox.Height / 12);
 
-            if (!RoomNode.Visited)
-                RoomNode.Visited = true;
-
-            Session.StatusHUD.MiniMap.CurrentRoom = RoomNode; ;
+            foreach (var door in doors)
+            {
+                var doorLight = AddLight(door.Name);
+                doorLight.Ambient = true;
+                doorLight.Color = new Color(240, 181, 65) * .7f;
+                doorLight.Position = door.BoundingBox.Center;
+                doorLight.Scale = new(2,7);
+            }
         }
 
-        // OnLoad
-        protected override void OnLoad()
+        // PrepareView
+        private void PrepareView()
         {
-            base.OnLoad();
-
             var index = 0;
             while (true)
             {
@@ -152,6 +154,30 @@ namespace ScaryCastle
 
                 Children.Add(foreground);
             }
+        }
+
+        #endregion
+
+        #region Protected members
+
+        // OnActivate
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+
+            if (!RoomNode.Visited)
+                RoomNode.Visited = true;
+
+            Session.StatusHUD.MiniMap.CurrentRoom = RoomNode; ;
+        }
+
+        // OnLoad
+        protected override void OnLoad()
+        {
+            base.OnLoad();
+
+            PrepareView();
+            PrepareLights();
 
             foreach (var door in doors)
             {

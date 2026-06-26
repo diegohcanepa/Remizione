@@ -407,10 +407,10 @@ namespace ScaryCastle
 
             base.OnDraw(gameTime);
 
-            if (RemainingTurns < 1 && IsHostile && IsStanding && ActiveThrowable == null && !HasSpeechText)
+            if (Session.ActiveNPC == null && CombatDecision?.Intent != null && IsHostile && IsStanding && ActiveThrowable == null && !HasSpeechText)
             {
                 alertIcon.Position = GetOverheadPosition();
-                //alertIcon.Draw(gameTime);
+                alertIcon.Draw(gameTime);
             }
 
             if (activeThrowableSprite?.RenderImage != null)
@@ -721,20 +721,26 @@ namespace ScaryCastle
         // BeginTurn
         public Script? BeginTurn()
         {
-            if (IsPlayer || !IsHostile || Session.IsAwaiting || RemainingTurns == -1)
+            if (CombatBehavior == null || IsPlayer || Session.Player == null || !IsHostile || Session.IsAwaiting || RemainingTurns == -1)
                 return null;
 
-            if (OutcomeScript != null && Brain.Decide(this, Session.Player) is CombatDecision decision)
+            if (CombatDecision?.Intent?.ActionKind == ActionKind.Proximity)
             {
-                CombatDecision = decision;
-                CombatDecisionType = decision.Type;
+                if (!CombatBehavior.Archetype.IsInMeleeRange(this, Session.Player))
+                    CombatDecision = null;
+            }
+
+            if (CombatDecision == null)
+                CombatDecision = Brain.Decide(this, Session.Player);
+
+            if (OutcomeScript != null && CombatDecision != null)
+            {
                 ResetRemainingTurns();
                 return OutcomeScript;
             }
             else
             {
                 CombatDecision = null;
-                CombatDecisionType = CombatDecisionType.None;
             }
 
             return null;
@@ -791,7 +797,7 @@ namespace ScaryCastle
 
         // CombatDecisionType
         [ScriptProperty]
-        public CombatDecisionType CombatDecisionType { get; private set; }
+        public CombatDecisionType CombatDecisionType => CombatDecision?.Type ?? CombatDecisionType.None;
 
         // Condition
         public ConditionType Condition { get; private set; }
@@ -1001,7 +1007,7 @@ namespace ScaryCastle
             direction.Normalize();
 
             // 2. El MeleeAttackRange del arquetipo define el paso máximo de persecución de este turno
-            float maxStepThisTurn = arch.MeleeAttackRange;
+            float maxStepThisTurn = arch.MeleeRange;
 
             // 3. El punto ideal es la posición del jugador menos un pequeño margen (ej. 12px) 
             // para que el sprite del bicho quede perfectamente enfrente y no encima del centro del player
@@ -1171,6 +1177,9 @@ namespace ScaryCastle
 
         // Stand
         [ScriptMethod()]
+        public void Stand() => Stand(true);
+
+        // Stand
         public void Stand(bool enforce = false)
         {
             BodyMachine.ChangeState<BodyStandState>(enforce);
@@ -1228,6 +1237,13 @@ namespace ScaryCastle
             else if (RemainingTurns > 0)
             {
                 RemainingTurns -= 1;
+                if (RemainingTurns == 0)
+                {
+                    if (Brain.Decide(this, Session.Player) is CombatDecision combatDecision && combatDecision.Intent != null)
+                        CombatDecision = Brain.Decide(this, Session.Player);
+                    else
+                        CombatDecision = null;
+                }
             }
         }
 

@@ -22,40 +22,31 @@ namespace ScaryCastle
 
         #endregion
 
-        // DistanceToTarget
-        private static float DistanceToTarget(GameThing source, GameThing target)
-        {
-            if (target.X < source.X)
-                return Vector2.Distance(target.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.RightBottom), source.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.LeftBottom));
-            else
-                return Vector2.Distance(target.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.LeftBottom), source.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.RightBottom));
-        }
-
         // Decide
-        public static CombatDecision? Decide(Actor actor, GameThing? target)
+        public static CombatDecision? Decide(Actor source, GameThing? target)
         {
-            if (actor.CombatBehavior?.Archetype is not { } archetype)
+            if (source.CombatBehavior?.Archetype is not { } archetype)
                 return null;
 
-            bool isCornered = target != null && actor.IsCornered(target);
+            bool isCornered = target != null && source.IsCornered(target);
 
             // 1. Decisión de Huida: Filtro de pánico si está reventado y hay espacio físico para escapar
-            if (!isCornered && actor.HPRatio <= archetype.FleeHPThreshold && Random.Shared.NextDouble() < archetype.FleeChance)
+            if (!isCornered && source.HPRatio <= archetype.FleeHPThreshold && Random.Shared.NextDouble() < archetype.FleeChance)
                 return new CombatDecision(CombatDecisionType.Flee, null, target, PositioningMode.Move);
 
             // 2. Procesamiento de la Intención de Ataque / Persecución
             if (target != null)
             {
-                float distance = DistanceToTarget(actor, target);
+                float distance = CombatArchetype.DistanceToTarget(source, target);
 
                 // Flag crítico: ¿Ya está físicamente en distancia de meter un viaje cuerpo a cuerpo?
-                bool isAlreadyInMeleeRange = distance <= archetype.MeleeAttackRange;
+                bool isInMeleeRange = archetype.IsInMeleeRange(source, target);
 
                 // Si está acorralado O si ya te tiene en rango de Melee, IGNORAMOS el AttackChance y va a buscarte sí o sí.
-                if (isAlreadyInMeleeRange || isCornered || Random.Shared.NextDouble() < archetype.AttackChance)
+                if (isInMeleeRange || isCornered || Random.Shared.NextDouble() < archetype.AttackChance)
                 {
                     // Selecciona el ataque basado en los pesos del arquetipo
-                    var intent = archetype.SelectIntent(actor, actor.CombatBehavior.Intents, distance);
+                    var intent = archetype.SelectIntent(source, source.CombatBehavior.Intents, distance);
 
                     if (intent != null)
                     {
@@ -63,7 +54,7 @@ namespace ScaryCastle
                         if (intent.ActionKind == ActionKind.Proximity)
                         {
                             // Como validamos arriba, si entró acá y es melee, ya sabemos que distance <= MeleeAttackRange
-                            if (distance <= archetype.MeleeAttackRange)
+                            if (distance <= archetype.MeleeRange)
                             {
                                 return new CombatDecision(CombatDecisionType.Attack, intent, target, PositioningMode.Move);
                             }

@@ -64,7 +64,7 @@ namespace ScaryCastle
 
                 // Examine
                 case Verb.Examine:
-                    MouseCursor.State = MouseCursorState.Examine;
+                    MouseCursor.State = MouseCursorState.Eye;
                     break;
 
                 // GoDown

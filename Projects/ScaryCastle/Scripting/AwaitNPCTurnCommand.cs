@@ -78,7 +78,7 @@ namespace ScaryCastle.Scripting
                 if (!actor.IsMoving)
                 {
                     awaitMove = false;
-                    awaitAttack = actor.CombatDecisionType is CombatDecisionType.Attack or CombatDecisionType.Charge;
+                    awaitAttack = actor.CombatDecision?.Intent != null;
                     if (awaitAttack && actor.CombatDecision?.Intent is { } intent)
                         actor.ExecuteAction(intent, actor.CombatDecision.Target);
                 }

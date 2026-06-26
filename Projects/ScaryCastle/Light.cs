@@ -10,14 +10,10 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly Blinker<bool> blinker = new(false, true);
-        private Color color = Color.White;
         private int duration;
-        private readonly Blinker<bool> flashBlinker = new(false, true);
         private readonly Sprite lightSprite;
         private int litTweenDuration;
         private readonly FloatTween opacityTween = new();
-        private Vector2 scale = Vector2.One;
         private int unlitTweenDuration;
 
         #endregion
@@ -28,6 +24,7 @@ namespace ScaryCastle
         public Light(string name)
         {
             this.Name = name;
+
             this.lightSprite = new Sprite()
             {
                 RenderImage = Atlases.Environment.DefaultLight,
@@ -49,14 +46,6 @@ namespace ScaryCastle
 
             switch (LightKind)
             {
-                //  Alarm
-                case LightKind.Alarm:
-
-                    lightSprite.Tweens.ColorTween = Utils.CreateLightColorTween(LightKind, Color);
-                    litTweenDuration = 1000;
-                    unlitTweenDuration = 1000;
-                    break;
-
                 //  Fire
                 case LightKind.Fire:
                     Passes = 2;
@@ -113,29 +102,16 @@ namespace ScaryCastle
             if (!IsEmitting)
                 return;
 
-            if (LightKind is LightKind.Default or LightKind.Ambient)
-                lightSprite.Color = Color;
-
-            if (blinker.IsRunning && blinker.CurrentValue)
+            if (Passes > 1)
             {
-                var color = lightSprite.Color;
-                lightSprite.Color *= .9f;
-                lightSprite.Draw(gameTime);
-                lightSprite.Color = color;
+                for (int i = 0; i < Passes; i++)
+                {
+                    lightSprite.Draw(gameTime);
+                }
             }
             else
             {
                 lightSprite.Draw(gameTime);
-            }
-
-            var passes = flashBlinker.IsRunning && flashBlinker.CurrentValue ? 6 : Passes;
-
-            if (passes > 1)
-            {
-                for (int i = 0; i < passes; i++)
-                {
-                    lightSprite.Draw(gameTime);
-                }
             }
         }
 
@@ -149,9 +125,6 @@ namespace ScaryCastle
                     TurnOff();
             }
 
-            blinker.Update(gameTime);
-            flashBlinker.Update(gameTime);
-
             lightSprite.Update(gameTime);
 
             if (opacityTween.IsRunning)
@@ -163,17 +136,8 @@ namespace ScaryCastle
 
         #endregion
 
-        // Blink
-        public void Blink(int interval, int count)
-        {
-            blinker.Start(new Int32Range(interval), count);
-        }
-
-        // Blink
-        public void Blink(Int32Range interval, int count)
-        {
-            blinker.Start(interval, count);
-        }
+        // Ambient
+        public bool Ambient { get; set; }
 
         // BoundingBox
         public RectangleF BoundingBox => lightSprite.BoundingBox;
@@ -181,58 +145,19 @@ namespace ScaryCastle
         // Color
         public Color Color
         {
-            get => color;
+            get;
             set
             {
-                if (value != color)
+                if (value != field)
                 {
-                    this.color = value;
+                    field = value;
                     Invalidate();
                 }
             }
-        }
-
-        // Flash
-        public void Flash()
-        {
-            Flash(66, 6);
-        }
-
-        // Flash
-        public void Flash(int interval, int count)
-        {
-            flashBlinker.Start(new Int32Range(interval), count);
-        }
-
-        // Flash
-        public void Flash(Int32Range interval, int count)
-        {
-            flashBlinker.Start(interval, count);
-        }
-
-        // ImageName
-        public string? ImageName { get; set; }
-
-        // IsBlinking
-        public bool IsBlinking => blinker.IsRunning;
+        } = Color.White;
 
         // IsEmitting
-        public bool IsEmitting
-        {
-            get
-            {
-                if (IsFlashing && !flashBlinker.CurrentValue)
-                    return false;
-                else
-                    return lightSprite.Opacity > 0 || (opacityTween.IsRunning && opacityTween.EndValue > opacityTween.StartValue);
-            }
-        }
-
-        // IsFlashing
-        public bool IsFlashing => flashBlinker.IsRunning;
-
-        // IsFlashingOn
-        public bool IsFlashingOn => flashBlinker.IsRunning && flashBlinker.CurrentValue;
+        public bool IsEmitting => lightSprite.Opacity > 0 || (opacityTween.IsRunning && opacityTween.EndValue > opacityTween.StartValue);
 
         // LightKind
         public LightKind LightKind
@@ -268,27 +193,19 @@ namespace ScaryCastle
             set => lightSprite.Position = value;
         }
 
-        // Prepare
-        public void Prepare(Atlas atlas)
-        {
-            lightSprite.RenderImage = Atlases.Environment.DefaultLight;
-            if (!string.IsNullOrWhiteSpace(ImageName) && atlas.FindImage(ImageName) is AtlasImage image)
-                lightSprite.RenderImage = image;
-        }
-
         // Scale
         public Vector2 Scale
         {
-            get => scale;
+            get;
             set
             {
-                if (value != scale)
+                if (value != field)
                 {
-                    scale = value;
+                    field = value;
                     Invalidate();
                 }
             }
-        }
+        } = Vector2.One;
 
         // ScaleTo
         public void ScaleTo(TweenStyle style, Vector2 value, int duration)

@@ -2,6 +2,7 @@
 using Adberration.Scripting;
 using Engendro;
 using Engendro.Audio;
+using Engendro.Input;
 using Microsoft.Xna.Framework;
 using ScaryCastle.Props;
 using ScaryCastle.Scripting;
@@ -427,7 +428,6 @@ namespace ScaryCastle
             if (IsCurrentScene)
                 InteractionContext.Refresh();
 
-            /*
             if (Player != null && Player.ActiveThrowable == null)
             {
                 if (!IsAwaiting && IsCurrentScene && CurrentRun != null)
@@ -439,7 +439,6 @@ namespace ScaryCastle
                     }
                 }
             }
-            */
         }
 
         // OnWrite
@@ -461,6 +460,9 @@ namespace ScaryCastle
         protected override void OnOutcomeCompleted(Thing target)
         {
             base.OnOutcomeCompleted(target);
+
+            ActiveNPC?.CombatDecision = null;
+
             ProcessTurn();
         }
 
@@ -618,9 +620,24 @@ namespace ScaryCastle
         // Game
         public new ScaryCastleGame Game { get; }
 
-        // GateEvent
+        // HasPendingTurns
         [ScriptProperty]
-        public GateEventType GateEvent { get; set; }
+        public bool HasPendingTurns
+        {
+            get
+            {
+                if (Room is ProceduralRoom)
+                {
+                    for (var i = 0; i < Room.Children.Count; i++)
+                    {
+                        if (Room.Children[i] is Actor actor && !actor.IsPlayer && actor.CombatDecision?.Intent != null)
+                            return true;
+                    }
+                }
+
+                return false;
+            }
+        }
 
         // InteractionContext
         public InteractionContext InteractionContext { get; }

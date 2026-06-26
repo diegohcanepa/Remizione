@@ -20,14 +20,14 @@ namespace ScaryCastle.UI
                 Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -7),
-                Scale = ScaleInfo.Text.ExtraLarge
+                Scale = ScaleInfo.Text.Huge
             };
 
             hpText = new(Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Left,
-                Scale = ScaleInfo.Text.Large
+                Scale = ScaleInfo.Text.ExtraLarge
             };
         }
 
@@ -61,7 +61,7 @@ namespace ScaryCastle.UI
                     text.Text = field?.DisplayName;
                     hpText.Text = field is Actor actor && actor.MaxHP > 0 ? $"{field.HP}" : null;
                     heartIcon.Position = text.BoundingBox.GetPoint(RectanglePoint.Top, -heartIcon.BoundingBox.Width / 2, 0);
-                    hpText.Position = heartIcon.BoundingBox.GetPoint(RectanglePoint.Right);
+                    hpText.Position = heartIcon.BoundingBox.GetPoint(RectanglePoint.Right, 1, .5f);
                 }
             }
         }
