@@ -40,11 +40,6 @@
                 "Boss"
               ],
               "default": "Common"
-            },
-            "turnInterval": {
-              "type": "integer",
-              "default": 2,
-              "minimum": 1
             }
           }
         }

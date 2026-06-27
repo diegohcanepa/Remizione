@@ -648,6 +648,15 @@ namespace ScaryCastle
             }
         } = string.Empty;
 
+        // DistanceToTarget
+        public float DistanceToTarget(GameThing target)
+        {
+            if (target.X < X)
+                return Vector2.Distance(target.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.RightBottom), RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.LeftBottom));
+            else
+                return Vector2.Distance(target.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.LeftBottom), RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.RightBottom));
+        }
+
         // DrawLights
         public void DrawLights(GameTime gameTime)
         {
@@ -917,34 +926,6 @@ namespace ScaryCastle
 
             else
                 return false;
-        }
-
-        // IsCornered
-        public bool IsCornered(GameThing target)
-        {
-            if (Room?.WalkArea == null)
-                return false;
-
-            var destX = Direction == FacingDirection.Left ? int.MaxValue : int.MinValue;
-            var destination = Room.WalkArea.ClampInside(new(destX, Y));
-
-            float distanceToTarget;
-            if (target.X < X)
-            {
-                distanceToTarget = Vector2.Distance(target.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.RightBottom), RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.LeftBottom));
-            }
-            else
-            {
-                distanceToTarget = Vector2.Distance(target.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.LeftBottom), RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.RightBottom));
-            }
-
-            float distanceToWall;
-            if (Direction == FacingDirection.Left)
-                distanceToWall = Vector2.Distance(RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.RightBottom), destination);
-            else
-                distanceToWall = Vector2.Distance(RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.LeftBottom), destination);
-
-            return distanceToWall < 40 && distanceToTarget < 20;
         }
 
         // IsDead

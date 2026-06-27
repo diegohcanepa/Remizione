@@ -39,6 +39,9 @@ namespace ScaryCastle
                 }
             }
 
+            // TurnInterval
+            TurnInterval = element.GetInt32("turnInterval", 2);
+
             Intents = new(intents);
 
             Behaviors.Add(this);
@@ -60,5 +63,8 @@ namespace ScaryCastle
 
         // Name
         public string Name { get; }
+
+        // TurnInterval
+        public int TurnInterval { get; }
     }
 }

@@ -751,7 +751,7 @@ namespace ScaryCastle
             {
                 if (room.Children[i] is Actor actor && !actor.IsPlayer)
                 {
-                    actor.UpdatePatience();
+                    actor.ProcessTurn();
                 }
             }
 

@@ -11,7 +11,6 @@ namespace ScaryCastle
     public abstract class CombatArchetype
     {
         // AllowRandomMove
-        // Por defecto, los NPCs no se mueven aleatoriamente. Solo lo hacen si el arquetipo lo permite explícitamente.
         public virtual bool AllowRandomMove => false;
 
         // AttackChance
@@ -19,16 +18,6 @@ namespace ScaryCastle
         // Un valor bajo (0.2) crea un comportamiento de "acecho".
         public abstract Ratio AttackChance { get; }
 
-        // DistanceToTarget
-        public static float DistanceToTarget(GameThing source, GameThing target)
-        {
-            if (target.X < source.X)
-                return Vector2.Distance(target.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.RightBottom), source.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.LeftBottom));
-            else
-                return Vector2.Distance(target.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.LeftBottom), source.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.RightBottom));
-        }
-
-        // FleeChance
         // Probabilidad de que efectivamente huya una vez herido.
         public abstract Ratio FleeChance { get; }
 
@@ -48,15 +37,11 @@ namespace ScaryCastle
         {
             // 1. Si es a distancia, en rooms chicas siempre tiene peso válido.
             if (intent.ActionKind == ActionKind.Projectile)
-            {
                 return intent.SpawnWeight;
-            }
 
             // 2. Si es cuerpo a cuerpo, solo tiene peso si el jugador entró en el rango operativo de Melee.
             if (intent.ActionKind == ActionKind.Proximity)
-            {
                 return distance > MeleeRange ? 0 : intent.SpawnWeight;
-            }
 
             return 0;
         }
@@ -64,7 +49,7 @@ namespace ScaryCastle
         // IsInMeleeRange
         public bool IsInMeleeRange(GameThing source, GameThing target)
         {
-            return DistanceToTarget(source, target) <= MeleeRange;
+            return source.DistanceToTarget(target) <= MeleeRange;
         }
 
         // MeleeRange

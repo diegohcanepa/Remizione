@@ -139,6 +139,7 @@
     {
       "name": "Skeleton",
       "archetype": "Stalker",
+      "turnInterval": 3,
       "intents": [
         {
           "name": "Headbutt",

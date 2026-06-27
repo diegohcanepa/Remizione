@@ -17,7 +17,6 @@ namespace ScaryCastle
         #region Private fields
 
         private Sprite? activeThrowableSprite;
-        private readonly Sprite alertIcon = new(Atlases.UI.AlertIcon) { PivotOrigin = RectanglePoint.Bottom };
         private int conditionTimer;
         private readonly List<AtlasImage>? customGuts;
         private ParticlePopEffect? footstepEffect;
@@ -157,10 +156,10 @@ namespace ScaryCastle
         [ScriptMethod]
         private void ResetRemainingTurns(bool random = false)
         {
-            if (Definition != null)
-                RemainingTurns = random ? Random.Shared.Next(1, Definition.TurnInterval + 1) : Definition.TurnInterval;
+            if (CombatBehavior == null)
+                RemainingTurns = 0;
             else
-                RemainingTurns = -1;
+                RemainingTurns = random ? Random.Shared.Next(1, CombatBehavior.TurnInterval + 1) : CombatBehavior.TurnInterval;
         }
 
         // SyncHeadAnimation
@@ -406,12 +405,6 @@ namespace ScaryCastle
                 Rotation += moveBalancingTween.CurrentValue;
 
             base.OnDraw(gameTime);
-
-            if (Session.ActiveNPC == null && CombatDecision?.Intent != null && IsHostile && IsStanding && ActiveThrowable == null && !HasSpeechText)
-            {
-                alertIcon.Position = GetOverheadPosition();
-                alertIcon.Draw(gameTime);
-            }
 
             if (activeThrowableSprite?.RenderImage != null)
             {
@@ -721,17 +714,10 @@ namespace ScaryCastle
         // BeginTurn
         public Script? BeginTurn()
         {
-            if (CombatBehavior == null || IsPlayer || Session.Player == null || !IsHostile || Session.IsAwaiting || RemainingTurns == -1)
+            if (CombatBehavior == null || IsPlayer || Session.Player == null || !IsHostile || Session.IsAwaiting)
                 return null;
 
-            if (CombatDecision?.Intent?.ActionKind == ActionKind.Proximity)
-            {
-                if (!CombatBehavior.Archetype.IsInMeleeRange(this, Session.Player))
-                    CombatDecision = null;
-            }
-
-            if (CombatDecision == null)
-                CombatDecision = Brain.Decide(this, Session.Player);
+            CombatDecision = Brain.Decide(this, Session.Player);
 
             if (OutcomeScript != null && CombatDecision != null)
             {
@@ -879,10 +865,7 @@ namespace ScaryCastle
         // Flee
         public virtual void Flee()
         {
-            if (Direction == FacingDirection.Left)
-                MoveTo(new(X + 30, Y));
-            else
-                MoveTo(new(X - 30, Y));
+            MoveRandomly();
         }
 
         // FootstepSound
@@ -1035,8 +1018,17 @@ namespace ScaryCastle
         {
             if (Room?.WalkArea is WalkArea walkArea)
             {
-                var margin = 0;// Math.Abs(Position.X - RuntimeHotspot.BoundingRectangleF.Right);
-                MoveTo(walkArea.RandomWalkablePoint(margin));
+                Vector2 destination;
+
+                for (var i = 0; i < 10; i++)
+                {
+                    destination = walkArea.RandomWalkablePoint();
+                    if (DistanceTo(destination) > 20)
+                    {
+                        MoveTo(destination);
+                        return;
+                    }
+                }
             }
         }
 
@@ -1103,7 +1095,17 @@ namespace ScaryCastle
         } = PlayerNumber.None;
 
         // RemainingTurns
-        public int RemainingTurns { get; private set; }
+        public int RemainingTurns
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = Math.Max(0, value);
+                }
+            }
+        }
 
         // ResolveInteraction
         public bool ResolveInteraction(GameThing target, Item? item)
@@ -1217,10 +1219,10 @@ namespace ScaryCastle
             BodyMachine.ChangeState(state.GetType());
         }
 
-        // UpdatePatience
-        public void UpdatePatience()
+        // ProcessTurn
+        public void ProcessTurn()
         {
-            if (IsPlayer || !IsHostile || RemainingTurns <= 0)
+            if (CombatBehavior == null || IsPlayer || !IsHostile || RemainingTurns == 0)
                 return;
 
             if (!IsAlert)
@@ -1233,18 +1235,26 @@ namespace ScaryCastle
                     //if (Room?.WalkArea?.InLineOfSight(Session.Player.Position, Position, this) == true)
                     IsAlert = true;
                 }
+
+                return;
             }
-            else if (RemainingTurns > 0)
+
+            if (Session.Player != null && RemainingTurns > 0)
             {
-                RemainingTurns -= 1;
-                if (RemainingTurns == 0)
+                if (DistanceToTarget(Session.Player) <= CombatBehavior.Archetype.MeleeRange)
                 {
-                    if (Brain.Decide(this, Session.Player) is CombatDecision combatDecision && combatDecision.Intent != null)
-                        CombatDecision = Brain.Decide(this, Session.Player);
-                    else
-                        CombatDecision = null;
+                    RemainingTurns = 0;
+                    return;
                 }
             }
+            
+            RemainingTurns -= 1;
+
+            if (DiceExpression.Dice10.Roll() <= 2)
+                RemainingTurns -= 1;
+
+            if (DiceExpression.Dice10.Roll() <= 1)
+                RemainingTurns -= 1;
         }
 
         /// <summary>

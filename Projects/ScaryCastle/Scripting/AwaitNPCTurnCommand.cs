@@ -50,10 +50,6 @@ namespace ScaryCastle.Scripting
                     actor.Charge(decision.Target.Position);
                 }
             }
-            else if (decision.Type == CombatDecisionType.Flee)
-            {
-                actor.Flee();
-            }
             else if (decision.Type == CombatDecisionType.RandomMove)
             {
                 actor.MoveRandomly();

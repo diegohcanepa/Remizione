@@ -45,6 +45,11 @@
             "$ref": "./CombatIntent.schema.json"
           },
           "minItems": 0
+        },
+        "turnInterval": {
+          "type": "integer",
+          "default": 2,
+          "minimum": 1
         }
       },
       "required": [

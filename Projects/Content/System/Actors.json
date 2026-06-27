@@ -35,8 +35,7 @@
       "dropSackChanceBonus": 0.3
     },
     {
-      "name": "Skeleton",
-      "turnInterval": 3
+      "name": "Skeleton"
     },
     {
       "name": "StinkyRat",

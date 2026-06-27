@@ -22,7 +22,7 @@ namespace ScaryCastle
         // FleeChance
         public override Ratio FleeChance => 0.15f;
 
-        // MoveRange
-        public override int MeleeRange => 50;
+        // MeleeRange
+        public override int MeleeRange => 30;
     }
 }
