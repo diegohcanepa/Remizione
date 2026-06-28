@@ -211,6 +211,47 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">CurseMeter-assets/CurseMeter0.png</key>
+            <key type="filename">CurseMeter-assets/CurseMeter1.png</key>
+            <key type="filename">CurseMeter-assets/CurseMeter2.png</key>
+            <key type="filename">CurseMeter-assets/CurseMeter3.png</key>
+            <key type="filename">CurseMeter-assets/CurseMeter4.png</key>
+            <key type="filename">CurseMeter-assets/CurseMeter5.png</key>
+            <key type="filename">CurseMeter-assets/CurseMeter6.png</key>
+            <key type="filename">CurseMeter-assets/CurseMeter7.png</key>
+            <key type="filename">CurseMeter-assets/CurseMeter8.png</key>
+            <key type="filename">CurseMeter-assets/CurseMeter9.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorAttack.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorCross.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorLift.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorMagnifier.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorSkull.png</key>
+            <key type="filename">PoisonMeter-assets/PoisonMeter0.png</key>
+            <key type="filename">PoisonMeter-assets/PoisonMeter1.png</key>
+            <key type="filename">PoisonMeter-assets/PoisonMeter2.png</key>
+            <key type="filename">PoisonMeter-assets/PoisonMeter3.png</key>
+            <key type="filename">PoisonMeter-assets/PoisonMeter4.png</key>
+            <key type="filename">PoisonMeter-assets/PoisonMeter5.png</key>
+            <key type="filename">PoisonMeter-assets/PoisonMeter6.png</key>
+            <key type="filename">PoisonMeter-assets/PoisonMeter7.png</key>
+            <key type="filename">PoisonMeter-assets/PoisonMeter8.png</key>
+            <key type="filename">PoisonMeter-assets/PoisonMeter9.png</key>
+            <key type="filename">UIIcons-assets/CorridorDoorIcon.png</key>
+            <key type="filename">UIIcons-assets/FaithIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,3,5,5</rect>
+                <key>scale9Paddings</key>
+                <rect>3,3,5,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">GooMeter-assets/GooMeter0.png</key>
             <key type="filename">GooMeter-assets/GooMeter1.png</key>
             <key type="filename">GooMeter-assets/GooMeter2.png</key>
@@ -600,29 +641,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">MouseCursors-assets/MouseCursorAttack.png</key>
-            <key type="filename">MouseCursors-assets/MouseCursorCross.png</key>
-            <key type="filename">MouseCursors-assets/MouseCursorLift.png</key>
-            <key type="filename">MouseCursors-assets/MouseCursorMagnifier.png</key>
-            <key type="filename">MouseCursors-assets/MouseCursorSkull.png</key>
-            <key type="filename">UI-assets/EdmundIcon.png</key>
-            <key type="filename">UI-assets/FearIcon.png</key>
-            <key type="filename">UIIcons-assets/CorridorDoorIcon.png</key>
-            <key type="filename">UIIcons-assets/FaithIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,3,5,5</rect>
-                <key>scale9Paddings</key>
-                <rect>3,3,5,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">MouseCursors-assets/MouseCursorDown.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorUp.png</key>
             <struct type="IndividualSpriteSettings">
@@ -684,21 +702,6 @@
                 <rect>3,3,5,6</rect>
                 <key>scale9Paddings</key>
                 <rect>3,3,5,6</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UI-assets/BertaIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,3,6,5</rect>
-                <key>scale9Paddings</key>
-                <rect>3,3,6,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -936,6 +939,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">UIIcons-assets/ConditionMeterUnit.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>0,1,1,1</rect>
+                <key>scale9Paddings</key>
+                <rect>0,1,1,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">UIIcons-assets/CountdownSkullIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -1002,6 +1020,8 @@
                     <filename>BossMeter-assets</filename>
                     <filename>GooMeter-assets</filename>
                     <filename>MiniMap-assets</filename>
+                    <filename>PoisonMeter-assets</filename>
+                    <filename>CurseMeter-assets</filename>
                 </array>
             </struct>
         </map>

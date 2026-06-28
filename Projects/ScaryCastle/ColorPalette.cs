@@ -22,7 +22,7 @@ namespace ScaryCastle
         internal static class Condition
         {
             internal static Color Curse { get; } = new(119, 103, 211);
-            internal static Color Poison { get; } = new(110, 224, 31);
+            internal static Color Poison { get; } = new(55, 111, 16);
         }
 
         // ContextMenu

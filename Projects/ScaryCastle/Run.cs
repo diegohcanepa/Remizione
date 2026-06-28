@@ -67,40 +67,77 @@ namespace ScaryCastle
         // ExecutePhase1_Layout
         private void ExecutePhase1_Layout(Random rng)
         {
-            var startNode = new RoomNode(FloorMap.Count, Point.Zero);
-            FloorMap[Point.Zero] = startNode;
+            int totalLayoutAttempts = 0;
+            const int maxLayoutAttempts = 1000;
 
-            List<RoomNode> activeNodes = [startNode];
-            Point[] directions = [new(0, -1), new(0, 1), new(-1, 0), new(1, 0)]; // Up, Down, Left, Right
-
-            while (FloorMap.Count < this.maxRooms)
+            while (true)
             {
-                var currentNode = activeNodes[rng.Next(activeNodes.Count)];
-                Point dir = directions[rng.Next(directions.Length)];
+                FloorMap.Clear();
 
-                // --- REGLA STRICTA DE SEGURIDAD PARA START ROOM ---
-                // Si el nodo actual es el Start (0,0) y el dado eligió ir hacia Abajo (0,1), cancelamos el intento.
-                if (currentNode.GridPosition == Point.Zero && dir == new Point(0, 1))
-                    continue;
-                // --------------------------------------------------
+                var startNode = new RoomNode(FloorMap.Count, Point.Zero);
+                FloorMap[Point.Zero] = startNode;
 
-                Point newPos = currentNode.GridPosition + dir;
+                List<RoomNode> activeNodes = [startNode];
+                Point[] directions = [new(0, -1), new(0, 1), new(-1, 0), new(1, 0)]; // Up, Down, Left, Right
 
-                if (FloorMap.ContainsKey(newPos))
-                    continue;
+                int iterationsWithoutSuccess = 0;
+                const int maxStagnantIterations = 500;
 
-                // Además, protegemos el casillero (0,1) para que ninguna OTRA habitación crezca ahí desde los lados
-                if (newPos == new Point(0, 1))
-                    continue;
+                while (FloorMap.Count < this.maxRooms && iterationsWithoutSuccess < maxStagnantIterations)
+                {
+                    iterationsWithoutSuccess++;
 
-                if (CountExistingNeighbors(newPos) >= 3)
-                    continue;
+                    if (activeNodes.Count == 0)
+                        break;
 
-                var newNode = new RoomNode(FloorMap.Count, newPos);
-                FloorMap[newPos] = newNode;
-                activeNodes.Add(newNode);
+                    var currentNode = activeNodes[rng.Next(activeNodes.Count)];
+                    Point dir = directions[rng.Next(directions.Length)];
 
-                ConnectNodes(currentNode, newNode, dir);
+                    // --- REGLA STRICTA DE SEGURIDAD PARA START ROOM ---
+                    // Si el nodo actual es el Start (0,0) y el dado eligió ir hacia Abajo (0,1), cancelamos el intento.
+                    if (currentNode.GridPosition == Point.Zero && dir == new Point(0, 1))
+                        continue;
+                    // --------------------------------------------------
+
+                    Point newPos = currentNode.GridPosition + dir;
+
+                    // --- LIMITACIÓN DE GRILLA ESTILO ISAAC (Bounding Box de 9x9) ---
+                    if (Math.Abs(newPos.X) > 4 || Math.Abs(newPos.Y) > 4)
+                        continue;
+
+                    if (FloorMap.ContainsKey(newPos))
+                        continue;
+
+                    // Además, protegemos el casillero (0,1) para que ninguna OTRA habitación crezca ahí desde los lados
+                    if (newPos == new Point(0, 1))
+                        continue;
+
+                    // --- REGLA DE ORO DE ISAAC: ÁRBOL DE EXPANSIÓN PURO ---
+                    // Si la posición propuesta tiene más de 1 vecino, significa que generaría un bucle/anillo o se pegaría
+                    // a un pasillo paralelo de forma adyacente. Lo descartamos para forzar la extensión lineal.
+                    if (CountExistingNeighbors(newPos) > 1)
+                        continue;
+
+                    var newNode = new RoomNode(FloorMap.Count, newPos);
+                    FloorMap[newPos] = newNode;
+                    activeNodes.Add(newNode);
+
+                    ConnectNodes(currentNode, newNode, dir);
+
+                    // Si la inserción fue exitosa, reiniciamos el contador de estancamiento de esta iteración
+                    iterationsWithoutSuccess = 0;
+                }
+
+                // Si logramos alcanzar la meta de habitaciones requeridas, la topología es válida
+                if (FloorMap.Count == this.maxRooms)
+                    break;
+
+                // Si se estancó por las severas restricciones del árbol, hacemos rollback total y reintentamos
+                totalLayoutAttempts++;
+                if (totalLayoutAttempts > maxLayoutAttempts)
+                {
+                    throw new InvalidOperationException($"ERROR Crítico de Generación: La Fase 1 (Layout Estilo Isaac) no pudo converger tras {maxLayoutAttempts} reintentos globales. Considera ampliar el Bounding Box o reducir maxRooms ({this.maxRooms}).");
+                }
             }
         }
 

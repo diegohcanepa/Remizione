@@ -17,7 +17,6 @@ namespace ScaryCastle
         #region Private fields
 
         private Sprite? activeThrowableSprite;
-        private int conditionTimer;
         private readonly List<AtlasImage>? customGuts;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
@@ -154,12 +153,12 @@ namespace ScaryCastle
 
         // ResetRemainingTurns
         [ScriptMethod]
-        private void ResetRemainingTurns(bool random = false)
+        private void ResetRemainingTurns()
         {
             if (CombatBehavior == null)
                 RemainingTurns = 0;
             else
-                RemainingTurns = random ? Random.Shared.Next(1, CombatBehavior.TurnInterval + 1) : CombatBehavior.TurnInterval;
+                RemainingTurns = CombatBehavior.TurnInterval;
         }
 
         // SyncHeadAnimation
@@ -177,24 +176,35 @@ namespace ScaryCastle
         // UpdateCondition
         private void UpdateCondition(GameTime gameTime)
         {
+            if (IsPlayer)
+            {
+                if (HasSpeechText)
+                    return;
+
+                if (Session.IsAwaiting && Session.ActiveNPC == null)
+                    return;
+            }
+
             if (Condition == ConditionType.None)
                 return;
 
-            if (conditionTimer >= 0)
+            if (ConditionTimer > 0)
             {
-                conditionTimer -= gameTime.ElapsedGameTime.Milliseconds;
+                ConditionTimer -= gameTime.ElapsedGameTime.Milliseconds;
 
-                if (conditionTimer <= 0)
+                if (ConditionTimer <= 0)
                 {
-                    conditionTimer = 0;
+                    ConditionTimer = 0;
 
                     if (ConditionAmount > 0)
                     {
                         ConditionAmount -= 1;
                         HP -= 1;
-                        conditionTimer = GameSettings.ConditionCooldown;
                         Sound.Play(SoundNames.StatusEffectDamage);
                         ShowComicText(ComicTextKind.AghGreen);
+
+                        if (ConditionAmount > 0)
+                            ConditionTimer = GameSettings.ConditionCooldown;
                     }
                 }
             }
@@ -391,7 +401,9 @@ namespace ScaryCastle
                 BodyMachine.ChangeState(deathState.GetType());
             }
 
-            ShowComicText(ComicTextKind.PlopRed);
+            if (Condition == ConditionType.None)
+                ShowComicText(ComicTextKind.PlopRed);
+
             ClearCondition();
         }
 
@@ -469,7 +481,7 @@ namespace ScaryCastle
         {
             base.OnLoad();
             IsAlert = true;
-            ResetRemainingTurns(true);
+            ResetRemainingTurns();
             OpacityFactor = 1;
             Stand();
         }
@@ -552,8 +564,7 @@ namespace ScaryCastle
         {
             base.OnUpdate(gameTime);
 
-            if (!HasSpeechText)
-                UpdateCondition(gameTime);
+            UpdateCondition(gameTime);
 
             headTween.Update(gameTime);
 
@@ -668,7 +679,6 @@ namespace ScaryCastle
                 {
                     Condition = ConditionType.Curse;
                     ConditionAmount = amount;
-                    conditionTimer = GameSettings.ConditionCooldown;
                 }
                 else
                 {
@@ -677,7 +687,9 @@ namespace ScaryCastle
                         HP -= 1;
                 }
 
-                if (Session.Player == this)
+                ConditionTimer = GameSettings.ConditionCooldown;
+
+                if (IsPlayer)
                     Session.ObjectPools.FloatingTexts.Get()?.ShowAmount(this, ColorPalette.Condition.Curse, amount);
             }
 
@@ -688,7 +700,6 @@ namespace ScaryCastle
                 {
                     Condition = ConditionType.Poison;
                     ConditionAmount = amount;
-                    conditionTimer = GameSettings.ConditionCooldown;
                 }
                 else
                 {
@@ -697,7 +708,9 @@ namespace ScaryCastle
                         HP -= 1;
                 }
 
-                if (Session.Player == this)
+                ConditionTimer = GameSettings.ConditionCooldown;
+
+                if (IsPlayer)
                     Session.ObjectPools.FloatingTexts.Get()?.ShowAmount(this, ColorPalette.Condition.Poison, amount);
             }
 
@@ -803,6 +816,9 @@ namespace ScaryCastle
                 }
             }
         }
+
+        // ConditionTimer
+        public int ConditionTimer { get; private set; }
 
         // DiscardActiveThrowable
         [ScriptMethod]

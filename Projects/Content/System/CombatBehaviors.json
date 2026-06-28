@@ -174,7 +174,7 @@
             {
               "context": "Attack",
               "effectType": "Condition",
-              "conditionType": "Poison",
+              "conditionType": "Curse",
               "amount": "1",
               "comicText": "AghGreen"
             }

@@ -482,7 +482,7 @@ namespace ScaryCastle
             if (Seed == 0)
                 Seed = System.Environment.TickCount;
 
-            CurrentRun = new Run(Seed, 10);
+            CurrentRun = new Run(Seed, 15);
 
             PlayerInventory.Capacity = GameSettings.InitialInventoryCapacity;
             PlayerActions.Add(ItemNames.Lift);

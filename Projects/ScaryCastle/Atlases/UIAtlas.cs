@@ -20,12 +20,13 @@ namespace ScaryCastle
             CoinIcon = this[nameof(CoinIcon)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
+            CurseMeter = CreateReadOnlyCollection(nameof(CurseMeter), 0, 9);
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
             DialogOptionBullet = this[nameof(DialogOptionBullet)];
             DiscardItemIcon = this[nameof(DiscardItemIcon)];
             FaithIcon = this[nameof(FaithIcon)];
             GooIcon = this[nameof(GooIcon)];
-            GooMeter = CreateReadOnlyCollection("GooMeter", 0, 5);
+            GooMeter = CreateReadOnlyCollection(nameof(GooMeter), 0, 5);
             GreenHearts = CreateReadOnlyCollection(nameof(GreenHearts), 1, 4);
             HeartIcon = this[nameof(HeartIcon)];
             InventoryActionSlot = this[nameof(InventoryActionSlot)];
@@ -38,6 +39,7 @@ namespace ScaryCastle
             PickupShadow = this[nameof(PickupShadow)];
             Pixel = this[nameof(Pixel)];
             PointingHand = this[nameof(PointingHand)];
+            PoisonMeter = CreateReadOnlyCollection(nameof(PoisonMeter), 0, 9);
             PopupContainer = this[nameof(PopupContainer)];
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
             PurpleHearts = CreateReadOnlyCollection(nameof(PurpleHearts), 1, 4);
@@ -77,6 +79,9 @@ namespace ScaryCastle
 
         // CreditsBar
         public AtlasImage CreditsBar { get; }
+
+        // CurseMeter
+        public ReadOnlyCollection<AtlasImage> CurseMeter { get; }
 
         // DialogArrowLarge
         public AtlasImage DialogArrowLarge { get; }
@@ -131,6 +136,9 @@ namespace ScaryCastle
 
         // PointingHand
         public AtlasImage PointingHand { get; }
+
+        // PoisonMeter
+        public ReadOnlyCollection<AtlasImage> PoisonMeter { get; }
 
         // PopupContainer
         public AtlasImage PopupContainer { get; }
