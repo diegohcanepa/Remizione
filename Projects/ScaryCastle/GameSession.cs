@@ -428,6 +428,7 @@ namespace ScaryCastle
             if (IsCurrentScene)
                 InteractionContext.Refresh();
 
+            /*
             if (Player != null && Player.ActiveThrowable == null)
             {
                 if (!IsAwaiting && IsCurrentScene && CurrentRun != null)
@@ -439,6 +440,7 @@ namespace ScaryCastle
                     }
                 }
             }
+            */
         }
 
         // OnWrite

@@ -90,7 +90,7 @@ namespace ScaryCastle
     public enum LockType { None, GoldenKey }
 
     // LogVerb
-    public enum LogVerb { None, Consumed, Obtained, Found, Lost, Requires, Used }
+    public enum LogVerb { None, Consumed, Discarded, Obtained, Found, Lost, Requires, Used }
 
     // LootDropMode
     public enum LootDropMode
@@ -126,7 +126,7 @@ namespace ScaryCastle
     public enum MessageKind { CannotPlaceItem, FullGoo, HandsFull, InventoryFull, ItemDiscarded, LiftNotAllowed, NotEnoughCoins, NotEnoughGoo, OutOfReach, OutOfLine, PathCleared, ExtraEnergy, ExtraHeart }
 
     // MouseCursorState
-    public enum MouseCursorState { Cross, Attack, Down, Eye, Hand, Left, Lift, Magnifier, Right, Skull, Talk, Up, Wait }
+    public enum MouseCursorState { Cross, Attack, Down, Eye, Hand, Left, Lift, Magnifier, Right, PickUp, Skull, Talk, Up, Wait }
 
     // PlacementType
     public enum PlacementType
@@ -183,7 +183,7 @@ namespace ScaryCastle
     public enum UIControlGroupLayoutStyle { Vertically, Horizontally }
 
     // Verb
-    public enum Verb { Use, Examine, Talk, Attack, Lift, GoLeft, GoRight, GoUp, GoDown }
+    public enum Verb { Use, Examine, Talk, Attack, Lift, GoLeft, PickUp, GoRight, GoUp, GoDown }
 
     // VolumeCategory
     public enum VolumeCategory { Ambient, FX, Music, Voice, Master }

@@ -92,6 +92,11 @@ namespace ScaryCastle
                     MouseCursor.State = MouseCursorState.Lift;
                     break;
 
+                // Pickup
+                case Verb.PickUp:
+                    MouseCursor.State = MouseCursorState.PickUp;
+                    break;
+
                 // Talk
                 case Verb.Talk:
                     MouseCursor.State = MouseCursorState.Talk;
@@ -113,14 +118,7 @@ namespace ScaryCastle
         internal static void Refresh(InteractionContext context)
         {
             MouseCursor.Reset();
-
             RefreshCursor(context);
-
-            if (context.Target is Actor actor)
-            {
-                if (context.HeldItem == null && actor.IsHostile && actor.IsAlert)
-                    MouseCursor.Color = ColorPalette.MouseCursor.HostileTarget;
-            }
         }
     }
 }

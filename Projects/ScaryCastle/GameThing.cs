@@ -830,7 +830,7 @@ namespace ScaryCastle
 
             return 1;
         }
-
+        
         // HitTest
         public bool HitTest(Vector2 value)
         {

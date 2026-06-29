@@ -54,7 +54,7 @@ namespace ScaryCastle
                 PivotOrigin = RectanglePoint.Center,
                 Position = amountContainer.BoundingBox.GetPoint(RectanglePoint.Center),
                 Scale = ScaleInfo.Text.ExtraLarge,
-                ShadowColor = ColorPalette.SceneShade,
+                ShadowColor = ColorPalette.Shadow,
                 ShadowOffset = new(0, 1)
             };
 

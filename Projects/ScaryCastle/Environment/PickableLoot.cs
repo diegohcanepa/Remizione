@@ -18,6 +18,7 @@ namespace ScaryCastle
             IgnoreWalkArea = false;
             Loot = ItemDefinition.Definitions.Find(GetType().Name);
             RenderLayer = RenderLayer.OverBackground;
+            Verb = Verb.PickUp;
         }
 
         #region Protected members

@@ -7,10 +7,11 @@ namespace ScaryCastle
     /// <summary>
     /// UIHPMeter
     /// </summary>
-    public sealed class UIHPMeter : GameObject
+    public sealed class UIHPMeter : HUDElement
     {
         #region Private fields
 
+        private Actor? actor;
         private readonly Sprite[] icons;
         private readonly Dictionary<ConditionType, IList<AtlasImage>> imageGroups = [];
         private int lastFilledIconIndex = -1;
@@ -25,14 +26,15 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public UIHPMeter(Vector2 margin)
+        public UIHPMeter(GameSession session)
+            : base(session)
         {
             imageGroups.Add(ConditionType.None, Atlases.UI.RedHearts);
             imageGroups.Add(ConditionType.Curse, Atlases.UI.PurpleHearts);
             imageGroups.Add(ConditionType.Poison, Atlases.UI.GreenHearts);
 
             this.icons = new Sprite[10];
-            var pos = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, margin);
+            var pos = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, new(14, 3));
 
             for (var i = 0; i < icons.Length; i++)
             {
@@ -55,20 +57,20 @@ namespace ScaryCastle
         // Refresh
         private void Refresh()
         {
-            if (Actor == null)
+            if (actor == null)
                 return;
 
             // 1. Fuentes de verdad
-            int hp = Actor.HP;
-            int maxHp = Actor.MaxHP;
-            int amount = (Actor.Condition != ConditionType.None) ? Actor.ConditionAmount : 0;
+            int hp = actor.HP;
+            int maxHp = actor.MaxHP;
+            int amount = (actor.Condition != ConditionType.None) ? actor.ConditionAmount : 0;
 
             // La "vida segura" es la que no está marcada por el estado
             int safeHp = hp - amount;
 
             // 2. Dimensionamiento
             totalIcons = maxHp / 2;
-            var images = imageGroups[Actor.Condition];
+            var images = imageGroups[actor.Condition];
 
             for (int i = 0; i < totalIcons; i++)
             {
@@ -127,7 +129,7 @@ namespace ScaryCastle
             lastKnownValue = hp;
             lastKnownMaxValue = maxHp;
             lastKnownConditionAmount = amount;
-            lastFilledIconIndex = Actor.IsDead ? 0 : ((Actor.HP + 1) / 2) - 1;
+            lastFilledIconIndex = actor.IsDead ? 0 : ((actor.HP + 1) / 2) - 1;
         }
 
         #endregion
@@ -137,7 +139,7 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (Actor == null)
+            if (actor == null)
                 return;
 
             for (var i = 0; i < totalIcons; i++)
@@ -149,17 +151,31 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (Actor == null || Actor.HP == 0)
+            if (Session.Player != actor)
+            {
+                actor = Session.Player;
+
+                if (actor == null)
+                {
+                    lastKnownValue = int.MinValue;
+                    lastKnownMaxValue = int.MinValue;
+                    lastKnownConditionAmount = int.MinValue;
+                }
+
+                Refresh();
+            }
+
+            if (actor == null || actor.HP == 0)
                 return;
 
             scaleTween.Update(gameTime);
 
-            if (lastKnownValue != Actor.HP || lastKnownMaxValue != Actor.MaxHP || lastKnownConditionAmount != Actor.ConditionAmount)
+            if (lastKnownValue != actor.HP || lastKnownMaxValue != actor.MaxHP || lastKnownConditionAmount != actor.ConditionAmount)
                 Refresh();
 
             if (totalIcons > 0)
             {
-                if (Actor.HP <= 2 || Actor.ConditionAmount > 0)
+                if (actor.HP <= 2 || actor.ConditionAmount > 0)
                     icons[lastFilledIconIndex].Scale = scaleTween.CurrentValue;
                 else
                     icons[lastFilledIconIndex].Scale = Vector2.One;
@@ -167,27 +183,5 @@ namespace ScaryCastle
         }
 
         #endregion
-
-        // Actor
-        public Actor? Actor
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-
-                    if (field == null)
-                    {
-                        lastKnownValue = int.MinValue;
-                        lastKnownMaxValue = int.MinValue;
-                        lastKnownConditionAmount = int.MinValue;
-                    }
-
-                    Refresh();
-                }
-            }
-        }
     }
 }

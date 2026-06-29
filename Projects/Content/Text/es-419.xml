@@ -106,6 +106,7 @@
   <String Key="Languages.fr-fr">Français</String>
   <String Key="Languages.ru-ru">Русский</String>
   <String Key="LogVerb.Consumed">Gastaste</String>
+  <String Key="LogVerb.Discarded">Descartaste</String>
   <String Key="LogVerb.Found">Encontraste</String>
   <String Key="LogVerb.Lost">Perdiste</String>
   <String Key="LogVerb.Obtained">Conseguiste</String>

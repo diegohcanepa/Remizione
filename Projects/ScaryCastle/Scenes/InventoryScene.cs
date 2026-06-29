@@ -19,6 +19,7 @@ namespace ScaryCastle
         private readonly Sprite[] gooIcons = new Sprite[ItemContainer.MaximumCapacity];
         private readonly Sprite[] icons = new Sprite[ItemContainer.MaximumCapacity];
         private readonly TextSprite itemLabel;
+        private Item? lastSelectedItem;
         private int lastSeenContainerVersion = -1;
         private readonly Sprite[] shadows = new Sprite[ItemContainer.MaximumCapacity];
         private readonly Sprite[] slots = new Sprite[ItemContainer.MaximumCapacity];
@@ -197,6 +198,7 @@ namespace ScaryCastle
         {
             base.OnActivate();
             MouseCursor.State = MouseCursorState.Cross;
+            Reset();
         }
 
         // OnDraw
@@ -206,6 +208,9 @@ namespace ScaryCastle
                 return;
 
             Game.SpriteBatch.Begin(Game.Camera);
+
+            //Game.Shapes.DrawRectangle(Screen.Area, ColorPalette.SceneShade);
+
             for (var i = 0; i < ItemContainer.Capacity; i++)
             {
                 slots[i].Draw(gameTime);
@@ -223,9 +228,12 @@ namespace ScaryCastle
             }
             Game.SpriteBatch.End();
 
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
-            itemLabel.Draw(gameTime);
-            Game.SpriteBatch.End();
+            if (lastSelectedItem != null)
+            {
+                Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+                itemLabel.Draw(gameTime);
+                Game.SpriteBatch.End();
+            }
         }
 
         // OnHandleInput
@@ -280,13 +288,24 @@ namespace ScaryCastle
                 autoHide = InputManager.DefaultPlayer.Mouse.VirtualPosition.Y >= autoHideThreshold;
             }
 
-            Reset();
-            
             if (GetSelectedItem() is Item item)
             {
-                itemLabel.X = slots[item.Index].BoundingBox.Center.X;
-                itemLabel.Text = item.Definition.DisplayName;
-                icons[item.Index].Scale = ScaleInfo.InventoryHeldItem;
+                if (item != lastSelectedItem)
+                {
+                    if (lastSelectedItem != null)
+                        icons[lastSelectedItem.Index].Scale = ScaleInfo.UIElement.Medium;
+
+                    itemLabel.X = slots[item.Index].BoundingBox.Center.X;
+                    itemLabel.Text = item.Definition.DisplayName;
+                    icons[item.Index].Scale = ScaleInfo.InventoryHeldItem;
+                    itemLabel.Tag = item;
+                    lastSelectedItem = item;
+                }
+            }
+            else if (lastSelectedItem != null)
+            {
+                icons[lastSelectedItem.Index].Scale = ScaleInfo.UIElement.Medium;
+                lastSelectedItem = null;
             }
         }
 

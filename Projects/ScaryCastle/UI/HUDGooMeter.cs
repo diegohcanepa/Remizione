@@ -6,11 +6,18 @@ using System.Collections.Generic;
 namespace ScaryCastle
 {
     /// <summary>
-    /// UIGooMeter
+    /// HUDGooMeter
     /// </summary>
-    public sealed class UIGooMeter : GameObject
+    public sealed class HUDGooMeter : HUDElement
     {
+        private Actor? actor;
         private enum GooMeterPart { TopEmpty, MiddleEmpty, BottomEmpty, TopFilled, MiddleFilled, BottomFilled };
+
+        // Constructor
+        public HUDGooMeter(GameSession session)
+            : base(session)
+        {
+        }
 
         #region Private fields
 
@@ -28,12 +35,12 @@ namespace ScaryCastle
         {
             parts.Clear();
 
-            if (Actor == null)
+            if (actor == null)
                 return;
 
-            visualValue = Actor.Energy;
+            visualValue = actor.Energy;
 
-            while (parts.Count < Actor.MaxEnergy)
+            while (parts.Count < actor.MaxEnergy)
             {
                 parts.Add(new Sprite(Atlases.UI.GooMeter[(int)GooMeterPart.MiddleEmpty]) { X = position.X });
             }
@@ -46,7 +53,7 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (Actor == null || parts.Count == 0)
+            if (actor == null || parts.Count == 0)
                 return;
 
             Game.SpriteBatch.Begin(Game.Camera);
@@ -90,15 +97,22 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (Actor == null)
+            if (Session.Player != actor)
+            {
+                actor = Session.Player;
+                if (actor != null)
+                    Refresh();
+            }
+
+            if (actor == null)
                 return;
 
-            if (Actor.MaxEnergy != parts.Count)
+            if (actor.MaxEnergy != parts.Count)
                 Refresh();
 
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            float targetValue = Actor.Energy;
+            float targetValue = actor.Energy;
 
             if (visualValue != targetValue)
             {
@@ -114,20 +128,5 @@ namespace ScaryCastle
         }
 
         #endregion
-
-        // Actor
-        public Actor? Actor
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    if (field != null)
-                        Refresh();
-                }
-            }
-        }
     }
 }

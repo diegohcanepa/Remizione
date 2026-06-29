@@ -32,8 +32,8 @@ namespace ScaryCastle
             // Container
             this.container = new(Atlases.UI.GetImage("ItemInfoContainer"))
             {
-                PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.Area.GetPoint(RectanglePoint.Bottom, 0, -5)
+                PivotOrigin = RectanglePoint.Center,
+                Position = Screen.Area.GetPoint(RectanglePoint.Center, 0, -5)
             };
 
             // Image
@@ -59,24 +59,26 @@ namespace ScaryCastle
             this.itemNameText = new(Fonts.Common)
             {
                 Color = ColorPalette.Text.Highlight,
+                Opacity = .7f,
                 PivotOrigin = RectanglePoint.Left,
                 Position = container.BoundingBox.GetPoint(RectanglePoint.LeftTop, 22, 13),
-                Scale = ScaleInfo.Text.Large,
+                Scale = ScaleInfo.Text.VeryLarge,
+                ShadowColor = ColorPalette.Shadow,
                 ShadowOffset = new(.5f)
             };
 
             // Description sprite
             this.descriptionText = new(Fonts.Common)
             {
-                Color = ColorPalette.Text.Sentence,
+                Color = ColorPalette.Text.Highlight,
                 Opacity = .7f,
                 MaximumWidth = 120,
                 PauseOnPunctuationMarks = false,
                 PivotOrigin = RectanglePoint.LeftTop,
                 Position = container.BoundingBox.GetPoint(RectanglePoint.LeftTop, 6, 23),
-                Scale = ScaleInfo.Text.Medium,
+                Scale = ScaleInfo.Text.Large,
+                ShadowColor = ColorPalette.Shadow,
                 ShadowOffset = new(.5f),
-                TypingSpeed = 20
             };
 
             // Button
@@ -84,7 +86,7 @@ namespace ScaryCastle
             {
                 ImageName = nameof(Atlases.UI.DiscardItemIcon),
                 PivotOrigin = RectanglePoint.RightTop,
-                Position = container.BoundingBox.GetPoint(RectanglePoint.RightTop, 0, 2)
+                Position = container.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -2)
             };
         }
 
@@ -102,12 +104,7 @@ namespace ScaryCastle
                 InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
             {
                 MouseCursor.PerformClick();
-
-                if (descriptionText.IsTyping)
-                    descriptionText.StopTyping();
-                else
-                    Game.SceneManager.Pop();
-
+                Game.SceneManager.Pop();
                 return true;
             }
 
@@ -154,15 +151,6 @@ namespace ScaryCastle
 
             if (HandleMouseInput())
                 return HandleInputResult.Handled;
-
-            if (InputBindings.Continue.IsPressed(PlayerIndex.One))
-            {
-                if (descriptionText.IsTyping)
-                    descriptionText.StopTyping();
-                else
-                    Game.SceneManager.Pop();
-                return HandleInputResult.Handled;
-            }
 
             return base.OnHandleInput();
         }

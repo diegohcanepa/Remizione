@@ -78,7 +78,10 @@ namespace ScaryCastle
         internal static Color PopupTitle { get; } = new(116, 95, 75);
 
         // SceneShade
-        internal static Color SceneShade { get; } = Color.Black * .3f;
+        internal static Color SceneShade { get; } = Color.Black * .6f;
+
+        // Shadow
+        internal static Color Shadow { get; } = Color.Black * .3f;
 
         // ShadowOpacity
         public const float ShadowOpacity = .4f;

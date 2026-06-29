@@ -363,6 +363,8 @@ namespace ScaryCastle
         // OnDeath
         protected override void OnDeath()
         {
+            speechText?.Hide();
+
             if (Guts > 0 || customGuts?.Count > 0)
             {
                 if (Room != null)

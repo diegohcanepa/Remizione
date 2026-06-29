@@ -189,7 +189,6 @@
                 <false/>
             </struct>
             <key type="filename">BossMeter-assets/BossMeterAmount.png</key>
-            <key type="filename">Inventory-assets/InventoryActionSlot.png</key>
             <key type="filename">Items-assets/AppleOn.png</key>
             <key type="filename">Items-assets/Burger.png</key>
             <key type="filename">Items-assets/Coin.png</key>
@@ -272,9 +271,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Inventory-assets/InventoryGiftActionSlot.png</key>
-            <key type="filename">Inventory-assets/InventoryHeadbuttActionSlot.png</key>
-            <key type="filename">Inventory-assets/InventoryLiftActionSlot.png</key>
+            <key type="filename">Inventory-assets/DiscardItemIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -283,9 +280,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>4,4,8,8</rect>
+                <rect>4,4,8,7</rect>
                 <key>scale9Paddings</key>
-                <rect>4,4,8,8</rect>
+                <rect>4,4,8,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -323,21 +320,6 @@
                 <rect>4,4,7,8</rect>
                 <key>scale9Paddings</key>
                 <rect>4,4,7,8</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ItemInfo-assets/DiscardItemIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>4,4,8,7</rect>
-                <key>scale9Paddings</key>
-                <rect>4,4,8,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -659,6 +641,7 @@
             </struct>
             <key type="filename">MouseCursors-assets/MouseCursorEye.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorLeft.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorPickUp.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorRight.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorTalk.png</key>
             <struct type="IndividualSpriteSettings">

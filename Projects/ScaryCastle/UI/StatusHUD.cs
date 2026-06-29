@@ -12,7 +12,7 @@ namespace ScaryCastle
 
         private readonly HUDConditionMeter conditionMeter;
         private readonly UICoinMeter coinMeter;
-        private readonly UIGooMeter gooMeter = new();
+        private readonly HUDGooMeter gooMeter;
         private readonly UIHPMeter hpMeter;
         private readonly UIPassiveItems passiveItems;
         private readonly GameSession session;
@@ -26,7 +26,8 @@ namespace ScaryCastle
         {
             this.session = session;
             this.conditionMeter = new(session);
-            this.hpMeter = new(new(14, 3));
+            this.gooMeter = new(session);
+            this.hpMeter = new(session);
             this.coinMeter = new(session);
             this.InventoryMeter = new(session.PlayerInventory);
             this.passiveItems = new(session);
@@ -75,8 +76,6 @@ namespace ScaryCastle
         // Reset
         public void Reset()
         {
-            hpMeter.Actor = session.Player;
-            gooMeter.Actor = session.Player;
         }
     }
 }

@@ -88,7 +88,7 @@ namespace ScaryCastle
             if (!active && elapsed == 0)
                 return;
 
-            image.Color = ColorPalette.SceneShade;
+            image.Color = ColorPalette.Shadow;
             image.Y += 1f;
             image.Draw(gameTime);
             image.Y -= 1f;
