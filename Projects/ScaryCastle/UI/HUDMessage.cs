@@ -14,7 +14,7 @@ namespace ScaryCastle
         private readonly FloatTween fadeTween = new();
         private readonly Sprite icon = new() { PivotOrigin = RectanglePoint.Right };
         private readonly TextSprite messageText;
-        private readonly Vector2 scale = ScaleInfo.Text.VeryLarge;
+        private readonly Vector2 scale = ScaleInfo.Text.ExtraLarge;
         private readonly Vector2Tween scaleTween = new();
 
         // Constructor
@@ -38,7 +38,7 @@ namespace ScaryCastle
                 return;
 
             Game.SpriteBatch.Begin(Game.Camera);
-            container.Draw(gameTime);
+            //container.Draw(gameTime);
             icon.Draw(gameTime);
             Game.SpriteBatch.End();
 

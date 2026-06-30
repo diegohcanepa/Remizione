@@ -396,6 +396,26 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            if (IsMoving && HasWideFootprint && RuntimeHotspot != null && Room?.Walls.Count > 0)
+            {
+                if (Direction == FacingDirection.Left)
+                {
+                    for (var i = 0; i < Room.Walls.Count; i++)
+                    {
+                        if (Room.Walls[i].Contains(RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.LeftBottom)))
+                            StopMoving();
+                    }
+                }
+                else
+                {
+                    for (var i = 0; i < Room.Walls.Count; i++)
+                    {
+                        if (Room.Walls[i].Contains(RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.RightBottom)))
+                            StopMoving();
+                    }
+                }
+            }
+
             floatingTween?.Update(gameTime);
             hurtTween?.Update(gameTime);
             hurtShakeTween?.Update(gameTime);
@@ -830,7 +850,10 @@ namespace ScaryCastle
 
             return 1;
         }
-        
+
+        // HasWideFootprint
+        public bool HasWideFootprint { get; set; }
+
         // HitTest
         public bool HitTest(Vector2 value)
         {

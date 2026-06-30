@@ -19,6 +19,7 @@ namespace ScaryCastle
             FastMoveFactor = 3;
             Guts = 4;
             scaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, Vector2.Zero, new(0, .05f), 200, -1);
+            HasWideFootprint = true;
         }
 
         #region Protected members
