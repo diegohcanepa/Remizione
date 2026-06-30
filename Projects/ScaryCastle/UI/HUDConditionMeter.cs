@@ -9,9 +9,9 @@ namespace ScaryCastle
     /// <summary>
     /// HUDConditionMeter
     /// </summary>
-    internal class HUDConditionMeter : HUDElement
+    internal class HUDConditionMeter : GameObject<GameSession>
     {
-        private readonly Sprite meter = new() { Position = new(14, 13) };
+        private readonly Sprite meter = new() { Position = new(11, 13) };
 
         // Constructor
         public HUDConditionMeter(GameSession session)

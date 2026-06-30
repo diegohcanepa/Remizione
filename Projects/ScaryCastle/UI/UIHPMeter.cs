@@ -7,7 +7,7 @@ namespace ScaryCastle
     /// <summary>
     /// UIHPMeter
     /// </summary>
-    public sealed class UIHPMeter : HUDElement
+    public sealed class UIHPMeter : GameObject<GameSession>
     {
         #region Private fields
 

@@ -8,7 +8,7 @@ namespace ScaryCastle
     /// <summary>
     /// HUDGooMeter
     /// </summary>
-    public sealed class HUDGooMeter : HUDElement
+    public sealed class HUDGooMeter : GameObject<GameSession>
     {
         #region Private fields
 

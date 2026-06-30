@@ -3,6 +3,7 @@
   "data": [
     {
       "name": "Castle_Start",
+      "allowEnemies": false,
       "difficulty": "Easy",
       "roomCategory": "Start",
       "doorUp": "126,41",

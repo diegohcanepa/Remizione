@@ -292,8 +292,10 @@ namespace ScaryCastle
             {
                 if (item != lastSelectedItem)
                 {
-                    if (lastSelectedItem != null)
+                    if (lastSelectedItem?.Index >= 0)
                         icons[lastSelectedItem.Index].Scale = ScaleInfo.UIElement.Medium;
+                    else
+                        lastSelectedItem = null;
 
                     itemLabel.X = slots[item.Index].BoundingBox.Center.X;
                     itemLabel.Text = item.Definition.DisplayName;
@@ -304,7 +306,8 @@ namespace ScaryCastle
             }
             else if (lastSelectedItem != null)
             {
-                icons[lastSelectedItem.Index].Scale = ScaleInfo.UIElement.Medium;
+                if (lastSelectedItem.Index >= 0)
+                    icons[lastSelectedItem.Index].Scale = ScaleInfo.UIElement.Medium;
                 lastSelectedItem = null;
             }
         }

@@ -6,7 +6,7 @@
     public sealed class Environment
     {
         // Constructor
-        public Environment(GameSession session)
+        public Environment()
         {
             this.DevilHand = new(DeityHandKind.Devil);
             this.GodHand = new(DeityHandKind.God);

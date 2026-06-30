@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:f2f59ad53b6a348e75074a83bd2af6ad:59d616e2a09e1e860a4f8b1b3c8a2b65:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:c77aaff6f3dc1a991830c879417ae3e9:5f0c1b04c507afcdb40c6341d7af8c64:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -33,7 +33,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Chili.png" x="244" y="195" w="22" h="22"/>
     <sprite n="Coin.png" x="214" y="202" w="22" h="22"/>
     <sprite n="CoinIcon.png" x="502" y="233" w="8" h="8"/>
-    <sprite n="ConditionMeterUnit.png" x="508" y="19" w="1" h="2"/>
+    <sprite n="ConditionMeterUnit.png" x="508" y="15" w="1" h="2"/>
     <sprite n="ContextMenuOptionSelector.png" x="238" y="202" w="4" h="5"/>
     <sprite n="CorridorDoorIcon.png" x="413" y="259" w="10" h="11"/>
     <sprite n="CountdownSkullIcon.png" x="451" y="227" w="13" h="19"/>
@@ -96,7 +96,6 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Lockpick.png" x="214" y="250" w="22" h="22"/>
     <sprite n="MagneticCard.png" x="238" y="267" w="22" h="22"/>
     <sprite n="MessageContainer.png" x="2" y="202" w="148" h="13"/>
-    <sprite n="MiniMapConnector.png" x="508" y="2" w="2" h="2"/>
     <sprite n="MiniMapContainer.png" x="152" y="202" w="29" h="21"/>
     <sprite n="MiniMapContainerBorder.png" x="183" y="202" w="29" h="21"/>
     <sprite n="MiniMapMarkerCoin.png" x="456" y="289" w="6" h="6"/>
@@ -124,7 +123,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="MouseCursorWait.png" x="142" y="217" w="8" h="11"/>
     <sprite n="PickupShadow.png" x="452" y="303" w="9" h="3"/>
     <sprite n="Pistol.png" x="176" y="249" w="22" h="22"/>
-    <sprite n="Pixel.png" x="508" y="23" w="1" h="1"/>
+    <sprite n="Pixel.png" x="508" y="19" w="1" h="1"/>
     <sprite n="PointingHand.png" x="490" y="320" w="7" h="6"/>
     <sprite n="PoisonMeter0.png" x="408" y="285" w="10" h="11"/>
     <sprite n="PoisonMeter1.png" x="420" y="285" w="10" h="11"/>
@@ -157,7 +156,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="SteelLockpick.png" x="176" y="273" w="22" h="22"/>
     <sprite n="TipBalloon.png" x="200" y="225" w="12" h="13"/>
     <sprite n="UIButtonContainerEdge.png" x="457" y="276" w="5" h="11"/>
-    <sprite n="UIButtonContainerPattern.png" x="508" y="6" w="1" h="11"/>
+    <sprite n="UIButtonContainerPattern.png" x="508" y="2" w="1" h="11"/>
     <sprite n="UIControlContainerEdgeLeftLarge.png" x="401" y="294" w="5" h="11"/>
     <sprite n="UIControlContainerEdgeLeftSmall.png" x="400" y="313" w="5" h="10"/>
     <sprite n="UIControlContainerEdgeRightLarge.png" x="408" y="309" w="5" h="11"/>

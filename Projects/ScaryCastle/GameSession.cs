@@ -52,7 +52,7 @@ namespace ScaryCastle
             this.Game = game;
             this.PlayerActions = new(this) { Capacity = 3 };
             this.PlayerInventory = new(this);
-            this.Environment = new Environment(this);
+            this.Environment = new Environment();
             this.LootGenerator = new(this);
             this.StatusHUD = new StatusHUD(this);
             this.TextHUD = new TextHUD(this);

@@ -14,9 +14,9 @@ namespace ScaryCastle
         private const string ReloadAnimationName = "Reload";
         private const string AttackAnimationName = "Attack";
 
+        private int attackCooldown;
+        private int attackTimer;
         private bool damageApplied;
-        private int cooldown;
-        private int cooldownInterval;
         private int upCooldown;
         private SpearState state;
 
@@ -29,6 +29,7 @@ namespace ScaryCastle
             CollisionDetection = false;
             IgnoreWalkArea = false;
             DepthOffset = -10;
+            attackCooldown = Random.Shared.Next(2500, 4500);
 
             var animation = AddAnimation(PreparedAnimationName);
             animation.AddFrame("SpearTrap01", 1000);
@@ -88,7 +89,7 @@ namespace ScaryCastle
         // ResetCooldown
         private void ResetCooldown()
         {
-            cooldown = cooldownInterval;
+            attackTimer = attackCooldown;
         }
 
         #endregion
@@ -99,7 +100,7 @@ namespace ScaryCastle
         protected override void OnActivate()
         {
             base.OnActivate();
-            cooldownInterval = Random.Shared.Next(2500, 4500);
+            attackCooldown = Random.Shared.Next(2500, 4500);
         }
 
         // OnDraw
@@ -121,10 +122,10 @@ namespace ScaryCastle
             // Prepared
             if (state == SpearState.Prepared)
             {
-                if (!Session.IsAwaiting && cooldown >= 0)
+                if (!Session.IsAwaiting && attackTimer >= 0)
                 {
-                    cooldown -= gameTime.ElapsedGameTime.Milliseconds;
-                    if (cooldown <= 0)
+                    attackTimer -= gameTime.ElapsedGameTime.Milliseconds;
+                    if (attackTimer <= 0)
                         Attack();
                 }
             }

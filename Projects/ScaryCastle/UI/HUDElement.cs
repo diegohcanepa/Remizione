@@ -1,19 +1,20 @@
-﻿using Engendro;
+﻿using Adberration;
+using Engendro;
 
 namespace ScaryCastle
 {
     /// <summary>
     /// HUDElement
     /// </summary>
-    public abstract class HUDElement : GameObject
+    public abstract class GameObject<T> : GameObject where T : Session
     {
         // Constructor
-        protected HUDElement(GameSession session)
+        protected GameObject(T session)
         {
             this.Session = session;
         }
 
         // Session
-        public GameSession Session { get; }
+        public T Session { get; }
     }
 }
