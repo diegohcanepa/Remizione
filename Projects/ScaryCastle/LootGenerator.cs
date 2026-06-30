@@ -130,9 +130,9 @@ namespace ScaryCastle
             // 2. Base por dificultad (Valores planos de probabilidad)
             float chance = thingDef.Difficulty switch
             {
-                Difficulty.Easy => 0.3f,   // 30%
-                Difficulty.Normal => 0.5f, // 50%
-                Difficulty.Hard => 0.9f,   // 90%
+                Difficulty.Easy => 0.1f,   // 10%
+                Difficulty.Normal => 0.3f, // 30%
+                Difficulty.Hard => 0.5f,   // 50%
                 _ => 0.1f
             };
 
@@ -146,7 +146,7 @@ namespace ScaryCastle
 
             // 4. El Roll (Con un cap de 98% para dejar siempre un margen mínimo de error, 
             // a menos que el diseño pida 100% garantizado)
-            float finalChance = MathHelper.Clamp(chance, 0.0f, 0.98f);
+            float finalChance = MathHelper.Clamp(chance, 0, .98f);
 
             if (session.Random.NextDouble() > finalChance)
                 return 0;
@@ -155,8 +155,8 @@ namespace ScaryCastle
             return thingDef.Difficulty switch
             {
                 Difficulty.Easy => 1,
-                Difficulty.Normal => session.Random.Next(1, 3), // 1 a 2 monedas
-                Difficulty.Hard => session.Random.Next(2, 5),   // 2 a 4 monedas
+                Difficulty.Normal => session.Random.Next(1, 2), // 1 a 2 monedas
+                Difficulty.Hard => session.Random.Next(1, 3),   // 2 a 4 monedas
                 _ => 1
             };
         }

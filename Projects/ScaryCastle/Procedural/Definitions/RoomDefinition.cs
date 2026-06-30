@@ -38,7 +38,7 @@ namespace ScaryCastle
 
             IsMandatory = element.GetBool("isMandatory", false);
 
-            LightMapColor = element.GetColor("lightMapColor", new Color(20, 20, 20));
+            LightMapColor = element.GetColor("lightMapColor", new Color(30, 30, 40));
 
             LockType = element.GetEnum("lockType", LockType.None);
             MusicTag = element.GetString("musicTag");

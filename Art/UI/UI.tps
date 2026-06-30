@@ -500,6 +500,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">MiniMap-assets/UIMiniMapConnector.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,1,1</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,1,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">MiniMap-assets/UIMiniMapContainer.png</key>
             <key type="filename">MiniMap-assets/UIMiniMapContainerBorder.png</key>
             <struct type="IndividualSpriteSettings">

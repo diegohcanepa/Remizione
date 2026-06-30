@@ -484,7 +484,7 @@ namespace ScaryCastle
             if (Seed == 0)
                 Seed = System.Environment.TickCount;
 
-            CurrentRun = new Run(Seed, 15);
+            CurrentRun = new Run(this, Seed, 15);
 
             PlayerInventory.Capacity = GameSettings.InitialInventoryCapacity;
             PlayerActions.Add(ItemNames.Lift);
@@ -499,7 +499,7 @@ namespace ScaryCastle
                 Player?.Energy = 0;
             }
 
-            CurrentRun.Generate(this);
+            CurrentRun.Generate();
 
             if (Player != null)
             {

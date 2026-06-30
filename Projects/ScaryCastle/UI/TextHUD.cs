@@ -19,7 +19,7 @@ namespace ScaryCastle
         {
             this.session = session;
             this.BossMeter = new();
-            this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 13), ScaleInfo.Text.Medium);
+            this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 13));
         }
 
         #endregion

@@ -33,14 +33,14 @@ namespace ScaryCastle
             rasterizerState = new RasterizerState { ScissorTestEnable = true };
 
             // Container
-            container = new Sprite(Atlases.UI.GetImage("UIMiniMapContainer"))
+            container = new Sprite(Atlases.UI.GetImage("MiniMapContainer"))
             {
                 PivotOrigin = RectanglePoint.RightTop,
                 Position = new(236, 4)
             };
 
             // ContainerBorder
-            containerBorder = new Sprite(Atlases.UI.GetImage("UIMiniMapContainerBorder"))
+            containerBorder = new Sprite(Atlases.UI.GetImage("MiniMapContainerBorder"))
             {
                 PivotOrigin = RectanglePoint.RightTop,
                 Position = new(236, 4)
@@ -67,7 +67,7 @@ namespace ScaryCastle
             roomImages = new Sprite[3];
             for (var i = 0; i < roomImages.Length; i++)
             {
-                roomImages[i] = new(Atlases.UI.GetImage($"UIMiniMapRoom{i}"))
+                roomImages[i] = new(Atlases.UI.GetImage($"MiniMapRoom{i}"))
                 {
                     PivotOrigin = RectanglePoint.Center,
                     Scale = new Vector2(.8f)
@@ -107,6 +107,9 @@ namespace ScaryCastle
             image.Opacity = roomNode == CurrentRoom ? opacityTween.CurrentValue : 1;
             image.Position = position;
 
+            if (!image.BoundingBox.Intersects(container.BoundingBox))
+                return;
+
             image.Draw(gameTime);
 
             if (roomNode != CurrentRoom)
@@ -123,7 +126,9 @@ namespace ScaryCastle
             drawnRooms.Add(roomNode);
 
             if (roomNode.Down != null && (roomNode == CurrentRoom || roomNode.Visited) && !drawnRooms.Contains(roomNode.Down))
+            {
                 DrawRoom(gameTime, roomNode.Down, position + new Vector2(0, image.BoundingBox.Height));
+            }
 
             if (roomNode.Left != null && (roomNode == CurrentRoom || roomNode.Visited) && !drawnRooms.Contains(roomNode.Left))
                 DrawRoom(gameTime, roomNode.Left, position - new Vector2(image.BoundingBox.Width, 0));

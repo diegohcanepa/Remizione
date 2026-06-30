@@ -168,7 +168,7 @@ namespace ScaryCastle
     public enum RoomTheme { Castle }
 
     // RoomCategory
-    public enum RoomCategory { Start, Boss, Treasure, Save, Special, Secret, Standard }
+    public enum RoomCategory { Start, Boss, Treasure, Store, Special, Secret, Standard }
 
     // SpeechTextState
     public enum SpeechTextState { Hidden, Typing, Idle }

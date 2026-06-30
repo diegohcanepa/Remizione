@@ -70,7 +70,9 @@ namespace ScaryCastle
         // GetVisualAssetName
         private static string GetVisualAssetName(RoomNode current, RoomNode neighbor)
         {
-            return $"{current.Definition.Theme}_{neighbor.Category}";
+            var category = neighbor.Category == RoomCategory.Start ? RoomCategory.Standard : neighbor.Category;
+
+            return $"{current.Definition.Theme}_{category}";
         }
 
         #endregion

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:5c407c4271903b51221d551e2e2a6e17:cf7d8e5fcaee1a2ec648a876a3da433c:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:f2f59ad53b6a348e75074a83bd2af6ad:59d616e2a09e1e860a4f8b1b3c8a2b65:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -33,7 +33,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Chili.png" x="244" y="195" w="22" h="22"/>
     <sprite n="Coin.png" x="214" y="202" w="22" h="22"/>
     <sprite n="CoinIcon.png" x="502" y="233" w="8" h="8"/>
-    <sprite n="ConditionMeterUnit.png" x="508" y="15" w="1" h="2"/>
+    <sprite n="ConditionMeterUnit.png" x="508" y="19" w="1" h="2"/>
     <sprite n="ContextMenuOptionSelector.png" x="238" y="202" w="4" h="5"/>
     <sprite n="CorridorDoorIcon.png" x="413" y="259" w="10" h="11"/>
     <sprite n="CountdownSkullIcon.png" x="451" y="227" w="13" h="19"/>
@@ -96,6 +96,16 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Lockpick.png" x="214" y="250" w="22" h="22"/>
     <sprite n="MagneticCard.png" x="238" y="267" w="22" h="22"/>
     <sprite n="MessageContainer.png" x="2" y="202" w="148" h="13"/>
+    <sprite n="MiniMapConnector.png" x="508" y="2" w="2" h="2"/>
+    <sprite n="MiniMapContainer.png" x="152" y="202" w="29" h="21"/>
+    <sprite n="MiniMapContainerBorder.png" x="183" y="202" w="29" h="21"/>
+    <sprite n="MiniMapMarkerCoin.png" x="456" y="289" w="6" h="6"/>
+    <sprite n="MiniMapMarkerHeart.png" x="436" y="313" w="5" h="5"/>
+    <sprite n="MiniMapMarkerLoot.png" x="422" y="309" w="5" h="6"/>
+    <sprite n="MiniMapMarkerStart.png" x="268" y="71" w="5" h="1"/>
+    <sprite n="MiniMapRoom0.png" x="463" y="303" w="8" h="8"/>
+    <sprite n="MiniMapRoom1.png" x="452" y="308" w="8" h="8"/>
+    <sprite n="MiniMapRoom2.png" x="473" y="305" w="8" h="8"/>
     <sprite n="MissingItem.png" x="152" y="249" w="22" h="22"/>
     <sprite n="MonitorFrame.png" x="268" y="74" w="240" h="135"/>
     <sprite n="MouseCursorAttack.png" x="298" y="273" w="10" h="10"/>
@@ -114,7 +124,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="MouseCursorWait.png" x="142" y="217" w="8" h="11"/>
     <sprite n="PickupShadow.png" x="452" y="303" w="9" h="3"/>
     <sprite n="Pistol.png" x="176" y="249" w="22" h="22"/>
-    <sprite n="Pixel.png" x="508" y="19" w="1" h="1"/>
+    <sprite n="Pixel.png" x="508" y="23" w="1" h="1"/>
     <sprite n="PointingHand.png" x="490" y="320" w="7" h="6"/>
     <sprite n="PoisonMeter0.png" x="408" y="285" w="10" h="11"/>
     <sprite n="PoisonMeter1.png" x="420" y="285" w="10" h="11"/>
@@ -139,7 +149,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="RedHearts4.png" x="356" y="296" w="9" h="9"/>
     <sprite n="RustyLockpick.png" x="214" y="274" w="22" h="22"/>
     <sprite n="Sack.png" x="400" y="256" w="11" h="10"/>
-    <sprite n="SackIcon.png" x="463" y="303" w="8" h="8"/>
+    <sprite n="SackIcon.png" x="462" y="313" w="8" h="8"/>
     <sprite n="SavingIcon.png" x="496" y="281" w="11" h="11"/>
     <sprite n="SkullIcon.png" x="286" y="273" w="10" h="11"/>
     <sprite n="SodaCan.png" x="152" y="273" w="22" h="22"/>
@@ -147,20 +157,11 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="SteelLockpick.png" x="176" y="273" w="22" h="22"/>
     <sprite n="TipBalloon.png" x="200" y="225" w="12" h="13"/>
     <sprite n="UIButtonContainerEdge.png" x="457" y="276" w="5" h="11"/>
-    <sprite n="UIButtonContainerPattern.png" x="508" y="2" w="1" h="11"/>
+    <sprite n="UIButtonContainerPattern.png" x="508" y="6" w="1" h="11"/>
     <sprite n="UIControlContainerEdgeLeftLarge.png" x="401" y="294" w="5" h="11"/>
     <sprite n="UIControlContainerEdgeLeftSmall.png" x="400" y="313" w="5" h="10"/>
     <sprite n="UIControlContainerEdgeRightLarge.png" x="408" y="309" w="5" h="11"/>
     <sprite n="UIControlContainerEdgeRightSmall.png" x="415" y="309" w="5" h="10"/>
-    <sprite n="UIMiniMapContainer.png" x="152" y="202" w="29" h="21"/>
-    <sprite n="UIMiniMapContainerBorder.png" x="183" y="202" w="29" h="21"/>
-    <sprite n="UIMiniMapMarkerCoin.png" x="456" y="289" w="6" h="6"/>
-    <sprite n="UIMiniMapMarkerHeart.png" x="436" y="313" w="5" h="5"/>
-    <sprite n="UIMiniMapMarkerLoot.png" x="422" y="309" w="5" h="6"/>
-    <sprite n="UIMiniMapMarkerStart.png" x="268" y="71" w="5" h="1"/>
-    <sprite n="UIMiniMapRoom0.png" x="452" y="308" w="8" h="8"/>
-    <sprite n="UIMiniMapRoom1.png" x="473" y="305" w="8" h="8"/>
-    <sprite n="UIMiniMapRoom2.png" x="462" y="313" w="8" h="8"/>
     <sprite n="XboxA.png" x="419" y="243" w="14" h="14"/>
     <sprite n="XboxB.png" x="435" y="243" w="14" h="14"/>
     <sprite n="XboxGadgetsSlot.png" x="200" y="296" w="12" h="12"/>

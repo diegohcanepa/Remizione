@@ -10,23 +10,23 @@ namespace ScaryCastle
     /// </summary>
     public sealed class HUDGooMeter : HUDElement
     {
-        private Actor? actor;
+        #region Private fields
+
         private enum GooMeterPart { TopEmpty, MiddleEmpty, BottomEmpty, TopFilled, MiddleFilled, BottomFilled };
+
+        private Actor? actor;
+        private const float fillSpeed = 8;
+        private readonly Sprite icon = new(Atlases.UI.GooIcon) { PivotOrigin = RectanglePoint.Top, Scale = ScaleInfo.UIElement.Medium };
+        private readonly List<Sprite> parts = [];
+        private float visualValue;
+
+        #endregion
 
         // Constructor
         public HUDGooMeter(GameSession session)
             : base(session)
         {
         }
-
-        #region Private fields
-
-        private const float fillSpeed = 8;
-        private readonly List<Sprite> parts = [];
-        private readonly Vector2 position = new(6, 2);
-        private float visualValue;
-
-        #endregion
 
         #region Private members
 
@@ -40,9 +40,15 @@ namespace ScaryCastle
 
             visualValue = actor.Energy;
 
+            icon.Position = new(7, 3);
+
+            float x = 4;
+            float y = 9;
             while (parts.Count < actor.MaxEnergy)
             {
-                parts.Add(new Sprite(Atlases.UI.GooMeter[(int)GooMeterPart.MiddleEmpty]) { X = position.X });
+                var part = new Sprite(Atlases.UI.GooMeter[(int)GooMeterPart.MiddleEmpty]) { X = x, Y = y };
+                parts.Add(part);
+                y += part.BoundingBox.Height - 1;
             }
         }
 
@@ -57,8 +63,6 @@ namespace ScaryCastle
                 return;
 
             Game.SpriteBatch.Begin(Game.Camera);
-
-            float currentLocalY = 0;
 
             for (int i = 0; i < parts.Count; i++)
             {
@@ -85,11 +89,10 @@ namespace ScaryCastle
                 }
 
                 segment.RenderImage = Atlases.UI.GooMeter[(int)part];
-                segment.Y = position.Y + currentLocalY;
                 segment.Draw(gameTime);
-
-                currentLocalY += segment.BoundingBox.Height - 1;
             }
+
+            icon.Draw(gameTime);
 
             Game.SpriteBatch.End();
         }

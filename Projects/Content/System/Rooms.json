@@ -8,6 +8,7 @@
       "doorUp": "126,41",
       "doorLeft": "21,80",
       "doorRight": "220,80",
+      "doorDown": "152,145",
       "walkArea": "210,53;221,75;199,101;232,101;237,109;5,109;37,46;47,46;48,56;64,60;87,44;156,44;160,58;186,58;189,53"
     },
     {
@@ -42,83 +43,15 @@
       "walkArea": "204,43;237,109;5,109;37,44;54,44;59,47;78,47;84,44;156,44;162,47;179,47;184,43"
     },
     {
-      "name": "Castle_Std_Common_02",
-      "roomCategory": "Treasure",
-      "doorUp": "150,54",
-      "doorLeft": "21,126",
-      "doorRight": "206,98",
-      "doorDown": "165,190",
-      "placeholders": [
-        {
-          "position": "67,92",
-          "placement": "Floor",
-          "fillChance": 0.5
-        },
-        {
-          "position": "115,56",
-          "placement": "Floor",
-          "fillChance": 0.5
-        },
-        {
-          "position": "188,56",
-          "placement": "Floor",
-          "fillChance": 0.5
-        },
-        {
-          "position": "227,140",
-          "placement": "Floor",
-          "fillChance": 0.5
-        }
-      ],
-      "walkArea": "238,157;4,156;36,91;93,91;111,56;192,57",
-      "walls": [
-        "33,0;33,90;0,150;0,0",
-        "109,0;109,54;92,83;91,0",
-        "192,0;192,54;240,153;240,0"
-      ]
-    },
-    {
       "name": "Castle_Std_Pit_01",
       "roomCategory": "Standard",
       "doorLeft": "21,80",
       "doorRight": "220,80",
-      "exactMatch": true,
       "walkArea": "213,62;227,91;178,91;171,93;144,93;132,89;103,94;62,93;16,91;31,62;95,60",
       "walls": [
         "2,0;2,113;37,44;36,0",
         "240,0;240,113;207,44;208,0"
       ]
-    },
-    {
-      "name": "Castle_Wide_Common_01",
-      "roomCategory": "Boss",
-      "doorUp": "126,41",
-      "doorLeft": "21,80",
-      "doorRight": "281,82",
-      "doorDown": "152,145",
-      "placeholders": [
-        {
-          "position": "67,92",
-          "placement": "Floor",
-          "fillChance": 0.5
-        },
-        {
-          "position": "115,56",
-          "placement": "Floor",
-          "fillChance": 0.5
-        },
-        {
-          "position": "188,56",
-          "placement": "Floor",
-          "fillChance": 0.5
-        },
-        {
-          "position": "227,140",
-          "placement": "Floor",
-          "fillChance": 0.5
-        }
-      ],
-      "walkArea": "258,58;269,58;295,110;7,110;31,57;44,57;50,45;251,45"
     }
   ]
 }

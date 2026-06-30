@@ -12,21 +12,23 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly int maxRooms;
+        private const int gridRadius = 4; // Radio 4 significa de -4 a 4 (Matriz de 9x9)
         private readonly RoomRegistry registry = new();
         private readonly int seed;
+        private readonly GameSession session;
+        private readonly int totalRooms;
 
         #endregion
 
         #region Constructor
 
         // Constructor
-        public Run(int seed, int maxRooms)
+        public Run(GameSession session, int seed, int totalRooms)
         {
-            CodeContract.GreaterThanZero(maxRooms, nameof(maxRooms));
-
+            CodeContract.ValidRange(totalRooms, 10, 20, nameof(totalRooms));
+            this.session = session;
             this.seed = seed;
-            this.maxRooms = maxRooms;
+            this.totalRooms = totalRooms;
         }
 
         #endregion
@@ -42,25 +44,14 @@ namespace ScaryCastle
             else if (directionFromAToB == new Point(1, 0)) { a.Right = b; b.Left = a; }
         }
 
-        // DisconnectNodes - Helper vital para el Plan A Rígido
-        private static void DisconnectNodes(RoomNode a, RoomNode b, Point directionFromAToB)
-        {
-            if (directionFromAToB == new Point(0, -1)) { a.Up = null; b.Down = null; }
-            else if (directionFromAToB == new Point(0, 1)) { a.Down = null; b.Up = null; }
-            else if (directionFromAToB == new Point(-1, 0)) { a.Left = null; b.Right = null; }
-            else if (directionFromAToB == new Point(1, 0)) { a.Right = null; b.Left = null; }
-        }
-
         // CountExistingNeighbors
         private int CountExistingNeighbors(Point p)
         {
             int count = 0;
-
             if (FloorMap.ContainsKey(p + new Point(0, -1))) count++;
             if (FloorMap.ContainsKey(p + new Point(0, 1))) count++;
             if (FloorMap.ContainsKey(p + new Point(-1, 0))) count++;
             if (FloorMap.ContainsKey(p + new Point(1, 0))) count++;
-
             return count;
         }
 
@@ -70,20 +61,24 @@ namespace ScaryCastle
             int totalLayoutAttempts = 0;
             const int maxLayoutAttempts = 1000;
 
+            // Ahora las 4 direcciones están completamente liberadas desde el inicio
+            Point[] directions = [new(0, -1), new(0, 1), new(-1, 0), new(1, 0)];
+
             while (true)
             {
                 FloorMap.Clear();
 
-                var startNode = new RoomNode(FloorMap.Count, Point.Zero);
+                // 1. Clavamos el START en el centro lógico
+                var startNode = new RoomNode(0, Point.Zero) { Category = RoomCategory.Start };
                 FloorMap[Point.Zero] = startNode;
 
                 List<RoomNode> activeNodes = [startNode];
-                Point[] directions = [new(0, -1), new(0, 1), new(-1, 0), new(1, 0)]; // Up, Down, Left, Right
 
                 int iterationsWithoutSuccess = 0;
                 const int maxStagnantIterations = 500;
 
-                while (FloorMap.Count < this.maxRooms && iterationsWithoutSuccess < maxStagnantIterations)
+                // 2. Bucle de expansión (La Mancha)
+                while (FloorMap.Count < totalRooms && iterationsWithoutSuccess < maxStagnantIterations)
                 {
                     iterationsWithoutSuccess++;
 
@@ -92,60 +87,54 @@ namespace ScaryCastle
 
                     var currentNode = activeNodes[rng.Next(activeNodes.Count)];
                     Point dir = directions[rng.Next(directions.Length)];
-
-                    // --- REGLA STRICTA DE SEGURIDAD PARA START ROOM ---
-                    // Si el nodo actual es el Start (0,0) y el dado eligió ir hacia Abajo (0,1), cancelamos el intento.
-                    if (currentNode.GridPosition == Point.Zero && dir == new Point(0, 1))
-                        continue;
-                    // --------------------------------------------------
-
                     Point newPos = currentNode.GridPosition + dir;
 
-                    // --- LIMITACIÓN DE GRILLA ESTILO ISAAC (Bounding Box de 9x9) ---
-                    if (Math.Abs(newPos.X) > 4 || Math.Abs(newPos.Y) > 4)
+                    // --- LIMITACIÓN DE GRILLA PARAMETRIZADA (Bounding Box de 9x9) ---
+                    if (Math.Abs(newPos.X) > gridRadius || Math.Abs(newPos.Y) > gridRadius)
                         continue;
 
+                    // Chequeo de celda libre
                     if (FloorMap.ContainsKey(newPos))
                         continue;
 
-                    // Además, protegemos el casillero (0,1) para que ninguna OTRA habitación crezca ahí desde los lados
-                    if (newPos == new Point(0, 1))
-                        continue;
-
-                    // --- REGLA DE ORO DE ISAAC: ÁRBOL DE EXPANSIÓN PURO ---
-                    // Si la posición propuesta tiene más de 1 vecino, significa que generaría un bucle/anillo o se pegaría
-                    // a un pasillo paralelo de forma adyacente. Lo descartamos para forzar la extensión lineal.
+                    // --- REGLA DE ORO DE ADYACENCIA ---
+                    // Si la posición propuesta tiene más de 1 vecino, generaría un bucle.
+                    // Lo descartamos para forzar la expansión arbórea sin colisiones.
                     if (CountExistingNeighbors(newPos) > 1)
                         continue;
 
+                    // El nodo superó los filtros, lo consolidamos
                     var newNode = new RoomNode(FloorMap.Count, newPos);
                     FloorMap[newPos] = newNode;
                     activeNodes.Add(newNode);
 
                     ConnectNodes(currentNode, newNode, dir);
 
-                    // Si la inserción fue exitosa, reiniciamos el contador de estancamiento de esta iteración
+                    // Éxito: reiniciamos el contador de estancamiento
                     iterationsWithoutSuccess = 0;
                 }
 
-                // Si logramos alcanzar la meta de habitaciones requeridas, la topología es válida
-                if (FloorMap.Count == this.maxRooms)
-                    break;
+                // 3. Validación de Topología
+                if (FloorMap.Count == totalRooms)
+                {
+                    StartNode = FloorMap[Point.Zero];
+                    break; // Salimos del while(true), la mancha está lista
+                }
 
-                // Si se estancó por las severas restricciones del árbol, hacemos rollback total y reintentamos
+                // Si se estancó (ej: se arrinconó solo por RNG), hacemos rollback y reintentamos
                 totalLayoutAttempts++;
                 if (totalLayoutAttempts > maxLayoutAttempts)
-                {
-                    throw new InvalidOperationException($"ERROR Crítico de Generación: La Fase 1 (Layout Estilo Isaac) no pudo converger tras {maxLayoutAttempts} reintentos globales. Considera ampliar el Bounding Box o reducir maxRooms ({this.maxRooms}).");
-                }
+                    throw new InvalidOperationException($"CRITICAL ERROR: Phase 1 failed.");
             }
         }
 
         // ExecutePhase2_Labeling
         private void ExecutePhase2_Labeling(Random rng)
         {
+            // 1. El START ya está fijado, pero nos aseguramos por las dudas
             FloorMap[Point.Zero].Category = RoomCategory.Start;
 
+            // 2. Recolectamos los Dead-Ends naturales (callejones sin salida de la Fase 1)
             var deadEnds = new List<RoomNode>();
             foreach (var node in FloorMap.Values)
             {
@@ -155,61 +144,130 @@ namespace ScaryCastle
                 }
             }
 
+            // 3. Los ordenamos de Mayor a Menor distancia Manhattan con respecto al Start (0,0)
             deadEnds.Sort((a, b) =>
             {
-                int distA = GetManhattanDistance(Point.Zero, a.GridPosition);
-                int distB = GetManhattanDistance(Point.Zero, b.GridPosition);
+                int distA = Math.Abs(a.GridPosition.X) + Math.Abs(a.GridPosition.Y);
+                int distB = Math.Abs(b.GridPosition.X) + Math.Abs(b.GridPosition.Y);
                 return distB.CompareTo(distA);
             });
 
+            // --- INYECCIÓN DEL BOSS (Reemplazo obligatorio) ---
             if (deadEnds.Count > 0)
             {
                 deadEnds[0].Category = RoomCategory.Boss;
-                deadEnds.RemoveAt(0);
+                deadEnds.RemoveAt(0); // Lo sacamos para que no lo use otra sala
             }
-
-            if (deadEnds.Count > 0)
+            else
             {
-                deadEnds[0].Category = RoomCategory.Treasure;
-                deadEnds.RemoveAt(0);
-            }
-
-            if (deadEnds.Count > 0)
-            {
-                deadEnds[0].Category = RoomCategory.Save;
-                deadEnds.RemoveAt(0);
-            }
-
-            if (rng.NextDouble() <= 0.15)
-            {
-                var standardRooms = new List<RoomNode>();
+                // Paracaídas de seguridad extremo: si la Fase 1 dio una masa sin dead-ends (rarísimo), 
+                // buscamos la habitación más lejana de la grilla y la obligamos a ser el Boss.
+                RoomNode? furthestNode = null;
+                int maxDist = -1;
                 foreach (var node in FloorMap.Values)
                 {
                     if (node.Category == RoomCategory.Standard)
-                        standardRooms.Add(node);
+                    {
+                        int dist = Math.Abs(node.GridPosition.X) + Math.Abs(node.GridPosition.Y);
+                        if (dist > maxDist)
+                        {
+                            maxDist = dist;
+                            furthestNode = node;
+                        }
+                    }
+                }
+                if (furthestNode != null) furthestNode.Category = RoomCategory.Boss;
+            }
+
+            // --- INYECCIÓN DE TREASURE Y STORE (Uso de Dead-Ends o Adosado) ---
+            RoomCategory[] remainingMandatories = [RoomCategory.Treasure, RoomCategory.Store];
+            Point[] directions = [new(0, -1), new(0, 1), new(-1, 0), new(1, 0)]; // Up, Down, Left, Right
+
+            foreach (var category in remainingMandatories)
+            {
+                // Plan A: Si todavía nos queda un Dead-End natural libre, lo usamos (Reemplazo)
+                if (deadEnds.Count > 0)
+                {
+                    deadEnds[0].Category = category;
+                    deadEnds.RemoveAt(0);
+                    continue;
                 }
 
-                if (standardRooms.Count > 0)
+                // Plan B: El Brote (Adosado hacia afuera)
+                bool placed = false;
+
+                // Creamos una lista de salas comunes para intentar tirar el brote desde alguna de ellas
+                var candidates = new List<RoomNode>();
+                foreach (var node in FloorMap.Values)
                 {
-                    var specialCandidate = standardRooms[rng.Next(standardRooms.Count)];
-                    specialCandidate.Category = RoomCategory.Special;
+                    if (node.Category == RoomCategory.Standard) candidates.Add(node);
                 }
+
+                // Mezclamos los candidatos al azar para que el brote no salga siempre del mismo lugar
+                for (int i = candidates.Count - 1; i > 0; i--)
+                {
+                    int j = rng.Next(i + 1);
+                    (candidates[i], candidates[j]) = (candidates[j], candidates[i]);
+                }
+
+                foreach (var baseNode in candidates)
+                {
+                    // Buscamos una dirección libre alrededor de esta sala común
+                    // Mezclamos también las direcciones para aportar variedad visual
+                    Point[] shuffledDirs = (Point[])directions.Clone();
+                    for (int i = shuffledDirs.Length - 1; i > 0; i--)
+                    {
+                        int j = rng.Next(i + 1);
+                        (shuffledDirs[i], shuffledDirs[j]) = (shuffledDirs[j], shuffledDirs[i]);
+                    }
+
+                    foreach (var dir in shuffledDirs)
+                    {
+                        Point candidatePos = baseNode.GridPosition + dir;
+
+                        // Verificamos que no se pase del Bounding Box de la Fase 1
+                        if (Math.Abs(candidatePos.X) > gridRadius || Math.Abs(candidatePos.Y) > gridRadius)
+                            continue;
+
+                        // Verificamos que la celda esté realmente vacía
+                        if (FloorMap.ContainsKey(candidatePos))
+                            continue;
+
+                        // Registramos y consolidamos el nuevo nodo adosado en la grilla
+                        var newNode = new RoomNode(FloorMap.Count, candidatePos) { Category = category };
+                        FloorMap[candidatePos] = newNode;
+
+                        ConnectNodes(baseNode, newNode, dir);
+
+                        placed = true;
+                        break;
+                    }
+
+                    if (placed) break;
+                }
+
+                // Seguro total: Si por algún motivo de trabe espacial no se pudo adosar en la grilla 9x9,
+                // tiramos la excepción controlada para activar el rollback global.
+                if (!placed)
+                    throw new InvalidOperationException($"Tagging ERROR: No free space could be found to attach the mandatory room {category}.");
             }
         }
 
-        // ExecutePhase3_AssignAssets
-        private void ExecutePhase3_AssignAssets(Random rng)
+        // ExecutePhase4_AssignAssets
+        private void ExecutePhase4_AssignAssets(Random rng)
         {
             int maxDistance = GetMaxFloorDistance();
 
             foreach (var node in FloorMap.Values)
             {
+                // 1. Calculamos la dificultad matemática según su posición en la grilla
                 Difficulty localRoomDiff = GetProgressiveDifficulty(node.GridPosition, maxDistance);
                 node.TopographicDifficulty = localRoomDiff;
 
+                // 2. Intentamos buscar la definición del asset que calce con la topología
                 var def = registry.GetValidDefinition(node, localRoomDiff, Spawns, rng);
 
-                // --- SISTEMA DE FALLBACK SEGURO ---
+                // --- SISTEMA DE FALLBACK SEGURO (Degradación Escalonada) ---
 
                 // Caso A: Es una sala Especial y no encaja -> Se degrada a común respetando la dificultad
                 if (def == null && node.Category == RoomCategory.Special)
@@ -218,10 +276,10 @@ namespace ScaryCastle
                     def = registry.GetValidDefinition(node, localRoomDiff, Spawns, rng);
                 }
 
-                // Caso B: Es una sala Mandatoria y no encuentra asset en esta dificultad -> Degradación escalonada
+                // Caso B: Es una sala Mandatoria (Boss, Treasure, Store) y no encuentra asset en su dificultad
                 if (def == null)
                 {
-                    if (node.Category is RoomCategory.Treasure or RoomCategory.Save or RoomCategory.Boss)
+                    if (node.Category is RoomCategory.Treasure or RoomCategory.Store or RoomCategory.Boss)
                     {
                         // Si era Hard, probamos en Normal
                         if (localRoomDiff == Difficulty.Hard)
@@ -234,8 +292,8 @@ namespace ScaryCastle
                     }
 
                     // --- PLAN B RÍGIDO: SALVAGUARDA DE DISEÑO ---
-                    // Si la degradación total falló (no tenés ningún asset de ese rol en el JSON),
-                    // sacrificamos el rol mandatorio convirtiéndolo en Standard para evitar el crash.
+                    // Si la degradación de dificultad falló por completo (ej: no tenés ese asset en el JSON),
+                    // sacrificamos el rol especial convirtiéndolo en Standard para evitar que el juego crasheé.
                     if (def == null)
                     {
                         node.Category = RoomCategory.Standard;
@@ -243,67 +301,13 @@ namespace ScaryCastle
                     }
                 }
 
-                // ----------------------------------
-
+                // Si después de todo esto sigue siendo null, es porque el JSON no tiene ni una sala básica Standard
                 if (def == null)
-                    throw new InvalidOperationException($"ERROR Crítico de Generación: No se encontró ningún asset en el JSON para el rol {node.Category} en la posición {node.GridPosition} (incluso tras intentar degradación de dificultad) que admita sus conexiones físicas.");
+                    throw new InvalidOperationException($"Critical Generation Error: No asset was found in the JSON for the role {node.Category} at position {node.GridPosition} (even after full demotion) that supports its physical connections.");
 
+                // Consolidamos el asset y sumamos al banco de spawns
                 node.Definition = def;
                 Spawns.Increment(def.Name);
-            }
-        }
-
-        // ExecutePhase4_InjectSecrets
-        private void ExecutePhase4_InjectSecrets(Random rng)
-        {
-            int targetSecrets = rng.Next(0, 4);
-            int secretsGenerated = 0;
-
-            int maxDistance = GetMaxFloorDistance();
-
-            var existingNodes = new List<RoomNode>(FloorMap.Count);
-            foreach (var node in FloorMap.Values)
-            {
-                existingNodes.Add(node);
-            }
-
-            for (int i = existingNodes.Count - 1; i > 0; i--)
-            {
-                int j = rng.Next(i + 1);
-                var temp = existingNodes[i];
-                existingNodes[i] = existingNodes[j];
-                existingNodes[j] = temp;
-            }
-
-            for (int i = 0; i < existingNodes.Count; i++)
-            {
-                if (secretsGenerated >= targetSecrets)
-                    break;
-
-                var node = existingNodes[i];
-
-                // Intento Izquierda
-                Point leftPos = node.GridPosition + new Point(-1, 0);
-                if (node.Left == null && node.Definition.DoorLeft != null && !FloorMap.ContainsKey(leftPos))
-                {
-                    Difficulty secretDiff = GetProgressiveDifficulty(leftPos, maxDistance);
-                    if (InjectSecretNode(leftPos, node, new Point(1, 0), secretDiff, rng))
-                    {
-                        secretsGenerated++;
-                    }
-                    continue;
-                }
-
-                // Intento Derecha
-                Point rightPos = node.GridPosition + new Point(1, 0);
-                if (node.Right == null && node.Definition.DoorRight != null && !FloorMap.ContainsKey(rightPos))
-                {
-                    Difficulty secretDiff = GetProgressiveDifficulty(rightPos, maxDistance);
-                    if (InjectSecretNode(rightPos, node, new Point(-1, 0), secretDiff, rng))
-                    {
-                        secretsGenerated++;
-                    }
-                }
             }
         }
 
@@ -311,6 +315,18 @@ namespace ScaryCastle
         private static int GetManhattanDistance(Point a, Point b)
         {
             return Math.Abs(a.X - b.X) + Math.Abs(a.Y - b.Y);
+        }
+
+        // GetMaxFloorDistance
+        private int GetMaxFloorDistance()
+        {
+            int max = 0;
+            foreach (var node in FloorMap.Values)
+            {
+                int dist = GetManhattanDistance(Point.Zero, node.GridPosition);
+                if (dist > max) max = dist;
+            }
+            return max;
         }
 
         // GetProgressiveDifficulty
@@ -331,60 +347,20 @@ namespace ScaryCastle
             return Difficulty.Hard;
         }
 
-        // GetMaxFloorDistance
-        private int GetMaxFloorDistance()
-        {
-            int max = 0;
-            foreach (var node in FloorMap.Values)
-            {
-                int dist = GetManhattanDistance(Point.Zero, node.GridPosition);
-                if (dist > max) max = dist;
-            }
-            return max;
-        }
-
-        // InjectSecretNode - Ahora devuelve bool y maneja el descarte seguro del Plan A
-        private bool InjectSecretNode(Point secretPos, RoomNode originNode, Point dirFromSecretToOrigin, Difficulty runDiff, Random rng)
-        {
-            var secretNode = new RoomNode(FloorMap.Count, secretPos)
-            {
-                Category = RoomCategory.Secret,
-                TopographicDifficulty = runDiff
-            };
-
-            // Conectamos temporalmente para que Fits() evalúe la topología de forma correcta
-            ConnectNodes(secretNode, originNode, dirFromSecretToOrigin);
-
-            var def = registry.GetValidDefinition(secretNode, runDiff, this.Spawns, rng);
-            if (def == null)
-            {
-                // Rollback total: Desconectamos los punteros y no agregamos nada al diccionario
-                DisconnectNodes(secretNode, originNode, dirFromSecretToOrigin);
-                return false;
-            }
-
-            // Si pasa el filtro, consolidamos el nodo físicamente en el mapa
-            secretNode.Definition = def;
-            FloorMap[secretPos] = secretNode;
-            this.Spawns.Increment(def.Name);
-
-            return true;
-        }
-
         #endregion
 
         // FloorMap
         public Dictionary<Point, RoomNode> FloorMap { get; } = [];
 
         // Generate
-        public void Generate(GameSession session)
+        public void Generate()
         {
             var rng = new Random(seed);
 
-            this.ExecutePhase1_Layout(rng);
-            this.ExecutePhase2_Labeling(rng);
-            this.ExecutePhase3_AssignAssets(rng);
-            this.ExecutePhase4_InjectSecrets(rng);
+            ExecutePhase1_Layout(rng);
+            ExecutePhase2_Labeling(rng);
+            // ExecutePhase3_InjectSecrets(rng);
+            ExecutePhase4_AssignAssets(rng);
 
             foreach (var node in FloorMap.Values)
             {
