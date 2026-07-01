@@ -126,7 +126,7 @@ namespace ScaryCastle
                 doorLight.Ambient = true;
                 doorLight.Color = new Color(240, 181, 65) * .7f;
                 doorLight.Position = door.BoundingBox.Center;
-                doorLight.Scale = new(2,7);
+                doorLight.Scale = new(2, 7);
             }
         }
 

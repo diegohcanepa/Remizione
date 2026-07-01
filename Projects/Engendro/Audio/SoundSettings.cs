@@ -57,6 +57,9 @@ namespace Engendro.Audio
             }
         }
 
+        // PitchVariance
+        public Ratio PitchVariance { get; set; }
+
         // PopMode
         public SoundPopMode PopMode { get; set; }
 

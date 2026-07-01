@@ -20,7 +20,7 @@ namespace ScaryCastle
         // Constructor
         public HUDMessage(RectanglePoint pivotOrigin, Vector2 position)
         {
-            this.messageText = new(Fonts.Common)
+            this.messageText = new(Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Sentence,
                 MaximumWidth = (int)(Screen.HUDArea.Width * .7f),

@@ -129,6 +129,6 @@
 	<FX Name="VendingMachine" />
 	<FX Name="VentBlower" PauseAware="false" />
 	<FX Name="WoodDebris" Sounds="1..1" />
-	<FX Name="WhooshA" />
+	<FX Name="WhooshA" PitchVariance = ".4" />
 	<FX Name="ZapLoop" />
 </Data>

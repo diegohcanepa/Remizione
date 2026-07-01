@@ -32,7 +32,8 @@
       "difficulty": "Normal",
       "dropTrigger": "OnImpact",
       "dropCoinChanceBonus": 1,
-      "dropSackChanceBonus": 0.3
+      "dropSackChanceBonus": 0.3,
+      "maxPerRun": 1
     },
     {
       "name": "Skeleton"

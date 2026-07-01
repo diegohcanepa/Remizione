@@ -13,7 +13,7 @@ namespace Engendro.Audio
     /// </summary>
     public static class AudioManager
     {
-        private static readonly string[] validAttributes = ["Caption", "MaxInstances", "Name", "Pan", "Pitch", "PopMode", "Sounds", "Tags", "TransitionAware", "PauseAware", "Volume"];
+        private static readonly string[] validAttributes = ["Caption", "MaxInstances", "Name", "Pan", "Pitch", "PitchVariance", "PopMode", "Sounds", "Tags", "TransitionAware", "PauseAware", "Volume"];
 
         #region Private members
 
@@ -57,6 +57,10 @@ namespace Engendro.Audio
                 // Pitch
                 if (attributes["Pitch"]?.Value is string pitch)
                     settings.Pitch = XmlConvert.ToSingle(pitch);
+
+                // PitchVariance
+                if (attributes["PitchVariance"]?.Value is string pitchVariance)
+                    settings.PitchVariance = XmlConvert.ToSingle(pitchVariance);
 
                 // PopMode
                 if (attributes["PopMode"]?.Value is string popMode)

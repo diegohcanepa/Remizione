@@ -117,6 +117,50 @@ namespace ScaryCastle
 
         #region Private members
 
+        // ApplyWideFootprintConstraint
+        private void ApplyWideFootprintConstraint()
+        {
+            var collision = false;
+
+            if (IsMoving || IsKnockbackInProgress)
+            {
+                if (HasWideFootprint && RuntimeHotspot != null && Room?.Walls.Count > 0)
+                {
+                    if (Direction == FacingDirection.Left)
+                    {
+                        for (var i = 0; i < Room.Walls.Count; i++)
+                        {
+                            if (Room.Walls[i].Contains(RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.LeftBottom)))
+                            {
+                                collision = true;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (var i = 0; i < Room.Walls.Count; i++)
+                        {
+                            if (Room.Walls[i].Contains(RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.RightBottom)))
+                            {
+                                collision = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (collision)
+            {
+                if (IsMoving)
+                    StopMoving();
+
+                if (knockbackVelocity != Vector2.Zero)
+                    knockbackVelocity = Vector2.Zero;
+            }
+        }
+
         // CheckCollisions
         private void CheckCollisions()
         {
@@ -396,25 +440,7 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (IsMoving && HasWideFootprint && RuntimeHotspot != null && Room?.Walls.Count > 0)
-            {
-                if (Direction == FacingDirection.Left)
-                {
-                    for (var i = 0; i < Room.Walls.Count; i++)
-                    {
-                        if (Room.Walls[i].Contains(RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.LeftBottom)))
-                            StopMoving();
-                    }
-                }
-                else
-                {
-                    for (var i = 0; i < Room.Walls.Count; i++)
-                    {
-                        if (Room.Walls[i].Contains(RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.RightBottom)))
-                            StopMoving();
-                    }
-                }
-            }
+            ApplyWideFootprintConstraint();
 
             floatingTween?.Update(gameTime);
             hurtTween?.Update(gameTime);

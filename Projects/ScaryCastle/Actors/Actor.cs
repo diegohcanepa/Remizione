@@ -1197,7 +1197,10 @@ namespace ScaryCastle
 
         // Stand
         [ScriptMethod()]
-        public void Stand() => Stand(true);
+        public void Stand()
+        {
+            Stand(true);
+        }
 
         // Stand
         public void Stand(bool enforce = false)
@@ -1265,7 +1268,7 @@ namespace ScaryCastle
                     return;
                 }
             }
-            
+
             RemainingTurns -= 1;
 
             if (DiceExpression.Dice10.Roll() <= 2)

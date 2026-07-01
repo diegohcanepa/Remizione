@@ -29,7 +29,7 @@ namespace Engendro.Audio
         #region Constructor
 
         // Constructor
-        private Sound(string name, SoundCategory category, string[]? soundNames, string[]? tags, int maxInstances, float volume, float pan, float pitch, SoundPopMode popMode, bool transitionAware, bool pauseAware, string caption)
+        private Sound(string name, SoundCategory category, string[]? soundNames, string[]? tags, int maxInstances, float volume, float pan, float pitch, Ratio pitchVariance, SoundPopMode popMode, bool transitionAware, bool pauseAware, string caption)
         {
             // Name cannot be empty
             CodeContract.NotEmpty(name, nameof(name));
@@ -61,6 +61,7 @@ namespace Engendro.Audio
             this.Volume = volume;
             this.Pan = pan;
             this.Pitch = pitch;
+            this.PitchVariance = pitchVariance;
             this.Caption = caption;
 
             if (soundNames == null || soundNames.Length == 0)
@@ -216,6 +217,7 @@ namespace Engendro.Audio
                                                settings.Volume,
                                                settings.Pan,
                                                settings.Pitch,
+                                               settings.PitchVariance,
                                                settings.PopMode,
                                                settings.TransitionAware,
                                                settings.PauseAware,
@@ -348,6 +350,9 @@ namespace Engendro.Audio
 
         // Pitch
         public float Pitch { get; }
+
+        // PitchVariance
+        public float PitchVariance { get; }
 
         // Play
         public SoundInstance? Play()

@@ -40,7 +40,7 @@ namespace ScaryCastle
             {
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Top,
-                Scale = ScaleInfo.Text.VeryLarge
+                Scale = ScaleInfo.Text.Huge
             };
 
             // Noun
@@ -48,7 +48,7 @@ namespace ScaryCastle
             {
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Top,
-                Scale = ScaleInfo.Text.Large
+                Scale = ScaleInfo.Text.VeryLarge
             };
         }
 

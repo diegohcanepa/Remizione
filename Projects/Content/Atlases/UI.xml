@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:c77aaff6f3dc1a991830c879417ae3e9:5f0c1b04c507afcdb40c6341d7af8c64:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:e7935cb25239948a98d000e52804393c:b6ed4681bdc8632e328704578f7123eb:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -29,7 +29,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="BossMeter.png" x="402" y="227" w="15" h="15"/>
     <sprite n="BossMeterAmount.png" x="451" y="248" w="11" h="13"/>
     <sprite n="Burger.png" x="244" y="171" w="22" h="22"/>
-    <sprite n="CheckMark.png" x="481" y="319" w="7" h="6"/>
+    <sprite n="CheckMark.png" x="479" y="319" w="7" h="6"/>
     <sprite n="Chili.png" x="244" y="195" w="22" h="22"/>
     <sprite n="Coin.png" x="214" y="202" w="22" h="22"/>
     <sprite n="CoinIcon.png" x="502" y="233" w="8" h="8"/>
@@ -48,9 +48,9 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="CurseMeter7.png" x="421" y="272" w="10" h="11"/>
     <sprite n="CurseMeter8.png" x="433" y="272" w="10" h="11"/>
     <sprite n="CurseMeter9.png" x="445" y="276" w="10" h="11"/>
-    <sprite n="DialogArrowLarge.png" x="499" y="320" w="7" h="5"/>
+    <sprite n="DialogArrowLarge.png" x="495" y="328" w="7" h="5"/>
     <sprite n="DialogBlockContainer.png" x="2" y="147" w="240" h="53"/>
-    <sprite n="DialogOptionBullet.png" x="429" y="309" w="5" h="5"/>
+    <sprite n="DialogOptionBullet.png" x="408" y="309" w="5" h="5"/>
     <sprite n="Dice.png" x="502" y="243" w="8" h="8"/>
     <sprite n="DiscardItemIcon.png" x="484" y="211" w="16" h="15"/>
     <sprite n="Duck.png" x="152" y="225" w="22" h="22"/>
@@ -64,13 +64,13 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="GooMeter2.png" x="488" y="298" w="6" h="4"/>
     <sprite n="GooMeter3.png" x="488" y="304" w="6" h="4"/>
     <sprite n="GooMeter4.png" x="400" y="307" w="6" h="4"/>
-    <sprite n="GooMeter5.png" x="499" y="327" w="6" h="4"/>
+    <sprite n="GooMeter5.png" x="488" y="319" w="6" h="4"/>
     <sprite n="GreenHearts1.png" x="390" y="294" w="9" h="9"/>
     <sprite n="GreenHearts2.png" x="357" y="285" w="9" h="9"/>
     <sprite n="GreenHearts3.png" x="368" y="285" w="9" h="9"/>
     <sprite n="GreenHearts4.png" x="345" y="288" w="9" h="9"/>
-    <sprite n="HeartBlackFull.png" x="483" y="310" w="7" h="7"/>
-    <sprite n="HeartBlackHalf.png" x="472" y="315" w="7" h="7"/>
+    <sprite n="HeartBlackFull.png" x="452" y="308" w="7" h="7"/>
+    <sprite n="HeartBlackHalf.png" x="473" y="305" w="7" h="7"/>
     <sprite n="HeartIcon.png" x="356" y="296" w="9" h="9"/>
     <sprite n="InventoryItemAmount1.png" x="142" y="241" w="8" h="9"/>
     <sprite n="InventoryItemAmount2.png" x="142" y="252" w="8" h="9"/>
@@ -99,12 +99,12 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="MiniMapContainer.png" x="152" y="202" w="29" h="21"/>
     <sprite n="MiniMapContainerBorder.png" x="183" y="202" w="29" h="21"/>
     <sprite n="MiniMapMarkerCoin.png" x="456" y="289" w="6" h="6"/>
-    <sprite n="MiniMapMarkerHeart.png" x="436" y="313" w="5" h="5"/>
-    <sprite n="MiniMapMarkerLoot.png" x="422" y="309" w="5" h="6"/>
+    <sprite n="MiniMapMarkerHeart.png" x="400" y="313" w="5" h="5"/>
+    <sprite n="MiniMapMarkerLoot.png" x="495" y="335" w="5" h="6"/>
     <sprite n="MiniMapMarkerStart.png" x="268" y="71" w="5" h="1"/>
-    <sprite n="MiniMapRoom0.png" x="463" y="303" w="8" h="8"/>
-    <sprite n="MiniMapRoom1.png" x="452" y="308" w="8" h="8"/>
-    <sprite n="MiniMapRoom2.png" x="473" y="305" w="8" h="8"/>
+    <sprite n="MiniMapRoom0.png" x="461" y="313" w="7" h="7"/>
+    <sprite n="MiniMapRoom1.png" x="482" y="310" w="7" h="7"/>
+    <sprite n="MiniMapRoom2.png" x="470" y="314" w="7" h="7"/>
     <sprite n="MissingItem.png" x="152" y="249" w="22" h="22"/>
     <sprite n="MonitorFrame.png" x="268" y="74" w="240" h="135"/>
     <sprite n="MouseCursorAttack.png" x="298" y="273" w="10" h="10"/>
@@ -124,7 +124,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="PickupShadow.png" x="452" y="303" w="9" h="3"/>
     <sprite n="Pistol.png" x="176" y="249" w="22" h="22"/>
     <sprite n="Pixel.png" x="508" y="19" w="1" h="1"/>
-    <sprite n="PointingHand.png" x="490" y="320" w="7" h="6"/>
+    <sprite n="PointingHand.png" x="496" y="320" w="7" h="6"/>
     <sprite n="PoisonMeter0.png" x="408" y="285" w="10" h="11"/>
     <sprite n="PoisonMeter1.png" x="420" y="285" w="10" h="11"/>
     <sprite n="PoisonMeter2.png" x="432" y="285" w="10" h="11"/>
@@ -148,19 +148,19 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="RedHearts4.png" x="356" y="296" w="9" h="9"/>
     <sprite n="RustyLockpick.png" x="214" y="274" w="22" h="22"/>
     <sprite n="Sack.png" x="400" y="256" w="11" h="10"/>
-    <sprite n="SackIcon.png" x="462" y="313" w="8" h="8"/>
+    <sprite n="SackIcon.png" x="463" y="303" w="8" h="8"/>
     <sprite n="SavingIcon.png" x="496" y="281" w="11" h="11"/>
     <sprite n="SkullIcon.png" x="286" y="273" w="10" h="11"/>
     <sprite n="SodaCan.png" x="152" y="273" w="22" h="22"/>
-    <sprite n="SpeechTextArrow.png" x="429" y="316" w="5" h="4"/>
+    <sprite n="SpeechTextArrow.png" x="415" y="309" w="5" h="4"/>
     <sprite n="SteelLockpick.png" x="176" y="273" w="22" h="22"/>
     <sprite n="TipBalloon.png" x="200" y="225" w="12" h="13"/>
     <sprite n="UIButtonContainerEdge.png" x="457" y="276" w="5" h="11"/>
     <sprite n="UIButtonContainerPattern.png" x="508" y="2" w="1" h="11"/>
     <sprite n="UIControlContainerEdgeLeftLarge.png" x="401" y="294" w="5" h="11"/>
-    <sprite n="UIControlContainerEdgeLeftSmall.png" x="400" y="313" w="5" h="10"/>
-    <sprite n="UIControlContainerEdgeRightLarge.png" x="408" y="309" w="5" h="11"/>
-    <sprite n="UIControlContainerEdgeRightSmall.png" x="415" y="309" w="5" h="10"/>
+    <sprite n="UIControlContainerEdgeLeftSmall.png" x="488" y="325" w="5" h="10"/>
+    <sprite n="UIControlContainerEdgeRightLarge.png" x="505" y="320" w="5" h="11"/>
+    <sprite n="UIControlContainerEdgeRightSmall.png" x="504" y="333" w="5" h="10"/>
     <sprite n="XboxA.png" x="419" y="243" w="14" h="14"/>
     <sprite n="XboxB.png" x="435" y="243" w="14" h="14"/>
     <sprite n="XboxGadgetsSlot.png" x="200" y="296" w="12" h="12"/>
