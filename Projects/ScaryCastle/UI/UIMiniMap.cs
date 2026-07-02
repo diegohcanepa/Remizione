@@ -13,11 +13,12 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private enum RoomImage { Current, Visited, NotVisited };
+        private enum RoomImage { Current, Start, Visited, NotVisited };
         private readonly Sprite container;
         private readonly Sprite containerBorder;
         private readonly Vector2 containerCenter;
         private readonly HashSet<RoomNode> drawnRooms = [];
+        private readonly Sprite marker = new() { PivotOrigin = RectanglePoint.Center, Scale = new(.5f) };
         private readonly FloatTween opacityTween = new();
         private readonly RasterizerState rasterizerState;
         private readonly Rectangle screenScissorRect;
@@ -64,13 +65,12 @@ namespace ScaryCastle
             );
 
             // Room images
-            roomImages = new Sprite[3];
+            roomImages = new Sprite[4];
             for (var i = 0; i < roomImages.Length; i++)
             {
                 roomImages[i] = new(Atlases.UI.GetImage($"MiniMapRoom{i}"))
                 {
                     PivotOrigin = RectanglePoint.Center,
-                    Scale = new Vector2(.8f)
                 };
             }
 
@@ -90,6 +90,12 @@ namespace ScaryCastle
             if (roomNode == CurrentRoom)
             {
                 image = roomImages[(int)RoomImage.Current];
+            }
+
+            // Start
+            else if (roomNode.Category == RoomCategory.Start)
+            {
+                image = roomImages[(int)RoomImage.Start];
             }
 
             // Visited
@@ -114,13 +120,24 @@ namespace ScaryCastle
 
             if (roomNode != CurrentRoom)
             {
-                /*
-                if (roomGraph.HeartCount > 0)
+                if (roomNode.LootCount > 0 && roomNode.CoinCount == 0)
                 {
-                    heartMarker.Position = image.BoundingBox.GetPoint(RectanglePoint.Center, -.25f, -.25f);
-                    heartMarker.Draw(gameTime);
+                    marker.RenderImage = Atlases.UI.MiniMapLoot;
+                    marker.Position = image.BoundingBox.GetPoint(RectanglePoint.Center, -.25f, 0);
+                    marker.Draw(gameTime);
                 }
-                */
+                else if (roomNode.CoinCount > 0 && roomNode.LootCount == 0)
+                {
+                    marker.RenderImage = Atlases.UI.MiniMapCoin;
+                    marker.Position = image.BoundingBox.GetPoint(RectanglePoint.Center);
+                    marker.Draw(gameTime);
+                }
+                else if (roomNode.CoinCount > 0 && roomNode.LootCount > 0)
+                {
+                    marker.RenderImage = Atlases.UI.MiniMapCoinAndLoot;
+                    marker.Position = image.BoundingBox.GetPoint(RectanglePoint.Center);
+                    marker.Draw(gameTime);
+                }
             }
 
             drawnRooms.Add(roomNode);

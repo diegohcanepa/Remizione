@@ -48,7 +48,7 @@ namespace ScaryCastle
             {
                 Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Top,
-                Scale = ScaleInfo.Text.VeryLarge
+                Scale = ScaleInfo.Text.Huge
             };
         }
 
@@ -64,7 +64,7 @@ namespace ScaryCastle
             nounText.Position = verbText.BoundingBox.GetPoint(RectanglePoint.Bottom);
             nounText.Text = noun;
             icon.RenderImage = image;
-            icon.Position = nounText.BoundingBox.GetPoint(RectanglePoint.Bottom, 2, -1);
+            icon.Position = nounText.BoundingBox.GetPoint(RectanglePoint.Bottom, 2, -2);
 
             iconShadow.Position = icon.BoundingBox.Center;
             iconShadow.RenderImage = image;

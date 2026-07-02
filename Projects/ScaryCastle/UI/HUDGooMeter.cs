@@ -8,7 +8,7 @@ namespace ScaryCastle
     /// <summary>
     /// HUDGooMeter
     /// </summary>
-    public sealed class HUDGooMeter : GameObject<GameSession>
+    public sealed class HUDGooMeter : Adberration.SessionGameObject<GameSession>
     {
         #region Private fields
 

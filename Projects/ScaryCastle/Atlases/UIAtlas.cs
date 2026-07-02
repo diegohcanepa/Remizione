@@ -32,6 +32,9 @@ namespace ScaryCastle
             InventoryItemAmounts = CreateReadOnlyCollection("InventoryItemAmount", 1, 5);
             InventoryItemSlot = this[nameof(InventoryItemSlot)];
             MessageContainer = this[nameof(MessageContainer)];
+            MiniMapCoin = this[nameof(MiniMapCoin)];
+            MiniMapCoinAndLoot = this[nameof(MiniMapCoinAndLoot)];
+            MiniMapLoot = this[nameof(MiniMapLoot)];
             PickupShadow = this[nameof(PickupShadow)];
             Pixel = this[nameof(Pixel)];
             PointingHand = this[nameof(PointingHand)];
@@ -111,6 +114,15 @@ namespace ScaryCastle
 
         // MessageContainer
         public AtlasImage MessageContainer { get; }
+
+        // MiniMapCoin
+        public AtlasImage MiniMapCoin { get; }
+
+        // MiniMapCoinAndLoot
+        public AtlasImage MiniMapCoinAndLoot { get; }
+
+        // MiniMapLoot
+        public AtlasImage MiniMapLoot { get; }
 
         // PickupShadow
         public AtlasImage PickupShadow { get; }

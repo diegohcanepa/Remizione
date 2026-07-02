@@ -17,6 +17,9 @@ namespace ScaryCastle
         // Category
         public RoomCategory Category { get; set; } = RoomCategory.Standard;
 
+        // CoinCount
+        public int CoinCount { get; set; }
+
         // ConnectionCount
         public int ConnectionCount()
         {
@@ -79,6 +82,9 @@ namespace ScaryCastle
 
         // Left
         public RoomNode? Left { get; set; }
+
+        // LootCount
+        public int LootCount { get; set; }
 
         // RideRoom
         public RideRoom RideRoom { get; set; } = null!;

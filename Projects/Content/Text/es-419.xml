@@ -79,12 +79,10 @@
   <String Key="Item.Pistol.Name">Pistola</String>
   <String Key="Item.RedPill.Description">Suplemento deportivo</String>
   <String Key="Item.RedPill.Name">Píldora</String>
-  <String Key="Item.RustyLockpick.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
-  <String Key="Item.RustyLockpick.Name">Ganzúa herrumbrosa</String>
+  <String Key="Item.SilverKey.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
+  <String Key="Item.SilverKey.Name">Llave plateada</String>
   <String Key="Item.SodaCan.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.SodaCan.Name">Caca-Cola</String>
-  <String Key="Item.SteelLockpick.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
-  <String Key="Item.SteelLockpick.Name">Ganzúa de acero</String>
   <String Key="Item.Ticket.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.Ticket.Name">Ticket</String>
   <String Key="ItemCategory.Consumable">Consumible</String>

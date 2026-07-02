@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration;
+using Engendro;
 using Microsoft.Xna.Framework;
 
 namespace ScaryCastle
@@ -6,7 +7,7 @@ namespace ScaryCastle
     /// <summary>
     /// HUDConditionMeter
     /// </summary>
-    internal class HUDConditionMeter : GameObject<GameSession>
+    internal class HUDConditionMeter : SessionGameObject<GameSession>
     {
         private readonly Sprite meter = new() { Position = new(11, 13) };
 

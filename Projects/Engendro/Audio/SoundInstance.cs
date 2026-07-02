@@ -294,7 +294,7 @@ namespace Engendro.Audio
                 InvalidateVolume();
 
                 if (Sound.PitchVariance > 0)
-                    instance.Pitch = Sound.PitchVariance * Random.Shared.NextSingle();
+                    instance.Pitch += Sound.PitchVariance * Random.Shared.NextSingle();
 
                 instance.Play();
 

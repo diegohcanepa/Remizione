@@ -185,13 +185,12 @@
 			]			
 		},
 		{
-			"name": "RustyLockpick",
-			"consumeVerb": "Consumed",
+			"name": "SilverKey",
 			"actionKind": "Script",
 			"category": "Access",
-			"deselectOnUse": true,
-			"skillChance": 30
-		},
+			"isStackable": true,
+			"pickupSound": "PickupKey"
+		},		
 		{
 			"name": "SodaCan",
 			"category": "Food",

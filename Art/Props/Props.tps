@@ -535,6 +535,7 @@
                 <false/>
             </struct>
             <key type="filename">PotteryC-assets/PotteryCPiece6.png</key>
+            <key type="filename">RideDoorUp-assets/RideDoorUp_SilverKey.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -650,10 +651,10 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">RideDoorLeft-assets/RideDoorLeftLock.png</key>
+            <key type="filename">RideDoorLeft-assets/RideDoorLeft_GoldenKey.png</key>
             <key type="filename">RideDoorLeft-assets/RideDoor_Castle_Standard_Left_Closed.png</key>
             <key type="filename">RideDoorLeft-assets/RideDoor_Castle_Standard_Left_Open.png</key>
-            <key type="filename">RideDoorRight-assets/RideDoorRightLock.png</key>
+            <key type="filename">RideDoorRight-assets/RideDoorRight_GoldenKey.png</key>
             <key type="filename">RideDoorRight-assets/RideDoor_Castle_Right_Closed.png</key>
             <key type="filename">RideDoorRight-assets/RideDoor_Castle_Right_Open.png</key>
             <key type="filename">RideDoorRight-assets/RideDoor_Castle_Standard_Right_Closed.png</key>
@@ -672,7 +673,23 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">RideDoorUp-assets/RideDoorUpLock.png</key>
+            <key type="filename">RideDoorLeft-assets/RideDoorLeft_SilverKey.png</key>
+            <key type="filename">RideDoorRight-assets/RideDoorRight_SilverKey.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,2,2,5</rect>
+                <key>scale9Paddings</key>
+                <rect>1,2,2,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">RideDoorUp-assets/RideDoorUp_GoldenKey.png</key>
             <key type="filename">RideDoorUp-assets/RideDoor_Castle_Standard_Up_Closed.png</key>
             <key type="filename">RideDoorUp-assets/RideDoor_Castle_Standard_Up_Open.png</key>
             <struct type="IndividualSpriteSettings">

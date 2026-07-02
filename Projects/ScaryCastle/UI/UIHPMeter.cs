@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration;
+using Engendro;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
@@ -7,7 +8,7 @@ namespace ScaryCastle
     /// <summary>
     /// UIHPMeter
     /// </summary>
-    public sealed class UIHPMeter : GameObject<GameSession>
+    public sealed class UIHPMeter : SessionGameObject<GameSession>
     {
         #region Private fields
 

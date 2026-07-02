@@ -346,8 +346,7 @@
             <key type="filename">Items-assets/Duck.png</key>
             <key type="filename">Items-assets/Lockpick.png</key>
             <key type="filename">Items-assets/MissingItem.png</key>
-            <key type="filename">Items-assets/RustyLockpick.png</key>
-            <key type="filename">Items-assets/SteelLockpick.png</key>
+            <key type="filename">Items-assets/SilverKey.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -517,6 +516,8 @@
                 <false/>
             </struct>
             <key type="filename">MiniMap-assets/MiniMapMarkerCoin.png</key>
+            <key type="filename">MiniMap-assets/MiniMapRoom2.png</key>
+            <key type="filename">MiniMap-assets/MiniMapRoom3.png</key>
             <key type="filename">UI-assets/CheckMark.png</key>
             <key type="filename">UI-assets/PointingHand.png</key>
             <key type="filename">UIIcons-assets/GreenHearts1.png</key>
@@ -558,7 +559,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">MiniMap-assets/MiniMapMarkerLoot.png</key>
+            <key type="filename">MiniMap-assets/MiniMapMarkerPickableLoot.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -590,7 +591,6 @@
             </struct>
             <key type="filename">MiniMap-assets/MiniMapRoom0.png</key>
             <key type="filename">MiniMap-assets/MiniMapRoom1.png</key>
-            <key type="filename">MiniMap-assets/MiniMapRoom2.png</key>
             <key type="filename">UIIcons-assets/CoinIcon.png</key>
             <key type="filename">UIIcons-assets/Sack.png</key>
             <key type="filename">UIIcons-assets/SackIcon.png</key>

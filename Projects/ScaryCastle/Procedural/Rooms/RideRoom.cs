@@ -179,13 +179,33 @@ namespace ScaryCastle
             PrepareView();
             PrepareLights();
 
-            foreach (var door in doors)
+            if (RoomNode.Category != RoomCategory.Start)
             {
-                if (door.DoorDirection is RideDoorDirection.Left or RideDoorDirection.Right or RideDoorDirection.Up)
+                foreach (var door in doors)
                 {
-                    // TODO: Check
-                    //if (door.TargetRoom?.Definition.LockType != LockType.None)
-                    //    door.LockType = door.TargetRoom.Definition.LockType;
+                    if (door.DoorDirection is RideDoorDirection.Left or RideDoorDirection.Right or RideDoorDirection.Up)
+                    {
+                        if (door.TargetRoom?.RoomNode is not RoomNode targetRoomNode)
+                            continue;
+
+                        if (targetRoomNode.Category == RoomCategory.Standard)
+                        {
+                            var lockChances = RoomNode.TopographicDifficulty switch
+                            {
+                                Difficulty.Easy => .2f,
+                                Difficulty.Normal => .4f,
+                                Difficulty.Hard => .6f,
+                                _ => 0.4f
+                            };
+
+                            if (Random.NextDouble() <= lockChances)
+                                door.LockType = LockType.SilverKey;
+                        }
+                        else if (targetRoomNode.Category is RoomCategory.Treasure or RoomCategory.Special)
+                        {
+                            door.LockType = LockType.GoldenKey;
+                        }
+                    }
                 }
             }
         }

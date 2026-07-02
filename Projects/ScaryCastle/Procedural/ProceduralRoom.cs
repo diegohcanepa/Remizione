@@ -354,8 +354,13 @@ namespace ScaryCastle
         {
             base.OnChildAdded(child);
 
-            if (child is Sack)
-                SackCount++;
+            if (child is PickableLoot)
+            {
+                if (child is Coin)
+                    RoomNode.CoinCount++;
+                else
+                    RoomNode.LootCount++;
+            }
         }
 
         // OnChildRemoved
@@ -363,8 +368,13 @@ namespace ScaryCastle
         {
             base.OnChildAdded(child);
 
-            if (child is Sack)
-                SackCount--;
+            if (child is PickableLoot)
+            {
+                if (child is Coin)
+                    RoomNode.CoinCount--;
+                else
+                    RoomNode.LootCount--;
+            }
         }
 
         // OnLoad
@@ -414,9 +424,6 @@ namespace ScaryCastle
 
         // RoomNode
         public RoomNode RoomNode { get; }
-
-        // SackCount
-        public int SackCount { get; private set; }
 
         // ToString
         public override string ToString()

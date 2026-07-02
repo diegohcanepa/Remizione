@@ -11,7 +11,7 @@ namespace ScaryCastle
     /// </summary>
     public class RideDoor : Openable
     {
-        private readonly Sprite lockImage;
+        private readonly Sprite lockImage = new();
 
         #region Constructor
 
@@ -45,8 +45,6 @@ namespace ScaryCastle
             CollisionDetection = false;
             DisplayNameKey = "Prop.Door";
             Verb = Verb.Use;
-
-            this.lockImage = new(Atlas?.FindImage($"{DeclaredName}Lock"));
         }
 
         #endregion
@@ -122,6 +120,13 @@ namespace ScaryCastle
 
             if (LockType != LockType.None)
                 lockImage.Draw(gameTime);
+        }
+
+        // OnLockTypeChanged
+        protected override void OnLockTypeChanged()
+        {
+            base.OnLockTypeChanged();
+            this.lockImage.RenderImage = Atlas?.FindImage($"{DeclaredName}_{LockType}");
         }
 
         // OnTransform

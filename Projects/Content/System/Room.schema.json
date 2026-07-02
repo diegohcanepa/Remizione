@@ -62,7 +62,8 @@
               "default": "None",
               "enum": [
                 "None",
-                "Padlock"
+                "GoldenKey",
+                "SilverKey"
               ]
             },
             "requiresDeadEnd": {
@@ -118,7 +119,7 @@
                 ],
                 "additionalProperties": false
               }
-            },            
+            },
             "musicTag": {
               "type": "string"
             },
