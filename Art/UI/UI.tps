@@ -342,11 +342,11 @@
             <key type="filename">Items-assets/BargainCross.png</key>
             <key type="filename">Items-assets/Battery.png</key>
             <key type="filename">Items-assets/BittenApple.png</key>
+            <key type="filename">Items-assets/BronzeKey.png</key>
             <key type="filename">Items-assets/Chili.png</key>
             <key type="filename">Items-assets/Duck.png</key>
             <key type="filename">Items-assets/Lockpick.png</key>
             <key type="filename">Items-assets/MissingItem.png</key>
-            <key type="filename">Items-assets/SilverKey.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -499,23 +499,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">MiniMap-assets/MiniMapContainer.png</key>
-            <key type="filename">MiniMap-assets/MiniMapContainerBorder.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>7,5,15,11</rect>
-                <key>scale9Paddings</key>
-                <rect>7,5,15,11</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">MiniMap-assets/MiniMapMarkerCoin.png</key>
+            <key type="filename">MiniMap-assets/MiniMapCoin.png</key>
+            <key type="filename">MiniMap-assets/MiniMapCoinAndLoot.png</key>
             <key type="filename">MiniMap-assets/MiniMapRoom2.png</key>
             <key type="filename">MiniMap-assets/MiniMapRoom3.png</key>
             <key type="filename">UI-assets/CheckMark.png</key>
@@ -544,7 +529,23 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">MiniMap-assets/MiniMapMarkerHeart.png</key>
+            <key type="filename">MiniMap-assets/MiniMapContainer.png</key>
+            <key type="filename">MiniMap-assets/MiniMapContainerBorder.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,5,15,11</rect>
+                <key>scale9Paddings</key>
+                <rect>7,5,15,11</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">MiniMap-assets/MiniMapHeart.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -559,7 +560,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">MiniMap-assets/MiniMapMarkerPickableLoot.png</key>
+            <key type="filename">MiniMap-assets/MiniMapLoot.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

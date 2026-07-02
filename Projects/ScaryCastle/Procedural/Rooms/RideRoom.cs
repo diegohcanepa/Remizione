@@ -199,7 +199,7 @@ namespace ScaryCastle
                             };
 
                             if (Random.NextDouble() <= lockChances)
-                                door.LockType = LockType.SilverKey;
+                                door.LockType = LockType.BronzeKey;
                         }
                         else if (targetRoomNode.Category is RoomCategory.Treasure or RoomCategory.Special)
                         {

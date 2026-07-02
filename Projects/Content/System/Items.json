@@ -65,6 +65,13 @@
 			]			
 		},
 		{
+			"name": "BronzeKey",
+			"actionKind": "Script",
+			"category": "Access",
+			"isStackable": true,
+			"pickupSound": "PickupKey"
+		},		
+		{
 			"name": "Coin",
 			"behavior": "Currency",
 			"actionKind": "Self",
@@ -184,13 +191,6 @@
 				}
 			]			
 		},
-		{
-			"name": "SilverKey",
-			"actionKind": "Script",
-			"category": "Access",
-			"isStackable": true,
-			"pickupSound": "PickupKey"
-		},		
 		{
 			"name": "SodaCan",
 			"category": "Food",

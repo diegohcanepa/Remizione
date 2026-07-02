@@ -87,7 +87,7 @@ namespace ScaryCastle
     public enum LightState { Off, On, TurningOn, TurningOff }
 
     // LockType
-    public enum LockType { None, GoldenKey, SilverKey }
+    public enum LockType { None, BronzeKey, GoldenKey }
 
     // LogVerb
     public enum LogVerb { None, Consumed, Discarded, Obtained, Found, Lost, Requires, Used }
