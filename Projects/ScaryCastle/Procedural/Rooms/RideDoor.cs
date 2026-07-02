@@ -146,7 +146,13 @@ namespace ScaryCastle
             {
                 int roomIndex = Room is RideRoom rideRoom ? rideRoom.RoomNode.Index : -1;
                 var pos = TargetRoom.GetPlayerPosition(roomIndex, out RideDoor? door);
-                door?.IsOpen = true;
+
+                if (door != null)
+                {
+                    door.IsOpen = true;
+                    door.LockType = LockType.None;
+                }
+
                 ConnectCore(TargetRoom, pos);
             }
         }
@@ -154,6 +160,24 @@ namespace ScaryCastle
         // DoorDirection
         [ScriptProperty]
         public RideDoorDirection DoorDirection { get; }
+
+        // IsBlocked
+        public bool IsBlocked()
+        {
+            if (Room != null)
+            {
+                for (var i = 0; i < Room.Children.Count; i++)
+                {
+                    if (Room.Children[i] == this || Room.Children[i] == Session.Player)
+                        continue;
+
+                    if (Room.Children[i] is GameThing thing && thing.BoundingBox.Intersects(BoundingBox))
+                        return true;
+                }
+            }
+
+            return false;
+        }
 
         // IsEmittingLight
         public override bool IsEmittingLight => Room?.HasAmbientLightSources == true ? false : base.IsEmittingLight;

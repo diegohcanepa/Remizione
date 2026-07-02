@@ -7,6 +7,7 @@
     {
         internal const string Apple = nameof(Apple);
         internal const string BargainCross = nameof(BargainCross);
+        internal const string BronzeKey = nameof(BronzeKey);
         internal const string Coin = nameof(Coin);
         internal const string GooBottle = nameof(GooBottle);
         internal const string Headbutt = nameof(Headbutt);

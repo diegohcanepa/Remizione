@@ -263,6 +263,10 @@
             </struct>
             <key type="filename">GoldenTrunk-assets/GoldenTrunkPiece2.png</key>
             <key type="filename">PotteryD-assets/PotteryDPiece5.png</key>
+            <key type="filename">Props-assets/BronzeKey01.png</key>
+            <key type="filename">Props-assets/BronzeKey02.png</key>
+            <key type="filename">Props-assets/BronzeKey03.png</key>
+            <key type="filename">Props-assets/BronzeKey04.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

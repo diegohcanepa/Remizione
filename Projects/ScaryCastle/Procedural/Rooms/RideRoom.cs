@@ -64,6 +64,131 @@ namespace ScaryCastle
 
         #region Private members
 
+        // DistributeBronzeKeys
+        private void DistributeBronzeKeys()
+        {
+            // Collect bronze locked doors
+            var lockedDoors = new List<RideDoor>();
+            foreach (var door in doors)
+            {
+                if (door.TargetRoom != null && door.LockType == LockType.BronzeKey)
+                    lockedDoors.Add(door);
+            }
+
+            if (lockedDoors.Count == 0)
+                return;
+
+            // Collect actors
+            var actors = new List<Actor>();
+            foreach (var actor in Children.OfType<Actor>())
+            {
+                if (!actor.IsDead && actor.IsPlayer || actor.Faction != Faction.Evil)
+                    continue;
+
+                if (actor.Definition?.DropTrigger == LootDropTrigger.OnImpact)
+                    continue;
+
+                actors.Add(actor);
+            }
+            actors.Shuffle();
+
+            // Collect pottery
+            var potteryList = new List<Pottery>();
+            foreach (var pottery in Children.OfType<Pottery>())
+            {
+                if (pottery.CanHideLoot)
+                    potteryList.Add(pottery);
+            }
+            potteryList.Shuffle();
+
+            var pendingKeys = lockedDoors.Count;
+
+            // Randomly hide a bronze key under a pot (Chance = 20%)
+            if (potteryList.Count > 0 && DiceExpression.Dice10.Roll() <= 2)
+            {
+                if (potteryList.GetRandomItem() is Pottery pot)
+                {
+                    DropBronzeKey(pot.Position - new Vector2(0, 2));
+                    pendingKeys--;
+                }
+            }
+
+            // Randomly drop a bronze key in the room (Chance = 20%)
+            if (DiceExpression.Dice10.Roll() <= 2)
+            {
+                DropBronzeKey();
+                pendingKeys--;
+            }
+
+            // Distribute bronze keys among actors
+            while (pendingKeys > 0 && actors.Count > 0)
+            {
+                if (actors.Count > 0)
+                {
+                    actors[0].ItemReward = ItemDefinition.Definitions.Get(ItemNames.BronzeKey);
+                    actors.RemoveAt(0);
+                    pendingKeys--;
+                }
+            }
+
+            // If there are still pending keys, drop them in the room
+            while (pendingKeys > 0)
+            {
+                DropBronzeKey();
+                pendingKeys--;
+            }
+        }
+
+        // DropBronzeKey
+        private void DropBronzeKey(Vector2? position = null)
+        {
+            var key = CreateThingClone<Prop>(ItemNames.BronzeKey);
+            Children.Add(key);
+
+            if (position.HasValue)
+            {
+                key.Position = position.Value;
+            }
+            else if (WalkArea != null)
+            {
+                key.Position = WalkArea.RandomWalkablePoint(30);
+            }
+        }
+
+        // LockDoorsAccordingly
+        private void LockDoorsAccordingly()
+        {
+            if (RoomNode.Category != RoomCategory.Start)
+            {
+                foreach (var door in doors)
+                {
+                    if (door.DoorDirection is RideDoorDirection.Left or RideDoorDirection.Right or RideDoorDirection.Up)
+                    {
+                        if (door.TargetRoom?.RoomNode is not RoomNode targetRoomNode)
+                            continue;
+
+                        if (targetRoomNode.Category == RoomCategory.Standard)
+                        {
+                            var lockChances = RoomNode.TopographicDifficulty switch
+                            {
+                                Difficulty.Easy => .2f,
+                                Difficulty.Normal => .4f,
+                                Difficulty.Hard => .6f,
+                                _ => 0.4f
+                            };
+
+                            if (Random.NextDouble() <= lockChances)
+                                door.LockType = LockType.BronzeKey;
+                        }
+                        else if (targetRoomNode.Category is RoomCategory.Treasure or RoomCategory.Special)
+                        {
+                            door.LockType = LockType.GoldenKey;
+                        }
+                    }
+                }
+            }
+        }
+
         // PopulateDoors
         private void PopulateDoors()
         {
@@ -178,36 +303,8 @@ namespace ScaryCastle
 
             PrepareView();
             PrepareLights();
-
-            if (RoomNode.Category != RoomCategory.Start)
-            {
-                foreach (var door in doors)
-                {
-                    if (door.DoorDirection is RideDoorDirection.Left or RideDoorDirection.Right or RideDoorDirection.Up)
-                    {
-                        if (door.TargetRoom?.RoomNode is not RoomNode targetRoomNode)
-                            continue;
-
-                        if (targetRoomNode.Category == RoomCategory.Standard)
-                        {
-                            var lockChances = RoomNode.TopographicDifficulty switch
-                            {
-                                Difficulty.Easy => .2f,
-                                Difficulty.Normal => .4f,
-                                Difficulty.Hard => .6f,
-                                _ => 0.4f
-                            };
-
-                            if (Random.NextDouble() <= lockChances)
-                                door.LockType = LockType.BronzeKey;
-                        }
-                        else if (targetRoomNode.Category is RoomCategory.Treasure or RoomCategory.Special)
-                        {
-                            door.LockType = LockType.GoldenKey;
-                        }
-                    }
-                }
-            }
+            LockDoorsAccordingly();
+            DistributeBronzeKeys();
         }
 
         // OnPopulating

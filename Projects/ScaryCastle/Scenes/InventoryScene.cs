@@ -209,7 +209,7 @@ namespace ScaryCastle
 
             Game.SpriteBatch.Begin(Game.Camera);
 
-            //Game.Shapes.DrawRectangle(Screen.Area, ColorPalette.SceneShade);
+            Game.Shapes.DrawRectangle(Screen.Area, ColorPalette.SceneShade * .5f);
 
             for (var i = 0; i < ItemContainer.Capacity; i++)
             {

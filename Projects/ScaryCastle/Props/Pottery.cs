@@ -1,4 +1,5 @@
-﻿using Engendro.Audio;
+﻿using Adberration.Scripting;
+using Engendro.Audio;
 
 namespace ScaryCastle
 {
@@ -23,6 +24,8 @@ namespace ScaryCastle
             IsLiftable = true;
         }
 
+        #region Protected members
+
         // OnTakeDamage
         protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType)
         {
@@ -34,6 +37,12 @@ namespace ScaryCastle
                 PlaySound(SoundNames.Break);
             }
         }
+
+        #endregion
+
+        // CanHideLoot
+        [ScriptProperty]
+        public bool CanHideLoot { get; set; }
 
         // GetThrowableImageName
         public override string GetThrowableImageName()

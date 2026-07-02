@@ -327,6 +327,7 @@ namespace ScaryCastle
             if (!Contains(point))
                 return false;
 
+            /*
             for (var i = 0; i < holeAreas.Count; i++)
             {
                 if (holeAreas[i].Contains(point))
@@ -334,6 +335,7 @@ namespace ScaryCastle
                     return false;
                 }
             }
+            */
 
             return true;
         }

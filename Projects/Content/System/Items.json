@@ -68,8 +68,10 @@
 			"name": "BronzeKey",
 			"actionKind": "Script",
 			"category": "Access",
+			"deselectOnUse": true,
 			"isStackable": true,
-			"pickupSound": "PickupKey"
+			"pickupSound": "PickupKey",
+			"spawnWeight": 0
 		},		
 		{
 			"name": "Coin",

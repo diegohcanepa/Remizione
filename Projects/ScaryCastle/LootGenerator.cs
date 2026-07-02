@@ -69,6 +69,9 @@ namespace ScaryCastle
                 if (itemDef.Name == nameof(Coin) || itemDef.Behavior == ItemBehavior.PlayerAction)
                     continue;
 
+                if (itemDef.SpawnWeight <= 0)
+                    continue;
+
                 if (IsDenied(itemDef.Category, denyCategories))
                     continue;
 

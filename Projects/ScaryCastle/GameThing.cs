@@ -265,7 +265,8 @@ namespace ScaryCastle
             if (Session.Room is not ProceduralRoom room)
                 return;
 
-            PrepareLoot();
+            if (ItemReward == null)
+                PrepareLoot();
 
             if (ItemReward != null)
             {

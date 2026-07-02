@@ -111,13 +111,15 @@ namespace Adberration
         // EndOutcome
         private void EndOutcome()
         {
+            var oldScript = outcomeScript;
             var oldTarget = OutcomeTarget;
+
             State = GameSessionState.Idle;
             outcomeScript = null;
             OutcomeTarget = null;
 
-            if (oldTarget != null)
-                OnOutcomeCompleted(oldTarget);
+            if (oldScript != null && oldTarget != null)
+                OnOutcomeCompleted(oldScript, oldTarget);
         }
 
         // ExitRoom
@@ -710,7 +712,7 @@ namespace Adberration
         }
 
         // OnOutcomeCompleted
-        protected virtual void OnOutcomeCompleted(Thing target)
+        protected virtual void OnOutcomeCompleted(Script script, Thing target)
         {
         }
 

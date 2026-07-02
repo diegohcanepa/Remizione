@@ -113,6 +113,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(BloodyEye));
             AotTypeRegistry.Register(typeof(BluePill));
             AotTypeRegistry.Register(typeof(BreakableProp));
+            AotTypeRegistry.Register(typeof(BronzeKey));
             AotTypeRegistry.Register(typeof(CloseUpRoom));
             AotTypeRegistry.Register(typeof(Coin));
             AotTypeRegistry.Register(typeof(CreditsRoom));
@@ -458,12 +459,10 @@ namespace ScaryCastle
         }
 
         // OnOutcomeCompleted
-        protected override void OnOutcomeCompleted(Thing target)
+        protected override void OnOutcomeCompleted(Script script, Thing target)
         {
-            base.OnOutcomeCompleted(target);
-
+            base.OnOutcomeCompleted(script, target);
             ActiveNPC?.CombatDecision = null;
-
             ProcessTurn();
         }
 
@@ -730,10 +729,19 @@ namespace ScaryCastle
         public new GameRoom? PreviousRoom => (GameRoom?)base.PreviousRoom;
 
         // ProcessTurn
-        public void ProcessTurn()
+        public void ProcessTurn(int turnPenalty = 0)
         {
             if (Room is not ProceduralRoom room)
                 return;
+
+            if (turnPenalty != 0)
+            {
+                for (var i = 0; i < room.Children.Count; i++)
+                {
+                    if (room.Children[i] is Actor actor && !actor.IsPlayer)
+                        actor.RemainingTurns -= Math.Abs(turnPenalty);
+                }
+            }
 
             for (var i = 0; i < room.Children.Count; i++)
             {

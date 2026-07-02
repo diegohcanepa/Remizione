@@ -118,7 +118,7 @@ namespace ScaryCastle
 
             image.Draw(gameTime);
 
-            if (roomNode != CurrentRoom)
+            if (roomNode != CurrentRoom && roomNode.Visited)
             {
                 if (roomNode.LootCount > 0 && roomNode.CoinCount == 0)
                 {
@@ -143,18 +143,16 @@ namespace ScaryCastle
             drawnRooms.Add(roomNode);
 
             if (roomNode.Down != null && (roomNode == CurrentRoom || roomNode.Visited) && !drawnRooms.Contains(roomNode.Down))
-            {
-                DrawRoom(gameTime, roomNode.Down, position + new Vector2(0, image.BoundingBox.Height));
-            }
+                DrawRoom(gameTime, roomNode.Down, position + new Vector2(0, image.BoundingBox.Height - 1));
 
             if (roomNode.Left != null && (roomNode == CurrentRoom || roomNode.Visited) && !drawnRooms.Contains(roomNode.Left))
-                DrawRoom(gameTime, roomNode.Left, position - new Vector2(image.BoundingBox.Width, 0));
+                DrawRoom(gameTime, roomNode.Left, position - new Vector2(image.BoundingBox.Width - 1, 0));
 
             if (roomNode.Right != null && (roomNode == CurrentRoom || roomNode.Visited) && !drawnRooms.Contains(roomNode.Right))
-                DrawRoom(gameTime, roomNode.Right, position + new Vector2(image.BoundingBox.Width, 0));
+                DrawRoom(gameTime, roomNode.Right, position + new Vector2(image.BoundingBox.Width - 1, 0));
 
             if (roomNode.Up != null && (roomNode == CurrentRoom || roomNode.Visited) && !drawnRooms.Contains(roomNode.Up))
-                DrawRoom(gameTime, roomNode.Up, position - new Vector2(0, image.BoundingBox.Height));
+                DrawRoom(gameTime, roomNode.Up, position - new Vector2(0, image.BoundingBox.Height - 1));
         }
 
         #endregion

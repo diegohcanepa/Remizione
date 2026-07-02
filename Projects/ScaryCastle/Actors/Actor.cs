@@ -153,12 +153,19 @@ namespace ScaryCastle
 
         // ResetRemainingTurns
         [ScriptMethod]
-        private void ResetRemainingTurns()
+        private void ResetRemainingTurns(bool randomize = false)
         {
             if (CombatBehavior == null)
+            {
                 RemainingTurns = 0;
+            }
             else
-                RemainingTurns = CombatBehavior.TurnInterval;
+            {
+                if (randomize && CombatBehavior.TurnInterval > 1)
+                    RemainingTurns = Random.Shared.Next(1, CombatBehavior.TurnInterval + 1);
+                else
+                    RemainingTurns = CombatBehavior.TurnInterval;
+            }
         }
 
         // SyncHeadAnimation
@@ -483,7 +490,7 @@ namespace ScaryCastle
         {
             base.OnLoad();
             IsAlert = true;
-            ResetRemainingTurns();
+            ResetRemainingTurns(true);
             OpacityFactor = 1;
             Stand();
         }
@@ -526,7 +533,7 @@ namespace ScaryCastle
             if (EnforceTurn)
             {
                 EnforceTurn = false;
-                Session.ProcessTurn();
+                Session.ProcessTurn(PixelsMoved > 80 ? -1 : 0);
             }
         }
 
@@ -1094,6 +1101,9 @@ namespace ScaryCastle
         // MoveToDestination
         public Vector2? MoveToDestination => pendingPathNodes.Count == 0 ? null : pendingPathNodes[^1];
 
+        // PixelsMoved
+        public float PixelsMoved { get; set; }
+
         // PlayerNumber
         [ScriptProperty]
         public PlayerNumber PlayerNumber
@@ -1144,6 +1154,13 @@ namespace ScaryCastle
             }
             else
             {
+                if (target is RideDoor door && door.IsBlocked())
+                {
+                    FaceTo(target);
+                    Session.AwaitRoutine(RoutineNames.WayBlockedHandler);
+                    return false;
+                }
+
                 var destination = target.GetApproachPosition(this, Session.InteractionData.IsAttack || ActiveThrowable != null ? ApproachBehavior.ClosestSide : null);
 
                 if (ActiveThrowable != null)
@@ -1159,9 +1176,7 @@ namespace ScaryCastle
                 }
 
                 if (!MoveTo(destination))
-                {
                     HandlePendingInteraction();
-                }
             }
 
             return true;
@@ -1270,12 +1285,6 @@ namespace ScaryCastle
             }
 
             RemainingTurns -= 1;
-
-            if (DiceExpression.Dice10.Roll() <= 2)
-                RemainingTurns -= 1;
-
-            if (DiceExpression.Dice10.Roll() <= 1)
-                RemainingTurns -= 1;
         }
 
         /// <summary>
