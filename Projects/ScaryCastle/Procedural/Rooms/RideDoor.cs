@@ -138,6 +138,17 @@ namespace ScaryCastle
 
         #endregion
 
+        // CanBeUnlockedWithPocketItem
+        [ScriptProperty]
+        public bool CanBeUnlockedWithPocketItem
+        {
+            get
+            {
+                return (LockType == LockType.BronzeKey && Session.BronzeKeys > 0) ||
+                       (LockType == LockType.GoldenKey && Session.GoldenKeys > 0);
+            }
+        }
+
         // Connect
         [ScriptMethod(CodingContext.Execution)]
         public void Connect()
@@ -171,8 +182,11 @@ namespace ScaryCastle
                     if (Room.Children[i] == this || Room.Children[i] == Session.Player)
                         continue;
 
-                    if (Room.Children[i] is GameThing thing && thing.BoundingBox.Intersects(BoundingBox))
-                        return true;
+                    if (Room.Children[i] is GameThing thing && !thing.IsDead && thing.MaxHP > 0)
+                    {
+                        if (RuntimeHotspot.ContainsVertex(thing.RuntimeHotspot))
+                            return true;
+                    }
                 }
             }
 
@@ -241,5 +255,21 @@ namespace ScaryCastle
 
         // TargetRoomPosition
         public Vector2 TargetRoomPosition { get; set; }
+
+        // UnlockWithPocketItem
+        [ScriptMethod(CodingContext.Execution)]
+        public void UnlockWithPocketItem()
+        {
+            if (LockType == LockType.BronzeKey && Session.BronzeKeys > 0)
+            {
+                Session.BronzeKeys--;
+                LockType = LockType.None;
+            }
+            else if (LockType == LockType.GoldenKey && Session.GoldenKeys > 0)
+            {
+                Session.GoldenKeys--;
+                LockType = LockType.None;
+            }
+        }
     }
 }

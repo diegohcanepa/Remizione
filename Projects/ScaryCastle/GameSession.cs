@@ -519,6 +519,18 @@ namespace ScaryCastle
         // Bosses
         public List<Actor> Bosses { get; } = [];
 
+        // BronzeKeys
+        [ScriptProperty]
+        public int BronzeKeys
+        {
+            get;
+            set
+            {
+                if (value != field)
+                    field = Math.Max(0, value);
+            }
+        }
+
         // Coins
         [ScriptProperty]
         public int Coins
@@ -527,9 +539,7 @@ namespace ScaryCastle
             set
             {
                 if (value != field)
-                {
                     field = Math.Max(0, value);
-                }
             }
         }
 
@@ -566,7 +576,9 @@ namespace ScaryCastle
             Bosses.Clear();
             TextHUD.BossMeter.Reset();
             CleanUpRuntimeEntities();
+            BronzeKeys = 0;
             Coins = 0;
+            GoldenKeys = 0;
             PlayerActions.Clear();
             PlayerInventory.Clear();
             PlayerStats.Reset();
@@ -599,15 +611,6 @@ namespace ScaryCastle
             Save();
         }
 
-        /*
-        // EnterCorridor
-        public void EnterCorridor()
-        {
-            if (CurrentRun?.CurrentCorridor?.RideRoom is CorridorRoom cr)
-                EnterRoom(cr);
-        }
-        */
-
         // Environment
         public Environment Environment { get; }
 
@@ -619,6 +622,18 @@ namespace ScaryCastle
 
         // Game
         public new ScaryCastleGame Game { get; }
+
+        // GoldenKeys
+        [ScriptProperty]
+        public int GoldenKeys
+        {
+            get;
+            set
+            {
+                if (value != field)
+                    field = Math.Max(0, value);
+            }
+        }
 
         // HasPendingTurns
         [ScriptProperty]

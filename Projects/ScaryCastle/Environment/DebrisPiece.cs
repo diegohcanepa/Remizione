@@ -11,14 +11,15 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private bool active;
         private float arcHeight;
         private Vector2 direction;
         private float duration;
         private float elapsed;
         private readonly Sprite image = new() { PivotOrigin = RectanglePoint.Center };
+        private bool isActive;
         private bool isFirstBounce;
         private bool isLaunched;
+        private bool isOutOfWalkArea;
         private float launchDelay;
         private GameRoom? room;
         private float rotationSpeed;
@@ -85,21 +86,27 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (!active && elapsed == 0)
+            if (isOutOfWalkArea)
                 return;
 
-            image.Color = ColorPalette.Shadow;
-            image.Y += 1f;
-            image.Draw(gameTime);
-            image.Y -= 1f;
-            image.Color = Color.White;
+            if (Shadow)
+            {
+                image.Color = ColorPalette.Shadow;
+                image.Y += 1f;
+                image.Draw(gameTime);
+                image.Y -= 1f;
+                image.Color = Color.White;
+            }
+
             image.Draw(gameTime);
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (!active) return;
+            if (!isActive)
+                return;
+
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if (!isLaunched)
@@ -138,7 +145,19 @@ namespace ScaryCastle
                 }
                 else
                 {
-                    active = false;
+                    isActive = false;
+
+                    if (room?.Walls != null)
+                    {
+                        for (var i = 0; i < room.Walls.Count; i++)
+                        {
+                            if (room.Walls[i].ContainsVertex(image.BoundingBox))
+                            {
+                                isOutOfWalkArea = true;
+                                break;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -156,6 +175,9 @@ namespace ScaryCastle
         public void Launch(GameThing owner)
         {
             room = owner.Session.Room;
+            if (room == null)
+                return;
+
             startPos = new Vector2(owner.X, owner.Y);
 
             // 1. Variación de ángulo y deformación de perspectiva (Y)
@@ -170,8 +192,9 @@ namespace ScaryCastle
             rotationSpeed = (float)((Random.Shared.NextDouble() * 12) - 6);
 
             isFirstBounce = true;
-            active = true;
+            isActive = true;
             isLaunched = false;
+            isOutOfWalkArea = false;
 
             // 4. Delay de salida más generoso para romper el "bloque" inicial
             launchDelay = (float)Random.Shared.NextDouble() * 0.2f;
@@ -179,11 +202,19 @@ namespace ScaryCastle
             CalculateNextArc(12, 22);
         }
 
+        // Opacity
+        public float Opacity
+        {
+            get => image.Opacity;
+            set => image.Opacity = value;
+        }   
+
         // Reset
         public void Reset()
         {
             Image = null;
             Scale = Vector2.One;
+            Shadow = false;
         }
 
         // Scale
@@ -192,5 +223,8 @@ namespace ScaryCastle
             get => image.Scale;
             set => image.Scale = value;
         }
+
+        // Shadow
+        public bool Shadow { get; set; }
     }
 }

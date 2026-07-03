@@ -251,6 +251,20 @@ namespace Engendro
         }
 
         // ContainsVertex
+        public bool ContainsVertex(RectangleF rect)
+        {
+            var rectVertices = new Vector2[]
+            {
+                new(rect.Left, rect.Top),
+                new(rect.Right, rect.Top),
+                new(rect.Right, rect.Bottom),
+                new(rect.Left, rect.Bottom)
+            };
+            
+            return ContainsVertex(rectVertices);
+        }
+
+        // ContainsVertex
         public bool ContainsVertex(ReadOnlyPolygon polygon)
         {
             return ContainsVertex(polygon.Vertices);

@@ -15,6 +15,7 @@ namespace ScaryCastle
             AlertIcon = this[nameof(AlertIcon)];
             BossMeter = this[nameof(BossMeter)];
             BossMeterAmount = this[nameof(BossMeterAmount)];
+            BronzeKeyIcon = this[nameof(BronzeKeyIcon)];
             CheckMark = this[nameof(CheckMark)];
             Coin = this[nameof(Coin)];
             CoinIcon = this[nameof(CoinIcon)];
@@ -25,6 +26,7 @@ namespace ScaryCastle
             DialogOptionBullet = this[nameof(DialogOptionBullet)];
             DiscardItemIcon = this[nameof(DiscardItemIcon)];
             FaithIcon = this[nameof(FaithIcon)];
+            GoldenKeyIcon = this[nameof(GoldenKeyIcon)];
             GooIcon = this[nameof(GooIcon)];
             GooMeter = CreateReadOnlyCollection(nameof(GooMeter), 0, 5);
             GreenHearts = CreateReadOnlyCollection(nameof(GreenHearts), 1, 4);
@@ -61,6 +63,9 @@ namespace ScaryCastle
         // BossMeterAmount
         public AtlasImage BossMeterAmount { get; }
 
+        // BronzeKeyIcon
+        public AtlasImage BronzeKeyIcon { get; }
+
         // CheckMark
         public AtlasImage CheckMark { get; }
 
@@ -93,6 +98,9 @@ namespace ScaryCastle
 
         // FaithIcon
         public AtlasImage FaithIcon { get; }
+
+        // GoldenKeyIcon
+        public AtlasImage GoldenKeyIcon { get; }
 
         // GooIcon
         public AtlasImage GooIcon { get; }

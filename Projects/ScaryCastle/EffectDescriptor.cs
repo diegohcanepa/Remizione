@@ -65,6 +65,11 @@ namespace ScaryCastle
                     case EffectType.None:
                         break;
 
+                    // BronzeKey
+                    case EffectType.BronzeKey:
+                        source.Session.BronzeKeys += amount;
+                        break;
+
                     // ComicText
                     case EffectType.ComicText:
                         // ComicText si hubo daño real
@@ -107,6 +112,11 @@ namespace ScaryCastle
                     case EffectType.ExtraHeart:
                         realTarget?.MaxHP += amount;
                         source.Session.TextHUD.Message.Show(MessageKind.ExtraHeart);
+                        break;
+
+                    // GoldenKey
+                    case EffectType.GoldenKey:
+                        source.Session.GoldenKeys += amount;
                         break;
 
                     // Heal

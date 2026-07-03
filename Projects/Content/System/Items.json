@@ -66,16 +66,23 @@
 		},
 		{
 			"name": "BronzeKey",
-			"actionKind": "Script",
+			"behavior": "PocketItem",
+			"actionKind": "Self",
 			"category": "Access",
-			"deselectOnUse": true,
-			"isStackable": true,
 			"pickupSound": "PickupKey",
-			"spawnWeight": 0
+			"spawnWeight": 0,
+			"effects": [
+				{
+					"context": "Collect",
+					"effectType": "BronzeKey",
+					"amount": "1",
+					"target": "Self"
+				}
+			]			
 		},		
 		{
 			"name": "Coin",
-			"behavior": "Currency",
+			"behavior": "PocketItem",
 			"actionKind": "Self",
 			"category": "Money",
 			"effects": [
@@ -105,11 +112,20 @@
 		},
 		{
 			"name": "GoldenKey",
-			"actionKind": "Script",
+			"behavior": "PocketItem",
+			"actionKind": "Self",
 			"category": "Access",
-			"isStackable": true,
-			"pickupSound": "PickupKey"
-		},
+			"pickupSound": "PickupKey",
+			"spawnWeight": 0.2,
+			"effects": [
+				{
+					"context": "Collect",
+					"effectType": "GoldenKey",
+					"amount": "1",
+					"target": "Self"
+				}
+			]			
+		},		
 		{
 			"name": "GooBottle",
 			"animationName": "ConsumeGooBottle",

@@ -13,13 +13,10 @@ namespace ScaryCastle
         private readonly List<DebrisPiece> parts = [];
 
         // Constructor
-        public Guts(GameSession session, bool bloodStain, int amount, Vector2 scale, IList<AtlasImage>? extraImages)
+        public Guts(GameSession session, int amount, Vector2 scale, IList<AtlasImage>? extraImages)
             : base(session, string.Empty)
         {
-            Atlas = Atlases.Environment;
-            DefaultImageName = Atlases.Environment.GutStains[Random.Shared.Next(0, 2)].Name;
             PivotOrigin = RectanglePoint.Center;
-            Opacity = bloodStain ? .8f : 0;
 
             // Guts pieces
             var guts = Math.Min(amount, Atlases.Environment.Guts.Count);
@@ -29,6 +26,7 @@ namespace ScaryCastle
                 {
                     var debris = Session.ObjectPools.DebrisPieces.Get();
                     debris.Image = Atlases.Environment.Guts[i];
+                    debris.Opacity = .75f;
                     debris.Scale = scale;
                     parts.Add(debris);
                 }
@@ -42,6 +40,7 @@ namespace ScaryCastle
                     var debris = Session.ObjectPools.DebrisPieces.Get();
                     debris.Image = extraImages[i];
                     debris.Scale = scale;
+                    debris.Shadow = true;
                     parts.Add(debris);
                 }
             }
@@ -54,7 +53,7 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            base.OnDraw(gameTime);
+            //base.OnDraw(gameTime);
 
             for (var i = 0; i < parts.Count; i++)
             {

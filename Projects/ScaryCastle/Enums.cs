@@ -54,7 +54,7 @@ namespace ScaryCastle
     public enum EffectContext { Collect, Contact, Attack, Update, Use, ProjectileHit }
 
     // EffectType
-    public enum EffectType { None, Coin, Condition, ComicText, Damage, Death, Energy, ExtraEnergy, ExtraHeart, Heal }
+    public enum EffectType { None, BronzeKey, Coin, Condition, ComicText, Damage, Death, Energy, ExtraEnergy, ExtraHeart, GoldenKey, Heal }
 
     // EffectTarget
     public enum EffectTarget { Target, Self }
@@ -72,7 +72,7 @@ namespace ScaryCastle
     public enum InPlaceEffectType { None, Lightning }
 
     // ItemBehavior
-    public enum ItemBehavior { Common, Currency, PlayerAction, StatModifier }
+    public enum ItemBehavior { Common, PocketItem, PlayerAction, StatModifier }
 
     // ItemCategory
     public enum ItemCategory { Access, Explosive, Food, Luck, Medicine, Misc, Money, Pills, Sacred }
@@ -143,6 +143,9 @@ namespace ScaryCastle
 
     // PlayerNumber
     public enum PlayerNumber { None = -1, One = 0, Two = 1, Three = 2, Four = 3 }
+
+    // PocketItemType
+    public enum PocketItemType { BronzeKey, Coin, GoldenKey }
 
     // PositioningMode
     public enum PositioningMode

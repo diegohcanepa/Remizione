@@ -384,7 +384,7 @@ namespace ScaryCastle
                         _ => Vector2.One * 1.25f
                     };
 
-                    var guts = new Guts(Session, Guts > 0, Guts, gutScale, customGuts)
+                    var guts = new Guts(Session, Guts, gutScale, customGuts)
                     {
                         Position = Position,
                     };
@@ -905,7 +905,7 @@ namespace ScaryCastle
 
         // Guts
         [ScriptProperty]
-        public int Guts { get; set; } = 3;
+        public int Guts { get; set; } = 8;
 
         // HandleInput
         public HandleInputResult HandleInput()

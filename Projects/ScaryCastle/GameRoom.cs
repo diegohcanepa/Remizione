@@ -285,7 +285,21 @@ namespace ScaryCastle
             if (Session.Player != null && Session.Player.IsInCurrentRoom && FollowPlayer)
                 Session.Camera.Follow(Session.Player, true);
 
+            if (DustParticleKind != DustParticleKind.None)
+                dustEmitter?.Activate();
+
+            if (AllowFireflyParticles)
+                fireflyEmitter?.Activate();
+
             InvalidateAmbientLightSources();
+        }
+
+        // OnDeactivate
+        protected override void OnDeactivate()
+        {
+            base.OnDeactivate();
+            dustEmitter?.Deactivate();
+            fireflyEmitter?.Deactivate();
         }
 
         // OnDraw
@@ -371,22 +385,8 @@ namespace ScaryCastle
             if (FollowPlayer && Session.Player?.Room == this)
                 Session.Camera.Follow(Session.Player, true);
 
-            if (DustParticleKind != DustParticleKind.None)
-                dustEmitter?.Activate();
-
-            if (AllowFireflyParticles)
-                fireflyEmitter?.Activate();
-
             lightMapTarget = Game.RenderTargets.AuxiliaryTargets[0];
             lightSources.Clear();
-        }
-
-        // OnUnload
-        protected override void OnUnload()
-        {
-            base.OnUnload();
-            dustEmitter?.Deactivate();
-            fireflyEmitter?.Deactivate();
         }
 
         // OnUpdate

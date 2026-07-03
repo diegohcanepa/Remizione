@@ -23,6 +23,7 @@ namespace ScaryCastle
             Zoom = 1.15f;
             AtlasName = roomNode.Definition.Name ?? string.Empty;
             DefaultImageName = AtlasName;
+            DustParticleKind = DustParticleKind.Ash;
             LightMapColor = roomNode.Definition.LightMapColor;
             LightingSystem = true;
 
@@ -82,7 +83,7 @@ namespace ScaryCastle
             var actors = new List<Actor>();
             foreach (var actor in Children.OfType<Actor>())
             {
-                if (!actor.IsDead && actor.IsPlayer || actor.Faction != Faction.Evil)
+                if (actor.IsDead || actor.IsPlayer || actor.Faction != Faction.Evil)
                     continue;
 
                 if (actor.Definition?.DropTrigger == LootDropTrigger.OnImpact)
