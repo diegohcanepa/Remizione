@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace ScaryCastle
 {
@@ -83,8 +84,14 @@ namespace ScaryCastle
         // Left
         public RoomNode? Left { get; set; }
 
+        // LockedDoors
+        public Dictionary<DoorDirection, LockType> LockedDoors { get; } = [];
+
         // LootCount
         public int LootCount { get; set; }
+
+        // PendingBronzeKeys
+        public int PendingBronzeKeys { get; set; }
 
         // RideRoom
         public RideRoom RideRoom { get; set; } = null!;

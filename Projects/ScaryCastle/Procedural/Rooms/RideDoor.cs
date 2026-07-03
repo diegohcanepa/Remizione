@@ -23,19 +23,19 @@ namespace ScaryCastle
 
             if (name.StartsWith("RideDoorUp", StringComparison.OrdinalIgnoreCase))
             {
-                DoorDirection = RideDoorDirection.Up;
+                DoorDirection = DoorDirection.Up;
             }
             else if (name.StartsWith("RideDoorDown", StringComparison.OrdinalIgnoreCase))
             {
-                DoorDirection = RideDoorDirection.Down;
+                DoorDirection = DoorDirection.Down;
             }
             else if (name.StartsWith("RideDoorLeft", StringComparison.OrdinalIgnoreCase))
             {
-                DoorDirection = RideDoorDirection.Left;
+                DoorDirection = DoorDirection.Left;
             }
             else if (name.StartsWith("RideDoorRight", StringComparison.OrdinalIgnoreCase))
             {
-                DoorDirection = RideDoorDirection.Right;
+                DoorDirection = DoorDirection.Right;
             }
             else
             {
@@ -88,22 +88,22 @@ namespace ScaryCastle
                 switch (DoorDirection)
                 {
                     // Up
-                    case RideDoorDirection.Up:
+                    case DoorDirection.Up:
                         Verb = Verb.GoUp;
                         break;
 
                     // Right
-                    case RideDoorDirection.Right:
+                    case DoorDirection.Right:
                         Verb = Verb.GoRight;
                         break;
 
                     // Down
-                    case RideDoorDirection.Down:
+                    case DoorDirection.Down:
                         Verb = Verb.GoDown;
                         break;
 
                     // Left
-                    case RideDoorDirection.Left:
+                    case DoorDirection.Left:
                         Verb = Verb.GoLeft;
                         break;
 
@@ -170,7 +170,7 @@ namespace ScaryCastle
 
         // DoorDirection
         [ScriptProperty]
-        public RideDoorDirection DoorDirection { get; }
+        public DoorDirection DoorDirection { get; }
 
         // IsBlocked
         public bool IsBlocked()
@@ -205,15 +205,15 @@ namespace ScaryCastle
                 Sprite.ClearAnimations();
 
                 var assetPrefix = string.Empty;
-                if (DoorDirection == RideDoorDirection.Up && rideRoom.RoomNode.Up != null)
+                if (DoorDirection == DoorDirection.Up && rideRoom.RoomNode.Up != null)
                 {
                     assetPrefix = GetVisualAssetName(rideRoom.RoomNode, rideRoom.RoomNode.Up);
                 }
-                else if (DoorDirection == RideDoorDirection.Right && rideRoom.RoomNode.Right != null)
+                else if (DoorDirection == DoorDirection.Right && rideRoom.RoomNode.Right != null)
                 {
                     assetPrefix = GetVisualAssetName(rideRoom.RoomNode, rideRoom.RoomNode.Right);
                 }
-                else if (DoorDirection == RideDoorDirection.Down && rideRoom.RoomNode.Down != null)
+                else if (DoorDirection == DoorDirection.Down && rideRoom.RoomNode.Down != null)
                 {
                     assetPrefix = GetVisualAssetName(rideRoom.RoomNode, rideRoom.RoomNode.Down);
 
@@ -230,7 +230,7 @@ namespace ScaryCastle
                         AttachedLightPosition = new(16, 20);
                     }
                 }
-                else if (DoorDirection == RideDoorDirection.Left && rideRoom.RoomNode.Left != null)
+                else if (DoorDirection == DoorDirection.Left && rideRoom.RoomNode.Left != null)
                 {
                     assetPrefix = GetVisualAssetName(rideRoom.RoomNode, rideRoom.RoomNode.Left);
                 }

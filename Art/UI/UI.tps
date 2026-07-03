@@ -626,6 +626,7 @@
             </struct>
             <key type="filename">MouseCursors-assets/MouseCursorDown.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorUp.png</key>
+            <key type="filename">UIIcons-assets/GoldenKeyIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -920,6 +921,21 @@
                 <rect>1,2,1,3</rect>
                 <key>scale9Paddings</key>
                 <rect>1,2,1,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">UIIcons-assets/BronzeKeyIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,3,10,5</rect>
+                <key>scale9Paddings</key>
+                <rect>5,3,10,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

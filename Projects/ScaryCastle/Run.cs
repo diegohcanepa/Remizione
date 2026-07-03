@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ScaryCastle
 {
@@ -253,8 +254,85 @@ namespace ScaryCastle
             }
         }
 
-        // ExecutePhase4_AssignAssets
-        private void ExecutePhase4_AssignAssets(Random rng)
+        // ExecutePhase3_InjectSecrets
+        private void ExecutePhase3_InjectSecrets(Random rng)
+        {
+        }
+
+        // ExecutePhase4_TopologyAndLocks
+        private void ExecutePhase4_TopologyAndLocks(Random rng)
+        {
+            int maxDistance = GetMaxFloorDistance();
+
+            var visited = new HashSet<RoomNode>();
+            var queue = new Queue<RoomNode>();
+            var accessibleRooms = new List<RoomNode>();
+
+            var startNode = FloorMap[Point.Zero];
+            queue.Enqueue(startNode);
+            visited.Add(startNode);
+
+            Point[] directions = [new(0, -1), new(0, 1), new(-1, 0), new(1, 0)];
+
+            while (queue.Count > 0)
+            {
+                var currentNode = queue.Dequeue();
+                accessibleRooms.Add(currentNode);
+
+                foreach (var dir in directions)
+                {
+                    Point neighborPos = currentNode.GridPosition + dir;
+
+                    if (FloorMap.TryGetValue(neighborPos, out RoomNode? targetNode) && !visited.Contains(targetNode))
+                    {
+                        Difficulty targetDiff = GetProgressiveDifficulty(targetNode.GridPosition, maxDistance);
+
+                        if (targetNode.Category == RoomCategory.Standard)
+                        {
+                            // Traducimos las direcciones antes de tirar los dados
+                            DoorDirection currentToTarget = GetDoorDirectionFromPoint(dir);
+                            DoorDirection targetToCurrent = GetDoorDirectionFromPoint(new Point(-dir.X, -dir.Y));
+
+                            // REGLA VISUAL: Si la puerta sale hacia ABAJO desde el nodo actual,
+                            // o si la puerta de regreso del hijo da hacia ABAJO, salteamos el bloqueo.
+                            if (currentToTarget == DoorDirection.Down || targetToCurrent == DoorDirection.Down)
+                            {
+                                // Continuamos explorando el árbol, pero dejamos la conexión abierta (sin candado)
+                                visited.Add(targetNode);
+                                queue.Enqueue(targetNode);
+                                continue;
+                            }
+
+                            var lockChance = targetDiff switch
+                            {
+                                Difficulty.Easy => 0.2f,
+                                Difficulty.Normal => 0.4f,
+                                Difficulty.Hard => 0.6f,
+                                _ => 0.4f
+                            };
+
+                            if (rng.NextDouble() <= lockChance)
+                            {
+                                // 1. Bloqueamos la conexión lógica usando el Enum
+                                currentNode.LockedDoors[currentToTarget] = LockType.BronzeKey;
+                                targetNode.LockedDoors[targetToCurrent] = LockType.BronzeKey;
+
+                                // 2. Inyectamos la llave en el pool seguro
+                                var safeRoom = accessibleRooms[rng.Next(accessibleRooms.Count)];
+                                safeRoom.PendingBronzeKeys++;
+                            }
+                        }
+
+                        // Avanzamos el BFS de forma segura
+                        visited.Add(targetNode);
+                        queue.Enqueue(targetNode);
+                    }
+                }
+            }
+        }
+
+        // ExecutePhase5_AssignDefinitions
+        private void ExecutePhase5_AssignDefinitions(Random rng)
         {
             int maxDistance = GetMaxFloorDistance();
 
@@ -311,6 +389,33 @@ namespace ScaryCastle
             }
         }
 
+        // ExecutePhase6_PrepareRooms
+        private void ExecutePhase6_PrepareRooms()
+        {
+            foreach (var node in FloorMap.Values)
+            {
+                node.RideRoom = RideRoom.CreateInstance(session, node);
+            }
+
+            foreach (var node in FloorMap.Values)
+            {
+                node.RideRoom.Load();
+            }
+        }
+
+        // GetDoorDirectionFromPoint
+        private static DoorDirection GetDoorDirectionFromPoint(Point direction)
+        {
+            return direction switch
+            {
+                { X: 0, Y: -1 } => DoorDirection.Up,
+                { X: 1, Y: 0 } => DoorDirection.Right,
+                { X: 0, Y: 1 } => DoorDirection.Down,
+                { X: -1, Y: 0 } => DoorDirection.Left,
+                _ => throw new ArgumentException($"Invalid direction: {direction}")
+            };
+        }
+
         // GetManhattanDistance
         private static int GetManhattanDistance(Point a, Point b)
         {
@@ -359,21 +464,17 @@ namespace ScaryCastle
 
             ExecutePhase1_Layout(rng);
             ExecutePhase2_Labeling(rng);
-            // ExecutePhase3_InjectSecrets(rng);
-            ExecutePhase4_AssignAssets(rng);
-
-            foreach (var node in FloorMap.Values)
-            {
-                node.RideRoom = RideRoom.CreateInstance(session, node);
-            }
-
-            foreach (var node in FloorMap.Values)
-            {
-                node.RideRoom.Load();
-            }
+            ExecutePhase3_InjectSecrets(rng);
+            ExecutePhase4_TopologyAndLocks(rng);
+            ExecutePhase5_AssignDefinitions(rng);
+            ExecutePhase6_PrepareRooms();
 
             StartNode = FloorMap[Point.Zero];
+
+            var lockedDoors = FloorMap.Values.Sum(node => node.LockedDoors.Count);
+            var totalBronzeKeys = FloorMap.Values.Sum(node => node.PendingBronzeKeys);
         }
+
 
         // Spawns
         public CounterBank Spawns { get; } = new();

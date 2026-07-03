@@ -164,8 +164,8 @@ namespace ScaryCastle
     // RenderLayer
     public enum RenderLayer { BehindBackground, Background, OverBackground, Default, Foreground, ForegroundNoLight }
 
-    // RideDoorDirection
-    public enum RideDoorDirection { Up, Right, Down, Left }
+    // DoorDirection
+    public enum DoorDirection { Up, Right, Down, Left }
 
     // RoomTheme
     public enum RoomTheme { Castle }

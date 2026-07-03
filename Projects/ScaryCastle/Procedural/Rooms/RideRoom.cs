@@ -68,15 +68,7 @@ namespace ScaryCastle
         // DistributeBronzeKeys
         private void DistributeBronzeKeys()
         {
-            // Collect bronze locked doors
-            var lockedDoors = new List<RideDoor>();
-            foreach (var door in doors)
-            {
-                if (door.TargetRoom != null && door.LockType == LockType.BronzeKey)
-                    lockedDoors.Add(door);
-            }
-
-            if (lockedDoors.Count == 0)
+            if (RoomNode.PendingBronzeKeys <= 0)
                 return;
 
             // Collect actors
@@ -102,7 +94,7 @@ namespace ScaryCastle
             }
             potteryList.Shuffle();
 
-            var pendingKeys = lockedDoors.Count;
+            var pendingKeys = RoomNode.PendingBronzeKeys;
 
             // Randomly hide a bronze key under a pot (Chance = 20%)
             if (potteryList.Count > 0 && DiceExpression.Dice10.Roll() <= 2)
@@ -111,6 +103,8 @@ namespace ScaryCastle
                 {
                     DropBronzeKey(pot.Position - new Vector2(0, 2));
                     pendingKeys--;
+                    if (pendingKeys <= 0)
+                        return;
                 }
             }
 
@@ -119,6 +113,8 @@ namespace ScaryCastle
             {
                 DropBronzeKey();
                 pendingKeys--;
+                if (pendingKeys <= 0)
+                    return;
             }
 
             // Distribute bronze keys among actors
@@ -129,6 +125,8 @@ namespace ScaryCastle
                     actors[0].ItemReward = ItemDefinition.Definitions.Get(ItemNames.BronzeKey);
                     actors.RemoveAt(0);
                     pendingKeys--;
+                    if (pendingKeys <= 0)
+                        return;
                 }
             }
 
@@ -159,34 +157,10 @@ namespace ScaryCastle
         // LockDoorsAccordingly
         private void LockDoorsAccordingly()
         {
-            if (RoomNode.Category != RoomCategory.Start)
+            foreach (var door in doors)
             {
-                foreach (var door in doors)
-                {
-                    if (door.DoorDirection is RideDoorDirection.Left or RideDoorDirection.Right or RideDoorDirection.Up)
-                    {
-                        if (door.TargetRoom?.RoomNode is not RoomNode targetRoomNode)
-                            continue;
-
-                        if (targetRoomNode.Category == RoomCategory.Standard)
-                        {
-                            var lockChances = RoomNode.TopographicDifficulty switch
-                            {
-                                Difficulty.Easy => .2f,
-                                Difficulty.Normal => .4f,
-                                Difficulty.Hard => .6f,
-                                _ => 0.4f
-                            };
-
-                            if (Random.NextDouble() <= lockChances)
-                                door.LockType = LockType.BronzeKey;
-                        }
-                        else if (targetRoomNode.Category is RoomCategory.Treasure or RoomCategory.Special)
-                        {
-                            door.LockType = LockType.GoldenKey;
-                        }
-                    }
-                }
+                if (RoomNode.LockedDoors.TryGetValue(door.DoorDirection, out LockType lockType))
+                    door.LockType = lockType;
             }
         }
 
@@ -346,7 +320,7 @@ namespace ScaryCastle
 
             foreach (var door in Children.OfType<RideDoor>())
             {
-                if ((previousRoomIndex == -1 && door.DoorDirection == RideDoorDirection.Down) ||
+                if ((previousRoomIndex == -1 && door.DoorDirection == DoorDirection.Down) ||
                      door.TargetRoom?.RoomNode.Index == previousRoomIndex)
                 {
                     targetDoor = door;
