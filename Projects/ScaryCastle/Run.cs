@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace ScaryCastle
@@ -13,6 +14,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
+        private readonly Dictionary<Point, RoomNode> floorMap = [];
         private const int gridRadius = 4; // Radio 4 significa de -4 a 4 (Matriz de 9x9)
         private readonly RoomRegistry registry = new();
         private readonly int seed;
@@ -49,10 +51,10 @@ namespace ScaryCastle
         private int CountExistingNeighbors(Point p)
         {
             int count = 0;
-            if (FloorMap.ContainsKey(p + new Point(0, -1))) count++;
-            if (FloorMap.ContainsKey(p + new Point(0, 1))) count++;
-            if (FloorMap.ContainsKey(p + new Point(-1, 0))) count++;
-            if (FloorMap.ContainsKey(p + new Point(1, 0))) count++;
+            if (floorMap.ContainsKey(p + new Point(0, -1))) count++;
+            if (floorMap.ContainsKey(p + new Point(0, 1))) count++;
+            if (floorMap.ContainsKey(p + new Point(-1, 0))) count++;
+            if (floorMap.ContainsKey(p + new Point(1, 0))) count++;
             return count;
         }
 
@@ -67,11 +69,11 @@ namespace ScaryCastle
 
             while (true)
             {
-                FloorMap.Clear();
+                floorMap.Clear();
 
                 // 1. Clavamos el START en el centro lógico
                 var startNode = new RoomNode(0, Point.Zero) { Category = RoomCategory.Start };
-                FloorMap[Point.Zero] = startNode;
+                floorMap[Point.Zero] = startNode;
 
                 List<RoomNode> activeNodes = [startNode];
 
@@ -79,7 +81,7 @@ namespace ScaryCastle
                 const int maxStagnantIterations = 500;
 
                 // 2. Bucle de expansión (La Mancha)
-                while (FloorMap.Count < totalRooms && iterationsWithoutSuccess < maxStagnantIterations)
+                while (floorMap.Count < totalRooms && iterationsWithoutSuccess < maxStagnantIterations)
                 {
                     iterationsWithoutSuccess++;
 
@@ -95,7 +97,7 @@ namespace ScaryCastle
                         continue;
 
                     // Chequeo de celda libre
-                    if (FloorMap.ContainsKey(newPos))
+                    if (floorMap.ContainsKey(newPos))
                         continue;
 
                     // --- REGLA DE ORO DE ADYACENCIA ---
@@ -105,8 +107,8 @@ namespace ScaryCastle
                         continue;
 
                     // El nodo superó los filtros, lo consolidamos
-                    var newNode = new RoomNode(FloorMap.Count, newPos);
-                    FloorMap[newPos] = newNode;
+                    var newNode = new RoomNode(floorMap.Count, newPos);
+                    floorMap[newPos] = newNode;
                     activeNodes.Add(newNode);
 
                     ConnectNodes(currentNode, newNode, dir);
@@ -116,9 +118,9 @@ namespace ScaryCastle
                 }
 
                 // 3. Validación de Topología
-                if (FloorMap.Count == totalRooms)
+                if (floorMap.Count == totalRooms)
                 {
-                    StartNode = FloorMap[Point.Zero];
+                    StartNode = floorMap[Point.Zero];
                     break; // Salimos del while(true), la mancha está lista
                 }
 
@@ -133,11 +135,11 @@ namespace ScaryCastle
         private void ExecutePhase2_Labeling(Random rng)
         {
             // 1. El START ya está fijado, pero nos aseguramos por las dudas
-            FloorMap[Point.Zero].Category = RoomCategory.Start;
+            floorMap[Point.Zero].Category = RoomCategory.Start;
 
             // 2. Recolectamos los Dead-Ends naturales (callejones sin salida de la Fase 1)
             var deadEnds = new List<RoomNode>();
-            foreach (var node in FloorMap.Values)
+            foreach (var node in floorMap.Values)
             {
                 if (node.ConnectionCount() == 1 && node.Category == RoomCategory.Standard)
                 {
@@ -165,7 +167,7 @@ namespace ScaryCastle
                 // buscamos la habitación más lejana de la grilla y la obligamos a ser el Boss.
                 RoomNode? furthestNode = null;
                 int maxDist = -1;
-                foreach (var node in FloorMap.Values)
+                foreach (var node in floorMap.Values)
                 {
                     if (node.Category == RoomCategory.Standard)
                     {
@@ -199,7 +201,7 @@ namespace ScaryCastle
 
                 // Creamos una lista de salas comunes para intentar tirar el brote desde alguna de ellas
                 var candidates = new List<RoomNode>();
-                foreach (var node in FloorMap.Values)
+                foreach (var node in floorMap.Values)
                 {
                     if (node.Category == RoomCategory.Standard) candidates.Add(node);
                 }
@@ -231,12 +233,12 @@ namespace ScaryCastle
                             continue;
 
                         // Verificamos que la celda esté realmente vacía
-                        if (FloorMap.ContainsKey(candidatePos))
+                        if (floorMap.ContainsKey(candidatePos))
                             continue;
 
                         // Registramos y consolidamos el nuevo nodo adosado en la grilla
-                        var newNode = new RoomNode(FloorMap.Count, candidatePos) { Category = category };
-                        FloorMap[candidatePos] = newNode;
+                        var newNode = new RoomNode(floorMap.Count, candidatePos) { Category = category };
+                        floorMap[candidatePos] = newNode;
 
                         ConnectNodes(baseNode, newNode, dir);
 
@@ -268,7 +270,7 @@ namespace ScaryCastle
             var queue = new Queue<RoomNode>();
             var accessibleRooms = new List<RoomNode>();
 
-            var startNode = FloorMap[Point.Zero];
+            var startNode = floorMap[Point.Zero];
             queue.Enqueue(startNode);
             visited.Add(startNode);
 
@@ -283,7 +285,7 @@ namespace ScaryCastle
                 {
                     Point neighborPos = currentNode.GridPosition + dir;
 
-                    if (FloorMap.TryGetValue(neighborPos, out RoomNode? targetNode) && !visited.Contains(targetNode))
+                    if (floorMap.TryGetValue(neighborPos, out RoomNode? targetNode) && !visited.Contains(targetNode))
                     {
                         Difficulty targetDiff = GetProgressiveDifficulty(targetNode.GridPosition, maxDistance);
 
@@ -319,7 +321,7 @@ namespace ScaryCastle
 
                                 // 2. Inyectamos la llave en el pool seguro
                                 var safeRoom = accessibleRooms[rng.Next(accessibleRooms.Count)];
-                                safeRoom.PendingBronzeKeys++;
+                                safeRoom.BronzeKeys++;
                             }
                         }
 
@@ -336,7 +338,7 @@ namespace ScaryCastle
         {
             int maxDistance = GetMaxFloorDistance();
 
-            foreach (var node in FloorMap.Values)
+            foreach (var node in floorMap.Values)
             {
                 // 1. Calculamos la dificultad matemática según su posición en la grilla
                 Difficulty localRoomDiff = GetProgressiveDifficulty(node.GridPosition, maxDistance);
@@ -392,12 +394,12 @@ namespace ScaryCastle
         // ExecutePhase6_PrepareRooms
         private void ExecutePhase6_PrepareRooms()
         {
-            foreach (var node in FloorMap.Values)
+            foreach (var node in floorMap.Values)
             {
                 node.RideRoom = RideRoom.CreateInstance(session, node);
             }
 
-            foreach (var node in FloorMap.Values)
+            foreach (var node in floorMap.Values)
             {
                 node.RideRoom.Load();
             }
@@ -426,7 +428,7 @@ namespace ScaryCastle
         private int GetMaxFloorDistance()
         {
             int max = 0;
-            foreach (var node in FloorMap.Values)
+            foreach (var node in floorMap.Values)
             {
                 int dist = GetManhattanDistance(Point.Zero, node.GridPosition);
                 if (dist > max) max = dist;
@@ -455,7 +457,7 @@ namespace ScaryCastle
         #endregion
 
         // FloorMap
-        public Dictionary<Point, RoomNode> FloorMap { get; } = [];
+        public ReadOnlyDictionary<Point, RoomNode> FloorMap => new(floorMap);
 
         // Generate
         public void Generate()
@@ -469,17 +471,17 @@ namespace ScaryCastle
             ExecutePhase5_AssignDefinitions(rng);
             ExecutePhase6_PrepareRooms();
 
-            StartNode = FloorMap[Point.Zero];
-
-            var lockedDoors = FloorMap.Values.Sum(node => node.LockedDoors.Count);
-            var totalBronzeKeys = FloorMap.Values.Sum(node => node.PendingBronzeKeys);
+            StartNode = floorMap[Point.Zero];
+            TotalBronzeKeys = floorMap.Values.Sum(node => node.BronzeKeys);
         }
-
 
         // Spawns
         public CounterBank Spawns { get; } = new();
 
         // StartNode
         public RoomNode? StartNode { get; private set; }
+
+        // TotalBronzeKeys
+        public int TotalBronzeKeys { get; private set; }
     }
 }

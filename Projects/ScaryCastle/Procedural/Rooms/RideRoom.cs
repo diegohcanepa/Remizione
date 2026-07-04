@@ -68,7 +68,7 @@ namespace ScaryCastle
         // DistributeBronzeKeys
         private void DistributeBronzeKeys()
         {
-            if (RoomNode.PendingBronzeKeys <= 0)
+            if (RoomNode.BronzeKeys <= 0)
                 return;
 
             // Collect actors
@@ -94,7 +94,7 @@ namespace ScaryCastle
             }
             potteryList.Shuffle();
 
-            var pendingKeys = RoomNode.PendingBronzeKeys;
+            var pendingKeys = RoomNode.BronzeKeys;
 
             // Randomly hide a bronze key under a pot (Chance = 20%)
             if (potteryList.Count > 0 && DiceExpression.Dice10.Roll() <= 2)

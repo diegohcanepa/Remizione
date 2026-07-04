@@ -15,12 +15,12 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly ReadOnlyPolygon deflatedPolygon;
+        private readonly IReadOnlyPolygon deflatedPolygon;
         private readonly PathNode findPathEndNode = new();
         private readonly PathNode findPathStartNode = new();
         private readonly List<IHoleArea> holeAreas = [];
         private readonly NamedObjectCollection<HoleArea> holes = [];
-        private readonly ReadOnlyPolygon inflatedPolygon;
+        private readonly IReadOnlyPolygon inflatedPolygon;
         private readonly List<PathNode> linkedNodes = [];
         private readonly List<PathNode> walkAreaNodes = [];
 
@@ -32,15 +32,15 @@ namespace ScaryCastle
         internal WalkArea(GameRoom room, string name, FlagCondition? condition, params Vector2[] vertices)
             : base(room, name, condition, vertices)
         {
-            this.deflatedPolygon = new ReadOnlyPolygon(Polygon.Vertices, -.01f);
-            this.inflatedPolygon = new ReadOnlyPolygon(Polygon.Vertices, .01f);
+            this.deflatedPolygon = new Polygon(Polygon.Vertices, -.01f);
+            this.inflatedPolygon = new Polygon(Polygon.Vertices, .01f);
             this.Holes = new RoomAreaReadOnlyCollection<HoleArea>(holes);
 
             // Create nodes (concave vertices)
             if (!Polygon.IsEmpty)
             {
                 // Deflate polygon by a marginal value to allow InLineOfSight between them
-                var p = new ReadOnlyPolygon(Polygon.Vertices, -.05f);
+                var p = new Polygon(Polygon.Vertices, -.05f);
 
                 for (var i = 0; i < p.Vertices.Count; i++)
                 {
@@ -200,7 +200,7 @@ namespace ScaryCastle
         // AddHole
         public HoleArea AddHole(string name, string vertices)
         {
-            return AddHole(name, null, ReadOnlyPolygon.GetVertices(vertices));
+            return AddHole(name, null, Engendro.Polygon.GetVertices(vertices));
         }
 
         // AddHole

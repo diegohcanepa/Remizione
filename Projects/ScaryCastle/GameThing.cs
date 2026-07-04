@@ -111,7 +111,7 @@ namespace ScaryCastle
         bool IHoleArea.IsActive => !Collider.IsEmpty && AffectsPathfinding;
 
         // Polygon
-        ReadOnlyPolygon IHoleArea.Polygon => holePoly;
+        IReadOnlyPolygon IHoleArea.Polygon => holePoly;
 
         #endregion
 

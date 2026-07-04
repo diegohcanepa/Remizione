@@ -15,6 +15,9 @@ namespace ScaryCastle
             this.GridPosition = gridPosition;
         }
 
+        // BronzeKeys
+        public int BronzeKeys { get; set; }
+
         // Category
         public RoomCategory Category { get; set; } = RoomCategory.Standard;
 
@@ -89,9 +92,6 @@ namespace ScaryCastle
 
         // LootCount
         public int LootCount { get; set; }
-
-        // PendingBronzeKeys
-        public int PendingBronzeKeys { get; set; }
 
         // RideRoom
         public RideRoom RideRoom { get; set; } = null!;

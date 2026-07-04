@@ -176,7 +176,7 @@ namespace ScaryCastle
 
             if (totalIcons > 0)
             {
-                if (actor.HP <= 2 || actor.ConditionAmount > 0)
+                if (actor.HP <= 1 || actor.ConditionAmount > 0)
                     icons[lastFilledIconIndex].Scale = scaleTween.CurrentValue;
                 else
                     icons[lastFilledIconIndex].Scale = Vector2.One;

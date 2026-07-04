@@ -34,7 +34,7 @@ namespace ScaryCastle
 
             ExitHotspot = element.GetString("exitHotspot", string.Empty);
             if (!string.IsNullOrWhiteSpace(ExitHotspot))
-                ReadOnlyPolygon.GetVertices(ExitHotspot);
+                Polygon.GetVertices(ExitHotspot);
 
             IsMandatory = element.GetBool("isMandatory", false);
 
@@ -96,7 +96,7 @@ namespace ScaryCastle
             if (element.TryGetProperty("walkArea", out JsonElement walkAreaElement))
             {
                 WalkArea = walkAreaElement.GetString() ?? string.Empty;
-                ReadOnlyPolygon.GetVertices(WalkArea);
+                Polygon.GetVertices(WalkArea);
             }
 
             // Walls
@@ -105,7 +105,7 @@ namespace ScaryCastle
                 foreach (var item in wallsElement.EnumerateArray())
                 {
                     var value = item.GetString() ?? string.Empty;
-                    ReadOnlyPolygon.GetVertices(value);
+                    Polygon.GetVertices(value);
                     walls.Add(value);
                 }
             }

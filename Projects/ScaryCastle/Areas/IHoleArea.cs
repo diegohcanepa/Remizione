@@ -32,6 +32,6 @@ namespace ScaryCastle
         string Name { get; }
 
         // Polygon
-        ReadOnlyPolygon Polygon { get; }
+        IReadOnlyPolygon Polygon { get; }
     }
 }

@@ -384,10 +384,13 @@ namespace ScaryCastle
                         _ => Vector2.One * 1.25f
                     };
 
-                    var guts = new Guts(Session, Guts, gutScale, customGuts)
+                    var guts = new Guts(Session, true, Guts, gutScale, customGuts)
                     {
                         Position = Position,
                     };
+
+                    if (Room.WalkArea != null)
+                        guts.Position = Room.WalkArea.Polygon.GetClampPosition(guts.Position, guts.BoundingBox.Width, guts.BoundingBox.Height);
 
                     Room.Children.Add(guts);
 

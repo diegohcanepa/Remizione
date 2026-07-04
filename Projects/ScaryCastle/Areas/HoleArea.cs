@@ -12,7 +12,7 @@ namespace ScaryCastle
     /// </summary>
     public class HoleArea : Room.Area, IHoleArea
     {
-        private readonly ReadOnlyPolygon inflatedPolygon;
+        private readonly IReadOnlyPolygon inflatedPolygon;
         private readonly List<PathNode> nodes = [];
 
         #region Constructor
@@ -24,7 +24,7 @@ namespace ScaryCastle
             this.WalkArea = walkArea;
 
             // Inflate polygon by a marginal value to allow InLineOfSight between them            
-            this.inflatedPolygon = new(vertices, .01f);
+            this.inflatedPolygon = new Polygon(vertices, .01f);
 
             // Create nodes (only convex vertices inside walk area)
             if (!Polygon.IsEmpty)

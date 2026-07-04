@@ -349,7 +349,7 @@ namespace Adberration
                 this.Room = room;
                 this.Name = name;
                 this.Condition = condition;
-                this.Polygon = new ReadOnlyPolygon(Geometry.SimplifyPolygon(vertices));
+                this.Polygon = new Polygon(Geometry.SimplifyPolygon(vertices));
 
                 room.areas.Add(this);
             }
@@ -402,7 +402,7 @@ namespace Adberration
             public string Name { get; }
 
             // Polygon
-            public ReadOnlyPolygon Polygon { get; }
+            public IReadOnlyPolygon Polygon { get; }
 
             // Reset
             public void Reset()

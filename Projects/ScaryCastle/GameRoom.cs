@@ -37,7 +37,7 @@ namespace ScaryCastle
         };
         private readonly List<TriggerArea> triggerAreas = [];
         private readonly List<WalkArea> walkAreas = [];
-        private readonly List<ReadOnlyPolygon> walls = [];
+        private readonly List<IReadOnlyPolygon> walls = [];
 
         #endregion
 
@@ -260,7 +260,7 @@ namespace ScaryCastle
         // AddWall
         protected void AddWall(string vertices)
         {
-            walls.Add(new ReadOnlyPolygon(vertices));
+            walls.Add(new Polygon(vertices));
         }
 
         // ClearWalkAreas
@@ -451,7 +451,7 @@ namespace ScaryCastle
         // AddWalkArea
         public WalkArea AddWalkArea(string name, string vertices)
         {
-            return AddWalkArea(name, ReadOnlyPolygon.GetVertices(vertices));
+            return AddWalkArea(name, Polygon.GetVertices(vertices));
         }
 
         // AddWalkArea
@@ -627,7 +627,7 @@ namespace ScaryCastle
         public RoomAreaReadOnlyCollection<TriggerArea> TriggerAreas { get; }
 
         // Walls
-        public ReadOnlyCollection<ReadOnlyPolygon> Walls { get; }
+        public ReadOnlyCollection<IReadOnlyPolygon> Walls { get; }
 
         // WalkArea
         public WalkArea? WalkArea { get; private set; }
