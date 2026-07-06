@@ -389,8 +389,7 @@ namespace ScaryCastle
                         Position = Position,
                     };
 
-                    if (Room.WalkArea != null)
-                        guts.Position = Room.WalkArea.Polygon.GetClampPosition(guts);
+                    ClampHotspotToWalkAea();
 
                     Room.Children.Add(guts);
 

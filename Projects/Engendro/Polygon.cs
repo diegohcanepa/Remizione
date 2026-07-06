@@ -334,48 +334,24 @@ namespace Engendro
         }
 
         // GetClampPosition
-        public Vector2 GetClampPosition(ITransform transform)
+        public Vector2 GetClampPosition(Vector2 desiredPosition, float width, float height)
         {
             if (IsEmpty)
-                return transform.Position;
+                return desiredPosition;
 
-            float width = transform.BoundingBox.Width;
-            float height = transform.BoundingBox.Height;
-
-            // 1. Calcular el desfase basado en el PivotOrigin. 
-            // Esto define dónde está realmente la Posición respecto al rectangulo.
-            float pivotOffsetX = transform.PivotOrigin switch
-            {
-                RectanglePoint.Top or RectanglePoint.Center or RectanglePoint.Bottom => -width / 2f,
-                RectanglePoint.RightTop or RectanglePoint.Right or RectanglePoint.RightBottom => -width,
-                _ => 0f // Cubre LeftTop, Left, LeftBottom
-            };
-
-            float pivotOffsetY = transform.PivotOrigin switch
-            {
-                RectanglePoint.Left or RectanglePoint.Center or RectanglePoint.Right => -height / 2f,
-                RectanglePoint.LeftBottom or RectanglePoint.Bottom or RectanglePoint.RightBottom => -height,
-                _ => 0f // Cubre LeftTop, Top, RightTop
-            };
-
-            // 2. Precalcular los vectores de desfase de las 4 esquinas
-            Vector2 tlOffset = new(pivotOffsetX, pivotOffsetY);
-            Vector2 trOffset = new(pivotOffsetX + width, pivotOffsetY);
-            Vector2 blOffset = new(pivotOffsetX, pivotOffsetY + height);
-            Vector2 brOffset = new(pivotOffsetX + width, pivotOffsetY + height);
-
-            var correctedPosition = transform.Position;
+            float halfWidth = width / 2f;
+            float halfHeight = height / 2f;
+            var correctedPosition = desiredPosition;
 
             const int MaxCorrections = 4;
             const float SafetyMargin = 1.01f;
 
             for (int i = 0; i < MaxCorrections; i++)
             {
-                // Aplicar los offsets a la posición iterada
-                var topLeft = correctedPosition + tlOffset;
-                var topRight = correctedPosition + trOffset;
-                var bottomLeft = correctedPosition + blOffset;
-                var bottomRight = correctedPosition + brOffset;
+                var topLeft = new Vector2(correctedPosition.X - halfWidth, correctedPosition.Y - halfHeight);
+                var topRight = new Vector2(correctedPosition.X + halfWidth, correctedPosition.Y - halfHeight);
+                var bottomLeft = new Vector2(correctedPosition.X - halfWidth, correctedPosition.Y + halfHeight);
+                var bottomRight = new Vector2(correctedPosition.X + halfWidth, correctedPosition.Y + halfHeight);
 
                 var tlIn = Contains(topLeft);
                 var trIn = Contains(topRight);
@@ -398,14 +374,8 @@ namespace Engendro
                 correctedPosition += pushVector * SafetyMargin;
             }
 
-            // 3. Fallback en caso de que la relajación falle
             if (!Contains(correctedPosition))
-            {
-                // Consideración de diseño: Si falla, clampeamos la Posición directamente, 
-                // pero ten en cuenta que si el pivote NO es Center, el objeto podría quedar 
-                // ligeramente fuera del polígono visible.
-                correctedPosition = GetClosestPointOnEdge(transform.Position);
-            }
+                correctedPosition = GetClosestPointOnEdge(desiredPosition);
 
             return correctedPosition;
         }

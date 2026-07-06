@@ -534,6 +534,13 @@ namespace ScaryCastle
             }
         } = PlacementMode.Relative;
 
+        // ClampHotspotToWalkArea
+        public void ClampHotspotToWalkAea()
+        {
+            if (Room?.WalkArea != null && !RuntimeHotspot.IsEmpty)
+                Position = Room.WalkArea.Polygon.GetClampPosition(Position, RuntimeHotspot.BoundingRectangleF.Width, RuntimeHotspot.BoundingRectangleF.Height);
+        }
+
         // ClampToWalkablePosition
         public void ClampToWalkablePosition()
         {
