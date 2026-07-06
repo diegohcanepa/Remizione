@@ -46,10 +46,6 @@ namespace Engendro.Audio
                 if (attributes["Caption"]?.Value is string caption)
                     settings.Caption = caption;
 
-                // Looped
-                if (attributes["Looped"]?.Value is string looped)
-                    settings.Looped = XmlConvert.ToBoolean(looped);
-
                 // MaxInstances
                 if (attributes["MaxInstances"]?.Value is string maxInstances)
                     settings.MaxInstances = XmlConvert.ToInt32(maxInstances);

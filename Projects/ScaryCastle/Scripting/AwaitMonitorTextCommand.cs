@@ -26,7 +26,7 @@ namespace ScaryCastle.Scripting
                 return;
 
             string text = GetDisplayText();
-            monitorRoom.TypeText(text, HasArg(FastArg), HasArg(ColorArg));
+            monitorRoom.AddText(text, HasArg(FastArg), HasArg(ColorArg));
         }
 
         // OnExecutionCompleted

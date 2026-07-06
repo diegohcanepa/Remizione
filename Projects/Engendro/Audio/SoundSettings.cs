@@ -13,9 +13,6 @@ namespace Engendro.Audio
         // Category
         public SoundCategory Category { get; set; } = AudioManager.FXCategory;
 
-        // Looped
-        public bool Looped { get; set; }
-
         // MaxInstances
         public int MaxInstances
         {

@@ -72,7 +72,6 @@ namespace ScaryCastle
 
                     // ComicText
                     case EffectType.ComicText:
-                        // ComicText si hubo daño real
                         if (effect.ComicText != ComicTextKind.None)
                             realTarget?.ShowComicText(effect.ComicText);
                         break;
@@ -122,6 +121,8 @@ namespace ScaryCastle
                     // Heal
                     case EffectType.Heal:
                         realTarget?.HP += amount;
+                        if (realTarget is Actor actor && actor.Condition == ConditionType.Poison)
+                            actor.ConditionAmount -= amount;
                         break;
                 }
             }

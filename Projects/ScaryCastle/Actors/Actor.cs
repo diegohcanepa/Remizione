@@ -212,6 +212,8 @@ namespace ScaryCastle
 
                         if (ConditionAmount > 0)
                             ConditionTimer = GameSettings.ConditionCooldown;
+                        else
+                            Condition = ConditionType.None;
                     }
                 }
             }
@@ -389,8 +391,6 @@ namespace ScaryCastle
                         Position = Position,
                     };
 
-                    ClampHotspotToWalkAea();
-
                     Room.Children.Add(guts);
 
                     if (Guts > 0)
@@ -467,17 +467,6 @@ namespace ScaryCastle
             base.OnFactionChanged();
             if (Faction == Faction.Evil)
                 Verb = Verb.Attack;
-        }
-
-        // OnHPChanged
-        protected override void OnHPChanged(int previousValue)
-        {
-            // Any food item remove poison status
-            if (previousValue < HP)
-            {
-                if (Condition == ConditionType.Poison)
-                    ClearCondition();
-            }
         }
 
         // OnInitialize
@@ -817,13 +806,11 @@ namespace ScaryCastle
         public int ConditionAmount
         {
             get;
-            private set
+            set
             {
                 if (value != field)
                 {
-                    field = value;
-                    if (field < 0)
-                        field = 0;
+                    field = Math.Max(0, value);
                 }
             }
         }
@@ -1154,7 +1141,7 @@ namespace ScaryCastle
             }
             else
             {
-                if (target is RideDoor door && door.IsBlocked())
+                if (target is RideDoor door && door.IsBlocked(this))
                 {
                     FaceTo(target);
                     Session.AwaitRoutine(RoutineNames.WayBlockedHandler);

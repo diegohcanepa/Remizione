@@ -182,9 +182,6 @@ namespace ScaryCastle
                 var instance = CreateThingClone<Actor>(chosenDef.Name);
                 instance.Position = points[i];
                 Children.Add(instance);
-
-                instance.ClampHotspotToWalkAea();
-
                 enemiesSpawnCounter.Increment(chosenDef.Name);
                 Session.CurrentRun.Spawns.Increment(chosenDef.Name);
             }
@@ -243,8 +240,6 @@ namespace ScaryCastle
                 var instance = CreateThingClone<Prop>(chosen.Name);
                 instance.Position = placeholder.Position;
                 Children.Add(instance);
-                instance.ClampHotspotToWalkAea();
-
                 Session.CurrentRun.Spawns.Increment(chosen.Name);
                 propsSpawnCounter.Increment(chosen.Name);
             }

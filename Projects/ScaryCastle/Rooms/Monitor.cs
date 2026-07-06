@@ -45,7 +45,7 @@ namespace ScaryCastle
                 Color = Color.White,
                 Opacity = .9f,
                 MaximumWidth = 163,
-                Scale = ScaleInfo.Text.ExtraLarge,
+                Scale = ScaleInfo.Text.Large,
                 Text = text,
                 X = 33
             };
@@ -58,7 +58,7 @@ namespace ScaryCastle
             for (int i = 0; i < lines.Length; i++)
             {
                 lines[i].Y = y;
-                y += lines[i].BoundingBox.Height + 4;
+                y += lines[i].BoundingBox.Height + 2;
             }
         }
 
@@ -71,7 +71,7 @@ namespace ScaryCastle
         {
             base.OnDraw(gameTime);
 
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
 
             title.Draw(gameTime);
             subtitle.Draw(gameTime);
@@ -100,15 +100,14 @@ namespace ScaryCastle
             {
                 lines[i].Update(gameTime);
             }
+
+            MouseCursor.State = IsTypingText ? MouseCursorState.Wait : MouseCursorState.Hand;
         }
 
         #endregion
 
-        // IsTypingText
-        public bool IsTypingText => lineIndex >= 0 && lines[lineIndex].IsTyping;
-
-        // TypeText
-        public void TypeText(string text, bool fast, bool color)
+        // AddText
+        public void AddText(string text, bool fast, bool color)
         {
             if (!pushText)
             {
@@ -132,11 +131,14 @@ namespace ScaryCastle
 
             Layout();
 
-            lines[lineIndex].Color = color ? Color.LightBlue : Color.White;
-            lines[lineIndex].Text = text;
+            lines[lineIndex].Color = color ? Color.White * .7f : Color.White;
+            lines[lineIndex].Text = text.ToUpper();
 
             if (!fast)
                 lines[lineIndex].StartTyping(Sound.Get(SoundNames.Keyboard)?.PopInstance());
         }
+
+        // IsTypingText
+        public bool IsTypingText => lineIndex >= 0 && lines[lineIndex].IsTyping;
     }
 }

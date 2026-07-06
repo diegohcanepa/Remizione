@@ -19,7 +19,6 @@ namespace Engendro
         bool ContainsVertex(IReadOnlyPolygon polygon);
         bool ContainsVertex(IList<Vector2> vertices);
         Vector2 GetClosestPointOnEdge(Vector2 point);
-        Vector2 GetClampPosition(Vector2 desiredPosition, float width, float height);
         Vector2[] GetVertices();
         Vector2[] GetVertices(Vector2 offset);
         void GetVertices(Span<Vector2> destination, Vector2 offset);

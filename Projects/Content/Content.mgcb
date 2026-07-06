@@ -899,6 +899,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/MetalPropBreak.wav;Audio/FX/MetalPropBreak
 
+#begin Audio/FX/Modem.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Modem.wav;Audio/FX/Modem
+
 #begin Audio/FX/NumberSixA.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

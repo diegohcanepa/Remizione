@@ -222,7 +222,6 @@
             <key type="filename">CurseMeter-assets/CurseMeter9.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorAttack.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorCross.png</key>
-            <key type="filename">MouseCursors-assets/MouseCursorLift.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorMagnifier.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorSkull.png</key>
             <key type="filename">PoisonMeter-assets/PoisonMeter0.png</key>
@@ -291,6 +290,7 @@
             <key type="filename">Inventory-assets/InventoryItemAmount3.png</key>
             <key type="filename">Inventory-assets/InventoryItemAmount4.png</key>
             <key type="filename">Inventory-assets/InventoryItemAmount5.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorLift.png</key>
             <key type="filename">UIIcons-assets/GooIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -629,7 +629,6 @@
             </struct>
             <key type="filename">MouseCursors-assets/MouseCursorEye.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorLeft.png</key>
-            <key type="filename">MouseCursors-assets/MouseCursorPickUp.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorRight.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorTalk.png</key>
             <struct type="IndividualSpriteSettings">
@@ -655,9 +654,25 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>3,4,5,7</rect>
+                <rect>2,3,5,7</rect>
                 <key>scale9Paddings</key>
-                <rect>3,4,5,7</rect>
+                <rect>2,3,5,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">MouseCursors-assets/MouseCursorPickUp.png</key>
+            <key type="filename">UIIcons-assets/SkullIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,5,4</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,5,4</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -952,21 +967,6 @@
                 <rect>6,3,11,6</rect>
                 <key>scale9Paddings</key>
                 <rect>6,3,11,6</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UIIcons-assets/SkullIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,5,4</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,5,4</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

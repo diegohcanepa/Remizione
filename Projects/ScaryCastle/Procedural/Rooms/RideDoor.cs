@@ -173,19 +173,24 @@ namespace ScaryCastle
         public DoorDirection DoorDirection { get; }
 
         // IsBlocked
-        public bool IsBlocked()
+        public bool IsBlocked(GameThing source)
         {
             if (Room != null)
             {
                 for (var i = 0; i < Room.Children.Count; i++)
                 {
-                    if (Room.Children[i] == this || Room.Children[i] == Session.Player)
+                    if (Room.Children[i] == this || Room.Children[i] == source)
                         continue;
 
                     if (Room.Children[i] is GameThing thing && !thing.IsDead && thing.MaxHP > 0)
                     {
                         if (RuntimeHotspot.ContainsVertex(thing.RuntimeHotspot))
-                            return true;
+                        {
+                            if (DoorDirection == DoorDirection.Up)
+                                return thing.Y < source.Y;
+                            else
+                                return true;
+                        }
                     }
                 }
             }

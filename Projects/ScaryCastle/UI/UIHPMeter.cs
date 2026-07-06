@@ -137,7 +137,7 @@ namespace ScaryCastle
             if (lastKnownValue == 1 || lastKnownConditionAmount > 0)
             {
                 if (heartbeat == null)
-                    heartbeat = Sound.Play(SoundNames.Heartbeat);
+                    heartbeat = Sound.Play(SoundNames.Heartbeat, true);
             }
             else
             {

@@ -16,10 +16,10 @@ namespace ScaryCastle
         public Guts(GameSession session, bool bloodStain, int amount, Vector2 scale, IList<AtlasImage>? extraImages)
             : base(session, string.Empty)
         {
-            Atlas = Atlases.Environment;
-            DefaultImageName = Atlases.Environment.GutStains[Random.Shared.Next(0, 2)].Name;
-            PivotOrigin = RectanglePoint.Center;
-            Opacity = bloodStain ? .8f : 0;
+            this.Atlas = Atlases.Environment;
+            this.DefaultImageName = Atlases.Environment.GutStains[Random.Shared.Next(0, 2)].Name;
+            this.PivotOrigin = RectanglePoint.Center;
+            this.Opacity = bloodStain ? .6f : 0;
 
             // Guts pieces
             var guts = Math.Min(amount, Atlases.Environment.Guts.Count);

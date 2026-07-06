@@ -76,6 +76,7 @@ namespace ScaryCastle
             if (Session.Player == null || !Session.Player.IsInCurrentRoom)
             {
                 Reset();
+                MouseCursorAppearance.Refresh(this);
                 return;
             }
 
@@ -98,7 +99,6 @@ namespace ScaryCastle
             }
 
             Target = null;
-            MouseCursorAppearance.Refresh(this);
         }
 
         // Session

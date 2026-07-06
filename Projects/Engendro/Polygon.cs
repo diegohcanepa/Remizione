@@ -333,53 +333,6 @@ namespace Engendro
             FlipCore(null, originY);
         }
 
-        // GetClampPosition
-        public Vector2 GetClampPosition(Vector2 desiredPosition, float width, float height)
-        {
-            if (IsEmpty)
-                return desiredPosition;
-
-            float halfWidth = width / 2f;
-            float halfHeight = height / 2f;
-            var correctedPosition = desiredPosition;
-
-            const int MaxCorrections = 4;
-            const float SafetyMargin = 1.01f;
-
-            for (int i = 0; i < MaxCorrections; i++)
-            {
-                var topLeft = new Vector2(correctedPosition.X - halfWidth, correctedPosition.Y - halfHeight);
-                var topRight = new Vector2(correctedPosition.X + halfWidth, correctedPosition.Y - halfHeight);
-                var bottomLeft = new Vector2(correctedPosition.X - halfWidth, correctedPosition.Y + halfHeight);
-                var bottomRight = new Vector2(correctedPosition.X + halfWidth, correctedPosition.Y + halfHeight);
-
-                var tlIn = Contains(topLeft);
-                var trIn = Contains(topRight);
-                var blIn = Contains(bottomLeft);
-                var brIn = Contains(bottomRight);
-
-                if (tlIn && trIn && blIn && brIn)
-                    break;
-
-                var criticalVertex = Vector2.Zero;
-
-                if (!tlIn) criticalVertex = topLeft;
-                else if (!trIn) criticalVertex = topRight;
-                else if (!blIn) criticalVertex = bottomLeft;
-                else if (!brIn) criticalVertex = bottomRight;
-
-                var closestEdgePoint = GetClosestPointOnEdge(criticalVertex);
-                var pushVector = closestEdgePoint - criticalVertex;
-
-                correctedPosition += pushVector * SafetyMargin;
-            }
-
-            if (!Contains(correctedPosition))
-                correctedPosition = GetClosestPointOnEdge(desiredPosition);
-
-            return correctedPosition;
-        }
-
         // GetClosestPointOnEdge
         public Vector2 GetClosestPointOnEdge(Vector2 point)
         {

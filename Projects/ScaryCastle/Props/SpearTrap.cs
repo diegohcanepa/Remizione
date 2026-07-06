@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Engendro;
+using Microsoft.Xna.Framework;
 using System;
 
 namespace ScaryCastle
@@ -29,6 +30,7 @@ namespace ScaryCastle
             CollisionDetection = false;
             IgnoreWalkArea = false;
             DepthOffset = -10;
+            PivotOrigin = RectanglePoint.Center;
             attackCooldown = Random.Shared.Next(2500, 4500);
 
             var animation = AddAnimation(PreparedAnimationName);
