@@ -3,8 +3,7 @@
   "data": [
     {
       "name": "DevilCarvedFace",
-      "tags": "WallDecoration",
-      "spawnLocation": "SideRoom",
+      "tags": "wallDecoration",
       "placements": [
         "WallFrontHang"      
       ]
@@ -13,7 +12,7 @@
       "name": "PotteryA",
       "dropCoinChanceBonus": 0.5,
       "dropMode": "CoinsOnly",
-      "tags": "Pottery",
+      "tags": "pottery",
       "effects": [
         {
           "context": "Contact",
@@ -30,7 +29,7 @@
       "name": "PotteryB",
       "dropCoinChanceBonus": 0.25,
       "dropSackChanceBonus": 0.25,
-      "tags": "Pottery",
+      "tags": "pottery",
       "effects": [
         {
           "context": "Contact",
@@ -60,14 +59,14 @@
     },
     {
       "name": "Torch",
-      "tags": "Torch",
+      "tags": "torch",
       "placements": [
         "WallFrontHang"
       ]
     },
     {
       "name": "SpearTrap",
-      "tags": "Trap",
+      "tags": "trap",
       "effects": [
         {
           "context": "Contact",
@@ -112,7 +111,7 @@
     },
     {
       "name": "Vent",
-      "tags": "WallDecoration",
+      "tags": "wallDecoration",
       "placements": [
         "WallFrontHang"      
       ]

@@ -16,13 +16,16 @@ namespace ScaryCastle
             "vendingMachine",
             "flip",
             "floor",
+            "poison",
             "pottery",
-            "wall",
+            "torch",
+            "trap",
+            "wallDecoration",
         ];
 
         // Constructor
         public Tags(string? tags)
-            : base(tags is null ? [] : tags.Split(','))
+            : this(tags is null ? [] : tags.Split(','))
         {
         }
 

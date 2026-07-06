@@ -13,7 +13,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private enum RoomImage { Current, Start, Visited, NotVisited };
+        private enum RoomImage { Current, Start, Visited, NotVisited, Boss };
         private readonly Sprite container;
         private readonly Sprite containerBorder;
         private readonly Vector2 containerCenter;
@@ -90,6 +90,12 @@ namespace ScaryCastle
             if (roomNode == CurrentRoom)
             {
                 image = roomImages[(int)RoomImage.Current];
+            }
+
+            // Boss
+            else if (roomNode.Category == RoomCategory.Boss)
+            {
+                image = roomImages[(int)RoomImage.Boss];
             }
 
             // Start

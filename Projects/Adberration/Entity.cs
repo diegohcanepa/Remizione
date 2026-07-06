@@ -671,7 +671,7 @@ namespace Adberration
         {
             if (sound?.PopInstance() is SoundInstance result)
             {
-                result.IsLooped = looped;
+                result.Looped = looped;
                 PlaySound(result);
                 return result;
             }
@@ -687,7 +687,7 @@ namespace Adberration
             if (instance != null)
             {
                 instance.Emitter = this;
-                instance.IsLooped = looped;
+                instance.Looped = looped;
                 instance.Play();
             }
         }

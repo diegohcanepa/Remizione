@@ -13,7 +13,7 @@ namespace Engendro.Audio
     /// </summary>
     public static class AudioManager
     {
-        private static readonly string[] validAttributes = ["Caption", "MaxInstances", "Name", "Pan", "Pitch", "PitchVariance", "PopMode", "Sounds", "Tags", "TransitionAware", "PauseAware", "Volume"];
+        private static readonly string[] validAttributes = ["Caption", "Looped", "MaxInstances", "Name", "Pan", "Pitch", "PitchVariance", "PopMode", "Sounds", "Tags", "TransitionAware", "PauseAware", "Volume"];
 
         #region Private members
 
@@ -45,6 +45,10 @@ namespace Engendro.Audio
                 // Caption
                 if (attributes["Caption"]?.Value is string caption)
                     settings.Caption = caption;
+
+                // Looped
+                if (attributes["Looped"]?.Value is string looped)
+                    settings.Looped = XmlConvert.ToBoolean(looped);
 
                 // MaxInstances
                 if (attributes["MaxInstances"]?.Value is string maxInstances)

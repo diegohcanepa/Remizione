@@ -733,7 +733,7 @@ namespace Engendro
             if (typingSound != null)
             {
                 typingSoundVolume = typingSound.Volume.Current;
-                typingSound.IsLooped = true;
+                typingSound.Looped = true;
                 typingSound.Play();
             }
 

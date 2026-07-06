@@ -19,6 +19,7 @@
         internal const string GutsLarge = nameof(GutsLarge);
         internal const string GutsMedium = nameof(GutsMedium);
         internal const string GutsSmall = nameof(GutsSmall);
+        internal const string Heartbeat = nameof(Heartbeat);
         internal const string ImpactA = nameof(ImpactA);
         internal const string Interact = nameof(Interact);
         internal const string ItemDiscard = nameof(ItemDiscard);

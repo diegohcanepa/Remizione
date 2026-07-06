@@ -20,6 +20,7 @@ namespace ScaryCastle
             this.session = session;
             this.BossMeter = new();
             this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 13));
+            this.Sentence = new(session);
         }
 
         #endregion
@@ -84,6 +85,6 @@ namespace ScaryCastle
         }
 
         // Sentence
-        public UISentence Sentence { get; } = new();
+        public UISentence Sentence { get; }
     }
 }

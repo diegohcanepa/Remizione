@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration;
+using Engendro;
 using Microsoft.Xna.Framework;
 
 namespace ScaryCastle.UI
@@ -6,14 +7,15 @@ namespace ScaryCastle.UI
     /// <summary>
     /// UISentence
     /// </summary>
-    public sealed class UISentence : GameObject
+    public sealed class UISentence : SessionGameObject<GameSession>
     {
         private readonly Sprite heartIcon = new(Atlases.UI.HeartIcon) { PivotOrigin = RectanglePoint.Bottom, Scale = ScaleInfo.UIElement.Medium };
         private readonly TextSprite hpText;
         private readonly TextSprite text;
 
         // Constructor
-        public UISentence()
+        public UISentence(GameSession session)
+            : base(session)
         {
             text = new(Fonts.CommonOutline)
             {
@@ -40,7 +42,7 @@ namespace ScaryCastle.UI
             Game.SpriteBatch.Begin(Game.Camera);
             text.Draw(gameTime);
 
-            if (!hpText.IsEmpty)
+            if (!hpText.IsEmpty && Target != Session.Player)
             {
                 heartIcon.Draw(gameTime);
                 hpText.Draw(gameTime);

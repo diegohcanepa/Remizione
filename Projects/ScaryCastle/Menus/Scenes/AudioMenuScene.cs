@@ -62,14 +62,14 @@ namespace ScaryCastle.Menus
             ambience = Sound.Find("Hallucinations")?.PopInstance();
             if (ambience != null)
             {
-                ambience.IsLooped = true;
+                ambience.Looped = true;
                 ambience.Play();
             }
 
             backgroundMusic = Sound.Find("BackIdleTension3")?.PopInstance();
             if (backgroundMusic != null)
             {
-                backgroundMusic.IsLooped = true;
+                backgroundMusic.Looped = true;
                 backgroundMusic.Play();
             }
         }

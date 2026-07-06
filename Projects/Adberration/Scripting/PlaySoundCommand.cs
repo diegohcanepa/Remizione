@@ -56,7 +56,7 @@ namespace Adberration.Scripting
             var scope = Parser.ParseEnumArgument(this, ScopeArg, LifetimeScope.Room);
 
             instance.Emitter = Parser.ParseEntityArgument<Entity>(this, EmitterArg, null);
-            instance.IsLooped = HasArg(LoopedArg);
+            instance.Looped = HasArg(LoopedArg);
             instance.Pan = Parser.ParseFloatArgument(this, PanArg, instance.Pan);
             instance.Pitch = Parser.ParseFloatArgument(this, PitchArg, instance.Pitch);
 

@@ -105,7 +105,7 @@ namespace ScaryCastle
         // ToString
         public override string ToString()
         {
-            return $"[Room_{Category}_{Index} ({GridPosition.X},{GridPosition.Y})]";
+            return $"[Room_{Category}_{Index} ({GridPosition.X},{GridPosition.Y}) {Definition.Name}]";
         }
 
         // Up

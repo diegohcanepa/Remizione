@@ -17,7 +17,6 @@ namespace ScaryCastle
             DepthOffset = 20;
             IgnoreWalkArea = false;
             Loot = ItemDefinition.Definitions.Find(GetType().Name);
-            RenderLayer = RenderLayer.OverBackground;
             Verb = Verb.PickUp;
         }
 

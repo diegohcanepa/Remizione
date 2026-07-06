@@ -26,18 +26,19 @@
       "archetype": "Harasser",
       "intents": [
         {
-          "name": "Contact",
+          "name": "Bite",
+          "soundTrigger": "RatAttack",
           "actionKind": "Proximity",
           "effects": [
             {
-              "context": "Contact",
+              "context": "Attack",
               "effectType": "Damage",
               "amount": "1",
               "comicText": "AghRed"
             },
             {
-              "context": "Contact",
-              "amount": "1",
+              "context": "Attack",
+              "amount": "0",
               "effectType": "Condition",
               "conditionType": "ChromaticAberration"
             }

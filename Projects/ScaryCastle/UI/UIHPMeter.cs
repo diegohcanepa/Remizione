@@ -1,5 +1,6 @@
 ﻿using Adberration;
 using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
@@ -13,6 +14,7 @@ namespace ScaryCastle
         #region Private fields
 
         private Actor? actor;
+        private SoundInstance? heartbeat;
         private readonly Sprite[] icons;
         private readonly Dictionary<ConditionType, IList<AtlasImage>> imageGroups = [];
         private int lastFilledIconIndex = -1;
@@ -131,6 +133,17 @@ namespace ScaryCastle
             lastKnownMaxValue = maxHp;
             lastKnownConditionAmount = amount;
             lastFilledIconIndex = actor.IsDead ? 0 : ((actor.HP + 1) / 2) - 1;
+
+            if (lastKnownValue == 1 || lastKnownConditionAmount > 0)
+            {
+                if (heartbeat == null)
+                    heartbeat = Sound.Play(SoundNames.Heartbeat);
+            }
+            else
+            {
+                heartbeat?.Stop(1000);
+                heartbeat = null;
+            }
         }
 
         #endregion

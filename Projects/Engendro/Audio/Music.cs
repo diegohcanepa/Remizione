@@ -42,7 +42,7 @@ namespace Engendro.Audio
 
             if (result != null)
             {
-                result.IsLooped = false;
+                result.Looped = false;
                 return result;
             }
 
@@ -62,7 +62,7 @@ namespace Engendro.Audio
             else
                 result = Sound.Find(tag)?.PopInstance();
 
-            result?.IsLooped = false;
+            result?.Looped = false;
 
             return result;
         }

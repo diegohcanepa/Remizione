@@ -384,13 +384,13 @@ namespace ScaryCastle
                         _ => Vector2.One * 1.25f
                     };
 
-                    var guts = new Guts(Session, true, Guts, gutScale, customGuts)
+                    var guts = new Guts(Session, Guts > 0, Guts, gutScale, customGuts)
                     {
                         Position = Position,
                     };
 
                     if (Room.WalkArea != null)
-                        guts.Position = Room.WalkArea.Polygon.GetClampPosition(guts.Position, guts.BoundingBox.Width, guts.BoundingBox.Height);
+                        guts.Position = Room.WalkArea.Polygon.GetClampPosition(guts);
 
                     Room.Children.Add(guts);
 
@@ -1035,9 +1035,7 @@ namespace ScaryCastle
 
             // Si el punto es válido y nos saca de la inercia (evita vibraciones contra muros)
             if (Vector2.Distance(Position, bestPoint) > 4f)
-            {
                 MoveTo(bestPoint);
-            }
         }
 
         // MoveRandomly

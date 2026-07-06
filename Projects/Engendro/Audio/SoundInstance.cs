@@ -225,15 +225,15 @@ namespace Engendro.Audio
         // IsDisposed
         public bool IsDisposed { get; private set; }
 
-        // IsLooped
-        public bool IsLooped
+        // IsPlaying
+        public bool IsPlaying => RemainingTime != 0;
+
+        // Looped
+        public bool Looped
         {
             get => instance.IsLooped;
             set => instance.IsLooped = value;
         }
-
-        // IsPlaying
-        public bool IsPlaying => RemainingTime != 0;
 
         // Pan
         public float Pan
@@ -298,7 +298,7 @@ namespace Engendro.Audio
 
                 instance.Play();
 
-                RemainingTime = IsLooped ? -1 : Duration;
+                RemainingTime = Looped ? -1 : Duration;
 
                 if (!runningInstances.Contains(this))
                     runningInstances.Add(this);
@@ -319,7 +319,7 @@ namespace Engendro.Audio
                 this.Scene = EngendroGame.Instance?.SceneManager.CurrentScene;
                 this.delayPlayCooldown = delay;
                 this.delayPlayFadeIn = fadeIn;
-                this.RemainingTime = IsLooped ? -1 : Duration;
+                this.RemainingTime = Looped ? -1 : Duration;
                 if (!runningInstances.Contains(this))
                     runningInstances.Add(this);
             }
@@ -335,6 +335,7 @@ namespace Engendro.Audio
             delayPlayCooldown = 0;
             delayPlayFadeIn = 0;
             panTween.Stop();
+            Looped = Sound.Looped;
             stopTween.Stop();
             RemainingTime = 0;
             Emitter = null;

@@ -18,10 +18,7 @@ namespace ScaryCastle
         // FleeChance
         public override Ratio FleeChance => 0.15f;
 
-        // GetIntentWeight
-        public override float GetIntentWeight(CombatIntent intent, Actor actor, float distance)
-        {
-            return .8f;
-        }
+        // MeleeRange
+        public override int MeleeRange => 30;
     }
 }

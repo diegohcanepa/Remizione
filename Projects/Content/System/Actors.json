@@ -23,7 +23,7 @@
     },
     {
       "name": "Rat",
-      "dropSackChanceBonus": 1,
+      "dropSackChanceBonus": 0,
       "minPackSize": 1,
       "maxPackSize": 4
     },
@@ -40,7 +40,9 @@
     },
     {
       "name": "StinkyRat",
-      "difficulty": "Normal"
+      "difficulty": "Normal",
+      "maxPackSize": 2,
+      "tags": "poison"
     }
   ]
 }

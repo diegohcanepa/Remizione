@@ -179,7 +179,9 @@ namespace ScaryCastle
                         }
                     }
                 }
-                if (furthestNode != null) furthestNode.Category = RoomCategory.Boss;
+                
+                if (furthestNode != null)
+                    furthestNode.Category = RoomCategory.Boss;
             }
 
             // --- INYECCIÓN DE TREASURE Y STORE (Uso de Dead-Ends o Adosado) ---
@@ -297,7 +299,9 @@ namespace ScaryCastle
 
                             // REGLA VISUAL: Si la puerta sale hacia ABAJO desde el nodo actual,
                             // o si la puerta de regreso del hijo da hacia ABAJO, salteamos el bloqueo.
-                            if (currentToTarget == DoorDirection.Down || targetToCurrent == DoorDirection.Down)
+                            if (currentToTarget == DoorDirection.Down ||
+                                targetToCurrent == DoorDirection.Down ||
+                                currentNode.Category == RoomCategory.Start)
                             {
                                 // Continuamos explorando el árbol, pero dejamos la conexión abierta (sin candado)
                                 visited.Add(targetNode);
@@ -307,9 +311,9 @@ namespace ScaryCastle
 
                             var lockChance = targetDiff switch
                             {
-                                Difficulty.Easy => 0.2f,
-                                Difficulty.Normal => 0.4f,
-                                Difficulty.Hard => 0.6f,
+                                Difficulty.Easy => 0.3f,
+                                Difficulty.Normal => 0.5f,
+                                Difficulty.Hard => 0.7f,
                                 _ => 0.4f
                             };
 

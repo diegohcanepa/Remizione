@@ -167,9 +167,7 @@ namespace ScaryCastle
                 }
 
                 if (successfulGroupSpawns == 0)
-                {
                     table.Remove(item.Name);
-                }
             }
 
             if (pendingSpawns.Count == 0)
@@ -184,6 +182,9 @@ namespace ScaryCastle
                 var instance = CreateThingClone<Actor>(chosenDef.Name);
                 instance.Position = points[i];
                 Children.Add(instance);
+
+                if (WalkArea != null)
+                    instance.Position = WalkArea.Polygon.GetClampPosition(instance);
 
                 enemiesSpawnCounter.Increment(chosenDef.Name);
                 Session.CurrentRun.Spawns.Increment(chosenDef.Name);
@@ -228,7 +229,6 @@ namespace ScaryCastle
                     if (!def.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns.GetCount(def.Name)))
                         continue;
 
-                    // Intensidad eliminada.
                     var finalWeight = AdjustWeight(RoomNode.TopographicDifficulty, def.Difficulty, def.SpawnWeight, null);
                     table.Add(def.Name, finalWeight);
                 }
@@ -244,6 +244,9 @@ namespace ScaryCastle
                 var instance = CreateThingClone<Prop>(chosen.Name);
                 instance.Position = placeholder.Position;
                 Children.Add(instance);
+
+                if (WalkArea != null)
+                    instance.Position = WalkArea.Polygon.GetClampPosition(instance);
 
                 Session.CurrentRun.Spawns.Increment(chosen.Name);
                 propsSpawnCounter.Increment(chosen.Name);
@@ -340,7 +343,7 @@ namespace ScaryCastle
                 if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns))
                     continue;
 
-                if (!TagScope.Test(RoomNode.Definition.Scope, RoomNode.Definition.Pools, RoomNode.Definition.Tags))
+                if (!TagScope.Test(RoomNode.Definition.Scope, RoomNode.Definition.Pools, definition.Tags))
                     continue;
 
                 outList.Add(definition);

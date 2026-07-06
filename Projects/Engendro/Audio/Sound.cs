@@ -29,7 +29,7 @@ namespace Engendro.Audio
         #region Constructor
 
         // Constructor
-        private Sound(string name, SoundCategory category, string[]? soundNames, string[]? tags, int maxInstances, float volume, float pan, float pitch, Ratio pitchVariance, SoundPopMode popMode, bool transitionAware, bool pauseAware, string caption)
+        private Sound(string name, SoundCategory category, string[]? soundNames, string[]? tags, int maxInstances, float volume, bool looped, float pan, float pitch, Ratio pitchVariance, SoundPopMode popMode, bool transitionAware, bool pauseAware, string caption)
         {
             // Name cannot be empty
             CodeContract.NotEmpty(name, nameof(name));
@@ -59,6 +59,7 @@ namespace Engendro.Audio
 
             this.PopMode = popMode;
             this.Volume = volume;
+            this.Looped = looped;
             this.Pan = pan;
             this.Pitch = pitch;
             this.PitchVariance = pitchVariance;
@@ -215,6 +216,7 @@ namespace Engendro.Audio
                                                tags,
                                                settings.MaxInstances,
                                                settings.Volume,
+                                               settings.Looped,
                                                settings.Pan,
                                                settings.Pitch,
                                                settings.PitchVariance,
@@ -322,6 +324,9 @@ namespace Engendro.Audio
         // Name
         public string Name { get; }
 
+        // Looped
+        public bool Looped { get; }
+
         // Pan
         public float Pan { get; }
 
@@ -374,7 +379,7 @@ namespace Engendro.Audio
             if (PopInstance() is SoundInstance instance)
             {
                 instance.Emitter = emitter;
-                instance.IsLooped = looped;
+                instance.Looped = looped;
                 instance.Play();
                 return instance;
             }
@@ -395,7 +400,7 @@ namespace Engendro.Audio
         {
             if (Find(name)?.PopInstance() is SoundInstance instance)
             {
-                instance.IsLooped = looped;
+                instance.Looped = looped;
                 instance.TransitionAware = transitionAware;
                 instance.Play();
                 return instance;
