@@ -459,7 +459,8 @@ namespace Engendro
 
                 if (Geometry.LineSegmentsCross(start, end, v1, v2))
                 {
-                    if (Geometry.DistanceToSegment(start, v1, v2) > epsilon && Geometry.DistanceToSegment(end, v1, v2) > epsilon)
+                    if (Geometry.DistanceToSegment(start, v1, v2) > epsilon &&
+                        Geometry.DistanceToSegment(end, v1, v2) > epsilon)
                         return true;
                 }
             }

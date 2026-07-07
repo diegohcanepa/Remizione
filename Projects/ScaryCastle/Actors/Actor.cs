@@ -1057,18 +1057,17 @@ namespace ScaryCastle
         }
 
         // MoveTo
-        public override bool MoveTo(Vector2 destination)
+        public override MoveToResult MoveTo(Vector2 destination)
         {
             // No path needed
             if (WalkArea == null || IgnoreWalkArea)
                 return base.MoveTo(destination);
 
-            if (!CanMove || destination == Position)
-                return false;
+            if (!CanMove)
+                return MoveToResult.MoveNotAllowed;
 
-            var distance = DistanceTo(destination);
-            if (distance <= 1)
-                return false;
+            if (destination == Position || DistanceTo(destination) <= 1)
+                return MoveToResult.TinyDistance;
 
             var path = WalkArea.FindPath(this, destination);
 
@@ -1076,14 +1075,14 @@ namespace ScaryCastle
             if (path == null || path.Length == 0)
             {
                 FastMove = false;
-                return false;
+                return MoveToResult.NoPath;
             }
 
             // Only one path node equals to starting position
             if (path.Length == 1 && path[0] == Position)
             {
                 FastMove = false;
-                return false;
+                return MoveToResult.NoPath;
             }
 
             pendingPathNodes.Clear();
@@ -1094,7 +1093,7 @@ namespace ScaryCastle
 
             BodyMachine.ChangeState<BodyMoveState>();
 
-            return true;
+            return MoveToResult.Success;
         }
 
         // MoveToDestination
@@ -1179,8 +1178,17 @@ namespace ScaryCastle
                 if (!target.RuntimeCollider.IsEmpty)
                     destination = target.RuntimeCollider.GetClosestPointOnEdge(destination);
 
-                if (!MoveTo(destination))
+                var moveToResult = MoveTo(destination);
+                if (moveToResult == MoveToResult.NoPath)
+                {
+                    FaceTo(target);
+                    Session.AwaitRoutine(RoutineNames.WayBlockedHandler);
+                    return false;
+                }
+                else if (moveToResult == MoveToResult.TinyDistance)
+                {
                     HandlePendingInteraction();
+                }
             }
 
             return true;

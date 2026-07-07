@@ -39,7 +39,7 @@ namespace ScaryCastle.Scripting
 
             var destination = target.GetApproachPosition(source, behavior);
 
-            directionCooldown = source.MoveTo(destination) ? 300 : 0;
+            directionCooldown = source.MoveTo(destination) == Adberration.MoveToResult.Success ? 300 : 0;
         }
 
         // OnExecutionCompleted

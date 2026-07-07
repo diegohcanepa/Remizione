@@ -1,4 +1,5 @@
-﻿using Adberration.Scripting;
+﻿using Adberration;
+using Adberration.Scripting;
 
 namespace ScaryCastle.Scripting
 {
@@ -44,7 +45,7 @@ namespace ScaryCastle.Scripting
                     if (decision.PositioningMode == PositioningMode.MoveOnY)
                         pos.X = actor.X;
 
-                    cancelAwait = !actor.MoveTo(pos);
+                    cancelAwait = actor.MoveTo(pos) != MoveToResult.Success;
                 }
             }
             else if (decision.Type == CombatDecisionType.Charge)

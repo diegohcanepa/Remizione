@@ -49,6 +49,7 @@ namespace ScaryCastle
 
         #region IAction interface
 
+        // Consume
         void IAction.Consume(Actor actor)
         {
             actor.Energy -= EnergyCost;

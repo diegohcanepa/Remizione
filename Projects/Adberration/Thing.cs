@@ -259,16 +259,19 @@ namespace Adberration
         }
 
         // MoveTo
-        public virtual bool MoveTo(Vector2 destination)
+        public virtual MoveToResult MoveTo(Vector2 destination)
         {
-            if (!CanMove || destination == Position)
-                return false;
+            if (!CanMove)
+                return MoveToResult.MoveNotAllowed;
+
+            if (destination == Position)
+                return MoveToResult.TinyDistance;
 
             moveSegment.SetPath(Position, destination);
 
             Move(Vector2.Normalize(destination - Position));
 
-            return true;
+            return MoveToResult.Success;
         }
 
         // OutcomeScript

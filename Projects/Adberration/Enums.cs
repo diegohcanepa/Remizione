@@ -21,6 +21,9 @@
     // LocalizationSource
     public enum LocalizationSource { Script, TextRepository, TextRepositoryOtherwiseScript }
 
+    // MoveToResult
+    public enum MoveToResult { Success, TinyDistance, MoveNotAllowed, NoPath }
+
     // MusicTagScope
     public enum MusicTagScope { Session, Script, Room }
 

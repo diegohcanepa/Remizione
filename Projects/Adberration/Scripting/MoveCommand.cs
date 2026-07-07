@@ -39,7 +39,7 @@ namespace Adberration.Scripting
             if (HasArg(FollowArg))
                 Session.Camera.Follow(thing);
 
-            if (thing.MoveTo(destination))
+            if (thing.MoveTo(destination) == MoveToResult.Success)
                 directionCooldown = 150;
             else
                 directionCooldown = 0;
