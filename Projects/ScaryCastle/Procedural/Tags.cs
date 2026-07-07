@@ -20,6 +20,7 @@ namespace ScaryCastle
             "pottery",
             "torch",
             "trap",
+            "trunk",
             "wallDecoration",
         ];
 

@@ -179,8 +179,12 @@ namespace ScaryCastle
                 Refresh();
             }
 
-            if (actor == null || actor.HP == 0)
+            if (actor == null || actor.IsDead)
+            {
+                heartbeat?.Stop();
+                heartbeat = null;
                 return;
+            }
 
             scaleTween.Update(gameTime);
 

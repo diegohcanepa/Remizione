@@ -14,7 +14,8 @@ namespace ScaryCastle
         FaceToFace,     // Cara a cara (respetando la dirección del NPC)
         ClosestSide,    // Lado más cercano (sin cruzar al NPC)
         InFront,         // Justo encima (para items o puertas)
-        Over
+        Over,
+        Behind
     }
 
     // BodySize

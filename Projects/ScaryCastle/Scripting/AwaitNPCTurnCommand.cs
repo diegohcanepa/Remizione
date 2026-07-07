@@ -10,6 +10,7 @@ namespace ScaryCastle.Scripting
         private Actor? actor;
         private bool awaitAttack;
         private bool awaitMove;
+        private bool cancelAwait;
 
         // Constructor
         internal AwaitNPCTurnCommand(Script script, string source, StatementBody body)
@@ -24,7 +25,7 @@ namespace ScaryCastle.Scripting
         protected override void OnExecute()
         {
             actor = AssertEntity<Actor>(0);
-            if (actor == null || actor.CombatDecision is not { } decision)
+            if (actor == null || actor.CombatBehavior == null || actor.CombatDecision is not { } decision)
                 return;
 
             if (decision.Type is CombatDecisionType.None or CombatDecisionType.Curse)
@@ -32,6 +33,7 @@ namespace ScaryCastle.Scripting
 
             awaitAttack = false;
             awaitMove = false;
+            cancelAwait = false;
 
             if (decision.Type == CombatDecisionType.Attack)
             {
@@ -39,7 +41,10 @@ namespace ScaryCastle.Scripting
                 {
                     awaitMove = true;
                     var pos = decision.Target.GetApproachPosition(actor, ApproachBehavior.ClosestSide);
-                    actor.MoveTo(pos);
+                    if (decision.PositioningMode == PositioningMode.MoveOnY)
+                        pos.X = actor.X;
+
+                    cancelAwait = !actor.MoveTo(pos);
                 }
             }
             else if (decision.Type == CombatDecisionType.Charge)
@@ -66,7 +71,7 @@ namespace ScaryCastle.Scripting
         // IsAwaiting
         public override bool IsAwaiting()
         {
-            if (actor == null || actor.IsDead)
+            if (actor == null || actor.IsDead || cancelAwait)
                 return false;
 
             if (awaitMove)

@@ -79,6 +79,7 @@
     },
     {
       "name": "Trunk",
+      "tags": "trunk",
       "effects": [
         {
           "context": "Contact",
@@ -95,6 +96,7 @@
     },
     {
       "name": "GoldenTrunk",
+      "tags": "trunk",
       "effects": [
         {
           "context": "Contact",

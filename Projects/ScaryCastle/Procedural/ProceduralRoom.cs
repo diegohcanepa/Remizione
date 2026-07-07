@@ -20,7 +20,6 @@ namespace ScaryCastle
         private readonly List<Placeholder> placeholders = [];
         private readonly CounterBank propsSpawnCounter = new();
         private readonly int randomSeed;
-        private readonly HashSet<Placeholder> usedPlaceholders = [];
 
         #endregion
 
@@ -203,9 +202,6 @@ namespace ScaryCastle
 
             foreach (var placeholder in shuffledPlaceholders)
             {
-                if (usedPlaceholders.Contains(placeholder))
-                    continue;
-
                 if (!placeholder.FillChance.Roll(Random))
                     continue;
 
@@ -234,8 +230,6 @@ namespace ScaryCastle
 
                 if (PropDefinition.Definitions.Find(item.Name) is not PropDefinition chosen)
                     continue;
-
-                usedPlaceholders.Add(placeholder);
 
                 var instance = CreateThingClone<Prop>(chosen.Name);
                 instance.Position = placeholder.Position;

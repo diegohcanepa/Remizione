@@ -770,6 +770,14 @@ namespace ScaryCastle
 
             switch (behavior)
             {
+                case ApproachBehavior.Behind:
+                    // "Párate a mi espalda"
+                    if (Direction == FacingDirection.Left)
+                        targetX = myBox.Right + spacing;  // Estoy mirando izq -> mi espalda está a la derecha
+                    else
+                        targetX = myBox.Left - spacing;   // Estoy mirando der -> mi espalda está a la izquierda
+                    break;
+
                 case ApproachBehavior.FaceToFace:
                     // "Párate frente a mi cara"
                     if (Direction == FacingDirection.Left)

@@ -32,12 +32,12 @@ namespace ScaryCastle
                 // 1. Decisión de Huida: Filtro de pánico por poca vida + proximidad del jugador
                 bool isPlayerClose = distance <= archetype.MeleeRange;
 
-                if (isPlayerClose && source.HPRatio <= archetype.FleeHPThreshold && Random.Shared.NextDouble() < archetype.FleeChance)
+                if (isPlayerClose && source.HPRatio <= archetype.FleeHPThreshold && archetype.FleeChance.Roll())
                     return new CombatDecision(CombatDecisionType.RandomMove, null, target, PositioningMode.Move);
 
                 // 2. Procesamiento de la Intención de Ataque / Persecución
                 // Instinto de supervivencia: Si ya te tiene a tiro de Melee, ataca sí o sí ignorando la chance.
-                if (isInMeleeRange || Random.Shared.NextDouble() < archetype.AttackChance)
+                if (isInMeleeRange || archetype.AttackChance.Roll())
                 {
                     var intent = archetype.SelectIntent(source, source.CombatBehavior.Intents, distance);
 

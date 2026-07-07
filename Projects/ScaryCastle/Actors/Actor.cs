@@ -811,6 +811,8 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = Math.Max(0, value);
+                    if (field == 0)
+                        ClearCondition();
                 }
             }
         }
@@ -853,20 +855,30 @@ namespace ScaryCastle
         public bool EnforceTurn { get; set; }
 
         // ExecuteAction
-        public void ExecuteAction(IAction action, GameThing? target)
+        public bool ExecuteAction(IAction action, GameThing? target)
         {
             if (IsDead)
-                return;
+                return false;
 
             StopMoving();
 
             if (target != null)
+            {
                 FaceTo(target);
+
+                if (action.ActionKind is ActionKind.Projectile or ActionKind.Proximity)
+                {
+                    if (!IsInAttackLane(target))
+                        return false;
+                }
+            }
 
             var state = BodyMachine.FindOrCreateState<BodyExecuteActionState>();
             state.Action = action;
             state.Target = target;
             BodyMachine.ChangeState(state.GetType());
+
+            return true;
         }
 
         // FastMove
@@ -923,7 +935,7 @@ namespace ScaryCastle
         public bool IsAlert { get; set; }
 
         // IsInAttackLane
-        public bool IsInAttackLane(GameThing target, int attackLaneThickness = 5)
+        public bool IsInAttackLane(GameThing target, int attackLaneThickness = 3)
         {
             float dy = Math.Abs(Position.Y - target.Y);
             return dy <= attackLaneThickness;
@@ -1153,14 +1165,19 @@ namespace ScaryCastle
                 if (ActiveThrowable != null)
                 {
                     if (target.X < X)
-                        destination.X += 10;
+                        destination.X += 14;
                     else
-                        destination.X -= 10;
+                        destination.X -= 14;
                 }
                 else if (item?.Definition.ActionKind == ActionKind.Projectile)
                 {
                     destination.X = X;
                 }
+
+                // Because destination is based on the hotspot it is possible that the current destination
+                // is within the collider polygon so we need to move it out; otherwise MoveTo() will fail.
+                if (!target.RuntimeCollider.IsEmpty)
+                    destination = target.RuntimeCollider.GetClosestPointOnEdge(destination);
 
                 if (!MoveTo(destination))
                     HandlePendingInteraction();

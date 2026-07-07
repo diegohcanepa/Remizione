@@ -23,22 +23,38 @@
         {
           "position": "46,44",
           "placement": "Floor",
-          "fillChance": 0.5
+          "fillChance": 0.5,
+          "allowTags": "pottery,trunk"
         },
         {
           "position": "193,44",
           "placement": "Floor",
-          "fillChance": 0.5
+          "fillChance": 0.5,
+          "allowTags": "pottery,trunk"
         },
         {
           "position": "68,46",
           "placement": "WallFrontBase",
-          "fillChance": 0.5
+          "fillChance": 0.5,
+          "allowTags": "pottery,trunk"
         },
         {
           "position": "170,46",
           "placement": "WallFrontBase",
-          "fillChance": 0.5
+          "fillChance": 0.5,
+          "allowTags": "pottery,trunk"
+        },
+        {
+          "position": "54,85",
+          "placement": "Floor",
+          "fillChance": 0.2,
+          "allowTags": "trap"
+        },
+        {
+          "position": "135,61",
+          "placement": "Floor",
+          "fillChance": 0.2,
+          "allowTags": "trap"
         }
       ],
       "walkArea": "199,43;232,109;10,109;42,44;54,44;59,47;78,47;84,44;156,44;162,47;179,47;184,43",
@@ -53,6 +69,20 @@
       "doorLeft": "21,80",
       "doorRight": "220,80",
       "allowTags": "poison",
+      "placeholders": [
+        {
+          "position": "74,72",
+          "placement": "Floor",
+          "fillChance": 0.5,
+          "allowTags": "trap"
+        },
+        {
+          "position": "172,72",
+          "placement": "Floor",
+          "fillChance": 0.5,
+          "allowTags": "trap"
+        }
+      ],      
       "walkArea": "210,62;224,91;178,91;171,93;144,93;132,89;103,94;62,93;19,91;34,62;95,60",
       "walls": [
         "2,0;2,113;37,44;36,0",
