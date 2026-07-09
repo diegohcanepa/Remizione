@@ -1,4 +1,6 @@
-﻿namespace Adberration.Scripting
+﻿using System;
+
+namespace Adberration.Scripting
 {
     // RandomPositionCommand
     // Arguments: {Thing[,Thing]} polygon {Polygon}
@@ -23,7 +25,7 @@
             {
                 if (things[i] is Thing thing)
                 {
-                    thing.Position = polygon.RandomPoint();
+                    thing.Position = polygon.RandomPoint(Random.Shared);
                 }
             }
         }

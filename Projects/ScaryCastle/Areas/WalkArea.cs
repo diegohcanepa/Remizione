@@ -3,6 +3,7 @@ using Adberration.Scripting;
 using Engendro;
 using Engendro.PathFinding;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -92,6 +93,29 @@ namespace ScaryCastle
             }
         }
 
+        // FindPathCore
+        private Vector2[]? FindPathCore(GameThing requester, Vector2 destination)
+        {
+            var start = deflatedPolygon.Clamp(requester.Position);
+            destination = deflatedPolygon.Clamp(destination);
+
+            // Straight path
+            if (InLineOfSight(start, destination, out IHoleArea? _))
+                return [destination];
+
+            // Create temp start/end nodes
+            findPathStartNode.Position = GetWalkablePoint(start);
+            findPathEndNode.Position = GetWalkablePoint(destination);
+
+            linkedNodes.Add(findPathStartNode);
+            LinkStartNode(findPathStartNode);
+
+            linkedNodes.Add(findPathEndNode);
+            LinkEndNode(findPathEndNode);
+
+            return AStar.CalculatePath(findPathStartNode, findPathEndNode, linkedNodes);
+        }
+
         // LinkNodes
         private void LinkNodes()
         {
@@ -110,7 +134,7 @@ namespace ScaryCastle
                     if (linkedNodes[a] == linkedNodes[b])
                         continue;
 
-                    if (InLineOfSight(linkedNodes[a].Position, linkedNodes[b].Position))
+                    if (InLineOfSight(linkedNodes[a].Position, linkedNodes[b].Position, out IHoleArea? _))
                     {
                         linkedNodes[a].Links.Add(b);
                         linkedNodes[b].Links.Add(a);
@@ -124,7 +148,7 @@ namespace ScaryCastle
         {
             for (var i = 0; i < linkedNodes.Count; i++)
             {
-                if (InLineOfSight(startNode.Position, linkedNodes[i].Position))
+                if (InLineOfSight(startNode.Position, linkedNodes[i].Position, out IHoleArea? _))
                     startNode.Links.Add(i);
             }
         }
@@ -134,7 +158,7 @@ namespace ScaryCastle
         {
             for (var i = 0; i < linkedNodes.Count; i++)
             {
-                if (InLineOfSight(endNode.Position, linkedNodes[i].Position))
+                if (InLineOfSight(endNode.Position, linkedNodes[i].Position, out IHoleArea? _))
                 {
                     endNode.Links.Add(i);
                     linkedNodes[i].Links.Add(linkedNodes.IndexOf(endNode));
@@ -240,29 +264,28 @@ namespace ScaryCastle
             if (requester.Position == destination)
                 return null;
 
+            // Clamp destination to walk area
             if (!Contains(destination))
                 destination = ClampInside(destination, out _);
 
             Prepare(requester, destination);
 
-            var start = deflatedPolygon.Clamp(requester.Position);
-            destination = deflatedPolygon.Clamp(destination);
+            var result = FindPathCore(requester, destination);
 
-            // Straight path
-            if (InLineOfSight(start, destination))
-                return [destination];
-
-            // Create temp start/end nodes
-            findPathStartNode.Position = GetWalkablePoint(start);
-            findPathEndNode.Position = GetWalkablePoint(destination);
-
-            linkedNodes.Add(findPathStartNode);
-            LinkStartNode(findPathStartNode);
-
-            linkedNodes.Add(findPathEndNode);
-            LinkEndNode(findPathEndNode);
-
-            var result = AStar.CalculatePath(findPathStartNode, findPathEndNode, linkedNodes);
+            /*
+            // Raycast to closest point
+            if (result == null || result.Length == 0)
+            {
+                if (!InLineOfSight(requester.Position, destination, out IHoleArea? blockingArea) && blockingArea != null)
+                {
+                    if (blockingArea.Polygon.GetClosestIntersection(requester.Position, destination, out Vector2 closestImpactPoint))
+                    {
+                        destination = blockingArea.ClampOutside(closestImpactPoint);
+                        result = FindPathCore(requester, destination);
+                    }
+                }
+            }
+            */
 
             return result;
         }
@@ -304,8 +327,10 @@ namespace ScaryCastle
         public RoomAreaReadOnlyCollection<HoleArea> Holes { get; }
 
         // InLineOfSight
-        public bool InLineOfSight(Vector2 value1, Vector2 value2, object? sender = null)
+        public bool InLineOfSight(Vector2 value1, Vector2 value2, out IHoleArea? blockingArea)
         {
+            blockingArea = null;
+
             if ((value1 - value2).LengthSquared() < float.Epsilon)
                 return true;
 
@@ -314,8 +339,12 @@ namespace ScaryCastle
 
             for (var i = 0; i < holeAreas.Count; i++)
             {
-                if (holeAreas[i] != sender && !holeAreas[i].InLineOfSight(value1, value2))
+                // Si la línea cruza la pared del agujero OR si el destino está adentro del agujero...
+                if (!holeAreas[i].InLineOfSight(value1, value2) || holeAreas[i].Contains(value2))
+                {
+                    blockingArea = holeAreas[i];
                     return false;
+                }
             }
 
             return true;
@@ -344,9 +373,9 @@ namespace ScaryCastle
         public ReadOnlyCollection<IHoleArea> ObstacleAreas { get; }
 
         // RandomWalkablePoint
-        public Vector2 RandomWalkablePoint(float margin = 0)
+        public Vector2 RandomWalkablePoint(Random rng, float margin = 0)
         {
-            var result = GetWalkablePoint(Polygon.RandomPoint());
+            var result = GetWalkablePoint(Polygon.RandomPoint(rng));
 
             if (margin > 0)
             {
@@ -358,26 +387,23 @@ namespace ScaryCastle
         }
 
         // RandomWalkablePoint
-        public Vector2 RandomWalkablePoint(Vector2 origin, float minimumRadius, float maximumRadius)
+        public Vector2 RandomWalkablePoint(Random rng, Vector2 origin, float minimumRadius, float maximumRadius)
         {
             // Intentamos X veces encontrar un punto que caiga en zona válida por azar.
             // Esto preserva la distribución y el radio que pediste.
             int attempts = 10;
             for (int i = 0; i < attempts; i++)
             {
-                var pt = Polygon.RandomPoint(origin, minimumRadius, maximumRadius);
+                var pt = Polygon.RandomPoint(rng, origin, minimumRadius, maximumRadius);
 
                 // Si el punto es caminable tal cual salió, lo usamos.
                 if (IsWalkableAt(pt))
-                {
                     return pt;
-                }
             }
 
             // FALLBACK: Si tras 10 intentos no encontramos nada (ej: el jugador está
             // arrinconado contra una pared), tenemos dos opciones:
 
-            // Opción A: Devolver el origen (el personaje no se mueve).
             return origin;
         }
     }

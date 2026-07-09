@@ -9,15 +9,15 @@ namespace ScaryCastle
     /// </summary>
     public abstract class CombatArchetype
     {
-        // AllowRandomMove
-        public virtual bool AllowRandomMove => false;
-
         // AttackChance
         // Probabilidad (0 a 1) de que el NPC intente un ataque en su turno.
         // Un valor bajo (0.2) crea un comportamiento de "acecho".
         public abstract Ratio AttackChance { get; }
 
-        // Probabilidad de que efectivamente huya una vez herido.
+        // FallbackMovement
+        public virtual FallbackMovementKind FallbackMovement => FallbackMovementKind.None;
+
+        // FleeChance (Probabilidad de que efectivamente huya una vez herido.)
         public abstract Ratio FleeChance { get; }
 
         // FleeHPThreshold
@@ -34,15 +34,12 @@ namespace ScaryCastle
         // Calcula el peso específico de un intent sin descartar proyectiles por distancia.
         public virtual float GetIntentWeight(CombatIntent intent, Actor actor, float distance)
         {
-            // 1. Si es a distancia, en rooms chicas siempre tiene peso válido.
-            if (intent.ActionKind == ActionKind.Projectile)
-                return intent.SpawnWeight;
+            // Si el jugador está fuera del rango operativo de este ataque en particular, el peso es cero.
+            if (distance < intent.MinRange || distance > intent.MaxRange)
+                return 0;
 
-            // 2. Si es cuerpo a cuerpo, solo tiene peso si el jugador entró en el rango operativo de Melee.
-            if (intent.ActionKind == ActionKind.Proximity)
-                return distance > MeleeRange ? 0 : intent.SpawnWeight;
-
-            return 0;
+            // Si está dentro de sus límites físicos, se respeta su peso base.
+            return intent.SpawnWeight;
         }
 
         // IsInMeleeRange

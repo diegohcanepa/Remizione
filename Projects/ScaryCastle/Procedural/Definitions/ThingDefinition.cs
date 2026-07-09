@@ -38,9 +38,7 @@ namespace ScaryCastle
             Faction = element.GetEnum("faction", Faction.Evil);
 
             // MaxPerRoom
-            MaxPerRoom = element.GetInt32("maxPerRoom", -1);
-            if (MaxPerRoom < 0)
-                MaxPerRoom = -1;
+            MaxPerRoom = element.GetInt32("maxPerRoom", 1);
 
             // RequiresDeadEnd
             RequiresDeadEnd = element.GetBool("requiresDeadEnd", false);

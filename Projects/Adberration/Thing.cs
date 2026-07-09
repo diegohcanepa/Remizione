@@ -265,7 +265,7 @@ namespace Adberration
                 return MoveToResult.MoveNotAllowed;
 
             if (destination == Position)
-                return MoveToResult.TinyDistance;
+                return MoveToResult.LessThan1px;
 
             moveSegment.SetPath(Position, destination);
 

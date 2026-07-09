@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 namespace Engendro
 {
     /// <summary>
-    /// Implementación concreta y mutable de un Polígono.
+    /// Polygon
     /// </summary>
     public sealed class Polygon : IReadOnlyPolygon
     {
@@ -275,13 +275,13 @@ namespace Engendro
         public bool ContainsVertex(RectangleF rect)
         {
             // Optimización C#14 con Span para evitar generar basura en el GC
-            ReadOnlySpan<Vector2> rectVertices = stackalloc Vector2[]
-            {
+            ReadOnlySpan<Vector2> rectVertices =
+            [
                 new(rect.Left, rect.Top),
                 new(rect.Right, rect.Top),
                 new(rect.Right, rect.Bottom),
                 new(rect.Left, rect.Bottom)
-            };
+            ];
 
             for (int i = 0; i < rectVertices.Length; i++)
             {
@@ -298,11 +298,11 @@ namespace Engendro
         }
 
         // ContainsVertex
-        public bool ContainsVertex(IList<Vector2> verticesList)
+        public bool ContainsVertex(IList<Vector2> vertices)
         {
-            for (var i = 0; i < verticesList.Count; i++)
+            for (var i = 0; i < vertices.Count; i++)
             {
-                if (Contains(verticesList[i]))
+                if (Contains(vertices[i]))
                     return true;
             }
 
@@ -331,6 +331,34 @@ namespace Engendro
         public void FlipVertically(float originY)
         {
             FlipCore(null, originY);
+        }
+
+        // GetClosestIntersection (Raycast to closest point from start)
+        public bool GetClosestIntersection(Vector2 start, Vector2 end, out Vector2 intersectionPoint)
+        {
+            intersectionPoint = end;
+            var hasImpact = false;
+            var closestT = float.MaxValue;
+
+            for (var i = 0; i < vertices.Count; i++)
+            {
+                var v1 = vertices[i];
+                var v2 = vertices[(i + 1) % vertices.Count];
+
+                if (Geometry.GetLineSegmentIntersection(start, end, v1, v2, out Vector2 impactPoint, out float t))
+                {
+                    // Nos quedamos con la intersección que tenga el 't' más chico 
+                    // (la más cercana al punto de origen 'start')
+                    if (t < closestT)
+                    {
+                        closestT = t;
+                        intersectionPoint = impactPoint;
+                        hasImpact = true;
+                    }
+                }
+            }
+
+            return hasImpact;
         }
 
         // GetClosestPointOnEdge
@@ -490,23 +518,23 @@ namespace Engendro
         public PolygonOrientation Orientation { get; private set; }
 
         // RandomPoint
-        public Vector2 RandomPoint()
+        public Vector2 RandomPoint(Random rng)
         {
             var bounds = BoundingRectangle;
-            Vector2 result = new(Random.Shared.Next(bounds.Left, bounds.Right + 1), Random.Shared.Next(bounds.Top, bounds.Bottom + 1));
+            Vector2 result = new(rng.Next(bounds.Left, bounds.Right + 1), rng.Next(bounds.Top, bounds.Bottom + 1));
             return Clamp(result);
         }
 
         // RandomPoint
-        public Vector2 RandomPoint(Vector2 origin, float radius)
+        public Vector2 RandomPoint(Random rng, Vector2 origin, float radius)
         {
-            return RandomPoint(origin, 0, radius);
+            return RandomPoint(rng, origin, 0, radius);
         }
 
         // RandomPoint
-        public Vector2 RandomPoint(Vector2 origin, float minimumRadius, float maximumRadius)
+        public Vector2 RandomPoint(Random rng, Vector2 origin, float minimumRadius, float maximumRadius)
         {
-            return Clamp(origin.Random(minimumRadius, maximumRadius));
+            return Clamp(origin.Random(rng, minimumRadius, maximumRadius));
         }
 
         // SetVertices

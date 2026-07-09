@@ -106,18 +106,16 @@ namespace ScaryCastle
         private void Populate()
         {
             SpawnProps();
-            if (RoomNode.Definition.AllowEnemies)
-                SpawnEnemies();
+            SpawnActors();
         }
 
-        // SpawnEnemies
-        private void SpawnEnemies()
+        // SpawnActors
+        private void SpawnActors()
         {
             if (WalkArea == null || Session.CurrentRun == null)
                 return;
 
-            var candidates = GetCandidateDefinitions<ActorDefinition, Actor>(
-                ActorDefinition.Definitions.All);
+            var candidates = GetCandidateDefinitions<ActorDefinition, Actor>(ActorDefinition.Definitions.All);
 
             if (candidates.Count == 0)
                 return;
@@ -125,7 +123,9 @@ namespace ScaryCastle
             var table = new ChanceTable();
             foreach (var c in candidates)
             {
-                // Intensidad eliminada. Ajuste puro por choque de dificultades.
+                if (!RoomNode.Definition.AllowEnemies && c.Faction == Faction.Evil)
+                    continue;
+
                 var finalWeight = AdjustWeight(RoomNode.TopographicDifficulty, c.Difficulty, c.SpawnWeight, c.Rank);
                 table.Add(c.Name, finalWeight);
             }
@@ -189,7 +189,7 @@ namespace ScaryCastle
         // SpawnProps
         private void SpawnProps()
         {
-            if (Session.CurrentRun == null || Placeholders.Count == 0)
+            if (Session.CurrentRun == null)
                 return;
 
             var candidates = GetCandidateDefinitions<PropDefinition, Prop>(PropDefinition.Definitions.All);
@@ -197,45 +197,124 @@ namespace ScaryCastle
             if (candidates.Count == 0)
                 return;
 
-            var shuffledPlaceholders = new List<Placeholder>(Placeholders);
-            shuffledPlaceholders.Shuffle(Random);
+            #region Placeholders
 
-            foreach (var placeholder in shuffledPlaceholders)
+            if (placeholders.Count > 0)
             {
-                if (!placeholder.FillChance.Roll(Random))
-                    continue;
+                var shuffledPlaceholders = new List<Placeholder>(Placeholders);
+                shuffledPlaceholders.Shuffle(Random);
 
-                var table = new ChanceTable();
-
-                foreach (var def in candidates)
+                foreach (var placeholder in shuffledPlaceholders)
                 {
-                    if (!def.Placements.Contains(placeholder.Placement))
+                    if (!placeholder.FillChance.Roll(Random))
                         continue;
 
-                    if (placeholder.AllowTags.Count > 0 && !placeholder.AllowTags.Intersects(def.Tags))
+                    var table = new ChanceTable();
+
+                    foreach (var def in candidates)
+                    {
+                        if (!def.RequiresPlaceholder)
+                            continue;
+
+                        if (!def.Placements.Contains(placeholder.Placement))
+                            continue;
+
+                        if (placeholder.AllowTags.Count > 0 && !placeholder.AllowTags.Intersects(def.Tags))
+                            continue;
+
+                        if (!def.PassesMaxPerRoomConstraint(propsSpawnCounter.GetCount(def.Name)))
+                            continue;
+
+                        if (!def.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns.GetCount(def.Name)))
+                            continue;
+
+                        var finalWeight = AdjustWeight(RoomNode.TopographicDifficulty, def.Difficulty, def.SpawnWeight, null);
+                        table.Add(def.Name, finalWeight);
+                    }
+
+                    if (table.GetValue() is not ChanceTableItem item)
                         continue;
 
-                    if (!def.PassesMaxPerRoomConstraint(propsSpawnCounter.GetCount(def.Name)))
+                    if (PropDefinition.Definitions.Find(item.Name) is not PropDefinition chosen)
                         continue;
 
-                    if (!def.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns.GetCount(def.Name)))
-                        continue;
-
-                    var finalWeight = AdjustWeight(RoomNode.TopographicDifficulty, def.Difficulty, def.SpawnWeight, null);
-                    table.Add(def.Name, finalWeight);
+                    var instance = CreateThingClone<Prop>(chosen.Name);
+                    instance.Position = placeholder.Position;
+                    Children.Add(instance);
+                    Session.CurrentRun.Spawns.Increment(chosen.Name);
+                    propsSpawnCounter.Increment(chosen.Name);
                 }
+            }
 
-                if (table.GetValue() is not ChanceTableItem item)
+            #endregion
+
+            if (WalkArea == null)
+                return;
+
+            var freeTable = new ChanceTable();
+
+            foreach (var def in candidates)
+            {
+                // Si la definición dice que SÍ necesita un placeholder, la salteamos (ya se procesó arriba)
+                if (def.RequiresPlaceholder)
                     continue;
+
+                // Control estricto de topes (Si pusiste MaxPerRoom = 1 en el JSON para la baba, acá se frena)
+                if (!def.PassesMaxPerRoomConstraint(propsSpawnCounter.GetCount(def.Name)))
+                    continue;
+
+                if (!def.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns.GetCount(def.Name)))
+                    continue;
+
+                // CRUCE CON LA DIFICULTAD TOPOGRÁFICA DE LA RUN:
+                // Si el cuarto es Easy y la baba es Hard, el peso se desploma (ej: de 1.0f a 0.02f)
+                var finalWeight = AdjustWeight(RoomNode.TopographicDifficulty, def.Difficulty, def.SpawnWeight, null);
+
+                // Si el peso es 0.1f, tiene un 90% de chances de quedar afuera de entrada.
+                // Esto rompe el monopolio de la ruleta cuando hay un solo elemento en el JSON.
+                if (Random.NextDouble() > finalWeight)
+                    continue;
+
+                freeTable.Add(def.Name, finalWeight);
+            }
+
+            if (freeTable.Count == 0)
+                return;
+
+            var occupiedPositions = new List<Vector2>();
+            int maxAttemptsInRoom = Random.Next(1, 3);
+
+            // 3. Hacemos girar la ruleta hasta agotar los intentos o vaciar las opciones legales
+            while (maxAttemptsInRoom > 0 && freeTable.Count > 0)
+            {
+                maxAttemptsInRoom--;
+
+                if (freeTable.GetValue() is not ChanceTableItem item)
+                    break;
 
                 if (PropDefinition.Definitions.Find(item.Name) is not PropDefinition chosen)
                     continue;
 
+                // Pedimos el punto al WalkArea
+                Vector2 spawnPosition = WalkArea.RandomWalkablePoint(Random);
+
+                if (spawnPosition == Vector2.Zero || occupiedPositions.Contains(spawnPosition))
+                    continue;
+
+                occupiedPositions.Add(spawnPosition);
+
+                // Clonación e inyección directa en MonoGame
                 var instance = CreateThingClone<Prop>(chosen.Name);
-                instance.Position = placeholder.Position;
+                instance.Position = spawnPosition;
                 Children.Add(instance);
+
                 Session.CurrentRun.Spawns.Increment(chosen.Name);
                 propsSpawnCounter.Increment(chosen.Name);
+
+                // EXCLUSIÓN POR REGISTRO (Tu regla del MaxPerRoom)
+                // Si la baba tenía MaxPerRoom = 1 y ya spawneó, la borramos de la ruleta para el siguiente tiro
+                if (!chosen.PassesMaxPerRoomConstraint(propsSpawnCounter.GetCount(chosen.Name)))
+                    freeTable.Remove(chosen.Name);
             }
         }
 
@@ -389,9 +468,6 @@ namespace ScaryCastle
         {
         }
 
-        // Random
-        protected Random Random { get; }
-
         #endregion
 
         // CreateThingClone
@@ -410,6 +486,9 @@ namespace ScaryCastle
 
         // Placeholders
         public ReadOnlyCollection<Placeholder> Placeholders { get; }
+
+        // Random
+        public Random Random { get; }
 
         // RoomNode
         public RoomNode RoomNode { get; }

@@ -7,7 +7,12 @@
       "placements": [
         "WallFrontHang"      
       ]
-    },    
+    },
+    {
+      "name": "Goo",
+      "requiresPlaceholder": false,
+      "spawnWeight": 0.1
+    },
     {
       "name": "PotteryA",
       "dropCoinChanceBonus": 0.5,

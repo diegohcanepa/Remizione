@@ -34,6 +34,15 @@ namespace ScaryCastle
             // InPlaceEffectType
             InPlaceEffectType = element.GetEnum("inPlaceEffectType", InPlaceEffectType.None);
 
+            // MinRange
+            MinRange = element.GetInt32("minRange", 0);
+
+            // MaxRange
+            MaxRange = element.GetInt32("maxRange", int.MaxValue);
+
+            if (MinRange > MaxRange)
+                RaiseValidationError(this, $"Minimum range exceeds the maximum range.");
+
             // SoundStart
             this.SoundStart = element.GetObject("soundStart", Sound.Get);
 
@@ -75,10 +84,14 @@ namespace ScaryCastle
         // EnergyCost
         public int EnergyCost { get; }
 
+        // MaxRange
+        public int MaxRange { get; }
+
+        // MinRange
+        public int MinRange { get; }
+
         // Projectile
         public ProjectileDescriptor? Projectile { get; }
-
-        // Range
 
         // SoundStart
         public Sound? SoundStart { get; }

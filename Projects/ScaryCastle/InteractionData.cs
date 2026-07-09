@@ -13,11 +13,18 @@ namespace ScaryCastle
         private CombatIntent? combatIntent;
         private Item? item;
         private Script? script;
+        private readonly GameSession session;
         private GameThing? target;
         private Vector2 targetPosition;
         private Prop? throwable;
 
         #endregion
+
+        // Constructor
+        public InteractionData(GameSession session)
+        {
+            this.session = session;
+        }
 
         // CanExecute
         public bool CanExecute => combatIntent != null || script != null || item != null || throwable != null;
@@ -34,7 +41,7 @@ namespace ScaryCastle
         }
 
         // Execute
-        public bool Execute(GameSession session)
+        public bool Execute()
         {
             if (session.Player == null || target == null)
                 return false;
@@ -96,14 +103,22 @@ namespace ScaryCastle
         public bool IsAttack => combatIntent != null;
 
         // Prepare
-        public void Prepare(InteractionContext context)
+        public void Prepare()
         {
             Clear();
+
+            var context = session.InteractionContext;
 
             if (context.Target == null)
                 return;
 
-            if (context.HeldItem != null && !context.Target.IsGoToVerb)// && context.Target.Cursor == MouseCursorState.Cross)
+            if (context.Session.Player?.ActiveThrowable != null)
+            {
+                if (context.Target.Verb != Verb.Attack && !context.Target.IsGoToVerb)
+                    return;
+            }
+
+            if (context.HeldItem != null && !context.Target.IsGoToVerb)
             {
                 if (context.Session.Player == context.Target)
                 {

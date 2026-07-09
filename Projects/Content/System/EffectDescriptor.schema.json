@@ -45,11 +45,6 @@
       "enum": [ "Low", "Medium", "High" ],
       "default": "Low"
     },
-    "modifier": {
-      "type": "number",
-      "format": "float",
-      "description": "Multiplier."
-    },
     "conditionType": {
       "type": "string",
       "description": "Si es condition, qué tipo es.",

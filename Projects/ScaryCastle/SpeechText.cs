@@ -17,7 +17,7 @@ namespace ScaryCastle
         private const string exclamationLow = "!";
         private const string exclamationMedium = "!!";
         private const string exclamationHigh = "!!!";
-        private const int maxWidth = 90;
+        private const int maxWidth = 80;
 
         #endregion
 
@@ -75,8 +75,7 @@ namespace ScaryCastle
             vp.Inflate(-10, -10);
 
             // Origin
-            var origin = Actor.GetOverheadPosition();
-            origin.Y -= 1;
+            var origin = Actor.GetOverheadPosition(new(0,3));
 
             textArea = CalculateTextArea(ref origin);
 
@@ -183,7 +182,7 @@ namespace ScaryCastle
             if (!text.IsTyping)
             {
                 Game.SpriteBatch.Begin(Actor.Session.Camera);
-                arrowImage.Draw(gameTime);
+                //arrowImage.Draw(gameTime);
                 Game.SpriteBatch.End();
             }
         }

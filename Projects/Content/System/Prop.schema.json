@@ -37,11 +37,12 @@
                   "Ceiling"
                 ]
               }
+            },
+            "requiresPlaceholder": {
+              "type": "boolean",
+              "default": false
             }
-          },
-          "required": [
-            "placements"
-          ]
+          }
         }
       ],
       "unevaluatedProperties": false

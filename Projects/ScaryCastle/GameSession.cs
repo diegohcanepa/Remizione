@@ -56,6 +56,7 @@ namespace ScaryCastle
             this.StatusHUD = new StatusHUD(this);
             this.TextHUD = new TextHUD(this);
             this.InteractionContext = new(this);
+            this.InteractionData = new(this);
             this.DeclaredThings = new(proceduralThings);
             this.Random = new Random(Seed);
             this.inventoryScene = new(PlayerInventory);
@@ -557,6 +558,10 @@ namespace ScaryCastle
         // CurrentRun
         public Run? CurrentRun { get; private set; }
 
+        // DangerousTarget
+        [ScriptProperty]
+        public GameThing? DangerousTarget { get; set; }
+
         // DeclaredThings
         public NamedObjectReadOnlyCollection<GameThing> DeclaredThings { get; }
 
@@ -658,7 +663,7 @@ namespace ScaryCastle
         public InteractionContext InteractionContext { get; }
 
         // InteractionData
-        public InteractionData InteractionData { get; } = new();
+        public InteractionData InteractionData { get; }
 
         // IsConsoleVisible
         public bool IsConsoleVisible => console?.IsActive ?? false;
@@ -755,6 +760,18 @@ namespace ScaryCastle
                 {
                     if (room.Children[i] is Actor actor && !actor.IsPlayer)
                         actor.RemainingTurns -= Math.Abs(turnPenalty);
+                }
+            }
+
+            if (Player != null)
+            {
+                for (var i = 0; i < room.Children.Count; i++)
+                {
+                    if (room.Children[i] is Actor actor && actor != Player && actor.RemainingTurns > 0)
+                    {
+                        if (actor.DistanceTo(Player) <= 5)
+                            actor.RemainingTurns = 0;
+                    }
                 }
             }
 

@@ -12,7 +12,20 @@ namespace ScaryCastle
         // GetFallbackMovement
         private static CombatDecision GetFallbackMovement(CombatArchetype archetype, GameThing? target)
         {
-            return new CombatDecision(archetype.AllowRandomMove ? CombatDecisionType.RandomMove : CombatDecisionType.MoveNearby, null, target, PositioningMode.Move);
+            // Evaluamos el tipo de movimiento de fallback que dicta el arquetipo
+            switch (archetype.FallbackMovement)
+            {
+                case FallbackMovementKind.Random:
+                    return new CombatDecision(CombatDecisionType.RandomMove, null, target, PositioningMode.Move);
+
+                case FallbackMovementKind.Lurk:
+                    return new CombatDecision(CombatDecisionType.LurkMove, null, target, PositioningMode.Move);
+
+                case FallbackMovementKind.None:
+                default:
+                    // Si no se mueve o es el fallback del fallback, se queda en el molde
+                    return new CombatDecision(CombatDecisionType.None, null, target, PositioningMode.None);
+            }
         }
 
         #endregion
@@ -35,24 +48,26 @@ namespace ScaryCastle
                 if (isPlayerClose && source.HPRatio <= archetype.FleeHPThreshold && archetype.FleeChance.Roll())
                     return new CombatDecision(CombatDecisionType.RandomMove, null, target, PositioningMode.Move);
 
+                var aggressive = archetype.AttackChance.Roll();
+
                 // 2. Procesamiento de la Intención de Ataque / Persecución
                 // Instinto de supervivencia: Si ya te tiene a tiro de Melee, ataca sí o sí ignorando la chance.
-                if (isInMeleeRange || archetype.AttackChance.Roll())
+                if (isInMeleeRange || aggressive)
                 {
                     var intent = archetype.SelectIntent(source, source.CombatBehavior.Intents, distance);
 
                     if (intent != null)
                     {
-                        // CASE 1: CUERPO A CUERPO
+                        // CUERPO A CUERPO
                         if (intent.ActionKind == ActionKind.Proximity)
                         {
                             if (distance <= archetype.MeleeRange)
                                 return new CombatDecision(CombatDecisionType.Attack, intent, target, PositioningMode.Move);
                             else
-                                return GetFallbackMovement(archetype, target);
+                                return new CombatDecision(CombatDecisionType.MoveNearby, null, target, PositioningMode.Move);
                         }
 
-                        // CASE 2: ATAQUE A DISTANCIA
+                        // ATAQUE A DISTANCIA
                         if (intent.ActionKind == ActionKind.Projectile)
                         {
                             return new CombatDecision(CombatDecisionType.Attack, intent, target, PositioningMode.MoveOnY);

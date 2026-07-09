@@ -39,6 +39,38 @@ namespace Engendro
             return MathF.Sqrt(DistanceToSegmentSquared(p, v, w));
         }
 
+        // GetLineSegmentIntersection
+        public static bool GetLineSegmentIntersection(Vector2 startA, Vector2 endA, Vector2 startB, Vector2 endB, out Vector2 intersection, out float t)
+        {
+            intersection = Vector2.Zero;
+            t = 0f;
+
+            var denominator = ((endA.X - startA.X) * (endB.Y - startB.Y)) - ((endA.Y - startA.Y) * (endB.X - startB.X));
+
+            // Son paralelas o colineales
+            if (denominator == 0)
+                return false;
+
+            var numerator1 = ((startA.Y - startB.Y) * (endB.X - startB.X)) - ((startA.X - startB.X) * (endB.Y - startB.Y));
+            var numerator2 = ((startA.Y - startB.Y) * (endA.X - startA.X)) - ((startA.X - startB.X) * (endA.Y - startA.Y));
+
+            var r = numerator1 / denominator;
+            var s = numerator2 / denominator;
+
+            // Si r y s están entre 0 y 1, los segmentos se tocan.
+            if (r >= 0 && r <= 1 && s >= 0 && s <= 1)
+            {
+                t = r; // Qué tan lejos está el impacto en la línea A (0 = en startA, 1 = en endA)
+                intersection = new Vector2(
+                    startA.X + (r * (endA.X - startA.X)),
+                    startA.Y + (r * (endA.Y - startA.Y))
+                );
+                return true;
+            }
+
+            return false;
+        }
+
         // IsColinear
         public static bool IsColinear(Vector2 a, Vector2 b, Vector2 c, float epsilon = 0.0001f)
         {

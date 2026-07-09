@@ -97,17 +97,6 @@ namespace ScaryCastle
 
         #region Private members
 
-        // FaceToMouseCursor
-        private void FaceToMouseCursor()
-        {
-            var mousePos = InputManager.DefaultPlayer.Mouse.WorldPosition(Session.Camera);
-            if (mousePos.X <= RuntimeHotspot.BoundingRectangleF.Left ||
-                mousePos.X >= RuntimeHotspot.BoundingRectangleF.Right)
-            {
-                FaceTo(mousePos);
-            }
-        }
-
         // HandlePendingInteraction
         private void HandlePendingInteraction()
         {
@@ -118,7 +107,7 @@ namespace ScaryCastle
             if (Session.State != GameSessionState.Idle)
                 return;
 
-            Session.InteractionData.Execute(Session);
+            Session.InteractionData.Execute();
 
             Session.InteractionContext.Reset();
         }
@@ -218,28 +207,6 @@ namespace ScaryCastle
                 }
             }
         }
-
-        /*
-        // UpdateContactIntent
-        private bool UpdateContactIntent(GameTime gameTime)
-        {
-            if (contactTimer > 0)
-            {
-                contactTimer -= gameTime.ElapsedGameTime.Milliseconds;
-            }
-            else if (Session.Player != null && IsMoving)
-            {
-                if (RuntimeCollider.Contains(Session.Player.Position))
-                {
-                    TryInflictContactDamage(Session.Player);
-                    contactTimer = 500;
-                    return true;
-                }
-            }
-
-            return false;
-        }
-        */
 
         // UpdateDirection
         private void UpdateDirection()
@@ -524,6 +491,9 @@ namespace ScaryCastle
             if (EnforceTurn)
             {
                 EnforceTurn = false;
+
+
+
                 Session.ProcessTurn(PixelsMoved > 80 ? -1 : 0);
             }
         }
@@ -996,6 +966,72 @@ namespace ScaryCastle
             }
         }
 
+        // MoveLurk
+        public virtual void MoveLurk(GameThing target)
+        {
+            if (WalkArea == null)
+                return;
+
+            if (CombatBehavior?.Archetype is not { } arch)
+                return;
+
+            // 1. Calculamos la métrica espacial con el jugador
+            Vector2 toTarget = target.Position - Position;
+            float currentDistance = toTarget.Length();
+
+            if (currentDistance <= 0.1f)
+                return;
+
+            // 2. Definimos los parámetros de comportamiento basados en el Arquetipo
+            float minLurkDistance = arch.MeleeRange * 1.4f;  // Justo afuera de su rango de ataque
+            float maxLurkDistance = arch.MeleeRange * 3f;    // Distancia máxima de acecho proporcional
+            float maxStepThisTurn = arch.MeleeRange * 0.75f; // El paso es una fracción de su rango para que sea corto
+
+            Vector2 desiredDirection = Vector2.Zero;
+
+            // 3. Evaluamos la posición en base a su zona de confort
+            if (currentDistance > maxLurkDistance)
+            {
+                // Muy lejos: Acorta distancia en línea recta (como MoveNearby pero a paso corto)
+                desiredDirection = toTarget;
+                desiredDirection.Normalize();
+            }
+            else if (currentDistance < minLurkDistance)
+            {
+                // Muy cerca: Da un paso de retirada para recuperar su distancia de acecho
+                desiredDirection = -toTarget;
+                desiredDirection.Normalize();
+            }
+            else
+            {
+                // En zona de confort: Orbita de costado de forma errática tendiendo a buscar los bordes
+                toTarget.Normalize();
+
+                // Calculamos los vectores perpendiculares (izquierda y derecha)
+                Vector2 perpendicularLeft = new Vector2(-toTarget.Y, toTarget.X);
+                Vector2 perpendicularRight = new Vector2(toTarget.Y, -toTarget.X);
+
+                // Determinismo espacial para elegir el sentido de la órbita
+                bool chooseLeft = (int)(Position.X + Position.Y) % 2 == 0;
+                Vector2 orbitDirection = chooseLeft ? perpendicularLeft : perpendicularRight;
+
+                // CRÍTICO: Mezclamos la dirección lateral con un empuje HACIA AFUERA (-toTarget)
+                // Esto arrastra al bicho hacia los muros y rincones del WalkArea
+                desiredDirection = (orbitDirection * 0.7f) - (toTarget * 0.3f);
+                desiredDirection.Normalize();
+            }
+
+            // 4. Proyectamos el punto potencial de este turno
+            Vector2 potentialTarget = Position + (desiredDirection * maxStepThisTurn);
+
+            // 5. Blindaje geométrico contra los muros del cuarto
+            Vector2 bestPoint = WalkArea.Polygon.Clamp(potentialTarget);
+
+            // Evitamos vibraciones rústicas contra los colisionadores
+            if (Vector2.Distance(Position, bestPoint) > 4f)
+                MoveTo(bestPoint);
+        }
+
         // MoveNearby
         public virtual void MoveNearby(GameThing target)
         {
@@ -1046,7 +1082,7 @@ namespace ScaryCastle
 
                 for (var i = 0; i < 10; i++)
                 {
-                    destination = walkArea.RandomWalkablePoint();
+                    destination = walkArea.RandomWalkablePoint(Random.Shared);
                     if (DistanceTo(destination) > 20)
                     {
                         MoveTo(destination);
@@ -1067,7 +1103,7 @@ namespace ScaryCastle
                 return MoveToResult.MoveNotAllowed;
 
             if (destination == Position || DistanceTo(destination) <= 1)
-                return MoveToResult.TinyDistance;
+                return MoveToResult.LessThan1px;
 
             var path = WalkArea.FindPath(this, destination);
 
@@ -1082,7 +1118,7 @@ namespace ScaryCastle
             if (path.Length == 1 && path[0] == Position)
             {
                 FastMove = false;
-                return MoveToResult.NoPath;
+                return MoveToResult.LessThan1px;
             }
 
             pendingPathNodes.Clear();
@@ -1139,7 +1175,7 @@ namespace ScaryCastle
             if (!IsPlayer || IsDead)
                 return false;
 
-            Session.InteractionData.Prepare(Session.InteractionContext);
+            Session.InteractionData.Prepare();
             if (!Session.InteractionData.CanExecute)
             {
                 MouseCursor.Shake();
@@ -1152,10 +1188,12 @@ namespace ScaryCastle
             }
             else
             {
-                if (target is RideDoor door && door.IsBlocked(this))
+                if (target.HasNearbyThreat())
                 {
+                    StopMoving();
                     FaceTo(target);
-                    Session.AwaitRoutine(RoutineNames.WayBlockedHandler);
+                    Session.DangerousTarget = target;
+                    Session.AwaitRoutine(RoutineNames.DangerousTargetHandler);
                     return false;
                 }
 
@@ -1173,19 +1211,13 @@ namespace ScaryCastle
                     destination.X = X;
                 }
 
-                // Because destination is based on the hotspot it is possible that the current destination
-                // is within the collider polygon so we need to move it out; otherwise MoveTo() will fail.
-                if (!target.RuntimeCollider.IsEmpty)
-                    destination = target.RuntimeCollider.GetClosestPointOnEdge(destination);
-
                 var moveToResult = MoveTo(destination);
                 if (moveToResult == MoveToResult.NoPath)
                 {
                     FaceTo(target);
-                    Session.AwaitRoutine(RoutineNames.WayBlockedHandler);
                     return false;
                 }
-                else if (moveToResult == MoveToResult.TinyDistance)
+                else if (moveToResult == MoveToResult.LessThan1px)
                 {
                     HandlePendingInteraction();
                 }

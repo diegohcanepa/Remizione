@@ -14,6 +14,7 @@ namespace ScaryCastle
         #region Private fields
 
         private Actor? actor;
+        private readonly UIConditionMeter conditionMeter;
         private SoundInstance? heartbeat;
         private readonly Sprite[] icons;
         private readonly Dictionary<ConditionType, IList<AtlasImage>> imageGroups = [];
@@ -32,6 +33,8 @@ namespace ScaryCastle
         public UIHPMeter(GameSession session)
             : base(session)
         {
+            this.conditionMeter = new(session);
+
             imageGroups.Add(ConditionType.None, Atlases.UI.RedHearts);
             imageGroups.Add(ConditionType.Curse, Atlases.UI.PurpleHearts);
             imageGroups.Add(ConditionType.Poison, Atlases.UI.GreenHearts);
@@ -134,16 +137,18 @@ namespace ScaryCastle
             lastKnownConditionAmount = amount;
             lastFilledIconIndex = actor.IsDead ? 0 : ((actor.HP + 1) / 2) - 1;
 
-            if (lastKnownValue == 1 || lastKnownConditionAmount > 0)
+            if (lastKnownValue == 1)
             {
-                if (heartbeat == null)
-                    heartbeat = Sound.Play(SoundNames.Heartbeat, true);
+                heartbeat ??= Sound.Play(SoundNames.Heartbeat, true);
             }
             else
             {
                 heartbeat?.Stop(1000);
                 heartbeat = null;
             }
+
+            if (lastFilledIconIndex >= 0)
+                conditionMeter.Position = icons[lastFilledIconIndex].BoundingBox.GetPoint(RectanglePoint.Bottom);
         }
 
         #endregion
@@ -160,6 +165,8 @@ namespace ScaryCastle
             {
                 icons[i].Draw(gameTime);
             }
+
+            conditionMeter.Draw(gameTime);
         }
 
         // OnUpdate
@@ -198,6 +205,8 @@ namespace ScaryCastle
                 else
                     icons[lastFilledIconIndex].Scale = Vector2.One;
             }
+
+            conditionMeter.Update(gameTime);
         }
 
         #endregion

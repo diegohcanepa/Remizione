@@ -40,6 +40,12 @@
         "energyCost": {
           "type": "integer"
         },
+        "minRange": {
+          "type": "integer"
+        },
+        "maxRange": {
+          "type": "integer"
+        },
         "projectile": {
           "$ref": "Projectile.schema.json",
           "description": "Referencia al comportamiento y descriptor del proyectil que este ítem dispara o genera."

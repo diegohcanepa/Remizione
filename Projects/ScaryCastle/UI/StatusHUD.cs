@@ -12,7 +12,6 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly UIPocketItemMeter bronzeKeyMeter;
-        private readonly HUDConditionMeter conditionMeter;
         private readonly UIPocketItemMeter coinMeter;
         private readonly UIPocketItemMeter goldenKeyMeter;
         private readonly HUDGooMeter gooMeter;
@@ -27,7 +26,6 @@ namespace ScaryCastle
         public StatusHUD(GameSession session)
             : base(session)
         {
-            this.conditionMeter = new(session);
             this.gooMeter = new(session);
             this.hpMeter = new(session);
             this.bronzeKeyMeter = new(session, PocketItemType.BronzeKey, new(5, -3), false);
@@ -48,7 +46,6 @@ namespace ScaryCastle
             Game.SpriteBatch.Begin(Game.Camera);
             hpMeter.Draw(gameTime);
             passiveItems.Draw(gameTime);
-            conditionMeter.Draw(gameTime);
             Game.SpriteBatch.End();
 
             gooMeter.Draw(gameTime);
@@ -69,7 +66,6 @@ namespace ScaryCastle
             InventoryMeter.Update(gameTime);
             hpMeter.Update(gameTime);
             gooMeter.Update(gameTime);
-            conditionMeter.Update(gameTime);
             MiniMap.Update(gameTime);
         }
 

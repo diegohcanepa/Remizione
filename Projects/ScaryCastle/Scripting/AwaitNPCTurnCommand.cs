@@ -56,6 +56,11 @@ namespace ScaryCastle.Scripting
                     actor.Charge(decision.Target.Position);
                 }
             }
+            else if (decision.Type == CombatDecisionType.LurkMove)
+            {
+                if (decision.Target != null)
+                    actor.MoveLurk(decision.Target);
+            }
             else if (decision.Type == CombatDecisionType.RandomMove)
             {
                 actor.MoveRandomly();

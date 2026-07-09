@@ -39,6 +39,8 @@ namespace ScaryCastle
 
             this.Placements = placements.AsReadOnly();
 
+            RequiresPlaceholder = element.GetBool("requiresPlaceholder", true);
+
             Definitions.Add(this);
         }
 
@@ -49,5 +51,8 @@ namespace ScaryCastle
 
         // Placements
         public ReadOnlyCollection<PlacementType> Placements { get; }
+
+        // RequiresPlaceholder
+        public bool RequiresPlaceholder { get; }
     }
 }

@@ -25,7 +25,7 @@ namespace ScaryCastle
     public enum CombatArchetypeName { Lurker, Harasser, Stalker, Tactical, Berserk, Coward, KamikazeFlyer, Volatile }
 
     // CombatDecisionType
-    public enum CombatDecisionType { None, Attack, Curse, Charge, MoveNearby, RandomMove }
+    public enum CombatDecisionType { None, Attack, Curse, Charge, LurkMove, MoveNearby, RandomMove }
 
     // CombatIntentCategory
     public enum CombatIntentCategory { Basic, Special }
@@ -62,6 +62,14 @@ namespace ScaryCastle
 
     // Faction
     public enum Faction { Good, Evil }
+
+    // FallbackMovementKind
+    public enum FallbackMovementKind
+    {
+        None,     // Se queda estático aguantando la posición (útil para torretas o jefes pesados)
+        Random,   // Cruza el room de forma errática (el comportamiento viejo)
+        Lurk      // Merodea agazapado en órbita corta (para las ratas y alimañas)
+    }
 
     // FloatingMessage
     public enum FloatingMessage { Failed, Success }

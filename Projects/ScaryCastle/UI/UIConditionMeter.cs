@@ -5,14 +5,14 @@ using Microsoft.Xna.Framework;
 namespace ScaryCastle
 {
     /// <summary>
-    /// HUDConditionMeter
+    /// UIConditionMeter
     /// </summary>
-    internal class HUDConditionMeter : SessionGameObject<GameSession>
+    internal class UIConditionMeter : SessionGameObject<GameSession>
     {
-        private readonly Sprite meter = new() { Position = new(11, 13) };
+        private readonly Sprite meter = new() { PivotOrigin = RectanglePoint.Top, Scale = ScaleInfo.UIElement.Medium };
 
         // Constructor
-        public HUDConditionMeter(GameSession session)
+        public UIConditionMeter(GameSession session)
             : base(session)
         {
         }
@@ -51,5 +51,12 @@ namespace ScaryCastle
         }
 
         #endregion
+
+        // Position
+        public Vector2 Position
+        {
+            get => meter.Position;
+            set => meter.Position = value;
+        }
     }
 }

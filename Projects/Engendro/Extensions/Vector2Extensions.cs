@@ -21,17 +21,14 @@ namespace Engendro
         }
 
         // Random
-        public static Vector2 Random(this Vector2 origin, float minimumRadius, float maximumRadius)
+        public static Vector2 Random(this Vector2 origin, Random rng, float minimumRadius, float maximumRadius)
         {
-            return Random(origin, new Vector2(minimumRadius), new Vector2(maximumRadius));
+            return Random(origin, rng, new Vector2(minimumRadius), new Vector2(maximumRadius));
         }
 
         // Random
-        public static Vector2 Random(this Vector2 origin, Vector2 minRadius, Vector2 maxRadius)
+        public static Vector2 Random(this Vector2 origin, Random rng, Vector2 minRadius, Vector2 maxRadius)
         {
-            // En C# moderno (.NET 6+), usamos Random.Shared para thread-safety y eficiencia.
-            var rng = System.Random.Shared;
-
             // 1. Generamos un ángulo aleatorio entre 0 y 2*PI
             // MathHelper.TwoPi es la constante de MonoGame para 360 grados en radianes
             float angle = (float)(rng.NextDouble() * MathHelper.TwoPi);

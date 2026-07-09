@@ -18,6 +18,7 @@ namespace Engendro
         bool ContainsVertex(RectangleF rect);
         bool ContainsVertex(IReadOnlyPolygon polygon);
         bool ContainsVertex(IList<Vector2> vertices);
+        bool GetClosestIntersection(Vector2 start, Vector2 end, out Vector2 intersectionPoint);
         Vector2 GetClosestPointOnEdge(Vector2 point);
         Vector2[] GetVertices();
         Vector2[] GetVertices(Vector2 offset);
@@ -26,9 +27,9 @@ namespace Engendro
         bool Intersects(Vector2 start, Vector2 end);
         bool IsVertexConcave(int vertex);
         PolygonOrientation Orientation { get; }
-        Vector2 RandomPoint();
-        Vector2 RandomPoint(Vector2 origin, float radius);
-        Vector2 RandomPoint(Vector2 origin, float minimumRadius, float maximumRadius);
+        Vector2 RandomPoint(Random rng);
+        Vector2 RandomPoint(Random rng, Vector2 origin, float radius);
+        Vector2 RandomPoint(Random rng, Vector2 origin, float minimumRadius, float maximumRadius);
         ReadOnlyCollection<Vector2> Vertices { get; }
     }
 }

@@ -150,7 +150,7 @@ namespace ScaryCastle
             }
             else if (WalkArea != null)
             {
-                key.Position = WalkArea.RandomWalkablePoint(30);
+                key.Position = WalkArea.RandomWalkablePoint(Random, 30);
             }
         }
 
