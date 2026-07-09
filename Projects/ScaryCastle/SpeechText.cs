@@ -182,7 +182,7 @@ namespace ScaryCastle
             if (!text.IsTyping)
             {
                 Game.SpriteBatch.Begin(Actor.Session.Camera);
-                //arrowImage.Draw(gameTime);
+                arrowImage.Draw(gameTime);
                 Game.SpriteBatch.End();
             }
         }

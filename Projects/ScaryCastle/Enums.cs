@@ -15,7 +15,8 @@ namespace ScaryCastle
         ClosestSide,    // Lado más cercano (sin cruzar al NPC)
         InFront,         // Justo encima (para items o puertas)
         Over,
-        Behind
+        Behind,
+        ApproachPosition
     }
 
     // BodySize

@@ -1236,7 +1236,7 @@ namespace ScaryCastle
             {
                 if (IsPlayer)
                 {
-                    color = ColorPalette.Text.Sentence;
+                    color = Color.White;
                 }
                 else
                 {

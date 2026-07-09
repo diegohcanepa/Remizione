@@ -746,7 +746,7 @@ namespace ScaryCastle
             // 1. Override Manual (Prioridad absoluta del editor)
             if (ApproachPosition != Vector2.Zero)
             {
-                if (HotspotPlacement == PlacementMode.Absolute)
+                if (HotspotPlacement == PlacementMode.Absolute || behavior is ApproachBehavior.ApproachPosition)
                     return ApproachPosition;
                 else
                     return this.GetAnchoredPosition(ApproachPosition);
