@@ -755,6 +755,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/GateOpen.wav;Audio/FX/GateOpen
 
+#begin Audio/FX/GateStuck.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/GateStuck.wav;Audio/FX/GateStuck
+
 #begin Audio/FX/Gesture1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

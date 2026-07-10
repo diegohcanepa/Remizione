@@ -309,6 +309,7 @@ Bla bla bla</String>
   <String Key="Prop.Gate">Gate</String>
   <String Key="Prop.Goo">Goo</String>
   <String Key="Prop.Lever">Lever</String>
+  <String Key="Prop.OwlEmblem">Owl emblem</String>
   <String Key="Prop.PortableToilet">Little purgatory</String>
   <String Key="Prop.PostClock">Tyrant time</String>
   <String Key="Prop.Pottery">Clay pot</String>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:96eeb8d594e964c19c086e9fd583b3bb:14ea9b66ca8305006ecbc6e7361c6c39:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:0bd0b37d6dc11f43ed629cebcd44f40e:ce6c7937e441d85aedba0ab5b7034dc7:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -157,6 +157,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="SkullIcon.png" x="471" y="309" w="10" h="11"/>
     <sprite n="SodaCan.png" x="152" y="273" w="22" h="22"/>
     <sprite n="SpeechTextArrow.png" x="441" y="311" w="5" h="4"/>
+    <sprite n="SpeechTextPipe.png" x="455" y="310" w="5" h="3"/>
     <sprite n="TipBalloon.png" x="200" y="225" w="12" h="13"/>
     <sprite n="UIButtonContainerEdge.png" x="207" y="299" w="5" h="11"/>
     <sprite n="UIButtonContainerPattern.png" x="508" y="2" w="1" h="11"/>

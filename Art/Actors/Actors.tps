@@ -305,6 +305,7 @@
             <key type="filename">Edmund-assets/InsertCoin07.png</key>
             <key type="filename">Edmund-assets/InsertCoin08.png</key>
             <key type="filename">Edmund-assets/LookBehind01.png</key>
+            <key type="filename">Edmund-assets/LookUp01.png</key>
             <key type="filename">Edmund-assets/Move01.png</key>
             <key type="filename">Edmund-assets/Move02.png</key>
             <key type="filename">Edmund-assets/Move03.png</key>
@@ -412,6 +413,8 @@
             <key type="filename">Father-assets/Move04.png</key>
             <key type="filename">Father-assets/RaiseArm01.png</key>
             <key type="filename">Father-assets/RaiseArm02.png</key>
+            <key type="filename">Father-assets/ReadPsalm02.png</key>
+            <key type="filename">Father-assets/ReadPsalm03.png</key>
             <key type="filename">Father-assets/UseCross01.png</key>
             <key type="filename">Father-assets/UseCross02.png</key>
             <key type="filename">Father-assets/UseCross03.png</key>

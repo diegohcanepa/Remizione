@@ -67,6 +67,7 @@
 	<FX Name="FootstepWater" Sounds="1..6" Volume=".9" />
 	<FX Name="FuseHissing" />
 	<FX Name="GateOpen" />
+	<FX Name="GateStuck" />
 	<FX Name="Gesture1" />
 	<FX Name="GooBoost" />
 	<FX Name="GooBoostFull" />

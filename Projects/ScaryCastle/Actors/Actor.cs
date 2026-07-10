@@ -1244,7 +1244,7 @@ namespace ScaryCastle
                 }
             }
 
-            speechText.Show(text, color, awaitInput);
+            speechText.Show(DisplayName, text, awaitInput);
         }
 
         // SpeechColor
