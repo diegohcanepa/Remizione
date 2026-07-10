@@ -247,6 +247,7 @@ Bla bla bla</String>
   <String Key="Misc.FearSyncope">Síncope de miedo</String>
   <String Key="Misc.Here">Aquí</String>
   <String Key="Misc.Level">Nivel</String>
+  <String Key="Misc.Miss">¡FALLÓ!</String>
   <String Key="Misc.Mute">Silencio</String>
   <String Key="Misc.No">No</String>
   <String Key="Misc.NoInventoryItem">Vacío como el alma de un pecador.</String>

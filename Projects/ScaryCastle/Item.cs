@@ -1,4 +1,5 @@
 ﻿using Adberration.Scripting;
+using Engendro;
 using Engendro.Audio;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -130,6 +131,9 @@ namespace ScaryCastle
 
         // Inventory
         public ItemContainer Inventory { get; }
+
+        // MissChance
+        public Ratio MissChance { get; }
 
         // Name
         public string Name => Definition.Name;

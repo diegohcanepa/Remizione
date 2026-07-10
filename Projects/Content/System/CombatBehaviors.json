@@ -126,6 +126,7 @@
           "name": "Bite",
           "soundTrigger": "RatAttack",
           "actionKind": "Proximity",
+          "missChance": 0.5,
           "effects": [
             {
               "context": "Attack",

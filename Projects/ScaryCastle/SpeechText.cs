@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -409,7 +410,10 @@ namespace ScaryCastle
             if (SpeechTextSettings.Typing && awaitInput)
             {
                 if (SpeechTextSettings.TypingSound)
-                    this.text.StartTyping(Actor.SpeechSound?.PopInstance());
+                {
+                    var speechSound = Actor.SpeechSound ?? Sound.Find(SoundNames.Text);
+                    this.text.StartTyping(speechSound?.PopInstance());
+                }
                 else
                     this.text.StartTyping();
 

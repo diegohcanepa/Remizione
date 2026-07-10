@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Engendro.Audio;
+using System;
 using System.Text.Json;
 
 namespace ScaryCastle
@@ -42,6 +43,9 @@ namespace ScaryCastle
 
             if (MinRange > MaxRange)
                 RaiseValidationError(this, $"Minimum range exceeds the maximum range.");
+
+            // MissChance
+            MissChance = Math.Max(0, element.GetFloat("missChance", 0));
 
             // SoundStart
             this.SoundStart = element.GetObject("soundStart", Sound.Get);
@@ -89,6 +93,9 @@ namespace ScaryCastle
 
         // MinRange
         public int MinRange { get; }
+
+        // MissChance
+        public Ratio MissChance { get; }
 
         // Projectile
         public ProjectileDescriptor? Projectile { get; }

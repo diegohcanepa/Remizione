@@ -29,15 +29,12 @@ namespace Engendro
         #endregion
 
         // Roll
-        public bool Roll()
-        {
-            return Random.Shared.NextDouble() <= Value;
-        }
+        public bool Roll() => Roll(Random.Shared);
 
         // Roll
         public bool Roll(Random random)
         {
-            return random.NextDouble() <= Value;
+            return random.NextDouble() < Value;
         }
 
         // ToString

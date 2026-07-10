@@ -1,4 +1,5 @@
-﻿using Engendro.Audio;
+﻿using Engendro;
+using Engendro.Audio;
 using System.Collections.ObjectModel;
 
 namespace ScaryCastle
@@ -28,6 +29,9 @@ namespace ScaryCastle
 
         // InPlaceEffectType
         InPlaceEffectType InPlaceEffectType { get; }
+
+        // MissChance
+        Ratio MissChance { get; }
 
         // Projectile
         ProjectileDescriptor? Projectile { get; }

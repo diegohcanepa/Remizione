@@ -10,6 +10,7 @@ namespace ScaryCastle
     {
         private bool animationFound;
         private bool eventDone;
+        private static string missText = TextRepository.GetValue("Misc.Miss");
 
         // Constructor
         public BodyExecuteActionState()
@@ -25,10 +26,7 @@ namespace ScaryCastle
             if (target.CanBeHit() && Owner.AnimationPlayer.Frame?.IsTrigger == true)
             {
                 if (Owner.IsInAttackLane(target))
-                {
-                    //if (Owner.AnimationPlayer.GetFrameSubArea().Intersects(target.RuntimeHotspot.BoundingRectangleF))
                     return true;
-                }
             }
 
             return false;
@@ -69,7 +67,11 @@ namespace ScaryCastle
         {
             if (Target != null && CanInflictDamage(Target))
             {
-                EffectDescriptor.Apply(action.EffectDescriptors, Owner, Target, EffectContext.Attack);
+                if (!action.MissChance.Roll())
+                    EffectDescriptor.Apply(action.EffectDescriptors, Owner, Target, EffectContext.Attack);
+                else
+                    Owner.ShowFloatingText(missText, Color.WhiteSmoke, 2000);
+
                 //Owner.Session.InterruptAwaitingScript();
             }
         }

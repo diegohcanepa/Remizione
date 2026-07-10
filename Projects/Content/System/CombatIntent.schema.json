@@ -43,6 +43,12 @@
         "minRange": {
           "type": "integer"
         },
+        "missChance": {
+          "type": "number",
+          "default": 0,
+          "minimum": 0,
+          "maximum": 1
+        },
         "maxRange": {
           "type": "integer"
         },

@@ -17,13 +17,19 @@ namespace ScaryCastle
 
             // Modal speech text active
             if (SpeechText.ModalInstance != null)
+            {
+                MouseCursor.State = MouseCursorState.Talk;
                 return;
+            }
 
             // Session is awaiting script
             if (context.Session.IsAwaiting)
             {
                 if (context.Session.AwaitingScript?.CurrentStatement is SayCommand)
+                {
+                    MouseCursor.State = MouseCursorState.Talk;
                     return;
+                }
 
                 if (context.Session.ActiveNPC == null)
                 {
