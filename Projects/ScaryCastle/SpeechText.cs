@@ -415,7 +415,9 @@ namespace ScaryCastle
                     this.text.StartTyping(speechSound?.PopInstance());
                 }
                 else
+                {
                     this.text.StartTyping();
+                }
 
                 State = SpeechTextState.Typing;
                 pipeTween.Start(TweenStyle.Linear, 0, .25f, 100, -1);

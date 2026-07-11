@@ -34,7 +34,7 @@
         <key>dataFormat</key>
         <string>xml</string>
         <key>textureFileName</key>
-        <filename>../../../Projects/Content/Atlases/Hub.png</filename>
+        <filename></filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrQualityLevel</key>
@@ -124,7 +124,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../../Projects/Content/Atlases/Hub.xml</filename>
+                <filename>../../../Projects/Content/Atlases/IntroTunnel.xml</filename>
             </struct>
         </map>
         <key>multiPackMode</key>
@@ -173,7 +173,7 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">Hub-assets/EntrancePatch.png</key>
+            <key type="filename">IntroTunnel-assets/IntroTunnel.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -182,58 +182,13 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>9,18,17,37</rect>
+                <rect>87,34,173,67</rect>
                 <key>scale9Paddings</key>
-                <rect>9,18,17,37</rect>
+                <rect>87,34,173,67</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Hub-assets/Foreground.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>78,13,156,25</rect>
-                <key>scale9Paddings</key>
-                <rect>78,13,156,25</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Hub-assets/Gate.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>8,11,15,23</rect>
-                <key>scale9Paddings</key>
-                <rect>8,11,15,23</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Hub-assets/Hub.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>120,34,240,67</rect>
-                <key>scale9Paddings</key>
-                <rect>120,34,240,67</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Hub-assets/LeftGateClosed.png</key>
+            <key type="filename">IntroTunnel-assets/LeftGateClosed.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -248,7 +203,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Hub-assets/LeftGateOpenBack.png</key>
+            <key type="filename">IntroTunnel-assets/LeftGateOpenBack.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -263,7 +218,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Hub-assets/LeftGateOpenFront.png</key>
+            <key type="filename">IntroTunnel-assets/LeftGateOpenFront.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -278,7 +233,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Hub-assets/LeftWall.png</key>
+            <key type="filename">IntroTunnel-assets/LeftWall.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -287,13 +242,13 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>10,28,21,55</rect>
+                <rect>4,15,8,29</rect>
                 <key>scale9Paddings</key>
-                <rect>10,28,21,55</rect>
+                <rect>4,15,8,29</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Hub-assets/RightTunnelPatch.png</key>
+            <key type="filename">IntroTunnel-assets/RightTunnelPatch.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -305,53 +260,6 @@
                 <rect>4,14,9,28</rect>
                 <key>scale9Paddings</key>
                 <rect>4,14,9,28</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Hub-assets/Skull01.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>7,8,13,15</rect>
-                <key>scale9Paddings</key>
-                <rect>7,8,13,15</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Lever-assets/Lever01.png</key>
-            <key type="filename">Lever-assets/Lever02.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,4,7,7</rect>
-                <key>scale9Paddings</key>
-                <rect>3,4,7,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Statue-assets/Statue01.png</key>
-            <key type="filename">Statue-assets/Statue02.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>6,9,11,17</rect>
-                <key>scale9Paddings</key>
-                <rect>6,9,11,17</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -362,9 +270,7 @@
             <struct type="SpriteSheet">
                 <key>files</key>
                 <array>
-                    <filename>Hub-assets</filename>
-                    <filename>Lever-assets</filename>
-                    <filename>Statue-assets</filename>
+                    <filename>IntroTunnel-assets</filename>
                 </array>
             </struct>
         </map>

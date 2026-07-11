@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
+<!-- $TexturePacker:SmartUpdate:f76a7b8fe313fc64122591685d398233:5dafd991844404ee6fae228d4d8fb4c4:0406bd169da11e428c99f364b12905dd$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="IntroTunnel.png" width="512" height="512">
+    <sprite n="IntroTunnel.png" x="2" y="2" w="346" h="135"/>
+    <sprite n="LeftGateClosed.png" x="370" y="60" w="15" h="66"/>
+    <sprite n="LeftGateOpenBack.png" x="350" y="65" w="12" h="49"/>
+    <sprite n="LeftGateOpenFront.png" x="350" y="2" w="18" h="61"/>
+    <sprite n="LeftWall.png" x="389" y="2" w="16" h="58"/>
+    <sprite n="RightTunnelPatch.png" x="370" y="2" w="17" h="56"/>
+</TextureAtlas>

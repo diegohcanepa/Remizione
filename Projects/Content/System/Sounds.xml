@@ -65,6 +65,7 @@
 	<FX Name="GateOpen" />
 	<FX Name="GateStuck" />
 	<FX Name="Gesture1" />
+	<FX Name="GhostTrainCrazyCackling" Sounds="1..5" />
 	<FX Name="GooBoost" />
 	<FX Name="GooBoostFull" />
 	<FX Name="GutsLarge" />
@@ -78,7 +79,7 @@
 	<FX Name="Interact" Sounds="1..4" Volume=".5" />
 	<FX Name="ItemDiscard" />
 	<FX Name="Keyboard" />
-	<FX Name="Laugh" Sounds="1..2" />
+	<FX Name="Laugh" Sounds="1..3" />
 	<FX Name="Lever" />
 	<FX Name="Lightning" />
 	<FX Name="LockOpen" />
@@ -96,6 +97,7 @@
 	<FX Name="PickupKey" />
 	<FX Name="Pistol" Sounds="1..2" />
 	<FX Name="PneumaticDoor" />
+	<FX Name="PneumaticHiss" />
 	<FX Name="PopHeart" />
 	<FX Name="PotteryBreak" Sounds="1..2" />
 	<FX Name="PowerRestored" />
@@ -105,8 +107,6 @@
 	<FX Name="Raven" />
 	<FX Name="RideCarLoop" />
 	<FX Name="RideCarStop" />
-	<FX Name="SaintPeregrine" Sounds="1..3" />
-	<FX Name="SaintPeregrineArm" />
 	<FX Name="ShockZap" Sounds="1..2" />
 	<FX Name="SmallChunks" Sounds="1..2" />
 	<FX Name="SmallWhooshA" Sounds="1..4" />

@@ -413,6 +413,7 @@
             <key type="filename">Father-assets/Move04.png</key>
             <key type="filename">Father-assets/RaiseArm01.png</key>
             <key type="filename">Father-assets/RaiseArm02.png</key>
+            <key type="filename">Father-assets/ReadPsalm01.png</key>
             <key type="filename">Father-assets/ReadPsalm02.png</key>
             <key type="filename">Father-assets/ReadPsalm03.png</key>
             <key type="filename">Father-assets/UseCross01.png</key>

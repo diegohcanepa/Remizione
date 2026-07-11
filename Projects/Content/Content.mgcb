@@ -134,6 +134,21 @@
 #begin Atlases/Hub.xml
 /copy:Atlases/Hub.xml
 
+#begin Atlases/IntroTunnel.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Atlases/IntroTunnel.png
+
+#begin Atlases/IntroTunnel.xml
+/copy:Atlases/IntroTunnel.xml
+
 #begin Atlases/Menu.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -725,6 +740,36 @@
 /processorParam:Quality=Best
 /build:Audio/FX/Gesture1.wav;Audio/FX/Gesture1
 
+#begin Audio/FX/GhostTrainCrazyCackling1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/GhostTrainCrazyCackling1.wav;Audio/FX/GhostTrainCrazyCackling1
+
+#begin Audio/FX/GhostTrainCrazyCackling2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/GhostTrainCrazyCackling2.wav;Audio/FX/GhostTrainCrazyCackling2
+
+#begin Audio/FX/GhostTrainCrazyCackling3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/GhostTrainCrazyCackling3.wav;Audio/FX/GhostTrainCrazyCackling3
+
+#begin Audio/FX/GhostTrainCrazyCackling4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/GhostTrainCrazyCackling4.wav;Audio/FX/GhostTrainCrazyCackling4
+
+#begin Audio/FX/GhostTrainCrazyCackling5.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/GhostTrainCrazyCackling5.wav;Audio/FX/GhostTrainCrazyCackling5
+
 #begin Audio/FX/GooBoost.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -844,6 +889,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/FX/Laugh2.wav;Audio/FX/Laugh2
+
+#begin Audio/FX/Laugh3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/Laugh3.wav;Audio/FX/Laugh3
 
 #begin Audio/FX/Lever.wav
 /importer:WavImporter
@@ -977,6 +1028,12 @@
 /processorParam:Quality=Best
 /build:Audio/FX/PneumaticDoor.wav;Audio/FX/PneumaticDoor
 
+#begin Audio/FX/PneumaticHiss.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/PneumaticHiss.wav;Audio/FX/PneumaticHiss
+
 #begin Audio/FX/PopHeart.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -1072,30 +1129,6 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/FX/RideCarStop.wav;Audio/FX/RideCarStop
-
-#begin Audio/FX/SaintPeregrine1.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/SaintPeregrine1.wav;Audio/FX/SaintPeregrine1
-
-#begin Audio/FX/SaintPeregrine2.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/SaintPeregrine2.wav;Audio/FX/SaintPeregrine2
-
-#begin Audio/FX/SaintPeregrine3.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/SaintPeregrine3.wav;Audio/FX/SaintPeregrine3
-
-#begin Audio/FX/SaintPeregrineArm.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/FX/SaintPeregrineArm.wav;Audio/FX/SaintPeregrineArm
 
 #begin Audio/FX/ShockZap1.wav
 /importer:WavImporter
