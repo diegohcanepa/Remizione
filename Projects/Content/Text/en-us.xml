@@ -75,7 +75,7 @@
   <String Key="Item.Lockpick.Name">Lockpick</String>
   <String Key="Item.MagneticCard.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.MagneticCard.Name">Magnetic card</String>
-  <String Key="Item.PieceOfWood.Description"></String>
+  <String Key="Item.PieceOfWood.Description" />
   <String Key="Item.PieceOfWood.Name">Piece of wood</String>
   <String Key="Item.Pistol.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </String>
   <String Key="Item.Pistol.Name">Pistol</String>
@@ -299,16 +299,18 @@ Bla bla bla</String>
   <String Key="Playtime.Minutes">minutes</String>
   <String Key="Prop.ATM">ATM</String>
   <String Key="Prop.Bag">Bag</String>
+  <String Key="Prop.Carrusel">Carrusel</String>
   <String Key="Prop.Coin">Coin</String>
   <String Key="Prop.Cross">Cross</String>
   <String Key="Prop.CrucifiedMan">Crucified man</String>
   <String Key="Prop.DepositMachine">Deposit machine</String>
   <String Key="Prop.Door">Door</String>
   <String Key="Prop.EnergyBolt">Energy bolt</String>
-  <String Key="Prop.ExitTower">Exit tower</String>
+  <String Key="Prop.FerrisWheel">Ferris wheel</String>
   <String Key="Prop.FoodStall">Food stall</String>
   <String Key="Prop.Gate">Gate</String>
   <String Key="Prop.Goo">Goo</String>
+  <String Key="Prop.HomeOfTomorrow">The Home of Tomorrow</String>
   <String Key="Prop.Lever">Lever</String>
   <String Key="Prop.OwlEmblem">Owl emblem</String>
   <String Key="Prop.PortableToilet">Little purgatory</String>
@@ -318,6 +320,7 @@ Bla bla bla</String>
   <String Key="Prop.RideCar">Ride car</String>
   <String Key="Prop.Sack">Sack</String>
   <String Key="Prop.SaintPeregrine">Saint Peregrine</String>
+  <String Key="Prop.ShootingGallery">Shooting gallery</String>
   <String Key="Prop.Sign">Sign</String>
   <String Key="Prop.Toilet">Toilet</String>
   <String Key="Prop.Tower">Tower</String>

@@ -530,6 +530,24 @@
 /processorParam:Quality=Best
 /build:Audio/FX/EdmundHurt2.wav;Audio/FX/EdmundHurt2
 
+#begin Audio/FX/EdmundScream1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/EdmundScream1.wav;Audio/FX/EdmundScream1
+
+#begin Audio/FX/EdmundScream2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/EdmundScream2.wav;Audio/FX/EdmundScream2
+
+#begin Audio/FX/EdmundScream3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/EdmundScream3.wav;Audio/FX/EdmundScream3
+
 #begin Audio/FX/ElectricZapStrong.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -769,6 +787,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/FX/GhostTrainCrazyCackling5.wav;Audio/FX/GhostTrainCrazyCackling5
+
+#begin Audio/FX/GhostTrainMonsterLaugh.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/GhostTrainMonsterLaugh.wav;Audio/FX/GhostTrainMonsterLaugh
 
 #begin Audio/FX/GooBoost.wav
 /importer:WavImporter
@@ -1028,11 +1052,17 @@
 /processorParam:Quality=Best
 /build:Audio/FX/PneumaticDoor.wav;Audio/FX/PneumaticDoor
 
-#begin Audio/FX/PneumaticHiss.wav
+#begin Audio/FX/PneumaticHiss1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/FX/PneumaticHiss.wav;Audio/FX/PneumaticHiss
+/build:Audio/FX/PneumaticHiss1.wav;Audio/FX/PneumaticHiss1
+
+#begin Audio/FX/PneumaticHiss2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/FX/PneumaticHiss2.wav;Audio/FX/PneumaticHiss2
 
 #begin Audio/FX/PopHeart.wav
 /importer:WavImporter

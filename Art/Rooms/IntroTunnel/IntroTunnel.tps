@@ -173,6 +173,23 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">ArmoredSkeleton-assets/ArmoredSkeleton01.png</key>
+            <key type="filename">ArmoredSkeleton-assets/ArmoredSkeleton02.png</key>
+            <key type="filename">ArmoredSkeleton-assets/ArmoredSkeleton03.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,4,9,9</rect>
+                <key>scale9Paddings</key>
+                <rect>5,4,9,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">IntroTunnel-assets/IntroTunnel.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -263,6 +280,39 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Monster-assets/Monster01.png</key>
+            <key type="filename">Monster-assets/Monster02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>13,10,25,21</rect>
+                <key>scale9Paddings</key>
+                <rect>13,10,25,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Skeleton-assets/Skeleton01.png</key>
+            <key type="filename">Skeleton-assets/Skeleton02.png</key>
+            <key type="filename">Skeleton-assets/Skeleton03.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,5,9,9</rect>
+                <key>scale9Paddings</key>
+                <rect>5,5,9,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileLists</key>
         <map type="SpriteSheetMap">
@@ -271,6 +321,9 @@
                 <key>files</key>
                 <array>
                     <filename>IntroTunnel-assets</filename>
+                    <filename>Skeleton-assets</filename>
+                    <filename>Monster-assets</filename>
+                    <filename>ArmoredSkeleton-assets</filename>
                 </array>
             </struct>
         </map>

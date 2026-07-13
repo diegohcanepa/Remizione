@@ -3,7 +3,7 @@
 namespace Adberration.Scripting
 {
     // PlayAnimationCommand
-    // Arguments: {Entity} {AnimationName} [#looped] [#random-frame] [#reverse]
+    // Arguments: {Entity} {AnimationName} [#looped] [#random-frame] [#reverse] [#sound]
     internal sealed class PlayAnimationCommand : AwaitableCommand
     {
         private SpriteAnimation? animation;

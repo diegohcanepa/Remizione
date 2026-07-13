@@ -299,16 +299,18 @@ Bla bla bla</String>
   <String Key="Playtime.Minutes">minutos</String>
   <String Key="Prop.ATM">Cajero automático</String>
   <String Key="Prop.Bag">Bolsa</String>
+  <String Key="Prop.Carrusel">Calesita</String>
   <String Key="Prop.Coin">Moneda</String>
   <String Key="Prop.Cross">Cruz</String>
   <String Key="Prop.CrucifiedMan">Hombre crucificado</String>
   <String Key="Prop.DepositMachine">Máquina de depósito</String>
   <String Key="Prop.Door">Puerta</String>
   <String Key="Prop.EnergyBolt">Chispa</String>
-  <String Key="Prop.ExitTower">Torre de salida</String>
+  <String Key="Prop.FerrisWheel">Rueda de la fortuna</String>
   <String Key="Prop.FoodStall">Puesto de comida</String>
   <String Key="Prop.Gate">Portón</String>
   <String Key="Prop.Goo">Baba</String>
+  <String Key="Prop.HomeOfTomorrow">La Casa del Mañana</String>
   <String Key="Prop.Lever">Palanca</String>
   <String Key="Prop.OwlEmblem">Emblema de búho</String>
   <String Key="Prop.PortableToilet">Pequeño purgatorio</String>
@@ -318,6 +320,7 @@ Bla bla bla</String>
   <String Key="Prop.RideCar">Carrito</String>
   <String Key="Prop.Sack">Bolsa</String>
   <String Key="Prop.SaintPeregrine">San Peregrino</String>
+  <String Key="Prop.ShootingGallery">Galería de tiro</String>
   <String Key="Prop.Sign">Cartel</String>
   <String Key="Prop.Toilet">Baño</String>
   <String Key="Prop.Tower">Torre</String>
