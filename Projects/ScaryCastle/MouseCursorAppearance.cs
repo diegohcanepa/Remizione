@@ -1,4 +1,6 @@
-﻿using ScaryCastle.Scripting;
+﻿using Engendro;
+using Microsoft.Xna.Framework;
+using ScaryCastle.Scripting;
 
 namespace ScaryCastle
 {
@@ -28,6 +30,12 @@ namespace ScaryCastle
                 if (context.Session.AwaitingScript?.CurrentStatement is SayCommand)
                 {
                     MouseCursor.State = MouseCursorState.Talk;
+                    return;
+                }
+
+                if (EngendroGame.Instance.SceneManager.CurrentScene is DialogBlockScene)
+                {
+                    MouseCursor.State = MouseCursorState.Cross;
                     return;
                 }
 

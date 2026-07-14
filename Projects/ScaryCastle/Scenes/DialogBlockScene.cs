@@ -45,7 +45,7 @@ namespace ScaryCastle
             {
                 OptionColor = ColorPalette.Text.Highlight,
                 OptionSelectedColor = ColorPalette.Text.Yellow,
-                OptionTextScale = ScaleInfo.Text.Giant,
+                OptionTextScale = ScaleInfo.Text.Large,
                 SelectInputBinding = InputBindings.SelectDialogOption
             };
         }
@@ -162,10 +162,6 @@ namespace ScaryCastle
             if (completed || RunningOption != null)
                 return;
 
-            Game.SpriteBatch.Begin(Game.Camera);
-            bottomGradient.Draw(gameTime);
-            Game.SpriteBatch.End();
-
             menu.Draw(gameTime);
         }
 
@@ -197,6 +193,7 @@ namespace ScaryCastle
         protected override void OnLoadContent()
         {
             base.OnLoadContent();
+            MouseCursor.State = MouseCursorState.Cross;
             InvalidateOptions();
         }
 

@@ -75,7 +75,7 @@
   <String Key="Item.Lockpick.Name">Lockpick</String>
   <String Key="Item.MagneticCard.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.MagneticCard.Name">Magnetic card</String>
-  <String Key="Item.PieceOfWood.Description" />
+  <String Key="Item.PieceOfWood.Description"></String>
   <String Key="Item.PieceOfWood.Name">Piece of wood</String>
   <String Key="Item.Pistol.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </String>
   <String Key="Item.Pistol.Name">Pistol</String>
@@ -309,6 +309,7 @@ Bla bla bla</String>
   <String Key="Prop.FerrisWheel">Ferris wheel</String>
   <String Key="Prop.FoodStall">Food stall</String>
   <String Key="Prop.Gate">Gate</String>
+  <String Key="Prop.GhostTrain">Ghost train</String>
   <String Key="Prop.Goo">Goo</String>
   <String Key="Prop.HomeOfTomorrow">The Home of Tomorrow</String>
   <String Key="Prop.Lever">Lever</String>
