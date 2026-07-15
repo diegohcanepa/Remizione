@@ -40,7 +40,7 @@ namespace ScaryCastle
                 {
                     Opacity = .8f,
                     PivotOrigin = RectanglePoint.LeftBottom,
-                    Y = Screen.Area.Bottom - 14
+                    Y = Screen.Area.Bottom - 17
                 };
 
                 icons[i] = new()
@@ -62,7 +62,7 @@ namespace ScaryCastle
                 amounts[i] = new Sprite()
                 {
                     PivotOrigin = RectanglePoint.Top,
-                    Y = slots[i].BoundingBox.Center.Y + 5,
+                    Y = slots[i].BoundingBox.Center.Y + 7,
                     Scale = ScaleInfo.UIElement.Medium
                 };
             }
@@ -154,15 +154,16 @@ namespace ScaryCastle
 
                     amounts[i].X = icons[i].X;
 
-                    if (ItemContainer[i].Definition.EnergyCost > 0)
+                    if (ItemContainer[i].Definition.EnergyCost.IsBetween(1, 3))
                     {
-                        if (ItemContainer[i].Amount.IsBetween(1, 5))
-                            amounts[i].RenderImage = Atlases.UI.InventoryFaithAmounts[ItemContainer[i].Amount - 1];
+                        amounts[i].RenderImage = Atlases.UI.InventoryFaithAmounts[ItemContainer[i].Definition.EnergyCost - 1];
                     }
                     else if (ItemContainer[i].Definition.IsStackable || ItemContainer[i].Definition.IsDepletable)
                     {
                         if (ItemContainer[i].Amount.IsBetween(1, 5))
+                        {
                             amounts[i].RenderImage = Atlases.UI.InventoryItemAmounts[ItemContainer[i].Amount - 1];
+                        }
                     }
                 }
             }

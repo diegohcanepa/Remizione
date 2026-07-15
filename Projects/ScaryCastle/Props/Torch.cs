@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration.Scripting;
+using Engendro;
 
 namespace ScaryCastle
 {
@@ -24,8 +25,7 @@ namespace ScaryCastle
                 LightKind = LightKind.Fire,
                 Passes = 2,
                 Position = new(9),
-                Scale = new(8
-                ,14)
+                Scale = new(8, 14)
             };
 
             AttachedLightPosition = new(9);
@@ -49,6 +49,22 @@ namespace ScaryCastle
         {
             base.OnLoad();
             InvalidateAnimation();
+        }
+
+        // ExtraLight
+        [ScriptProperty]
+        public bool ExtraLight
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    if (AttachedLight != null)
+                        AttachedLight.Scale = field ? new(12, 14) : new(8, 14);
+                }
+            }
         }
     }
 }

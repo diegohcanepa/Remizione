@@ -14,13 +14,13 @@ namespace ScaryCastle
         private readonly FloatTween fadeTween = new();
         private readonly Sprite icon = new() { PivotOrigin = RectanglePoint.Right };
         private readonly TextSprite messageText;
-        private readonly Vector2 scale = ScaleInfo.Text.ExtraLarge;
+        private readonly Vector2 scale = ScaleInfo.Text.Huge;
         private readonly Vector2Tween scaleTween = new();
 
         // Constructor
         public HUDMessage(RectanglePoint pivotOrigin, Vector2 position)
         {
-            this.messageText = new(Fonts.CommonOutline)
+            this.messageText = new(Fonts.Common)
             {
                 Color = ColorPalette.Text.Sentence,
                 MaximumWidth = (int)(Screen.HUDArea.Width * .7f),
@@ -38,7 +38,7 @@ namespace ScaryCastle
                 return;
 
             Game.SpriteBatch.Begin(Game.Camera);
-            //container.Draw(gameTime);
+            container.Draw(gameTime);
             icon.Draw(gameTime);
             Game.SpriteBatch.End();
 

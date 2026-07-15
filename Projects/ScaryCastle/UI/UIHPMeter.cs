@@ -148,7 +148,7 @@ namespace ScaryCastle
             }
 
             if (lastFilledIconIndex >= 0)
-                conditionMeter.Position = icons[lastFilledIconIndex].BoundingBox.GetPoint(RectanglePoint.Bottom);
+                conditionMeter.Position = icons[0].BoundingBox.GetPoint(RectanglePoint.Bottom);
         }
 
         #endregion

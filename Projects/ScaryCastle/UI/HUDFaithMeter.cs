@@ -43,7 +43,7 @@ namespace ScaryCastle
 
             icon.Position = new(9, 3);
 
-            float x = 6.75f;
+            float x = 6.5f;
             float y = 13;
             while (parts.Count < actor.MaxEnergy)
             {

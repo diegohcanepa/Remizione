@@ -31,7 +31,7 @@ namespace ScaryCastle
             FaithMeter = CreateReadOnlyCollection(nameof(FaithMeter), 0, 5);
             GreenHearts = CreateReadOnlyCollection(nameof(GreenHearts), 1, 4);
             HeartIcon = this[nameof(HeartIcon)];
-            InventoryFaithAmounts = CreateReadOnlyCollection("InventoryFaithAmount", 1, 5);
+            InventoryFaithAmounts = CreateReadOnlyCollection("InventoryFaithAmount", 1, 3);
             InventoryItemAmounts = CreateReadOnlyCollection("InventoryItemAmount", 1, 5);
             InventoryItemSlot = this[nameof(InventoryItemSlot)];
             MessageContainer = this[nameof(MessageContainer)];
