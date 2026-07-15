@@ -1199,25 +1199,28 @@ namespace ScaryCastle
 
                 var destination = target.GetApproachPosition(this, Session.InteractionData.IsAttack || ActiveThrowable != null ? ApproachBehavior.ClosestSide : null);
 
-                if (ActiveThrowable != null)
+                if (destination != Vector2.Zero)
                 {
-                    if (target.X < X)
-                        destination.X += 14;
-                    else
-                        destination.X -= 14;
-                }
-                else if (item?.Definition.ActionKind == ActionKind.Projectile)
-                {
-                    destination.X = X;
+                    if (ActiveThrowable != null)
+                    {
+                        if (target.X < X)
+                            destination.X += 14;
+                        else
+                            destination.X -= 14;
+                    }
+                    else if (item?.Definition.ActionKind == ActionKind.Projectile)
+                    {
+                        destination.X = X;
+                    }
                 }
 
-                var moveToResult = MoveTo(destination);
-                if (moveToResult == MoveToResult.NoPath)
+                var moveToResult = destination == Vector2.Zero ? MoveToResult.NoPath : MoveTo(destination);
+                if (destination != Vector2.Zero && moveToResult == MoveToResult.NoPath)
                 {
                     FaceTo(target);
                     return false;
                 }
-                else if (moveToResult == MoveToResult.LessThan1px)
+                else if (moveToResult == MoveToResult.LessThan1px || destination == Vector2.Zero)
                 {
                     HandlePendingInteraction();
                 }

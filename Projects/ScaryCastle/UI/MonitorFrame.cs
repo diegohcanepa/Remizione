@@ -13,6 +13,7 @@ namespace ScaryCastle.UI
         // Draw
         public static void Draw(GameTime gameTime)
         {
+            /*
             if (ScaryCastleGame.Effects.CRT.MonitorStyle)
             {
                 image ??= new(Atlases.UI.GetImage("MonitorFrame"));
@@ -20,6 +21,7 @@ namespace ScaryCastle.UI
                 image.Draw(gameTime);
                 image.Game.SpriteBatch.End();
             }
+            */
         }
     }
 }

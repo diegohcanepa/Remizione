@@ -13,8 +13,8 @@ namespace ScaryCastle
 
         private readonly UIPocketItemMeter bronzeKeyMeter;
         private readonly UIPocketItemMeter coinMeter;
+        private readonly HUDFaithMeter faithMeter;
         private readonly UIPocketItemMeter goldenKeyMeter;
-        private readonly HUDGooMeter gooMeter;
         private readonly UIHPMeter hpMeter;
         private readonly UIPassiveItems passiveItems;
 
@@ -26,11 +26,11 @@ namespace ScaryCastle
         public StatusHUD(GameSession session)
             : base(session)
         {
-            this.gooMeter = new(session);
+            this.faithMeter = new(session);
             this.hpMeter = new(session);
-            this.bronzeKeyMeter = new(session, PocketItemType.BronzeKey, new(5, -3), false);
-            this.goldenKeyMeter = new(session, PocketItemType.GoldenKey, new(20, -3.5f), true);
-            this.coinMeter = new(session, PocketItemType.Coin, new(-7, -14), false);
+            this.bronzeKeyMeter = new(session, PocketItemType.BronzeKey, new(7, -5), false);
+            this.goldenKeyMeter = new(session, PocketItemType.GoldenKey, new(22, -5), true);
+            this.coinMeter = new(session, PocketItemType.Coin, new(-7, -16), false);
             this.InventoryMeter = new(session.PlayerInventory);
             this.passiveItems = new(session);
             this.MiniMap = new();
@@ -48,7 +48,7 @@ namespace ScaryCastle
             passiveItems.Draw(gameTime);
             Game.SpriteBatch.End();
 
-            gooMeter.Draw(gameTime);
+            faithMeter.Draw(gameTime);
             InventoryMeter.Draw(gameTime);
             coinMeter.Draw(gameTime);
             bronzeKeyMeter.Draw(gameTime);
@@ -65,7 +65,7 @@ namespace ScaryCastle
             passiveItems.Update(gameTime);
             InventoryMeter.Update(gameTime);
             hpMeter.Update(gameTime);
-            gooMeter.Update(gameTime);
+            faithMeter.Update(gameTime);
             MiniMap.Update(gameTime);
         }
 

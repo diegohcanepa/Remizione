@@ -202,13 +202,12 @@
   <String Key="MessageKind.CannotPlaceItem">No hay suficiente espacio en el terreno.</String>
   <String Key="MessageKind.ExtraEnergy">¡Puedes retener más baba!</String>
   <String Key="MessageKind.ExtraHeart">¡Te sientes más fuerte!</String>
-  <String Key="MessageKind.FullGoo">La baba del Supremo corre por tus venas. </String>
   <String Key="MessageKind.HandsFull">Tienes las manos ocupadas.</String>
   <String Key="MessageKind.InventoryFull">No te queda espacio.</String>
   <String Key="MessageKind.ItemDiscarded">Item descartado.</String>
   <String Key="MessageKind.LiftNotAllowed">No puedes alzar eso.</String>
   <String Key="MessageKind.NotEnoughCoins">No tienes monedas suficientes.</String>
-  <String Key="MessageKind.NotEnoughGoo">No tienes Baba en tu cuerpo.</String>
+  <String Key="MessageKind.NotEnoughFaith">Tu fe es insuficiente.</String>
   <String Key="MessageKind.OutOfLine">¡Fuera línea!</String>
   <String Key="MessageKind.OutOfReach">Fuera de alcance.</String>
   <String Key="MessageKind.PathCleared">Camino despejado.</String>
@@ -324,6 +323,7 @@ Bla bla bla</String>
   <String Key="Prop.ShootingGallery">Galería de tiro</String>
   <String Key="Prop.Sign">Cartel</String>
   <String Key="Prop.Toilet">Baño</String>
+  <String Key="Prop.Torch">Antorcha</String>
   <String Key="Prop.Tower">Torre</String>
   <String Key="Prop.Trunk">Baúl</String>
   <String Key="Prop.Tunnel">Túnel</String>

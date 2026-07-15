@@ -250,12 +250,12 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">GooMeter-assets/GooMeter0.png</key>
-            <key type="filename">GooMeter-assets/GooMeter1.png</key>
-            <key type="filename">GooMeter-assets/GooMeter2.png</key>
-            <key type="filename">GooMeter-assets/GooMeter3.png</key>
-            <key type="filename">GooMeter-assets/GooMeter4.png</key>
-            <key type="filename">GooMeter-assets/GooMeter5.png</key>
+            <key type="filename">FaithMeter-assets/FaithMeter0.png</key>
+            <key type="filename">FaithMeter-assets/FaithMeter1.png</key>
+            <key type="filename">FaithMeter-assets/FaithMeter2.png</key>
+            <key type="filename">FaithMeter-assets/FaithMeter3.png</key>
+            <key type="filename">FaithMeter-assets/FaithMeter4.png</key>
+            <key type="filename">FaithMeter-assets/FaithMeter5.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -285,6 +285,11 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Inventory-assets/InventoryFaithAmount1.png</key>
+            <key type="filename">Inventory-assets/InventoryFaithAmount2.png</key>
+            <key type="filename">Inventory-assets/InventoryFaithAmount3.png</key>
+            <key type="filename">Inventory-assets/InventoryFaithAmount4.png</key>
+            <key type="filename">Inventory-assets/InventoryFaithAmount5.png</key>
             <key type="filename">Inventory-assets/InventoryItemAmount1.png</key>
             <key type="filename">Inventory-assets/InventoryItemAmount2.png</key>
             <key type="filename">Inventory-assets/InventoryItemAmount3.png</key>
@@ -1019,10 +1024,10 @@
                     <filename>MonitorFrame-assets</filename>
                     <filename>ItemInfo-assets</filename>
                     <filename>BossMeter-assets</filename>
-                    <filename>GooMeter-assets</filename>
                     <filename>MiniMap-assets</filename>
                     <filename>PoisonMeter-assets</filename>
                     <filename>CurseMeter-assets</filename>
+                    <filename>FaithMeter-assets</filename>
                 </array>
             </struct>
         </map>

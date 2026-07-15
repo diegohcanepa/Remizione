@@ -96,6 +96,18 @@ namespace ScaryCastle
             };
         }
 
+        // CreateLightOpacityTween
+        internal static FloatTween? CreateLightOpacityTween(LightKind lightKind)
+        {
+            return lightKind switch
+            {
+                LightKind.Fire or
+                LightKind.Fireplace or
+                LightKind.Lantern => FloatTween.Create(TweenStyle.Linear, 1, .98f, 80, -1),
+                _ => null,
+            };
+        }
+
         // CreateLightScaleTween
         internal static Vector2Tween? CreateLightScaleTween(LightKind lightKind, Vector2 scale)
         {

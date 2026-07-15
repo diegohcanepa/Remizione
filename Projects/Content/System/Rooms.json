@@ -10,6 +10,18 @@
       "doorLeft": "21,80",
       "doorRight": "220,80",
       "doorDown": "152,145",
+      "placeholders": [
+        {
+          "position": "69,18",
+          "placement": "WallFrontHang",
+          "allowTags": "torch"
+        },
+        {
+          "position": "170,18",
+          "placement": "WallFrontHang",
+          "allowTags": "torch"
+        }
+      ],
       "walkArea": "210,53;221,75;199,101;232,101;237,109;5,109;37,46;47,46;48,56;64,60;87,44;156,44;160,58;186,58;189,53"
     },
     {
@@ -82,7 +94,7 @@
           "fillChance": 0.5,
           "allowTags": "trap"
         }
-      ],      
+      ],
       "walkArea": "210,62;224,91;178,91;171,93;144,93;132,89;103,94;62,93;19,91;34,62;95,60",
       "walls": [
         "2,0;2,113;37,44;36,0",

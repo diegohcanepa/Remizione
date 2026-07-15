@@ -28,9 +28,10 @@ namespace ScaryCastle
             FaithIcon = this[nameof(FaithIcon)];
             GoldenKeyIcon = this[nameof(GoldenKeyIcon)];
             GooIcon = this[nameof(GooIcon)];
-            GooMeter = CreateReadOnlyCollection(nameof(GooMeter), 0, 5);
+            FaithMeter = CreateReadOnlyCollection(nameof(FaithMeter), 0, 5);
             GreenHearts = CreateReadOnlyCollection(nameof(GreenHearts), 1, 4);
             HeartIcon = this[nameof(HeartIcon)];
+            InventoryFaithAmounts = CreateReadOnlyCollection("InventoryFaithAmount", 1, 5);
             InventoryItemAmounts = CreateReadOnlyCollection("InventoryItemAmount", 1, 5);
             InventoryItemSlot = this[nameof(InventoryItemSlot)];
             MessageContainer = this[nameof(MessageContainer)];
@@ -100,20 +101,23 @@ namespace ScaryCastle
         // FaithIcon
         public AtlasImage FaithIcon { get; }
 
+        // FaithMeter
+        public ReadOnlyCollection<AtlasImage> FaithMeter { get; }
+
         // GoldenKeyIcon
         public AtlasImage GoldenKeyIcon { get; }
 
         // GooIcon
         public AtlasImage GooIcon { get; }
 
-        // GooMeter
-        public ReadOnlyCollection<AtlasImage> GooMeter { get; }
-
         // GreenHearts
         public ReadOnlyCollection<AtlasImage> GreenHearts { get; }
 
         // HeartIcon
         public AtlasImage HeartIcon { get; }
+
+        // InventoryFaithAmounts
+        public ReadOnlyCollection<AtlasImage> InventoryFaithAmounts { get; }
 
         // InventoryItemAmounts
         public ReadOnlyCollection<AtlasImage> InventoryItemAmounts { get; }

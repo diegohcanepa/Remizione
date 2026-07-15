@@ -31,7 +31,7 @@ namespace ScaryCastle
             this.icon = new(Atlases.UI.Sack)
             {
                 PivotOrigin = RectanglePoint.Center,
-                Position = Screen.Area.GetPoint(RectanglePoint.RightBottom, -10, -8),
+                Position = Screen.Area.GetPoint(RectanglePoint.RightBottom, -10, -10),
             };
 
             // Amount

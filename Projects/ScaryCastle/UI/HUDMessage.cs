@@ -95,14 +95,9 @@ namespace ScaryCastle
                 icon.RenderImage = Atlases.UI.HeartIcon;
             }
 
-            else if (message == MessageKind.FullGoo)
+            else if (message == MessageKind.NotEnoughFaith)
             {
-                icon.RenderImage = Atlases.UI.GooIcon;
-            }
-
-            else if (message == MessageKind.NotEnoughGoo)
-            {
-                icon.RenderImage = Atlases.UI.GooIcon;
+                icon.RenderImage = Atlases.UI.FaithIcon;
                 Sound.Play(SoundNames.Error);
             }
 

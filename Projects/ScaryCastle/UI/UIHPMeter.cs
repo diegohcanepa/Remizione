@@ -40,7 +40,7 @@ namespace ScaryCastle
             imageGroups.Add(ConditionType.Poison, Atlases.UI.GreenHearts);
 
             this.icons = new Sprite[10];
-            var pos = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, new(11, 3));
+            var pos = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, new(15, 3));
 
             for (var i = 0; i < icons.Length; i++)
             {

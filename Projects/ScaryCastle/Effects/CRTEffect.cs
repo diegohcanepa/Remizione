@@ -44,9 +44,13 @@ namespace ScaryCastle.Effects
         {
             if (MonitorStyle)
             {
-                Effect.Parameters[param_curvature].SetValue(0.12f);
-                Effect.Parameters[param_scanlineIntensity].SetValue(0.09f);
-                Effect.Parameters[param_chromaticAberration].SetValue(0.0007f);
+                Effect.Parameters[param_curvature].SetValue(0);
+                Effect.Parameters[param_scanlineIntensity].SetValue(0.05f);
+                Effect.Parameters[param_chromaticAberration].SetValue(0.0004f);
+
+                //Effect.Parameters[param_curvature].SetValue(0.12f);
+                //Effect.Parameters[param_scanlineIntensity].SetValue(0.09f);
+                //Effect.Parameters[param_chromaticAberration].SetValue(0.0007f);
             }
             else
             {

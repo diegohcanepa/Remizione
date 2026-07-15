@@ -49,8 +49,9 @@ namespace ScaryCastle
                 //  Fire
                 case LightKind.Fire:
                     Passes = 2;
-                    lightSprite.Tweens.ColorTween = Utils.CreateLightColorTween(LightKind, Color);
-                    lightSprite.Tweens.ScaleTween = Utils.CreateLightScaleTween(LightKind, Scale);
+                    //lightSprite.Tweens.ColorTween = Utils.CreateLightColorTween(LightKind, Color);
+                    //lightSprite.Tweens.ScaleTween = Utils.CreateLightScaleTween(LightKind, Scale);
+                    lightSprite.Tweens.OpacityTween = Utils.CreateLightOpacityTween(LightKind);
                     litTweenDuration = 2000;
                     unlitTweenDuration = 2000;
                     break;
@@ -60,6 +61,7 @@ namespace ScaryCastle
                     Passes = 2;
                     lightSprite.Tweens.ColorTween = Utils.CreateLightColorTween(LightKind, Color);
                     lightSprite.Tweens.ScaleTween = Utils.CreateLightScaleTween(LightKind, Scale);
+                    lightSprite.Tweens.OpacityTween = Utils.CreateLightOpacityTween(LightKind);
                     litTweenDuration = 1000;
                     unlitTweenDuration = 1000;
                     break;

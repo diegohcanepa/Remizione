@@ -202,13 +202,12 @@
   <String Key="MessageKind.CannotPlaceItem">There is not enough space on the ground.</String>
   <String Key="MessageKind.ExtraEnergy">You can hold more goo!</String>
   <String Key="MessageKind.ExtraHeart">You feel stronger!</String>
-  <String Key="MessageKind.FullGoo">The Supreme's Goo flows through your veins.</String>
   <String Key="MessageKind.HandsFull">Your hands are full.</String>
   <String Key="MessageKind.InventoryFull">Out of space.</String>
   <String Key="MessageKind.ItemDiscarded">Item discarded.</String>
   <String Key="MessageKind.LiftNotAllowed">You can't lift that.</String>
   <String Key="MessageKind.NotEnoughCoins">Not enough coins.</String>
-  <String Key="MessageKind.NotEnoughGoo">You don't have goo on your body.</String>
+  <String Key="MessageKind.NotEnoughFaith">You don't have enough faith.</String>
   <String Key="MessageKind.OutOfLine">Out of line!</String>
   <String Key="MessageKind.OutOfReach">Out of reach.</String>
   <String Key="MessageKind.PathCleared">The way is open.</String>
@@ -324,6 +323,7 @@ Bla bla bla</String>
   <String Key="Prop.ShootingGallery">Shooting gallery</String>
   <String Key="Prop.Sign">Sign</String>
   <String Key="Prop.Toilet">Toilet</String>
+  <String Key="Prop.Torch">Torch</String>
   <String Key="Prop.Tower">Tower</String>
   <String Key="Prop.Trunk">Trunk</String>
   <String Key="Prop.Tunnel">Tunnel</String>

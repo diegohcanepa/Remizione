@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration;
+using Engendro;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -6,24 +7,24 @@ using System.Collections.Generic;
 namespace ScaryCastle
 {
     /// <summary>
-    /// HUDGooMeter
+    /// HUDFaithMeter
     /// </summary>
-    public sealed class HUDGooMeter : Adberration.SessionGameObject<GameSession>
+    public sealed class HUDFaithMeter : SessionGameObject<GameSession>
     {
         #region Private fields
 
-        private enum GooMeterPart { TopEmpty, MiddleEmpty, BottomEmpty, TopFilled, MiddleFilled, BottomFilled };
+        private enum MeterPart { TopEmpty, MiddleEmpty, BottomEmpty, TopFilled, MiddleFilled, BottomFilled };
 
         private Actor? actor;
         private const float fillSpeed = 8;
-        private readonly Sprite icon = new(Atlases.UI.GooIcon) { PivotOrigin = RectanglePoint.Top, Scale = ScaleInfo.UIElement.Medium };
+        private readonly Sprite icon = new(Atlases.UI.FaithIcon) { PivotOrigin = RectanglePoint.Top };
         private readonly List<Sprite> parts = [];
         private float visualValue;
 
         #endregion
 
         // Constructor
-        public HUDGooMeter(GameSession session)
+        public HUDFaithMeter(GameSession session)
             : base(session)
         {
         }
@@ -40,13 +41,13 @@ namespace ScaryCastle
 
             visualValue = actor.Energy;
 
-            icon.Position = new(7, 3);
+            icon.Position = new(9, 3);
 
-            float x = 4;
-            float y = 9;
+            float x = 6.75f;
+            float y = 13;
             while (parts.Count < actor.MaxEnergy)
             {
-                var part = new Sprite(Atlases.UI.GooMeter[(int)GooMeterPart.MiddleEmpty]) { X = x, Y = y };
+                var part = new Sprite(Atlases.UI.FaithMeter[(int)MeterPart.MiddleEmpty]) { X = x, Y = y };
                 parts.Add(part);
                 y += part.BoundingBox.Height - 1;
             }
@@ -73,22 +74,22 @@ namespace ScaryCastle
                 bool isSegmentFilled = visualValue > fillIndex;
 
                 // Determinar la parte del enum correspondiente
-                GooMeterPart part;
+                MeterPart part;
 
                 if (i == 0)
                 {
-                    part = isSegmentFilled ? GooMeterPart.TopFilled : GooMeterPart.TopEmpty;
+                    part = isSegmentFilled ? MeterPart.TopFilled : MeterPart.TopEmpty;
                 }
                 else if (i == parts.Count - 1)
                 {
-                    part = isSegmentFilled ? GooMeterPart.BottomFilled : GooMeterPart.BottomEmpty;
+                    part = isSegmentFilled ? MeterPart.BottomFilled : MeterPart.BottomEmpty;
                 }
                 else
                 {
-                    part = isSegmentFilled ? GooMeterPart.MiddleFilled : GooMeterPart.MiddleEmpty;
+                    part = isSegmentFilled ? MeterPart.MiddleFilled : MeterPart.MiddleEmpty;
                 }
 
-                segment.RenderImage = Atlases.UI.GooMeter[(int)part];
+                segment.RenderImage = Atlases.UI.FaithMeter[(int)part];
                 segment.Draw(gameTime);
             }
 

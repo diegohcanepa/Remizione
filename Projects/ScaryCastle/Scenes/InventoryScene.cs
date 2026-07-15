@@ -16,7 +16,6 @@ namespace ScaryCastle
         private readonly Sprite[] amounts = new Sprite[ItemContainer.MaximumCapacity];
         private bool autoHide;
         private const int autoHideThreshold = 105;
-        private readonly Sprite[] gooIcons = new Sprite[ItemContainer.MaximumCapacity];
         private readonly Sprite[] icons = new Sprite[ItemContainer.MaximumCapacity];
         private readonly TextSprite itemLabel;
         private Item? lastSelectedItem;
@@ -48,13 +47,6 @@ namespace ScaryCastle
                 {
                     PivotOrigin = RectanglePoint.Center,
                     Y = slots[i].BoundingBox.Center.Y
-                };
-
-                gooIcons[i] = new()
-                {
-                    PivotOrigin = RectanglePoint.Top,
-                    Scale = ScaleInfo.UIElement.Medium,
-                    Y = slots[i].BoundingBox.Bottom - 2
                 };
 
                 shadows[i] = new()
@@ -149,7 +141,6 @@ namespace ScaryCastle
             {
                 slots[i].X = startingX + (i * (slotWidth + spacing));
                 icons[i].RenderImage = null;
-                gooIcons[i].RenderImage = null;
                 shadows[i].RenderImage = null;
                 amounts[i].RenderImage = null;
 
@@ -158,18 +149,17 @@ namespace ScaryCastle
                     icons[i].X = slots[i].BoundingBox.Center.X;
                     icons[i].RenderImage = ItemContainer[i].Definition.Image;
 
-                    if (ItemContainer[i].Definition.EnergyCost > 0)
-                    {
-                        gooIcons[i].X = slots[i].BoundingBox.Center.X;
-                        gooIcons[i].RenderImage = Atlases.UI.GooIcon;
-                    }
-
                     shadows[i].X = icons[i].X - .5f;
                     shadows[i].RenderImage = ItemContainer[i].Definition.Image;
 
                     amounts[i].X = icons[i].X;
 
-                    if (ItemContainer[i].Definition.IsStackable || ItemContainer[i].Definition.IsDepletable)
+                    if (ItemContainer[i].Definition.EnergyCost > 0)
+                    {
+                        if (ItemContainer[i].Amount.IsBetween(1, 5))
+                            amounts[i].RenderImage = Atlases.UI.InventoryFaithAmounts[ItemContainer[i].Amount - 1];
+                    }
+                    else if (ItemContainer[i].Definition.IsStackable || ItemContainer[i].Definition.IsDepletable)
                     {
                         if (ItemContainer[i].Amount.IsBetween(1, 5))
                             amounts[i].RenderImage = Atlases.UI.InventoryItemAmounts[ItemContainer[i].Amount - 1];
@@ -223,7 +213,6 @@ namespace ScaryCastle
 
                 shadows[i].Draw(gameTime);
                 icons[i].Draw(gameTime);
-                gooIcons[i].Draw(gameTime);
                 amounts[i].Draw(gameTime);
             }
             Game.SpriteBatch.End();

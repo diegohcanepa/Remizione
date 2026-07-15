@@ -685,16 +685,18 @@ namespace ScaryCastle
         public void FaceTo(GameThing target)
         {
             if (target != this)
-                FaceTo(target.Position);
+            {
+                if (target.Sprite.RenderImage == null)
+                    FaceTo(target.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Bottom));
+                else
+                    FaceTo(target.Position);
+            }
         }
 
         // FaceTo
         public void FaceTo(Vector2 position)
         {
-            if (X < position.X)
-                Direction = FacingDirection.Right;
-            else
-                Direction = FacingDirection.Left;
+            Direction = X < position.X ? FacingDirection.Right : FacingDirection.Left;
         }
 
         // Faction
@@ -742,6 +744,9 @@ namespace ScaryCastle
         public Vector2 GetApproachPosition(GameThing requester, ApproachBehavior? behavior = null)
         {
             behavior ??= this.ApproachBehavior;
+
+            if (behavior == ApproachBehavior.None)
+                return Vector2.Zero;
 
             // 1. Override Manual (Prioridad absoluta del editor)
             if (ApproachPosition != Vector2.Zero)

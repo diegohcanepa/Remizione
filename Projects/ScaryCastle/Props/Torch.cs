@@ -12,14 +12,20 @@ namespace ScaryCastle
             : base(session, name)
         {
             Atlas = Atlases.Props;
+            ApproachBehavior = ApproachBehavior.None;
+            DisplayNameKey = "Prop.Torch";
+            Verb = Verb.Examine;
 
             this.AttachedLight = new("Light")
             {
                 Ambient = true,
-                Color = new(255, 248, 183),
+                Color = new(220, 132, 50),
                 PivotOrigin = RectanglePoint.Center,
+                LightKind = LightKind.Fire,
+                Passes = 2,
                 Position = new(9),
-                Scale = new(18)
+                Scale = new(8
+                ,14)
             };
 
             AttachedLightPosition = new(9);

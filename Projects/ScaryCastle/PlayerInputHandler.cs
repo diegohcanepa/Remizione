@@ -78,7 +78,7 @@ namespace ScaryCastle
             {
                 if (Actor.Energy < gooCost)
                 {
-                    Actor.Session.TextHUD.Message.Show(MessageKind.NotEnoughGoo);
+                    Actor.Session.TextHUD.Message.Show(MessageKind.NotEnoughFaith);
                     return;
                 }
             }

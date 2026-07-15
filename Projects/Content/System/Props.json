@@ -63,13 +63,6 @@
       "placements": []
     },
     {
-      "name": "Torch",
-      "tags": "torch",
-      "placements": [
-        "WallFrontHang"
-      ]
-    },
-    {
       "name": "SpearTrap",
       "tags": "trap",
       "effects": [
@@ -83,6 +76,13 @@
       "placements": ["Floor"]
     },
     {
+      "name": "Torch",
+      "tags": "torch",
+      "maxPerRoom": -1,
+      "placements": [
+        "WallFrontHang"
+      ]
+    },    {
       "name": "Trunk",
       "tags": "trunk",
       "effects": [

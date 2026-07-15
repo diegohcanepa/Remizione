@@ -37,7 +37,7 @@ namespace ScaryCastle
             container = new Sprite(Atlases.UI.GetImage("MiniMapContainer"))
             {
                 PivotOrigin = RectanglePoint.RightTop,
-                Position = new(236, 4)
+                Position = new(236, 3)
             };
 
             // ContainerBorder
