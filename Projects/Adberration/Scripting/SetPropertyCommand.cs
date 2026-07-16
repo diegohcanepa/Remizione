@@ -16,9 +16,7 @@ namespace Adberration.Scripting
             {
                 var property = propertyExpression.Property;
                 if (!property.PropertyInfo.CanWrite)
-                {
                     throw new ScriptException(this, $"'{property.Name}' is read-only.");
-                }
 
                 AssertKeyword(1, ScriptSyntax.AssignmentOp, ScriptSyntax.AdditionAssignmentOp, ScriptSyntax.SubtractionAssignmentOp);
 

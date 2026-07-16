@@ -18,9 +18,7 @@
         protected override void OnExecute()
         {
             if (Session.ScriptEnvironment.FindFlag(Body.Clauses[0]) is Flag flag)
-            {
                 flag.Value = Parser.ParseBoolean(this, 2);
-            }
         }
     }
 }

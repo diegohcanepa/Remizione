@@ -288,8 +288,6 @@
             <key type="filename">Inventory-assets/InventoryFaithAmount1.png</key>
             <key type="filename">Inventory-assets/InventoryFaithAmount2.png</key>
             <key type="filename">Inventory-assets/InventoryFaithAmount3.png</key>
-            <key type="filename">Inventory-assets/InventoryFaithAmount4.png</key>
-            <key type="filename">Inventory-assets/InventoryFaithAmount5.png</key>
             <key type="filename">Inventory-assets/InventoryItemAmount1.png</key>
             <key type="filename">Inventory-assets/InventoryItemAmount2.png</key>
             <key type="filename">Inventory-assets/InventoryItemAmount3.png</key>

@@ -494,6 +494,9 @@ namespace ScaryCastle
             if (IsDead || string.IsNullOrWhiteSpace(DisplayName))
                 return false;
 
+            if (InteractCondition != null && !InteractCondition.Evaluate())
+                return false;
+
             return true;
         }
 
@@ -955,6 +958,10 @@ namespace ScaryCastle
         // IgnoreWalkArea
         [ScriptProperty]
         public bool IgnoreWalkArea { get; set; } = true;
+
+        // InteractCondition
+        [ScriptProperty]
+        public FlagCondition? InteractCondition { get; set; }
 
         // IsBehind
         public bool IsBehind(GameThing thing)

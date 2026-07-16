@@ -14,9 +14,7 @@ namespace Adberration.Scripting
         {
             // Empty value
             if (string.IsNullOrWhiteSpace(value))
-            {
                 return;
-            }
 
             // $
             if (value.StartsWith(ScriptSyntax.SessionPropertyAlias, StringComparison.Ordinal))
