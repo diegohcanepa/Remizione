@@ -299,6 +299,7 @@ Bla bla bla</String>
   <String Key="Prop.ATM">Cajero automático</String>
   <String Key="Prop.Bag">Bolsa</String>
   <String Key="Prop.Carrusel">Calesita</String>
+  <String Key="Prop.ChambersOfTerror">Cámaras del Terror</String>
   <String Key="Prop.Coin">Moneda</String>
   <String Key="Prop.Cross">Cruz</String>
   <String Key="Prop.CrucifiedMan">Hombre crucificado</String>

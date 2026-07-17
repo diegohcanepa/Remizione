@@ -414,9 +414,9 @@
             <key type="filename">Father-assets/Move04.png</key>
             <key type="filename">Father-assets/RaiseArm01.png</key>
             <key type="filename">Father-assets/RaiseArm02.png</key>
-            <key type="filename">Father-assets/ReadPsalm01.png</key>
-            <key type="filename">Father-assets/ReadPsalm02.png</key>
-            <key type="filename">Father-assets/ReadPsalm03.png</key>
+            <key type="filename">Father-assets/Read01.png</key>
+            <key type="filename">Father-assets/Read02.png</key>
+            <key type="filename">Father-assets/Read03.png</key>
             <key type="filename">Father-assets/UseCross01.png</key>
             <key type="filename">Father-assets/UseCross02.png</key>
             <key type="filename">Father-assets/UseCross03.png</key>
@@ -805,6 +805,8 @@
             <key type="filename">Sister-assets/RaiseArm01.png</key>
             <key type="filename">Sister-assets/RaiseArm02.png</key>
             <key type="filename">Sister-assets/RaiseArm03.png</key>
+            <key type="filename">Sister-assets/Read01.png</key>
+            <key type="filename">Sister-assets/Read02.png</key>
             <key type="filename">Sister-assets/Stand01.png</key>
             <key type="filename">Sister-assets/StandHead01.png</key>
             <key type="filename">Sister-assets/StandHead02.png</key>

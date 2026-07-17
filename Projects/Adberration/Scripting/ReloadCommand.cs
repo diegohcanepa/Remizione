@@ -2,12 +2,12 @@
 
 namespace Adberration.Scripting
 {
-    // UnparentCommand
+    // ReloadCommand
     // Arguments: {Entity[,...]}]
-    internal sealed class UnparentCommand : NonAwaitableCommand
+    internal sealed class ReloadCommand : NonAwaitableCommand
     {
         // Constructor
-        internal UnparentCommand(Script script, string source, StatementBody body)
+        internal ReloadCommand(Script script, string source, StatementBody body)
             : base(script, source, body, 1)
         {
             Parser.ParseEntities<Entity>(this, 0);
@@ -21,7 +21,7 @@ namespace Adberration.Scripting
             for (var i = 0; i < list.Count; i++)
             {
                 if (list[i] is Entity entity)
-                    entity.Unparent();
+                    entity.Reload();
             }
         }
     }

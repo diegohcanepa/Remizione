@@ -24,6 +24,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
+/processorParam:Version=3.8.5.0
 /build:Atlases/Actors.png
 
 #begin Atlases/Actors.xml
@@ -39,6 +40,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
+/processorParam:Version=3.8.5.0
 /build:Atlases/Castle_Start.png
 
 #begin Atlases/Castle_Start.xml
@@ -54,6 +56,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
+/processorParam:Version=3.8.5.0
 /build:Atlases/Castle_Std_Common_01.png
 
 #begin Atlases/Castle_Std_Common_01.xml
@@ -69,6 +72,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
+/processorParam:Version=3.8.5.0
 /build:Atlases/Castle_Std_Common_02.png
 
 #begin Atlases/Castle_Std_Common_02.xml
@@ -84,6 +88,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
+/processorParam:Version=3.8.5.0
 /build:Atlases/Castle_Std_Pit_01.png
 
 #begin Atlases/Castle_Std_Pit_01.xml
@@ -99,6 +104,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
+/processorParam:Version=3.8.5.0
 /build:Atlases/Castle_Wide_Common_01.png
 
 #begin Atlases/Castle_Wide_Common_01.xml
@@ -114,6 +120,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
+/processorParam:Version=3.8.5.0
 /build:Atlases/Environment.png
 
 #begin Atlases/Environment.xml
@@ -129,6 +136,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
+/processorParam:Version=3.8.5.0
 /build:Atlases/Hub.png
 
 #begin Atlases/Hub.xml
@@ -144,6 +152,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
+/processorParam:Version=3.8.5.0
 /build:Atlases/IntroTunnel.png
 
 #begin Atlases/IntroTunnel.xml
@@ -159,6 +168,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
+/processorParam:Version=3.8.5.0
 /build:Atlases/Menu.png
 
 #begin Atlases/Menu.xml
@@ -174,6 +184,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
+/processorParam:Version=3.8.5.0
 /build:Atlases/Monitor.png
 
 #begin Atlases/Monitor.xml
@@ -189,6 +200,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
+/processorParam:Version=3.8.5.0
 /build:Atlases/Props.png
 
 #begin Atlases/Props.xml
@@ -204,6 +216,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
+/processorParam:Version=3.8.5.0
 /build:Atlases/ThemePark.png
 
 #begin Atlases/ThemePark.xml
@@ -219,6 +232,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
+/processorParam:Version=3.8.5.0
 /build:Atlases/ThemeParkEntrance.png
 
 #begin Atlases/ThemeParkEntrance.xml
@@ -234,6 +248,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
+/processorParam:Version=3.8.5.0
 /build:Atlases/ToiletRoom.png
 
 #begin Atlases/ToiletRoom.xml
@@ -249,6 +264,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
+/processorParam:Version=3.8.5.0
 /build:Atlases/UI.png
 
 #begin Atlases/UI.xml
@@ -258,1152 +274,1351 @@
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/Ambience/Ambience1.wav
 
 #begin Audio/Ambience/Day.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/Ambience/Day.wav;Audio/Ambience/Day
 
 #begin Audio/Ambience/Night.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/Ambience/Night.wav;Audio/Ambience/Night
 
 #begin Audio/FX/Alarm.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Alarm.wav;Audio/FX/Alarm
 
 #begin Audio/FX/AppleBite.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/AppleBite.wav
 
 #begin Audio/FX/Bible1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Bible1.wav;Audio/FX/Bible1
 
 #begin Audio/FX/Bible2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Bible2.wav;Audio/FX/Bible2
 
 #begin Audio/FX/Bible3.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Bible3.wav;Audio/FX/Bible3
 
 #begin Audio/FX/BibleBreak.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/BibleBreak.wav;Audio/FX/BibleBreak
 
 #begin Audio/FX/BodyFallMedium1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/BodyFallMedium1.wav
 
 #begin Audio/FX/Bones.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Bones.wav;Audio/FX/Bones
 
 #begin Audio/FX/Break.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Break.wav;Audio/FX/Break
 
 #begin Audio/FX/BulletRicochet1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/BulletRicochet1.wav;Audio/FX/BulletRicochet1
 
 #begin Audio/FX/BulletRicochet2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/BulletRicochet2.wav;Audio/FX/BulletRicochet2
 
 #begin Audio/FX/BulletRicochet3.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/BulletRicochet3.wav;Audio/FX/BulletRicochet3
 
 #begin Audio/FX/CardFlap.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/CardFlap.wav;Audio/FX/CardFlap
 
 #begin Audio/FX/CardWhoosh1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/CardWhoosh1.wav;Audio/FX/CardWhoosh1
 
 #begin Audio/FX/CardWhoosh2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/CardWhoosh2.wav;Audio/FX/CardWhoosh2
 
 #begin Audio/FX/CardWhoosh3.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/CardWhoosh3.wav;Audio/FX/CardWhoosh3
 
 #begin Audio/FX/CardWhoosh4.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/CardWhoosh4.wav;Audio/FX/CardWhoosh4
 
 #begin Audio/FX/CardWhoosh5.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/CardWhoosh5.wav;Audio/FX/CardWhoosh5
 
 #begin Audio/FX/CardWhoosh6.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/CardWhoosh6.wav;Audio/FX/CardWhoosh6
 
 #begin Audio/FX/ChatMessage.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/ChatMessage.wav;Audio/FX/ChatMessage
 
 #begin Audio/FX/CoinLoss.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/CoinLoss.wav;Audio/FX/CoinLoss
 
 #begin Audio/FX/CollectCoin.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/CollectCoin.wav;Audio/FX/CollectCoin
 
 #begin Audio/FX/Courage.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Courage.wav;Audio/FX/Courage
 
 #begin Audio/FX/DeathByFear.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/DeathByFear.wav;Audio/FX/DeathByFear
 
 #begin Audio/FX/Dice1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Dice1.wav;Audio/FX/Dice1
 
 #begin Audio/FX/Dice2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Dice2.wav;Audio/FX/Dice2
 
 #begin Audio/FX/Dice3.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Dice3.wav;Audio/FX/Dice3
 
 #begin Audio/FX/DoodleDoo.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/DoodleDoo.wav;Audio/FX/DoodleDoo
 
 #begin Audio/FX/DoorGateClose.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/DoorGateClose.wav;Audio/FX/DoorGateClose
 
 #begin Audio/FX/DoorGateOpen.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/DoorGateOpen.wav;Audio/FX/DoorGateOpen
 
 #begin Audio/FX/DoorGenericClose1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/DoorGenericClose1.wav;Audio/FX/DoorGenericClose1
 
 #begin Audio/FX/DoorGenericClose2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/DoorGenericClose2.wav;Audio/FX/DoorGenericClose2
 
 #begin Audio/FX/DoorGenericOpen1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/DoorGenericOpen1.wav;Audio/FX/DoorGenericOpen1
 
 #begin Audio/FX/DoorGenericOpen2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/DoorGenericOpen2.wav;Audio/FX/DoorGenericOpen2
 
 #begin Audio/FX/DoorToilet.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/DoorToilet.wav;Audio/FX/DoorToilet
 
 #begin Audio/FX/DoorTunnelClose.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/DoorTunnelClose.wav;Audio/FX/DoorTunnelClose
 
 #begin Audio/FX/DoorTunnelOpen.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/DoorTunnelOpen.wav;Audio/FX/DoorTunnelOpen
 
 #begin Audio/FX/Drink.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Drink.wav;Audio/FX/Drink
 
 #begin Audio/FX/DrinkFromBottle.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/DrinkFromBottle.wav;Audio/FX/DrinkFromBottle
 
 #begin Audio/FX/DrinkGoo.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/DrinkGoo.wav;Audio/FX/DrinkGoo
 
 #begin Audio/FX/EatPill.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/EatPill.wav;Audio/FX/EatPill
 
 #begin Audio/FX/EdmundHurt1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/EdmundHurt1.wav;Audio/FX/EdmundHurt1
 
 #begin Audio/FX/EdmundHurt2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/EdmundHurt2.wav;Audio/FX/EdmundHurt2
 
 #begin Audio/FX/EdmundScream1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/EdmundScream1.wav;Audio/FX/EdmundScream1
 
 #begin Audio/FX/EdmundScream2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/EdmundScream2.wav;Audio/FX/EdmundScream2
 
 #begin Audio/FX/EdmundScream3.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/EdmundScream3.wav;Audio/FX/EdmundScream3
 
 #begin Audio/FX/ElectricZapStrong.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/ElectricZapStrong.wav;Audio/FX/ElectricZapStrong
 
 #begin Audio/FX/EnergyBolt1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/EnergyBolt1.wav;Audio/FX/EnergyBolt1
 
 #begin Audio/FX/EnergyBolt2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/EnergyBolt2.wav;Audio/FX/EnergyBolt2
 
 #begin Audio/FX/EnergyBolt3.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/EnergyBolt3.wav;Audio/FX/EnergyBolt3
 
 #begin Audio/FX/EnviousEyeAttack.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/EnviousEyeAttack.wav;Audio/FX/EnviousEyeAttack
 
 #begin Audio/FX/EnviousEyeMove.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/EnviousEyeMove.wav;Audio/FX/EnviousEyeMove
 
 #begin Audio/FX/Error1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Error1.wav;Audio/FX/Error1
 
 #begin Audio/FX/Error2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Error2.wav;Audio/FX/Error2
 
 #begin Audio/FX/Fart.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Fart.wav;Audio/FX/Fart
 
 #begin Audio/FX/FartLong1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/FartLong1.wav;Audio/FX/FartLong1
 
 #begin Audio/FX/FartLong2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/FartLong2.wav;Audio/FX/FartLong2
 
 #begin Audio/FX/FartLong3.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/FartLong3.wav;Audio/FX/FartLong3
 
 #begin Audio/FX/FartLong4.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/FartLong4.wav;Audio/FX/FartLong4
 
 #begin Audio/FX/FartLong5.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/FartLong5.wav;Audio/FX/FartLong5
 
 #begin Audio/FX/FartLong6.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/FartLong6.wav;Audio/FX/FartLong6
 
 #begin Audio/FX/Fatigue.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Fatigue.wav;Audio/FX/Fatigue
 
 #begin Audio/FX/Fear1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Fear1.wav;Audio/FX/Fear1
 
 #begin Audio/FX/Fear2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Fear2.wav;Audio/FX/Fear2
 
 #begin Audio/FX/FenceOpen.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/FenceOpen.wav;Audio/FX/FenceOpen
 
 #begin Audio/FX/Firecracker1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Firecracker1.wav;Audio/FX/Firecracker1
 
 #begin Audio/FX/Firecracker2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Firecracker2.wav;Audio/FX/Firecracker2
 
 #begin Audio/FX/FleshImpact1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/FleshImpact1.wav;Audio/FX/FleshImpact1
 
 #begin Audio/FX/FleshImpact2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/FleshImpact2.wav;Audio/FX/FleshImpact2
 
 #begin Audio/FX/FootstepA1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/FootstepA1.wav;Audio/FX/FootstepA1
 
 #begin Audio/FX/FootstepA2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/FootstepA2.wav;Audio/FX/FootstepA2
 
 #begin Audio/FX/FootstepWater1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/FootstepWater1.wav
 
 #begin Audio/FX/FootstepWater2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/FootstepWater2.wav
 
 #begin Audio/FX/FootstepWater3.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/FootstepWater3.wav
 
 #begin Audio/FX/FootstepWater4.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/FootstepWater4.wav
 
 #begin Audio/FX/FootstepWater5.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/FootstepWater5.wav
 
 #begin Audio/FX/FootstepWater6.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/FootstepWater6.wav
 
 #begin Audio/FX/FuseHissing.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/FuseHissing.wav;Audio/FX/FuseHissing
 
 #begin Audio/FX/GateOpen.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/GateOpen.wav;Audio/FX/GateOpen
 
 #begin Audio/FX/GateStuck.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/GateStuck.wav;Audio/FX/GateStuck
 
 #begin Audio/FX/Gesture1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Gesture1.wav;Audio/FX/Gesture1
 
 #begin Audio/FX/GhostTrainCrazyCackling1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/GhostTrainCrazyCackling1.wav;Audio/FX/GhostTrainCrazyCackling1
 
 #begin Audio/FX/GhostTrainCrazyCackling2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/GhostTrainCrazyCackling2.wav;Audio/FX/GhostTrainCrazyCackling2
 
 #begin Audio/FX/GhostTrainCrazyCackling3.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/GhostTrainCrazyCackling3.wav;Audio/FX/GhostTrainCrazyCackling3
 
 #begin Audio/FX/GhostTrainCrazyCackling4.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/GhostTrainCrazyCackling4.wav;Audio/FX/GhostTrainCrazyCackling4
 
 #begin Audio/FX/GhostTrainCrazyCackling5.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/GhostTrainCrazyCackling5.wav;Audio/FX/GhostTrainCrazyCackling5
 
 #begin Audio/FX/GhostTrainMonsterLaugh.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/GhostTrainMonsterLaugh.wav;Audio/FX/GhostTrainMonsterLaugh
 
 #begin Audio/FX/GooBoost.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/GooBoost.wav;Audio/FX/GooBoost
 
 #begin Audio/FX/GooBoostFull.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/GooBoostFull.wav;Audio/FX/GooBoostFull
 
 #begin Audio/FX/GutsLarge.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/GutsLarge.wav;Audio/FX/GutsLarge
 
 #begin Audio/FX/GutsMedium.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/GutsMedium.wav;Audio/FX/GutsMedium
 
 #begin Audio/FX/GutsSmall1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/GutsSmall1.wav;Audio/FX/GutsSmall1
 
 #begin Audio/FX/GutsSmall2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/GutsSmall2.wav;Audio/FX/GutsSmall2
 
 #begin Audio/FX/GutsSmall3.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/GutsSmall3.wav;Audio/FX/GutsSmall3
 
 #begin Audio/FX/Headbutt.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Headbutt.wav;Audio/FX/Headbutt
 
 #begin Audio/FX/Heartbeat.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Heartbeat.wav;Audio/FX/Heartbeat
 
 #begin Audio/FX/ImpactA.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/ImpactA.wav
 
 #begin Audio/FX/ImpactB.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/ImpactB.wav;Audio/FX/ImpactB
 
 #begin Audio/FX/InsertCoin.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/InsertCoin.wav;Audio/FX/InsertCoin
 
 #begin Audio/FX/Interact1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Interact1.wav;Audio/FX/Interact1
 
 #begin Audio/FX/Interact2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Interact2.wav;Audio/FX/Interact2
 
 #begin Audio/FX/Interact3.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Interact3.wav;Audio/FX/Interact3
 
 #begin Audio/FX/Interact4.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Interact4.wav;Audio/FX/Interact4
 
 #begin Audio/FX/ItemDiscard.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/ItemDiscard.wav;Audio/FX/ItemDiscard
 
 #begin Audio/FX/Keyboard.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Keyboard.wav;Audio/FX/Keyboard
 
 #begin Audio/FX/Laugh1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Laugh1.wav;Audio/FX/Laugh1
 
 #begin Audio/FX/Laugh2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Laugh2.wav;Audio/FX/Laugh2
 
 #begin Audio/FX/Laugh3.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Laugh3.wav;Audio/FX/Laugh3
 
 #begin Audio/FX/Lever.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Lever.wav;Audio/FX/Lever
 
 #begin Audio/FX/Lightning.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Lightning.wav;Audio/FX/Lightning
 
 #begin Audio/FX/LockOpen.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/LockOpen.wav;Audio/FX/LockOpen
 
 #begin Audio/FX/LootSack.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/LootSack.wav;Audio/FX/LootSack
 
 #begin Audio/FX/MetalPropBreak.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/MetalPropBreak.wav;Audio/FX/MetalPropBreak
 
 #begin Audio/FX/Modem.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Modem.wav;Audio/FX/Modem
 
 #begin Audio/FX/NumberSixA.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/NumberSixA.wav;Audio/FX/NumberSixA
 
 #begin Audio/FX/NumberSixB.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/NumberSixB.wav;Audio/FX/NumberSixB
 
 #begin Audio/FX/NumberSixC.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/NumberSixC.wav;Audio/FX/NumberSixC
 
 #begin Audio/FX/Penitent1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Penitent1.wav;Audio/FX/Penitent1
 
 #begin Audio/FX/Penitent2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Penitent2.wav;Audio/FX/Penitent2
 
 #begin Audio/FX/Penitent3.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Penitent3.wav;Audio/FX/Penitent3
 
 #begin Audio/FX/Penitent4.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Penitent4.wav;Audio/FX/Penitent4
 
 #begin Audio/FX/Penitent5.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Penitent5.wav;Audio/FX/Penitent5
 
 #begin Audio/FX/PickupBag.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/PickupBag.wav;Audio/FX/PickupBag
 
 #begin Audio/FX/PickupCoin.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/PickupCoin.wav;Audio/FX/PickupCoin
 
 #begin Audio/FX/PickupGeneric.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/PickupGeneric.wav;Audio/FX/PickupGeneric
 
 #begin Audio/FX/PickupHeart.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/PickupHeart.wav;Audio/FX/PickupHeart
 
 #begin Audio/FX/PickupKey.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/PickupKey.wav;Audio/FX/PickupKey
 
 #begin Audio/FX/Pistol1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Pistol1.wav;Audio/FX/Pistol1
 
 #begin Audio/FX/Pistol2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Pistol2.wav;Audio/FX/Pistol2
 
 #begin Audio/FX/PneumaticDoor.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/PneumaticDoor.wav;Audio/FX/PneumaticDoor
 
 #begin Audio/FX/PneumaticHiss1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/PneumaticHiss1.wav;Audio/FX/PneumaticHiss1
 
 #begin Audio/FX/PneumaticHiss2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/PneumaticHiss2.wav;Audio/FX/PneumaticHiss2
 
 #begin Audio/FX/PopHeart.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/PopHeart.wav;Audio/FX/PopHeart
 
 #begin Audio/FX/PotteryBreak1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/PotteryBreak1.wav;Audio/FX/PotteryBreak1
 
 #begin Audio/FX/PotteryBreak2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/PotteryBreak2.wav;Audio/FX/PotteryBreak2
 
 #begin Audio/FX/PowerRestored.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/PowerRestored.wav;Audio/FX/PowerRestored
 
 #begin Audio/FX/Rat1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Rat1.wav;Audio/FX/Rat1
 
 #begin Audio/FX/Rat2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Rat2.wav;Audio/FX/Rat2
 
 #begin Audio/FX/Rat3.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Rat3.wav;Audio/FX/Rat3
 
 #begin Audio/FX/Rat4.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Rat4.wav;Audio/FX/Rat4
 
 #begin Audio/FX/RatAttack1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/RatAttack1.wav;Audio/FX/RatAttack1
 
 #begin Audio/FX/RatAttack2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/RatAttack2.wav;Audio/FX/RatAttack2
 
 #begin Audio/FX/RatAttack3.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/RatAttack3.wav;Audio/FX/RatAttack3
 
 #begin Audio/FX/RatDeath1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/RatDeath1.wav;Audio/FX/RatDeath1
 
 #begin Audio/FX/RatDeath2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/RatDeath2.wav;Audio/FX/RatDeath2
 
 #begin Audio/FX/Raven.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Raven.wav;Audio/FX/Raven
 
 #begin Audio/FX/RideCarLoop.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/RideCarLoop.wav;Audio/FX/RideCarLoop
 
 #begin Audio/FX/RideCarStop.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/RideCarStop.wav;Audio/FX/RideCarStop
 
 #begin Audio/FX/ShockZap1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/ShockZap1.wav;Audio/FX/ShockZap1
 
 #begin Audio/FX/ShockZap2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/ShockZap2.wav;Audio/FX/ShockZap2
 
 #begin Audio/FX/SmallChunks1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/SmallChunks1.wav;Audio/FX/SmallChunks1
 
 #begin Audio/FX/SmallChunks2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/SmallChunks2.wav;Audio/FX/SmallChunks2
 
 #begin Audio/FX/SmallWhooshA1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/SmallWhooshA1.wav
 
 #begin Audio/FX/SmallWhooshA2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/SmallWhooshA2.wav
 
 #begin Audio/FX/SmallWhooshA3.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/SmallWhooshA3.wav
 
 #begin Audio/FX/SmallWhooshA4.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/SmallWhooshA4.wav
 
 #begin Audio/FX/SpearTrap.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/SpearTrap.wav;Audio/FX/SpearTrap
 
 #begin Audio/FX/StatusEffectDamage.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/StatusEffectDamage.wav;Audio/FX/StatusEffectDamage
 
 #begin Audio/FX/TestSkillFail.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/TestSkillFail.wav;Audio/FX/TestSkillFail
 
 #begin Audio/FX/Text.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Text.wav;Audio/FX/Text
 
 #begin Audio/FX/Thunder1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Thunder1.wav
 
 #begin Audio/FX/Thunder2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Thunder2.wav
 
 #begin Audio/FX/Thunder3.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Thunder3.wav
 
 #begin Audio/FX/Thunder4.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/Thunder4.wav
 
 #begin Audio/FX/TowerDoorClose.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/TowerDoorClose.wav;Audio/FX/TowerDoorClose
 
 #begin Audio/FX/TrunkLocked.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/TrunkLocked.wav;Audio/FX/TrunkLocked
 
 #begin Audio/FX/TrunkOpen.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/TrunkOpen.wav;Audio/FX/TrunkOpen
 
 #begin Audio/FX/UIHover.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/UIHover.wav;Audio/FX/UIHover
 
 #begin Audio/FX/UIPrompt.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/UIPrompt.wav;Audio/FX/UIPrompt
 
 #begin Audio/FX/UISelectA.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/UISelectA.wav;Audio/FX/UISelectA
 
 #begin Audio/FX/UISelectB.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/UISelectB.wav;Audio/FX/UISelectB
 
 #begin Audio/FX/UISelectC.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/UISelectC.wav;Audio/FX/UISelectC
 
 #begin Audio/FX/UISelectD.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/UISelectD.wav;Audio/FX/UISelectD
 
 #begin Audio/FX/UISelectPlayer.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/UISelectPlayer.wav;Audio/FX/UISelectPlayer
+
+#begin Audio/FX/Vanish.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/Vanish.wav;Audio/FX/Vanish
 
 #begin Audio/FX/VendingMachine.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/VendingMachine.wav;Audio/FX/VendingMachine
 
 #begin Audio/FX/VentBlower.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/VentBlower.wav;Audio/FX/VentBlower
 
 #begin Audio/FX/WhooshA.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/WhooshA.wav;Audio/FX/WhooshA
 
 #begin Audio/FX/WoodDebris1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/WoodDebris1.wav;Audio/FX/WoodDebris1
 
 #begin Audio/FX/ZapLoop.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/FX/ZapLoop.wav;Audio/FX/ZapLoop
 
 #begin Audio/Music/Arrival.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/Music/Arrival.wav;Audio/Music/Arrival
 
 #begin Audio/Music/Combat1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/Music/Combat1.wav;Audio/Music/Combat1
 
 #begin Audio/Music/FirstSteps.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/Music/FirstSteps.wav;Audio/Music/FirstSteps
 
 #begin Audio/Music/GameOver.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/Music/GameOver.wav;Audio/Music/GameOver
 
 #begin Audio/Music/Monitor.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/Music/Monitor.wav;Audio/Music/Monitor
 
 #begin Audio/Music/PilgrimPath01.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/Music/PilgrimPath01.wav;Audio/Music/PilgrimPath01
 
 #begin Audio/Music/Ride01.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/Music/Ride01.wav;Audio/Music/Ride01
 
 #begin Audio/Music/Run01.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/Music/Run01.wav;Audio/Music/Run01
 
 #begin Audio/Music/ThemePark.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/Music/ThemePark.wav;Audio/Music/ThemePark
 
 #begin Audio/Music/Toilet.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
 /build:Audio/Music/Toilet.wav;Audio/Music/Toilet
 
 #begin Fonts/Common.bmp
@@ -1413,6 +1628,7 @@
 /processorParam:FirstCharacter=
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Color
+/processorParam:Version=1.0.0.0
 /build:Fonts/Common.bmp
 
 #begin Fonts/CommonOutline.bmp
@@ -1422,6 +1638,7 @@
 /processorParam:FirstCharacter=
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Color
+/processorParam:Version=1.0.0.0
 /build:Fonts/CommonOutline.bmp
 
 #begin Fonts/Monitor.bmp
@@ -1431,54 +1648,71 @@
 /processorParam:FirstCharacter=
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Color
+/processorParam:Version=1.0.0.0
 /build:Fonts/Monitor.bmp
 
 #begin Shaders/Blur.fx
 /importer:EffectImporter
 /processor:EffectProcessor
 /processorParam:DebugMode=Auto
+/processorParam:Defines=
+/processorParam:Version=3.8.5.0
 /build:Shaders/Blur.fx
 
 #begin Shaders/ColorReduction.fx
 /importer:EffectImporter
 /processor:EffectProcessor
 /processorParam:DebugMode=Auto
+/processorParam:Defines=
+/processorParam:Version=3.8.5.0
 /build:Shaders/ColorReduction.fx
 
 #begin Shaders/ColorSaturation.fx
 /importer:EffectImporter
 /processor:EffectProcessor
 /processorParam:DebugMode=Auto
+/processorParam:Defines=
+/processorParam:Version=3.8.5.0
 /build:Shaders/ColorSaturation.fx
 
 #begin Shaders/CRT.fx
 /importer:EffectImporter
 /processor:EffectProcessor
 /processorParam:DebugMode=Auto
+/processorParam:Defines=
+/processorParam:Version=3.8.5.0
 /build:Shaders/CRT.fx
 
 #begin Shaders/Lighting.fx
 /importer:EffectImporter
 /processor:EffectProcessor
 /processorParam:DebugMode=Auto
+/processorParam:Defines=
+/processorParam:Version=3.8.5.0
 /build:Shaders/Lighting.fx
 
 #begin Shaders/Outline.fx
 /importer:EffectImporter
 /processor:EffectProcessor
 /processorParam:DebugMode=Auto
+/processorParam:Defines=
+/processorParam:Version=3.8.5.0
 /build:Shaders/Outline.fx
 
 #begin Shaders/PlaneDeformation.fx
 /importer:EffectImporter
 /processor:EffectProcessor
 /processorParam:DebugMode=Auto
+/processorParam:Defines=
+/processorParam:Version=3.8.5.0
 /build:Shaders/PlaneDeformation.fx
 
 #begin Shaders/Sepia.fx
 /importer:EffectImporter
 /processor:EffectProcessor
 /processorParam:DebugMode=Auto
+/processorParam:Defines=
+/processorParam:Version=3.8.5.0
 /build:Shaders/Sepia.fx
 
 #begin System/Actors.json

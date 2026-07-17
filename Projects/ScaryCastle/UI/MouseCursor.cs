@@ -22,6 +22,7 @@ namespace ScaryCastle
         private static OutlineEffect? effect;
         private static readonly Vector2Tween scaleTween = new();
         private static readonly FloatTween shakeTween = new();
+        private static readonly TextSprite textSprite;
 
         #endregion
 
@@ -47,6 +48,15 @@ namespace ScaryCastle
                 cursorImages[i] = Atlases.UI.GetImage(imageName);
             }
 
+            // Text sprite
+            textSprite = new(Fonts.CommonOutline)
+            {
+                PivotOrigin = RectanglePoint.LeftTop,
+                Multiline = true,
+                Scale = ScaleInfo.Text.Large
+            };
+
+
             Reset();
 
             InvalidateCursorImage();
@@ -56,12 +66,33 @@ namespace ScaryCastle
 
         #region Private members
 
+        // ClampTextToScreen
+        private static void ClampTextToScreen()
+        {
+            if (textSprite.IsEmpty)
+                return;
+
+            var offset = CustomImage == null ? new Vector2(3, 7) : new Vector2(-2, 1);
+
+            textSprite.PivotOrigin = RectanglePoint.Left;
+            textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.Right, -offset.X, offset.Y);
+
+            if (!textSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox))
+            {
+                textSprite.PivotOrigin = RectanglePoint.Right;
+                textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.Left, offset.X, offset.Y);
+            }
+
+            if (textSprite.BoundingBox.Bottom >= Screen.NativeHeight)
+                textSprite.Y -= 10;
+        }
+
         // InvalidateCursorImage
         private static void InvalidateCursorImage()
         {
             cursorSprite.RenderImage = CustomImage ?? cursorImages[(int)State];
             cursorSprite.Scale = CustomImage != null ? ScaleInfo.UIElement.Medium : defaultScale;
-            cursorSprite.PivotOrigin = (State is MouseCursorState.Hand) && CustomImage == null ? RectanglePoint.LeftTop : RectanglePoint.Center;
+            cursorSprite.PivotOrigin = (State is MouseCursorState.Hand) && CustomImage == null ? RectanglePoint.Top : RectanglePoint.Center;
         }
 
         #endregion
@@ -101,6 +132,10 @@ namespace ScaryCastle
             cursorSprite.X += shakeTween.IsRunning ? shakeTween.CurrentValue : 0;
             cursorSprite.Draw(gameTime);
             cursorSprite.X -= shakeTween.IsRunning ? shakeTween.CurrentValue : 0;
+
+            if (State != MouseCursorState.Cross && !IsArrow)
+                textSprite.Draw(gameTime);
+
             EngendroGame.Instance.SpriteBatch.End();
         }
 
@@ -130,6 +165,7 @@ namespace ScaryCastle
             cursorSprite.Scale = defaultScale;
             CustomImage = null;
             HightlightColor = null;
+            textSprite.Color = ColorPalette.Text.MouseCursor;
             State = MouseCursorState.Cross;
         }
 
@@ -154,6 +190,20 @@ namespace ScaryCastle
             }
         }
 
+        // Text
+        public static string? Text
+        {
+            get => textSprite.Text;
+            set => textSprite.Text = value;
+        }
+
+        // TextColor
+        public static Color TextColor
+        {
+            get => textSprite.Color;
+            set => textSprite.Color = value;
+        }
+
         // Update
         public static void Update(GameTime gameTime)
         {
@@ -161,6 +211,8 @@ namespace ScaryCastle
             cursorSprite.Position = InputManager.DefaultPlayer.Mouse.VirtualPosition;
             cursorSprite.Update(gameTime);
             shakeTween.Update(gameTime);
+
+            ClampTextToScreen();
 
             if (CustomImage != null)
             {

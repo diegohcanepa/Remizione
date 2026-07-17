@@ -85,6 +85,7 @@ namespace ScaryCastle
                 HeldItem = null;
 
             Session.TextHUD.Sentence.Target = Target;
+            MouseCursor.Text = Target?.DisplayName;
 
             MouseCursorAppearance.Refresh(this);
         }

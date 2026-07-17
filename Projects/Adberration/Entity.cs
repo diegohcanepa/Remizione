@@ -704,6 +704,14 @@ namespace Adberration
             }
         }
 
+        // Reload
+        [ScriptMethod]
+        public void Reload()
+        {
+            if (LoadState == LoadState.Loaded && loadScript != null)
+                RunScript(loadScript);
+        }
+
         // RenderLayerDepth
         public virtual int RenderLayerDepth => 0;
 

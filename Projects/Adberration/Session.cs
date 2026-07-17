@@ -375,6 +375,7 @@ namespace Adberration
             AotTypeRegistry.Register("position-y-tween", typeof(YTweenCommand), CodingContext.Any);
             AotTypeRegistry.Register("put", typeof(PutCommand), CodingContext.Any);
             AotTypeRegistry.Register("random-position", typeof(RandomPositionCommand));
+            AotTypeRegistry.Register("reload", typeof(ReloadCommand));
             AotTypeRegistry.Register("reset-camera", typeof(ResetCameraCommand));
             AotTypeRegistry.Register("reset-tweens", typeof(ResetTweensCommand), CodingContext.Any);
             AotTypeRegistry.Register("resume-routine", typeof(ResumeRoutineCommand));

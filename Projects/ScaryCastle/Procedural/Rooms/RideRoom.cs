@@ -214,13 +214,6 @@ namespace ScaryCastle
         // PrepareLights
         private void PrepareLights()
         {
-            /*
-            var light = AddLight("Main");
-            light.Ambient = true;
-            light.Color = new(255, 248, 183);
-            light.Position = BoundingBox.Center;
-            light.Scale = new(BoundingBox.Width / 12, BoundingBox.Height / 12);
-
             foreach (var door in doors)
             {
                 var doorLight = AddLight(door.Name);
@@ -229,7 +222,6 @@ namespace ScaryCastle
                 doorLight.Position = door.BoundingBox.Center;
                 doorLight.Scale = new(2, 7);
             }
-            */
         }
 
         // PrepareView

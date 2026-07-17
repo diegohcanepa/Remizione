@@ -235,26 +235,26 @@ namespace Engendro
         }
 
         // Play
-        public SpriteAnimation? Play(string name, bool loop)
+        public SpriteAnimation? Play(string name, bool looped)
         {
-            return Play(name, loop, AnimationDirection.Forward, false);
+            return Play(name, looped, AnimationDirection.Forward, false);
         }
 
         // Play
-        public SpriteAnimation? Play(string name, bool loop, AnimationDirection direction)
+        public SpriteAnimation? Play(string name, bool looped, AnimationDirection direction)
         {
-            return Play(name, loop, direction, false);
+            return Play(name, looped, direction, false);
         }
 
         // Play
-        public SpriteAnimation? Play(string name, bool loop, AnimationDirection direction, bool randomFrame)
+        public SpriteAnimation? Play(string name, bool looped, AnimationDirection direction, bool randomFrame)
         {
             CodeContract.ValidName(name, nameof(name));
 
             if (sprite.Animations.Find(name) is SpriteAnimation animation)
             {
                 this.Animation = animation;
-                Play(loop, direction, randomFrame);
+                Play(looped, direction, randomFrame);
                 return animation;
             }
             else

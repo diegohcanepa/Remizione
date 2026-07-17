@@ -94,7 +94,7 @@ namespace ScaryCastle
         {
             internal static Color Fill { get; } = new(172, 167, 144);
             internal static Color Shadow { get; } = Color.Black * .2f;
-            internal static Color Text { get; } = Color.Black * .5f;
+            internal static Color Text { get; } = Color.Black * .4f;
             internal static Color Title { get; } = new Color(27, 31, 33) * .5f;
         }
 
@@ -111,6 +111,7 @@ namespace ScaryCastle
             internal static Color Highlight { get; } = new(172, 167, 144);
             internal static Color Hover { get; } = new(167, 143, 145);
             internal static Color Light { get; } = new(200, 165, 138);
+            internal static Color MouseCursor { get; } = new(247, 232, 213);
             internal static Color Orange { get; } = new(171, 81, 48);
             internal static Color OrangeLight { get; } = new(207, 117, 43);
             internal static Color Purple { get; } = new(156, 42, 112);

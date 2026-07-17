@@ -493,7 +493,6 @@ namespace ScaryCastle
             if (RunCount == 0)
             {
                 PlayerInventory.Add(ItemNames.Apple);
-                PlayerInventory.Add(ItemNames.GooBottle);
                 Player?.Energy = 0;
             }
 

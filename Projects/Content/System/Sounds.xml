@@ -127,6 +127,7 @@
 	<FX Name="UISelectC" />
 	<FX Name="UISelectD" />
 	<FX Name="UISelectPlayer" />
+	<FX Name="Vanish" />
 	<FX Name="VendingMachine" />
 	<FX Name="VentBlower" PauseAware="false" />
 	<FX Name="WoodDebris" Sounds="1..1" />
