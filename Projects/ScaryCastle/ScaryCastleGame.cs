@@ -109,11 +109,13 @@ namespace ScaryCastle
             MouseCursor.Draw(gameTime);
         }
 
+        /*
         // OnScenesDrawn
         protected override void OnScenesDrawn(GameTime gameTime)
         {
             MonitorFrame.Draw(gameTime);
         }
+        */
 
         // OnInitialize
         protected override void OnInitialize()

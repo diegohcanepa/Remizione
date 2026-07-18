@@ -491,17 +491,14 @@ namespace ScaryCastle
             PlayerInventory.Add(ItemNames.BargainCross);
 
             if (RunCount == 0)
-            {
                 PlayerInventory.Add(ItemNames.Apple);
-                Player?.Energy = 0;
-            }
 
             CurrentRun.Generate();
 
             if (Player != null)
             {
                 Player.Reheal();
-
+                Player.Recharge();
                 var startRoom = CurrentRun.FloorMap[new(0, 0)].RideRoom;
                 startRoom.Children.Add(Player);
                 if (startRoom.WalkArea != null)
@@ -591,6 +588,7 @@ namespace ScaryCastle
             if (Player != null)
             {
                 Player.Reheal();
+                Player.Recharge();
                 Player.MaxEnergy = 3;
                 Player.Energy = 3;
                 Player.ClearCondition();

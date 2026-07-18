@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Engendro;
+using Microsoft.Xna.Framework;
 
 namespace ScaryCastle.UI
 {
@@ -7,12 +8,11 @@ namespace ScaryCastle.UI
     /// </summary>
     internal static class MonitorFrame
     {
-        //private static Sprite? image;
+        private static Sprite? image;
 
         // Draw
         public static void Draw(GameTime gameTime)
         {
-            /*
             if (ScaryCastleGame.Effects.CRT.MonitorStyle)
             {
                 image ??= new(Atlases.UI.GetImage("MonitorFrame"));
@@ -20,7 +20,6 @@ namespace ScaryCastle.UI
                 image.Draw(gameTime);
                 image.Game.SpriteBatch.End();
             }
-            */
         }
     }
 }

@@ -217,7 +217,7 @@ namespace ScaryCastle
             foreach (var door in doors)
             {
                 var doorLight = AddLight(door.Name);
-                doorLight.Ambient = true;
+                //doorLight.Ambient = true;
                 doorLight.Color = new Color(240, 181, 65) * .7f;
                 doorLight.Position = door.BoundingBox.Center;
                 doorLight.Scale = new(2, 7);

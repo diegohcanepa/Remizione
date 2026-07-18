@@ -25,7 +25,7 @@ namespace ScaryCastle
                 LightKind = LightKind.Fire,
                 Passes = 2,
                 Position = new(9),
-                Scale = new(8, 14)
+                Scale = new(10, 16)
             };
 
             AttachedLightPosition = new(9);
@@ -62,7 +62,7 @@ namespace ScaryCastle
                 {
                     field = value;
                     if (AttachedLight != null)
-                        AttachedLight.Scale = field ? new(12, 14) : new(8, 14);
+                        AttachedLight.Scale = field ? new(12, 16) : new(10, 16);
                 }
             }
         }

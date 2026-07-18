@@ -72,7 +72,7 @@ namespace ScaryCastle
             if (textSprite.IsEmpty)
                 return;
 
-            var offset = CustomImage == null ? new Vector2(3, 7) : new Vector2(-2, 1);
+            var offset = CustomImage == null ? new Vector2(1, 7) : new Vector2(-2, 1);
 
             textSprite.PivotOrigin = RectanglePoint.Left;
             textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.Right, -offset.X, offset.Y);

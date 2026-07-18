@@ -16,10 +16,13 @@ namespace ScaryCastle
         private readonly Sprite[] amounts = new Sprite[ItemContainer.MaximumCapacity];
         private bool autoHide;
         private const int autoHideThreshold = 105;
+        private RectangleF goalRect;
+        private readonly TextSprite goalText;
         private readonly Sprite[] icons = new Sprite[ItemContainer.MaximumCapacity];
         private readonly TextSprite itemLabel;
         private Item? lastSelectedItem;
         private int lastSeenContainerVersion = -1;
+        private int lastSeenRun = -1;
         private readonly Sprite[] shadows = new Sprite[ItemContainer.MaximumCapacity];
         private readonly Sprite[] slots = new Sprite[ItemContainer.MaximumCapacity];
 
@@ -76,6 +79,17 @@ namespace ScaryCastle
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = slots[0].BoundingBox.GetPoint(RectanglePoint.Top, 0, -2),
                 Scale = ScaleInfo.Text.ExtraLarge
+            };
+
+            // GoalText
+            goalText = new(Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.Terra,
+                MaximumWidth = 140,
+                Multiline = true,
+                PivotOrigin = RectanglePoint.Top,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Top),
+                Scale = ScaleInfo.Text.Large
             };
         }
 
@@ -202,6 +216,9 @@ namespace ScaryCastle
 
             Game.Shapes.DrawRectangle(Screen.Area, ColorPalette.SceneShade * .5f);
 
+            Game.Shapes.DrawRectangle(goalRect, Color.Black);
+            goalText.Draw(gameTime);
+
             for (var i = 0; i < ItemContainer.Capacity; i++)
             {
                 slots[i].Draw(gameTime);
@@ -252,6 +269,14 @@ namespace ScaryCastle
             {
                 lastSeenContainerVersion = ItemContainer.ContentVersion;
                 Refresh();
+            }
+
+            if (lastSeenRun != ItemContainer.Session.RunCount)
+            {
+                lastSeenRun = ItemContainer.Session.RunCount;
+                goalText.Text = TextRepository.GetValue($"RunGoal.{ItemContainer.Session.RunCount + 1}");
+                goalRect = goalText.BoundingBox;
+                goalRect.Inflate(2, 2);
             }
         }
 

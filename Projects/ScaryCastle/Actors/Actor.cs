@@ -1169,6 +1169,13 @@ namespace ScaryCastle
             }
         }
 
+        // Recharge
+        [ScriptMethod]
+        public virtual void Recharge()
+        {
+            Energy = MaxEnergy;
+        }
+
         // ResolveInteraction
         public bool ResolveInteraction(GameThing target, Item? item)
         {
