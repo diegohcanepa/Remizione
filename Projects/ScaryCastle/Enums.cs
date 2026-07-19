@@ -50,6 +50,9 @@ namespace ScaryCastle
     // Difficulty
     public enum Difficulty { Easy, Normal, Hard }
 
+    // DoorDirection
+    public enum DoorDirection { Up, Right, Down, Left }
+
     // DustParticleKind
     public enum DustParticleKind { None, Dust, Ash }
 
@@ -175,14 +178,17 @@ namespace ScaryCastle
     // RenderLayer
     public enum RenderLayer { BehindBackground, Background, OverBackground, Default, Foreground, ForegroundNoLight }
 
-    // DoorDirection
-    public enum DoorDirection { Up, Right, Down, Left }
-
     // RoomTheme
     public enum RoomTheme { Castle }
 
     // RoomCategory
     public enum RoomCategory { Start, Boss, Treasure, Store, Special, Secret, Standard }
+
+    // RunModifierKind
+    public enum RunModifierKind { Darkness }
+
+    // RunModifierScope
+    public enum RunModifierScope { Room, Run }
 
     // SpeechTextState
     public enum SpeechTextState { Hidden, Typing, Idle }

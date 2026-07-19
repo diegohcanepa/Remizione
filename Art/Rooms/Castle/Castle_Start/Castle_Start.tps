@@ -173,6 +173,7 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">Castle_Start-assets/Foreground.png</key>
             <key type="filename">Castle_Start-assets/View1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>

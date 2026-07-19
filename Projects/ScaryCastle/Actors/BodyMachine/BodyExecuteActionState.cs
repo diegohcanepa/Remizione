@@ -10,7 +10,7 @@ namespace ScaryCastle
     {
         private bool animationFound;
         private bool eventDone;
-        private static string missText = TextRepository.GetValue("Misc.Miss");
+        private static readonly string missText = TextRepository.GetValue("Misc.Miss");
 
         // Constructor
         public BodyExecuteActionState()
@@ -67,7 +67,11 @@ namespace ScaryCastle
         {
             if (Target != null && CanInflictDamage(Target))
             {
-                if (!action.MissChance.Roll())
+                var missChance = action.MissChance;
+                if (Owner.Session.CurrentRun?.Modifiers.Contains(RunModifierKind.Darkness) == true)
+                    missChance += GameSettings.DarknessMissChancePenalty;
+
+                if (!missChance.Roll())
                     EffectDescriptor.Apply(action.EffectDescriptors, Owner, Target, EffectContext.Attack);
                 else
                     Owner.ShowFloatingText(missText, Color.WhiteSmoke, 2000);

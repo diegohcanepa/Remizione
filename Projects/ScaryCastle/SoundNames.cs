@@ -31,6 +31,8 @@
         internal const string PickupBag = nameof(PickupBag);
         internal const string PickupGeneric = nameof(PickupGeneric);
         internal const string PickupKey = nameof(PickupKey);
+        internal const string PneumaticDoor = nameof(PneumaticDoor);
+        internal const string PneumaticHiss = nameof(PneumaticHiss);
         internal const string PotteryBreak = nameof(PotteryBreak);
         internal const string SpearTrap = nameof(SpearTrap);
         internal const string TestSkillFail = nameof(TestSkillFail);

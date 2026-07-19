@@ -4,7 +4,6 @@ using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ScaryCastle.Menus;
-using ScaryCastle.UI;
 
 namespace ScaryCastle
 {

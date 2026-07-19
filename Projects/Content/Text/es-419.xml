@@ -331,7 +331,7 @@ Bla bla bla</String>
   <String Key="Prop.UnderRideEntrance">Inframundo</String>
   <String Key="Prop.VendingMachine">Máquina expendedora</String>
   <String Key="Prop.WC">Inodoro</String>
-  <String Key="RunGoal.1">Encontrar a Mandinga e intimarlo a que vuelva al infierno.</String>
+  <String Key="RunGoal.1">Intimar a Mandinga a que al infierno.</String>
   <String Key="StatName.Faith">Fe</String>
   <String Key="StatName.HP">Salud</String>
 </Strings>

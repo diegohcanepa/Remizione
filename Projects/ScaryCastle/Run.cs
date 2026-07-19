@@ -179,7 +179,7 @@ namespace ScaryCastle
                         }
                     }
                 }
-                
+
                 if (furthestNode != null)
                     furthestNode.Category = RoomCategory.Boss;
             }
@@ -478,6 +478,9 @@ namespace ScaryCastle
             StartNode = floorMap[Point.Zero];
             TotalBronzeKeys = floorMap.Values.Sum(node => node.BronzeKeys);
         }
+
+        // Modifiers
+        public RunModifierManager Modifiers { get; } = new();
 
         // Spawns
         public CounterBank Spawns { get; } = new();

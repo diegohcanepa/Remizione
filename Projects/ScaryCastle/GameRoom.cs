@@ -193,7 +193,7 @@ namespace ScaryCastle
 
             Game.GraphicsDevice.SetRenderTarget(renderTarget);
 
-            Game.GraphicsDevice.Clear(HasAmbientLightSources ? LightMapColor : Color.Black);
+            Game.GraphicsDevice.Clear(Darkness ? Color.Black : LightMapColor);
 
             Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
 
@@ -218,7 +218,7 @@ namespace ScaryCastle
 
             if (Session.Player != null)
             {
-                if (!HasAmbientLightSources)
+                if (Darkness)
                 {
                     playerLight.Color = Session.PlayerInventory.AmbientLightColor ?? defaultPlayerLightColor;
                     playerLight.Scale = defaultPlayerLightScale * Session.PlayerStats.AmbientLight.Value;
@@ -409,7 +409,7 @@ namespace ScaryCastle
                 lights[i].Update(gameTime);
             }
 
-            if (HasAmbientLightSources && Session.Player != null)
+            if (!Darkness && Session.Player != null)
                 playerLight.Update(gameTime);
 
             // Dust particles
@@ -494,6 +494,9 @@ namespace ScaryCastle
         // CanUseLightingSystem
         public bool CanUseLightingSystem => Session.LightingSystem && LightingSystem;
 
+        // Darkness
+        public bool Darkness { get; private set; }
+
         // DustParticleKind
         [ScriptProperty]
         public DustParticleKind DustParticleKind { get; set; } = DustParticleKind.Ash;
@@ -501,53 +504,54 @@ namespace ScaryCastle
         // FollowPlayer
         public bool FollowPlayer { get; set; } = true;
 
-        // HasAmbientLightSources
-        public bool HasAmbientLightSources { get; private set; }
-
         // InvalidateAmbientLightSources
         public void InvalidateAmbientLightSources()
         {
-            HasAmbientLightSources = !IsProcedural;
-            if (HasAmbientLightSources)
-                return;
+            var hasAmbientLights = false;
 
-            for (var i = 0; i < Lights.Count; i++)
+            if (IsProcedural)
             {
-                if (Lights[i].Ambient && Lights[i].IsEmitting)
+                for (var i = 0; i < Lights.Count; i++)
                 {
-                    HasAmbientLightSources = true;
-                    break;
+                    if (Lights[i].Ambient && Lights[i].IsEmitting)
+                    {
+                        hasAmbientLights = true;
+                        break;
+                    }
                 }
-            }
 
-            for (var i = 0; i < Children.Count; i++)
-            {
-                if (Children[i] is Prop prop && prop.IsAmbientLight && prop.IsEmittingLight)
+                if (!hasAmbientLights)
                 {
-                    HasAmbientLightSources = true;
-                    break;
+                    for (var i = 0; i < Children.Count; i++)
+                    {
+                        if (Children[i] is Prop prop && prop.IsAmbientLight && prop.IsEmittingLight)
+                        {
+                            hasAmbientLights = true;
+                            break;
+                        }
+                    }
                 }
-            }
 
-            if (HasAmbientLightSources)
-                playerLight.TurnOff();
-            else
-                playerLight.TurnOn();
-        }
+                if (hasAmbientLights)
+                    playerLight.TurnOff();
+                else
+                    playerLight.TurnOn();
 
-        // IsIlluminated
-        public bool IsIlluminated(GameThing target)
-        {
-            if (HasAmbientLightSources)
-                return true;
+                Darkness = !hasAmbientLights;
 
-            if (!target.RuntimeHotspot.IsEmpty)
-            {
-                return playerLight.BoundingBox.Intersects(target.RuntimeHotspot.BoundingRectangleF);
-            }
-            else
-            {
-                return playerLight.BoundingBox.Contains(target.Position);
+                if (Session.CurrentRun?.Modifiers is { } modifiers)
+                {
+                    var hasDarknessModifier = modifiers.Contains(RunModifierKind.Darkness);
+
+                    if (!Darkness && hasDarknessModifier)
+                    {
+                        modifiers.Remove(RunModifierKind.Darkness);
+                    }
+                    else if (Darkness && !hasDarknessModifier)
+                    {
+                        Session.CurrentRun.Modifiers.Add(new RunModifier(RunModifierKind.Darkness, RunModifierScope.Room));
+                    }
+                }
             }
         }
 

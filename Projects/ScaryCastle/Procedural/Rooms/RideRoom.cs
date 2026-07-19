@@ -227,10 +227,13 @@ namespace ScaryCastle
         // PrepareView
         private void PrepareView()
         {
+            if (Atlas == null)
+                return;
+
             var index = 0;
             while (true)
             {
-                if (Atlas?.FindImage($"View{index + 1}") == null)
+                if (Atlas.FindImage($"View{index + 1}") == null)
                     break;
                 else
                     index++;
@@ -241,12 +244,21 @@ namespace ScaryCastle
                 var animation = AddAnimation("View");
                 var viewName = $"View{Random.Shared.Next(1, index + 1)}";
                 animation.AddFrame(viewName, 10000);
-                foreground.Atlas = Atlas;
-                foreground.DefaultImageName = viewName + "Foreground";
-                foreground.ParallaxFactor = new(1.1f, 1);
-                foreground.Position = new(0, 15);
 
-                Children.Add(foreground);
+                var foregroundImageName = viewName + "Foreground";
+                var hasForeground = Atlas.Contains(foregroundImageName);
+                if (!hasForeground)
+                    foregroundImageName = "Foreground";
+                hasForeground = Atlas.Contains(foregroundImageName);
+
+                if (hasForeground)
+                {
+                    foreground.Atlas = Atlas;
+                    foreground.DefaultImageName = foregroundImageName;
+                    foreground.ParallaxFactor = new(1.1f, 1);
+                    //foreground.Position = new(0, 15);
+                    Children.Add(foreground);
+                }
             }
         }
 

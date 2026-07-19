@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using Microsoft.Xna.Framework;
 using ScaryCastle.Scripting;
 
 namespace ScaryCastle

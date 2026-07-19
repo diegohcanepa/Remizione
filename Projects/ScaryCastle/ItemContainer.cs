@@ -199,10 +199,7 @@ namespace ScaryCastle
         // Remove
         public bool Remove(string name)
         {
-            if (Find(name) is Item item)
-                return Remove(item);
-
-            return false;
+            return Find(name) is Item item ? Remove(item) : false;
         }
 
         // Session

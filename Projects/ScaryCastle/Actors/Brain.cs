@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ScaryCastle
+﻿namespace ScaryCastle
 {
     /// <summary>
     /// Brain
@@ -13,19 +11,12 @@ namespace ScaryCastle
         private static CombatDecision GetFallbackMovement(CombatArchetype archetype, GameThing? target)
         {
             // Evaluamos el tipo de movimiento de fallback que dicta el arquetipo
-            switch (archetype.FallbackMovement)
+            return archetype.FallbackMovement switch
             {
-                case FallbackMovementKind.Random:
-                    return new CombatDecision(CombatDecisionType.RandomMove, null, target, PositioningMode.Move);
-
-                case FallbackMovementKind.Lurk:
-                    return new CombatDecision(CombatDecisionType.LurkMove, null, target, PositioningMode.Move);
-
-                case FallbackMovementKind.None:
-                default:
-                    // Si no se mueve o es el fallback del fallback, se queda en el molde
-                    return new CombatDecision(CombatDecisionType.None, null, target, PositioningMode.None);
-            }
+                FallbackMovementKind.Random => new CombatDecision(CombatDecisionType.RandomMove, null, target, PositioningMode.Move),
+                FallbackMovementKind.Lurk => new CombatDecision(CombatDecisionType.LurkMove, null, target, PositioningMode.Move),
+                _ => new CombatDecision(CombatDecisionType.None, null, target, PositioningMode.None),// Si no se mueve o es el fallback del fallback, se queda en el molde
+            };
         }
 
         #endregion

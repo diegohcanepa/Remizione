@@ -29,7 +29,10 @@ namespace Engendro
         #endregion
 
         // Roll
-        public bool Roll() => Roll(Random.Shared);
+        public bool Roll()
+        {
+            return Roll(Random.Shared);
+        }
 
         // Roll
         public bool Roll(Random random)

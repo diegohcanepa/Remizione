@@ -207,7 +207,7 @@ namespace ScaryCastle
         {
             get => image.Opacity;
             set => image.Opacity = value;
-        }   
+        }
 
         // Reset
         public void Reset()

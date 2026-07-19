@@ -140,14 +140,8 @@ namespace ScaryCastle
 
         // CanBeUnlockedWithPocketItem
         [ScriptProperty]
-        public bool CanBeUnlockedWithPocketItem
-        {
-            get
-            {
-                return (LockType == LockType.BronzeKey && Session.BronzeKeys > 0) ||
+        public bool CanBeUnlockedWithPocketItem => (LockType == LockType.BronzeKey && Session.BronzeKeys > 0) ||
                        (LockType == LockType.GoldenKey && Session.GoldenKeys > 0);
-            }
-        }
 
         // Connect
         [ScriptMethod(CodingContext.Execution)]
@@ -173,7 +167,7 @@ namespace ScaryCastle
         public DoorDirection DoorDirection { get; }
 
         // IsEmittingLight
-        public override bool IsEmittingLight => Room?.HasAmbientLightSources == true ? false : base.IsEmittingLight;
+        public override bool IsEmittingLight => Room == null || Room.Darkness ? false : base.IsEmittingLight;
 
         // Prepare
         [ScriptMethod]
@@ -215,7 +209,7 @@ namespace ScaryCastle
                 }
 
                 CloseSound = Sound.Find(SoundNames.DoorGenericClose);
-                OpenSound = Sound.Find(SoundNames.DoorGenericOpen);
+                OpenSound = Sound.Find(SoundNames.PneumaticDoor);
 
                 var prefix = $"RideDoor_{assetPrefix}_{DoorDirection}_";
 

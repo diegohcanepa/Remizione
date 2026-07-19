@@ -105,7 +105,7 @@ namespace ScaryCastle
                     if (fallbackDef.Quality <= 1)
                         table.Add(fallbackDef.Name, fallbackDef.SpawnWeight, 1, fallbackDef);
                 }
-               
+
                 result = table.GetValue(session.Random)?.Context as ItemDefinition;
             }
 

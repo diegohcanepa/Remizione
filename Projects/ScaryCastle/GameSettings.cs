@@ -23,6 +23,9 @@
         // CountdownCritical
         public const int CountdownCritical = 9;
 
+        // DarknessMissChancePenalty
+        public const float DarknessMissChancePenalty = .8f;
+
         // DeathCoooldown
         public const int DeathCoooldown = 15000;
 
