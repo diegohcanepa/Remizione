@@ -197,7 +197,9 @@ namespace ScaryCastle
                         ConditionAmount -= 1;
                         HP -= 1;
                         Sound.Play(SoundNames.StatusEffectDamage);
-                        ShowComicText(ComicTextKind.AghGreen);
+
+                        if (HP > 0)
+                            ShowComicText(ComicTextKind.AghGreen);
 
                         if (ConditionAmount > 0)
                             ConditionTimer = GameSettings.ConditionCooldown;

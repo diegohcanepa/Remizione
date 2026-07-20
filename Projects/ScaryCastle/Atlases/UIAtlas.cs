@@ -40,8 +40,6 @@ namespace ScaryCastle
             MiniMapLoot = this[nameof(MiniMapLoot)];
             PickupShadow = this[nameof(PickupShadow)];
             Pixel = this[nameof(Pixel)];
-            PointingHand = this[nameof(PointingHand)];
-            PoisonMeter = CreateReadOnlyCollection(nameof(PoisonMeter), 0, 9);
             PopupContainer = this[nameof(PopupContainer)];
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
             PurpleHearts = CreateReadOnlyCollection(nameof(PurpleHearts), 1, 4);
@@ -142,12 +140,6 @@ namespace ScaryCastle
 
         // Pixel
         public AtlasImage Pixel { get; }
-
-        // PointingHand
-        public AtlasImage PointingHand { get; }
-
-        // PoisonMeter
-        public ReadOnlyCollection<AtlasImage> PoisonMeter { get; }
 
         // PopupContainer
         public AtlasImage PopupContainer { get; }

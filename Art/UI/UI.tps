@@ -224,16 +224,6 @@
             <key type="filename">MouseCursors-assets/MouseCursorCross.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorMagnifier.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorSkull.png</key>
-            <key type="filename">PoisonMeter-assets/PoisonMeter0.png</key>
-            <key type="filename">PoisonMeter-assets/PoisonMeter1.png</key>
-            <key type="filename">PoisonMeter-assets/PoisonMeter2.png</key>
-            <key type="filename">PoisonMeter-assets/PoisonMeter3.png</key>
-            <key type="filename">PoisonMeter-assets/PoisonMeter4.png</key>
-            <key type="filename">PoisonMeter-assets/PoisonMeter5.png</key>
-            <key type="filename">PoisonMeter-assets/PoisonMeter6.png</key>
-            <key type="filename">PoisonMeter-assets/PoisonMeter7.png</key>
-            <key type="filename">PoisonMeter-assets/PoisonMeter8.png</key>
-            <key type="filename">PoisonMeter-assets/PoisonMeter9.png</key>
             <key type="filename">UIIcons-assets/CorridorDoorIcon.png</key>
             <key type="filename">UIIcons-assets/FaithIcon.png</key>
             <struct type="IndividualSpriteSettings">
@@ -247,6 +237,29 @@
                 <rect>3,3,5,5</rect>
                 <key>scale9Paddings</key>
                 <rect>3,3,5,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">DialogBox-assets/DialogBoxB.png</key>
+            <key type="filename">DialogBox-assets/DialogBoxL.png</key>
+            <key type="filename">DialogBox-assets/DialogBoxLB.png</key>
+            <key type="filename">DialogBox-assets/DialogBoxLT.png</key>
+            <key type="filename">DialogBox-assets/DialogBoxR.png</key>
+            <key type="filename">DialogBox-assets/DialogBoxRB.png</key>
+            <key type="filename">DialogBox-assets/DialogBoxRT.png</key>
+            <key type="filename">DialogBox-assets/DialogBoxT.png</key>
+            <key type="filename">UI-assets/DialogOptionBullet.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,2,2</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,2,2</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -513,8 +526,6 @@
             <key type="filename">UIIcons-assets/GreenHearts2.png</key>
             <key type="filename">UIIcons-assets/GreenHearts3.png</key>
             <key type="filename">UIIcons-assets/GreenHearts4.png</key>
-            <key type="filename">UIIcons-assets/HeartBlackFull.png</key>
-            <key type="filename">UIIcons-assets/HeartBlackHalf.png</key>
             <key type="filename">UIIcons-assets/PurpleHearts1.png</key>
             <key type="filename">UIIcons-assets/PurpleHearts2.png</key>
             <key type="filename">UIIcons-assets/PurpleHearts3.png</key>
@@ -754,21 +765,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UI-assets/DialogOptionBullet.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,1,2,2</rect>
-                <key>scale9Paddings</key>
-                <rect>1,1,2,2</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">UI-assets/Pixel.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -988,7 +984,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UIIcons-assets/GlobalModifierDarknessIcon.png</key>
+            <key type="filename">UIIcons-assets/RunModifierDarknessIcon.png</key>
+            <key type="filename">UIIcons-assets/RunModifierPoisonIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -997,9 +994,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>3,3,6,5</rect>
+                <rect>3,3,7,7</rect>
                 <key>scale9Paddings</key>
-                <rect>3,3,6,5</rect>
+                <rect>3,3,7,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1038,9 +1035,9 @@
                     <filename>ItemInfo-assets</filename>
                     <filename>BossMeter-assets</filename>
                     <filename>MiniMap-assets</filename>
-                    <filename>PoisonMeter-assets</filename>
                     <filename>CurseMeter-assets</filename>
                     <filename>FaithMeter-assets</filename>
+                    <filename>DialogBox-assets</filename>
                 </array>
             </struct>
         </map>

@@ -13,7 +13,6 @@ namespace ScaryCastle
         #region Private fields
 
         private Actor? actor;
-        private readonly UIConditionMeter conditionMeter;
         private readonly Sprite[] icons;
         private readonly Dictionary<ConditionType, IList<AtlasImage>> imageGroups = [];
         private int lastFilledIconIndex = -1;
@@ -31,14 +30,12 @@ namespace ScaryCastle
         public UIHPMeter(GameSession session)
             : base(session)
         {
-            this.conditionMeter = new(session);
-
             imageGroups.Add(ConditionType.None, Atlases.UI.RedHearts);
             imageGroups.Add(ConditionType.Curse, Atlases.UI.PurpleHearts);
             imageGroups.Add(ConditionType.Poison, Atlases.UI.GreenHearts);
 
             this.icons = new Sprite[10];
-            var pos = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, new(15, 3));
+            var pos = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, new(16, 3));
 
             for (var i = 0; i < icons.Length; i++)
             {
@@ -134,9 +131,6 @@ namespace ScaryCastle
             lastKnownMaxValue = maxHp;
             lastKnownConditionAmount = amount;
             lastFilledIconIndex = actor.IsDead ? 0 : ((actor.HP + 1) / 2) - 1;
-
-            if (lastFilledIconIndex >= 0)
-                conditionMeter.Position = icons[0].BoundingBox.GetPoint(RectanglePoint.Bottom);
         }
 
         #endregion
@@ -153,8 +147,6 @@ namespace ScaryCastle
             {
                 icons[i].Draw(gameTime);
             }
-
-            conditionMeter.Draw(gameTime);
         }
 
         // OnUpdate
@@ -184,13 +176,11 @@ namespace ScaryCastle
 
             if (totalIcons > 0)
             {
-                if (actor.HP <= 1 || actor.ConditionAmount > 0)
+                if (actor.ConditionAmount > 0 && actor.ConditionTimer < 5000)
                     icons[lastFilledIconIndex].Scale = scaleTween.CurrentValue;
                 else
                     icons[lastFilledIconIndex].Scale = Vector2.One;
             }
-
-            conditionMeter.Update(gameTime);
         }
 
         #endregion
