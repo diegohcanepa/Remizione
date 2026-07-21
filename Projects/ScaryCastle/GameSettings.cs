@@ -24,7 +24,7 @@
         public const int CountdownCritical = 9;
 
         // DarknessMissChancePenalty
-        public const float DarknessMissChancePenalty = .8f;
+        public const float DarknessMissChancePenalty = .2f;
 
         // DeathCoooldown
         public const int DeathCoooldown = 15000;

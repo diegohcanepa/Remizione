@@ -113,7 +113,7 @@ namespace ScaryCastle
             Validate();
 
             Lights = lights.AsReadOnly();
-            Placeholders = placeholders.AsReadOnly();
+            Placeholders = new(placeholders);
             Walls = walls.AsReadOnly();
 
             Definitions.Add(this);
@@ -199,7 +199,7 @@ namespace ScaryCastle
         public string MusicTag { get; }
 
         // Placeholders
-        public ReadOnlyCollection<Placeholder> Placeholders { get; }
+        public ReadOnlyPlaceholderCollection Placeholders { get; }
 
         // PlayerPosition
         public Vector2 PlayerPosition { get; }

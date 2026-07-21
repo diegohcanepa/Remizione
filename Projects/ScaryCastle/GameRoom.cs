@@ -576,6 +576,9 @@ namespace ScaryCastle
         // MonitorStyle
         public bool MonitorStyle { get; init; }
 
+        // PlayerLightBounds
+        public static RectangleF PlayerLightBounds => playerLight.BoundingBox;
+
         // PreserveBeforeGateway
         [ScriptMethod]
         public void PreserveBeforeGateway()

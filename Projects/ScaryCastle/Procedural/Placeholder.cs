@@ -13,7 +13,7 @@ namespace ScaryCastle
         // Constructor
         public Placeholder(JsonElement element)
         {
-            AllowTags = Tags.FromJson(element, "allowTags");
+            AllowTags = TagReadOnlyCollection.FromJson(element, "allowTags");
             FillChance = element.GetFloat("fillChance", 1);
             FlipImage = element.GetBool("flipImage", false);
 
@@ -27,7 +27,7 @@ namespace ScaryCastle
         }
 
         // AllowTags
-        public Tags AllowTags { get; }
+        public TagReadOnlyCollection AllowTags { get; }
 
         // FillChance
         public Ratio FillChance { get; set; }

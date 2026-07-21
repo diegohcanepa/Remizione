@@ -84,12 +84,12 @@ namespace ScaryCastle
             // GoalText
             goalText = new(Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Terra,
+                Color = ColorPalette.Text.TerraLight,
                 MaximumWidth = 140,
                 Multiline = true,
                 PivotOrigin = RectanglePoint.Top,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.Top),
-                Scale = ScaleInfo.Text.Large
+                Scale = ScaleInfo.Text.VeryLarge
             };
         }
 
@@ -215,8 +215,6 @@ namespace ScaryCastle
             Game.SpriteBatch.Begin(Game.Camera);
 
             Game.Shapes.DrawRectangle(Screen.Area, ColorPalette.SceneShade * .5f);
-
-            Game.Shapes.DrawRectangle(goalRect, Color.Black);
             goalText.Draw(gameTime);
 
             for (var i = 0; i < ItemContainer.Capacity; i++)

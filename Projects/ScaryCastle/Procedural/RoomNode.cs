@@ -8,6 +8,8 @@ namespace ScaryCastle
     /// </summary>
     public sealed class RoomNode
     {
+        private readonly Dictionary<Placeholder, PlaceholderState> placeholderStates = [];
+
         // Constructor
         public RoomNode(int index, Point gridPosition)
         {
@@ -78,6 +80,18 @@ namespace ScaryCastle
             return true;
         }
 
+        // GateLevers
+        public int GateLevers { get; set; }
+
+        // GetPlaceholderState
+        public PlaceholderState GetPlaceholderState(Placeholder placeholder)
+        {
+            if (placeholderStates.TryGetValue(placeholder, out var state))
+                return state;
+
+            return PlaceholderState.Pending;
+        }
+
         // GridPosition
         public Point GridPosition { get; }
 
@@ -98,6 +112,12 @@ namespace ScaryCastle
 
         // Right
         public RoomNode? Right { get; set; }
+
+        // SetPlaceholderState
+        public void SetPlaceholderState(Placeholder placeholder, PlaceholderState state)
+        {
+            placeholderStates[placeholder] = state;
+        }
 
         // TopographicDifficulty
         public Difficulty TopographicDifficulty { get; set; }

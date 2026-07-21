@@ -68,8 +68,12 @@ namespace ScaryCastle
             if (Target != null && CanInflictDamage(Target))
             {
                 var missChance = action.MissChance;
+                
                 if (Owner.Session.CurrentRun?.Modifiers.Contains(RunModifierKind.Darkness) == true)
-                    missChance += GameSettings.DarknessMissChancePenalty;
+                {
+                    if (Owner.PixelsMoved > GameRoom.PlayerLightBounds.Width / 2)
+                        missChance += GameSettings.DarknessMissChancePenalty;
+                }
 
                 if (!missChance.Roll())
                     EffectDescriptor.Apply(action.EffectDescriptors, Owner, Target, EffectContext.Attack);

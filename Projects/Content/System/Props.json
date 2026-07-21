@@ -3,7 +3,7 @@
   "data": [
     {
       "name": "DevilCarvedFace",
-      "tags": "wallDecoration",
+      "tags": "WallDecoration",
       "placements": [
         "WallFrontHang"      
       ]
@@ -17,7 +17,7 @@
       "name": "PotteryA",
       "dropCoinChanceBonus": 0.5,
       "dropMode": "CoinsOnly",
-      "tags": "pottery",
+      "tags": "Pottery",
       "effects": [
         {
           "context": "Contact",
@@ -34,7 +34,7 @@
       "name": "PotteryB",
       "dropCoinChanceBonus": 0.25,
       "dropSackChanceBonus": 0.25,
-      "tags": "pottery",
+      "tags": "Pottery",
       "effects": [
         {
           "context": "Contact",
@@ -64,7 +64,7 @@
     },
     {
       "name": "SpearTrap",
-      "tags": "trap",
+      "tags": "Trap",
       "effects": [
         {
           "context": "Contact",
@@ -77,14 +77,14 @@
     },
     {
       "name": "Torch",
-      "tags": "torch",
+      "tags": "Torch",
       "maxPerRoom": -1,
       "placements": [
         "WallFrontHang"
       ]
     },    {
       "name": "Trunk",
-      "tags": "trunk",
+      "tags": "Trunk",
       "effects": [
         {
           "context": "Contact",
@@ -101,7 +101,7 @@
     },
     {
       "name": "GoldenTrunk",
-      "tags": "trunk",
+      "tags": "Trunk",
       "effects": [
         {
           "context": "Contact",
@@ -118,7 +118,7 @@
     },
     {
       "name": "Vent",
-      "tags": "wallDecoration",
+      "tags": "WallDecoration",
       "placements": [
         "WallFrontHang"      
       ]

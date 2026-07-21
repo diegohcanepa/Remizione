@@ -28,10 +28,10 @@ namespace ScaryCastle
                 QualityBoost = 0;
 
             // Tags
-            Tags = Tags.FromJson(element, "tags");
+            Tags = TagReadOnlyCollection.FromJson(element, "tags");
 
             // Pools
-            Pools = Tags.FromJson(element, "pools");
+            Pools = TagReadOnlyCollection.FromJson(element, "pools");
         }
 
         #endregion
@@ -92,7 +92,7 @@ namespace ScaryCastle
         }
 
         // Pools
-        public Tags Pools { get; }
+        public TagReadOnlyCollection Pools { get; }
 
         // PreferredLootCategory
         public ItemCategory? PreferredLootCategory { get; }
@@ -104,6 +104,6 @@ namespace ScaryCastle
         public int QualityBoost { get; }
 
         // Tags
-        public Tags Tags { get; }
+        public TagReadOnlyCollection Tags { get; }
     }
 }

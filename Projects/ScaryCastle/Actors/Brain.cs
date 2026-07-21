@@ -30,8 +30,13 @@
             if (target != null)
             {
                 // Calculamos la métrica espacial de entrada
+                var darkness = source.Session.CurrentRun?.Modifiers.Contains(RunModifierKind.Darkness) == true;
+                var isVisible = !darkness || source.Hotspot.BoundingRectangleF.Intersects(GameRoom.PlayerLightBounds);
+
                 float distance = source.DistanceToTarget(target);
-                bool isInMeleeRange = archetype.IsInMeleeRange(source, target);
+                bool isInMeleeRange = archetype.IsInMeleeRange(source, target) && isVisible;
+                if (isInMeleeRange && darkness)
+                    isInMeleeRange = source.Hotspot.BoundingRectangleF.Intersects(GameRoom.PlayerLightBounds);
 
                 // 1. Decisión de Huida: Filtro de pánico por poca vida + proximidad del jugador
                 bool isPlayerClose = distance <= archetype.MeleeRange;
@@ -39,7 +44,7 @@
                 if (isPlayerClose && source.HPRatio <= archetype.FleeHPThreshold && archetype.FleeChance.Roll())
                     return new CombatDecision(CombatDecisionType.RandomMove, null, target, PositioningMode.Move);
 
-                var aggressive = archetype.AttackChance.Roll();
+                var aggressive = isVisible && archetype.AttackChance.Roll();
 
                 // 2. Procesamiento de la Intención de Ataque / Persecución
                 // Instinto de supervivencia: Si ya te tiene a tiro de Melee, ataca sí o sí ignorando la chance.

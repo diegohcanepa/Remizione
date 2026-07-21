@@ -9,17 +9,37 @@ namespace ScaryCastle
     /// </summary>
     public class DynamicWindow : GameObject
     {
-        private readonly Sprite[] sprites = new Sprite[9];
-        private bool isInitializing = true;
+        private readonly bool isInitializing = true;
+        private static readonly AtlasImage[] borderPieces = [
+            Atlases.UI.GetImage("DialogBoxBorderLT"),
+            Atlases.UI.GetImage("DialogBoxBorderT"),
+            Atlases.UI.GetImage("DialogBoxBorderRT"),
+            Atlases.UI.GetImage("DialogBoxBorderL"),
+            Atlases.UI.GetImage("DialogBoxBorderR"),
+            Atlases.UI.GetImage("DialogBoxBorderLB"),
+            Atlases.UI.GetImage("DialogBoxBorderB"),
+            Atlases.UI.GetImage("DialogBoxBorderRB")
+        ];
+
+        private static readonly AtlasImage[] fillPieces = [
+            Atlases.UI.GetImage("DialogBoxFillLT"),
+            Atlases.UI.GetImage("DialogBoxFillT"),
+            Atlases.UI.GetImage("DialogBoxFillRT"),
+            Atlases.UI.GetImage("DialogBoxFillL"),
+            Atlases.UI.GetImage("DialogBoxFillR"),
+            Atlases.UI.GetImage("DialogBoxFillLB"),
+            Atlases.UI.GetImage("DialogBoxFillB"),
+            Atlases.UI.GetImage("DialogBoxFillRB")
+        ];
+
+        private readonly Sprite[] borderSprites = new Sprite[9];
+        private readonly Sprite[] fillSprites = new Sprite[9];
 
         #region Constructor
 
         // Constructor
-        public DynamicWindow(Vector2 position, int width, int height, RectanglePoint pivotOrigin, AtlasImage[] windowPieces)
+        public DynamicWindow()
         {
-            if (windowPieces.Length < 8)
-                throw new ArgumentException("The window container requires exactly 8 images.", nameof(windowPieces));
-
             int sourceIndex = 0;
             for (int i = 0; i < 9; i++)
             {
@@ -27,17 +47,23 @@ namespace ScaryCastle
                 if (i == (int)RectanglePoint.Center)
                     continue;
 
-                sprites[i] = new()
+                borderSprites[i] = new()
                 {
-                    RenderImage = windowPieces[sourceIndex++],
+                    RenderImage = borderPieces[sourceIndex],
                     PivotOrigin = RectanglePoint.LeftTop
                 };
+
+                fillSprites[i] = new()
+                {
+                    RenderImage = fillPieces[sourceIndex],
+                    PivotOrigin = RectanglePoint.LeftTop
+                };
+
+                sourceIndex++;
             }
 
-            this.Width = width;
-            this.Height = height;
-            this.PivotOrigin = pivotOrigin;
-            this.Position = position;
+            this.PivotOrigin = RectanglePoint.Center;
+            this.Position = Screen.Center;
 
             isInitializing = false;
             Layout();
@@ -102,36 +128,46 @@ namespace ScaryCastle
             float posY = MathF.Round(renderOrigin.Y);
 
             // 2. Posicionar Esquinas basadas en el origen corregido
-            sprites[(int)RectanglePoint.LeftTop].Position = new Vector2(posX, posY);
-            sprites[(int)RectanglePoint.RightTop].Position = new Vector2(posX + Width - 4, posY);
-            sprites[(int)RectanglePoint.LeftBottom].Position = new Vector2(posX, posY + Height - 4);
-            sprites[(int)RectanglePoint.RightBottom].Position = new Vector2(posX + Width - 4, posY + Height - 4);
+            borderSprites[(int)RectanglePoint.LeftTop].Position = new Vector2(posX, posY);
+            borderSprites[(int)RectanglePoint.RightTop].Position = new Vector2(posX + Width - 4, posY);
+            borderSprites[(int)RectanglePoint.LeftBottom].Position = new Vector2(posX, posY + Height - 4);
+            borderSprites[(int)RectanglePoint.RightBottom].Position = new Vector2(posX + Width - 4, posY + Height - 4);
 
             // 3. Escalar y Posicionar Bordes Horizontales
             float horizontalScale = (Width - 8) / 4f;
 
-            var top = sprites[(int)RectanglePoint.Top];
+            var top = borderSprites[(int)RectanglePoint.Top];
             top.Position = new Vector2(posX + 4, posY);
             top.ScaleX = horizontalScale;
-            top.ScaleY = 1f;
+            top.ScaleY = 1;
 
-            var bottom = sprites[(int)RectanglePoint.Bottom];
+            var bottom = borderSprites[(int)RectanglePoint.Bottom];
             bottom.Position = new Vector2(posX + 4, posY + Height - 4);
             bottom.ScaleX = horizontalScale;
-            bottom.ScaleY = 1f;
+            bottom.ScaleY = 1;
 
             // 4. Escalar y Posicionar Bordes Verticales
             float verticalScale = (Height - 8) / 4f;
 
-            var left = sprites[(int)RectanglePoint.Left];
+            var left = borderSprites[(int)RectanglePoint.Left];
             left.Position = new Vector2(posX, posY + 4);
-            left.ScaleX = 1f;
+            left.ScaleX = 1;
             left.ScaleY = verticalScale;
 
-            var right = sprites[(int)RectanglePoint.Right];
+            var right = borderSprites[(int)RectanglePoint.Right];
             right.Position = new Vector2(posX + Width - 4, posY + 4);
-            right.ScaleX = 1f;
+            right.ScaleX = 1;
             right.ScaleY = verticalScale;
+
+            for (var i = 0; i < borderSprites.Length; i++)
+            {
+                if (borderSprites[i] != null)
+                {
+                    fillSprites[i].Position = borderSprites[i].Position;
+                    fillSprites[i].ScaleX = borderSprites[i].ScaleX;
+                    fillSprites[i].ScaleY = borderSprites[i].ScaleY;
+                }
+            }
 
             // El área interna útil también se desplaza con el pivote de forma automática
             InnerBounds = new(posX + 4, posY + 4, Width - 8, Height - 8);
@@ -146,14 +182,16 @@ namespace ScaryCastle
         {
             for (int i = 0; i < 9; i++)
             {
-                sprites[i]?.Draw(gameTime);
+                fillSprites[i]?.Draw(gameTime);
+                borderSprites[i]?.Draw(gameTime);
+                Game.Shapes.DrawRectangle(InnerBounds, FillColor);
             }
         }
 
         #endregion
 
-        // Height
-        public int Height
+        // BorderColor
+        public Color BorderColor
         {
             get;
             set
@@ -161,6 +199,42 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = value;
+                    for (int i = 0; i < 9; i++)
+                    {
+                        borderSprites[i]?.Color = field;
+                    }
+                }
+            }
+        }
+
+        // FillColor
+        public Color FillColor
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    for (int i = 0; i < 9; i++)
+                    {
+                        fillSprites[i]?.Color = field;
+                    }
+                }
+            }
+        }
+
+        // Height
+        public int Height
+        {
+            get;
+            set
+            {
+                int validatedValue = value < 8 ? 8 : 8 + (value - 8 + 3) / 4 * 4;
+
+                if (validatedValue != field)
+                {
+                    field = validatedValue;
                     Layout();
                 }
             }
@@ -208,9 +282,11 @@ namespace ScaryCastle
             get;
             set
             {
-                if (value != field)
+                int validatedValue = value < 8 ? 8 : 8 + (value - 8 + 3) / 4 * 4;
+
+                if (validatedValue != field)
                 {
-                    field = value;
+                    field = validatedValue;
                     Layout();
                 }
             }

@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace ScaryCastle
 {
@@ -263,82 +262,8 @@ namespace ScaryCastle
         {
         }
 
-        // ExecutePhase4_TopologyAndLocks
-        private void ExecutePhase4_TopologyAndLocks(Random rng)
-        {
-            int maxDistance = GetMaxFloorDistance();
-
-            var visited = new HashSet<RoomNode>();
-            var queue = new Queue<RoomNode>();
-            var accessibleRooms = new List<RoomNode>();
-
-            var startNode = floorMap[Point.Zero];
-            queue.Enqueue(startNode);
-            visited.Add(startNode);
-
-            Point[] directions = [new(0, -1), new(0, 1), new(-1, 0), new(1, 0)];
-
-            while (queue.Count > 0)
-            {
-                var currentNode = queue.Dequeue();
-                accessibleRooms.Add(currentNode);
-
-                foreach (var dir in directions)
-                {
-                    Point neighborPos = currentNode.GridPosition + dir;
-
-                    if (floorMap.TryGetValue(neighborPos, out RoomNode? targetNode) && !visited.Contains(targetNode))
-                    {
-                        Difficulty targetDiff = GetProgressiveDifficulty(targetNode.GridPosition, maxDistance);
-
-                        if (targetNode.Category == RoomCategory.Standard)
-                        {
-                            // Traducimos las direcciones antes de tirar los dados
-                            DoorDirection currentToTarget = GetDoorDirectionFromPoint(dir);
-                            DoorDirection targetToCurrent = GetDoorDirectionFromPoint(new Point(-dir.X, -dir.Y));
-
-                            // REGLA VISUAL: Si la puerta sale hacia ABAJO desde el nodo actual,
-                            // o si la puerta de regreso del hijo da hacia ABAJO, salteamos el bloqueo.
-                            if (currentToTarget == DoorDirection.Down ||
-                                targetToCurrent == DoorDirection.Down ||
-                                currentNode.Category == RoomCategory.Start)
-                            {
-                                // Continuamos explorando el árbol, pero dejamos la conexión abierta (sin candado)
-                                visited.Add(targetNode);
-                                queue.Enqueue(targetNode);
-                                continue;
-                            }
-
-                            var lockChance = targetDiff switch
-                            {
-                                Difficulty.Easy => 0.3f,
-                                Difficulty.Normal => 0.5f,
-                                Difficulty.Hard => 0.7f,
-                                _ => 0.4f
-                            };
-
-                            if (rng.NextDouble() <= lockChance)
-                            {
-                                // 1. Bloqueamos la conexión lógica usando el Enum
-                                currentNode.LockedDoors[currentToTarget] = LockType.BronzeKey;
-                                targetNode.LockedDoors[targetToCurrent] = LockType.BronzeKey;
-
-                                // 2. Inyectamos la llave en el pool seguro
-                                var safeRoom = accessibleRooms[rng.Next(accessibleRooms.Count)];
-                                safeRoom.BronzeKeys++;
-                            }
-                        }
-
-                        // Avanzamos el BFS de forma segura
-                        visited.Add(targetNode);
-                        queue.Enqueue(targetNode);
-                    }
-                }
-            }
-        }
-
-        // ExecutePhase5_AssignDefinitions
-        private void ExecutePhase5_AssignDefinitions(Random rng)
+        // ExecutePhase4_AssignDefinitions
+        private void ExecutePhase4_AssignDefinitions(Random rng)
         {
             int maxDistance = GetMaxFloorDistance();
 
@@ -392,6 +317,110 @@ namespace ScaryCastle
                 // Consolidamos el asset y sumamos al banco de spawns
                 node.Definition = def;
                 Spawns.Increment(def.Name);
+            }
+        }
+
+        // ExecutePhase5_TopologyAndLocks
+        private void ExecutePhase5_TopologyAndLocks(Random rng)
+        {
+            int maxDistance = GetMaxFloorDistance();
+
+            var visited = new HashSet<RoomNode>();
+            var queue = new Queue<RoomNode>();
+            var accessibleRooms = new List<RoomNode>();
+
+            var startNode = floorMap[Point.Zero];
+            queue.Enqueue(startNode);
+            visited.Add(startNode);
+
+            Point[] directions = [new(0, -1), new(0, 1), new(-1, 0), new(1, 0)];
+
+            while (queue.Count > 0)
+            {
+                var currentNode = queue.Dequeue();
+                accessibleRooms.Add(currentNode);
+
+                // Control local: máximo 1 reja/palanca iniciada desde este nodo
+                bool hasGateInCurrentNode = false;
+
+                foreach (var dir in directions)
+                {
+                    Point neighborPos = currentNode.GridPosition + dir;
+
+                    if (floorMap.TryGetValue(neighborPos, out RoomNode? targetNode) && !visited.Contains(targetNode))
+                    {
+                        Difficulty targetDiff = GetProgressiveDifficulty(targetNode.GridPosition, maxDistance);
+
+                        if (targetNode.Category == RoomCategory.Standard)
+                        {
+                            DoorDirection currentToTarget = GetDoorDirectionFromPoint(dir);
+                            DoorDirection targetToCurrent = GetDoorDirectionFromPoint(new Point(-dir.X, -dir.Y));
+
+                            // REGLA VISUAL: Sin candados hacia abajo ni en el Start
+                            if (currentToTarget == DoorDirection.Down ||
+                                targetToCurrent == DoorDirection.Down ||
+                                currentNode.Category == RoomCategory.Start)
+                            {
+                                visited.Add(targetNode);
+                                queue.Enqueue(targetNode);
+                                continue;
+                            }
+
+                            var bronzeKeyChance = targetDiff switch
+                            {
+                                Difficulty.Easy => 0.3f,
+                                Difficulty.Normal => 0.5f,
+                                Difficulty.Hard => 0.7f,
+                                _ => 0.4f
+                            };
+
+                            // 1. Candado de Bronce
+                            if (rng.NextDouble() <= bronzeKeyChance)
+                            {
+                                currentNode.LockedDoors[currentToTarget] = LockType.BronzeKey;
+                                targetNode.LockedDoors[targetToCurrent] = LockType.BronzeKey;
+                                var safeRoom = accessibleRooms[rng.Next(accessibleRooms.Count)];
+                                safeRoom.BronzeKeys++;
+                            }
+
+                            // 2. Reja con Palanca (solo si el asset asignado en Fase 4 tiene placeholder y no pusimos reja aún)
+                            else if (!hasGateInCurrentNode &&
+                                     currentNode.Definition.Placeholders.GetPlaceholdersByTag(Tag.GateLever) is { } phList &&
+                                     phList.Count > 0)
+                            {
+                                phList.Shuffle();
+
+                                for (var i = 0; i < phList.Count; i++)
+                                {
+                                    if (currentNode.GetPlaceholderState(phList[i]) != PlaceholderState.Pending)
+                                        continue;
+
+                                    if (phList[i].FillChance.Roll(rng))
+                                    {
+                                        currentNode.LockedDoors[currentToTarget] = LockType.GateLever;
+                                        targetNode.LockedDoors[targetToCurrent] = LockType.GateLever;
+                                        hasGateInCurrentNode = true;
+
+                                        // Asignamos la palanca al slot ganador
+                                        currentNode.SetPlaceholderState(phList[i], PlaceholderState.GateLever);
+
+                                        // Quemamos el resto de las alternativas de la sala
+                                        for (var j = 0; j < phList.Count; j++)
+                                        {
+                                            if (j != i)
+                                                currentNode.SetPlaceholderState(phList[j], PlaceholderState.Used);
+                                        }
+
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                        visited.Add(targetNode);
+                        queue.Enqueue(targetNode);
+                    }
+                }
             }
         }
 
@@ -471,12 +500,18 @@ namespace ScaryCastle
             ExecutePhase1_Layout(rng);
             ExecutePhase2_Labeling(rng);
             ExecutePhase3_InjectSecrets(rng);
-            ExecutePhase4_TopologyAndLocks(rng);
-            ExecutePhase5_AssignDefinitions(rng);
+            ExecutePhase4_AssignDefinitions(rng);
+            ExecutePhase5_TopologyAndLocks(rng);
             ExecutePhase6_PrepareRooms();
 
             StartNode = floorMap[Point.Zero];
-            TotalBronzeKeys = floorMap.Values.Sum(node => node.BronzeKeys);
+
+            int totalKeys = 0;
+            foreach (var node in floorMap.Values)
+            {
+                totalKeys += node.BronzeKeys;
+            }
+            TotalBronzeKeys = totalKeys;
         }
 
         // Modifiers

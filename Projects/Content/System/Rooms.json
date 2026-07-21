@@ -14,12 +14,12 @@
         {
           "position": "69,18",
           "placement": "WallFrontHang",
-          "allowTags": "torch"
+          "allowTags": "Torch"
         },
         {
           "position": "170,18",
           "placement": "WallFrontHang",
-          "allowTags": "torch"
+          "allowTags": "Torch"
         }
       ],
       "walkArea": "202,47;233,109;8,109;38,47"
@@ -33,40 +33,56 @@
       "doorDown": "152,145",
       "placeholders": [
         {
+          "position": "69,18",
+          "placement": "WallFrontHang",
+          "allowTags": "Torch"
+        },
+        {
+          "position": "170,18",
+          "placement": "WallFrontHang",
+          "allowTags": "Torch"
+        },        
+        {
           "position": "46,44",
           "placement": "Floor",
           "fillChance": 0.5,
-          "allowTags": "pottery,trunk"
+          "allowTags": "Pottery,Trunk"
         },
         {
           "position": "193,44",
           "placement": "Floor",
           "fillChance": 0.5,
-          "allowTags": "pottery,trunk"
+          "allowTags": "Pottery,Trunk"
         },
         {
           "position": "68,46",
           "placement": "WallFrontBase",
           "fillChance": 0.5,
-          "allowTags": "pottery,trunk"
+          "allowTags": "Pottery,Trunk,GateLever"
         },
         {
           "position": "170,46",
           "placement": "WallFrontBase",
           "fillChance": 0.5,
-          "allowTags": "pottery,trunk"
+          "allowTags": "Pottery,Trunk,GateLever"
         },
         {
           "position": "54,85",
           "placement": "Floor",
           "fillChance": 0.2,
-          "allowTags": "trap"
+          "allowTags": "Trap"
         },
         {
           "position": "135,61",
           "placement": "Floor",
           "fillChance": 0.2,
-          "allowTags": "trap"
+          "allowTags": "Trap"
+        },
+        {
+          "position": "210,100",
+          "placement": "Floor",
+          "fillChance": 1,
+          "allowTags": "GateLever"
         }
       ],
       "walkArea": "199,43;232,109;10,109;42,44;54,44;59,47;78,47;84,44;156,44;162,47;179,47;184,43",
@@ -80,19 +96,19 @@
       "roomCategory": "Standard",
       "doorLeft": "21,80",
       "doorRight": "220,80",
-      "allowTags": "poison",
+      "allowTags": "Poison",
       "placeholders": [
         {
           "position": "74,72",
           "placement": "Floor",
           "fillChance": 0.5,
-          "allowTags": "trap"
+          "allowTags": "Trap"
         },
         {
           "position": "172,72",
           "placement": "Floor",
           "fillChance": 0.5,
-          "allowTags": "trap"
+          "allowTags": "Trap"
         }
       ],
       "walkArea": "210,62;224,91;178,91;171,93;144,93;132,89;103,94;62,93;19,91;34,62;95,60",

@@ -240,14 +240,22 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">DialogBox-assets/DialogBoxB.png</key>
-            <key type="filename">DialogBox-assets/DialogBoxL.png</key>
-            <key type="filename">DialogBox-assets/DialogBoxLB.png</key>
-            <key type="filename">DialogBox-assets/DialogBoxLT.png</key>
-            <key type="filename">DialogBox-assets/DialogBoxR.png</key>
-            <key type="filename">DialogBox-assets/DialogBoxRB.png</key>
-            <key type="filename">DialogBox-assets/DialogBoxRT.png</key>
-            <key type="filename">DialogBox-assets/DialogBoxT.png</key>
+            <key type="filename">DialogBox-assets/DialogBoxBorderB.png</key>
+            <key type="filename">DialogBox-assets/DialogBoxBorderL.png</key>
+            <key type="filename">DialogBox-assets/DialogBoxBorderLB.png</key>
+            <key type="filename">DialogBox-assets/DialogBoxBorderLT.png</key>
+            <key type="filename">DialogBox-assets/DialogBoxBorderR.png</key>
+            <key type="filename">DialogBox-assets/DialogBoxBorderRB.png</key>
+            <key type="filename">DialogBox-assets/DialogBoxBorderRT.png</key>
+            <key type="filename">DialogBox-assets/DialogBoxBorderT.png</key>
+            <key type="filename">DialogBox-assets/DialogBoxFillB.png</key>
+            <key type="filename">DialogBox-assets/DialogBoxFillL.png</key>
+            <key type="filename">DialogBox-assets/DialogBoxFillLB.png</key>
+            <key type="filename">DialogBox-assets/DialogBoxFillLT.png</key>
+            <key type="filename">DialogBox-assets/DialogBoxFillR.png</key>
+            <key type="filename">DialogBox-assets/DialogBoxFillRB.png</key>
+            <key type="filename">DialogBox-assets/DialogBoxFillRT.png</key>
+            <key type="filename">DialogBox-assets/DialogBoxFillT.png</key>
             <key type="filename">UI-assets/DialogOptionBullet.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>

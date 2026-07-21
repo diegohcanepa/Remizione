@@ -66,11 +66,15 @@ namespace ScaryCastle
         }
 
         // GetVisualAssetName
-        private static string GetVisualAssetName(RoomNode current, RoomNode neighbor)
+        private static string GetVisualAssetName(RoomNode current, RoomNode neighbor, DoorDirection doorDirection)
         {
             var category = neighbor.Category == RoomCategory.Start ? RoomCategory.Standard : neighbor.Category;
 
-            return $"{current.Definition.Theme}_{category}";
+            if (current.LockedDoors.TryGetValue(doorDirection, out LockType lockType) &&
+                lockType == LockType.GateLever)
+                return $"{current.Definition.Theme}_Gate";
+            else
+                return $"{current.Definition.Theme}_{category}";
         }
 
         #endregion
@@ -127,6 +131,17 @@ namespace ScaryCastle
         {
             base.OnLockTypeChanged();
             this.lockImage.RenderImage = Atlas?.FindImage($"{DeclaredName}_{LockType}");
+
+            if (LockType == LockType.GateLever)
+            {
+                Verb = Verb.Examine;
+                CloseSound = Sound.Find(SoundNames.DoorGateClose);
+                OpenSound = Sound.Find(SoundNames.DoorGateOpen);
+            }
+            else
+            {
+                this.Verb = Verb.Use;
+            }
         }
 
         // OnTransform
@@ -178,17 +193,18 @@ namespace ScaryCastle
                 Sprite.ClearAnimations();
 
                 var assetPrefix = string.Empty;
+                
                 if (DoorDirection == DoorDirection.Up && rideRoom.RoomNode.Up != null)
                 {
-                    assetPrefix = GetVisualAssetName(rideRoom.RoomNode, rideRoom.RoomNode.Up);
+                    assetPrefix = GetVisualAssetName(rideRoom.RoomNode, rideRoom.RoomNode.Up, DoorDirection);
                 }
                 else if (DoorDirection == DoorDirection.Right && rideRoom.RoomNode.Right != null)
                 {
-                    assetPrefix = GetVisualAssetName(rideRoom.RoomNode, rideRoom.RoomNode.Right);
+                    assetPrefix = GetVisualAssetName(rideRoom.RoomNode, rideRoom.RoomNode.Right, DoorDirection);
                 }
                 else if (DoorDirection == DoorDirection.Down && rideRoom.RoomNode.Down != null)
                 {
-                    assetPrefix = GetVisualAssetName(rideRoom.RoomNode, rideRoom.RoomNode.Down);
+                    assetPrefix = GetVisualAssetName(rideRoom.RoomNode, rideRoom.RoomNode.Down, DoorDirection);
 
                     //if (!rideRoom.HasAmbientLightSources)
                     {
@@ -205,11 +221,11 @@ namespace ScaryCastle
                 }
                 else if (DoorDirection == DoorDirection.Left && rideRoom.RoomNode.Left != null)
                 {
-                    assetPrefix = GetVisualAssetName(rideRoom.RoomNode, rideRoom.RoomNode.Left);
+                    assetPrefix = GetVisualAssetName(rideRoom.RoomNode, rideRoom.RoomNode.Left, DoorDirection);
                 }
 
                 CloseSound = Sound.Find(SoundNames.DoorGenericClose);
-                OpenSound = Sound.Find(SoundNames.PneumaticDoor);
+                OpenSound = Sound.Find(SoundNames.DoorGenericOpen);
 
                 var prefix = $"RideDoor_{assetPrefix}_{DoorDirection}_";
 

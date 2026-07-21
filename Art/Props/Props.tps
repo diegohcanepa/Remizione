@@ -224,6 +224,22 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">GateLever-assets/GateLever01.png</key>
+            <key type="filename">GateLever-assets/GateLever02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,4,7,7</rect>
+                <key>scale9Paddings</key>
+                <rect>3,4,7,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">GoldenTrunk-assets/GoldenTrunk01.png</key>
             <key type="filename">GoldenTrunk-assets/GoldenTrunk02.png</key>
             <key type="filename">GoldenTrunk-assets/GoldenTrunkLootBag.png</key>
@@ -329,22 +345,6 @@
                 <rect>4,2,7,3</rect>
                 <key>scale9Paddings</key>
                 <rect>4,2,7,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Lever-assets/Lever01.png</key>
-            <key type="filename">Lever-assets/Lever02.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,4,7,7</rect>
-                <key>scale9Paddings</key>
-                <rect>3,4,7,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -658,10 +658,14 @@
             </struct>
             <key type="filename">RideDoorLeft-assets/RideDoorLeft_BronzeKey.png</key>
             <key type="filename">RideDoorLeft-assets/RideDoorLeft_GoldenKey.png</key>
+            <key type="filename">RideDoorLeft-assets/RideDoor_Castle_Gate_Left_Closed.png</key>
+            <key type="filename">RideDoorLeft-assets/RideDoor_Castle_Gate_Left_Open.png</key>
             <key type="filename">RideDoorLeft-assets/RideDoor_Castle_Standard_Left_Closed.png</key>
             <key type="filename">RideDoorLeft-assets/RideDoor_Castle_Standard_Left_Open.png</key>
             <key type="filename">RideDoorRight-assets/RideDoorRight_BronzeKey.png</key>
             <key type="filename">RideDoorRight-assets/RideDoorRight_GoldenKey.png</key>
+            <key type="filename">RideDoorRight-assets/RideDoor_Castle_Gate_Right_Closed.png</key>
+            <key type="filename">RideDoorRight-assets/RideDoor_Castle_Gate_Right_Open.png</key>
             <key type="filename">RideDoorRight-assets/RideDoor_Castle_Right_Closed.png</key>
             <key type="filename">RideDoorRight-assets/RideDoor_Castle_Right_Open.png</key>
             <key type="filename">RideDoorRight-assets/RideDoor_Castle_Standard_Right_Closed.png</key>
@@ -682,6 +686,8 @@
             </struct>
             <key type="filename">RideDoorUp-assets/RideDoorUp_BronzeKey.png</key>
             <key type="filename">RideDoorUp-assets/RideDoorUp_GoldenKey.png</key>
+            <key type="filename">RideDoorUp-assets/RideDoor_Castle_Gate_Up_Closed.png</key>
+            <key type="filename">RideDoorUp-assets/RideDoor_Castle_Gate_Up_Open.png</key>
             <key type="filename">RideDoorUp-assets/RideDoor_Castle_Standard_Up_Closed.png</key>
             <key type="filename">RideDoorUp-assets/RideDoor_Castle_Standard_Up_Open.png</key>
             <struct type="IndividualSpriteSettings">
@@ -882,7 +888,6 @@
                     <filename>WaterPuddleA-assets</filename>
                     <filename>WaterPuddleB-assets</filename>
                     <filename>WaterPuddleC-assets</filename>
-                    <filename>Lever-assets</filename>
                     <filename>Trunk-assets</filename>
                     <filename>VendingMachine-assets</filename>
                     <filename>GoldenTrunk-assets</filename>
@@ -893,6 +898,7 @@
                     <filename>Goo-assets</filename>
                     <filename>DevilCarvedFace-assets</filename>
                     <filename>Vent-assets</filename>
+                    <filename>GateLever-assets</filename>
                 </array>
             </struct>
         </map>

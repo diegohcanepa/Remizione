@@ -1075,13 +1075,6 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/LootSack.wav;Audio/FX/LootSack
 
-#begin Audio/FX/MetalPropBreak.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/FX/MetalPropBreak.wav;Audio/FX/MetalPropBreak
-
 #begin Audio/FX/Modem.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

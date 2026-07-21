@@ -52,7 +52,7 @@ namespace Engendro
     public enum PolygonOrientation { Clockwise, CounterClockwise }
 
     // RectanglePoint
->    public enum RectanglePoint { LeftTop, Top, RightTop, Left, Center, Right, LeftBottom, Bottom, RightBottom }
+    public enum RectanglePoint { LeftTop, Top, RightTop, Left, Center, Right, LeftBottom, Bottom, RightBottom }
 
     // RunningPlatform
     public enum RunningPlatform { Unknown, NintendoSwitch, PlayStation4, PlayStation5, XboxOne, XboxSeries, Windows }

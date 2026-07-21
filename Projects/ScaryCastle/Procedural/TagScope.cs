@@ -9,7 +9,7 @@ namespace ScaryCastle
     public sealed class TagScope
     {
         // Constructor
-        public TagScope(IList<string> allowPools, IList<string> denyPools, IList<string> allowTags, IList<string> denyTags)
+        public TagScope(IList<Tag> allowPools, IList<Tag> denyPools, IList<Tag> allowTags, IList<Tag> denyTags)
         {
             this.AllowPools = new(allowPools);
             this.DenyPools = new(denyPools);
@@ -18,30 +18,30 @@ namespace ScaryCastle
         }
 
         // AllowPools
-        public Tags AllowPools { get; }
+        public TagReadOnlyCollection AllowPools { get; }
 
         // AllowTags
-        public Tags AllowTags { get; }
+        public TagReadOnlyCollection AllowTags { get; }
 
         // DenyPools
-        public Tags DenyPools { get; }
+        public TagReadOnlyCollection DenyPools { get; }
 
         // DenyTags
-        public Tags DenyTags { get; }
+        public TagReadOnlyCollection DenyTags { get; }
 
         // FromJson
         public static TagScope FromJson(JsonElement element)
         {
-            var allowPools = Tags.FromJson(element, "allowPools");
-            var denyPools = Tags.FromJson(element, "denyPools");
-            var allowTags = Tags.FromJson(element, "allowTags");
-            var denyTags = Tags.FromJson(element, "denyTags");
+            var allowPools = TagReadOnlyCollection.FromJson(element, "allowPools");
+            var denyPools = TagReadOnlyCollection.FromJson(element, "denyPools");
+            var allowTags = TagReadOnlyCollection.FromJson(element, "allowTags");
+            var denyTags = TagReadOnlyCollection.FromJson(element, "denyTags");
 
             return new TagScope(allowPools, denyPools, allowTags, denyTags);
         }
 
         // Test
-        public static bool Test(TagScope scope, Tags pools, Tags tags)
+        public static bool Test(TagScope scope, TagReadOnlyCollection pools, TagReadOnlyCollection tags)
         {
             // DenyPools
             if (scope.DenyPools.Count > 0)

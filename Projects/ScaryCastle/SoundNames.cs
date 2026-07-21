@@ -9,6 +9,8 @@
         internal const string Break = nameof(Break);
         internal const string CoinLoss = nameof(CoinLoss);
         internal const string CollectCoin = nameof(CollectCoin);
+        internal const string DoorGateClose = nameof(DoorGateClose);
+        internal const string DoorGateOpen = nameof(DoorGateOpen);
         internal const string DoorGenericClose = nameof(DoorGenericClose);
         internal const string DoorGenericOpen = nameof(DoorGenericOpen);
         internal const string StatusEffectDamage = nameof(StatusEffectDamage);
