@@ -49,7 +49,7 @@ namespace ScaryCastle
                 icons[i] = new()
                 {
                     PivotOrigin = RectanglePoint.Center,
-                    Y = slots[i].BoundingBox.Center.Y
+                    Y = slots[i].BoundingBox.Center.Y - .5f
                 };
 
                 shadows[i] = new()

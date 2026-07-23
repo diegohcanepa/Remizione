@@ -13,13 +13,13 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public DialogOption(DialogBlock dialog, int id, string text, FlagCondition? condition, int[] requiredOptions)
+        public DialogOption(DialogBlock dialog, int id, string text, FlagCondition? condition, int[] requiresRead)
         {
             this.Dialog = dialog;
             this.Id = id;
             this.Text = text;
-            this.RequiredOptions = new ReadOnlyCollection<int>(requiredOptions ?? []);
             this.condition = condition;
+            this.RequiresRead = new ReadOnlyCollection<int>(requiresRead ?? []);
         }
 
         #endregion
@@ -38,11 +38,12 @@ namespace ScaryCastle
                 if (condition != null && !condition.Evaluate())
                     return false;
 
-                if (RequiredOptions.Count > 0)
+                if (RequiresRead.Count > 0)
                 {
-                    for (int i = 0; i < RequiredOptions.Count; i++)
+                    for (int i = 0; i < RequiresRead.Count; i++)
                     {
-                        if (Dialog.FindOption(RequiredOptions[i]) != null)
+                        var requiredOption = Dialog.FindOption(RequiresRead[i]);
+                        if (requiredOption == null || !requiredOption.IsRead)
                             return false;
                     }
                 }
@@ -51,8 +52,11 @@ namespace ScaryCastle
             }
         }
 
-        // RequiredOptions
-        public ReadOnlyCollection<int> RequiredOptions { get; }
+        // IsRead
+        public bool IsRead { get; set; }
+
+        // RequiresRead
+        public ReadOnlyCollection<int> RequiresRead { get; }
 
         // Text
         public string Text { get; }

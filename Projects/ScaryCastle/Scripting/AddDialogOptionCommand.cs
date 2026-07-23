@@ -3,18 +3,18 @@
 namespace ScaryCastle.Scripting
 {
     // AddDialogOptionCommand
-    // Syntax: {Id:Integer} {"Text"} [#condition:FlagCondition] [#lid:Integer] [#required-options:Id[,Id...]
+    // Syntax: {Id:Integer} {"Text"} [#condition:FlagCondition] [#lid:Integer] [#requires:Id[,Id...]] [#requires-read:Id[,Id...]]
     internal sealed class AddDialogOptionCommand : LocalizableCommand
     {
-        private const string RequiredOptionsArg = "#required-options";
+        private const string RequiresReadArg = "#requires-read";
 
         // Constructor
         internal AddDialogOptionCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 2, ConditionArg, LocalizationIdArg, RequiredOptionsArg)
+            : base(script, source, body, 2, ConditionArg, LocalizationIdArg, RequiresReadArg)
         {
             Parser.ParseInt32(this, 0);
             Parser.ParseQuotedString(this, 1);
-            Parser.ParseInt32ArrayArgument(this, RequiredOptionsArg);
+            Parser.ParseInt32ArrayArgument(this, RequiresReadArg);
             Parser.ParseFlagConditionArgument(this, ConditionArg);
         }
 
@@ -31,9 +31,9 @@ namespace ScaryCastle.Scripting
             var id = Parser.ParseInt32(this, 0);
             var text = GetDisplayText();
             var condition = Parser.ParseFlagConditionArgument(this, ConditionArg);
-            int[] requiredOptions = Parser.ParseInt32ArrayArgument(this, RequiredOptionsArg);
+            int[] requiredReadOptions = Parser.ParseInt32ArrayArgument(this, RequiresReadArg);
 
-            block.Insert(block.Count, id, text, condition, requiredOptions);
+            block.Insert(block.Count, id, text, condition, requiredReadOptions);
         }
 
         // TextClauseIndex

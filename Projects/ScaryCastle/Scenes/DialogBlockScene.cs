@@ -15,7 +15,6 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly Sprite bottomGradient;
         private bool completed;
         private readonly DialogBlock dialogBlock;
         private readonly UIContextMenu<string> menu;
@@ -33,19 +32,11 @@ namespace ScaryCastle
             this.session = session;
             this.dialogBlock = dialogBlock;
 
-            // Bottom gradient
-            this.bottomGradient = new(Atlases.UI.GetImage("DialogBlockContainer"))
-            {
-                Opacity = .8f,
-                PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.Area.GetPoint(RectanglePoint.Bottom),
-            };
-
             this.menu = new UIContextMenu<string>(Fonts.CommonOutline)
             {
                 OptionColor = ColorPalette.Text.Highlight,
                 OptionSelectedColor = ColorPalette.Text.Yellow,
-                OptionTextScale = ScaleInfo.Text.Large,
+                OptionTextScale = ScaleInfo.Text.ExtraLarge,
                 SelectInputBinding = InputBindings.SelectDialogOption
             };
         }
@@ -61,6 +52,8 @@ namespace ScaryCastle
 
             if (RunningOption != null)
             {
+                RunningOption.IsRead = true;
+
                 InvalidateOptions();
                 if (dialogBlock.AvailableOptions.Count == 0)
                     completed = true;
@@ -101,9 +94,9 @@ namespace ScaryCastle
 
             dialogBlock.Invalidate();
 
-            var image = Atlases.UI.FindImage("DialogOptionBullet");
             foreach (var option in dialogBlock.AvailableOptions)
             {
+                var image = option.IsRead ? Atlases.UI.CheckMark : Atlases.UI.FindImage("DialogOptionBullet");
                 var optionText = option.Text;
                 var menuOption = menu.AddOption(option.Id.ToString(CultureInfo.InvariantCulture), optionText, image);
                 menuOption.IconOffset = new(0, -1);
@@ -116,7 +109,7 @@ namespace ScaryCastle
         private void Layout()
         {
             menu.X = 8;
-            menu.Y = Screen.HUDArea.Bottom - menu.BoundingBox.Height - 5;
+            menu.Y = Screen.HUDArea.Bottom - menu.BoundingBox.Height - 10;
 
             if (dialogBlock.AllowQuit)
             {

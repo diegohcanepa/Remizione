@@ -53,7 +53,7 @@ namespace ScaryCastle
             {
                 PivotOrigin = RectanglePoint.LeftTop,
                 Multiline = true,
-                Scale = ScaleInfo.Text.Large
+                Scale = ScaleInfo.Text.VeryLarge
             };
 
 

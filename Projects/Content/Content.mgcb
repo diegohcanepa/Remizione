@@ -1453,19 +1453,26 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/TrunkOpen.wav;Audio/FX/TrunkOpen
 
-#begin Audio/FX/UIHover.wav
+#begin Audio/FX/UIHover1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
-/build:Audio/FX/UIHover.wav;Audio/FX/UIHover
+/build:Audio/FX/UIHover1.wav;Audio/FX/UIHover1
 
-#begin Audio/FX/UIPrompt.wav
+#begin Audio/FX/UIHover2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
-/build:Audio/FX/UIPrompt.wav;Audio/FX/UIPrompt
+/build:Audio/FX/UIHover2.wav;Audio/FX/UIHover2
+
+#begin Audio/FX/UIHover3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/UIHover3.wav;Audio/FX/UIHover3
 
 #begin Audio/FX/UISelectA.wav
 /importer:WavImporter
@@ -1494,13 +1501,6 @@
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/UISelectD.wav;Audio/FX/UISelectD
-
-#begin Audio/FX/UISelectPlayer.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/FX/UISelectPlayer.wav;Audio/FX/UISelectPlayer
 
 #begin Audio/FX/Vanish.wav
 /importer:WavImporter

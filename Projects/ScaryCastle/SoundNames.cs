@@ -42,12 +42,10 @@
         internal const string TrunkLocked = nameof(TrunkLocked);
         internal const string TrunkOpen = nameof(TrunkOpen);
         internal const string UIHover = nameof(UIHover);
-        internal const string UIPrompt = nameof(UIPrompt);
         internal const string UISelectA = nameof(UISelectA);
         internal const string UISelectB = nameof(UISelectB);
         internal const string UISelectC = nameof(UISelectC);
         internal const string UISelectD = nameof(UISelectD);
-        internal const string UISelectPlayer = nameof(UISelectPlayer);
         internal const string VendingMachine = nameof(VendingMachine);
         internal const string WhooshA = nameof(WhooshA);
         internal const string WoodDebris = nameof(WoodDebris);

@@ -20,12 +20,12 @@ namespace ScaryCastle
             this.AttachedLight = new("Light")
             {
                 Ambient = true,
-                Color = new(190, 132, 50),
+                Color = new(210, 132, 100),
                 PivotOrigin = RectanglePoint.Center,
                 LightKind = LightKind.Fire,
                 Passes = 2,
                 Position = new(9),
-                Scale = new(10, 16)
+                Scale = new(12, 18)
             };
 
             AttachedLightPosition = new(9);
@@ -49,22 +49,6 @@ namespace ScaryCastle
         {
             base.OnLoad();
             InvalidateAnimation();
-        }
-
-        // ExtraLight
-        [ScriptProperty]
-        public bool ExtraLight
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    if (AttachedLight != null)
-                        AttachedLight.Scale = field ? new(12, 16) : new(10, 16);
-                }
-            }
         }
     }
 }

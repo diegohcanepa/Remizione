@@ -19,7 +19,7 @@ namespace ScaryCastle
 
         private Color brightnessColor;
         private int currentDrawIndex;
-        private readonly Color defaultPlayerLightColor = new(240, 181, 65);
+        private readonly Color defaultPlayerLightColor = new(190, 190, 190);
         private readonly Vector2 defaultPlayerLightScale = new(5);
         private static DustEmitter dustEmitter = null!;
         private static FireflyEmitter fireflyEmitter = null!;
@@ -525,7 +525,7 @@ namespace ScaryCastle
 
         // LightMapColor
         [ScriptProperty]
-        public Color LightMapColor { get; set; } = new Color(10, 10, 25);
+        public Color LightMapColor { get; set; } = new Color(20, 20, 25);
 
         // Lights
         public NamedObjectReadOnlyCollection<Light> Lights { get; }

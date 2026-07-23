@@ -73,6 +73,13 @@ namespace ScaryCastle
             textSprite.Draw(gameTime);
         }
 
+        // Icon
+        public AtlasImage? IconImage
+        {
+            get => iconSprite.RenderImage;
+            set => iconSprite.RenderImage = value;
+        }
+
         // IconOffset
         public Vector2 IconOffset { get; set; }
 
