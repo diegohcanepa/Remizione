@@ -57,7 +57,7 @@ namespace ScaryCastle
     public enum DustParticleKind { None, Dust, Ash }
 
     // EffectContext
-    public enum EffectContext { Collect, Contact, Attack, Update, Use, ProjectileHit }
+    public enum EffectContext { Collect, Contact, Attack, RunModifier, Update, Use, ProjectileHit }
 
     // EffectType
     public enum EffectType { None, BronzeKey, Coin, Condition, ComicText, Damage, Death, Energy, ExtraEnergy, ExtraHeart, GoldenKey, Heal }
@@ -186,9 +186,6 @@ namespace ScaryCastle
 
     // RoomCategory
     public enum RoomCategory { Start, Boss, Treasure, Store, Special, Secret, Standard }
-
-    // RunModifierKind
-    public enum RunModifierKind { Darkness }
 
     // RunModifierScope
     public enum RunModifierScope { Room, Run }

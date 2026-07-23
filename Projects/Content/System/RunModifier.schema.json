@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "runmodifier.schema.json",
+  "title": "Run Modifier",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/RunModifier"
+      }
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "$defs": {
+    "RunModifier": {
+      "allOf": [
+        {
+          "$ref": "./Definition.schema.json"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "cooldown": {
+              "type": "integer"
+            },
+            "meterBackColor": {
+              "type": "string"
+            },
+            "meterForeColor": {
+              "type": "string"
+            },
+            "scope": {
+              "type": "string",
+              "enum": [
+                "Room",
+                "Run"
+              ],
+              "default": "Room"
+            }
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    }
+  }
+}

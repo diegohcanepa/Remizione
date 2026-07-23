@@ -43,7 +43,7 @@ namespace ScaryCastle
             this.IgnoreWalkArea = false;
             this.Verb = Verb.Talk;
             this.Faction = Definition == null ? Faction.Good : Definition.Faction;
-            this.CombatBehavior = CombatBehavior.Behaviors.Find(DeclaredName);
+            this.CombatBehavior = CombatBehavior.Definitions.Find(DeclaredName);
 
             headSprite = new AnimatedSprite()
             {

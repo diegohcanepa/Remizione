@@ -1,6 +1,10 @@
-﻿using Engendro;
+﻿/*
+
+using Engendro;
 using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace ScaryCastle
 {
@@ -11,73 +15,59 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly Sprite back;
-        private readonly Sprite container;
-        private readonly Sprite diff;
-        private readonly Sprite fore;
-        private readonly FloatTween tween = new() { StartDelay = 200 };
-        private float width;
+        private enum MeterPart { LeftEmpty, MiddleEmpty, RightEmpty, LeftFilled, MiddleFilled, RightFilled };
+        private readonly ReadOnlyCollection<AtlasImage> images;
+        private readonly List<Sprite> parts = [];
 
         #endregion
 
         // Constructor
-        public Meter(Color backColor, Color foreColor, Color diffColor, Vector2 size, float borderSize)
+        public Meter(float x, float y, RunModifierKind modifierKind)
         {
-            this.BorderSize = new(borderSize);
-            this.width = size.X;
+            if (modifierKind == RunModifierKind.Darkness)
+                this.images = new(Atlases.UI.PoisonMeter);
+            else
+                throw new InvalidOperationException();
 
-            // Container
-            this.container = new Sprite(Atlases.UI.Pixel)
+            for (var i = 0; i < MaximumValue; i++)
             {
-                Color = Color.Black,
-                ScaleY = size.Y,
-                ScaleX = size.X + (BorderSize.X * 2) // ancho fijo para el container
-            };
+                var part = new Sprite(images[(int)MeterPart.MiddleEmpty]) { X = x, Y = y };
+                parts.Add(part);
+                x += part.BoundingBox.Width - 1;
+            }
 
-            // Back
-            this.back = new Sprite(Atlases.UI.Pixel)
-            {
-                Color = backColor,
-                ScaleY = container.ScaleY - (BorderSize.Y * 2),
-                ScaleX = size.X
-            };
+            Refresh();
 
-            // Fore
-            this.fore = new Sprite(Atlases.UI.Pixel)
-            {
-                Color = foreColor,
-                ScaleY = container.ScaleY - (BorderSize.Y * 2)
-            };
-
-            // Previous value
-            this.diff = new Sprite(Atlases.UI.Pixel)
-            {
-                Color = diffColor,
-                ScaleY = container.ScaleY - (BorderSize.Y * 2)
-            };
+            Value = 3;
         }
 
         #region Private members
 
-        // Invalidate
-        private void Invalidate()
+        // Refresh
+        private void Refresh()
         {
-            container.Position = Position;
-            back.Position = Position + BorderSize;
-            fore.Position = Position + BorderSize;
-            diff.Position = Position + BorderSize;
+            for (int i = 0; i < parts.Count; i++)
+            {
+                var segment = parts[i];
+                bool isSegmentFilled = Value > i;
 
-            var xOffset = container.BoundingBox.Width / 2;
-            container.X -= xOffset;
-            back.X -= xOffset;
-            fore.X -= xOffset;
-            diff.X -= xOffset;
-        }
+                MeterPart part;
 
-        // Convierte un valor lógico (0..MaximumValue) a ancho proporcional (0..fixedWidth)
-        private float GetScaledWidth(float val)
-        {
-            return MaximumValue <= 0 ? 0 : val / MaximumValue * width;
+                if (i == 0)
+                {
+                    part = isSegmentFilled ? MeterPart.LeftFilled : MeterPart.LeftEmpty;
+                }
+                else if (i == parts.Count - 1)
+                {
+                    part = isSegmentFilled ? MeterPart.RightFilled : MeterPart.RightEmpty;
+                }
+                else
+                {
+                    part = isSegmentFilled ? MeterPart.MiddleFilled : MeterPart.MiddleEmpty;
+                }
+
+                segment.RenderImage = images[(int)part];
+            }
         }
 
         #endregion
@@ -87,130 +77,54 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            container.Draw(gameTime);
-            back.Draw(gameTime);
-            if (diff.ScaleX > 0)
-                diff.Draw(gameTime);
-            fore.Draw(gameTime);
-        }
-
-        // OnUpdate
-        protected override void OnUpdate(GameTime gameTime)
-        {
-            if (tween.IsRunning)
+            for (int i = 0; i < parts.Count; i++)
             {
-                tween.Update(gameTime);
-                diff.ScaleX = tween.CurrentValue;
+                var segment = parts[i];
+                bool isSegmentFilled = Value > i;
+
+                // Determinar la parte del enum correspondiente
+                MeterPart part;
+
+                if (i == 0)
+                {
+                    part = isSegmentFilled ? MeterPart.LeftFilled : MeterPart.LeftEmpty;
+                }
+                else if (i == parts.Count - 1)
+                {
+                    part = isSegmentFilled ? MeterPart.RightFilled : MeterPart.RightEmpty;
+                }
+                else
+                {
+                    part = isSegmentFilled ? MeterPart.MiddleFilled : MeterPart.MiddleEmpty;
+                }
+
+                segment.RenderImage = images[(int)part];
+                segment.Draw(gameTime);
             }
         }
 
         #endregion
 
-        // BackColor
-        public Color BackColor
-        {
-            get => back.Color;
-            set => back.Color = value;
-        }
-
-        // BoundingBox
-        public RectangleF BoundingBox => container.BoundingBox;
-
-        // BorderSize
-        public Vector2 BorderSize { get; }
-
-        // DiffColor
-        public Color DiffColor
-        {
-            get => diff.Color;
-            set => diff.Color = value;
-        }
-
-        // ForeColor
-        public Color ForeColor
-        {
-            get => fore.Color;
-            set => fore.Color = value;
-        }
+        // IsFull
+        public bool IsFull => Value == MaximumValue;
 
         // MaximumValue
-        public float MaximumValue
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    this.Value = field; // setea al maximo
-                    back.ScaleX = width;  // back siempre ancho fijo
-                    container.ScaleX = width + (BorderSize.X * 2);
-                    Invalidate();
-                }
-            }
-        }
-
-        // Position
-        public Vector2 Position
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    Invalidate();
-                }
-            }
-        }
-
-        // Ratio
-        public float Ratio => Value / MaximumValue;
+        public int MaximumValue { get; } = 10;
 
         // Value
-        public float Value
+        public int Value
         {
             get;
             set
             {
-                if (value != field)
+                if (Math.Clamp(value, 0, MaximumValue) != field)
                 {
-                    float newWidth = GetScaledWidth(value);
-
-                    if (value < field)
-                    {
-                        float prevWidth = fore.ScaleX;
-                        diff.ScaleX = tween.IsRunning ? tween.CurrentValue : prevWidth;
-                        tween.Start(TweenStyle.CubicIn, diff.ScaleX, newWidth, 1000);
-                    }
-                    else
-                    {
-                        diff.ScaleX = 0;
-                        tween.Stop();
-                    }
-
-                    field = value;
-                    fore.ScaleX = newWidth;
-                }
-            }
-        }
-
-        // Width
-        public float Width
-        {
-            get => width;
-            set
-            {
-                if (Math.Abs(width - value) > float.Epsilon)
-                {
-                    width = value;
-                    back.ScaleX = width;
-                    container.ScaleX = width + (BorderSize.X * 2);
-                    fore.ScaleX = GetScaledWidth(Value);
-                    diff.ScaleX = GetScaledWidth(Value);
-                    Invalidate();
+                    field = Math.Clamp(value, 0, MaximumValue);
+                    Refresh();
                 }
             }
         }
     }
 }
+
+*/

@@ -14,16 +14,20 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
+        public EffectDescriptor()
+        {
+        }
+
+        // Constructor
         public EffectDescriptor(JsonElement element)
         {
             this.Amount = element.GetObject("amount", v => new DiceExpression(v));
             this.Chance = element.GetFloat("chance", 1);
             this.ComicText = element.GetEnum("comicText", ComicTextKind.None);
-            this.Condition = element.GetEnum("conditionType", ConditionType.None);
+            this.ConditionType = element.GetEnum("conditionType", ConditionType.None);
             this.Context = element.GetEnum("context", EffectContext.Contact);
             this.DamageType = element.GetEnum("damageType", DamageType.Physical);
             this.EffectType = element.GetEnum("effectType", EffectType.None);
-            this.Modifier = element.GetFloat("modifier", 0);
             this.Knockback = element.GetEnum("knockback", KnockbackIntensity.Low);
             this.Sound = element.GetObject("sound", Sound.Get);
             this.Target = element.GetEnum("target", EffectTarget.Target);
@@ -83,7 +87,7 @@ namespace ScaryCastle
 
                     // Condition
                     case EffectType.Condition:
-                        (realTarget as Actor)?.ApplyCondition(effect.Condition, amount, effect.ComicText);
+                        (realTarget as Actor)?.ApplyCondition(effect.ConditionType, amount, effect.ComicText);
                         break;
 
                     // Damage
@@ -128,9 +132,6 @@ namespace ScaryCastle
             }
         }
 
-        // ConditionType
-        public ConditionType Condition { get; }
-
         // Contains
         public static bool Contains(IList<EffectDescriptor> effects, EffectContext context)
         {
@@ -146,22 +147,25 @@ namespace ScaryCastle
         #endregion
 
         // Amount
-        public DiceExpression? Amount { get; }
+        public DiceExpression? Amount { get; init; }
 
         // Chance
-        public Ratio Chance { get; }
+        public Ratio Chance { get; init; }
+
+        // ConditionType
+        public ConditionType ConditionType { get; init; }
 
         // ComicText
-        public ComicTextKind ComicText { get; }
+        public ComicTextKind ComicText { get; init; }
 
         // Context
-        public EffectContext Context { get; }
+        public EffectContext Context { get; init; }
 
         // DamageType
-        public DamageType DamageType { get; }
+        public DamageType DamageType { get; init; }
 
         // EffectType
-        public EffectType EffectType { get; }
+        public EffectType EffectType { get; init; }
 
         // GetKnockbackForce
         public Vector2 GetKnockbackForce()
@@ -177,15 +181,12 @@ namespace ScaryCastle
         }
 
         // Knockback
-        public KnockbackIntensity Knockback { get; }
-
-        // Modifier
-        public float Modifier { get; }
+        public KnockbackIntensity Knockback { get; init; }
 
         // Sound
-        public Sound? Sound { get; }
+        public Sound? Sound { get; init; }
 
         // Target
-        public EffectTarget Target { get; }
+        public EffectTarget Target { get; init; }
     }
 }

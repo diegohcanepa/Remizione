@@ -1723,6 +1723,9 @@
 #begin System/Rooms.json
 /copy:System/Rooms.json
 
+#begin System/RunModifiers.json
+/copy:System/RunModifiers.json
+
 #begin System/ScriptLibrary.esl
 /copy:System/ScriptLibrary.esl
 

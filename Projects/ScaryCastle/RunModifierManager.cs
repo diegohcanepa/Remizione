@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace ScaryCastle
@@ -8,14 +9,31 @@ namespace ScaryCastle
     /// </summary>
     public sealed class RunModifierManager
     {
-        private readonly List<RunModifier> modifiers = [];
-        private readonly Dictionary<RunModifierKind, RunModifier> modifiersDict = [];
+        #region Private fields
+
+        private readonly List<RunModifier> activeModifiers = [];
+        private readonly Dictionary<string, RunModifier> activeModifiersDict = [];
+        private readonly Dictionary<string, RunModifier> allModifiersDict = [];
+
+        #endregion
+
+        #region Constructor
 
         // Constructor
-        public RunModifierManager()
+        public RunModifierManager(GameSession session)
         {
-            Modifiers = modifiers.AsReadOnly();
+            this.Session = session;
+
+            ActiveModifiers = activeModifiers.AsReadOnly();
+
+            foreach (var definition in RunModifierDefinition.Definitions.All)
+            {
+                var modifier = new RunModifier(this, definition);
+                allModifiersDict.Add(modifier.Name, modifier);
+            }
         }
+
+        #endregion
 
         #region Private members
 
@@ -27,38 +45,49 @@ namespace ScaryCastle
 
         #endregion
 
-        // Add
-        public void Add(RunModifier modifier)
+        // Activate
+        public void Activate(string modifierName)
         {
-            // Avoid duplicates
-            if (modifiersDict.ContainsKey(modifier.Kind))
-                return;
-
-            modifiers.Add(modifier);
-            modifiersDict.Add(modifier.Kind, modifier);
-
-            InvalidateContentVersion();
+            if (!IsActive(modifierName))
+            {
+                if (Find(modifierName) is { } modifier)
+                {
+                    activeModifiers.Add(modifier);
+                    activeModifiersDict.Add(modifierName, modifier);
+                    modifier.ResetTimer();
+                    InvalidateContentVersion();
+                }
+            }
         }
+
+        // ActiveCount
+        public int ActiveCount => activeModifiersDict.Count;
+
+        // ActiveModifiers
+        public ReadOnlyCollection<RunModifier> ActiveModifiers { get; }
+
+        // All
+        public IEnumerable<RunModifier> All => allModifiersDict.Values;
 
         // Clear
         public void Clear()
         {
-            modifiers.Clear();
-            modifiersDict.Clear();
+            activeModifiers.Clear();
+            activeModifiersDict.Clear();
             InvalidateContentVersion();
         }
 
-        // ClearRoomModifiers
-        public void ClearRoomModifiers()
+        // Clear
+        public void Clear(RunModifierScope scope)
         {
             var invalidateContent = false;
 
-            for (var i = modifiers.Count - 1; i >= 0; i--)
+            for (var i = activeModifiers.Count - 1; i >= 0; i--)
             {
-                if (modifiers[i].Scope == RunModifierScope.Room)
+                if (activeModifiers[i].Definition.Scope == scope)
                 {
-                    modifiersDict.Remove(modifiers[i].Kind);
-                    modifiers.Remove(modifiers[i]);
+                    activeModifiersDict.Remove(activeModifiers[i].Name);
+                    activeModifiers.Remove(activeModifiers[i]);
                     invalidateContent = true;
                 }
             }
@@ -67,29 +96,53 @@ namespace ScaryCastle
                 InvalidateContentVersion();
         }
 
-        // Contains
-        public bool Contains(RunModifierKind modifierKind)
-        {
-            return modifiersDict.ContainsKey(modifierKind);
-        }
-
-        // Count
-        public int Count => modifiersDict.Count;
-
-        // Modifiers
-        public ReadOnlyCollection<RunModifier> Modifiers { get; }
-
         // ContentVersion
         public int ContentVersion { get; private set; }
 
-        // Remove
-        public void Remove(RunModifierKind modifierKind)
+        // Deactivate
+        public void Deactivate(string modifierName)
         {
-            if (modifiersDict.TryGetValue(modifierKind, out RunModifier? runModifier))
+            if (activeModifiersDict.TryGetValue(modifierName, out RunModifier? runModifier))
             {
-                modifiersDict.Remove(modifierKind);
-                modifiers.Remove(runModifier);
+                activeModifiersDict.Remove(modifierName);
+                activeModifiers.Remove(runModifier);
                 InvalidateContentVersion();
+            }
+        }
+
+        // Find
+        public RunModifier? Find(string modifierName)
+        {
+            if (allModifiersDict.TryGetValue(modifierName, out RunModifier? modifier))
+                return modifier;
+            else
+                return null;
+        }
+
+        // FindActive
+        public RunModifier? FindActive(string modifierName)
+        {
+            if (activeModifiersDict.TryGetValue(modifierName, out RunModifier? modifier))
+                return modifier;
+            else
+                return null;
+        }
+
+        // IsActive
+        public bool IsActive(string modifierName)
+        {
+            return FindActive(modifierName) != null;
+        }
+   
+        // Session
+        public GameSession Session { get; }
+
+        // Update
+        public void Update(GameTime gameTime)
+        {
+            for (var i = 0; i < activeModifiers.Count; i++)
+            {
+                activeModifiers[i].Update(gameTime);
             }
         }
     }

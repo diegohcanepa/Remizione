@@ -17,6 +17,7 @@ namespace ScaryCastle
         private readonly UIPocketItemMeter goldenKeyMeter;
         private readonly UIHPMeter hpMeter;
         private readonly UIPassiveItems passiveItems;
+        //private readonly Meter poisonMeter = new(100, 30, RunModifierKind.Poison);
         private readonly UIRunModifiers runModifiers;
 
         #endregion
@@ -49,6 +50,7 @@ namespace ScaryCastle
             hpMeter.Draw(gameTime);
             runModifiers.Draw(gameTime);
             passiveItems.Draw(gameTime);
+            //poisonMeter.Draw(gameTime);
             Game.SpriteBatch.End();
 
             faithMeter.Draw(gameTime);

@@ -15,7 +15,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly CounterBank enemiesSpawnCounter = new();
+        private readonly CounterBank actorsSpawnCounter = new();
         private int instanceCount;
         private readonly List<Placeholder> placeholders = [];
         private readonly CounterBank propsSpawnCounter = new();
@@ -155,7 +155,7 @@ namespace ScaryCastle
                             pendingCount++;
                     }
 
-                    int currentInRoom = enemiesSpawnCounter.GetCount(chosen.Name) + pendingCount;
+                    int currentInRoom = actorsSpawnCounter.GetCount(chosen.Name) + pendingCount;
 
                     if (!chosen.PassesMaxPerRoomConstraint(currentInRoom))
                         break;
@@ -177,12 +177,7 @@ namespace ScaryCastle
 
             for (int i = 0; i < points.Count; i++)
             {
-                var chosenDef = pendingSpawns[i];
-                var instance = CreateThingClone<Actor>(chosenDef.Name);
-                instance.Position = points[i];
-                Children.Add(instance);
-                enemiesSpawnCounter.Increment(chosenDef.Name);
-                Session.CurrentRun.Spawns.Increment(chosenDef.Name);
+                SpawnThing<Actor>(Session.CurrentRun, pendingSpawns[i].Name, points[i], actorsSpawnCounter);
             }
         }
 
@@ -213,7 +208,7 @@ namespace ScaryCastle
 
                     if (phState == PlaceholderState.GateLever)
                     {
-                        SpawnThing<Prop>(Session.CurrentRun, nameof(PlaceholderState.GateLever), ph.Position);
+                        SpawnThing<Prop>(Session.CurrentRun, nameof(PlaceholderState.GateLever), ph.Position, propsSpawnCounter);
                         RoomNode.SetPlaceholderState(ph, PlaceholderState.Used);
                         continue;
                     }
@@ -250,7 +245,7 @@ namespace ScaryCastle
                     if (PropDefinition.Definitions.Find(item.Name) is not PropDefinition chosen)
                         continue;
 
-                    SpawnThing<Prop>(Session.CurrentRun, chosen.Name, ph.Position);
+                    SpawnThing<Prop>(Session.CurrentRun, chosen.Name, ph.Position, propsSpawnCounter);
 
                     RoomNode.SetPlaceholderState(ph, PlaceholderState.Used);
                 }
@@ -329,14 +324,14 @@ namespace ScaryCastle
         }
 
         // SpawnThing
-        private T SpawnThing<T>(Run run, string name, Vector2 position)
+        private T SpawnThing<T>(Run run, string name, Vector2 position, CounterBank counterBank)
             where T : GameThing
         {
             var instance = CreateThingClone<T>(name);
             instance.Position = position;
             Children.Add(instance);
             run.Spawns.Increment(name);
-            propsSpawnCounter.Increment(name);
+            counterBank.Increment(name);
 
             return instance;
         }

@@ -371,6 +371,7 @@
             <key type="filename">Items-assets/Duck.png</key>
             <key type="filename">Items-assets/Lockpick.png</key>
             <key type="filename">Items-assets/MissingItem.png</key>
+            <key type="filename">Items-assets/Verse.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -713,6 +714,26 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">PoisonMeter-assets/PoisonMeter0.png</key>
+            <key type="filename">PoisonMeter-assets/PoisonMeter1.png</key>
+            <key type="filename">PoisonMeter-assets/PoisonMeter2.png</key>
+            <key type="filename">PoisonMeter-assets/PoisonMeter3.png</key>
+            <key type="filename">PoisonMeter-assets/PoisonMeter4.png</key>
+            <key type="filename">PoisonMeter-assets/PoisonMeter5.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,2,2,3</rect>
+                <key>scale9Paddings</key>
+                <rect>1,2,2,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">UI-assets/ContextMenuOptionSelector.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -1046,6 +1067,7 @@
                     <filename>CurseMeter-assets</filename>
                     <filename>FaithMeter-assets</filename>
                     <filename>DialogBox-assets</filename>
+                    <filename>PoisonMeter-assets</filename>
                 </array>
             </struct>
         </map>

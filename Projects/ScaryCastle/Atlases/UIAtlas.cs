@@ -26,9 +26,9 @@ namespace ScaryCastle
             DialogOptionBullet = this[nameof(DialogOptionBullet)];
             DiscardItemIcon = this[nameof(DiscardItemIcon)];
             FaithIcon = this[nameof(FaithIcon)];
+            FaithMeter = CreateReadOnlyCollection(nameof(FaithMeter), 0, 5);
             GoldenKeyIcon = this[nameof(GoldenKeyIcon)];
             GooIcon = this[nameof(GooIcon)];
-            FaithMeter = CreateReadOnlyCollection(nameof(FaithMeter), 0, 5);
             GreenHearts = CreateReadOnlyCollection(nameof(GreenHearts), 1, 4);
             HeartIcon = this[nameof(HeartIcon)];
             InventoryFaithAmounts = CreateReadOnlyCollection("InventoryFaithAmount", 1, 3);
@@ -40,6 +40,7 @@ namespace ScaryCastle
             MiniMapLoot = this[nameof(MiniMapLoot)];
             PickupShadow = this[nameof(PickupShadow)];
             Pixel = this[nameof(Pixel)];
+            PoisonMeter = CreateReadOnlyCollection(nameof(PoisonMeter), 0, 5);
             PopupContainer = this[nameof(PopupContainer)];
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
             PurpleHearts = CreateReadOnlyCollection(nameof(PurpleHearts), 1, 4);
@@ -140,6 +141,9 @@ namespace ScaryCastle
 
         // Pixel
         public AtlasImage Pixel { get; }
+
+        // PoisonMeter
+        public ReadOnlyCollection<AtlasImage> PoisonMeter { get; }
 
         // PopupContainer
         public AtlasImage PopupContainer { get; }

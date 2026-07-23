@@ -28,6 +28,7 @@ namespace ScaryCastle
         public Run(GameSession session, int seed, int totalRooms)
         {
             CodeContract.ValidRange(totalRooms, 10, 20, nameof(totalRooms));
+
             this.session = session;
             this.seed = seed;
             this.totalRooms = totalRooms;
@@ -513,9 +514,6 @@ namespace ScaryCastle
             }
             TotalBronzeKeys = totalKeys;
         }
-
-        // Modifiers
-        public RunModifierManager Modifiers { get; } = new();
 
         // Spawns
         public CounterBank Spawns { get; } = new();

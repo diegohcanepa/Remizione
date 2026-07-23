@@ -11,8 +11,8 @@ namespace ScaryCastle
     /// </summary>
     public sealed class UIRunModifiers : SessionGameObject<GameSession>
     {
-        private readonly List<Sprite> activeIcons = [];
-        private readonly Dictionary<RunModifierKind, Sprite> icons = [];
+        private readonly List<ModifierIcon> activeIcons = [];
+        private readonly Dictionary<string, ModifierIcon> icons = [];
         private int lastKnownVersion = -1;
 
         #region Constructor
@@ -21,14 +21,9 @@ namespace ScaryCastle
         public UIRunModifiers(GameSession session)
             : base(session)
         {
-            foreach (var modifierKind in Enum.GetValues<RunModifierKind>())
+            foreach (var modifier in Session.RunModifiers.All)
             {
-                icons[modifierKind] = new()
-                {
-                    PivotOrigin = RectanglePoint.Top,
-                    RenderImage = Atlases.UI.GetImage($"{nameof(RunModifier)}{modifierKind}Icon"),
-                    Scale = ScaleInfo.UIElement.Medium
-                };
+                icons[modifier.Name] = new(modifier);
             }
         }
 
@@ -41,18 +36,15 @@ namespace ScaryCastle
         {
             activeIcons.Clear();
 
-            if (Session.CurrentRun?.Modifiers is not RunModifierManager runModifierManager)
+            if (Session.RunModifiers.ActiveCount == 0)
                 return;
 
-            if (runModifierManager.Count == 0)
-                return;
-
-            foreach (var modifier in runModifierManager.Modifiers)
+            foreach (var modifier in Session.RunModifiers.ActiveModifiers)
             {
-                activeIcons.Add(icons[modifier.Kind]);
+                activeIcons.Add(icons[modifier.Name]);
             }
 
-            float spacing = 1;
+            float spacing = 2;
             float w = 0;
 
             // Calculamos el ancho total sumando los bounding boxes y los espacios intermedios
@@ -74,15 +66,15 @@ namespace ScaryCastle
             float currentX = startX;
             for (var i = 0; i < activeIcons.Count; i++)
             {
-                var sprite = activeIcons[i];
-                float halfWidth = sprite.BoundingBox.Width / 2f;
+                var icon = activeIcons[i];
+                float halfWidth = icon.BoundingBox.Width / 2f;
 
                 // Como el PivotOrigin es 'Top' (centro superior del sprite), 
                 // sumamos la mitad de su propio ancho para centrar el pivote en la posición X actual
-                sprite.Position = new Vector2(currentX + halfWidth, topMargin);
+                icon.Position = new Vector2(currentX + halfWidth, topMargin);
 
                 // Desplazamos la X para el siguiente ícono en la fila
-                currentX += sprite.BoundingBox.Width + spacing;
+                currentX += icon.BoundingBox.Width + spacing;
             }
         }
 
@@ -95,26 +87,90 @@ namespace ScaryCastle
         {
             for (var i = 0; i < activeIcons.Count; i++)
             {
-                if (activeIcons[i].RenderImage == null)
-                    break;
-                else
-                    activeIcons[i].Draw(gameTime);
+                activeIcons[i].Draw(gameTime);
             }
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (Session.CurrentRun?.Modifiers == null)
-                return;
-
-            if (lastKnownVersion != Session.CurrentRun.Modifiers.ContentVersion)
+            if (lastKnownVersion != Session.RunModifiers.ContentVersion)
             {
                 Refresh();
-                lastKnownVersion = Session.CurrentRun.Modifiers.ContentVersion;
+                lastKnownVersion = Session.RunModifiers.ContentVersion;
+            }
+
+            for (var i = 0; i < activeIcons.Count; i++)
+            {
+                activeIcons[i].Update(gameTime);
             }
         }
 
         #endregion
+
+        /// <summary>
+        /// ModifierIcon
+        /// </summary>
+        private sealed class ModifierIcon : GameObject
+        {
+            private readonly FlatMeter meter;
+            private readonly RunModifier modifier;
+            private readonly Sprite sprite;
+
+            // Constructor
+            public ModifierIcon(RunModifier modifier)
+            {
+                this.modifier = modifier;
+
+                sprite = new()
+                {
+                    PivotOrigin = RectanglePoint.Top,
+                    RenderImage = modifier.Definition.Image,
+                    Scale = ScaleInfo.UIElement.Medium
+                };
+
+                meter = new(modifier.Definition.MeterBackColor, modifier.Definition.MeterForeColor, Color.Transparent, new(8, 1), 0)
+                {
+                    MaximumValue = modifier.Definition.Cooldown
+                };
+            }
+
+            #region Protected members
+
+            // OnDraw
+            protected override void OnDraw(GameTime gameTime)
+            {
+                sprite.Draw(gameTime);
+
+                if (meter.MaximumValue > 0)
+                    meter.Draw(gameTime);
+            }
+
+            // OnUpdate
+            protected override void OnUpdate(GameTime gameTime)
+            {
+                if (meter.MaximumValue > 0)
+                {
+                    meter.Value = modifier.Timer;
+                    meter.Update(gameTime);
+                }
+            }
+
+            #endregion
+
+            // BoundingBox
+            public RectangleF BoundingBox => sprite.BoundingBox;
+
+            // Position
+            public Vector2 Position
+            {
+                get => sprite.Position;
+                set
+                {
+                    sprite.Position = value;
+                    meter.Position = sprite.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 1);
+                }
+            }
+        }
     }
 }

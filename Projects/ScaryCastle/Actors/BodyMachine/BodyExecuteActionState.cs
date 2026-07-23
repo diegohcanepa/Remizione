@@ -69,7 +69,7 @@ namespace ScaryCastle
             {
                 var missChance = action.MissChance;
                 
-                if (Owner.Session.CurrentRun?.Modifiers.Contains(RunModifierKind.Darkness) == true)
+                if (Owner.Session.RunModifiers.IsActive(RunModifierNames.Darkness))
                 {
                     if (Owner.PixelsMoved > GameRoom.PlayerLightBounds.Width / 2)
                         missChance += GameSettings.DarknessMissChancePenalty;

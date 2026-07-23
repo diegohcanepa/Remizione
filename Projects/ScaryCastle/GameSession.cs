@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Xml;
+using Windows.Globalization;
 
 namespace ScaryCastle
 {
@@ -49,6 +50,7 @@ namespace ScaryCastle
             : base(game, new ScaryCastlePersistenceModel(), ContentManagerExtension.EncodePath(game.Content, ContentFolder.System, "ScriptLibrary.esl"), slotNumber)
         {
             this.Game = game;
+            this.RunModifiers = new(this);
             this.PlayerActions = new(this) { Capacity = 3 };
             this.PlayerInventory = new(this);
             this.Environment = new Environment();
@@ -410,6 +412,8 @@ namespace ScaryCastle
 
             if (CurrentRun != null)
             {
+                RunModifiers.Update(gameTime);
+
                 if (IsHUDVisible)
                 {
                     StatusHUD.Update(gameTime);
@@ -574,6 +578,7 @@ namespace ScaryCastle
 
             CurrentRun = null;
 
+            RunModifiers.Clear();
             Bosses.Clear();
             TextHUD.BossMeter.Reset();
             CleanUpRuntimeEntities();
@@ -806,6 +811,9 @@ namespace ScaryCastle
         // RunCount
         [ScriptProperty]
         public int RunCount { get; set; }
+
+        // RunModifiers
+        public RunModifierManager RunModifiers { get; }
 
         // Seed
         [ScriptProperty]

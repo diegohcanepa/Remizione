@@ -17,7 +17,7 @@ namespace ScaryCastle
         private readonly TextSprite amountText;
         private readonly Sprite icon;
         private readonly TextSprite labelText;
-        private readonly Meter meter;
+        private readonly FlatMeter meter;
         private readonly FloatTween shakeTween = new();
         private readonly List<Actor> targetList = [];
 
@@ -29,7 +29,7 @@ namespace ScaryCastle
         public UIBossMeter()
             : base()
         {
-            this.meter = new Meter(ColorPalette.BossMeter.Back, ColorPalette.BossMeter.Fore, ColorPalette.BossMeter.Diff, new(40, 6), 1)
+            this.meter = new FlatMeter(ColorPalette.BossMeter.Back, ColorPalette.BossMeter.Fore, ColorPalette.BossMeter.Diff, new(40, 6), 1)
             {
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -10)
             };

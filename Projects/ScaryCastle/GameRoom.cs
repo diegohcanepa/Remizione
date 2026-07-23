@@ -539,18 +539,16 @@ namespace ScaryCastle
 
                 Darkness = !hasAmbientLights;
 
-                if (Session.CurrentRun?.Modifiers is { } modifiers)
-                {
-                    var hasDarknessModifier = modifiers.Contains(RunModifierKind.Darkness);
+                var hasDarknessModifier = Session.RunModifiers.IsActive(RunModifierNames.Darkness);
 
-                    if (!Darkness && hasDarknessModifier)
-                    {
-                        modifiers.Remove(RunModifierKind.Darkness);
-                    }
-                    else if (Darkness && !hasDarknessModifier)
-                    {
-                        Session.CurrentRun.Modifiers.Add(new RunModifier(RunModifierKind.Darkness, RunModifierScope.Room));
-                    }
+                if (!Darkness && hasDarknessModifier)
+                {
+                    Session.RunModifiers.Deactivate(RunModifierNames.Darkness);
+                }
+                else if (Darkness && !hasDarknessModifier)
+                {
+                    Session.RunModifiers.Activate(RunModifierNames.Darkness);
+                    Session.RunModifiers.Activate(RunModifierNames.Poison);
                 }
             }
         }

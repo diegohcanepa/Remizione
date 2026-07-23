@@ -30,7 +30,7 @@
     "context": {
       "type": "string",
       "description": "Contexto en donde es aplicable el efecto.",
-      "enum": [ "Collect", "Contact", "Attack", "Update", "Use", "ProjectileHit" ],
+      "enum": [ "Collect", "Contact", "Attack", "Update", "Use", "ProjectileHit", "RunModifier" ],
       "default": "Contact"
     },
     "damageType": {
