@@ -12,15 +12,11 @@
           	"effects": [
             {
               "context": "RunModifier",
-              "effectType": "Damage",
-              "amount": "0"
-            },
-            {
-              "context": "RunModifier",
               "effectType": "Condition",
               "conditionType": "Poison",
               "amount": "1",
-              "comicText": "AghGreen"
+              "comicText": "AghGreen",
+              "sound": "StatusEffectDamage"
             }
           ]			
 		}

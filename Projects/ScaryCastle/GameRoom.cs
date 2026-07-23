@@ -193,7 +193,7 @@ namespace ScaryCastle
 
             Game.GraphicsDevice.SetRenderTarget(renderTarget);
 
-            Game.GraphicsDevice.Clear(Darkness ? Color.Black : LightMapColor);
+            Game.GraphicsDevice.Clear(AmbientLights ? LightMapColor : Color.Black);
 
             Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
 
@@ -218,7 +218,7 @@ namespace ScaryCastle
 
             if (Session.Player != null)
             {
-                if (Darkness)
+                if (!AmbientLights)
                 {
                     playerLight.Color = Session.PlayerInventory.AmbientLightColor ?? defaultPlayerLightColor;
                     playerLight.Scale = defaultPlayerLightScale * Session.PlayerStats.AmbientLight.Value;
@@ -291,7 +291,7 @@ namespace ScaryCastle
             if (AllowFireflyParticles)
                 fireflyEmitter?.Activate();
 
-            InvalidateAmbientLightSources();
+            RefreshAmbientLightSources();
         }
 
         // OnDeactivate
@@ -389,6 +389,11 @@ namespace ScaryCastle
             lightSources.Clear();
         }
 
+        // OnRefreshAmbientLightSources
+        protected virtual void OnRefreshAmbientLightSources()
+        {
+        }
+
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
@@ -409,7 +414,7 @@ namespace ScaryCastle
                 lights[i].Update(gameTime);
             }
 
-            if (!Darkness && Session.Player != null)
+            if (!AmbientLights && Session.Player != null)
                 playerLight.Update(gameTime);
 
             // Dust particles
@@ -476,6 +481,9 @@ namespace ScaryCastle
         [ScriptProperty]
         public bool AllowPauseMenu { get; set; } = true;
 
+        // AmbientLights
+        public bool AmbientLights { get; private set; }
+
         // BrightnessModifier
         [ScriptProperty]
         public float BrightnessModifier
@@ -494,9 +502,6 @@ namespace ScaryCastle
         // CanUseLightingSystem
         public bool CanUseLightingSystem => Session.LightingSystem && LightingSystem;
 
-        // Darkness
-        public bool Darkness { get; private set; }
-
         // DustParticleKind
         [ScriptProperty]
         public DustParticleKind DustParticleKind { get; set; } = DustParticleKind.Ash;
@@ -504,54 +509,8 @@ namespace ScaryCastle
         // FollowPlayer
         public bool FollowPlayer { get; set; } = true;
 
-        // InvalidateAmbientLightSources
-        public void InvalidateAmbientLightSources()
-        {
-            var hasAmbientLights = false;
-
-            if (IsProcedural)
-            {
-                for (var i = 0; i < Lights.Count; i++)
-                {
-                    if (Lights[i].Ambient && Lights[i].IsEmitting)
-                    {
-                        hasAmbientLights = true;
-                        break;
-                    }
-                }
-
-                if (!hasAmbientLights)
-                {
-                    for (var i = 0; i < Children.Count; i++)
-                    {
-                        if (Children[i] is Prop prop && prop.IsAmbientLight && prop.IsEmittingLight)
-                        {
-                            hasAmbientLights = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (hasAmbientLights)
-                    playerLight.TurnOff();
-                else
-                    playerLight.TurnOn();
-
-                Darkness = !hasAmbientLights;
-
-                var hasDarknessModifier = Session.RunModifiers.IsActive(RunModifierNames.Darkness);
-
-                if (!Darkness && hasDarknessModifier)
-                {
-                    Session.RunModifiers.Deactivate(RunModifierNames.Darkness);
-                }
-                else if (Darkness && !hasDarknessModifier)
-                {
-                    Session.RunModifiers.Activate(RunModifierNames.Darkness);
-                    Session.RunModifiers.Activate(RunModifierNames.Poison);
-                }
-            }
-        }
+        // HasAmbientLights
+        public bool HasAmbientLights { get; private set; }
 
         // IsProcedural
         [ScriptProperty]
@@ -590,6 +549,42 @@ namespace ScaryCastle
             lastKnownMusicTag = AudioManager.Music.CurrentTag;
         }
 
+        // RefreshAmbientLightSources
+        public void RefreshAmbientLightSources()
+        {
+            var hasAmbientLights = false;
+
+            for (var i = 0; i < Lights.Count; i++)
+            {
+                if (Lights[i].Ambient && Lights[i].IsEmitting)
+                {
+                    hasAmbientLights = true;
+                    break;
+                }
+            }
+
+            if (!hasAmbientLights)
+            {
+                for (var i = 0; i < Children.Count; i++)
+                {
+                    if (Children[i] is Prop prop && prop.IsAmbientLight && prop.IsEmittingLight)
+                    {
+                        hasAmbientLights = true;
+                        break;
+                    }
+                }
+            }
+
+            if (hasAmbientLights)
+                playerLight.TurnOff();
+            else
+                playerLight.TurnOn();
+
+            AmbientLights = hasAmbientLights;
+
+            OnRefreshAmbientLightSources();
+        }
+
         // RestoreAfterGateway
         [ScriptMethod]
         public void RestoreAfterGateway()
@@ -625,7 +620,7 @@ namespace ScaryCastle
                     prop.IgnoreAttachedLight = true;
             }
 
-            InvalidateAmbientLightSources();
+            RefreshAmbientLightSources();
         }
 
         // TriggerAreas

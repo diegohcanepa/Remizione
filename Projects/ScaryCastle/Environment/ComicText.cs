@@ -9,13 +9,19 @@ namespace ScaryCastle
     /// </summary>
     public sealed class ComicText : GameObject
     {
+        #region private fields
+
         private int endingPhaseCooldown;
-        private readonly FloatTween opacityTween = new();
         private readonly Vector2 maxScale = new(.75f);
+        private readonly FloatTween opacityTween = new();
         private readonly Vector2Tween scaleTween = new();
         private readonly Sprite sprite;
         private readonly FloatTween xTween = new();
         private readonly FloatTween yTween = new();
+
+        #endregion
+
+        #region Constructor
 
         // Constructor
         public ComicText()
@@ -26,6 +32,8 @@ namespace ScaryCastle
                 Scale = maxScale
             };
         }
+
+        #endregion
 
         #region Protected members
 
@@ -51,7 +59,7 @@ namespace ScaryCastle
                 endingPhaseCooldown -= gameTime.ElapsedGameTime.Milliseconds;
                 if (endingPhaseCooldown <= 0)
                 {
-                    opacityTween.Start(TweenStyle.CubicOut, 1, 0, 1500);
+                    opacityTween.Start(TweenStyle.CubicOut, 1, 0, 1000);
                     xTween.Start(TweenStyle.Linear, sprite.X, sprite.X + 1, 30, -1);
                     yTween.Start(TweenStyle.Linear, sprite.Y, sprite.Y + 1, 300);
 
@@ -68,13 +76,22 @@ namespace ScaryCastle
 
         #endregion
 
+        // Kind
+        public ComicTextKind Kind { get; private set; }
+
         // IsActive
         public bool IsActive { get; private set; }
+
+        // IsVanishing
+        public bool IsVanishing => opacityTween.IsRunning;
 
         // Show
         public void Show(ComicTextKind kind, Vector2 position)
         {
             const string prefix = nameof(ComicText);
+
+            this.Kind = kind;
+
             sprite.Tweens.Reset();
             endingPhaseCooldown = 200;
             sprite.RenderImage = Atlases.Environment.FindImage($"{prefix}_{kind}");

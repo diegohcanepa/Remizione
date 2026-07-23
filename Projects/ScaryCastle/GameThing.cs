@@ -17,6 +17,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
+        private ComicText? comicText;
         private bool dieCalled;
         private FloatTween? floatingTween;
         private readonly Polygon holePoly = new();
@@ -1133,8 +1134,15 @@ namespace ScaryCastle
         // ShowComicText
         public void ShowComicText(ComicTextKind kind)
         {
+            if (comicText != null)
+            {
+                if (comicText.Kind == kind && comicText.IsActive && !comicText.IsVanishing)
+                    return;
+            }
+
             var pos = RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, 3);
-            Session.ComicTextPool.Get()?.Show(kind, pos);
+            comicText = Session.ComicTextPool.Get();
+            comicText.Show(kind, pos);
         }
 
         // ShowFloatingText

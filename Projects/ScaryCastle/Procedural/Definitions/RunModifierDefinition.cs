@@ -31,25 +31,25 @@ namespace ScaryCastle
             // Scope
             this.Scope = element.GetEnum("scope", RunModifierScope.Room);
 
-            Definitions.Add(this);
+            Container.Add(this);
         }
 
         #endregion
+
+        // Container
+        public static DataContainer<RunModifierDefinition> Container { get; } = new(element => new RunModifierDefinition(element));
+
+        // Cooldown
+        public int Cooldown { get; }
+
+        // Image
+        public AtlasImage Image { get; }
 
         // MeterBackColor
         public Color MeterBackColor { get; }
 
         // MeterForeColor
         public Color MeterForeColor { get; }
-
-        // Cooldown
-        public int Cooldown { get; }
-
-        // Definitions
-        public static DataContainer<RunModifierDefinition> Definitions { get; } = new(element => new RunModifierDefinition(element));
-
-        // Image
-        public AtlasImage Image { get; }
 
         // Scope
         public RunModifierScope Scope { get; }

@@ -14,7 +14,7 @@ namespace ScaryCastle.Scripting
         {
             var itemName = Parser.ParseName(this, 0);
             Parser.ParseInt32Argument(this, AmountArg);
-            definition = ItemDefinition.Definitions.Get(itemName);
+            definition = ItemDefinition.Container.Get(itemName);
         }
 
         // OnExecute

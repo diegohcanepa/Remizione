@@ -12,9 +12,13 @@ namespace ScaryCastle
     /// </summary>
     public sealed class RoomDefinition : EntityDefinition
     {
+        #region Private fields
+
         private readonly List<LightDescriptor> lights = [];
         private readonly List<Placeholder> placeholders = [];
         private readonly List<string> walls = [];
+
+        #endregion
 
         #region Constructor
 
@@ -22,6 +26,9 @@ namespace ScaryCastle
         private RoomDefinition(JsonElement element)
             : base(element)
         {
+            if (!RunModifierDefinition.Container.IsLoaded)
+                throw new InvalidOperationException("Run modifier definitions load required.");
+
             AllowEnemies = element.GetBool("allowEnemies", true);
             DoorDown = element.GetVector2("doorDown");
             DoorLeft = element.GetVector2("doorLeft");
@@ -88,6 +95,21 @@ namespace ScaryCastle
                 }
             }
 
+            // RunModifiers
+            if (element.GetString("runModifiers") is string runModifiersData && !string.IsNullOrWhiteSpace(runModifiersData))
+            {
+                RunModifiers = new(runModifiersData.Split(','));
+                foreach (var value in RunModifiers)
+                {
+                    if (RunModifierDefinition.Container.Find(value) is null)
+                        RaiseValidationError(this, $"The name '{value}' is not a valid run modifier.");
+                }
+            }
+            else
+            {
+                RunModifiers = [];
+            }
+
             // Scope
             this.Scope = TagScope.FromJson(element);
 
@@ -116,7 +138,7 @@ namespace ScaryCastle
             Placeholders = new(placeholders);
             Walls = walls.AsReadOnly();
 
-            Definitions.Add(this);
+            Container.Add(this);
         }
 
         #endregion
@@ -138,8 +160,8 @@ namespace ScaryCastle
         // BossPosition
         public Vector2? BossPosition { get; }
 
-        // Definitions
-        public static DataContainer<RoomDefinition> Definitions { get; } = new(element => new RoomDefinition(element));
+        // Container
+        public static DataContainer<RoomDefinition> Container { get; } = new(element => new RoomDefinition(element));
 
         // DoorDown
         public Vector2? DoorDown { get; }
@@ -212,6 +234,9 @@ namespace ScaryCastle
 
         // RoomCategory
         public RoomCategory RoomCategory { get; }
+
+        // RunModifiers
+        public ReadOnlyCollection<string> RunModifiers { get; }
 
         // Scope
         public TagScope Scope { get; }

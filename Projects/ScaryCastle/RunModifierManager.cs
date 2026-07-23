@@ -26,7 +26,7 @@ namespace ScaryCastle
 
             ActiveModifiers = activeModifiers.AsReadOnly();
 
-            foreach (var definition in RunModifierDefinition.Definitions.All)
+            foreach (var definition in RunModifierDefinition.Container.All)
             {
                 var modifier = new RunModifier(this, definition);
                 allModifiersDict.Add(modifier.Name, modifier);

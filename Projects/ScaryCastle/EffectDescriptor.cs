@@ -47,9 +47,11 @@ namespace ScaryCastle
             {
                 var effect = effects[i];
 
+                // Out of context
                 if (effect.Context != context)
                     continue;
 
+                // Roll dice
                 if (!effect.Chance.Roll())
                     continue;
 

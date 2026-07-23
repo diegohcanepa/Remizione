@@ -114,7 +114,7 @@ namespace ScaryCastle
             if (ActionKind == ActionKind.Projectile && Projectile == null)
                 RaiseValidationError(this, "Items with Projectile usage mode must have a Projectile defined.", nameof(ActionKind));
 
-            Definitions.Add(this);
+            Container.Add(this);
         }
 
         #endregion
@@ -137,8 +137,8 @@ namespace ScaryCastle
         // ConsumeVerb
         public LogVerb ConsumeVerb { get; }
 
-        // Definitions
-        public static ItemDefinitionContainer Definitions { get; } = new(element => new ItemDefinition(element));
+        // Container
+        public static ItemDefinitionContainer Container { get; } = new(element => new ItemDefinition(element));
 
         // Description
         public string Description { get; }

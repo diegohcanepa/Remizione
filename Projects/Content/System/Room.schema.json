@@ -160,6 +160,9 @@
                 "additionalProperties": false
               }
             },
+            "runModifiers": {
+              "type": "string"
+            },            
             "theme": {
               "type": "string",
               "default": "BlueStone",

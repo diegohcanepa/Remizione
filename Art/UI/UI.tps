@@ -193,6 +193,8 @@
             <key type="filename">Items-assets/Burger.png</key>
             <key type="filename">Items-assets/Coin.png</key>
             <key type="filename">Items-assets/SodaCan.png</key>
+            <key type="filename">RunModifierIcons-assets/RunModifierDarknessIcon.png</key>
+            <key type="filename">RunModifierIcons-assets/RunModifierPoisonIcon.png</key>
             <key type="filename">UIIcons-assets/Dice.png</key>
             <key type="filename">XboxControls-assets/XboxA.png</key>
             <key type="filename">XboxControls-assets/XboxB.png</key>
@@ -1013,22 +1015,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UIIcons-assets/RunModifierDarknessIcon.png</key>
-            <key type="filename">UIIcons-assets/RunModifierPoisonIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,3,7,7</rect>
-                <key>scale9Paddings</key>
-                <rect>3,3,7,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">XboxControls-assets/XboxLeftShoulder.png</key>
             <key type="filename">XboxControls-assets/XboxRightShoulder.png</key>
             <struct type="IndividualSpriteSettings">
@@ -1068,6 +1054,7 @@
                     <filename>FaithMeter-assets</filename>
                     <filename>DialogBox-assets</filename>
                     <filename>PoisonMeter-assets</filename>
+                    <filename>RunModifierIcons-assets</filename>
                 </array>
             </struct>
         </map>

@@ -35,7 +35,7 @@ namespace ScaryCastle
         public Actor(GameSession session, string name)
             : base(session, name)
         {
-            this.Definition = ActorDefinition.Definitions.Find(DeclaredName);
+            this.Definition = ActorDefinition.Container.Find(DeclaredName);
             this.Atlas = Atlases.Actors;
             this.ApproachBehavior = ApproachBehavior.FaceToFace;
             this.DeathWord = ComicTextKind.PlopRed;
@@ -43,7 +43,7 @@ namespace ScaryCastle
             this.IgnoreWalkArea = false;
             this.Verb = Verb.Talk;
             this.Faction = Definition == null ? Faction.Good : Definition.Faction;
-            this.CombatBehavior = CombatBehavior.Definitions.Find(DeclaredName);
+            this.CombatBehavior = CombatBehavior.Container.Find(DeclaredName);
 
             headSprite = new AnimatedSprite()
             {

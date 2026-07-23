@@ -12,7 +12,7 @@ namespace ScaryCastle.Scripting
         {
             Parser.ParseEnum<LogVerb>(this, 0);
 
-            if (ItemDefinition.Definitions.Find(Body.Clauses[1]) == null)
+            if (ItemDefinition.Container.Find(Body.Clauses[1]) == null)
                 throw new ScriptException(this, $"Item '{Body.Clauses[1]}' not defined.");
 
             Parser.ParseInt32Argument(this, DelayArg);
@@ -26,7 +26,7 @@ namespace ScaryCastle.Scripting
             if (Session is GameSession session)
             {
                 var verb = Parser.ParseEnum<LogVerb>(this, 0);
-                if (ItemDefinition.Definitions.Find(Body.Clauses[1]) is ItemDefinition definition)
+                if (ItemDefinition.Container.Find(Body.Clauses[1]) is ItemDefinition definition)
                     session.TextHUD.Log.Show(verb, definition, HasArg(WarningArg));
             }
         }

@@ -44,7 +44,7 @@ namespace ScaryCastle
                 activeIcons.Add(icons[modifier.Name]);
             }
 
-            float spacing = 2;
+            float spacing = 1;
             float w = 0;
 
             // Calculamos el ancho total sumando los bounding boxes y los espacios intermedios
@@ -71,7 +71,7 @@ namespace ScaryCastle
 
                 // Como el PivotOrigin es 'Top' (centro superior del sprite), 
                 // sumamos la mitad de su propio ancho para centrar el pivote en la posición X actual
-                icon.Position = new Vector2(currentX + halfWidth, topMargin);
+                icon.Position = new Vector2(currentX + halfWidth, topMargin + icon.BoundingBox.Height / 2);
 
                 // Desplazamos la X para el siguiente ícono en la fila
                 currentX += icon.BoundingBox.Width + spacing;
@@ -124,7 +124,7 @@ namespace ScaryCastle
 
                 sprite = new()
                 {
-                    PivotOrigin = RectanglePoint.Top,
+                    PivotOrigin = RectanglePoint.Center,
                     RenderImage = modifier.Definition.Image,
                     Scale = ScaleInfo.UIElement.Medium
                 };

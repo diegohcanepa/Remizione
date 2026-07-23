@@ -109,13 +109,28 @@ namespace ScaryCastle
             SpawnActors();
         }
 
+        // RefreshRunModifiers
+        private void RefreshRunModifiers()
+        {
+            var hasDarknessModifier = Session.RunModifiers.IsActive(RunModifierNames.Darkness);
+
+            if (AmbientLights && hasDarknessModifier)
+            {
+                Session.RunModifiers.Deactivate(RunModifierNames.Darkness);
+            }
+            else if (!AmbientLights && !hasDarknessModifier)
+            {
+                Session.RunModifiers.Activate(RunModifierNames.Darkness);
+            }
+        }
+
         // SpawnActors
         private void SpawnActors()
         {
             if (WalkArea == null || Session.CurrentRun == null)
                 return;
 
-            var candidates = GetCandidateDefinitions<ActorDefinition, Actor>(ActorDefinition.Definitions.All);
+            var candidates = GetCandidateDefinitions<ActorDefinition, Actor>(ActorDefinition.Container.All);
 
             if (candidates.Count == 0)
                 return;
@@ -139,7 +154,7 @@ namespace ScaryCastle
                 if (table.GetValue() is not ChanceTableItem item)
                     break;
 
-                if (ActorDefinition.Definitions.Find(item.Name) is not ActorDefinition chosen)
+                if (ActorDefinition.Container.Find(item.Name) is not ActorDefinition chosen)
                     continue;
 
                 int packSize = chosen.RollPackSize(Random);
@@ -187,7 +202,7 @@ namespace ScaryCastle
             if (Session.CurrentRun == null)
                 return;
 
-            var candidates = GetCandidateDefinitions<PropDefinition, Prop>(PropDefinition.Definitions.All);
+            var candidates = GetCandidateDefinitions<PropDefinition, Prop>(PropDefinition.Container.All);
 
             if (candidates.Count == 0)
                 return;
@@ -242,7 +257,7 @@ namespace ScaryCastle
                     if (table.GetValue() is not ChanceTableItem item)
                         continue;
 
-                    if (PropDefinition.Definitions.Find(item.Name) is not PropDefinition chosen)
+                    if (PropDefinition.Container.Find(item.Name) is not PropDefinition chosen)
                         continue;
 
                     SpawnThing<Prop>(Session.CurrentRun, chosen.Name, ph.Position, propsSpawnCounter);
@@ -297,7 +312,7 @@ namespace ScaryCastle
                 if (freeTable.GetValue() is not ChanceTableItem item)
                     break;
 
-                if (PropDefinition.Definitions.Find(item.Name) is not PropDefinition chosen)
+                if (PropDefinition.Container.Find(item.Name) is not PropDefinition chosen)
                     continue;
 
                 // Pedimos el punto al WalkArea
@@ -435,6 +450,16 @@ namespace ScaryCastle
             return outList;
         }
 
+        // OnActivate
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            foreach (var name in RoomNode.Definition.RunModifiers)
+            {
+                Session.RunModifiers.Activate(name);
+            }
+        }
+
         // OnChildAdded
         protected override void OnChildAdded(Entity child)
         {
@@ -463,6 +488,13 @@ namespace ScaryCastle
             }
         }
 
+        // OnDeactivate
+        protected override void OnDeactivate()
+        {
+            base.OnDeactivate();
+            Session.RunModifiers.Clear(RunModifierScope.Room);
+        }
+
         // OnLoad
         protected override void OnLoad()
         {
@@ -484,6 +516,13 @@ namespace ScaryCastle
         // OnPopulated
         protected virtual void OnPopulated()
         {
+        }
+
+        // OnRefreshAmbientLightSources
+        protected override void OnRefreshAmbientLightSources()
+        {
+            base.OnRefreshAmbientLightSources();
+            RefreshRunModifiers();
         }
 
         #endregion

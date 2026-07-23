@@ -122,7 +122,7 @@ namespace ScaryCastle
             {
                 if (actors.Count > 0)
                 {
-                    actors[0].ItemReward = ItemDefinition.Definitions.Get(ItemNames.BronzeKey);
+                    actors[0].ItemReward = ItemDefinition.Container.Get(ItemNames.BronzeKey);
                     actors.RemoveAt(0);
                     pendingKeys--;
                     if (pendingKeys <= 0)

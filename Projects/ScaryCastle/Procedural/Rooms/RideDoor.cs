@@ -182,7 +182,7 @@ namespace ScaryCastle
         public DoorDirection DoorDirection { get; }
 
         // IsEmittingLight
-        public override bool IsEmittingLight => Room == null || Room.Darkness ? false : base.IsEmittingLight;
+        public override bool IsEmittingLight => Room == null || !Room.AmbientLights ? false : base.IsEmittingLight;
 
         // Prepare
         [ScriptMethod]

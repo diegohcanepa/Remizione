@@ -354,7 +354,7 @@ namespace ScaryCastle
             {
                 if (script.ScriptType == ScriptType.Outcome && script.OverloadName.Length > 0)
                 {
-                    if (ItemDefinition.Definitions.Find(script.OverloadName) == null)
+                    if (ItemDefinition.Container.Find(script.OverloadName) == null)
                         throw new InvalidOperationException($"The item definition supplied in [{script.Name}] does not exist.");
                 }
             }
@@ -378,12 +378,12 @@ namespace ScaryCastle
                 }
             }
 
-            foreach (var actorDef in ActorDefinition.Definitions.All)
+            foreach (var actorDef in ActorDefinition.Container.All)
             {
                 actorDef.AssertScriptDeclaration(this);
             }
 
-            foreach (var propDef in PropDefinition.Definitions.All)
+            foreach (var propDef in PropDefinition.Container.All)
             {
                 propDef.AssertScriptDeclaration(this);
             }

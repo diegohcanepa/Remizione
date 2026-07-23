@@ -44,6 +44,9 @@ namespace ScaryCastle
             return data[name];
         }
 
+        // IsLoaded
+        public bool IsLoaded { get; private set; }
+
         // Load
         public void Load(string fileName)
         {
@@ -51,6 +54,8 @@ namespace ScaryCastle
                 throw new InvalidOperationException("Data already loaded.");
 
             Utils.LoadJsonData(fileName, onCreate);
+
+            IsLoaded = true;
         }
     }
 }

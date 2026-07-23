@@ -41,13 +41,13 @@ namespace ScaryCastle
 
             RequiresPlaceholder = element.GetBool("requiresPlaceholder", true);
 
-            Definitions.Add(this);
+            Container.Add(this);
         }
 
         #endregion
 
-        // Definitions
-        public static DataContainer<PropDefinition> Definitions { get; } = new(element => new PropDefinition(element));
+        // Container
+        public static DataContainer<PropDefinition> Container { get; } = new(element => new PropDefinition(element));
 
         // Placements
         public ReadOnlyCollection<PlacementType> Placements { get; }

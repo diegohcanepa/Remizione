@@ -39,6 +39,9 @@ namespace ScaryCastle
                 Timer += gameTime.ElapsedGameTime.Milliseconds;
                 if (Timer >= Definition.Cooldown)
                 {
+                    if (manager.Session.Player is Actor player)
+                        EffectDescriptor.Apply(Definition.EffectDescriptors, player, player, EffectContext.RunModifier);
+
                     ResetTimer();
                 }
             }

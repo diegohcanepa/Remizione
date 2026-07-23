@@ -49,12 +49,12 @@ namespace ScaryCastle
         // InitializeProceduralContent
         private void InitializeProceduralContent()
         {
-            RunModifierDefinition.Definitions.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "RunModifiers.json"));
-            CombatBehavior.Definitions.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "CombatBehaviors.json"));
-            ItemDefinition.Definitions.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Items.json"));
-            RoomDefinition.Definitions.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Rooms.json"));
-            ActorDefinition.Definitions.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Actors.json"));
-            PropDefinition.Definitions.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Props.json"));
+            RunModifierDefinition.Container.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "RunModifiers.json"));
+            CombatBehavior.Container.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "CombatBehaviors.json"));
+            ItemDefinition.Container.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Items.json"));
+            RoomDefinition.Container.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Rooms.json"));
+            ActorDefinition.Container.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Actors.json"));
+            PropDefinition.Container.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Props.json"));
         }
 
 #if !QUICK_START
