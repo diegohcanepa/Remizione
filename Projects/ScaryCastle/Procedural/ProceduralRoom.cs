@@ -11,11 +11,13 @@ namespace ScaryCastle
     /// <summary>
     /// ProceduralRoom
     /// </summary>
-    public abstract class ProceduralRoom : GameRoom
+    public class ProceduralRoom : GameRoom
     {
         #region Private fields
 
         private readonly CounterBank actorsSpawnCounter = new();
+        private readonly List<Door> doors = [];
+        private readonly Prop foreground;
         private int instanceCount;
         private readonly List<Placeholder> placeholders = [];
         private readonly CounterBank propsSpawnCounter = new();
@@ -26,8 +28,8 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        protected ProceduralRoom(GameSession session, string name, RoomNode roomNode)
-            : base(session, name)
+        public ProceduralRoom(GameSession session, RoomNode roomNode)
+            : base(session, string.Empty)
         {
             this.RoomNode = roomNode;
             this.LightingSystem = true;
@@ -36,9 +38,50 @@ namespace ScaryCastle
             int salt = roomNode.Index;
             this.randomSeed = RandomHelper.GetSeed(Session.Seed, salt);
             this.Random = new Random(randomSeed);
-            this.Placeholders = placeholders.AsReadOnly();
 
             this.MonitorStyle = true;
+
+            // Foreground
+            this.foreground = new(Session, string.Empty)
+            {
+                PivotOrigin = RectanglePoint.LeftTop,
+                RenderLayer = RenderLayer.Foreground
+            };
+
+            this.Doors = doors.AsReadOnly();
+
+            Zoom = 1.15f;
+            AtlasName = roomNode.Definition.Name ?? string.Empty;
+            DefaultImageName = AtlasName;
+            DustParticleKind = DustParticleKind.Ash;
+            LightMapColor = roomNode.Definition.LightMapColor;
+            LightingSystem = true;
+
+            AddWalkArea("WalkArea", roomNode.Definition.WalkArea);
+
+            // Add lights
+            var index = 0;
+            foreach (var lightDescriptor in roomNode.Definition.Lights)
+            {
+                var light = AddLight($"Light{index}__");
+                light.Ambient = true;
+                light.Color = lightDescriptor.Color;
+                light.Position = lightDescriptor.Position;
+                light.Scale = lightDescriptor.Scale;
+                index++;
+            }
+
+            // Add placeholders
+            foreach (var placeholder in roomNode.Definition.Placeholders)
+            {
+                AddPlaceholder(placeholder);
+            }
+
+            // Add walls
+            foreach (var wall in roomNode.Definition.Walls)
+            {
+                AddWall(wall);
+            }
         }
 
         #endregion
@@ -62,6 +105,95 @@ namespace ScaryCastle
 
             // 3. Clamp final para garantizar un límite mínimo y máximo absoluto en el cuarto
             return Math.Clamp(finalBudget, 1, 4); // Nunca 0, nunca más de 4 patrullas/patotas base
+        }
+
+        // DistributeBronzeKeys
+        private void DistributeBronzeKeys()
+        {
+            if (RoomNode.BronzeKeys <= 0)
+                return;
+
+            // Collect actors
+            var actors = new List<Actor>();
+            foreach (var actor in Children.OfType<Actor>())
+            {
+                if (actor.IsDead || actor.IsPlayer || actor.Faction != Faction.Evil)
+                    continue;
+
+                if (actor.Definition?.DropTrigger == LootDropTrigger.OnImpact)
+                    continue;
+
+                actors.Add(actor);
+            }
+            actors.Shuffle();
+
+            // Collect pottery
+            var potteryList = new List<Pottery>();
+            foreach (var pottery in Children.OfType<Pottery>())
+            {
+                if (pottery.CanHideLoot)
+                    potteryList.Add(pottery);
+            }
+            potteryList.Shuffle();
+
+            var pendingKeys = RoomNode.BronzeKeys;
+
+            // Randomly hide a bronze key under a pot (Chance = 20%)
+            if (potteryList.Count > 0 && DiceExpression.Dice10.Roll() <= 2)
+            {
+                if (potteryList.GetRandomItem() is Pottery pot)
+                {
+                    DropBronzeKey(pot.Position - new Vector2(0, 2));
+                    pendingKeys--;
+                    if (pendingKeys <= 0)
+                        return;
+                }
+            }
+
+            // Randomly drop a bronze key in the room (Chance = 20%)
+            if (DiceExpression.Dice10.Roll() <= 2)
+            {
+                DropBronzeKey();
+                pendingKeys--;
+                if (pendingKeys <= 0)
+                    return;
+            }
+
+            // Distribute bronze keys among actors
+            while (pendingKeys > 0 && actors.Count > 0)
+            {
+                if (actors.Count > 0)
+                {
+                    actors[0].ItemReward = ItemDefinition.Container.Get(ItemNames.BronzeKey);
+                    actors.RemoveAt(0);
+                    pendingKeys--;
+                    if (pendingKeys <= 0)
+                        return;
+                }
+            }
+
+            // If there are still pending keys, drop them in the room
+            while (pendingKeys > 0)
+            {
+                DropBronzeKey();
+                pendingKeys--;
+            }
+        }
+
+        // DropBronzeKey
+        private void DropBronzeKey(Vector2? position = null)
+        {
+            var key = CreateThingClone<Prop>(ItemNames.BronzeKey);
+            Children.Add(key);
+
+            if (position.HasValue)
+            {
+                key.Position = position.Value;
+            }
+            else if (WalkArea != null)
+            {
+                key.Position = WalkArea.RandomWalkablePoint(Random, 30);
+            }
         }
 
         // GetSpawnPoints
@@ -102,11 +234,73 @@ namespace ScaryCastle
             return cells;
         }
 
+        // LockDoorsAccordingly
+        private void LockDoorsAccordingly()
+        {
+            foreach (var door in doors)
+            {
+                if (RoomNode.LockedDoors.TryGetValue(door.DoorDirection, out LockType lockType))
+                    door.LockType = lockType;
+            }
+        }
+
         // Populate
         private void Populate()
         {
+            SpawnDoors();
             SpawnProps();
             SpawnActors();
+        }
+
+        // PrepareLights
+        private void PrepareLights()
+        {
+            foreach (var door in Doors)
+            {
+                var doorLight = AddLight(door.Name);
+                //doorLight.Ambient = true;
+                doorLight.Color = new Color(240, 181, 65) * .7f;
+                doorLight.Position = door.BoundingBox.Center;
+                doorLight.Scale = new(2, 7);
+            }
+        }
+
+        // PrepareView
+        private void PrepareView()
+        {
+            if (Atlas == null)
+                return;
+
+            var index = 0;
+            while (true)
+            {
+                if (Atlas.FindImage($"View{index + 1}") == null)
+                    break;
+                else
+                    index++;
+            }
+
+            if (index > 0)
+            {
+                var animation = AddAnimation("View");
+                var viewName = $"View{Random.Shared.Next(1, index + 1)}";
+                animation.AddFrame(viewName, 10000);
+
+                var foregroundImageName = viewName + "Foreground";
+                var hasForeground = Atlas.Contains(foregroundImageName);
+                if (!hasForeground)
+                    foregroundImageName = "Foreground";
+                hasForeground = Atlas.Contains(foregroundImageName);
+
+                if (hasForeground)
+                {
+                    foreground.Atlas = Atlas;
+                    foreground.DefaultImageName = foregroundImageName;
+                    foreground.ParallaxFactor = new(1.1f, 1);
+                    //foreground.Position = new(0, 15);
+                    Children.Add(foreground);
+                }
+            }
         }
 
         // RefreshRunModifiers
@@ -196,6 +390,53 @@ namespace ScaryCastle
             }
         }
 
+        // SpawnDoors
+        private void SpawnDoors()
+        {
+            var def = this.RoomNode.Definition;
+
+            // Up
+            if (RoomNode.Up != null && def.DoorUp != null && CreateThingClone<Door>("DoorUp") is Door upDoor)
+            {
+                doors.Add(upDoor);
+                Children.Add(upDoor);
+                upDoor.Position = def.DoorUp.Value;
+                upDoor.TargetRoom = RoomNode.Up.Room;
+            }
+
+            // Left
+            if (RoomNode.Left != null && def.DoorLeft != null && CreateThingClone<Door>("DoorLeft") is Door leftDoor)
+            {
+                doors.Add(leftDoor);
+                Children.Add(leftDoor);
+                leftDoor.Position = def.DoorLeft.Value;
+                leftDoor.TargetRoom = RoomNode.Left.Room;
+            }
+
+            // Right
+            if (RoomNode.Right != null && def.DoorRight != null && CreateThingClone<Door>("DoorRight") is Door rightDoor)
+            {
+                doors.Add(rightDoor);
+                Children.Add(rightDoor);
+                rightDoor.Position = def.DoorRight.Value;
+                rightDoor.TargetRoom = RoomNode.Right.Room;
+            }
+
+            // Down
+            if (RoomNode.Down != null)
+            {
+                if (def.DoorDown != null && CreateThingClone<Door>("DoorDown") is Door downDoor)
+                {
+                    doors.Add(downDoor);
+                    Children.Add(downDoor);
+                    downDoor.Position = def.DoorDown.Value;
+
+                    if (RoomNode.Down != null)
+                        downDoor.TargetRoom = RoomNode.Down.Room;
+                }
+            }
+        }
+
         // SpawnProps
         private void SpawnProps()
         {
@@ -211,7 +452,7 @@ namespace ScaryCastle
 
             if (placeholders.Count > 0)
             {
-                var shuffledPlaceholders = new List<Placeholder>(Placeholders);
+                var shuffledPlaceholders = new List<Placeholder>(placeholders);
                 shuffledPlaceholders.Shuffle(Random);
 
                 foreach (var ph in shuffledPlaceholders)
@@ -457,10 +698,16 @@ namespace ScaryCastle
         protected override void OnActivate()
         {
             base.OnActivate();
+
+            if (!RoomNode.Visited)
+                RoomNode.Visited = true;
+
             foreach (var name in RoomNode.Definition.RunModifiers)
             {
                 Session.RunModifiers.Activate(name);
             }
+
+            Session.StatusHUD.MiniMap.CurrentRoom = RoomNode;
         }
 
         // OnChildAdded
@@ -506,19 +753,19 @@ namespace ScaryCastle
             CustomWidth = (int)BoundingBox.Width;
             CustomHeight = (int)BoundingBox.Height;
 
-            OnPopulating();
+            LockDoorsAccordingly();
             Populate();
-            OnPopulated();
-        }
 
-        // OnPopulating
-        protected virtual void OnPopulating()
-        {
-        }
+            // Prepare doors
+            var doors = new List<Door>(Children.OfType<Door>());
+            for (var i = 0; i < doors.Count; i++)
+            {
+                doors[i].Prepare();
+            }
 
-        // OnPopulated
-        protected virtual void OnPopulated()
-        {
+            PrepareView();
+            PrepareLights();
+            DistributeBronzeKeys();
         }
 
         // OnRefreshAmbientLightSources
@@ -529,6 +776,16 @@ namespace ScaryCastle
         }
 
         #endregion
+
+        // CreateInstance
+        public static ProceduralRoom CreateInstance(GameSession session, RoomNode roomNode)
+        {
+            // Get type from AOT registry
+            if (Activator.CreateInstance(typeof(ProceduralRoom), session, roomNode) is not ProceduralRoom result)
+                throw new InvalidOperationException($"Cannot create instance [{roomNode.Definition.Name}]");
+
+            return result;
+        }
 
         // CreateThingClone
         public T CreateThingClone<T>(string declaredName) where T : GameThing
@@ -541,11 +798,29 @@ namespace ScaryCastle
             return result;
         }
 
+        // Doors
+        public ReadOnlyCollection<Door> Doors { get; }
+
+        // GetPlayerPosition
+        public Vector2 GetPlayerPosition(int previousRoomIndex, out Door? targetDoor)
+        {
+            targetDoor = null;
+
+            foreach (var door in Children.OfType<Door>())
+            {
+                if ((previousRoomIndex == -1 && door.DoorDirection == DoorDirection.Down) ||
+                     door.TargetRoom?.RoomNode.Index == previousRoomIndex)
+                {
+                    targetDoor = door;
+                    return door.GetAnchoredPosition(door.ApproachPosition);
+                }
+            }
+
+            return Vector2.Zero;
+        }
+
         // IsProcedural
         public override bool IsProcedural => true;
-
-        // Placeholders
-        public ReadOnlyCollection<Placeholder> Placeholders { get; }
 
         // Random
         public Random Random { get; }

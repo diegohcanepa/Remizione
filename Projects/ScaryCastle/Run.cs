@@ -180,8 +180,7 @@ namespace ScaryCastle
                     }
                 }
 
-                if (furthestNode != null)
-                    furthestNode.Category = RoomCategory.Boss;
+                furthestNode?.Category = RoomCategory.Boss;
             }
 
             // --- INYECCIÓN DE TREASURE Y STORE (Uso de Dead-Ends o Adosado) ---
@@ -430,12 +429,12 @@ namespace ScaryCastle
         {
             foreach (var node in floorMap.Values)
             {
-                node.RideRoom = RideRoom.CreateInstance(session, node);
+                node.Room = ProceduralRoom.CreateInstance(session, node);
             }
 
             foreach (var node in floorMap.Values)
             {
-                node.RideRoom.Load();
+                node.Room.Load();
             }
         }
 

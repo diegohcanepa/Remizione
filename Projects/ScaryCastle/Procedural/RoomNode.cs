@@ -107,11 +107,11 @@ namespace ScaryCastle
         // LootCount
         public int LootCount { get; set; }
 
-        // RideRoom
-        public RideRoom RideRoom { get; set; } = null!;
-
         // Right
         public RoomNode? Right { get; set; }
+
+        // Room
+        public ProceduralRoom Room { get; set; } = null!;
 
         // SetPlaceholderState
         public void SetPlaceholderState(Placeholder placeholder, PlaceholderState state)

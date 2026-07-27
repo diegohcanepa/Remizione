@@ -206,6 +206,68 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">DoorDown-assets/Door_Castle_Standard_Down_Closed.png</key>
+            <key type="filename">DoorDown-assets/Door_Castle_Standard_Down_Open.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,9,16,18</rect>
+                <key>scale9Paddings</key>
+                <rect>8,9,16,18</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">DoorLeft-assets/DoorLeft_BronzeKey.png</key>
+            <key type="filename">DoorLeft-assets/DoorLeft_GoldenKey.png</key>
+            <key type="filename">DoorLeft-assets/Door_Castle_Gate_Left_Closed.png</key>
+            <key type="filename">DoorLeft-assets/Door_Castle_Gate_Left_Open.png</key>
+            <key type="filename">DoorLeft-assets/Door_Castle_Standard_Left_Closed.png</key>
+            <key type="filename">DoorLeft-assets/Door_Castle_Standard_Left_Open.png</key>
+            <key type="filename">DoorRight-assets/DoorRight_BronzeKey.png</key>
+            <key type="filename">DoorRight-assets/DoorRight_GoldenKey.png</key>
+            <key type="filename">DoorRight-assets/Door_Castle_Gate_Right_Closed.png</key>
+            <key type="filename">DoorRight-assets/Door_Castle_Gate_Right_Open.png</key>
+            <key type="filename">DoorRight-assets/Door_Castle_Standard_Right_Closed.png</key>
+            <key type="filename">DoorRight-assets/Door_Castle_Standard_Right_Open.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,14,8,27</rect>
+                <key>scale9Paddings</key>
+                <rect>4,14,8,27</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">DoorUp-assets/DoorUp_BronzeKey.png</key>
+            <key type="filename">DoorUp-assets/DoorUp_GoldenKey.png</key>
+            <key type="filename">DoorUp-assets/Door_Castle_Gate_Up_Closed.png</key>
+            <key type="filename">DoorUp-assets/Door_Castle_Gate_Up_Open.png</key>
+            <key type="filename">DoorUp-assets/Door_Castle_Standard_Up_Closed.png</key>
+            <key type="filename">DoorUp-assets/Door_Castle_Standard_Up_Open.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,9,17,18</rect>
+                <key>scale9Paddings</key>
+                <rect>8,9,17,18</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Firecracker-assets/Firecracker01.png</key>
             <key type="filename">Firecracker-assets/Firecracker02.png</key>
             <key type="filename">Firecracker-assets/Firecracker03.png</key>
@@ -640,70 +702,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">RideDoorDown-assets/RideDoor_Castle_Standard_Down_Closed.png</key>
-            <key type="filename">RideDoorDown-assets/RideDoor_Castle_Standard_Down_Open.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>8,9,16,18</rect>
-                <key>scale9Paddings</key>
-                <rect>8,9,16,18</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">RideDoorLeft-assets/RideDoorLeft_BronzeKey.png</key>
-            <key type="filename">RideDoorLeft-assets/RideDoorLeft_GoldenKey.png</key>
-            <key type="filename">RideDoorLeft-assets/RideDoor_Castle_Gate_Left_Closed.png</key>
-            <key type="filename">RideDoorLeft-assets/RideDoor_Castle_Gate_Left_Open.png</key>
-            <key type="filename">RideDoorLeft-assets/RideDoor_Castle_Standard_Left_Closed.png</key>
-            <key type="filename">RideDoorLeft-assets/RideDoor_Castle_Standard_Left_Open.png</key>
-            <key type="filename">RideDoorRight-assets/RideDoorRight_BronzeKey.png</key>
-            <key type="filename">RideDoorRight-assets/RideDoorRight_GoldenKey.png</key>
-            <key type="filename">RideDoorRight-assets/RideDoor_Castle_Gate_Right_Closed.png</key>
-            <key type="filename">RideDoorRight-assets/RideDoor_Castle_Gate_Right_Open.png</key>
-            <key type="filename">RideDoorRight-assets/RideDoor_Castle_Right_Closed.png</key>
-            <key type="filename">RideDoorRight-assets/RideDoor_Castle_Right_Open.png</key>
-            <key type="filename">RideDoorRight-assets/RideDoor_Castle_Standard_Right_Closed.png</key>
-            <key type="filename">RideDoorRight-assets/RideDoor_Castle_Standard_Right_Open.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>4,14,8,27</rect>
-                <key>scale9Paddings</key>
-                <rect>4,14,8,27</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">RideDoorUp-assets/RideDoorUp_BronzeKey.png</key>
-            <key type="filename">RideDoorUp-assets/RideDoorUp_GoldenKey.png</key>
-            <key type="filename">RideDoorUp-assets/RideDoor_Castle_Gate_Up_Closed.png</key>
-            <key type="filename">RideDoorUp-assets/RideDoor_Castle_Gate_Up_Open.png</key>
-            <key type="filename">RideDoorUp-assets/RideDoor_Castle_Standard_Up_Closed.png</key>
-            <key type="filename">RideDoorUp-assets/RideDoor_Castle_Standard_Up_Open.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>8,9,17,18</rect>
-                <key>scale9Paddings</key>
-                <rect>8,9,17,18</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">SpearTrap-assets/SpearTrap01.png</key>
             <key type="filename">SpearTrap-assets/SpearTrap02.png</key>
             <key type="filename">SpearTrap-assets/SpearTrap03.png</key>
@@ -896,6 +894,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">WreckingBall-assets/WreckingBallShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,2,14,3</rect>
+                <key>scale9Paddings</key>
+                <rect>7,2,14,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileLists</key>
         <map type="SpriteSheetMap">
@@ -909,10 +922,6 @@
                     <filename>PotteryD-assets</filename>
                     <filename>PotteryE-assets</filename>
                     <filename>RideCar-assets</filename>
-                    <filename>RideDoorDown-assets</filename>
-                    <filename>RideDoorLeft-assets</filename>
-                    <filename>RideDoorRight-assets</filename>
-                    <filename>RideDoorUp-assets</filename>
                     <filename>SpearTrap-assets</filename>
                     <filename>Firecracker-assets</filename>
                     <filename>WaterPuddleA-assets</filename>
@@ -930,6 +939,10 @@
                     <filename>Vent-assets</filename>
                     <filename>GateLever-assets</filename>
                     <filename>WreckingBall-assets</filename>
+                    <filename>DoorDown-assets</filename>
+                    <filename>DoorLeft-assets</filename>
+                    <filename>DoorRight-assets</filename>
+                    <filename>DoorUp-assets</filename>
                 </array>
             </struct>
         </map>

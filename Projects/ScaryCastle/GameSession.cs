@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Xml;
-using Windows.Globalization;
 
 namespace ScaryCastle
 {
@@ -136,7 +135,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(Prop));
             AotTypeRegistry.Register(typeof(Rat));
             AotTypeRegistry.Register(typeof(RedPill));
-            AotTypeRegistry.Register(typeof(RideDoor));
+            AotTypeRegistry.Register(typeof(Door));
             AotTypeRegistry.Register(typeof(Sack));
             AotTypeRegistry.Register(typeof(Skeleton));
             AotTypeRegistry.Register(typeof(SpearTrap));
@@ -501,7 +500,7 @@ namespace ScaryCastle
             {
                 Player.Reheal();
                 Player.Recharge();
-                var startRoom = CurrentRun.FloorMap[new(0, 0)].RideRoom;
+                var startRoom = CurrentRun.FloorMap[new(0, 0)].Room;
                 startRoom.Children.Add(Player);
                 if (startRoom.WalkArea != null)
                     Player.Position = startRoom.WalkArea.Polygon.BoundingRectangleF.Center;
@@ -699,7 +698,7 @@ namespace ScaryCastle
 
         // OutcomeDoor
         [ScriptProperty]
-        public RideDoor? OutcomeDoor => OutcomeTarget as RideDoor;
+        public Door? OutcomeDoor => OutcomeTarget as Door;
 
         // OutcomeTarget
         [ScriptProperty]

@@ -20,7 +20,7 @@ namespace ScaryCastle.Props
         {
             if (Room != null)
             {
-                foreach (var door in Room.Children.OfType<RideDoor>())
+                foreach (var door in Room.Children.OfType<Door>())
                 {
                     if (door.LockType == LockType.GateLever)
                     {

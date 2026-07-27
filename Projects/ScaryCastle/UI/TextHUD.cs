@@ -39,7 +39,7 @@ namespace ScaryCastle
             {
                 Sentence.Draw(gameTime);
 
-                if (session.Room is RideRoom rideRoom && rideRoom.RoomNode.Category == RoomCategory.Boss)
+                if (session.Room is ProceduralRoom rideRoom && rideRoom.RoomNode.Category == RoomCategory.Boss)
                     BossMeter.Draw(gameTime);
             }
         }

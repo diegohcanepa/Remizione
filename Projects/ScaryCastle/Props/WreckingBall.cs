@@ -22,9 +22,10 @@ namespace ScaryCastle
             ActivatingDuration = 0;
             ActiveDuration = 5;
             CooldownDuration = 2;
+            MatchShadowTransform = false;
         }
 
-        #region ISpawnNotification
+        #region ISpawnNotification interface
 
         // OnSpawned
         void ISpawnNotification.OnSpawned(ProceduralRoom room)
@@ -36,6 +37,7 @@ namespace ScaryCastle
             room.Children.Add(crack);
             
             this.hitPosition = Position;
+            this.Shadow.Position = hitPosition;
         }
 
         #endregion
@@ -46,7 +48,7 @@ namespace ScaryCastle
         private void HitFloor()
         {
             PlaySound(SoundNames.WreckingBallImpact);
-            Session.Camera.Shake(TweenStyle.QuadraticInOut, new(0, .8f), 40, 6);
+            Session.Camera.Shake(TweenStyle.QuadraticInOut, new(.08f, 1), 40, 6);
 
             if (Room == null || Session.IsAwaiting || Definition == null)
                 return;
@@ -77,16 +79,26 @@ namespace ScaryCastle
             if (state == TrapState.Idle)
             {
                 Y = 0;
+                Shadow.Scale = Vector2.Zero;
             }
             else if (state == TrapState.Active)
             {
                 Tweens.YTween = FloatTween.Create(TweenStyle.QuadraticIn, Y, hitPosition.Y, 200, HitFloor);
+                Shadow.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.QuadraticIn, Shadow.Scale, Vector2.One, 200);
             }
 
             else if (state == TrapState.Cooldown)
             {
-                Tweens.YTween = FloatTween.Create(TweenStyle.QuadraticIn, Y, 10, 1000);
+                PlaySound(SoundNames.WreckingBallChain);
+                Tweens.YTween = FloatTween.Create(TweenStyle.QuadraticIn, Y, 0, 1000);
+                Shadow.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.QuadraticIn, Shadow.Scale, Vector2.Zero, 1000);
             }
+        }
+
+        // OnUpdate
+        protected override void OnUpdate(GameTime gameTime)
+        {
+            base.OnUpdate(gameTime);
         }
 
         #endregion

@@ -13,7 +13,6 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly Vector2Tween bounceScaleTween = new();
-        private readonly Sprite shadow;
         private readonly FloatTween xTween = new();
 
         #endregion
@@ -30,7 +29,7 @@ namespace ScaryCastle
             this.Definition = PropDefinition.Container.Find(DeclaredName);
 
             // Shadow
-            this.shadow = new Sprite()
+            this.Shadow = new Sprite()
             {
                 Opacity = ColorPalette.ShadowOpacity,
                 PivotOrigin = RectanglePoint.Bottom,
@@ -50,7 +49,7 @@ namespace ScaryCastle
         // InvalidateShadowImage
         private void InvalidateShadowImage()
         {
-            shadow.RenderImage = Atlas?.FindImage(GetDefaultImageName() + "Shadow");
+            Shadow.RenderImage = Atlas?.FindImage(GetDefaultImageName() + "Shadow");
         }
 
         #endregion
@@ -64,13 +63,16 @@ namespace ScaryCastle
             xTween.Start(TweenStyle.QuadraticInOut, X, X - 1, 40, 6);
         }
 
+        // MatchShadowTransform
+        protected bool MatchShadowTransform { get; set; } = true;
+
         // OnDrawShadow
         protected override void OnDrawShadow(GameTime gameTime)
         {
-            if (shadow.IsEmpty)
+            if (Shadow.IsEmpty)
                 base.OnDrawShadow(gameTime);
             else
-                shadow.Draw(gameTime);
+                Shadow.Draw(gameTime);
         }
 
         // OnLoad
@@ -91,13 +93,17 @@ namespace ScaryCastle
         protected override void OnTransform(TransformChange change)
         {
             base.OnTransform(change);
-            shadow?.MatchTransform(Sprite);
+
+            if (MatchShadowTransform)
+                Shadow?.MatchTransform(Sprite);
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
+
+            Shadow.Update(gameTime);
 
             if (bounceScaleTween.IsRunning)
             {
@@ -111,6 +117,9 @@ namespace ScaryCastle
                 X = xTween.CurrentValue;
             }
         }
+
+        // Shadow
+        protected Sprite Shadow { get; }
 
         #endregion
 

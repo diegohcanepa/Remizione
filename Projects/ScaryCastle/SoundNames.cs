@@ -50,6 +50,7 @@
         internal const string VendingMachine = nameof(VendingMachine);
         internal const string WhooshA = nameof(WhooshA);
         internal const string WoodDebris = nameof(WoodDebris);
+        internal const string WreckingBallChain = nameof(WreckingBallChain);
         internal const string WreckingBallImpact = nameof(WreckingBallImpact);
     }
 }

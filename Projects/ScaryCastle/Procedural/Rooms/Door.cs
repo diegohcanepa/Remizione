@@ -7,33 +7,33 @@ using System;
 namespace ScaryCastle
 {
     /// <summary>
-    /// RideDoor
+    /// Door
     /// </summary>
-    public class RideDoor : Openable
+    public class Door : Openable
     {
         private readonly Sprite lockImage = new();
 
         #region Constructor
 
         // Constructor
-        public RideDoor(GameSession session, string name)
+        public Door(GameSession session, string name)
             : base(session, name)
         {
             Atlas = Atlases.Props;
 
-            if (name.StartsWith("RideDoorUp", StringComparison.OrdinalIgnoreCase))
+            if (name.StartsWith("DoorUp", StringComparison.OrdinalIgnoreCase))
             {
                 DoorDirection = DoorDirection.Up;
             }
-            else if (name.StartsWith("RideDoorDown", StringComparison.OrdinalIgnoreCase))
+            else if (name.StartsWith("DoorDown", StringComparison.OrdinalIgnoreCase))
             {
                 DoorDirection = DoorDirection.Down;
             }
-            else if (name.StartsWith("RideDoorLeft", StringComparison.OrdinalIgnoreCase))
+            else if (name.StartsWith("DoorLeft", StringComparison.OrdinalIgnoreCase))
             {
                 DoorDirection = DoorDirection.Left;
             }
-            else if (name.StartsWith("RideDoorRight", StringComparison.OrdinalIgnoreCase))
+            else if (name.StartsWith("DoorRight", StringComparison.OrdinalIgnoreCase))
             {
                 DoorDirection = DoorDirection.Right;
             }
@@ -164,8 +164,8 @@ namespace ScaryCastle
         {
             if (TargetRoom != null)
             {
-                int roomIndex = Room is RideRoom rideRoom ? rideRoom.RoomNode.Index : -1;
-                var pos = TargetRoom.GetPlayerPosition(roomIndex, out RideDoor? door);
+                int roomIndex = Room is ProceduralRoom proceduralRoom ? proceduralRoom.RoomNode.Index : -1;
+                var pos = TargetRoom.GetPlayerPosition(roomIndex, out Door? door);
 
                 if (door != null)
                 {
@@ -188,25 +188,25 @@ namespace ScaryCastle
         [ScriptMethod]
         public void Prepare()
         {
-            if (Room is RideRoom rideRoom)
+            if (Room is ProceduralRoom proceduralRoom)
             {
                 Sprite.ClearAnimations();
 
                 var assetPrefix = string.Empty;
                 
-                if (DoorDirection == DoorDirection.Up && rideRoom.RoomNode.Up != null)
+                if (DoorDirection == DoorDirection.Up && proceduralRoom.RoomNode.Up != null)
                 {
-                    assetPrefix = GetVisualAssetName(rideRoom.RoomNode, rideRoom.RoomNode.Up, DoorDirection);
+                    assetPrefix = GetVisualAssetName(proceduralRoom.RoomNode, proceduralRoom.RoomNode.Up, DoorDirection);
                 }
-                else if (DoorDirection == DoorDirection.Right && rideRoom.RoomNode.Right != null)
+                else if (DoorDirection == DoorDirection.Right && proceduralRoom.RoomNode.Right != null)
                 {
-                    assetPrefix = GetVisualAssetName(rideRoom.RoomNode, rideRoom.RoomNode.Right, DoorDirection);
+                    assetPrefix = GetVisualAssetName(proceduralRoom.RoomNode, proceduralRoom.RoomNode.Right, DoorDirection);
                 }
-                else if (DoorDirection == DoorDirection.Down && rideRoom.RoomNode.Down != null)
+                else if (DoorDirection == DoorDirection.Down && proceduralRoom.RoomNode.Down != null)
                 {
-                    assetPrefix = GetVisualAssetName(rideRoom.RoomNode, rideRoom.RoomNode.Down, DoorDirection);
+                    assetPrefix = GetVisualAssetName(proceduralRoom.RoomNode, proceduralRoom.RoomNode.Down, DoorDirection);
 
-                    //if (!rideRoom.HasAmbientLightSources)
+                    //if (!proceduralRoom.HasAmbientLightSources)
                     {
                         this.AttachedLight = new("Light")
                         {
@@ -219,15 +219,15 @@ namespace ScaryCastle
                         AttachedLightPosition = new(16, 20);
                     }
                 }
-                else if (DoorDirection == DoorDirection.Left && rideRoom.RoomNode.Left != null)
+                else if (DoorDirection == DoorDirection.Left && proceduralRoom.RoomNode.Left != null)
                 {
-                    assetPrefix = GetVisualAssetName(rideRoom.RoomNode, rideRoom.RoomNode.Left, DoorDirection);
+                    assetPrefix = GetVisualAssetName(proceduralRoom.RoomNode, proceduralRoom.RoomNode.Left, DoorDirection);
                 }
 
                 CloseSound = Sound.Find(SoundNames.DoorGenericClose);
                 OpenSound = Sound.Find(SoundNames.DoorGenericOpen);
 
-                var prefix = $"RideDoor_{assetPrefix}_{DoorDirection}_";
+                var prefix = $"Door_{assetPrefix}_{DoorDirection}_";
 
                 var animation = AddAnimation("Closed");
                 animation.AddFrame(prefix + animation.Name, 1000);
@@ -240,7 +240,7 @@ namespace ScaryCastle
         }
 
         // TargetRoom
-        public RideRoom? TargetRoom { get; set; }
+        public ProceduralRoom? TargetRoom { get; set; }
 
         // TargetRoomPosition
         public Vector2 TargetRoomPosition { get; set; }
