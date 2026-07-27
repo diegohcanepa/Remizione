@@ -867,7 +867,7 @@ namespace ScaryCastle
                         if (thing.RuntimeHotspot.BoundingRectangleF.Intersects(RuntimeHotspot.BoundingRectangleF))
                             return true;
 
-                        if (thing.DistanceTo(this) <= 15)
+                        if (thing.DistanceTo(this) <= 5)
                             return true;
                     }
                 }
@@ -978,6 +978,7 @@ namespace ScaryCastle
         }
 
         // IsDead
+        [ScriptProperty]
         public bool IsDead => (HP <= 0 && MaxHP > 0) || (HP == int.MinValue);
 
         // IsEmittingLight

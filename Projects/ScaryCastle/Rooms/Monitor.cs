@@ -101,7 +101,7 @@ namespace ScaryCastle
                 lines[i].Update(gameTime);
             }
 
-            MouseCursor.State = IsTypingText ? MouseCursorState.Wait : MouseCursorState.Hand;
+            MouseCursor.Icon = IsTypingText ? MouseCursorIcon.Wait : MouseCursorIcon.Hand;
         }
 
         #endregion

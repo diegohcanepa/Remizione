@@ -64,6 +64,7 @@
     },
     {
       "name": "SpearTrap",
+      "difficulty": "Normal",
       "tags": "Trap",
       "effects": [
         {
@@ -122,6 +123,19 @@
       "placements": [
         "WallFrontHang"      
       ]
-    }    
+    },    
+    {
+      "name": "WreckingBall",
+      "tags": "Trap",
+      "effects": [
+        {
+          "context": "Contact",
+          "effectType": "Damage",
+          "amount": "100",
+          "comicText": "AghRed"
+        }
+      ],
+      "placements": ["Ceiling"]
+    }
   ]
 }

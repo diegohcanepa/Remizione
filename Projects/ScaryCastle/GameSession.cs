@@ -51,7 +51,6 @@ namespace ScaryCastle
         {
             this.Game = game;
             this.RunModifiers = new(this);
-            this.PlayerActions = new(this) { Capacity = 3 };
             this.PlayerInventory = new(this);
             this.Environment = new Environment();
             this.LootGenerator = new(this);
@@ -144,6 +143,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(StinkyRat));
             AotTypeRegistry.Register(typeof(Torch));
             AotTypeRegistry.Register(typeof(Trunk));
+            AotTypeRegistry.Register(typeof(WreckingBall));
 
             AotTypeRegistry.Register("add-dialog-option", typeof(AddDialogOptionCommand));
             AotTypeRegistry.Register("add-hole", typeof(AddHoleCommand), CodingContext.EntityDeclaration);
@@ -490,9 +490,6 @@ namespace ScaryCastle
             CurrentRun = new Run(this, Seed, 15);
 
             PlayerInventory.Capacity = GameSettings.InitialInventoryCapacity;
-            PlayerActions.Add(ItemNames.Lift);
-            PlayerActions.Add(ItemNames.Headbutt);
-
             PlayerInventory.Add(ItemNames.BargainCross);
 
             if (RunCount == 0)
@@ -521,7 +518,6 @@ namespace ScaryCastle
         public List<Actor> Bosses { get; } = [];
 
         // BronzeKeys
-        [ScriptProperty]
         public int BronzeKeys
         {
             get;
@@ -585,7 +581,6 @@ namespace ScaryCastle
             BronzeKeys = 0;
             Coins = 0;
             GoldenKeys = 0;
-            PlayerActions.Clear();
             PlayerInventory.Clear();
             PlayerStats.Reset();
             InteractionContext.Reset();
@@ -595,8 +590,8 @@ namespace ScaryCastle
             {
                 Player.Reheal();
                 Player.Recharge();
-                Player.MaxEnergy = 3;
-                Player.Energy = 3;
+                Player.MaxEnergy = 5;
+                Player.Energy = 5;
                 Player.ClearCondition();
             }
 
@@ -736,9 +731,6 @@ namespace ScaryCastle
                 }
             }
         }
-
-        // PlayerActions
-        public ItemContainer PlayerActions { get; }
 
         // PlayerInventory
         public ItemContainer PlayerInventory { get; }

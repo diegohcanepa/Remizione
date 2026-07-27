@@ -8,6 +8,7 @@
         internal const string Charge = nameof(Charge);
         internal const string Death = nameof(Death);
         internal const string Default = nameof(Default);
+        internal const string Fear = nameof(Fear);
         internal const string Hit = nameof(Hit);
         internal const string Hurt = nameof(Hurt);
         internal const string Idle = nameof(Idle);

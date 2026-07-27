@@ -13,6 +13,7 @@ namespace ScaryCastle
         public PlayerStats()
         {
             AmbientLight = AddStat(1);
+            Fear = AddStat(1);
             Luck = AddStat(1);
         }
 
@@ -30,6 +31,9 @@ namespace ScaryCastle
 
         // AmbientLight
         public Stat AmbientLight { get; }
+
+        // Fear
+        public Stat Fear { get; }
 
         // Luck
         public Stat Luck { get; }

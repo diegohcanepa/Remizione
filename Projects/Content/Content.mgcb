@@ -1537,6 +1537,13 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/WoodDebris1.wav;Audio/FX/WoodDebris1
 
+#begin Audio/FX/WreckingBallImpact.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/WreckingBallImpact.wav;Audio/FX/WreckingBallImpact
+
 #begin Audio/FX/ZapLoop.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

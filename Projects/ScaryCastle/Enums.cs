@@ -139,8 +139,11 @@ namespace ScaryCastle
     // MessageKind
     public enum MessageKind { CannotPlaceItem, HandsFull, InventoryFull, ItemDiscarded, LiftNotAllowed, NotEnoughCoins, NotEnoughFaith, OutOfReach, OutOfLine, PathCleared, ExtraEnergy, ExtraHeart }
 
-    // MouseCursorState
-    public enum MouseCursorState { Cross, Attack, Down, Eye, Hand, Left, Lift, Magnifier, Right, PickUp, Skull, Talk, Up, Wait }
+    // MeterColor
+    public enum MeterColor { Green, Purple, White }
+
+    // MouseCursorIcon
+    public enum MouseCursorIcon { Cross, Attack, Down, Eye, Hand, Left, Lift, Magnifier, Right, PickUp, Skull, Talk, Up, Wait }
 
     // PlaceholderState
     public enum PlaceholderState { Pending, GateLever, Used }
@@ -201,6 +204,9 @@ namespace ScaryCastle
 
     // TestPolygon
     public enum TestPolygon { Hotspot, Collider }
+
+    // TrapState
+    public enum TrapState { Idle, Warning, Activating, Active, Cooldown, Disabled }
 
     // UIControlGroupLayoutStyle
     public enum UIControlGroupLayoutStyle { Vertically, Horizontally }

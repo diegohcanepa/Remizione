@@ -83,7 +83,12 @@
           "placement": "Floor",
           "fillChance": 1,
           "allowTags": "GateLever"
-        }
+        },
+        {
+          "position": "81,73",
+          "placement": "Ceiling",
+          "allowTags": "Trap"
+        }        
       ],
       "walkArea": "199,43;232,109;10,109;42,44;54,44;59,47;78,47;84,44;156,44;162,47;179,47;184,43",
       "walls": [

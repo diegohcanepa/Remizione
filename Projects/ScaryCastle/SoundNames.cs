@@ -13,6 +13,7 @@
         internal const string DoorGateOpen = nameof(DoorGateOpen);
         internal const string DoorGenericClose = nameof(DoorGenericClose);
         internal const string DoorGenericOpen = nameof(DoorGenericOpen);
+        internal const string EdmundScream = nameof(EdmundScream);
         internal const string StatusEffectDamage = nameof(StatusEffectDamage);
         internal const string Error = nameof(Error);
         internal const string FootstepA = nameof(FootstepA);
@@ -49,5 +50,6 @@
         internal const string VendingMachine = nameof(VendingMachine);
         internal const string WhooshA = nameof(WhooshA);
         internal const string WoodDebris = nameof(WoodDebris);
+        internal const string WreckingBallImpact = nameof(WreckingBallImpact);
     }
 }

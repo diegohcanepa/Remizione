@@ -19,7 +19,7 @@ namespace ScaryCastle
             // Modal speech text active
             if (SpeechText.ModalInstance != null)
             {
-                MouseCursor.State = MouseCursorState.Talk;
+                MouseCursor.Icon = MouseCursorIcon.Talk;
                 return;
             }
 
@@ -28,24 +28,24 @@ namespace ScaryCastle
             {
                 if (context.Session.AwaitingScript?.CurrentStatement is SayCommand)
                 {
-                    MouseCursor.State = MouseCursorState.Talk;
+                    MouseCursor.Icon = MouseCursorIcon.Talk;
                     return;
                 }
 
                 if (EngendroGame.Instance.SceneManager.CurrentScene is DialogBlockScene)
                 {
-                    MouseCursor.State = MouseCursorState.Cross;
+                    MouseCursor.Icon = MouseCursorIcon.Cross;
                     return;
                 }
 
                 if (context.Session.ActiveNPC == null)
                 {
                     if (context.Session.IsCurrentScene)
-                        MouseCursor.State = MouseCursorState.Wait;
+                        MouseCursor.Icon = MouseCursorIcon.Wait;
                 }
                 else if (context.Session.ActiveNPC.CombatDecisionType is CombatDecisionType.Attack or CombatDecisionType.Charge or CombatDecisionType.Curse)
                 {
-                    MouseCursor.State = MouseCursorState.Skull;
+                    MouseCursor.Icon = MouseCursorIcon.Skull;
                 }
 
                 return;
@@ -61,7 +61,7 @@ namespace ScaryCastle
                 if (context.Target != null)
                     SyncMouseCursor(context.Target.Verb);
                 else
-                    MouseCursor.State = MouseCursorState.Cross;
+                    MouseCursor.Icon = MouseCursorIcon.Cross;
             }
         }
 
@@ -72,52 +72,52 @@ namespace ScaryCastle
             {
                 // Attack
                 case Verb.Attack:
-                    MouseCursor.State = MouseCursorState.Attack;
+                    MouseCursor.Icon = MouseCursorIcon.Attack;
                     break;
 
                 // Examine
                 case Verb.Examine:
-                    MouseCursor.State = MouseCursorState.Eye;
+                    MouseCursor.Icon = MouseCursorIcon.Eye;
                     break;
 
                 // GoDown
                 case Verb.GoDown:
-                    MouseCursor.State = MouseCursorState.Down;
+                    MouseCursor.Icon = MouseCursorIcon.Down;
                     break;
 
                 // GoLeft
                 case Verb.GoLeft:
-                    MouseCursor.State = MouseCursorState.Left;
+                    MouseCursor.Icon = MouseCursorIcon.Left;
                     break;
 
                 // GoRight
                 case Verb.GoRight:
-                    MouseCursor.State = MouseCursorState.Right;
+                    MouseCursor.Icon = MouseCursorIcon.Right;
                     break;
 
                 // GoUp
                 case Verb.GoUp:
-                    MouseCursor.State = MouseCursorState.Up;
+                    MouseCursor.Icon = MouseCursorIcon.Up;
                     break;
 
                 // Lift
                 case Verb.Lift:
-                    MouseCursor.State = MouseCursorState.Lift;
+                    MouseCursor.Icon = MouseCursorIcon.Lift;
                     break;
 
                 // Pickup
                 case Verb.PickUp:
-                    MouseCursor.State = MouseCursorState.PickUp;
+                    MouseCursor.Icon = MouseCursorIcon.PickUp;
                     break;
 
                 // Talk
                 case Verb.Talk:
-                    MouseCursor.State = MouseCursorState.Talk;
+                    MouseCursor.Icon = MouseCursorIcon.Talk;
                     break;
 
                 // Use
                 case Verb.Use:
-                    MouseCursor.State = MouseCursorState.Hand;
+                    MouseCursor.Icon = MouseCursorIcon.Hand;
                     break;
 
                 default:

@@ -1,6 +1,4 @@
-﻿/*
-
-using Engendro;
+﻿using Engendro;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -22,12 +20,21 @@ namespace ScaryCastle
         #endregion
 
         // Constructor
-        public Meter(float x, float y, RunModifierKind modifierKind)
+        public Meter(Vector2 position, MeterColor color)
+            : this(position.X, position.Y, color)
         {
-            if (modifierKind == RunModifierKind.Darkness)
-                this.images = new(Atlases.UI.PoisonMeter);
-            else
-                throw new InvalidOperationException();
+        }
+
+        // Constructor
+        public Meter(float x, float y, MeterColor color)
+        {
+            this.images = color switch
+            {
+                MeterColor.Green => Atlases.UI.MeterGreen,
+                MeterColor.Purple => Atlases.UI.MeterPurple,
+                MeterColor.White => Atlases.UI.MeterWhite,
+                _ => throw new NotImplementedException(),
+            };
 
             for (var i = 0; i < MaximumValue; i++)
             {
@@ -37,8 +44,6 @@ namespace ScaryCastle
             }
 
             Refresh();
-
-            Value = 3;
         }
 
         #region Private members
@@ -109,7 +114,7 @@ namespace ScaryCastle
         public bool IsFull => Value == MaximumValue;
 
         // MaximumValue
-        public int MaximumValue { get; } = 10;
+        public int MaximumValue { get; set; } = 10;
 
         // Value
         public int Value
@@ -117,7 +122,7 @@ namespace ScaryCastle
             get;
             set
             {
-                if (Math.Clamp(value, 0, MaximumValue) != field)
+                if (value != field && Math.Clamp(value, 0, MaximumValue) != field)
                 {
                     field = Math.Clamp(value, 0, MaximumValue);
                     Refresh();
@@ -126,5 +131,3 @@ namespace ScaryCastle
         }
     }
 }
-
-*/

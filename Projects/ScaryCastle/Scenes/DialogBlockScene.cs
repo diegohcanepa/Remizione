@@ -186,7 +186,7 @@ namespace ScaryCastle
         protected override void OnLoadContent()
         {
             base.OnLoadContent();
-            MouseCursor.State = MouseCursorState.Cross;
+            MouseCursor.Icon = MouseCursorIcon.Cross;
             InvalidateOptions();
         }
 

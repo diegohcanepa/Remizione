@@ -2,7 +2,6 @@
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace ScaryCastle
 {
@@ -15,17 +14,16 @@ namespace ScaryCastle
 
         private readonly Sprite[] amounts = new Sprite[ItemContainer.MaximumCapacity];
         private bool autoHide;
-        private const int autoHideThreshold = 105;
-        private RectangleF goalRect;
         private readonly TextSprite goalText;
         private readonly Sprite[] icons = new Sprite[ItemContainer.MaximumCapacity];
         private readonly TextSprite itemLabel;
         private Item? lastSelectedItem;
         private int lastSeenContainerVersion = -1;
         private int lastSeenRun = -1;
+        private readonly Sprite scroll = new(Atlases.UI.GetImage("Scroll")) { PivotOrigin = RectanglePoint.Top, Position = Screen.HUDArea.GetPoint(RectanglePoint.Top) };
         private readonly Sprite[] shadows = new Sprite[ItemContainer.MaximumCapacity];
         private readonly Sprite[] slots = new Sprite[ItemContainer.MaximumCapacity];
-
+        
         #endregion
 
         #region Constructor
@@ -43,7 +41,7 @@ namespace ScaryCastle
                 {
                     Opacity = .8f,
                     PivotOrigin = RectanglePoint.LeftBottom,
-                    Y = Screen.Area.Bottom - 17
+                    Y = Screen.Area.Bottom - 14
                 };
 
                 icons[i] = new()
@@ -65,7 +63,7 @@ namespace ScaryCastle
                 amounts[i] = new Sprite()
                 {
                     PivotOrigin = RectanglePoint.Top,
-                    Y = slots[i].BoundingBox.Center.Y + 7,
+                    Y = slots[i].BoundingBox.Center.Y + 6,
                     Scale = ScaleInfo.UIElement.Medium
                 };
             }
@@ -75,21 +73,23 @@ namespace ScaryCastle
             // Item name
             itemLabel = new(Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Highlight,
+                Color = ColorPalette.Text.MouseCursor,
                 PivotOrigin = RectanglePoint.Bottom,
-                Position = slots[0].BoundingBox.GetPoint(RectanglePoint.Top, 0, -2),
-                Scale = ScaleInfo.Text.ExtraLarge
+                Position = slots[0].BoundingBox.GetPoint(RectanglePoint.Top, 0, -1),
+                Scale = ScaleInfo.Text.VeryLarge
             };
 
             // GoalText
-            goalText = new(Fonts.CommonOutline)
+            goalText = new(Fonts.Common)
             {
-                Color = ColorPalette.Text.TerraLight,
-                MaximumWidth = 140,
+                Color = ColorPalette.Text.Highlight * .7f,
+                MaximumWidth = 100,
                 Multiline = true,
-                PivotOrigin = RectanglePoint.Top,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.Top),
-                Scale = ScaleInfo.Text.VeryLarge
+                PivotOrigin = RectanglePoint.LeftTop,
+                Position = scroll.BoundingBox.GetPoint(RectanglePoint.LeftTop, 10, 4.5f),
+                Scale = ScaleInfo.Text.Large,
+                ShadowColor = ColorPalette.Shadow,
+                ShadowOffset = new(.5f),
             };
         }
 
@@ -102,7 +102,7 @@ namespace ScaryCastle
         {
             if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
             {
-                if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y < autoHideThreshold)
+                if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y < AutoHideThreshold)
                 {
                     MouseCursor.PerformClick(false);
                     Game.SceneManager.Pop();
@@ -123,6 +123,7 @@ namespace ScaryCastle
                 }
             }
 
+            /*
             if (InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
             {
                 if (GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item item)
@@ -136,6 +137,7 @@ namespace ScaryCastle
                     Game.SceneManager.Pop();
                 }
             }
+            */
 
             return false;
         }
@@ -191,6 +193,7 @@ namespace ScaryCastle
             for (var i = 0; i < ItemContainer.Count; i++)
             {
                 icons[i].Scale = ScaleInfo.UIElement.Medium;
+                shadows[i].Scale = ScaleInfo.UIElement.Medium;
             }
         }
 
@@ -202,7 +205,7 @@ namespace ScaryCastle
         protected override void OnActivate()
         {
             base.OnActivate();
-            MouseCursor.State = MouseCursorState.Cross;
+            MouseCursor.Icon = MouseCursorIcon.Cross;
             Reset();
         }
 
@@ -214,8 +217,10 @@ namespace ScaryCastle
 
             Game.SpriteBatch.Begin(Game.Camera);
 
-            Game.Shapes.DrawRectangle(Screen.Area, ColorPalette.SceneShade * .5f);
-            goalText.Draw(gameTime);
+            //goalWindow.Draw(gameTime);
+
+            //scroll.Draw(gameTime);
+            //goalText.Draw(gameTime);
 
             for (var i = 0; i < ItemContainer.Capacity; i++)
             {
@@ -231,14 +236,11 @@ namespace ScaryCastle
                 icons[i].Draw(gameTime);
                 amounts[i].Draw(gameTime);
             }
-            Game.SpriteBatch.End();
 
             if (lastSelectedItem != null)
-            {
-                Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
                 itemLabel.Draw(gameTime);
-                Game.SpriteBatch.End();
-            }
+
+            Game.SpriteBatch.End();
         }
 
         // OnHandleInput
@@ -273,8 +275,6 @@ namespace ScaryCastle
             {
                 lastSeenRun = ItemContainer.Session.RunCount;
                 goalText.Text = TextRepository.GetValue($"RunGoal.{ItemContainer.Session.RunCount + 1}");
-                goalRect = goalText.BoundingBox;
-                goalRect.Inflate(2, 2);
             }
         }
 
@@ -290,7 +290,7 @@ namespace ScaryCastle
         {
             if (autoHide)
             {
-                if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y < autoHideThreshold)
+                if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y < AutoHideThreshold)
                 {
                     Game.SceneManager.Pop();
                     return;
@@ -298,7 +298,7 @@ namespace ScaryCastle
             }
             else
             {
-                autoHide = InputManager.DefaultPlayer.Mouse.VirtualPosition.Y >= autoHideThreshold;
+                autoHide = InputManager.DefaultPlayer.Mouse.VirtualPosition.Y >= AutoHideThreshold;
             }
 
             if (GetSelectedItem() is Item item)
@@ -306,13 +306,17 @@ namespace ScaryCastle
                 if (item != lastSelectedItem)
                 {
                     if (lastSelectedItem?.Index >= 0)
+                    {
                         icons[lastSelectedItem.Index].Scale = ScaleInfo.UIElement.Medium;
+                        shadows[lastSelectedItem.Index].Scale = ScaleInfo.UIElement.Medium;
+                    }
                     else
                         lastSelectedItem = null;
 
                     itemLabel.X = slots[item.Index].BoundingBox.Center.X;
                     itemLabel.Text = item.Definition.DisplayName;
                     icons[item.Index].Scale = ScaleInfo.InventoryHeldItem;
+                    shadows[item.Index].Scale = ScaleInfo.InventoryHeldItem;
                     itemLabel.Tag = item;
                     lastSelectedItem = item;
                 }
@@ -320,12 +324,19 @@ namespace ScaryCastle
             else if (lastSelectedItem != null)
             {
                 if (lastSelectedItem.Index >= 0)
+                {
                     icons[lastSelectedItem.Index].Scale = ScaleInfo.UIElement.Medium;
+                    shadows[lastSelectedItem.Index].Scale = ScaleInfo.UIElement.Medium;
+                }
+
                 lastSelectedItem = null;
             }
         }
 
         #endregion
+
+        // AutoHideThreshold
+        public const int AutoHideThreshold = 105;
 
         // ItemContainer
         public ItemContainer ItemContainer

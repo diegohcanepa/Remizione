@@ -17,16 +17,17 @@ namespace ScaryCastle
             BossMeterAmount = this[nameof(BossMeterAmount)];
             BronzeKeyIcon = this[nameof(BronzeKeyIcon)];
             CheckMark = this[nameof(CheckMark)];
+            CloseWindowButton = this[nameof(CloseWindowButton)];
             Coin = this[nameof(Coin)];
             CoinIcon = this[nameof(CoinIcon)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
-            CurseMeter = CreateReadOnlyCollection(nameof(CurseMeter), 0, 9);
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
             DialogOptionBullet = this[nameof(DialogOptionBullet)];
             DiscardItemIcon = this[nameof(DiscardItemIcon)];
             FaithIcon = this[nameof(FaithIcon)];
             FaithMeter = CreateReadOnlyCollection(nameof(FaithMeter), 0, 5);
+            FearIcon = this[nameof(FearIcon)];
             GoldenKeyIcon = this[nameof(GoldenKeyIcon)];
             GooIcon = this[nameof(GooIcon)];
             GreenHearts = CreateReadOnlyCollection(nameof(GreenHearts), 1, 4);
@@ -38,9 +39,12 @@ namespace ScaryCastle
             MiniMapCoin = this[nameof(MiniMapCoin)];
             MiniMapCoinAndLoot = this[nameof(MiniMapCoinAndLoot)];
             MiniMapLoot = this[nameof(MiniMapLoot)];
+            MouseRightButtonIcon = this[nameof(MouseRightButtonIcon)];
             PickupShadow = this[nameof(PickupShadow)];
             Pixel = this[nameof(Pixel)];
-            PoisonMeter = CreateReadOnlyCollection(nameof(PoisonMeter), 0, 5);
+            MeterGreen = CreateReadOnlyCollection("GreenMeter", 0, 5);
+            MeterPurple = CreateReadOnlyCollection("PurpleMeter", 0, 5);
+            MeterWhite = CreateReadOnlyCollection("WhiteMeter", 0, 5);
             PopupContainer = this[nameof(PopupContainer)];
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
             PurpleHearts = CreateReadOnlyCollection(nameof(PurpleHearts), 1, 4);
@@ -82,11 +86,11 @@ namespace ScaryCastle
         // CountdownSkullIcon
         public AtlasImage CountdownSkullIcon { get; }
 
+        // CloseWindowButton
+        public AtlasImage CloseWindowButton { get; }
+
         // CreditsBar
         public AtlasImage CreditsBar { get; }
-
-        // CurseMeter
-        public ReadOnlyCollection<AtlasImage> CurseMeter { get; }
 
         // DialogArrowLarge
         public AtlasImage DialogArrowLarge { get; }
@@ -102,6 +106,9 @@ namespace ScaryCastle
 
         // FaithMeter
         public ReadOnlyCollection<AtlasImage> FaithMeter { get; }
+
+        // FearIcon
+        public AtlasImage FearIcon { get; }
 
         // GoldenKeyIcon
         public AtlasImage GoldenKeyIcon { get; }
@@ -127,6 +134,15 @@ namespace ScaryCastle
         // MessageContainer
         public AtlasImage MessageContainer { get; }
 
+        // MeterGreen
+        public ReadOnlyCollection<AtlasImage> MeterGreen { get; }
+
+        // MeterPurple
+        public ReadOnlyCollection<AtlasImage> MeterPurple { get; }
+
+        // MeterWhite
+        public ReadOnlyCollection<AtlasImage> MeterWhite { get; }
+
         // MiniMapCoin
         public AtlasImage MiniMapCoin { get; }
 
@@ -136,14 +152,14 @@ namespace ScaryCastle
         // MiniMapLoot
         public AtlasImage MiniMapLoot { get; }
 
+        // MouseRightButtonIcon
+        public AtlasImage MouseRightButtonIcon { get; }
+
         // PickupShadow
         public AtlasImage PickupShadow { get; }
 
         // Pixel
         public AtlasImage Pixel { get; }
-
-        // PoisonMeter
-        public ReadOnlyCollection<AtlasImage> PoisonMeter { get; }
 
         // PopupContainer
         public AtlasImage PopupContainer { get; }

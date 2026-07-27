@@ -11,7 +11,8 @@ namespace ScaryCastle
     public sealed class ItemInfoScene : Scene
     {
         private bool allowDiscard;
-        private readonly UIButton button;
+        private readonly UIButton closeButton;
+        private readonly UIButton discardButton;
         private readonly Sprite container;
         private readonly Sprite image;
         private readonly Sprite imageShadow;
@@ -81,8 +82,16 @@ namespace ScaryCastle
                 ShadowOffset = new(.5f),
             };
 
-            // Button
-            this.button = new(null, 1.5f)
+            // Close button
+            this.closeButton = new(null)
+            {
+                ImageName = nameof(Atlases.UI.CloseWindowButton),
+                PivotOrigin = RectanglePoint.Center,
+                Position = container.BoundingBox.GetPoint(RectanglePoint.RightTop)
+            };
+
+            // Discard button
+            this.discardButton = new(null, 1.5f)
             {
                 ImageName = nameof(Atlases.UI.DiscardItemIcon),
                 PivotOrigin = RectanglePoint.RightTop,
@@ -119,7 +128,7 @@ namespace ScaryCastle
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
-            Game.Shapes.DrawRectangle(Screen.Area, ColorPalette.SceneShade);
+            Game.Shapes.DrawRectangle(Screen.Area, Color.Black);
             container.Draw(gameTime);
             imageShadow.Draw(gameTime);
             image.Draw(gameTime);
@@ -130,8 +139,10 @@ namespace ScaryCastle
             descriptionText.Draw(gameTime);
             Game.SpriteBatch.End();
 
+            closeButton.Draw(gameTime);
+
             if (allowDiscard)
-                button.Draw(gameTime);
+                discardButton.Draw(gameTime);
         }
 
         // OnHandleInput
@@ -139,7 +150,7 @@ namespace ScaryCastle
         {
             if (allowDiscard)
             {
-                if (button.TestPressed(PlayerIndex.One))
+                if (discardButton.TestPressed(PlayerIndex.One))
                 {
                     item?.Remove();
                     session.InteractionContext.HeldItem = null;
@@ -158,8 +169,10 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            closeButton.Update(gameTime);
+
             if (allowDiscard)
-                button.Update(gameTime);
+                discardButton.Update(gameTime);
 
             itemNameText.Update(gameTime);
             descriptionText.Update(gameTime);

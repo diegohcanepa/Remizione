@@ -493,10 +493,7 @@ namespace ScaryCastle
             if (EnforceTurn)
             {
                 EnforceTurn = false;
-
-
-
-                Session.ProcessTurn(PixelsMoved > 80 ? -1 : 0);
+                Session.ProcessTurn(PixelsMoved > 80 ? 1 : 0);
             }
         }
 
@@ -817,7 +814,7 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     var previousValue = field;
-                    field = int.Clamp(value, 0, MaxEnergy);
+                    field = Math.Clamp(value, 0, MaxEnergy);
                     OnEnergyChanged(previousValue);
                 }
             }
@@ -962,8 +959,14 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = value;
-                    if (HP > field)
-                        HP = field;
+                    if (Energy == 0)
+                    {
+                        Energy = value;
+                    }
+                    else if (Energy > field)
+                    {
+                        Energy = field;
+                    }
                 }
             }
         }

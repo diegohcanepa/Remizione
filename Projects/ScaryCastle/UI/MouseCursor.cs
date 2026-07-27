@@ -39,12 +39,12 @@ namespace ScaryCastle
             };
 
             const string prefix = "MouseCursor";
-            var names = Enum.GetNames<MouseCursorState>();
+            var names = Enum.GetNames<MouseCursorIcon>();
 
             cursorImages = new AtlasImage[names.Length];
             for (var i = 0; i < cursorImages.Length; i++)
             {
-                var imageName = $"{prefix}{names[i]}";
+                var imageName = $"{prefix}{names[i]}Icon";
                 cursorImages[i] = Atlases.UI.GetImage(imageName);
             }
 
@@ -90,9 +90,9 @@ namespace ScaryCastle
         // InvalidateCursorImage
         private static void InvalidateCursorImage()
         {
-            cursorSprite.RenderImage = CustomImage ?? cursorImages[(int)State];
+            cursorSprite.RenderImage = CustomImage ?? cursorImages[(int)Icon];
             cursorSprite.Scale = CustomImage != null ? ScaleInfo.UIElement.Medium : defaultScale;
-            cursorSprite.PivotOrigin = (State is MouseCursorState.Hand) && CustomImage == null ? RectanglePoint.Top : RectanglePoint.Center;
+            cursorSprite.PivotOrigin = (Icon is MouseCursorIcon.Hand) && CustomImage == null ? RectanglePoint.Top : RectanglePoint.Center;
         }
 
         #endregion
@@ -115,7 +115,7 @@ namespace ScaryCastle
                     field = value;
 
                     if (field != null)
-                        State = MouseCursorState.Cross;
+                        Icon = MouseCursorIcon.Cross;
 
                     InvalidateCursorImage();
                 }
@@ -133,7 +133,7 @@ namespace ScaryCastle
             cursorSprite.Draw(gameTime);
             cursorSprite.X -= shakeTween.IsRunning ? shakeTween.CurrentValue : 0;
 
-            if (State != MouseCursorState.Cross && !IsArrow)
+            if (Icon != MouseCursorIcon.Cross && !IsArrow)
                 textSprite.Draw(gameTime);
 
             EngendroGame.Instance.SpriteBatch.End();
@@ -142,9 +142,23 @@ namespace ScaryCastle
         // HightlightColor
         public static Vector4? HightlightColor { get; set; }
 
+        // Icon
+        public static MouseCursorIcon Icon
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    InvalidateCursorImage();
+                }
+            }
+        }
+
         // IsArrow
-        public static bool IsArrow => State is MouseCursorState.Up or MouseCursorState.Down or
-                                      MouseCursorState.Right or MouseCursorState.Left;
+        public static bool IsArrow => Icon is MouseCursorIcon.Up or MouseCursorIcon.Down or
+                                      MouseCursorIcon.Right or MouseCursorIcon.Left;
 
         // PerformClick
         public static void PerformClick(bool animate = true)
@@ -166,7 +180,7 @@ namespace ScaryCastle
             CustomImage = null;
             HightlightColor = null;
             textSprite.Color = ColorPalette.Text.MouseCursor;
-            State = MouseCursorState.Cross;
+            Icon = MouseCursorIcon.Cross;
         }
 
         // Shake
@@ -174,20 +188,6 @@ namespace ScaryCastle
         {
             shakeTween.Start(TweenStyle.CubicInOut, 0, 1, 50, 4);
             Sound.Play(SoundNames.Error);
-        }
-
-        // State
-        public static MouseCursorState State
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    InvalidateCursorImage();
-                }
-            }
         }
 
         // Text
