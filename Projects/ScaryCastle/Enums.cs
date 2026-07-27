@@ -206,7 +206,7 @@ namespace ScaryCastle
     public enum TestPolygon { Hotspot, Collider }
 
     // TrapState
-    public enum TrapState { Idle, Warning, Activating, Active, Cooldown, Disabled }
+    public enum TrapState { None, Idle, Warning, Activating, Active, Cooldown, Disabled }
 
     // UIControlGroupLayoutStyle
     public enum UIControlGroupLayoutStyle { Vertically, Horizontally }

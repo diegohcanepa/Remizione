@@ -348,6 +348,9 @@ namespace ScaryCastle
             run.Spawns.Increment(name);
             counterBank.Increment(name);
 
+            if (instance is ISpawnNotification spawnNotification)
+                spawnNotification.OnSpawned(this);
+
             return instance;
         }
 

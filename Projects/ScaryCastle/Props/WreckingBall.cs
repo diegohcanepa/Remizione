@@ -8,7 +8,7 @@ namespace ScaryCastle
     /// <summary>
     /// WreckingBall
     /// </summary>
-    public sealed class WreckingBall : Trap
+    public sealed class WreckingBall : Trap, ISpawnNotification
     {
         private Vector2 hitPosition;
 
@@ -17,12 +17,28 @@ namespace ScaryCastle
             : base(session, name)
         {
             Atlas = Atlases.Props;
-            DepthOffset = 10;
+            DepthOffset = 2;
             IdleDuration = 10;
             ActivatingDuration = 0;
             ActiveDuration = 5;
             CooldownDuration = 2;
         }
+
+        #region ISpawnNotification
+
+        // OnSpawned
+        void ISpawnNotification.OnSpawned(ProceduralRoom room)
+        {
+            var crack = new Crack(Session)
+            {
+                Position = this.Position - new Vector2(0, 5)
+            };
+            room.Children.Add(crack);
+            
+            this.hitPosition = Position;
+        }
+
+        #endregion
 
         #region Private members
 
@@ -52,22 +68,6 @@ namespace ScaryCastle
 
         #region Protected members
 
-        // OnParentChanged
-        protected override void OnParentChanged(Entity? previousParent)
-        {
-            base.OnParentChanged(previousParent);
-            
-            if (Room != null && previousParent is null)
-            {
-                var crack = new Crack(Session)
-                {
-                    Position = this.Position
-                };
-                Room.Children.Add(crack);
-                this.hitPosition = Position;
-            }
-        }
-
         // OnStateEnter
         protected override void OnStateEnter(TrapState state)
         {
@@ -76,11 +76,11 @@ namespace ScaryCastle
 
             if (state == TrapState.Idle)
             {
-                Y = 10;
+                Y = 0;
             }
             else if (state == TrapState.Active)
             {
-                Tweens.YTween = FloatTween.Create(TweenStyle.QuadraticIn, Y, hitPosition.Y, 400, HitFloor);
+                Tweens.YTween = FloatTween.Create(TweenStyle.QuadraticIn, Y, hitPosition.Y, 200, HitFloor);
             }
 
             else if (state == TrapState.Cooldown)

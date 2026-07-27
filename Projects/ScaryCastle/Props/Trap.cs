@@ -37,18 +37,19 @@ namespace ScaryCastle
 
         #region Protected members
 
+        // OnActivate
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+
+            if (TrapState == TrapState.None)
+                TransitionTo(TrapState.Idle);
+        }
+
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
             base.OnDraw(gameTime);
-        }
-
-        // OnLoad
-        protected override void OnLoad()
-        {
-            base.OnLoad();
-            
-            TransitionTo(TrapState.Idle);
         }
 
         // OnStateEnter
