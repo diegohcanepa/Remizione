@@ -39,15 +39,15 @@ namespace ScaryCastle
             {
                 Sentence.Draw(gameTime);
 
-                if (session.Room is ProceduralRoom rideRoom && rideRoom.RoomNode.Category == RoomCategory.Boss)
-                    BossMeter.Draw(gameTime);
+                //if (session.InteractionContext.Target != null && session.InteractionContext.Target != session.Player)
+                  //  BossMeter.Draw(gameTime);
             }
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            BossMeter.Update(gameTime);
+            //BossMeter.Update(gameTime);
             Log.Update(gameTime);
             Message.Update(gameTime);
             Sentence.Update(gameTime);
@@ -79,7 +79,7 @@ namespace ScaryCastle
         // Reset
         public void Reset()
         {
-            BossMeter.Reset();
+            BossMeter.Target = null;
             Message.Hide();
             Log.Hide();
         }

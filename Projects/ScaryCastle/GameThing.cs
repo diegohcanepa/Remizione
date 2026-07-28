@@ -21,6 +21,7 @@ namespace ScaryCastle
         private bool dieCalled;
         private FloatTween? floatingTween;
         private readonly Polygon holePoly = new();
+        private FlatMeter? hpMeter;
         private static readonly Vector2 hurtShakeForce = new(1.5f, 0);
         private Vector2Tween? hurtShakeTween;
         private FloatTween? hurtTween;
@@ -206,6 +207,16 @@ namespace ScaryCastle
             isCollisionDirty = true;
         }
 
+        // SyncHPMeter
+        private void SyncHPMeter()
+        {
+            if (hpMeter != null)
+            {
+                hpMeter.MaximumValue = MaxHP;
+                hpMeter.Value = HP;
+            }
+        }
+
         #endregion
 
         #region Protected members
@@ -267,7 +278,11 @@ namespace ScaryCastle
         // GetDisplayName
         protected virtual string GetDisplayName()
         {
-            return TextRepository.GetValue(DisplayNameKey);
+            var result = TextRepository.GetValue(DisplayNameKey);
+            if (IsHostile && HP > 0)
+                result += $" [{HP}]";
+
+            return result;
         }
 
         // GetKnockbackMultiplier
@@ -402,6 +417,12 @@ namespace ScaryCastle
             hurtTween?.Update(gameTime);
             hurtShakeTween?.Update(gameTime);
             shadowSpot.Update(gameTime);
+
+            if (hpMeter != null)
+            {
+                hpMeter.Update(gameTime);
+                hpMeter.Position = GetOverheadPosition(new(0, -3));
+            }
 
             if (knockbackVelocity != Vector2.Zero)
             {
@@ -678,6 +699,16 @@ namespace ScaryCastle
             OnDrawLights(gameTime);
         }
 
+        // DrawMeter
+        public void DrawMeter(GameTime gameTime)
+        {
+            if (hpMeter == null)
+                return;
+
+            if (Session.InteractionContext.Target == this || hpMeter.IsAnimating)
+                hpMeter.Draw(gameTime);
+        }
+
         // DrawShadow
         public void DrawShadow(GameTime gameTime)
         {
@@ -925,6 +956,8 @@ namespace ScaryCastle
                         dieCalled = false;
 
                     OnHPChanged(previousValue);
+                    SyncHPMeter();
+                    DisplayName = GetDisplayName();
                 }
             }
         }
@@ -1004,7 +1037,23 @@ namespace ScaryCastle
 
         // IsHostile
         [ScriptProperty]
-        public bool IsHostile { get; set; }
+        public bool IsHostile
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    if (field)
+                        hpMeter ??= FlatMeter.CreateHPMeter();
+                    else
+                        hpMeter = null;
+                    SyncHPMeter();
+                    DisplayName = GetDisplayName();
+                }
+            }
+        }
 
         // IsMouseOver
         public bool IsMouseOver()
@@ -1039,6 +1088,8 @@ namespace ScaryCastle
                     {
                         HP = field;
                     }
+
+                    SyncHPMeter();
                 }
             }
         }
@@ -1205,7 +1256,7 @@ namespace ScaryCastle
                     OnTakeDamage(attacker, amount, damageType);
 
                     if (!IsDead)
-                        Session.ObjectPools.FloatingTexts.Get()?.ShowAmount(this, ColorPalette.Text.Red, -amount);
+                        Session.ObjectPools.FloatingTexts.Get()?.ShowAmount(this, ColorPalette.HPMeter.Diff, -amount);
 
                     // ComicText si hubo daño real
                     if (comicTextKind != ComicTextKind.None)

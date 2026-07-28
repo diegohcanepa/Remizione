@@ -10,14 +10,6 @@ namespace ScaryCastle
         // BackgroundColor
         internal static Color BackgroundColor { get; } = new(0, 2, 5);
 
-        // BossMeter
-        internal static class BossMeter
-        {
-            internal static Color Back { get; } = new(77, 34, 34);
-            internal static Color Diff { get; } = Text.Orange;
-            internal static Color Fore { get; } = new(168, 45, 45);
-        }
-
         // Condition
         internal static class Condition
         {
@@ -45,6 +37,14 @@ namespace ScaryCastle
 
         // HighlightedText
         internal static Color HighlightedText { get; } = new(215, 215, 170);
+
+        // HPMeter
+        internal static class HPMeter
+        {
+            internal static Color Back { get; } = new(20, 20, 20);
+            internal static Color Diff { get; } = Text.Orange;
+            internal static Color Fore { get; } = new(168, 45, 45);
+        }
 
         // HUDMessage
         internal static Color HUDMessage { get; } = new(227, 213, 200);

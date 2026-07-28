@@ -148,6 +148,18 @@ namespace ScaryCastle
             Game.SpriteBatch.End();
         }
 
+        // DrawMeters
+        private void DrawMeters(GameTime gameTime)
+        {
+            Game.SpriteBatch.Begin(Session.Camera, SamplerState.PointClamp, BlendState.AlphaBlend, null);
+            for (int i = 0; i < CulledThings.Count; i++)
+            {
+                if (CulledThings[i] is GameThing thing)
+                    thing.DrawMeter(gameTime);
+            }
+            Game.SpriteBatch.End();
+        }
+
         // DrawShadows
         private void DrawShadows(GameTime gameTime)
         {
@@ -335,6 +347,8 @@ namespace ScaryCastle
 
             // Default (layer)
             DrawThings(gameTime, RenderLayer.Default);
+
+            DrawMeters(gameTime);
 
             // Environment particles
             DrawEnvironmentParticles(gameTime);

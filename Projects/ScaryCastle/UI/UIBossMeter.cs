@@ -1,7 +1,5 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
 using System.Globalization;
 
 namespace ScaryCastle
@@ -16,10 +14,7 @@ namespace ScaryCastle
         private readonly Sprite amountContainer;
         private readonly TextSprite amountText;
         private readonly Sprite icon;
-        private readonly TextSprite labelText;
         private readonly FlatMeter meter;
-        private readonly FloatTween shakeTween = new();
-        private readonly List<Actor> targetList = [];
 
         #endregion
 
@@ -29,17 +24,9 @@ namespace ScaryCastle
         public UIBossMeter()
             : base()
         {
-            this.meter = new FlatMeter(ColorPalette.BossMeter.Back, ColorPalette.BossMeter.Fore, ColorPalette.BossMeter.Diff, new(40, 6), 1)
+            this.meter = new FlatMeter(ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore, ColorPalette.HPMeter.Diff, new(40, 6), 1)
             {
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -10)
-            };
-
-            this.labelText = new(Fonts.CommonOutline)
-            {
-                Color = ColorPalette.Text.Highlight,
-                PivotOrigin = RectanglePoint.Bottom,
-                Position = meter.BoundingBox.GetPoint(RectanglePoint.Top, 0, .25f),
-                Scale = ScaleInfo.Text.Large
             };
 
             this.amountContainer = new(Atlases.UI.BossMeterAmount)
@@ -67,102 +54,77 @@ namespace ScaryCastle
 
         #endregion
 
+        #region Private members
+
+        // CanDisplay
+        private bool CanDisplay()
+        {
+            return Target != null && Target.MaxHP != 0 && Target.HP != 0;
+        }
+
+        // Refresh
+        private void Refresh()
+        {
+            if (!CanDisplay())
+            {
+                amountText.Clear();
+                meter.MaximumValue = 0;
+                meter.Value = 0;
+                return;
+            }
+
+            if (Target != null)
+            {
+                meter.MaximumValue = Target.MaxHP;
+                meter.Value = Target.HP;
+                amountText.Text = Target.HP.ToString(CultureInfo.InvariantCulture);
+            }
+        }
+
+        #endregion
+
         #region Protected members
 
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (targetList.Count == 0)
+            if (Target == null)
                 return;
 
             Game.SpriteBatch.Begin(Game.Camera);
             meter.Draw(gameTime);
             icon.Draw(gameTime);
             amountContainer.Draw(gameTime);
-            Game.SpriteBatch.End();
-
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
-            labelText.Draw(gameTime);
-            amountText.X += shakeTween.CurrentValue;
             amountText.Draw(gameTime);
-            amountText.X -= shakeTween.CurrentValue;
             Game.SpriteBatch.End();
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (targetList.Count == 0)
+            if (!CanDisplay() || Target == null)
                 return;
 
-            var currentTotalHP = 0;
-            var allDead = true;
-
-            for (int i = 0; i < targetList.Count; i++)
-            {
-                var t = targetList[i];
-
-                if (t != null && !t.IsDead)
-                {
-                    currentTotalHP += t.HP;
-                    allDead = false;
-                }
-            }
-
-            if (allDead)
-            {
-                targetList.Clear();
-                // Call end of run script
-                //?session.AddCorridorExit();
-            }
-            else if (meter.Value != currentTotalHP)
-            {
-                meter.Value = currentTotalHP;
-                amountText.Text = currentTotalHP.ToString(CultureInfo.InvariantCulture);
-                shakeTween.Start(TweenStyle.CubicInOut, 0, .5f, 60, 4);
-            }
+            if (Target.HP != meter.Value || Target.MaxHP != meter.MaximumValue)
+                Refresh();
 
             meter.Update(gameTime);
-            shakeTween.Update(gameTime);
         }
 
         #endregion
 
-        // Reset
-        public void Reset()
+        // Target
+        public Actor? Target
         {
-            targetList.Clear();
-            amountText.Clear();
-            labelText.Clear();
-            meter.MaximumValue = 0;
-            meter.Value = 0;
-        }
-
-        // SetTargets
-        public void SetTargets(IList<Actor> targets)
-        {
-            Reset();
-
-            targetList.AddRange(targets);
-
-            int totalMaxHP = 0;
-            int totalCurrentHP = 0;
-
-            for (int i = 0; i < targets.Count; i++)
+            get;
+            set
             {
-                totalMaxHP += targets[i].MaxHP;
-                totalCurrentHP += targets[i].HP;
+                if (value != field)
+                {
+                    field = value;
+                    Refresh();
+                }
             }
-
-            meter.MaximumValue = totalMaxHP;
-            meter.Value = totalCurrentHP;
-            amountText.Text = totalCurrentHP.ToString(CultureInfo.InvariantCulture);
-
-            if (targetList.Count > 1)
-                labelText.Text = TextRepository.GetValue($"{targetList[0].DisplayNameKey}.Group");
-
-            if (labelText.IsEmpty)
-                labelText.Text = targets[0].DisplayName;
         }
     }
 }

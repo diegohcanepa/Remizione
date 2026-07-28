@@ -90,8 +90,8 @@ namespace ScaryCastle
             else if (state == TrapState.Cooldown)
             {
                 PlaySound(SoundNames.WreckingBallChain);
-                Tweens.YTween = FloatTween.Create(TweenStyle.QuadraticIn, Y, 0, 1000);
-                Shadow.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.QuadraticIn, Shadow.Scale, Vector2.Zero, 1000);
+                Tweens.YTween = FloatTween.Create(TweenStyle.QuadraticIn, Y, 0, 1500);
+                Shadow.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.QuadraticIn, Shadow.Scale, Vector2.Zero, 1500);
             }
         }
 

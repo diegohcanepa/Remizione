@@ -575,7 +575,7 @@ namespace ScaryCastle
 
             RunModifiers.Clear();
             Bosses.Clear();
-            TextHUD.BossMeter.Reset();
+            TextHUD.BossMeter.Target = null;
             CleanUpRuntimeEntities();
             BronzeKeys = 0;
             Coins = 0;

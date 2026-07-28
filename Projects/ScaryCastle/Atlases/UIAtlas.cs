@@ -12,7 +12,6 @@ namespace ScaryCastle
         public UIAtlas()
             : base(EngendroGame.Instance.Content, "UI", ContentManagerExtension.EncodePath(ContentFolder.Atlases, "UI"), false)
         {
-            AlertIcon = this[nameof(AlertIcon)];
             BossMeter = this[nameof(BossMeter)];
             BossMeterAmount = this[nameof(BossMeterAmount)];
             BronzeKeyIcon = this[nameof(BronzeKeyIcon)];
@@ -52,15 +51,11 @@ namespace ScaryCastle
             CountdownSkullIcon = this[nameof(CountdownSkullIcon)];
             Sack = this[nameof(Sack)];
             SavingIcon = this[nameof(SavingIcon)];
-            SkullIcon = this[nameof(SkullIcon)];
             SpeechTextArrow = this[nameof(SpeechTextArrow)];
             SpeechTextPipe = this[nameof(SpeechTextPipe)];
             UIButtonContainerEdge = this[nameof(UIButtonContainerEdge)];
             UIButtonContainerPattern = this[nameof(UIButtonContainerPattern)];
         }
-
-        // AlertIcon
-        public AtlasImage AlertIcon { get; }
 
         // BossMeter
         public AtlasImage BossMeter { get; }
@@ -178,9 +173,6 @@ namespace ScaryCastle
 
         // SavingIcon
         public AtlasImage SavingIcon { get; }
-
-        // SkullIcon
-        public AtlasImage SkullIcon { get; }
 
         // SpeechTextArrow
         public AtlasImage SpeechTextArrow { get; }

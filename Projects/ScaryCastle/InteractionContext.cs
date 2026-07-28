@@ -85,6 +85,7 @@ namespace ScaryCastle
                 HeldItem = null;
 
             Session.TextHUD.Sentence.Target = Target;
+            Session.TextHUD.BossMeter.Target = Target as Actor;
             MouseCursor.Text = Target?.DisplayName;
 
             MouseCursorAppearance.Refresh(this);

@@ -17,6 +17,7 @@ namespace ScaryCastle
         #region Private fields
 
         private Sprite? activeThrowableSprite;
+        private readonly FloatTween alertTween = FloatTween.Create(TweenStyle.Linear, 0, .5f, 50, -1);
         private readonly List<AtlasImage>? customGuts;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
@@ -396,6 +397,10 @@ namespace ScaryCastle
             if (moveBalancingTween.IsRunning)
                 Rotation += moveBalancingTween.CurrentValue;
 
+            var shake = !Session.IsAwaiting && RemainingTurns == 0 && IsHostile;
+            if (shake)
+                X += alertTween.CurrentValue;
+
             base.OnDraw(gameTime);
 
             if (activeThrowableSprite?.RenderImage != null)
@@ -418,6 +423,9 @@ namespace ScaryCastle
 
             if (moveVerticalTween.IsRunning)
                 Y += moveVerticalTween.CurrentValue;
+
+            if (shake)
+                X -= alertTween.CurrentValue;
 
             if (moveBalancingTween.IsRunning)
                 Rotation -= moveBalancingTween.CurrentValue;
@@ -452,6 +460,7 @@ namespace ScaryCastle
             IsAlert = true;
             ResetRemainingTurns(true);
             OpacityFactor = 1;
+            alertTween.RandomizeTime();
             Stand();
         }
 
@@ -520,7 +529,6 @@ namespace ScaryCastle
                     DropLoot();
 
                 IsHostile = true;
-                RemainingTurns = 0;
             }
 
             Session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);
@@ -547,6 +555,8 @@ namespace ScaryCastle
             UpdateFootstep();
             footstepEffect?.Update(gameTime);
             BodyMachine.Update(gameTime);
+            alertTween.Update(gameTime);
+
 
             if (!Session.IsAwaiting && !IsMoving)
             {
@@ -1168,9 +1178,7 @@ namespace ScaryCastle
             set
             {
                 if (value != field)
-                {
                     field = Math.Max(0, value);
-                }
             }
         }
 

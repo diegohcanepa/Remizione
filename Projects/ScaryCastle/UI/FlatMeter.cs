@@ -119,6 +119,12 @@ namespace ScaryCastle
         // BorderSize
         public Vector2 BorderSize { get; }
 
+        // CreateHPMeter
+        public static FlatMeter CreateHPMeter()
+        {
+            return new(ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore, ColorPalette.HPMeter.Diff, new(10, 2.5f), .5f);
+        }
+
         // DiffColor
         public Color DiffColor
         {
@@ -132,6 +138,9 @@ namespace ScaryCastle
             get => fore.Color;
             set => fore.Color = value;
         }
+
+        // IsAnimating
+        public bool IsAnimating => tween.IsRunning;
 
         // MaximumValue
         public float MaximumValue
