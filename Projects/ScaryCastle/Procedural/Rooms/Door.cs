@@ -181,7 +181,7 @@ namespace ScaryCastle
         public DoorDirection DoorDirection { get; }
 
         // IsEmittingLight
-        public override bool IsEmittingLight => Room == null || !Room.AmbientLights ? false : base.IsEmittingLight;
+        public override bool IsEmittingLight => Room != null && Room.AmbientLights && base.IsEmittingLight;
 
         // Prepare
         [ScriptMethod]
@@ -228,10 +228,10 @@ namespace ScaryCastle
 
                 var prefix = $"Door_{assetPrefix}_{DoorDirection}_";
 
-                var animation = AddAnimation("Closed");
+                var animation = AddAnimation(AnimationNames.Closed);
                 animation.AddFrame(prefix + animation.Name, 1000);
 
-                animation = AddAnimation("Open");
+                animation = AddAnimation(AnimationNames.Open);
                 animation.AddFrame(prefix + animation.Name, 1000);
 
                 SyncAnimation();

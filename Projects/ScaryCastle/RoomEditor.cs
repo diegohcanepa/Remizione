@@ -112,7 +112,6 @@ namespace ScaryCastle
                 awaitingScript = "(None)";
             }
 
-            DrawText(gameTime, text, $"Seed: {session.Seed}");
             DrawText(gameTime, text, $"Awaiting script: {awaitingScript}");
             DrawText(gameTime, text, $"Registered entities: {session.Entities.Count}");
         }

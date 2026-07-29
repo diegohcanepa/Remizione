@@ -6,6 +6,7 @@
     internal static class AnimationNames
     {
         internal const string Charge = nameof(Charge);
+        internal const string Closed = nameof(Closed);
         internal const string Death = nameof(Death);
         internal const string Default = nameof(Default);
         internal const string Fear = nameof(Fear);
@@ -14,6 +15,7 @@
         internal const string Idle = nameof(Idle);
         internal const string Move = nameof(Move);
         internal const string MoveCarry = nameof(MoveCarry);
+        internal const string Open = nameof(Open);
         internal const string PickUp = nameof(PickUp);
         internal const string Stand = nameof(Stand);
         internal const string StandCarry = nameof(StandCarry);

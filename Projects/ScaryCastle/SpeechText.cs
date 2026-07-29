@@ -20,7 +20,7 @@ namespace ScaryCastle
         private const string exclamationMedium = "!!";
         private const string exclamationHigh = "!!!";
         private const int maxWidth = 90;
-        private static readonly Vector2 textPadding = new(1);
+        private static readonly Vector2 textPadding = new(3, 2);
 
         #endregion
 

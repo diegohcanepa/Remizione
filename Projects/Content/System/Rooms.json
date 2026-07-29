@@ -79,6 +79,12 @@
           "allowTags": "Trap"
         },
         {
+          "position": "155,61",
+          "placement": "Floor",
+          "fillChance": 1,
+          "allowTags": "TrapDoor"
+        },
+        {
           "position": "210,100",
           "placement": "Floor",
           "fillChance": 1,

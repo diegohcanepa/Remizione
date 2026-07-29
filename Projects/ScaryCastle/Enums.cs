@@ -101,7 +101,7 @@ namespace ScaryCastle
     public enum LightState { Off, On, TurningOn, TurningOff }
 
     // LockType
-    public enum LockType { None, BronzeKey, GoldenKey, GateLever }
+    public enum LockType { None, BronzeKey, GoldenKey, GateLever, TrapDoorKey }
 
     // LogVerb
     public enum LogVerb { None, Consumed, Discarded, Obtained, Found, Lost, Requires, Used }
@@ -200,7 +200,7 @@ namespace ScaryCastle
     public enum StatName { HP, XP }
 
     // Tag
-    public enum Tag { Ceiling, Floor, GateLever, Poison, Pottery, Torch, Trap, Trunk, WallDecoration }
+    public enum Tag { Ceiling, Floor, GateLever, Poison, Pottery, Torch, Trap, TrapDoor, Trunk, WallDecoration }
 
     // TestPolygon
     public enum TestPolygon { Hotspot, Collider }

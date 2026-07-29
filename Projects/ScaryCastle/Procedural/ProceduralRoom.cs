@@ -28,16 +28,16 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public ProceduralRoom(GameSession session, RoomNode roomNode)
+        public ProceduralRoom(GameSession session, RoomNode roomNode, int seed)
             : base(session, string.Empty)
         {
             this.RoomNode = roomNode;
             this.LightingSystem = true;
             this.UnloadMode = UnloadMode.Manual;
 
-            int salt = roomNode.Index;
-            this.randomSeed = RandomHelper.GetSeed(Session.Seed, salt);
-            this.Random = new Random(randomSeed);
+            // MAGIA PURA Y LIMPIA:
+            this.randomSeed = seed;
+            this.Random = new Random(this.randomSeed);
 
             this.MonitorStyle = true;
 
@@ -125,7 +125,7 @@ namespace ScaryCastle
 
                 actors.Add(actor);
             }
-            actors.Shuffle();
+            actors.Shuffle(this.Random);
 
             // Collect pottery
             var potteryList = new List<Pottery>();
@@ -134,14 +134,14 @@ namespace ScaryCastle
                 if (pottery.CanHideLoot)
                     potteryList.Add(pottery);
             }
-            potteryList.Shuffle();
+            potteryList.Shuffle(this.Random);
 
             var pendingKeys = RoomNode.BronzeKeys;
 
             // Randomly hide a bronze key under a pot (Chance = 20%)
-            if (potteryList.Count > 0 && DiceExpression.Dice10.Roll() <= 2)
+            if (potteryList.Count > 0 && DiceExpression.Dice10.Roll(this.Random) <= 2)
             {
-                if (potteryList.GetRandomItem() is Pottery pot)
+                if (potteryList.GetRandomItem(this.Random) is Pottery pot)
                 {
                     DropBronzeKey(pot.Position - new Vector2(0, 2));
                     pendingKeys--;
@@ -151,7 +151,7 @@ namespace ScaryCastle
             }
 
             // Randomly drop a bronze key in the room (Chance = 20%)
-            if (DiceExpression.Dice10.Roll() <= 2)
+            if (DiceExpression.Dice10.Roll(this.Random) <= 2)
             {
                 DropBronzeKey();
                 pendingKeys--;
@@ -244,14 +244,6 @@ namespace ScaryCastle
             }
         }
 
-        // Populate
-        private void Populate()
-        {
-            SpawnDoors();
-            SpawnProps();
-            SpawnActors();
-        }
-
         // PrepareLights
         private void PrepareLights()
         {
@@ -283,7 +275,7 @@ namespace ScaryCastle
             if (index > 0)
             {
                 var animation = AddAnimation("View");
-                var viewName = $"View{Random.Shared.Next(1, index + 1)}";
+                var viewName = $"View{this.Random.Next(1, index + 1)}";
                 animation.AddFrame(viewName, 10000);
 
                 var foregroundImageName = viewName + "Foreground";
@@ -753,7 +745,9 @@ namespace ScaryCastle
             CustomWidth = (int)BoundingBox.Width;
             CustomHeight = (int)BoundingBox.Height;
 
-            Populate();
+            SpawnDoors();
+            SpawnProps();
+            SpawnActors();
 
             // Prepare doors
             var doors = new List<Door>(Children.OfType<Door>());
@@ -778,10 +772,10 @@ namespace ScaryCastle
         #endregion
 
         // CreateInstance
-        public static ProceduralRoom CreateInstance(GameSession session, RoomNode roomNode)
+        public static ProceduralRoom CreateInstance(GameSession session, RoomNode roomNode, int roomSeed)
         {
             // Get type from AOT registry
-            if (Activator.CreateInstance(typeof(ProceduralRoom), session, roomNode) is not ProceduralRoom result)
+            if (Activator.CreateInstance(typeof(ProceduralRoom), session, roomNode, roomSeed) is not ProceduralRoom result)
                 throw new InvalidOperationException($"Cannot create instance [{roomNode.Definition.Name}]");
 
             return result;

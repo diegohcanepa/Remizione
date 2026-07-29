@@ -808,9 +808,14 @@ namespace ScaryCastle
         {
             if (ActiveThrowable != null)
             {
-                var thrownObject = new ThrownProp(this, ActiveThrowable);
-                thrownObject.Drop();
-                ActiveThrowable = null;
+                if (ActiveThrowable.MaxHP > 0)
+                {
+                    var thrownObject = new ThrownProp(this, ActiveThrowable);
+                    thrownObject.Drop();
+                    ActiveThrowable = null;
+                }
+                else
+                    DropActiveThrowable();
             }
         }
 

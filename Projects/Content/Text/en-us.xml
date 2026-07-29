@@ -325,6 +325,7 @@ Bla bla bla</String>
   <String Key="Prop.Toilet">Toilet</String>
   <String Key="Prop.Torch">Torch</String>
   <String Key="Prop.Tower">Tower</String>
+  <String Key="Prop.TrapDoor">Trap door</String>
   <String Key="Prop.Trunk">Trunk</String>
   <String Key="Prop.Tunnel">Tunnel</String>
   <String Key="Prop.UnderRideEntrance">Under ride</String>
@@ -333,4 +334,5 @@ Bla bla bla</String>
   <String Key="RunGoal.1" />
   <String Key="StatName.Faith">Faith</String>
   <String Key="StatName.HP">Health</String>
+  <String Key="Verb.Examine">Examine</String>
 </Strings>

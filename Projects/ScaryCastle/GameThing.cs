@@ -266,8 +266,8 @@ namespace ScaryCastle
 
                         // Offset aleatorio para que no caigan apiladas exactamente en el mismo píxel
                         coin.Position += new Vector2(
-                            Session.Random.Next(-6, 7),
-                            Session.Random.Next(-6, 7)
+                            Random.Shared.Next(-6, 7),
+                            Random.Shared.Next(-6, 7)
                         );
                         room.Children.Add(coin);
                     }

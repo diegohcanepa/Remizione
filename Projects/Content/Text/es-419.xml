@@ -325,6 +325,7 @@ Bla bla bla</String>
   <String Key="Prop.Toilet">Baño</String>
   <String Key="Prop.Torch">Antorcha</String>
   <String Key="Prop.Tower">Torre</String>
+  <String Key="Prop.TrapDoor">Trampilla</String>
   <String Key="Prop.Trunk">Baúl</String>
   <String Key="Prop.Tunnel">Túnel</String>
   <String Key="Prop.UnderRideEntrance">Inframundo</String>
@@ -333,4 +334,5 @@ Bla bla bla</String>
   <String Key="RunGoal.1">Intimar a Mandinga para que regrese al infierno.</String>
   <String Key="StatName.Faith">Fe</String>
   <String Key="StatName.HP">Salud</String>
+  <String Key="Verb.Examine">Examinar</String>
 </Strings>

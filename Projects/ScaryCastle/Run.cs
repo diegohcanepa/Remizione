@@ -16,7 +16,6 @@ namespace ScaryCastle
         private readonly Dictionary<Point, RoomNode> floorMap = [];
         private const int gridRadius = 4; // Radio 4 significa de -4 a 4 (Matriz de 9x9)
         private readonly RoomRegistry registry = new();
-        private readonly int seed;
         private readonly GameSession session;
         private readonly int totalRooms;
 
@@ -25,18 +24,37 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public Run(GameSession session, int seed, int totalRooms)
+        public Run(GameSession session, int totalRooms)
         {
             CodeContract.ValidRange(totalRooms, 10, 20, nameof(totalRooms));
 
             this.session = session;
-            this.seed = seed;
             this.totalRooms = totalRooms;
         }
 
         #endregion
 
         #region Private members
+
+        // CleanUp
+        private void CleanUp()
+        {
+            session.CleanUpRuntimeEntities();
+            session.InteractionContext.HeldItem = null;
+
+            // 1. Force an immediate collection of all generations (0, 1, and 2).
+            // 'Forced' tells the GC to ignore its internal heuristics and run immediately.
+            // 'true' makes the call blocking (execution halts until the GC finishes).
+            GC.Collect(2, GCCollectionMode.Forced, true);
+
+            // 2. Wait for objects with finalizers (destructors) to finish their cleanup logic.
+            GC.WaitForPendingFinalizers();
+
+            // 3. Collect again.
+            // This is necessary because objects finalized in step 2 are now officially
+            // marked as "garbage" and can finally be released from memory in this pass.
+            GC.Collect(2, GCCollectionMode.Forced, true);
+        }
 
         // ConnectNodes
         private static void ConnectNodes(RoomNode a, RoomNode b, Point directionFromAToB)
@@ -368,9 +386,9 @@ namespace ScaryCastle
 
                             var bronzeKeyChance = targetDiff switch
                             {
-                                Difficulty.Easy => 0.3f,
-                                Difficulty.Normal => 0.5f,
-                                Difficulty.Hard => 0.7f,
+                                Difficulty.Easy => 0.2f,
+                                Difficulty.Normal => 0.2f,
+                                Difficulty.Hard => 0.4f,
                                 _ => 0.4f
                             };
 
@@ -425,11 +443,15 @@ namespace ScaryCastle
         }
 
         // ExecutePhase6_PrepareRooms
-        private void ExecutePhase6_PrepareRooms()
+        private void ExecutePhase6_PrepareRooms(Random floorRng)
         {
             foreach (var node in floorMap.Values)
             {
-                node.Room = ProceduralRoom.CreateInstance(session, node);
+                // El floorRng escupe un int único, determinista y seguro para esta sala exacta
+                int roomSeed = floorRng.Next();
+
+                // Se lo pasamos a la fábrica
+                node.Room = ProceduralRoom.CreateInstance(session, node, roomSeed);
             }
 
             foreach (var node in floorMap.Values)
@@ -489,20 +511,33 @@ namespace ScaryCastle
 
         #endregion
 
+        // CurrentFloor
+        public int CurrentFloor { get; private set; } = -1;
+
         // FloorMap
         public ReadOnlyDictionary<Point, RoomNode> FloorMap => new(floorMap);
 
-        // Generate
-        public void Generate()
+        // NextFloor
+        public void NextFloor(int floorIncrement = 1)
         {
-            var rng = new Random(seed);
+            if (CurrentFloor >= 0)
+                CleanUp();
 
-            ExecutePhase1_Layout(rng);
-            ExecutePhase2_Labeling(rng);
-            ExecutePhase3_InjectSecrets(rng);
-            ExecutePhase4_AssignDefinitions(rng);
-            ExecutePhase5_TopologyAndLocks(rng);
-            ExecutePhase6_PrepareRooms();
+            CurrentFloor += floorIncrement;
+            if (CurrentFloor > 666)
+                CurrentFloor = 666;
+
+            // El seed de este piso lo dicta el RNG Maestro. 
+            // Si recargas la run, el orden de pisos será exactamente igual.
+            int currentFloorSeed = session.MasterRunRng.Next();
+            var floorRng = new Random(currentFloorSeed);
+
+            ExecutePhase1_Layout(floorRng);
+            ExecutePhase2_Labeling(floorRng);
+            ExecutePhase3_InjectSecrets(floorRng);
+            ExecutePhase4_AssignDefinitions(floorRng);
+            ExecutePhase5_TopologyAndLocks(floorRng);
+            ExecutePhase6_PrepareRooms(floorRng);
 
             StartNode = floorMap[Point.Zero];
 

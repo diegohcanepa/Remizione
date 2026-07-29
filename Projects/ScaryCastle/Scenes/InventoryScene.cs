@@ -20,6 +20,8 @@ namespace ScaryCastle
         private Item? lastSelectedItem;
         private int lastSeenContainerVersion = -1;
         private int lastSeenRun = -1;
+        private readonly Sprite mouseIcon;
+        private readonly TextSprite mouseTip;
         private readonly Sprite scroll = new(Atlases.UI.GetImage("Scroll")) { PivotOrigin = RectanglePoint.Top, Position = Screen.HUDArea.GetPoint(RectanglePoint.Top) };
         private readonly Sprite[] shadows = new Sprite[ItemContainer.MaximumCapacity];
         private readonly Sprite[] slots = new Sprite[ItemContainer.MaximumCapacity];
@@ -41,7 +43,7 @@ namespace ScaryCastle
                 {
                     Opacity = .8f,
                     PivotOrigin = RectanglePoint.LeftBottom,
-                    Y = Screen.Area.Bottom - 14
+                    Y = Screen.Area.Bottom - 22
                 };
 
                 icons[i] = new()
@@ -91,6 +93,24 @@ namespace ScaryCastle
                 ShadowColor = ColorPalette.Shadow,
                 ShadowOffset = new(.5f),
             };
+
+            // MouseTip
+            mouseTip = new(Fonts.Common)
+            {
+                Color = ColorPalette.Text.Terra,
+                PivotOrigin = RectanglePoint.Bottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom),
+                Scale = ScaleInfo.Text.ExtraLarge,
+                Text = "@Verb.Examine"
+            };
+
+            // MouseIcon
+            this.mouseIcon =  new(Atlases.UI.MouseRightButtonIcon)
+            {
+                PivotOrigin = RectanglePoint.Right,
+                Position = mouseTip.BoundingBox.GetPoint(RectanglePoint.Left, -1, -1),
+                Scale = ScaleInfo.UIElement.Medium
+            };
         }
 
         #endregion
@@ -123,7 +143,6 @@ namespace ScaryCastle
                 }
             }
 
-            /*
             if (InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
             {
                 if (GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item item)
@@ -137,7 +156,6 @@ namespace ScaryCastle
                     Game.SceneManager.Pop();
                 }
             }
-            */
 
             return false;
         }
@@ -216,6 +234,9 @@ namespace ScaryCastle
                 return;
 
             Game.SpriteBatch.Begin(Game.Camera);
+
+            mouseIcon.Draw(gameTime);
+            mouseTip.Draw(gameTime);
 
             //goalWindow.Draw(gameTime);
 
@@ -336,7 +357,7 @@ namespace ScaryCastle
         #endregion
 
         // AutoHideThreshold
-        public const int AutoHideThreshold = 105;
+        public const int AutoHideThreshold = 98;
 
         // ItemContainer
         public ItemContainer ItemContainer

@@ -58,7 +58,6 @@ namespace ScaryCastle
             this.InteractionContext = new(this);
             this.InteractionData = new(this);
             this.DeclaredThings = new(proceduralThings);
-            this.Random = new Random(Seed);
             this.inventoryScene = new(PlayerInventory);
 
             ObjectPools = new ObjectPools(this);
@@ -141,6 +140,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(SpearTrap));
             AotTypeRegistry.Register(typeof(StinkyRat));
             AotTypeRegistry.Register(typeof(Torch));
+            AotTypeRegistry.Register(typeof(TrapDoor));
             AotTypeRegistry.Register(typeof(Trunk));
             AotTypeRegistry.Register(typeof(WreckingBall));
 
@@ -480,23 +480,31 @@ namespace ScaryCastle
 
         // BeginRun
         [ScriptMethod]
-        public void BeginRun()
+        public void BeginRun() => BeginRun(null);
+
+        // BeginRun
+        public void BeginRun(int? seed = null)
         {
             if (CurrentRun != null)
                 throw new InvalidOperationException("A run is already in progress.");
 
-            if (Seed == 0)
-                Seed = System.Environment.TickCount;
+            // 1. Establecer el Seed de la run (fijo o por tiempo)
+            RunSeed = seed ?? System.Environment.TickCount;
 
-            CurrentRun = new Run(this, Seed, 15);
+            // 2. Inicializar el RNG Maestro y el Volátil
+            MasterRunRng = new Random(RunSeed);
+            VolatileRng = new Random(RunSeed); // Opcional: puedes darle otro seed inicial si no quieres determinismo en combate
+
+            CurrentRun = new Run(this, 15);
 
             PlayerInventory.Capacity = GameSettings.InitialInventoryCapacity;
-            PlayerInventory.Add(ItemNames.BargainCross);
-
             if (RunCount == 0)
+            {
                 PlayerInventory.Add(ItemNames.Apple);
+                PlayerInventory.Add(ItemNames.BargainCross);
+            }
 
-            CurrentRun.Generate();
+            CurrentRun.NextFloor();
 
             if (Player != null)
             {
@@ -596,8 +604,6 @@ namespace ScaryCastle
                 Player.ClearCondition();
             }
 
-            Seed = 0;
-
             // 1. Force an immediate collection of all generations (0, 1, and 2).
             // 'Forced' tells the GC to ignore its internal heuristics and run immediately.
             // 'true' makes the call blocking (execution halts until the GC finishes).
@@ -690,6 +696,9 @@ namespace ScaryCastle
 
         // LootGenerator
         public LootGenerator LootGenerator { get; }
+
+        // MasterRunRng (RNG supremo de la partida entera. Solo se usa para generar pisos.)
+        public Random MasterRunRng { get; private set; }
 
         // NextRoom
         [ScriptProperty]
@@ -794,9 +803,6 @@ namespace ScaryCastle
             ActiveNPC = null;
         }
 
-        // Random
-        public Random Random { get; private set; }
-
         // Room
         [ScriptProperty]
         public new GameRoom? Room => (GameRoom?)base.Room;
@@ -808,20 +814,9 @@ namespace ScaryCastle
         // RunModifiers
         public RunModifierManager RunModifiers { get; }
 
-        // Seed
+        // RunSeed
         [ScriptProperty]
-        public int Seed
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    Random = new Random(field);
-                }
-            }
-        }
+        public int RunSeed { get; private set; }
 
         // ShakeCamera
         public void ShakeCamera(ImpactType impactType)
@@ -863,5 +858,8 @@ namespace ScaryCastle
 
         // TextHUD
         public TextHUD TextHUD { get; }
+
+        // VolatileRng (Este es el RNG para gameplay (Drops, IA, combate))
+        public Random VolatileRng { get; private set; }
     }
 }

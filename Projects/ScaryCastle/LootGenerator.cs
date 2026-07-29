@@ -94,7 +94,7 @@ namespace ScaryCastle
                 table.Add(itemDef.Name, weight, 1, itemDef);
             }
 
-            ItemDefinition? result = table.GetValue(session.Random)?.Context as ItemDefinition;
+            ItemDefinition? result = table.GetValue(session.VolatileRng)?.Context as ItemDefinition;
 
             // Fallback: Si se garantizaba un drop pero fallaron los filtros estrictos
             if (result == null && guaranteeDrop)
@@ -106,7 +106,7 @@ namespace ScaryCastle
                         table.Add(fallbackDef.Name, fallbackDef.SpawnWeight, 1, fallbackDef);
                 }
 
-                result = table.GetValue(session.Random)?.Context as ItemDefinition;
+                result = table.GetValue(session.VolatileRng)?.Context as ItemDefinition;
             }
 
             return result;
@@ -152,15 +152,15 @@ namespace ScaryCastle
             // a menos que el diseño pida 100% garantizado)
             float finalChance = MathHelper.Clamp(chance, 0, .98f);
 
-            if (session.Random.NextDouble() > finalChance)
+            if (session.VolatileRng.NextDouble() > finalChance)
                 return 0;
 
             // 5. Cantidad de monedas (Lógica de cantidad según dificultad)
             return thingDef.Difficulty switch
             {
                 Difficulty.Easy => 1,
-                Difficulty.Normal => session.Random.Next(1, 2), // 1 a 2 monedas
-                Difficulty.Hard => session.Random.Next(1, 3),   // 2 a 4 monedas
+                Difficulty.Normal => session.VolatileRng.Next(1, 2), // 1 a 2 monedas
+                Difficulty.Hard => session.VolatileRng.Next(1, 3),   // 2 a 4 monedas
                 _ => 1
             };
         }
@@ -238,7 +238,7 @@ namespace ScaryCastle
                 // Nunca dejamos que sea 100% a menos que sea guaranteeDrop explícito
                 float finalChance = MathHelper.Clamp(chance, 0, .95f);
 
-                if (session.Random.NextDouble() > finalChance)
+                if (session.VolatileRng.NextDouble() > finalChance)
                     return null;
             }
 
