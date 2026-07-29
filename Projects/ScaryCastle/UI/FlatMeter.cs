@@ -84,7 +84,7 @@ namespace ScaryCastle
             diff.X -= xOffset;
 
             amountText.Text = Value.ToString(CultureInfo.InvariantCulture);
-            amountText.Position = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 1.5f);
+            amountText.Position = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 1);
         }
 
         // Convierte un valor lógico (0..MaximumValue) a ancho proporcional (0..fixedWidth)
@@ -105,7 +105,9 @@ namespace ScaryCastle
             if (diff.ScaleX > 0)
                 diff.Draw(gameTime);
             fore.Draw(gameTime);
-            amountText.Draw(gameTime);
+
+            if (ShowAmount)
+                amountText.Draw(gameTime);
         }
 
         // OnUpdate
@@ -136,7 +138,10 @@ namespace ScaryCastle
         // CreateHPMeter
         public static FlatMeter CreateHPMeter()
         {
-            return new(ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore, ColorPalette.HPMeter.Diff, new(10, 2.5f), .5f);
+            return new(ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore, ColorPalette.HPMeter.Diff, new(10, 2.5f), .5f)
+            {   
+                ShowAmount = true
+            };
         }
 
         // DiffColor
@@ -189,6 +194,9 @@ namespace ScaryCastle
 
         // Ratio
         public float Ratio => Value / MaximumValue;
+
+        // ShowAmount
+        public bool ShowAmount { get; set; }
 
         // Value
         public float Value

@@ -19,8 +19,8 @@ namespace ScaryCastle
         private const string exclamationLow = "!";
         private const string exclamationMedium = "!!";
         private const string exclamationHigh = "!!!";
-        private const int maxWidth = 80;
-        private static readonly Vector2 textPadding = new(3, 2);
+        private const int maxWidth = 90;
+        private static readonly Vector2 textPadding = new(1);
 
         #endregion
 
@@ -97,7 +97,7 @@ namespace ScaryCastle
         // DrawBubble
         private void DrawBubble(GameTime gameTime)
         {
-            Game.SpriteBatch.Begin(Actor.Session.Camera, SamplerState.PointClamp);
+            Game.SpriteBatch.Begin(Actor.Session.Camera);
 
             // Draw bubble shadow
             bubbleImage.Color = ColorPalette.SpeechText.Shadow;

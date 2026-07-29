@@ -37,6 +37,7 @@
         internal const string PneumaticDoor = nameof(PneumaticDoor);
         internal const string PneumaticHiss = nameof(PneumaticHiss);
         internal const string PotteryBreak = nameof(PotteryBreak);
+        internal const string PropPlace = nameof(PropPlace);
         internal const string SpearTrap = nameof(SpearTrap);
         internal const string TestSkillFail = nameof(TestSkillFail);
         internal const string Text = nameof(Text);

@@ -102,6 +102,7 @@
 	<FX Name="PopHeart" />
 	<FX Name="PotteryBreak" Sounds="1..2" />
 	<FX Name="PowerRestored" />
+	<FX Name="PropPlace" />
 	<FX Name="Rat" Sounds="1..4" />
 	<FX Name="RatAttack" Sounds="1..3" />
 	<FX Name="RatDeath" Sounds="1..2" />

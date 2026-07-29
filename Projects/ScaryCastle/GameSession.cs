@@ -181,6 +181,7 @@ namespace ScaryCastle
         // SyncProceduralMusic
         private void SyncProceduralMusic()
         {
+            /*
             if (Room is ProceduralRoom proceduralRoom)
             {
                 var tag = proceduralRoom.RoomNode.Definition.MusicTag;
@@ -190,6 +191,7 @@ namespace ScaryCastle
 
                 AudioManager.Music.PlayTag(tag);
             }
+            */
         }
 
         #endregion

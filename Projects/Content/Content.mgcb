@@ -1236,6 +1236,13 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/PowerRestored.wav;Audio/FX/PowerRestored
 
+#begin Audio/FX/PropPlace.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/PropPlace.wav;Audio/FX/PropPlace
+
 #begin Audio/FX/Rat1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

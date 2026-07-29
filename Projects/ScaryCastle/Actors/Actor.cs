@@ -799,6 +799,9 @@ namespace ScaryCastle
         // ConditionTimer
         public int ConditionTimer { get; private set; }
 
+        // Definition
+        public ActorDefinition? Definition { get; }
+
         // DiscardActiveThrowable
         [ScriptMethod]
         public void DiscardActiveThrowable()
@@ -811,8 +814,19 @@ namespace ScaryCastle
             }
         }
 
-        // Definition
-        public ActorDefinition? Definition { get; }
+        // DropActiveThrowable
+        [ScriptMethod]
+        public void DropActiveThrowable()
+        {
+            if (ActiveThrowable != null && Room != null)
+            {
+                Room.Children.Add(ActiveThrowable);
+                ActiveThrowable.Position = Position;
+                ActiveThrowable.Y += 2;
+                ActiveThrowable = null;
+                PlaySound(SoundNames.PropPlace);
+            }
+        }
 
         // Energy
         [ScriptProperty]

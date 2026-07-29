@@ -111,7 +111,7 @@ namespace ScaryCastle
             // Drop throwable
             if (Actor.ActiveThrowable != null)
             {
-                Actor.DiscardActiveThrowable();
+                Actor.DropActiveThrowable();
                 return true;
             }
 

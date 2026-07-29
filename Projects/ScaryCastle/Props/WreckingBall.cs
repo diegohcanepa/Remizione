@@ -17,7 +17,7 @@ namespace ScaryCastle
             : base(session, name)
         {
             Atlas = Atlases.Props;
-            DepthOffset = 2;
+            DepthOffset = -1;
             IdleDuration = 10;
             ActivatingDuration = 0;
             ActiveDuration = 5;
@@ -60,10 +60,12 @@ namespace ScaryCastle
 
                 if (Room.Children[i] is GameThing target && !target.IsDead && target.MaxHP > 0)
                 {
-                    if (RuntimeCollider.BoundingRectangleF.Bottom >= target.Y && RuntimeCollider.BoundingRectangleF.Intersects(target.RuntimeHotspot.BoundingRectangleF))
+                    if (RuntimeHotspot.BoundingRectangleF.Bottom >= target.Y && RuntimeHotspot.BoundingRectangleF.Intersects(target.RuntimeHotspot.BoundingRectangleF))
                         EffectDescriptor.Apply(Definition.EffectDescriptors, this, target, EffectContext.Contact);
                 }
             }
+
+            CollisionDetection = true;
         }
 
         #endregion
@@ -80,6 +82,7 @@ namespace ScaryCastle
             {
                 Y = 0;
                 Shadow.Scale = Vector2.Zero;
+                CollisionDetection = false;
             }
             else if (state == TrapState.Active)
             {
@@ -113,7 +116,7 @@ namespace ScaryCastle
                 : base(session, string.Empty)
             {
                 Atlas = Atlases.Props;
-                DefaultImageName = "WreckingBallCrack";
+                DefaultImageName = $"WreckingBallCrack{Random.Shared.Next(1, 4)}";
                 PivotOrigin = Engendro.RectanglePoint.Center;
                 RenderLayer = RenderLayer.Background;
             }

@@ -70,8 +70,7 @@ namespace ScaryCastle
         {
             var category = neighbor.Category == RoomCategory.Start ? RoomCategory.Standard : neighbor.Category;
 
-            if (current.LockedDoors.TryGetValue(doorDirection, out LockType lockType) &&
-                lockType == LockType.GateLever)
+            if (current.LockedDoors.TryGetValue(doorDirection, out LockType lockType) && lockType == LockType.GateLever)
                 return $"{current.Definition.Theme}_Gate";
             else
                 return $"{current.Definition.Theme}_{category}";

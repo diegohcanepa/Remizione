@@ -753,7 +753,6 @@ namespace ScaryCastle
             CustomWidth = (int)BoundingBox.Width;
             CustomHeight = (int)BoundingBox.Height;
 
-            LockDoorsAccordingly();
             Populate();
 
             // Prepare doors
@@ -763,6 +762,7 @@ namespace ScaryCastle
                 doors[i].Prepare();
             }
 
+            LockDoorsAccordingly();
             PrepareView();
             PrepareLights();
             DistributeBronzeKeys();
