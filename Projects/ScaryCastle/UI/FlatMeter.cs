@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
 using System;
+using System.Globalization;
 
 namespace ScaryCastle
 {
@@ -15,6 +16,7 @@ namespace ScaryCastle
         private readonly Sprite container;
         private readonly Sprite diff;
         private readonly Sprite fore;
+        private readonly TextSprite amountText;
         private readonly FloatTween tween = new() { StartDelay = 200 };
         private float width;
 
@@ -55,6 +57,14 @@ namespace ScaryCastle
                 Color = diffColor,
                 ScaleY = container.ScaleY - (BorderSize.Y * 2)
             };
+
+            // AmountText
+            this.amountText = new(Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.MouseCursor,
+                PivotOrigin = RectanglePoint.Bottom,
+                Scale = ScaleInfo.Text.Medium
+            };
         }
 
         #region Private members
@@ -72,6 +82,9 @@ namespace ScaryCastle
             back.X -= xOffset;
             fore.X -= xOffset;
             diff.X -= xOffset;
+
+            amountText.Text = Value.ToString(CultureInfo.InvariantCulture);
+            amountText.Position = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 1.5f);
         }
 
         // Convierte un valor lógico (0..MaximumValue) a ancho proporcional (0..fixedWidth)
@@ -92,6 +105,7 @@ namespace ScaryCastle
             if (diff.ScaleX > 0)
                 diff.Draw(gameTime);
             fore.Draw(gameTime);
+            amountText.Draw(gameTime);
         }
 
         // OnUpdate

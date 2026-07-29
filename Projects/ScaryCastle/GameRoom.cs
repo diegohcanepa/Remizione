@@ -348,8 +348,6 @@ namespace ScaryCastle
             // Default (layer)
             DrawThings(gameTime, RenderLayer.Default);
 
-            DrawMeters(gameTime);
-
             // Environment particles
             DrawEnvironmentParticles(gameTime);
 
@@ -362,6 +360,9 @@ namespace ScaryCastle
                 Game.RenderTargets.Swap();
                 ApplyLightMap(Game.RenderTargets.PreviousTarget, lightMapTarget);
             }
+
+            // Draw meters
+            DrawMeters(gameTime);
 
             Game.SpriteBatch.Begin(Session.Camera, SamplerState.PointClamp);
             Session.Environment.DevilHand.Draw(gameTime);

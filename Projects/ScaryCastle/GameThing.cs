@@ -278,11 +278,7 @@ namespace ScaryCastle
         // GetDisplayName
         protected virtual string GetDisplayName()
         {
-            var result = TextRepository.GetValue(DisplayNameKey);
-            if (IsHostile && HP > 0)
-                result += $" [{HP}]";
-
-            return result;
+            return TextRepository.GetValue(DisplayNameKey);
         }
 
         // GetKnockbackMultiplier
@@ -957,7 +953,6 @@ namespace ScaryCastle
 
                     OnHPChanged(previousValue);
                     SyncHPMeter();
-                    DisplayName = GetDisplayName();
                 }
             }
         }
@@ -1049,8 +1044,8 @@ namespace ScaryCastle
                         hpMeter ??= FlatMeter.CreateHPMeter();
                     else
                         hpMeter = null;
+                    
                     SyncHPMeter();
-                    DisplayName = GetDisplayName();
                 }
             }
         }

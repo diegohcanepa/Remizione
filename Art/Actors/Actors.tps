@@ -897,7 +897,12 @@
             <key type="filename">Skeleton-assets/Move02.png</key>
             <key type="filename">Skeleton-assets/Move03.png</key>
             <key type="filename">Skeleton-assets/Move04.png</key>
+            <key type="filename">Skeleton-assets/MoveCarry01.png</key>
+            <key type="filename">Skeleton-assets/MoveCarry02.png</key>
+            <key type="filename">Skeleton-assets/MoveCarry03.png</key>
+            <key type="filename">Skeleton-assets/MoveCarry04.png</key>
             <key type="filename">Skeleton-assets/Stand01.png</key>
+            <key type="filename">Skeleton-assets/StandCarry01.png</key>
             <key type="filename">Skeleton-assets/StandHead01.png</key>
             <key type="filename">Skeleton-assets/StandHead02.png</key>
             <key type="filename">Skeleton-assets/TalkHead01.png</key>
