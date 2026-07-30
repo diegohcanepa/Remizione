@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:7750fc75d650d1d7993b9abb5ca44b12:481c6d2a7a2ef95e8584a58d1e197ebb:90dd61259f597836213851943cf8b193$ -->
+<!-- $TexturePacker:SmartUpdate:af956c8fecab0a19abb5024e3fda6dac:5ba865f8a8af0912abc33f0c66d1887e:90dd61259f597836213851943cf8b193$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -23,7 +23,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Bible.png" x="264" y="933" w="6" h="8"/>
     <sprite n="BiblePiece1.png" x="277" y="889" w="3" h="4"/>
     <sprite n="BiblePiece2.png" x="463" y="904" w="5" h="3"/>
-    <sprite n="BiblePiece3.png" x="470" y="904" w="4" h="3"/>
+    <sprite n="BiblePiece3.png" x="380" y="945" w="4" h="3"/>
     <sprite n="BiblePiece4.png" x="277" y="901" w="3" h="3"/>
     <sprite n="BiblePiece5.png" x="355" y="911" w="3" h="2"/>
     <sprite n="BiblePiece6.png" x="292" y="913" w="1" h="1"/>
@@ -32,6 +32,11 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="BiblePiece9.png" x="355" y="946" w="4" h="5"/>
     <sprite n="BiblePiece10.png" x="419" y="899" w="6" h="5"/>
     <sprite n="BibleShadow.png" x="264" y="943" w="6" h="8"/>
+    <sprite n="Bone1.png" x="455" y="905" w="5" h="3"/>
+    <sprite n="Bone2.png" x="470" y="904" w="5" h="3"/>
+    <sprite n="Bone3.png" x="355" y="915" w="3" h="2"/>
+    <sprite n="Bone4.png" x="477" y="904" w="5" h="3"/>
+    <sprite n="Bone5.png" x="484" y="904" w="5" h="3"/>
     <sprite n="ComicText_AghGreen.png" x="282" y="874" w="37" h="16"/>
     <sprite n="ComicText_AghPurple.png" x="321" y="874" w="37" h="16"/>
     <sprite n="ComicText_AghRed.png" x="373" y="913" w="26" h="16"/>
@@ -78,17 +83,17 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="GodHand04.png" x="500" y="644" w="477" h="212"/>
     <sprite n="GoldenTrunk.png" x="314" y="935" w="13" h="11"/>
     <sprite n="Gut1.png" x="439" y="905" w="6" h="4"/>
-    <sprite n="Gut2.png" x="355" y="915" w="3" h="2"/>
+    <sprite n="Gut2.png" x="444" y="929" w="3" h="2"/>
     <sprite n="Gut3.png" x="361" y="946" w="4" h="5"/>
-    <sprite n="Gut4.png" x="373" y="946" w="4" h="2"/>
+    <sprite n="Gut4.png" x="417" y="935" w="4" h="2"/>
     <sprite n="Gut5.png" x="282" y="945" w="2" h="2"/>
     <sprite n="Gut6.png" x="341" y="907" w="3" h="3"/>
     <sprite n="Gut7.png" x="277" y="895" w="3" h="4"/>
     <sprite n="Gut8.png" x="282" y="949" w="2" h="2"/>
-    <sprite n="Gut9.png" x="476" y="904" w="4" h="3"/>
-    <sprite n="Gut10.png" x="482" y="904" w="4" h="3"/>
+    <sprite n="Gut9.png" x="386" y="945" w="4" h="3"/>
+    <sprite n="Gut10.png" x="391" y="938" w="4" h="3"/>
     <sprite n="Gut11.png" x="367" y="946" w="4" h="5"/>
-    <sprite n="Gut12.png" x="379" y="945" w="4" h="2"/>
+    <sprite n="Gut12.png" x="444" y="925" w="4" h="2"/>
     <sprite n="GutStain1.png" x="424" y="925" w="18" h="11"/>
     <sprite n="GutStain2.png" x="398" y="935" w="17" h="10"/>
     <sprite n="Lightning01.png" x="960" y="369" w="35" h="181"/>
@@ -101,8 +106,8 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="PotteryA.png" x="355" y="919" w="12" h="7"/>
     <sprite n="PotteryB.png" x="346" y="892" w="12" h="12"/>
     <sprite n="PotteryB_Cracked.png" x="377" y="931" w="12" h="12"/>
-    <sprite n="ShadowSpot4.png" x="488" y="904" w="4" h="3"/>
-    <sprite n="ShadowSpot5.png" x="455" y="905" w="5" h="3"/>
+    <sprite n="ShadowSpot4.png" x="392" y="943" w="4" h="3"/>
+    <sprite n="ShadowSpot5.png" x="373" y="946" w="5" h="3"/>
     <sprite n="ShadowSpot6.png" x="447" y="905" w="6" h="3"/>
     <sprite n="ShadowSpot7.png" x="430" y="905" w="7" h="3"/>
     <sprite n="ShadowSpot8.png" x="272" y="945" w="8" h="3"/>

@@ -11,7 +11,6 @@ namespace ScaryCastle
         #region Private fields
 
         private float depth;
-        //private readonly Debris debris;
         private float floorY;               // Cuánto se frena en horizontal al chocar
         private readonly float gravity;     // gravedad base
         private readonly Vector2 initialVelocity;     // gravedad base
@@ -37,7 +36,6 @@ namespace ScaryCastle
             this.IgnoreWalkArea = true;
             this.weight = .8f;
             this.gravity = 500;
-            //this.debris = new Debris(prop);
 
             var animation = AddAnimation(AnimationNames.Default);
             animation.AddFrame(prop.GetThrowableImageName(), 1000);
@@ -108,32 +106,10 @@ namespace ScaryCastle
 
         #region Protected members
 
-        // OnDraw
-        protected override void OnDraw(GameTime gameTime)
-        {
-           // if (isGrounded)
-              //  debris.Draw(gameTime);
-            //else
-                base.OnDraw(gameTime);
-        }
-
-        // OnUnload
-        protected override void OnUnload()
-        {
-            base.OnUnload();
-            //debris.Release();
-        }
-
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
-
-            if (isGrounded)
-            {
-                //debris.Update(gameTime);
-                return;
-            }
 
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -164,7 +140,11 @@ namespace ScaryCastle
             DepthOffset = 0;
             isGrounded = true;
             Prop.Position = this.Position;
-            //debris.Launch();
+            
+            if (Room != null)
+                Prop.SpawnDebris(Room);
+
+            Unparent();
 
             Session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);
         }
@@ -178,13 +158,13 @@ namespace ScaryCastle
             Launch(null);
         }
 
+        // Prop
+        public Prop Prop { get; }
+
         // Throw
         public void Throw(GameThing target)
         {
             Launch(target);
         }
-
-        // Prop
-        public Prop Prop { get; }
     }
 }

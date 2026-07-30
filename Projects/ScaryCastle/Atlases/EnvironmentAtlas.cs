@@ -12,6 +12,7 @@ namespace ScaryCastle
         public EnvironmentAtlas()
             : base(EngendroGame.Instance.Content, "Environment", ContentManagerExtension.EncodePath(ContentFolder.Atlases, "Environment"), false)
         {
+            Bones = CreateReadOnlyCollection("Bone", 1, 5);
             DefaultLight = this[nameof(DefaultLight)];
             DustParticles = CreateReadOnlyCollection("DustParticle", 1, 1);
             FireflyParticles = CreateReadOnlyCollection("FireflyParticle", 1, 2);
@@ -19,6 +20,9 @@ namespace ScaryCastle
             GutStains = CreateReadOnlyCollection("GutStain", 1, 2);
             LightningLight = this[nameof(LightningLight)];
         }
+
+        // Bones
+        public ReadOnlyCollection<AtlasImage> Bones { get; }
 
         // DefaultLight
         public AtlasImage DefaultLight { get; }

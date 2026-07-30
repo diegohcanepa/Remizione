@@ -18,7 +18,7 @@ namespace ScaryCastle
 
         private Sprite? activeThrowableSprite;
         private readonly FloatTween alertTween = FloatTween.Create(TweenStyle.Linear, 0, .5f, 50, -1);
-        private List<AtlasImage>? customGuts;
+        private List<AtlasImage>? customDebrisPieces;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
         private readonly AnimatedSprite headSprite;
@@ -111,29 +111,6 @@ namespace ScaryCastle
             }
         }
 
-        // InitializeCustomDebris (Collect custom guts)
-        private void InitializeCustomDebris()
-        {
-            if (Atlas == null)
-                return;
-
-            var index = 0;
-            while (true)
-            {
-                if (Atlas.FindImage(Sprite.ImagePath + $"DebrisPiece{index}") is AtlasImage image)
-                {
-                    customGuts ??= [];
-                    customGuts.Add(image);
-                }
-                else
-                {
-                    break;
-                }
-
-                index++;
-            }
-        }
-
         // MoveToNextPathNode
         private void MoveToNextPathNode()
         {
@@ -174,8 +151,8 @@ namespace ScaryCastle
             // Amount of pieces
             var debrisAmount = BodySize switch
             {
-                BodySize.Small => 6,
-                BodySize.Medium => 8,
+                BodySize.Small => 4,
+                BodySize.Medium => 7,
                 BodySize.Large => 12,
                 _ => throw new NotImplementedException(),
             };
@@ -183,36 +160,39 @@ namespace ScaryCastle
             Debris? debris = null;
             var imageName = string.Empty;
 
-            // Generic guts
-            if (DebrisKind == DebrisKind.Gut)
+            // Guts
+            if (DebrisKind == DebrisKind.Guts)
             {
                 if (Atlases.Environment.GutStains.GetRandomItem() is AtlasImage atlasImage)
                     imageName = atlasImage.Name;
-                debris = new Debris(Session, imageName, debrisAmount, Vector2.One, Atlases.Environment.Guts, false);
+                debris = new Debris(Session, imageName, Vector2.One, Atlases.Environment.Guts, debrisAmount, false);
+                _ = BodySize switch
+                {
+                    BodySize.Small => debris.PlaySound(SoundNames.GutsSmall),
+                    BodySize.Medium => debris.PlaySound(SoundNames.GutsMedium),
+                    BodySize.Large => debris.PlaySound(SoundNames.GutsLarge),
+                    _ => throw new NotImplementedException(),
+                };
+            }
+
+            // Bones
+            else if (DebrisKind == DebrisKind.Bones)
+            {
+                debris = new Debris(Session, imageName, Vector2.One, Atlases.Environment.Bones, debrisAmount, true);
+                debris.PlaySound(SoundNames.Bones);
             }
 
             // Custom
             else if (DebrisKind == DebrisKind.Custom)
             {
-                if (customGuts != null)
-                    debris = new Debris(Session, imageName, customGuts.Count, Vector2.One, customGuts, false);
+                if (customDebrisPieces != null)
+                    debris = new Debris(Session, imageName, Vector2.One, customDebrisPieces, customDebrisPieces.Count, false);
             }
 
             if (debris != null)
             {
                 debris.Position = Position;
                 Room.Children.Add(debris);
-
-                if (DebrisKind == DebrisKind.Gut)
-                {
-                    _ = BodySize switch
-                    {
-                        BodySize.Small => debris.PlaySound(SoundNames.GutsSmall),
-                        BodySize.Medium => debris.PlaySound(SoundNames.GutsMedium),
-                        BodySize.Large => debris.PlaySound(SoundNames.GutsLarge),
-                        _ => throw new NotImplementedException(),
-                    };
-                }
             }
 
             Unparent();
@@ -393,6 +373,33 @@ namespace ScaryCastle
         // InputHandler
         protected InputHandler? InputHandler { get; set; }
 
+        // OnAtlasChanged
+        protected override void OnAtlasChanged()
+        {
+            base.OnAtlasChanged();
+
+            customDebrisPieces?.Clear();
+
+            if (Atlas == null)
+                return;
+
+            var index = 0;
+            while (true)
+            {
+                if (Atlas.FindImage(Sprite.ImagePath + $"DebrisPiece{index}") is AtlasImage image)
+                {
+                    customDebrisPieces ??= [];
+                    customDebrisPieces.Add(image);
+                }
+                else
+                {
+                    break;
+                }
+
+                index++;
+            }
+        }
+
         // OnCollisioning
         protected override void OnCollisioning(GameThing thing, out bool handled)
         {
@@ -489,7 +496,6 @@ namespace ScaryCastle
         protected override void OnLoad()
         {
             base.OnLoad();
-            InitializeCustomDebris();
             IsAlert = true;
             ResetRemainingTurns(true);
             OpacityFactor = 1;
@@ -834,7 +840,7 @@ namespace ScaryCastle
 
         // DebrisKind
         [ScriptProperty]
-        public DebrisKind DebrisKind { get; set; } = DebrisKind.Gut;
+        public DebrisKind DebrisKind { get; set; } = DebrisKind.Guts;
 
         // Definition
         public ActorDefinition? Definition { get; }

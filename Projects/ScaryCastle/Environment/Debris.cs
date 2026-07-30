@@ -9,14 +9,14 @@ namespace ScaryCastle
     /// </summary>
     public sealed class Debris : GameThing
     {
-        private readonly List<DebrisPiece> parts = [];
+        private readonly List<DebrisPiece> pieces = [];
 
         // Constructor
-        public Debris(GameSession session, string imageName, int amount, Vector2 scale, IList<AtlasImage> pieces, bool shadow)
+        public Debris(GameSession session, string defaultImageName, Vector2 scale, IList<AtlasImage> pieces, int amount, bool shadow)
             : base(session, string.Empty)
         {
             this.Atlas = Atlases.Environment;
-            this.DefaultImageName = imageName;
+            this.DefaultImageName = defaultImageName;
             this.PivotOrigin = RectanglePoint.Center;
             this.Opacity = .6f;
 
@@ -24,12 +24,12 @@ namespace ScaryCastle
             {
                 for (var i = 0; i < amount; i++)
                 {
-                    var debris = Session.ObjectPools.DebrisPieces.Get();
-                    debris.Image = pieces.GetRandomItem();
-                    debris.Opacity = .75f;
-                    debris.Scale = scale;
-                    debris.Shadow = shadow;
-                    parts.Add(debris);
+                    var debrisPiece = Session.ObjectPools.DebrisPieces.Get();
+                    debrisPiece.Image = pieces.GetRandomItem();
+                    debrisPiece.Opacity = .75f;
+                    debrisPiece.Scale = scale;
+                    debrisPiece.Shadow = shadow;
+                    this.pieces.Add(debrisPiece);
                 }
             }
 
@@ -43,9 +43,9 @@ namespace ScaryCastle
         {
             base.OnDraw(gameTime);
 
-            for (var i = 0; i < parts.Count; i++)
+            for (var i = 0; i < pieces.Count; i++)
             {
-                parts[i].Draw(gameTime);
+                pieces[i].Draw(gameTime);
             }
         }
 
@@ -54,13 +54,23 @@ namespace ScaryCastle
         {
             base.OnLoad();
 
-            for (var i = 0; i < parts.Count; i++)
+            for (var i = 0; i < pieces.Count; i++)
             {
-                parts[i].Launch(this);
+                pieces[i].Launch(this);
                 RenderLayer = RenderLayer.OverBackground;
             }
 
             Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicOut, 0, 1, 400);
+        }
+
+        // OnUnload
+        protected override void OnUnload()
+        {
+            base.OnUnload();
+            for (var i = 0; i < pieces.Count; i++)
+            {
+                Session.ObjectPools.DebrisPieces.Return(pieces[i]);
+            }
         }
 
         // OnUpdate
@@ -68,9 +78,9 @@ namespace ScaryCastle
         {
             base.OnUpdate(gameTime);
 
-            for (var i = 0; i < parts.Count; i++)
+            for (var i = 0; i < pieces.Count; i++)
             {
-                parts[i].Update(gameTime);
+                pieces[i].Update(gameTime);
             }
         }
 

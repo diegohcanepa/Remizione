@@ -45,7 +45,7 @@ namespace ScaryCastle
     public enum DamageType { None, Physical, Acid, Explosive, Fire, Ice, Lightning }
 
     // DebrisKind
-    public enum DebrisKind { None, Custom, Gut }
+    public enum DebrisKind { None, Custom, Bones, Guts }
 
     // DeityHandKind
     public enum DeityHandKind { Devil, God }

@@ -6,7 +6,7 @@ namespace ScaryCastle
     /// <summary>
     /// Pottery
     /// </summary>
-    public class Pottery : BreakableProp
+    public class Pottery : Prop
     {
         private const string CrackedSuffix = "_Cracked";
 
@@ -14,6 +14,7 @@ namespace ScaryCastle
         public Pottery(GameSession session, string name)
             : base(session, name)
         {
+            Atlas = Atlases.Props;
             ApproachBehavior = ApproachBehavior.ClosestSide;
             Verb = Verb.Lift;
             IsHittable = true;

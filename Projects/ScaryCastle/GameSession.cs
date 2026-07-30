@@ -111,7 +111,6 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(Actor));
             AotTypeRegistry.Register(typeof(BloodyEye));
             AotTypeRegistry.Register(typeof(BluePill));
-            AotTypeRegistry.Register(typeof(BreakableProp));
             AotTypeRegistry.Register(typeof(BronzeKey));
             AotTypeRegistry.Register(typeof(CloseUpRoom));
             AotTypeRegistry.Register(typeof(Coin));

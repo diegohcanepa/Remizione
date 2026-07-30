@@ -2,6 +2,7 @@
 using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace ScaryCastle
 {
@@ -13,6 +14,7 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly Vector2Tween bounceScaleTween = new();
+        private List<AtlasImage>? pieces;
         private readonly FloatTween xTween = new();
 
         #endregion
@@ -65,6 +67,43 @@ namespace ScaryCastle
 
         // MatchShadowTransform
         protected bool MatchShadowTransform { get; set; } = true;
+
+        // OnAtlasChanged
+        protected override void OnAtlasChanged()
+        {
+            base.OnAtlasChanged();
+
+            pieces?.Clear();
+
+            if (Atlas == null)
+                return;
+
+            var index = 1;
+            while (true)
+            {
+                if (Atlas.FindImage($"{DeclaredName}Piece{index}") is AtlasImage image)
+                {
+                    pieces ??= [];
+                    pieces.Add(image);
+                }
+                else
+                {
+                    break;
+                }
+
+                index++;
+            }
+        }
+
+        // OnDeath
+        protected override void OnDeath()
+        {
+            if (Room != null && pieces?.Count > 0)
+            {
+                SpawnDebris(Room);
+                Unparent();
+            }
+        }
 
         // OnDrawShadow
         protected override void OnDrawShadow(GameTime gameTime)
@@ -155,6 +194,20 @@ namespace ScaryCastle
         // SkillChancePenalty
         [ScriptProperty]
         public int SkillChancePenalty { get; set; }
+
+        // SpawnDebris
+        public void SpawnDebris(GameRoom room)
+        {
+            if (pieces?.Count > 0)
+            {
+                var debris = new Debris(Session, string.Empty, Vector2.One, pieces, pieces.Count, true)
+                {
+                    Position = Position
+                };
+
+                room.Children.Add(debris);
+            }
+        }
 
         // TestSkillChance
         public bool TestSkillChance(Actor actor, Item item)
