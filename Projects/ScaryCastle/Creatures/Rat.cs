@@ -17,7 +17,6 @@ namespace ScaryCastle
             AnimationSettings.SupressAll();
             BodySize = BodySize.Small;
             FastMoveFactor = 3;
-            Guts = 4;
             scaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, Vector2.Zero, new(0, .05f), 200, -1);
         }
 

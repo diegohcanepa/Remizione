@@ -25,7 +25,7 @@ namespace ScaryCastle
         private readonly Sprite scroll = new(Atlases.UI.GetImage("Scroll")) { PivotOrigin = RectanglePoint.Top, Position = Screen.HUDArea.GetPoint(RectanglePoint.Top) };
         private readonly Sprite[] shadows = new Sprite[ItemContainer.MaximumCapacity];
         private readonly Sprite[] slots = new Sprite[ItemContainer.MaximumCapacity];
-        
+
         #endregion
 
         #region Constructor
@@ -105,7 +105,7 @@ namespace ScaryCastle
             };
 
             // MouseIcon
-            this.mouseIcon =  new(Atlases.UI.MouseRightButtonIcon)
+            this.mouseIcon = new(Atlases.UI.MouseRightButtonIcon)
             {
                 PivotOrigin = RectanglePoint.Right,
                 Position = mouseTip.BoundingBox.GetPoint(RectanglePoint.Left, -1, -1),

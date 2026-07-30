@@ -40,7 +40,7 @@ namespace ScaryCastle
                 Sentence.Draw(gameTime);
 
                 //if (session.InteractionContext.Target != null && session.InteractionContext.Target != session.Player)
-                  //  BossMeter.Draw(gameTime);
+                //  BossMeter.Draw(gameTime);
             }
         }
 

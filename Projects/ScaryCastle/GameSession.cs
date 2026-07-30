@@ -1,7 +1,6 @@
 ﻿using Adberration;
 using Adberration.Scripting;
 using Engendro;
-using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using ScaryCastle.Props;
 using ScaryCastle.Scripting;
@@ -480,7 +479,10 @@ namespace ScaryCastle
 
         // BeginRun
         [ScriptMethod]
-        public void BeginRun() => BeginRun(null);
+        public void BeginRun()
+        {
+            BeginRun(null);
+        }
 
         // BeginRun
         public void BeginRun(int? seed = null)
@@ -488,12 +490,14 @@ namespace ScaryCastle
             if (CurrentRun != null)
                 throw new InvalidOperationException("A run is already in progress.");
 
-            // 1. Establecer el Seed de la run (fijo o por tiempo)
+            // 1. Establecemos el Seed de la run para la TOPOLOGÍA (fijo o por tiempo)
             RunSeed = seed ?? System.Environment.TickCount;
 
-            // 2. Inicializar el RNG Maestro y el Volátil
+            // 2. RNG Maestro: DETERMINISTA. Usa el RunSeed para que los cuartos sean iguales.
             MasterRunRng = new Random(RunSeed);
-            VolatileRng = new Random(RunSeed); // Opcional: puedes darle otro seed inicial si no quieres determinismo en combate
+
+            // 3. RNG Volátil: CAOS TOTAL. Sin parámetros, .NET genera una semilla impredecible.
+            VolatileRng = new Random(RunSeed);
 
             CurrentRun = new Run(this, 15);
 
@@ -698,7 +702,7 @@ namespace ScaryCastle
         public LootGenerator LootGenerator { get; }
 
         // MasterRunRng (RNG supremo de la partida entera. Solo se usa para generar pisos.)
-        public Random MasterRunRng { get; private set; }
+        public Random MasterRunRng { get; private set; } = new();
 
         // NextRoom
         [ScriptProperty]
@@ -860,6 +864,6 @@ namespace ScaryCastle
         public TextHUD TextHUD { get; }
 
         // VolatileRng (Este es el RNG para gameplay (Drops, IA, combate))
-        public Random VolatileRng { get; private set; }
+        public Random VolatileRng { get; private set; } = new();
     }
 }

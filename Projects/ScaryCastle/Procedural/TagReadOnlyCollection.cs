@@ -32,7 +32,7 @@ namespace ScaryCastle
         public static TagReadOnlyCollection FromString(string value)
         {
             var tagList = new List<Tag>();
-            
+
             var tags = value.Split(',');
             foreach (var tagName in tags)
             {

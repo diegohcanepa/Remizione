@@ -49,17 +49,17 @@
     },
     {
       "name": "PotteryC",
-      "minRun": 10,
+      "minFloor": 10,
       "placements": []
     },
     {
       "name": "PotteryD",
-      "minRun": 10,
+      "minFloor": 10,
       "placements": []
     },
     {
       "name": "PotteryE",
-      "minRun": 10,
+      "minFloor": 10,
       "placements": []
     },
     {

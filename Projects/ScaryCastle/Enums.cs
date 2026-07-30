@@ -44,6 +44,9 @@ namespace ScaryCastle
     // DamageType
     public enum DamageType { None, Physical, Acid, Explosive, Fire, Ice, Lightning }
 
+    // DebrisKind
+    public enum DebrisKind { None, Custom, Gut }
+
     // DeityHandKind
     public enum DeityHandKind { Devil, God }
 
@@ -195,9 +198,6 @@ namespace ScaryCastle
 
     // SpeechTextState
     public enum SpeechTextState { Hidden, Typing, Idle }
-
-    // StatName
-    public enum StatName { HP, XP }
 
     // Tag
     public enum Tag { Ceiling, Floor, GateLever, Poison, Pottery, Torch, Trap, TrapDoor, Trunk, WallDecoration }

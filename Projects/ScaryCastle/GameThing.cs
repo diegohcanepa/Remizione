@@ -1044,7 +1044,7 @@ namespace ScaryCastle
                         hpMeter ??= FlatMeter.CreateHPMeter();
                     else
                         hpMeter = null;
-                    
+
                     SyncHPMeter();
                 }
             }
@@ -1075,9 +1075,10 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = value;
+                    
                     if (HP == 0)
                     {
-                        HP = value;
+                        HP = field;
                     }
                     else if (HP > field)
                     {

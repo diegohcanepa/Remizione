@@ -18,7 +18,7 @@ namespace ScaryCastle
 
         private Sprite? activeThrowableSprite;
         private readonly FloatTween alertTween = FloatTween.Create(TweenStyle.Linear, 0, .5f, 50, -1);
-        private readonly List<AtlasImage>? customGuts;
+        private List<AtlasImage>? customGuts;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
         private readonly AnimatedSprite headSprite;
@@ -67,22 +67,6 @@ namespace ScaryCastle
             this.BodyMachine = new BodyStateMachine(this, new BodyStandState());
             this.BodyMachine.AddState(new BodyMoveState());
 
-            if (Atlas?.FindImage(Sprite.ImagePath + "Gut0") != null)
-            {
-                var index = 0;
-                customGuts = [];
-
-                while (true)
-                {
-                    if (Atlas.FindImage(Sprite.ImagePath + $"Gut{index}") is AtlasImage image)
-                        customGuts.Add(image);
-                    else
-                        break;
-
-                    index++;
-                }
-            }
-
             ShadowSpotSize = 6;
 
             ResetRemainingTurns();
@@ -127,6 +111,29 @@ namespace ScaryCastle
             }
         }
 
+        // InitializeCustomDebris (Collect custom guts)
+        private void InitializeCustomDebris()
+        {
+            if (Atlas == null)
+                return;
+
+            var index = 0;
+            while (true)
+            {
+                if (Atlas.FindImage(Sprite.ImagePath + $"DebrisPiece{index}") is AtlasImage image)
+                {
+                    customGuts ??= [];
+                    customGuts.Add(image);
+                }
+                else
+                {
+                    break;
+                }
+
+                index++;
+            }
+        }
+
         // MoveToNextPathNode
         private void MoveToNextPathNode()
         {
@@ -156,6 +163,59 @@ namespace ScaryCastle
                 else
                     RemainingTurns = CombatBehavior.TurnInterval;
             }
+        }
+
+        // SpawnDebris
+        private void SpawnDebris()
+        {
+            if (Room == null)
+                return;
+
+            // Amount of pieces
+            var debrisAmount = BodySize switch
+            {
+                BodySize.Small => 6,
+                BodySize.Medium => 8,
+                BodySize.Large => 12,
+                _ => throw new NotImplementedException(),
+            };
+
+            Debris? debris = null;
+            var imageName = string.Empty;
+
+            // Generic guts
+            if (DebrisKind == DebrisKind.Gut)
+            {
+                if (Atlases.Environment.GutStains.GetRandomItem() is AtlasImage atlasImage)
+                    imageName = atlasImage.Name;
+                debris = new Debris(Session, imageName, debrisAmount, Vector2.One, Atlases.Environment.Guts, false);
+            }
+
+            // Custom
+            else if (DebrisKind == DebrisKind.Custom)
+            {
+                if (customGuts != null)
+                    debris = new Debris(Session, imageName, customGuts.Count, Vector2.One, customGuts, false);
+            }
+
+            if (debris != null)
+            {
+                debris.Position = Position;
+                Room.Children.Add(debris);
+
+                if (DebrisKind == DebrisKind.Gut)
+                {
+                    _ = BodySize switch
+                    {
+                        BodySize.Small => debris.PlaySound(SoundNames.GutsSmall),
+                        BodySize.Medium => debris.PlaySound(SoundNames.GutsMedium),
+                        BodySize.Large => debris.PlaySound(SoundNames.GutsLarge),
+                        _ => throw new NotImplementedException(),
+                    };
+                }
+            }
+
+            Unparent();
         }
 
         // SyncHeadAnimation
@@ -344,37 +404,9 @@ namespace ScaryCastle
         {
             speechText?.Hide();
 
-            if (Guts > 0 || customGuts?.Count > 0)
+            if (DebrisKind != DebrisKind.None)
             {
-                if (Room != null)
-                {
-                    var gutScale = BodySize switch
-                    {
-                        BodySize.Small => Vector2.One,
-                        BodySize.Medium => Vector2.One,
-                        BodySize.Large => Vector2.One,
-                        _ => Vector2.One * 1.25f
-                    };
-
-                    var guts = new Guts(Session, Guts > 0, Guts, gutScale, customGuts)
-                    {
-                        Position = Position,
-                    };
-
-                    Room.Children.Add(guts);
-
-                    if (Guts > 0)
-                    {
-                        _ = BodySize switch
-                        {
-                            BodySize.Small => guts.PlaySound(SoundNames.GutsSmall),
-                            BodySize.Medium => guts.PlaySound(SoundNames.GutsMedium),
-                            _ => guts.PlaySound(SoundNames.GutsLarge)
-                        };
-                    }
-
-                    Unparent();
-                }
+                SpawnDebris();
             }
             else
             {
@@ -457,6 +489,7 @@ namespace ScaryCastle
         protected override void OnLoad()
         {
             base.OnLoad();
+            InitializeCustomDebris();
             IsAlert = true;
             ResetRemainingTurns(true);
             OpacityFactor = 1;
@@ -799,6 +832,10 @@ namespace ScaryCastle
         // ConditionTimer
         public int ConditionTimer { get; private set; }
 
+        // DebrisKind
+        [ScriptProperty]
+        public DebrisKind DebrisKind { get; set; } = DebrisKind.Gut;
+
         // Definition
         public ActorDefinition? Definition { get; }
 
@@ -815,7 +852,9 @@ namespace ScaryCastle
                     ActiveThrowable = null;
                 }
                 else
+                {
                     DropActiveThrowable();
+                }
             }
         }
 
@@ -901,10 +940,6 @@ namespace ScaryCastle
         {
             return activeThrowableSprite?.Position;
         }
-
-        // Guts
-        [ScriptProperty]
-        public int Guts { get; set; } = 8;
 
         // HandleInput
         public HandleInputResult HandleInput()
@@ -1021,7 +1056,7 @@ namespace ScaryCastle
             float maxLurkDistance = arch.MeleeRange * 3f;    // Distancia máxima de acecho proporcional
             float maxStepThisTurn = arch.MeleeRange * 0.75f; // El paso es una fracción de su rango para que sea corto
 
-            Vector2 desiredDirection = Vector2.Zero;
+            Vector2 desiredDirection;
 
             // 3. Evaluamos la posición en base a su zona de confort
             if (currentDistance > maxLurkDistance)
@@ -1042,8 +1077,8 @@ namespace ScaryCastle
                 toTarget.Normalize();
 
                 // Calculamos los vectores perpendiculares (izquierda y derecha)
-                Vector2 perpendicularLeft = new Vector2(-toTarget.Y, toTarget.X);
-                Vector2 perpendicularRight = new Vector2(toTarget.Y, -toTarget.X);
+                var perpendicularLeft = new Vector2(-toTarget.Y, toTarget.X);
+                var perpendicularRight = new Vector2(toTarget.Y, -toTarget.X);
 
                 // Determinismo espacial para elegir el sentido de la órbita
                 bool chooseLeft = (int)(Position.X + Position.Y) % 2 == 0;
@@ -1272,20 +1307,6 @@ namespace ScaryCastle
         public void Say(string text, bool awaitInput)
         {
             speechText ??= new SpeechText(this);
-
-            var color = SpeechColor;
-            if (color == Color.Transparent)
-            {
-                if (IsPlayer)
-                {
-                    color = Color.White;
-                }
-                else
-                {
-                    color = Faction == Faction.Evil ? ColorPalette.Text.Yellow : ColorPalette.Text.Default;
-                }
-            }
-
             speechText.Show(DisplayName, text, awaitInput);
         }
 

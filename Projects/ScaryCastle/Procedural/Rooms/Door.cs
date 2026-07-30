@@ -192,7 +192,7 @@ namespace ScaryCastle
                 Sprite.ClearAnimations();
 
                 var assetPrefix = string.Empty;
-                
+
                 if (DoorDirection == DoorDirection.Up && proceduralRoom.RoomNode.Up != null)
                 {
                     assetPrefix = GetVisualAssetName(proceduralRoom.RoomNode, proceduralRoom.RoomNode.Up, DoorDirection);

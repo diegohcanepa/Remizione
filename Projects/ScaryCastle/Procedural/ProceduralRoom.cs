@@ -197,7 +197,7 @@ namespace ScaryCastle
         }
 
         // GetSpawnPoints
-        private List<Vector2> GetSpawnPoints(IReadOnlyPolygon polygon, int count, int cellSize)
+        private List<Vector2> GetSpawnPoints(Polygon polygon, int count, int cellSize)
         {
             var cells = new List<Vector2>();
             var area = polygon.BoundingRectangle;

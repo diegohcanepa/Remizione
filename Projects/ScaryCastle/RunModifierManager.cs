@@ -133,7 +133,7 @@ namespace ScaryCastle
         {
             return FindActive(modifierName) != null;
         }
-   
+
         // Session
         public GameSession Session { get; }
 

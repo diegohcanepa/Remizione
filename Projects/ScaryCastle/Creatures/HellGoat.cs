@@ -9,7 +9,6 @@
         public HellGoat(GameSession session, string name)
             : base(session, name)
         {
-            this.Guts = 8;
         }
 
         // OnLoad

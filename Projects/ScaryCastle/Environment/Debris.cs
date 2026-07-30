@@ -7,31 +7,33 @@ namespace ScaryCastle
     /// <summary>
     /// Debris
     /// </summary>
-    public sealed class Debris : GameObject
+    public sealed class Debris : GameThing
     {
-        private readonly List<DebrisPiece> debrisList = [];
-        private readonly Prop source;
+        private readonly List<DebrisPiece> parts = [];
 
         // Constructor
-        public Debris(Prop source)
+        public Debris(GameSession session, string imageName, int amount, Vector2 scale, IList<AtlasImage> pieces, bool shadow)
+            : base(session, string.Empty)
         {
-            this.source = source;
+            this.Atlas = Atlases.Environment;
+            this.DefaultImageName = imageName;
+            this.PivotOrigin = RectanglePoint.Center;
+            this.Opacity = .6f;
 
-            var index = 1;
-            while (true)
+            if (amount > 0 && pieces.Count > 0)
             {
-                if (source.Atlas?.FindImage($"{source.DeclaredName}Piece{index}") is { } image)
+                for (var i = 0; i < amount; i++)
                 {
-                    var debris = source.Session.ObjectPools.DebrisPieces.Get();
-                    debris.Image = image;
-                    debrisList.Add(debris);
-                    index++;
-                }
-                else
-                {
-                    break;
+                    var debris = Session.ObjectPools.DebrisPieces.Get();
+                    debris.Image = pieces.GetRandomItem();
+                    debris.Opacity = .75f;
+                    debris.Scale = scale;
+                    debris.Shadow = shadow;
+                    parts.Add(debris);
                 }
             }
+
+            RenderLayer = RenderLayer.OverBackground;
         }
 
         #region Protected members
@@ -39,37 +41,39 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            for (var i = 0; i < debrisList.Count; i++)
+            base.OnDraw(gameTime);
+
+            for (var i = 0; i < parts.Count; i++)
             {
-                debrisList[i].Draw(gameTime);
+                parts[i].Draw(gameTime);
             }
+        }
+
+        // OnLoad
+        protected override void OnLoad()
+        {
+            base.OnLoad();
+
+            for (var i = 0; i < parts.Count; i++)
+            {
+                parts[i].Launch(this);
+                RenderLayer = RenderLayer.OverBackground;
+            }
+
+            Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicOut, 0, 1, 400);
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            for (var i = 0; i < debrisList.Count; i++)
+            base.OnUpdate(gameTime);
+
+            for (var i = 0; i < parts.Count; i++)
             {
-                //pieces[i].Opacity = source.Opacity;
-                debrisList[i].Update(gameTime);
+                parts[i].Update(gameTime);
             }
         }
 
         #endregion
-
-        // Launch
-        public void Launch()
-        {
-            for (var i = 0; i < debrisList.Count; i++)
-            {
-                debrisList[i].Launch(source);
-            }
-        }
-
-        // Release
-        public void Release()
-        {
-            source.Session.ObjectPools.DebrisPieces.Return(debrisList);
-        }
     }
 }

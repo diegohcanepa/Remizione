@@ -1,5 +1,4 @@
-﻿using Adberration;
-using Engendro;
+﻿using Engendro;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -35,7 +34,7 @@ namespace ScaryCastle
                 Position = this.Position - new Vector2(0, 5)
             };
             room.Children.Add(crack);
-            
+
             this.hitPosition = Position;
             this.Shadow.Position = hitPosition;
         }
@@ -50,9 +49,10 @@ namespace ScaryCastle
             PlaySound(SoundNames.WreckingBallImpact);
             Session.Camera.Shake(TweenStyle.QuadraticInOut, new(.08f, 1), 40, 6);
 
-            if (Room == null || Session.IsAwaiting || Definition == null)
+            if (Room == null || Definition == null)
                 return;
 
+            var hitArea = new RectangleF(X - 5, Y - 3, 10, 6);
             for (var i = 0; i < Room.Children.Count; i++)
             {
                 if (Room.Children[i] == this)
@@ -60,8 +60,11 @@ namespace ScaryCastle
 
                 if (Room.Children[i] is GameThing target && !target.IsDead && target.MaxHP > 0)
                 {
-                    if (RuntimeHotspot.BoundingRectangleF.Bottom >= target.Y && RuntimeHotspot.BoundingRectangleF.Intersects(target.RuntimeHotspot.BoundingRectangleF))
-                        EffectDescriptor.Apply(Definition.EffectDescriptors, this, target, EffectContext.Contact);
+                    if (hitArea.Contains(target.Position))
+                    {
+                        if (RuntimeHotspot.BoundingRectangleF.Intersects(target.RuntimeHotspot.BoundingRectangleF))
+                            EffectDescriptor.Apply(Definition.EffectDescriptors, this, target, EffectContext.Contact);
+                    }
                 }
             }
 
@@ -96,12 +99,6 @@ namespace ScaryCastle
                 Tweens.YTween = FloatTween.Create(TweenStyle.QuadraticIn, Y, 0, 1500);
                 Shadow.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.QuadraticIn, Shadow.Scale, Vector2.Zero, 1500);
             }
-        }
-
-        // OnUpdate
-        protected override void OnUpdate(GameTime gameTime)
-        {
-            base.OnUpdate(gameTime);
         }
 
         #endregion

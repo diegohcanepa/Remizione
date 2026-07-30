@@ -66,7 +66,7 @@ namespace ScaryCastle
             base.OnUpdate(gameTime);
 
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            
+
             StateTimer += deltaTime;
 
             // Dispatch de Update por estado

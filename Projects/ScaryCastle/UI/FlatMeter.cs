@@ -139,7 +139,7 @@ namespace ScaryCastle
         public static FlatMeter CreateHPMeter()
         {
             return new(ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore, ColorPalette.HPMeter.Diff, new(10, 2.5f), .5f)
-            {   
+            {
                 ShowAmount = true
             };
         }

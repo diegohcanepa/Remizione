@@ -86,38 +86,38 @@ namespace ScaryCastle
             {
                 case RectanglePoint.LeftTop:
                     break;
-                
+
                 case RectanglePoint.Top:
                     renderOrigin.X -= Width / 2f;
                     break;
-                
+
                 case RectanglePoint.RightTop:
                     renderOrigin.X -= Width;
                     break;
-                
+
                 case RectanglePoint.Left:
                     renderOrigin.Y -= Height / 2f;
                     break;
-                
+
                 case RectanglePoint.Center:
                     renderOrigin.X -= Width / 2f;
                     renderOrigin.Y -= Height / 2f;
                     break;
-                
+
                 case RectanglePoint.Right:
                     renderOrigin.X -= Width;
                     renderOrigin.Y -= Height / 2f;
                     break;
-                
+
                 case RectanglePoint.LeftBottom:
                     renderOrigin.Y -= Height;
                     break;
-                
+
                 case RectanglePoint.Bottom:
                     renderOrigin.X -= Width / 2f;
                     renderOrigin.Y -= Height;
                     break;
-                
+
                 case RectanglePoint.RightBottom:
                     renderOrigin.X -= Width;
                     renderOrigin.Y -= Height;
@@ -230,7 +230,7 @@ namespace ScaryCastle
             get;
             set
             {
-                int validatedValue = value < 8 ? 8 : 8 + (value - 8 + 3) / 4 * 4;
+                int validatedValue = value < 8 ? 8 : 8 + ((value - 8 + 3) / 4 * 4);
 
                 if (validatedValue != field)
                 {
@@ -282,7 +282,7 @@ namespace ScaryCastle
             get;
             set
             {
-                int validatedValue = value < 8 ? 8 : 8 + (value - 8 + 3) / 4 * 4;
+                int validatedValue = value < 8 ? 8 : 8 + ((value - 8 + 3) / 4 * 4);
 
                 if (validatedValue != field)
                 {

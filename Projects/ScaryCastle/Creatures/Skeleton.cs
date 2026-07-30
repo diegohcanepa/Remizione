@@ -10,7 +10,7 @@
             : base(session, name)
         {
             BodySize = BodySize.Medium;
-            Guts = 0;
+            DebrisKind = DebrisKind.Custom;
         }
     }
 }

@@ -9,103 +9,33 @@ namespace ScaryCastle
     /// </summary>
     public class BreakableProp : Prop
     {
-        private readonly List<DebrisPiece> debrisList = [];
+        private readonly List<AtlasImage> pieces = [];
 
         // Constructor
         public BreakableProp(GameSession session, string name)
             : base(session, name)
         {
             Atlas = Atlases.Props;
+
+            var index = 1;
+            while (true)
+            {
+                if (Atlas.FindImage($"{DeclaredName}Piece{index}") is AtlasImage image)
+                    pieces.Add(image);
+                else
+                    break;
+
+                index++;
+            }
         }
 
         #region Protected members
 
-        // OnDie
+        // OnDeath
         protected override void OnDeath()
         {
-            Break();
-        }
-
-        // OnDraw
-        protected override void OnDraw(GameTime gameTime)
-        {
-            if (IsBroken)
-            {
-                for (var i = 0; i < debrisList.Count; i++)
-                {
-                    debrisList[i].Draw(gameTime);
-                }
-            }
-            else
-            {
-                base.OnDraw(gameTime);
-            }
-        }
-
-        // OnLoad
-        protected override void OnLoad()
-        {
-            base.OnLoad();
-
-            if (debrisList.Count == 0)
-            {
-                var index = 1;
-                while (true)
-                {
-                    if (Atlas?.FindImage($"{DeclaredName}Piece{index}") is AtlasImage image)
-                    {
-                        var debris = Session.ObjectPools.DebrisPieces.Get();
-                        debris.Image = image;
-                        debrisList.Add(debris);
-                        index++;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-        }
-
-        // OnUnload
-        protected override void OnUnload()
-        {
-            base.OnUnload();
-            Session.ObjectPools.DebrisPieces.Return(debrisList);
-        }
-
-        // OnUpdate
-        protected override void OnUpdate(GameTime gameTime)
-        {
-            base.OnUpdate(gameTime);
-
-            if (IsBroken)
-            {
-                for (var i = 0; i < debrisList.Count; i++)
-                {
-                    debrisList[i].Update(gameTime);
-                }
-            }
         }
 
         #endregion
-
-        // Break
-        public void Break()
-        {
-            if (IsBroken)
-                return;
-
-            RenderLayer = RenderLayer.OverBackground;
-
-            IsBroken = true;
-            for (var i = 0; i < debrisList.Count; i++)
-            {
-                debrisList[i].Launch(this);
-            }
-        }
-
-        // IsBroken
-        public bool IsBroken { get; private set; }
     }
 }
