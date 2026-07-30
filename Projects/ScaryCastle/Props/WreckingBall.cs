@@ -37,6 +37,14 @@ namespace ScaryCastle
 
             this.hitPosition = Position;
             this.Shadow.Position = hitPosition;
+
+            IdleDuration = room.RoomNode.Definition.Difficulty switch
+            {
+                Difficulty.Easy => 10000,
+                Difficulty.Normal => 8000,
+                Difficulty.Hard => 6000,
+                _ => throw new NotImplementedException(),
+            };
         }
 
         #endregion
@@ -52,7 +60,7 @@ namespace ScaryCastle
             if (Room == null || Definition == null)
                 return;
 
-            var hitArea = new RectangleF(X - 5, Y - 3, 10, 6);
+            var hitArea = new RectangleF(X - 5, Y - 3, 10, 7);
             for (var i = 0; i < Room.Children.Count; i++)
             {
                 if (Room.Children[i] == this)

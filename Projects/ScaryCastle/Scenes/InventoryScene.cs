@@ -97,9 +97,9 @@ namespace ScaryCastle
             // MouseTip
             mouseTip = new(Fonts.Common)
             {
-                Color = ColorPalette.Text.Terra,
-                PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom),
+                Color = ColorPalette.Text.Highlight,
+                PivotOrigin = RectanglePoint.LeftBottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 10, -13),
                 Scale = ScaleInfo.Text.ExtraLarge,
                 Text = "@Verb.Examine"
             };

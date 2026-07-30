@@ -30,7 +30,7 @@
     "context": {
       "type": "string",
       "description": "Contexto en donde es aplicable el efecto.",
-      "enum": [ "Collect", "Contact", "Attack", "Update", "Use", "ProjectileHit", "RunModifier" ],
+      "enum": [ "Collect", "Contact", "Attack", "Update", "RemainsContact", "Use", "ProjectileHit", "RunModifier" ],
       "default": "Contact"
     },
     "damageType": {
@@ -42,7 +42,7 @@
     "knockback": {
       "type": "string",
       "description": "intensidad del knockback.",
-      "enum": [ "Low", "Medium", "High" ],
+      "enum": [ "None", "Low", "Medium", "High" ],
       "default": "Low"
     },
     "conditionType": {

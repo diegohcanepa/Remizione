@@ -1075,7 +1075,7 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = value;
-                    
+
                     if (HP == 0)
                     {
                         HP = field;
@@ -1251,7 +1251,7 @@ namespace ScaryCastle
 
                     OnTakeDamage(attacker, amount, damageType);
 
-                    if (!IsDead)
+                    if (!IsDead && Session.Player != this)
                         Session.ObjectPools.FloatingTexts.Get()?.ShowAmount(this, ColorPalette.HPMeter.Diff, -amount);
 
                     // ComicText si hubo daño real

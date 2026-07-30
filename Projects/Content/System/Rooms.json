@@ -79,12 +79,6 @@
           "allowTags": "Trap"
         },
         {
-          "position": "210,100",
-          "placement": "Floor",
-          "fillChance": 1,
-          "allowTags": "GateLever"
-        },
-        {
           "position": "81,73",
           "placement": "Ceiling",
           "allowTags": "Trap"

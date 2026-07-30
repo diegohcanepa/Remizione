@@ -5,9 +5,9 @@ using System;
 namespace ScaryCastle
 {
     /// <summary>
-    /// DebrisPiece
+    /// RemainsPiece
     /// </summary>
-    public class DebrisPiece : GameObject, IPoolable
+    public class RemainsPiece : GameObject, IPoolable
     {
         #region Private fields
 

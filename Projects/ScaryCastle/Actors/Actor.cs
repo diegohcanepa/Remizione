@@ -18,7 +18,6 @@ namespace ScaryCastle
 
         private Sprite? activeThrowableSprite;
         private readonly FloatTween alertTween = FloatTween.Create(TweenStyle.Linear, 0, .5f, 50, -1);
-        private List<AtlasImage>? customDebrisPieces;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
         private readonly AnimatedSprite headSprite;
@@ -26,6 +25,7 @@ namespace ScaryCastle
         private readonly FloatTween moveBalancingTween = new();
         private readonly FloatTween moveVerticalTween = new();
         private readonly List<Vector2> pendingPathNodes = [];
+        private List<AtlasImage>? remainsPieces;
         private SpeechText? speechText;
 
         #endregion
@@ -142,14 +142,14 @@ namespace ScaryCastle
             }
         }
 
-        // SpawnDebris
-        private void SpawnDebris()
+        // SpawnRemains
+        private void SpawnRemains()
         {
             if (Room == null)
                 return;
 
             // Amount of pieces
-            var debrisAmount = BodySize switch
+            var pieceCount = BodySize switch
             {
                 BodySize.Small => 4,
                 BodySize.Medium => 7,
@@ -157,42 +157,58 @@ namespace ScaryCastle
                 _ => throw new NotImplementedException(),
             };
 
-            Debris? debris = null;
+            Remains? remains = null;
             var imageName = string.Empty;
 
             // Guts
-            if (DebrisKind == DebrisKind.Guts)
+            if (RemainsKind == RemainsKind.Guts || RemainsKind == RemainsKind.ToxicGuts)
             {
-                if (Atlases.Environment.GutStains.GetRandomItem() is AtlasImage atlasImage)
+                var stains = RemainsKind switch
+                {
+                    RemainsKind.Guts => Atlases.Environment.GutStains,
+                    RemainsKind.ToxicGuts => Atlases.Environment.ToxicGutStains,
+                    _ => throw new NotImplementedException(),
+                };
+
+                var guts = RemainsKind switch
+                {
+                    RemainsKind.Guts => Atlases.Environment.Guts,
+                    RemainsKind.ToxicGuts => Atlases.Environment.ToxicGuts,
+                    _ => throw new NotImplementedException(),
+                };
+
+                if (stains.GetRandomItem() is AtlasImage atlasImage)
                     imageName = atlasImage.Name;
-                debris = new Debris(Session, imageName, Vector2.One, Atlases.Environment.Guts, debrisAmount, false);
+
+                remains = new Remains(Session, imageName, Vector2.One, guts, pieceCount, false, Definition?.EffectDescriptors);
+                
                 _ = BodySize switch
                 {
-                    BodySize.Small => debris.PlaySound(SoundNames.GutsSmall),
-                    BodySize.Medium => debris.PlaySound(SoundNames.GutsMedium),
-                    BodySize.Large => debris.PlaySound(SoundNames.GutsLarge),
+                    BodySize.Small => remains.PlaySound(SoundNames.GutsSmall),
+                    BodySize.Medium => remains.PlaySound(SoundNames.GutsMedium),
+                    BodySize.Large => remains.PlaySound(SoundNames.GutsLarge),
                     _ => throw new NotImplementedException(),
                 };
             }
 
             // Bones
-            else if (DebrisKind == DebrisKind.Bones)
+            else if (RemainsKind == RemainsKind.Bones)
             {
-                debris = new Debris(Session, imageName, Vector2.One, Atlases.Environment.Bones, debrisAmount, true);
-                debris.PlaySound(SoundNames.Bones);
+                remains = new Remains(Session, imageName, Vector2.One, Atlases.Environment.Bones, pieceCount, true);
+                remains.PlaySound(SoundNames.Bones);
             }
 
             // Custom
-            else if (DebrisKind == DebrisKind.Custom)
+            else if (RemainsKind == RemainsKind.Custom)
             {
-                if (customDebrisPieces != null)
-                    debris = new Debris(Session, imageName, Vector2.One, customDebrisPieces, customDebrisPieces.Count, false);
+                if (remainsPieces != null)
+                    remains = new Remains(Session, imageName, Vector2.One, remainsPieces, remainsPieces.Count, false);
             }
 
-            if (debris != null)
+            if (remains != null)
             {
-                debris.Position = Position;
-                Room.Children.Add(debris);
+                remains.Position = Position;
+                Room.Children.Add(remains);
             }
 
             Unparent();
@@ -378,7 +394,7 @@ namespace ScaryCastle
         {
             base.OnAtlasChanged();
 
-            customDebrisPieces?.Clear();
+            remainsPieces?.Clear();
 
             if (Atlas == null)
                 return;
@@ -386,10 +402,10 @@ namespace ScaryCastle
             var index = 0;
             while (true)
             {
-                if (Atlas.FindImage(Sprite.ImagePath + $"DebrisPiece{index}") is AtlasImage image)
+                if (Atlas.FindImage(Sprite.ImagePath + $"Remains{index}") is AtlasImage image)
                 {
-                    customDebrisPieces ??= [];
-                    customDebrisPieces.Add(image);
+                    remainsPieces ??= [];
+                    remainsPieces.Add(image);
                 }
                 else
                 {
@@ -411,9 +427,9 @@ namespace ScaryCastle
         {
             speechText?.Hide();
 
-            if (DebrisKind != DebrisKind.None)
+            if (RemainsKind != RemainsKind.None)
             {
-                SpawnDebris();
+                SpawnRemains();
             }
             else
             {
@@ -838,10 +854,6 @@ namespace ScaryCastle
         // ConditionTimer
         public int ConditionTimer { get; private set; }
 
-        // DebrisKind
-        [ScriptProperty]
-        public DebrisKind DebrisKind { get; set; } = DebrisKind.Guts;
-
         // Definition
         public ActorDefinition? Definition { get; }
 
@@ -1231,6 +1243,13 @@ namespace ScaryCastle
             }
         } = PlayerNumber.None;
 
+        // Recharge
+        [ScriptMethod]
+        public virtual void Recharge()
+        {
+            Energy = MaxEnergy;
+        }
+
         // RemainingTurns
         public int RemainingTurns
         {
@@ -1242,12 +1261,9 @@ namespace ScaryCastle
             }
         }
 
-        // Recharge
-        [ScriptMethod]
-        public virtual void Recharge()
-        {
-            Energy = MaxEnergy;
-        }
+        // RemainsKind
+        [ScriptProperty]
+        public RemainsKind RemainsKind { get; set; } = RemainsKind.Guts;
 
         // ResolveInteraction
         public bool ResolveInteraction(GameThing target, Item? item)

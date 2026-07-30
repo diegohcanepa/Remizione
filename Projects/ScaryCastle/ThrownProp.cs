@@ -140,9 +140,9 @@ namespace ScaryCastle
             DepthOffset = 0;
             isGrounded = true;
             Prop.Position = this.Position;
-            
+
             if (Room != null)
-                Prop.SpawnDebris(Room);
+                Prop.SpawnRemains(Room);
 
             Unparent();
 

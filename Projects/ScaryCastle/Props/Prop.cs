@@ -14,7 +14,7 @@ namespace ScaryCastle
         #region Private fields
 
         private readonly Vector2Tween bounceScaleTween = new();
-        private List<AtlasImage>? pieces;
+        private List<AtlasImage>? remainsPieces;
         private readonly FloatTween xTween = new();
 
         #endregion
@@ -73,7 +73,7 @@ namespace ScaryCastle
         {
             base.OnAtlasChanged();
 
-            pieces?.Clear();
+            remainsPieces?.Clear();
 
             if (Atlas == null)
                 return;
@@ -81,10 +81,10 @@ namespace ScaryCastle
             var index = 1;
             while (true)
             {
-                if (Atlas.FindImage($"{DeclaredName}Piece{index}") is AtlasImage image)
+                if (Atlas.FindImage($"{DeclaredName}Remains{index}") is AtlasImage image)
                 {
-                    pieces ??= [];
-                    pieces.Add(image);
+                    remainsPieces ??= [];
+                    remainsPieces.Add(image);
                 }
                 else
                 {
@@ -98,9 +98,9 @@ namespace ScaryCastle
         // OnDeath
         protected override void OnDeath()
         {
-            if (Room != null && pieces?.Count > 0)
+            if (Room != null && remainsPieces?.Count > 0)
             {
-                SpawnDebris(Room);
+                SpawnRemains(Room);
                 Unparent();
             }
         }
@@ -195,17 +195,17 @@ namespace ScaryCastle
         [ScriptProperty]
         public int SkillChancePenalty { get; set; }
 
-        // SpawnDebris
-        public void SpawnDebris(GameRoom room)
+        // SpawnRemains
+        public void SpawnRemains(GameRoom room)
         {
-            if (pieces?.Count > 0)
+            if (remainsPieces?.Count > 0)
             {
-                var debris = new Debris(Session, string.Empty, Vector2.One, pieces, pieces.Count, true)
+                var remains = new Remains(Session, string.Empty, Vector2.One, remainsPieces, remainsPieces.Count, true)
                 {
                     Position = Position
                 };
 
-                room.Children.Add(debris);
+                room.Children.Add(remains);
             }
         }
 

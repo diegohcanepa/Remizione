@@ -19,6 +19,8 @@ namespace ScaryCastle
             Guts = CreateReadOnlyCollection("Gut", 1, 12);
             GutStains = CreateReadOnlyCollection("GutStain", 1, 2);
             LightningLight = this[nameof(LightningLight)];
+            ToxicGuts = CreateReadOnlyCollection("ToxicGut", 1, 12);
+            ToxicGutStains = CreateReadOnlyCollection("ToxicGutStain", 1, 2);
         }
 
         // Bones
@@ -41,5 +43,11 @@ namespace ScaryCastle
 
         // LightningLight
         public AtlasImage LightningLight { get; }
+
+        // ToxicGuts
+        public ReadOnlyCollection<AtlasImage> ToxicGuts { get; }
+
+        // ToxicGutStains
+        public ReadOnlyCollection<AtlasImage> ToxicGutStains { get; }
     }
 }

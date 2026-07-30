@@ -44,9 +44,6 @@ namespace ScaryCastle
     // DamageType
     public enum DamageType { None, Physical, Acid, Explosive, Fire, Ice, Lightning }
 
-    // DebrisKind
-    public enum DebrisKind { None, Custom, Bones, Guts }
-
     // DeityHandKind
     public enum DeityHandKind { Devil, God }
 
@@ -60,7 +57,7 @@ namespace ScaryCastle
     public enum DustParticleKind { None, Dust, Ash }
 
     // EffectContext
-    public enum EffectContext { Collect, Contact, Attack, RunModifier, Update, Use, ProjectileHit }
+    public enum EffectContext { Collect, Contact, Attack, RemainsContact, RunModifier, Update, Use, ProjectileHit }
 
     // EffectType
     public enum EffectType { None, BronzeKey, Coin, Condition, ComicText, Damage, Death, Energy, ExtraEnergy, ExtraHeart, GoldenKey, Heal }
@@ -95,7 +92,7 @@ namespace ScaryCastle
     public enum ItemCategory { Access, Explosive, Food, Luck, Medicine, Misc, Money, Pills, Sacred }
 
     // KnockbackIntensity
-    public enum KnockbackIntensity { Low, Medium, High }
+    public enum KnockbackIntensity { None, Low, Medium, High }
 
     // LightKind
     public enum LightKind { Default, Lantern, Fire, Fireplace, MuzzleFlash, Outdoor, Player }
@@ -183,6 +180,9 @@ namespace ScaryCastle
 
     // Realm
     public enum Realm { Earthly, Infernal, Celestial }
+
+    // RemainsKind
+    public enum RemainsKind { None, Custom, Bones, Guts, ToxicGuts }
 
     // RenderLayer
     public enum RenderLayer { BehindBackground, Background, OverBackground, Default, Foreground, ForegroundNoLight }

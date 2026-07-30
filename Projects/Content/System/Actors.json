@@ -12,7 +12,7 @@
     {
       "name": "FlyingSkull",
       "difficulty": "Normal"
-    },    
+    },
     {
       "name": "Penitent",
       "difficulty": "Hard",
@@ -42,7 +42,18 @@
       "name": "StinkyRat",
       "difficulty": "Normal",
       "maxPackSize": 2,
-      "tags": "Poison"
+      "tags": "Poison",
+      "effects": [
+        {
+          "context": "RemainsContact",
+          "effectType": "Condition",
+          "conditionType": "Poison",
+          "amount": "1",
+          "comicText": "AghGreen",
+          "knockback": "None",
+          "sound": "StatusEffectDamage"
+        }
+      ]
     }
   ]
 }

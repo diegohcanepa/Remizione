@@ -10,7 +10,7 @@
             : base(session, name)
         {
             BodySize = BodySize.Medium;
-            DebrisKind = DebrisKind.Bones;
+            RemainsKind = RemainsKind.Bones;
         }
     }
 }

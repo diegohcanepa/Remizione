@@ -5,31 +5,34 @@ using System.Collections.Generic;
 namespace ScaryCastle
 {
     /// <summary>
-    /// Debris
+    /// Remains
     /// </summary>
-    public sealed class Debris : GameThing
+    public sealed class Remains : GameThing
     {
-        private readonly List<DebrisPiece> pieces = [];
+        private int applyEffectTimer;
+        private readonly IList<EffectDescriptor>? effects;
+        private readonly List<RemainsPiece> pieces = [];
 
         // Constructor
-        public Debris(GameSession session, string defaultImageName, Vector2 scale, IList<AtlasImage> pieces, int amount, bool shadow)
+        public Remains(GameSession session, string defaultImageName, Vector2 scale, IList<AtlasImage> pieces, int amount, bool shadow, IList<EffectDescriptor>? effects = null)
             : base(session, string.Empty)
         {
             this.Atlas = Atlases.Environment;
             this.DefaultImageName = defaultImageName;
             this.PivotOrigin = RectanglePoint.Center;
-            this.Opacity = .6f;
+            this.Opacity = .65f;
+            this.effects = effects;
 
             if (amount > 0 && pieces.Count > 0)
             {
                 for (var i = 0; i < amount; i++)
                 {
-                    var debrisPiece = Session.ObjectPools.DebrisPieces.Get();
-                    debrisPiece.Image = pieces.GetRandomItem();
-                    debrisPiece.Opacity = .75f;
-                    debrisPiece.Scale = scale;
-                    debrisPiece.Shadow = shadow;
-                    this.pieces.Add(debrisPiece);
+                    var piece = Session.ObjectPools.RemainsPieces.Get();
+                    piece.Image = pieces.GetRandomItem();
+                    piece.Opacity = .75f;
+                    piece.Scale = scale;
+                    piece.Shadow = shadow;
+                    this.pieces.Add(piece);
                 }
             }
 
@@ -69,7 +72,7 @@ namespace ScaryCastle
             base.OnUnload();
             for (var i = 0; i < pieces.Count; i++)
             {
-                Session.ObjectPools.DebrisPieces.Return(pieces[i]);
+                Session.ObjectPools.RemainsPieces.Return(pieces[i]);
             }
         }
 
@@ -81,6 +84,24 @@ namespace ScaryCastle
             for (var i = 0; i < pieces.Count; i++)
             {
                 pieces[i].Update(gameTime);
+            }
+
+            if (applyEffectTimer > 0)
+            {
+                if (Session.Player?.IsInCurrentRoom == true && !BoundingBox.Contains(Session.Player.Position))
+                    applyEffectTimer = 0;
+                else
+                    applyEffectTimer -= gameTime.ElapsedGameTime.Milliseconds;
+                return;
+            }
+
+            if (Sprite.RenderImage != null && effects != null)
+            {
+                if (Session.Player?.IsInCurrentRoom == true && BoundingBox.Contains(Session.Player.Position))
+                {
+                    applyEffectTimer = 5000;
+                    EffectDescriptor.Apply(effects, this, Session.Player, EffectContext.RemainsContact);
+                }
             }
         }
 

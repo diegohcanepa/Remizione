@@ -10,9 +10,6 @@ namespace ScaryCastle
     /// </summary>
     public class Trunk : Openable, ILootContainer<ItemDefinition>
     {
-        private int breakTimer = -1;
-        //private readonly Debris debris;
-        private bool isBroken;
         private readonly Sprite lootImage;
 
         // Constructor
@@ -28,25 +25,10 @@ namespace ScaryCastle
             OverheadOrigin = new(6, 2);
             UnlockSound = Sound.Find(SoundNames.LockOpen);
 
-            //this.debris = new Debris(this);
-
             this.lootImage = new(Atlas.FindImage($"{DeclaredName}LootBag"))
             {
                 PivotOrigin = RectanglePoint.Bottom,
             };
-        }
-
-        // Break
-        private void Break()
-        {
-            isBroken = true;
-
-            if (DeathSound != null)
-                PlaySound(DeathSound);
-
-            RenderLayer = RenderLayer.Background;
-            DepthOffset = 0;
-            //debris.Launch();
         }
 
         #region Protected members
@@ -63,28 +45,17 @@ namespace ScaryCastle
                 }
 
                 if (actionInProgress)
-                {
                     Bounce();
-                    if (Loot == null)
-                        breakTimer = 2000;
-                }
             }
         }
 
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (isBroken)
-            {
-                //debris.Draw(gameTime);
-            }
-            else
-            {
-                base.OnDraw(gameTime);
+            base.OnDraw(gameTime);
 
-                if (IsOpen && Loot != null)
-                    lootImage.Draw(gameTime);
-            }
+            if (IsOpen && Loot != null)
+                lootImage.Draw(gameTime);
         }
 
         // OnTransform
@@ -92,36 +63,6 @@ namespace ScaryCastle
         {
             base.OnTransform(change);
             lootImage?.MatchTransform(this.Sprite);
-        }
-
-        // OnUnload
-        protected override void OnUnload()
-        {
-            base.OnUnload();
-            //debris.Release();
-        }
-
-        // OnUpdate
-        protected override void OnUpdate(GameTime gameTime)
-        {
-            base.OnUpdate(gameTime);
-
-            if (!isBroken)
-            {
-                if (breakTimer > 0)
-                {
-                    breakTimer -= gameTime.ElapsedGameTime.Milliseconds;
-                    if (breakTimer < 0)
-                    {
-                        Break();
-                        return;
-                    }
-                }
-            }
-            else
-            {
-                //debris.Update(gameTime);
-            }
         }
 
         #endregion
@@ -137,19 +78,6 @@ namespace ScaryCastle
         public bool HasLoot => IsOpen && Loot != null;
 
         // Loot
-        public ItemDefinition? Loot
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    if (field != null && value == null)
-                        breakTimer = 2000;
-
-                    field = value;
-                }
-            }
-        }
+        public ItemDefinition? Loot { get; set; }
     }
 }

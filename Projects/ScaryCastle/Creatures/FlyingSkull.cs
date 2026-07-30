@@ -11,7 +11,7 @@
         {
             BodySize = BodySize.Small;
             AnimationSettings.SupressAll();
-            DebrisKind = DebrisKind.None;
+            RemainsKind = RemainsKind.None;
             FloatingForce = 1;
             ShadowSpotSize = 9;
         }

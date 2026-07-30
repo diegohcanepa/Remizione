@@ -226,13 +226,17 @@
             <key type="filename">Bible-assets/BiblePiece6.png</key>
             <key type="filename">Bible-assets/BiblePiece7.png</key>
             <key type="filename">Bible-assets/BiblePiece8.png</key>
-            <key type="filename">Debris-assets/Bone3.png</key>
-            <key type="filename">Debris-assets/Gut2.png</key>
-            <key type="filename">Debris-assets/Gut5.png</key>
-            <key type="filename">Debris-assets/Gut6.png</key>
-            <key type="filename">Debris-assets/Gut8.png</key>
             <key type="filename">DustParticles-assets/DustParticle1.png</key>
             <key type="filename">FireflyParticles-assets/FireflyParticle1.png</key>
+            <key type="filename">Remains-assets/Bone3.png</key>
+            <key type="filename">Remains-assets/Gut2.png</key>
+            <key type="filename">Remains-assets/Gut5.png</key>
+            <key type="filename">Remains-assets/Gut6.png</key>
+            <key type="filename">Remains-assets/Gut8.png</key>
+            <key type="filename">Remains-assets/ToxicGut2.png</key>
+            <key type="filename">Remains-assets/ToxicGut5.png</key>
+            <key type="filename">Remains-assets/ToxicGut6.png</key>
+            <key type="filename">Remains-assets/ToxicGut8.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -248,8 +252,10 @@
                 <false/>
             </struct>
             <key type="filename">Bible-assets/BiblePiece9.png</key>
-            <key type="filename">Debris-assets/Gut11.png</key>
-            <key type="filename">Debris-assets/Gut3.png</key>
+            <key type="filename">Remains-assets/Gut11.png</key>
+            <key type="filename">Remains-assets/Gut3.png</key>
+            <key type="filename">Remains-assets/ToxicGut11.png</key>
+            <key type="filename">Remains-assets/ToxicGut3.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -438,104 +444,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Debris-assets/Bone0.png</key>
-            <key type="filename">Debris-assets/Bone1.png</key>
-            <key type="filename">Debris-assets/Bone2.png</key>
-            <key type="filename">Debris-assets/Bone4.png</key>
-            <key type="filename">Environment-assets/ShadowSpot5.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,1,3,1</rect>
-                <key>scale9Paddings</key>
-                <rect>1,1,3,1</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Debris-assets/Gut1.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,1,3,2</rect>
-                <key>scale9Paddings</key>
-                <rect>2,1,3,2</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Debris-assets/Gut10.png</key>
-            <key type="filename">Debris-assets/Gut12.png</key>
-            <key type="filename">Debris-assets/Gut4.png</key>
-            <key type="filename">Debris-assets/Gut9.png</key>
-            <key type="filename">Environment-assets/ShadowSpot4.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,1,2,1</rect>
-                <key>scale9Paddings</key>
-                <rect>1,1,2,1</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Debris-assets/Gut7.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,1,1,2</rect>
-                <key>scale9Paddings</key>
-                <rect>1,1,1,2</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Debris-assets/GutStain1.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>5,3,9,5</rect>
-                <key>scale9Paddings</key>
-                <rect>5,3,9,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Debris-assets/GutStain2.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>4,3,9,5</rect>
-                <key>scale9Paddings</key>
-                <rect>4,3,9,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">DevilHand-assets/DevilHand01.png</key>
             <key type="filename">DevilHand-assets/DevilHand02.png</key>
             <key type="filename">DevilHand-assets/DevilHand03.png</key>
@@ -637,6 +545,48 @@
                 <rect>3,1,5,1</rect>
                 <key>scale9Paddings</key>
                 <rect>3,1,5,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Environment-assets/ShadowSpot4.png</key>
+            <key type="filename">Remains-assets/Gut10.png</key>
+            <key type="filename">Remains-assets/Gut12.png</key>
+            <key type="filename">Remains-assets/Gut4.png</key>
+            <key type="filename">Remains-assets/Gut9.png</key>
+            <key type="filename">Remains-assets/ToxicGut10.png</key>
+            <key type="filename">Remains-assets/ToxicGut12.png</key>
+            <key type="filename">Remains-assets/ToxicGut4.png</key>
+            <key type="filename">Remains-assets/ToxicGut9.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,2,1</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,2,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Environment-assets/ShadowSpot5.png</key>
+            <key type="filename">Remains-assets/Bone1.png</key>
+            <key type="filename">Remains-assets/Bone2.png</key>
+            <key type="filename">Remains-assets/Bone4.png</key>
+            <key type="filename">Remains-assets/Bone5.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,3,1</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,3,1</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -855,6 +805,70 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Remains-assets/Gut1.png</key>
+            <key type="filename">Remains-assets/ToxicGut1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,1,3,2</rect>
+                <key>scale9Paddings</key>
+                <rect>2,1,3,2</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Remains-assets/Gut7.png</key>
+            <key type="filename">Remains-assets/ToxicGut7.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,1,2</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,1,2</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Remains-assets/GutStain1.png</key>
+            <key type="filename">Remains-assets/ToxicGutStain1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,3,9,5</rect>
+                <key>scale9Paddings</key>
+                <rect>5,3,9,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Remains-assets/GutStain2.png</key>
+            <key type="filename">Remains-assets/ToxicGutStain2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,3,9,5</rect>
+                <key>scale9Paddings</key>
+                <rect>4,3,9,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Sign-assets/Sign.png</key>
             <key type="filename">Sign-assets/SignShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -938,7 +952,7 @@
                     <filename>DevilHand-assets</filename>
                     <filename>GodHand-assets</filename>
                     <filename>Projectiles-assets</filename>
-                    <filename>Debris-assets</filename>
+                    <filename>Remains-assets</filename>
                 </array>
             </struct>
         </map>

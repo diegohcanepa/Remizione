@@ -377,7 +377,7 @@
                 <false/>
             </struct>
             <key type="filename">GoldenTrunk-assets/GoldenTrunkPiece4.png</key>
-            <key type="filename">PotteryA-assets/PotteryAPiece2.png</key>
+            <key type="filename">PotteryA-assets/PotteryARemains2.png</key>
             <key type="filename">PotteryC-assets/PotteryCPiece2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -425,8 +425,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">PotteryA-assets/PotteryAPiece1.png</key>
-            <key type="filename">PotteryA-assets/PotteryAPiece3.png</key>
+            <key type="filename">PotteryA-assets/PotteryARemains1.png</key>
+            <key type="filename">PotteryA-assets/PotteryARemains3.png</key>
             <key type="filename">PotteryC-assets/PotteryCPiece3.png</key>
             <key type="filename">PotteryD-assets/PotteryDPiece1.png</key>
             <key type="filename">PotteryD-assets/PotteryDPiece2.png</key>
@@ -444,8 +444,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">PotteryA-assets/PotteryAPiece4.png</key>
-            <key type="filename">PotteryA-assets/PotteryAPiece5.png</key>
+            <key type="filename">PotteryA-assets/PotteryARemains4.png</key>
+            <key type="filename">PotteryA-assets/PotteryARemains5.png</key>
             <key type="filename">PotteryC-assets/PotteryCPiece1.png</key>
             <key type="filename">PotteryD-assets/PotteryDPiece4.png</key>
             <key type="filename">PotteryE-assets/PotteryEPiece4.png</key>

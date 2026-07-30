@@ -11,6 +11,10 @@ namespace ScaryCastle
     /// </summary>
     public sealed class EffectDescriptor
     {
+        private static readonly Vector2 KnockbackLow = new(15, 5);
+        private static readonly Vector2 KnockbackMedium = new(25, 5);
+        private static readonly Vector2 KnockbackHigh = new(35, 5);
+
         #region Constructor
 
         // Constructor
@@ -172,14 +176,14 @@ namespace ScaryCastle
         // GetKnockbackForce
         public Vector2 GetKnockbackForce()
         {
-            if (Knockback == KnockbackIntensity.High)
-                return new(35, 5);
-
-            else if (Knockback == KnockbackIntensity.Medium)
-                return new(25, 5);
-
-            else
-                return new(15, 5);
+            return Knockback switch
+            {
+                KnockbackIntensity.None => Vector2.Zero,
+                KnockbackIntensity.Low => KnockbackLow,
+                KnockbackIntensity.Medium => KnockbackMedium,
+                KnockbackIntensity.High => KnockbackHigh,
+                _ => throw new System.NotImplementedException(),
+            };
         }
 
         // Knockback
