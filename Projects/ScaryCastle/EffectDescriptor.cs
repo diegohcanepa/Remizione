@@ -28,12 +28,12 @@ namespace ScaryCastle
             this.Amount = element.GetObject("amount", v => new DiceExpression(v));
             this.Chance = element.GetFloat("chance", 1);
             this.ComicText = element.GetEnum("comicText", ComicTextKind.None);
-            this.ConditionType = element.GetEnum("conditionType", ConditionType.None);
             this.Context = element.GetEnum("context", EffectContext.Contact);
             this.DamageType = element.GetEnum("damageType", DamageType.Physical);
             this.EffectType = element.GetEnum("effectType", EffectType.None);
             this.Knockback = element.GetEnum("knockback", KnockbackIntensity.Low);
             this.Sound = element.GetObject("sound", Sound.Get);
+            this.StatusType = element.GetEnum<StatusType>("statusType");
             this.Target = element.GetEnum("target", EffectTarget.Target);
         }
 
@@ -60,6 +60,7 @@ namespace ScaryCastle
                     continue;
 
                 var realTarget = effect.Target == EffectTarget.Self ? source : target;
+                var targetActor = realTarget as Actor;
 
                 // Play sound
                 if (effect.Sound != null)
@@ -91,9 +92,9 @@ namespace ScaryCastle
                         source.Session.Coins += amount;
                         break;
 
-                    // Condition
-                    case EffectType.Condition:
-                        (realTarget as Actor)?.ApplyCondition(effect.ConditionType, amount, effect.ComicText);
+                    // CoinLoss
+                    case EffectType.CoinLoss:
+                        source.Session.Coins -= amount;
                         break;
 
                     // Damage
@@ -108,12 +109,12 @@ namespace ScaryCastle
 
                     // Energy
                     case EffectType.Energy:
-                        (realTarget as Actor)?.Energy += amount;
+                        targetActor?.Energy += amount;
                         break;
 
                     // ExtraEnergy
                     case EffectType.ExtraEnergy:
-                        (realTarget as Actor)?.MaxEnergy += amount;
+                        targetActor?.MaxEnergy += amount;
                         source.Session.TextHUD.Message.Show(MessageKind.ExtraEnergy);
                         break;
 
@@ -131,8 +132,18 @@ namespace ScaryCastle
                     // Heal
                     case EffectType.Heal:
                         realTarget?.HP += amount;
-                        if (realTarget is Actor actor && actor.Condition == ConditionType.Poison)
-                            actor.ConditionAmount -= amount;
+                        targetActor?.StatusManager.GetStatus(ScaryCastle.StatusType.Poison).Value = 0;
+                        break;
+
+                    // Status
+                    case EffectType.Status:
+                        if (effect.StatusType is StatusType statusType && targetActor != null)
+                        {
+                            var status = targetActor.StatusManager.GetStatus(statusType);
+                            var wasZero = status.Value == 0;
+                            status.Value += amount;
+                            targetActor.ShowStatusReaction(status, wasZero);
+                        }
                         break;
                 }
             }
@@ -153,25 +164,22 @@ namespace ScaryCastle
         #endregion
 
         // Amount
-        public DiceExpression? Amount { get; init; }
+        public DiceExpression? Amount { get; }
 
         // Chance
-        public Ratio Chance { get; init; }
-
-        // ConditionType
-        public ConditionType ConditionType { get; init; }
+        public Ratio Chance { get; }
 
         // ComicText
-        public ComicTextKind ComicText { get; init; }
+        public ComicTextKind ComicText { get; }
 
         // Context
-        public EffectContext Context { get; init; }
+        public EffectContext Context { get; }
 
         // DamageType
-        public DamageType DamageType { get; init; }
+        public DamageType DamageType { get; }
 
         // EffectType
-        public EffectType EffectType { get; init; }
+        public EffectType EffectType { get; }
 
         // GetKnockbackForce
         public Vector2 GetKnockbackForce()
@@ -187,12 +195,15 @@ namespace ScaryCastle
         }
 
         // Knockback
-        public KnockbackIntensity Knockback { get; init; }
+        public KnockbackIntensity Knockback { get; }
 
         // Sound
-        public Sound? Sound { get; init; }
+        public Sound? Sound { get; }
+
+        // StatusType
+        public StatusType? StatusType { get; }
 
         // Target
-        public EffectTarget Target { get; init; }
+        public EffectTarget Target { get; }
     }
 }

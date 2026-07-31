@@ -114,6 +114,7 @@
 	<FX Name="SmallWhooshA" Sounds="1..4" />
 	<FX Name="SpearTrap" />
 	<FX Name="StatusEffectDamage" />
+	<FX Name="StatusPoison" />
 	<FX Name="TestSkillFail" />
 	<FX Name="Text" Volume=".8" />
 	<FX Name="TowerDoorClose" />

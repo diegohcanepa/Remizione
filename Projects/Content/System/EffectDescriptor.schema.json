@@ -7,7 +7,7 @@
     "effectType": {
       "type": "string",
       "description": "El tipo de acción a ejecutar.",
-      "enum": [ "None", "BronzeKey", "Coin", "Condition", "ComicText", "Damage", "Death", "Energy", "ExtraEnergy", "ExtraHeart", "GoldenKey", "Heal" ] ,
+      "enum": [ "None", "BronzeKey", "Coin", "CoinLoss", "ComicText", "Damage", "Death", "Energy", "ExtraEnergy", "ExtraHeart", "GoldenKey", "Heal", "Status" ] ,
       "default": "None"
     },
     "amount": {
@@ -15,7 +15,7 @@
       "description": "Cantidad o expresión de dados (ej: '1d6', '5')."
     },
     "chance": {
-      "type": "number",
+      "type": "number", 
       "format": "float",
       "default": 1.0,
       "maximum": 1.0,
@@ -30,7 +30,7 @@
     "context": {
       "type": "string",
       "description": "Contexto en donde es aplicable el efecto.",
-      "enum": [ "Collect", "Contact", "Attack", "Update", "RemainsContact", "Use", "ProjectileHit", "RunModifier" ],
+      "enum": [ "Collect", "Contact", "Attack", "Update", "RemainsContact", "Use", "ProjectileHit", "RunModifier", "Status", "ApplyStatus" ],
       "default": "Contact"
     },
     "damageType": {
@@ -45,12 +45,6 @@
       "enum": [ "None", "Low", "Medium", "High" ],
       "default": "Low"
     },
-    "conditionType": {
-      "type": "string",
-      "description": "Si es condition, qué tipo es.",
-      "enum": [ "None", "CoinLoss", "Curse", "Poison", "ChromaticAberration" ],
-      "default": "None"
-    },          
     "target": {
       "type": "string",
       "description": "A quién se aplica el efecto.",
@@ -60,6 +54,11 @@
     "sound": {
       "type": "string",
       "description": "Nombre del archivo de sonido a reproducir."
+    },
+    "statusType": {
+      "type": "string",
+      "enum": [ "Poison" ],
+      "default": "None"
     }
   },
   "required": [ "effectType", "context" ],

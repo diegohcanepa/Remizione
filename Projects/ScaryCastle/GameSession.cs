@@ -269,7 +269,7 @@ namespace ScaryCastle
             StatusHUD.Reset();
             TextHUD.Reset();
             ComicTextPool.ReturnAll();
-            ObjectPools.FloatingTexts.ReturnAll();
+            ObjectPools.FlyOffs.ReturnAll();
 
             for (var i = currentRoom.Children.Count - 1; i >= 0; i--)
             {
@@ -604,7 +604,6 @@ namespace ScaryCastle
                 Player.Recharge();
                 Player.MaxEnergy = 5;
                 Player.Energy = 5;
-                Player.ClearCondition();
             }
 
             // 1. Force an immediate collection of all generations (0, 1, and 2).

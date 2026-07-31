@@ -1397,6 +1397,13 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/StatusEffectDamage.wav;Audio/FX/StatusEffectDamage
 
+#begin Audio/FX/StatusPoison.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/StatusPoison.wav;Audio/FX/StatusPoison
+
 #begin Audio/FX/TestSkillFail.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -1752,6 +1759,9 @@
 
 #begin System/Sounds.xml
 /copy:System/Sounds.xml
+
+#begin System/Statuses.json
+/copy:System/Statuses.json
 
 #begin Text/en-us.lpkg
 /copy:Text/en-us.lpkg

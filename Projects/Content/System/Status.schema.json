@@ -1,13 +1,13 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "runmodifier.schema.json",
-  "title": "Run Modifier",
+  "$id": "status.schema.json",
+  "title": "Status",
   "type": "object",
   "properties": {
     "data": {
       "type": "array",
       "items": {
-        "$ref": "#/$defs/RunModifier"
+        "$ref": "#/$defs/Status"
       }
     }
   },
@@ -15,7 +15,7 @@
     "data"
   ],
   "$defs": {
-    "RunModifier": {
+    "Status": {
       "allOf": [
         {
           "$ref": "./Definition.schema.json"
@@ -23,16 +23,11 @@
         {
           "type": "object",
           "properties": {
-            "cooldown": {
-              "type": "integer"
+            "meterBackColor": {
+              "type": "string"
             },
-            "scope": {
-              "type": "string",
-              "enum": [
-                "Room",
-                "Run"
-              ],
-              "default": "Room"
+            "meterForeColor": {
+              "type": "string"
             }
           }
         }

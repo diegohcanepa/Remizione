@@ -29,7 +29,6 @@ namespace ScaryCastle
             FearIcon = this[nameof(FearIcon)];
             GoldenKeyIcon = this[nameof(GoldenKeyIcon)];
             GooIcon = this[nameof(GooIcon)];
-            GreenHearts = CreateReadOnlyCollection(nameof(GreenHearts), 1, 4);
             HeartIcon = this[nameof(HeartIcon)];
             InventoryFaithAmounts = CreateReadOnlyCollection("InventoryFaithAmount", 1, 3);
             InventoryItemAmounts = CreateReadOnlyCollection("InventoryItemAmount", 1, 5);
@@ -46,7 +45,6 @@ namespace ScaryCastle
             MeterWhite = CreateReadOnlyCollection("WhiteMeter", 0, 5);
             PopupContainer = this[nameof(PopupContainer)];
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
-            PurpleHearts = CreateReadOnlyCollection(nameof(PurpleHearts), 1, 4);
             RedHearts = CreateReadOnlyCollection(nameof(RedHearts), 1, 4);
             CountdownSkullIcon = this[nameof(CountdownSkullIcon)];
             Sack = this[nameof(Sack)];
@@ -111,9 +109,6 @@ namespace ScaryCastle
         // GooIcon
         public AtlasImage GooIcon { get; }
 
-        // GreenHearts
-        public ReadOnlyCollection<AtlasImage> GreenHearts { get; }
-
         // HeartIcon
         public AtlasImage HeartIcon { get; }
 
@@ -161,9 +156,6 @@ namespace ScaryCastle
 
         // PopupContainerShadow
         public AtlasImage PopupContainerShadow { get; }
-
-        // PurpleHearts
-        public ReadOnlyCollection<AtlasImage> PurpleHearts { get; }
 
         // RedHearts
         public ReadOnlyCollection<AtlasImage> RedHearts { get; }

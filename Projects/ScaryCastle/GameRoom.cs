@@ -137,13 +137,13 @@ namespace ScaryCastle
             }
         }
 
-        // DrawFloatingTexts
-        private void DrawFloatingTexts(GameTime gameTime)
+        // DrawFlyOffs
+        private void DrawFlyOffs(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Session.Camera, SamplerState.PointClamp);
-            for (var i = Session.ObjectPools.FloatingTexts.InUse.Count - 1; i >= 0; i--)
+            for (var i = Session.ObjectPools.FlyOffs.InUse.Count - 1; i >= 0; i--)
             {
-                Session.ObjectPools.FloatingTexts.InUse[i].Draw(gameTime);
+                Session.ObjectPools.FlyOffs.InUse[i].Draw(gameTime);
             }
             Game.SpriteBatch.End();
         }
@@ -372,7 +372,7 @@ namespace ScaryCastle
             DrawThings(gameTime, RenderLayer.ForegroundNoLight);
 
             // Draw texts (hit numbers, etc)
-            DrawFloatingTexts(gameTime);
+            DrawFlyOffs(gameTime);
 
             // Impact words
             DrawComicTexts(gameTime);
@@ -441,9 +441,9 @@ namespace ScaryCastle
                 fireflyEmitter?.Update(gameTime);
 
             // Floating texts
-            for (var i = 0; i < Session.ObjectPools.FloatingTexts.InUse.Count; i++)
+            for (var i = 0; i < Session.ObjectPools.FlyOffs.InUse.Count; i++)
             {
-                Session.ObjectPools.FloatingTexts.InUse[i].Update(gameTime);
+                Session.ObjectPools.FlyOffs.InUse[i].Update(gameTime);
             }
         }
 

@@ -27,6 +27,7 @@ namespace ScaryCastle
         private readonly List<Vector2> pendingPathNodes = [];
         private List<AtlasImage>? remainsPieces;
         private SpeechText? speechText;
+        private readonly ColorTween tintTween = new();
 
         #endregion
 
@@ -45,6 +46,7 @@ namespace ScaryCastle
             this.Verb = Verb.Talk;
             this.Faction = Definition == null ? Faction.Good : Definition.Faction;
             this.CombatBehavior = CombatBehavior.Container.Find(DeclaredName);
+            this.StatusManager = new(this);
 
             headSprite = new AnimatedSprite()
             {
@@ -157,11 +159,14 @@ namespace ScaryCastle
                 _ => throw new NotImplementedException(),
             };
 
+            if (RemainsKind == RemainsKind.ToxicGuts)
+                pieceCount = 0;
+
             Remains? remains = null;
             var imageName = string.Empty;
 
             // Guts
-            if (RemainsKind == RemainsKind.Guts || RemainsKind == RemainsKind.ToxicGuts)
+            if (RemainsKind is RemainsKind.Guts or RemainsKind.ToxicGuts)
             {
                 var stains = RemainsKind switch
                 {
@@ -223,47 +228,6 @@ namespace ScaryCastle
                 ResetHeadTween();
                 if (headSprite.Animations.Find(AnimationNames.Stand) != null)
                     headSprite.Player.Play(AnimationNames.Stand);
-            }
-        }
-
-        // UpdateCondition
-        private void UpdateCondition(GameTime gameTime)
-        {
-            if (IsPlayer)
-            {
-                if (HasSpeechText)
-                    return;
-
-                if (Session.IsAwaiting && Session.ActiveNPC == null)
-                    return;
-            }
-
-            if (Condition == ConditionType.None)
-                return;
-
-            if (ConditionTimer > 0)
-            {
-                ConditionTimer -= gameTime.ElapsedGameTime.Milliseconds;
-
-                if (ConditionTimer <= 0)
-                {
-                    ConditionTimer = 0;
-
-                    if (ConditionAmount > 0)
-                    {
-                        ConditionAmount -= 1;
-                        HP -= 1;
-                        Sound.Play(SoundNames.StatusEffectDamage);
-
-                        if (HP > 0)
-                            ShowComicText(ComicTextKind.AghGreen);
-
-                        if (ConditionAmount > 0)
-                            ConditionTimer = GameSettings.ConditionCooldown;
-                        else
-                            Condition = ConditionType.None;
-                    }
-                }
             }
         }
 
@@ -436,11 +400,6 @@ namespace ScaryCastle
                 var deathState = BodyMachine.FindOrCreateState<BodyDeathState>();
                 BodyMachine.ChangeState(deathState.GetType());
             }
-
-            if (Condition == ConditionType.None)
-                ShowComicText(ComicTextKind.PlopRed);
-
-            ClearCondition();
         }
 
         // OnDraw
@@ -456,6 +415,9 @@ namespace ScaryCastle
             if (shake)
                 X += alertTween.CurrentValue;
 
+            if (tintTween.IsRunning)
+                Color = tintTween.CurrentValue;
+
             base.OnDraw(gameTime);
 
             if (activeThrowableSprite?.RenderImage != null)
@@ -468,6 +430,7 @@ namespace ScaryCastle
             {
                 if (AnimationPlayer.Animation?.Headless == true && headSprite.Player.IsPlaying)
                 {
+                    headSprite.Color = Color;
                     headSprite.Opacity = Opacity;
                     headSprite.OpacityFactor = OpacityFactor;
                     headSprite.MatchTransform(Sprite);
@@ -475,6 +438,9 @@ namespace ScaryCastle
                     headSprite.Draw(gameTime);
                 }
             }
+
+            if (tintTween.IsRunning)
+                Color = Color.White;
 
             if (moveVerticalTween.IsRunning)
                 Y += moveVerticalTween.CurrentValue;
@@ -486,6 +452,7 @@ namespace ScaryCastle
                 Rotation -= moveBalancingTween.CurrentValue;
 
             footstepEffect?.Draw(gameTime);
+
         }
 
         // OnEnergyChanged
@@ -596,8 +563,6 @@ namespace ScaryCastle
         {
             base.OnUpdate(gameTime);
 
-            UpdateCondition(gameTime);
-
             headTween.Update(gameTime);
 
             if (AnimationSettings.DetachedHead)
@@ -611,7 +576,7 @@ namespace ScaryCastle
             footstepEffect?.Update(gameTime);
             BodyMachine.Update(gameTime);
             alertTween.Update(gameTime);
-
+            tintTween.Update(gameTime);
 
             if (!Session.IsAwaiting && !IsMoving)
             {
@@ -673,91 +638,6 @@ namespace ScaryCastle
         // AnimationSettings
         public ActorAnimationSettings AnimationSettings { get; } = new();
 
-        // ApplyCondition
-        public void ApplyCondition(ConditionType condition, int amount, ComicTextKind comicTextKind)
-        {
-            // 1. Clear
-            if (condition == ConditionType.None)
-            {
-                ClearCondition();
-                return;
-            }
-
-            // 2. Chromatic aberration
-            if (condition == ConditionType.ChromaticAberration)
-            {
-                Session.PerformChromaticAberration();
-                return;
-            }
-
-            // 3. Coin loss
-            if (condition == ConditionType.CoinLoss)
-            {
-                if (Session.Player == this)
-                {
-                    if (Session.PlayerInventory.Find(nameof(Coin)) is Item coin)
-                    {
-                        coin.Amount--;
-                        Sound.Play(SoundNames.CoinLoss);
-                        Session.TextHUD.Log.Show(LogVerb.Lost, coin.Definition, true);
-                    }
-                }
-
-                return;
-            }
-
-            // 4. Si el efecto entrante es Maldición: PISA el veneno o SE SUMA a una maldición previa.
-            if (condition == ConditionType.Curse)
-            {
-                if (Condition != ConditionType.Curse)
-                {
-                    Condition = ConditionType.Curse;
-                    ConditionAmount = amount;
-                }
-                else
-                {
-                    ConditionAmount += amount; // Ya estaba maldito, se acumula.
-                    if (ConditionAmount > HP)
-                        HP -= 1;
-                }
-
-                ConditionTimer = GameSettings.ConditionCooldown;
-
-                if (IsPlayer)
-                    Session.ObjectPools.FloatingTexts.Get()?.ShowAmount(this, ColorPalette.Condition.Curse, amount);
-            }
-
-            // 5. Si el efecto entrante es Veneno: Solo importa si no estás maldito.
-            if (condition == ConditionType.Poison && Condition != ConditionType.Curse)
-            {
-                if (Condition != ConditionType.Poison)
-                {
-                    Condition = ConditionType.Poison;
-                    ConditionAmount = amount;
-                }
-                else
-                {
-                    ConditionAmount += amount; // Ya estaba envenenado, se acumula.
-                    if (ConditionAmount > HP)
-                        HP -= 1;
-                }
-
-                ConditionTimer = GameSettings.ConditionCooldown;
-
-                if (IsPlayer)
-                    Session.ObjectPools.FloatingTexts.Get()?.ShowAmount(this, ColorPalette.Condition.Poison, amount);
-            }
-
-            // ComicText si hubo daño real
-            if (comicTextKind != ComicTextKind.None)
-            {
-                if (!IsDead || DeathWord == ComicTextKind.None)
-                    ShowComicText(comicTextKind);
-            }
-
-            OnApplyCondition(condition, amount);
-        }
-
         // BeginTurn
         public Script? BeginTurn()
         {
@@ -815,13 +695,6 @@ namespace ScaryCastle
             BodyMachine.ChangeState(state.GetType());
         }
 
-        // ClearCondition
-        public void ClearCondition()
-        {
-            this.Condition = ConditionType.None;
-            this.ConditionAmount = 0;
-        }
-
         // CombatBehavior
         public CombatBehavior? CombatBehavior { get; }
 
@@ -831,28 +704,6 @@ namespace ScaryCastle
         // CombatDecisionType
         [ScriptProperty]
         public CombatDecisionType CombatDecisionType => CombatDecision?.Type ?? CombatDecisionType.None;
-
-        // Condition
-        public ConditionType Condition { get; private set; }
-
-        // ConditionAmount
-        [ScriptProperty]
-        public int ConditionAmount
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = Math.Max(0, value);
-                    if (field == 0)
-                        ClearCondition();
-                }
-            }
-        }
-
-        // ConditionTimer
-        public int ConditionTimer { get; private set; }
 
         // Definition
         public ActorDefinition? Definition { get; }
@@ -1332,6 +1183,24 @@ namespace ScaryCastle
             speechText.Show(DisplayName, text, awaitInput);
         }
 
+        // ShowStatusReaction
+        public void ShowStatusReaction(Status status, bool showIcon)
+        {
+            switch (status.StatusType)
+            {
+                // Poison
+                case StatusType.Poison:
+                    if (showIcon)
+                        ShowFlyOff(status.Definition.Image);
+                    tintTween.Start(TweenStyle.QuadraticInOut, Color.White, Color.Green, 150, 2);
+                    PlaySound(SoundNames.StatusPoison);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
         // SpeechColor
         public Color SpeechColor { get; set; } = Color.Transparent;
 
@@ -1360,6 +1229,9 @@ namespace ScaryCastle
             else
                 Animate(AnimationNames.Talk, true, AnimationDirection.Forward, false);
         }
+
+        // StatusManager
+        public StatusManager StatusManager { get; }
 
         // StopTalking
         public void StopTalking()

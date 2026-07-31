@@ -112,7 +112,6 @@ namespace ScaryCastle
         /// </summary>
         private sealed class ModifierIcon : GameObject
         {
-            private readonly FlatMeter meter;
             private readonly RunModifier modifier;
             private readonly Sprite sprite;
 
@@ -127,11 +126,6 @@ namespace ScaryCastle
                     RenderImage = modifier.Definition.Image,
                     Scale = ScaleInfo.UIElement.Medium
                 };
-
-                meter = new(modifier.Definition.MeterBackColor, modifier.Definition.MeterForeColor, Color.Transparent, new(8, 1), 0)
-                {
-                    MaximumValue = modifier.Definition.Cooldown
-                };
             }
 
             #region Protected members
@@ -140,19 +134,6 @@ namespace ScaryCastle
             protected override void OnDraw(GameTime gameTime)
             {
                 sprite.Draw(gameTime);
-
-                if (meter.MaximumValue > 0)
-                    meter.Draw(gameTime);
-            }
-
-            // OnUpdate
-            protected override void OnUpdate(GameTime gameTime)
-            {
-                if (meter.MaximumValue > 0)
-                {
-                    meter.Value = modifier.Timer;
-                    meter.Update(gameTime);
-                }
             }
 
             #endregion
@@ -164,11 +145,7 @@ namespace ScaryCastle
             public Vector2 Position
             {
                 get => sprite.Position;
-                set
-                {
-                    sprite.Position = value;
-                    meter.Position = sprite.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 1);
-                }
+                set => sprite.Position = value;
             }
         }
     }

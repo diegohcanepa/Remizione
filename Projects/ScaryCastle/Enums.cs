@@ -35,9 +35,6 @@ namespace ScaryCastle
     // ComicTextKind
     public enum ComicTextKind { None, AghGreen, AghPurple, AghRed, BoomPurple, BoomRed, BangBlue, BangRed, CrackBlue, CrackYellow, CuackPurple, CuackYellow, Kapow, KapowStrong, OuchBlue, OuchGreen, PlopRed, PlopYellow, SlapBlue, SlapRed, Zap }
 
-    // ConditionType
-    public enum ConditionType { None, Curse, Poison, ChromaticAberration, CoinLoss }
-
     // ContentFolder
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Video, Voices, System, Text }
 
@@ -57,10 +54,10 @@ namespace ScaryCastle
     public enum DustParticleKind { None, Dust, Ash }
 
     // EffectContext
-    public enum EffectContext { Collect, Contact, Attack, RemainsContact, RunModifier, Update, Use, ProjectileHit }
+    public enum EffectContext { Collect, Contact, Attack, RemainsContact, RunModifier, Update, Use, ProjectileHit, Status, ApplyStatus }
 
     // EffectType
-    public enum EffectType { None, BronzeKey, Coin, Condition, ComicText, Damage, Death, Energy, ExtraEnergy, ExtraHeart, GoldenKey, Heal }
+    public enum EffectType { None, BronzeKey, Coin, CoinLoss, ComicText, Damage, Death, Energy, ExtraEnergy, ExtraHeart, GoldenKey, Heal, Status }
 
     // EffectTarget
     public enum EffectTarget { Target, Self }
@@ -198,6 +195,9 @@ namespace ScaryCastle
 
     // SpeechTextState
     public enum SpeechTextState { Hidden, Typing, Idle }
+
+    // StatusType
+    public enum StatusType { Poison }
 
     // Tag
     public enum Tag { Ceiling, Floor, GateLever, Poison, Pottery, Torch, Trap, TrapDoor, Trunk, WallDecoration }

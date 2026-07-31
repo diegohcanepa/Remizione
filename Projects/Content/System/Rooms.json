@@ -96,7 +96,6 @@
       "doorLeft": "21,80",
       "doorRight": "220,80",
       "allowTags": "Poison",
-      "runModifiers": "Poison",
       "placeholders": [
         {
           "position": "74,72",

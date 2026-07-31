@@ -296,11 +296,6 @@ namespace ScaryCastle
                 return Vector2.Zero;
         }
 
-        // OnApplyCondition
-        protected virtual void OnApplyCondition(ConditionType condition, int amount)
-        {
-        }
-
         // OnCollision
         protected virtual void OnCollision(GameThing thing)
         {
@@ -1193,11 +1188,18 @@ namespace ScaryCastle
             comicText.Show(kind, pos);
         }
 
-        // ShowFloatingText
-        public void ShowFloatingText(string text, Color color, int duration = 1000)
+        // ShowFlyOff
+        public void ShowFlyOff(AtlasImage image, int duration = 1000)
         {
-            if (Session.ObjectPools.FloatingTexts.Get() is FloatingText floatingText)
-                floatingText.Show(GetOverheadPosition(), text, color, duration);
+            if (Session.ObjectPools.FlyOffs.Get() is FlyOff flyOff)
+                flyOff.ShowIcon(GetOverheadPosition(), image, duration);
+        }
+
+        // ShowFlyOff
+        public void ShowFlyOff(string text, Color color, int duration = 1000)
+        {
+            if (Session.ObjectPools.FlyOffs.Get() is FlyOff flyOff)
+                flyOff.ShowText(GetOverheadPosition(), text, color, duration);
         }
 
         // TakeDamage
@@ -1252,7 +1254,7 @@ namespace ScaryCastle
                     OnTakeDamage(attacker, amount, damageType);
 
                     if (!IsDead && Session.Player != this)
-                        Session.ObjectPools.FloatingTexts.Get()?.ShowAmount(this, ColorPalette.HPMeter.Diff, -amount);
+                        Session.ObjectPools.FlyOffs.Get()?.ShowAmount(this, ColorPalette.HPMeter.Diff, -amount);
 
                     // ComicText si hubo daño real
                     if (comicTextKind != ComicTextKind.None)

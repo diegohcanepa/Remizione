@@ -3,23 +3,6 @@
 	"data": [
 		{
 			"name": "Darkness"
-		},
-		{
-			"name": "Poison",
-      "cooldown": 10000,
-      "meterBackColor": "47,87,83",
-      "meterForeColor": "59,125,79",
-          	"effects": [
-            {
-              "context": "RunModifier",
-              "effectType": "Condition",
-              "conditionType": "Poison",
-              "amount": "1",
-              "comicText": "AghGreen",
-              "sound": "StatusEffectDamage"
-            }
-          ]			
 		}
-
 	]
 }

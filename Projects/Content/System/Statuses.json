@@ -1,0 +1,21 @@
+{
+	"$schema": "./Status.schema.json",
+	"data": [
+		{
+			"name": "Poison",
+      "meterBackColor": "47, 87, 83",
+      "meterForeColor": "59,125,79",
+      "effects": [
+      {
+        "context": "ApplyStatus",
+        "effectType": "Damage",
+        "amount": "1",
+        "comicText": "AghGreen",
+        "sound": "StatusEffectDamage",
+        "knockback": "None"
+      }
+    ]			
+		}
+
+	]
+}

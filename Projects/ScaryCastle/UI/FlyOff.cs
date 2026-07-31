@@ -7,59 +7,62 @@ using System.Globalization;
 namespace ScaryCastle
 {
     /// <summary>
-    /// FloatingText
+    /// FlyOff
     /// </summary>
-    public sealed class FloatingText : GameObject
+    public sealed class FlyOff : SessionGameObject<GameSession>
     {
         private const int fadeDuration = 250;
         private static readonly float defaultScale = ScaleInfo.Text.VeryLarge.X;
 
+        private Sprite? activeSprite;
+        private readonly Sprite icon = new() { PivotOrigin = RectanglePoint.Bottom, Scale = ScaleInfo.UIElement.Medium };
         private readonly FloatTween opacityTween = new();
-        private readonly GameSession session;
-        private readonly TextSprite text;
+        private readonly TextSprite text = new(Fonts.CommonOutline) { PivotOrigin = RectanglePoint.Bottom };
         private readonly FloatTween xTween = new();
         private readonly FloatTween yTween = new();
 
         // Constructor
-        public FloatingText(GameSession session)
+        public FlyOff(GameSession session)
+            : base(session)
         {
-            this.session = session;
-
-            this.text = new TextSprite(Fonts.CommonOutline)
-            {
-                Color = ColorPalette.Text.Default,
-                PivotOrigin = RectanglePoint.Bottom
-            };
         }
 
         #region Private members
 
-        // ShowCore
-        private void ShowCore(Vector2 origin, string value, Color color, Vector2 distance, float scale, int duration)
+        // Launch
+        private void Launch(Vector2 origin, Sprite sprite, Vector2 distance, int duration)
         {
+            activeSprite = sprite;
+
             if (duration < fadeDuration)
                 duration = fadeDuration;
 
-            text.Color = color;
-            text.Scale = new(scale);
-            text.Text = value;
-            text.Position = origin;
+            sprite.Position = origin;
 
             if (distance.Y != 0)
             {
                 yTween.Start(TweenStyle.CubicOut, origin.Y, origin.Y + distance.Y, duration);
-                text.Tweens.YTween = yTween;
+                sprite.Tweens.YTween = yTween;
             }
 
             if (distance.X != 0)
             {
                 xTween.Start(TweenStyle.CubicOut, origin.X, origin.X + distance.X, duration);
-                text.Tweens.XTween = xTween;
+                sprite.Tweens.XTween = xTween;
             }
 
             opacityTween.StartDelay = duration - fadeDuration;
             opacityTween.Start(TweenStyle.CubicIn, 1, 0, fadeDuration);
-            text.Tweens.OpacityTween = opacityTween;
+            sprite.Tweens.OpacityTween = opacityTween;
+        }
+
+        // ShowTextCore
+        private void ShowTextCore(Vector2 origin, string value, Color color, Vector2 distance, float scale, int duration)
+        {
+            text.Color = color;
+            text.Scale = new(scale);
+            text.Text = value;
+            Launch(origin, text, distance, duration);
         }
 
         #endregion
@@ -69,16 +72,16 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            text.Draw(gameTime);
+            activeSprite?.Draw(gameTime);
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            text.Update(gameTime);
+            activeSprite?.Update(gameTime);
 
             if (!IsVisible)
-                session.ObjectPools.FloatingTexts.Return(this);
+                Session.ObjectPools.FlyOffs.Return(this);
         }
 
         #endregion
@@ -86,16 +89,23 @@ namespace ScaryCastle
         // IsVisible
         public bool IsVisible => xTween.IsRunning || yTween.IsRunning || opacityTween.IsRunning;
 
-        // Show
-        public void Show(Vector2 origin, string value, Color color, int duration = 1000)
+        // ShowIcon
+        public void ShowIcon(Vector2 origin, AtlasImage image, int duration = 2000)
         {
-            Show(origin, value, color, defaultScale, duration);
+            icon.RenderImage = image;
+            Launch(origin, icon, new Vector2(0, -3), duration);
         }
 
-        // Show
-        public void Show(Vector2 origin, string value, Color color, float scale, int duration = 1000)
+        // ShowText
+        public void ShowText(Vector2 origin, string value, Color color, int duration = 1000)
         {
-            ShowCore(origin, value, color, new Vector2(0, -6), scale, duration);
+            ShowText(origin, value, color, defaultScale, duration);
+        }
+
+        // ShowText
+        public void ShowText(Vector2 origin, string value, Color color, float scale, int duration = 1000)
+        {
+            ShowTextCore(origin, value, color, new Vector2(0, -6), scale, duration);
         }
 
         // ShowAmount
@@ -108,7 +118,7 @@ namespace ScaryCastle
             var deltaX = Random.Shared.Next(3, 6);
             var horzDirection = source.Direction == FacingDirection.Left ? deltaX : -deltaX;
 
-            ShowCore(origin, amount.ToString(CultureInfo.InvariantCulture), color, new(horzDirection, -10), ScaleInfo.Text.Huge.X, 1700);
+            ShowTextCore(origin, amount.ToString(CultureInfo.InvariantCulture), color, new(horzDirection, -10), ScaleInfo.Text.Huge.X, 1700);
         }
     }
 }

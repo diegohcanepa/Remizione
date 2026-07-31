@@ -220,7 +220,7 @@ namespace ScaryCastle
 
             var text = success ? Localization.GetValue(FloatingMessage.Success) : Localization.GetValue(FloatingMessage.Failed);
 
-            actor.ShowFloatingText(text, success ? ColorPalette.Text.Green : ColorPalette.Text.Terra);
+            actor.ShowFlyOff(text, success ? ColorPalette.Text.Green : ColorPalette.Text.Terra);
 
             if (!success)
                 Sound.Play(SoundNames.TestSkillFail);

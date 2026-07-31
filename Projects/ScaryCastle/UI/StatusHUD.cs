@@ -18,6 +18,7 @@ namespace ScaryCastle
         private readonly UIHPMeter hpMeter;
         private readonly UIPassiveItems passiveItems;
         private readonly UIRunModifiers runModifiers;
+        private readonly UIStatuses statuses;
 
         #endregion
 
@@ -36,6 +37,7 @@ namespace ScaryCastle
             this.passiveItems = new(session);
             this.MiniMap = new();
             this.runModifiers = new(session);
+            this.statuses = new();
         }
 
         #endregion
@@ -48,6 +50,7 @@ namespace ScaryCastle
             Game.SpriteBatch.Begin(Game.Camera);
             hpMeter.Draw(gameTime);
             runModifiers.Draw(gameTime);
+            statuses.Draw(gameTime);
             passiveItems.Draw(gameTime);
             Game.SpriteBatch.End();
 
@@ -65,6 +68,7 @@ namespace ScaryCastle
             coinMeter.Update(gameTime);
             bronzeKeyMeter.Update(gameTime);
             runModifiers.Update(gameTime);
+            statuses.Update(gameTime);
             goldenKeyMeter.Update(gameTime);
             passiveItems.Update(gameTime);
             InventoryMeter.Update(gameTime);
@@ -84,6 +88,7 @@ namespace ScaryCastle
         // Reset
         public void Reset()
         {
+            statuses.Actor = Session.Player;
         }
     }
 }

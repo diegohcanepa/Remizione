@@ -78,7 +78,7 @@ namespace ScaryCastle
                 if (!missChance.Roll())
                     EffectDescriptor.Apply(action.EffectDescriptors, Owner, Target, EffectContext.Attack);
                 else
-                    Owner.ShowFloatingText(missText, Color.WhiteSmoke, 2000);
+                    Owner.ShowFlyOff(missText, Color.WhiteSmoke, 2000);
 
                 //Owner.Session.InterruptAwaitingScript();
             }

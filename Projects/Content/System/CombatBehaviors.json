@@ -35,12 +35,6 @@
               "effectType": "Damage",
               "amount": "1",
               "comicText": "AghRed"
-            },
-            {
-              "context": "Attack",
-              "amount": "0",
-              "effectType": "Condition",
-              "conditionType": "ChromaticAberration"
             }
           ]
         }
@@ -88,8 +82,7 @@
             {
               "context": "Contact",
               "amount": "1",
-              "effectType": "Condition",
-              "conditionType": "CoinLoss"
+              "effectType": "CoinLoss"
             }
           ]
         }
@@ -177,9 +170,9 @@
             },
             {
               "context": "Attack",
-              "effectType": "Condition",
-              "conditionType": "Poison",
-              "amount": "1",
+              "effectType": "Status",
+              "statusType": "Poison",
+              "amount": "3",
               "comicText": "AghGreen"
             }
           ]

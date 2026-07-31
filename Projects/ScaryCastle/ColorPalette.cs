@@ -10,13 +10,6 @@ namespace ScaryCastle
         // BackgroundColor
         internal static Color BackgroundColor { get; } = new(0, 2, 5);
 
-        // Condition
-        internal static class Condition
-        {
-            internal static Color Curse { get; } = new(119, 103, 211);
-            internal static Color Poison { get; } = new(55, 111, 16);
-        }
-
         // ContextMenu
         internal static class ContextMenu
         {
