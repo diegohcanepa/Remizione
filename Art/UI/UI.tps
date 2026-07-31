@@ -552,14 +552,6 @@
             <key type="filename">MiniMap-assets/MiniMapRoom4.png</key>
             <key type="filename">UI-assets/CheckMark.png</key>
             <key type="filename">UI-assets/PointingHand.png</key>
-            <key type="filename">UIIcons-assets/GreenHearts1.png</key>
-            <key type="filename">UIIcons-assets/GreenHearts2.png</key>
-            <key type="filename">UIIcons-assets/GreenHearts3.png</key>
-            <key type="filename">UIIcons-assets/GreenHearts4.png</key>
-            <key type="filename">UIIcons-assets/PurpleHearts1.png</key>
-            <key type="filename">UIIcons-assets/PurpleHearts2.png</key>
-            <key type="filename">UIIcons-assets/PurpleHearts3.png</key>
-            <key type="filename">UIIcons-assets/PurpleHearts4.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -722,7 +714,6 @@
                 <false/>
             </struct>
             <key type="filename">MouseCursors-assets/MouseCursorPickUpIcon.png</key>
-            <key type="filename">UIIcons-assets/SkullIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

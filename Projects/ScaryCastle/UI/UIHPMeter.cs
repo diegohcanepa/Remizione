@@ -1,7 +1,7 @@
 ﻿using Adberration;
 using Engendro;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace ScaryCastle
 {
@@ -14,12 +14,9 @@ namespace ScaryCastle
 
         private Actor? actor;
         private readonly Sprite[] icons;
-        private readonly Dictionary<ConditionType, IList<AtlasImage>> imageGroups = [];
-        private int lastFilledIconIndex = -1;
-        private int lastKnownMaxValue;
-        private int lastKnownConditionAmount;
-        private int lastKnownValue;
-        private readonly Vector2Tween scaleTween = new();
+        private readonly ReadOnlyCollection<AtlasImage> heartImages;
+        private int lastKnownValue = int.MinValue;
+        private int lastKnownMaxValue = int.MinValue;
         private int totalIcons;
 
         #endregion
@@ -30,25 +27,23 @@ namespace ScaryCastle
         public UIHPMeter(GameSession session)
             : base(session)
         {
-            imageGroups.Add(ConditionType.None, Atlases.UI.RedHearts);
-            imageGroups.Add(ConditionType.Curse, Atlases.UI.PurpleHearts);
-            imageGroups.Add(ConditionType.Poison, Atlases.UI.GreenHearts);
+            // Directamente referenciamos las imágenes de los corazones rojos:
+            // Frame 0 = Vacío, Frame 1 = Medio corazón, Frame 2 = Corazón lleno
+            heartImages = Atlases.UI.RedHearts;
 
-            this.icons = new Sprite[10];
+            icons = new Sprite[10];
             var pos = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, new(16, 3));
 
             for (var i = 0; i < icons.Length; i++)
             {
-                icons[i] = new(imageGroups[0][0])
+                icons[i] = new(heartImages[0])
                 {
                     PivotOrigin = RectanglePoint.Center,
                     Position = pos
                 };
 
-                pos.X += icons[i].BoundingBox.Width + .5f;
+                pos.X += icons[i].BoundingBox.Width + 0.5f;
             }
-
-            scaleTween.Start(TweenStyle.Linear, Vector2.One, Vector2.One * 1.1f, 300, -1);
         }
 
         #endregion
@@ -61,76 +56,35 @@ namespace ScaryCastle
             if (actor == null)
                 return;
 
-            // 1. Fuentes de verdad
             int hp = actor.HP;
             int maxHp = actor.MaxHP;
-            int amount = (actor.Condition != ConditionType.None) ? actor.ConditionAmount : 0;
 
-            // La "vida segura" es la que no está marcada por el estado
-            int safeHp = hp - amount;
-
-            // 2. Dimensionamiento
             totalIcons = maxHp / 2;
-            var images = imageGroups[actor.Condition];
 
             for (int i = 0; i < totalIcons; i++)
             {
                 if (i >= icons.Length)
                     break;
 
-                // Puntos de este icono (p1 = inferior, p2 = superior)
-                int p1 = (i * 2) + 1;
-                int p2 = (i * 2) + 2;
+                int p1 = (i * 2) + 1; // Primer punto de vida de este icono
+                int p2 = (i * 2) + 2; // Segundo punto de vida de este icono
 
-                // --- LÓGICA DE RENDERIZADO ---
-
-                // CASO A: El corazón no tiene vida (puntos por encima del HP actual)
-                if (hp < p1)
+                if (hp >= p2)
                 {
-                    icons[i].RenderImage = imageGroups[0][0]; // Vacío
+                    icons[i].RenderImage = heartImages[2]; // Corazón Lleno
                 }
-
-                // CASO B: El corazón está lleno (tiene los 2 puntos de vida)
-                else if (hp >= p2)
+                else if (hp == p1)
                 {
-                    if (safeHp >= p2)
-                    {
-                        // Ambos puntos son rojos
-                        icons[i].RenderImage = imageGroups[0][2];
-                    }
-                    else if (safeHp >= p1)
-                    {
-                        // El punto inferior es rojo, el superior es veneno
-                        // AQUÍ USAS TU NUEVO ARTE (Frame 3)
-                        icons[i].RenderImage = images[3];
-                    }
-                    else
-                    {
-                        // Ambos puntos son veneno
-                        icons[i].RenderImage = images[2];
-                    }
+                    icons[i].RenderImage = heartImages[1]; // Medio Corazón
                 }
-
-                // CASO C: El corazón está por la mitad (solo tiene 1 punto de vida)
-                else // hp == p1
+                else
                 {
-                    if (safeHp >= p1)
-                    {
-                        // El único punto que tiene es rojo
-                        icons[i].RenderImage = imageGroups[0][1];
-                    }
-                    else
-                    {
-                        // El único punto que tiene es veneno
-                        icons[i].RenderImage = images[1];
-                    }
+                    icons[i].RenderImage = heartImages[0]; // Corazón Vacío
                 }
             }
 
             lastKnownValue = hp;
             lastKnownMaxValue = maxHp;
-            lastKnownConditionAmount = amount;
-            lastFilledIconIndex = actor.IsDead ? 0 : ((actor.HP + 1) / 2) - 1;
         }
 
         #endregion
@@ -160,7 +114,6 @@ namespace ScaryCastle
                 {
                     lastKnownValue = int.MinValue;
                     lastKnownMaxValue = int.MinValue;
-                    lastKnownConditionAmount = int.MinValue;
                 }
 
                 Refresh();
@@ -169,17 +122,9 @@ namespace ScaryCastle
             if (actor == null || actor.IsDead)
                 return;
 
-            scaleTween.Update(gameTime);
-
-            if (lastKnownValue != actor.HP || lastKnownMaxValue != actor.MaxHP || lastKnownConditionAmount != actor.ConditionAmount)
-                Refresh();
-
-            if (totalIcons > 0)
+            if (lastKnownValue != actor.HP || lastKnownMaxValue != actor.MaxHP)
             {
-                if (actor.ConditionAmount > 0 && actor.ConditionTimer < 5000)
-                    icons[lastFilledIconIndex].Scale = scaleTween.CurrentValue;
-                else
-                    icons[lastFilledIconIndex].Scale = Vector2.One;
+                Refresh();
             }
         }
 

@@ -478,7 +478,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">PotteryB-assets/PotteryBPiece1.png</key>
+            <key type="filename">PotteryB-assets/PotteryBRemains1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -493,7 +493,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">PotteryB-assets/PotteryBPiece2.png</key>
+            <key type="filename">PotteryB-assets/PotteryBRemains2.png</key>
             <key type="filename">PotteryC-assets/PotteryCPiece4.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -509,8 +509,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">PotteryB-assets/PotteryBPiece3.png</key>
-            <key type="filename">PotteryB-assets/PotteryBPiece5.png</key>
+            <key type="filename">PotteryB-assets/PotteryBRemains3.png</key>
+            <key type="filename">PotteryB-assets/PotteryBRemains5.png</key>
             <key type="filename">PotteryE-assets/PotteryEPiece2.png</key>
             <key type="filename">PotteryE-assets/PotteryEPiece5.png</key>
             <key type="filename">PotteryE-assets/PotteryEPiece6.png</key>
@@ -528,7 +528,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">PotteryB-assets/PotteryBPiece4.png</key>
+            <key type="filename">PotteryB-assets/PotteryBRemains4.png</key>
             <key type="filename">PotteryE-assets/PotteryEPiece1.png</key>
             <key type="filename">PotteryE-assets/PotteryEPiece3.png</key>
             <key type="filename">Props-assets/Sack.png</key>
@@ -547,7 +547,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">PotteryB-assets/PotteryBPiece6.png</key>
+            <key type="filename">PotteryB-assets/PotteryBRemains6.png</key>
             <key type="filename">PotteryC-assets/PotteryCPiece5.png</key>
             <key type="filename">PotteryD-assets/PotteryDPiece3.png</key>
             <key type="filename">PotteryD-assets/PotteryDPiece6.png</key>
