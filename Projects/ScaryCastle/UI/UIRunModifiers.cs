@@ -22,7 +22,7 @@ namespace ScaryCastle
         {
             foreach (var modifier in Session.RunModifiers.All)
             {
-                icons[modifier.Name] = new(modifier);
+                icons[modifier.Name] = new(modifier.Definition.Image);
             }
         }
 
@@ -43,7 +43,7 @@ namespace ScaryCastle
                 activeIcons.Add(icons[modifier.Name]);
             }
 
-            float spacing = 1;
+            float spacing = 0;
             float w = 0;
 
             // Calculamos el ancho total sumando los bounding boxes y los espacios intermedios
@@ -56,7 +56,7 @@ namespace ScaryCastle
 
             // Buscamos el centro horizontal de la pantalla. 
             float screenCenterX = Screen.Area.Width / 2;
-            float topMargin = 4; // Margen desde el borde superior de la pantalla
+            float topMargin = 2; // Margen desde el borde superior de la pantalla
 
             // El punto de partida (X) a la izquierda de la fila centrada
             float startX = screenCenterX - (w / 2f);
@@ -112,19 +112,15 @@ namespace ScaryCastle
         /// </summary>
         private sealed class ModifierIcon : GameObject
         {
-            private readonly RunModifier modifier;
             private readonly Sprite sprite;
 
             // Constructor
-            public ModifierIcon(RunModifier modifier)
+            public ModifierIcon(AtlasImage image)
             {
-                this.modifier = modifier;
-
                 sprite = new()
                 {
                     PivotOrigin = RectanglePoint.Center,
-                    RenderImage = modifier.Definition.Image,
-                    Scale = ScaleInfo.UIElement.Medium
+                    RenderImage = image
                 };
             }
 

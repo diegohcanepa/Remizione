@@ -29,14 +29,15 @@ namespace ScaryCastle
         }
 
         // Timer
-        public int Timer { get; private set; }
+        public float Timer { get; private set; }
 
         // Update
         public void Update(GameTime gameTime)
         {
             if (Timer >= 0)
             {
-                Timer += gameTime.ElapsedGameTime.Milliseconds;
+                Timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                
                 if (Timer >= Definition.Cooldown)
                 {
                     if (manager.Session.Player is Actor player)

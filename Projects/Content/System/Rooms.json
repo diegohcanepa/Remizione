@@ -96,6 +96,7 @@
       "doorLeft": "21,80",
       "doorRight": "220,80",
       "allowTags": "Poison",
+      "runModifiers": "Toxic",
       "placeholders": [
         {
           "position": "74,72",

@@ -3,6 +3,18 @@
 	"data": [
 		{
 			"name": "Darkness"
+		},
+		{
+			"name": "Toxic",
+			"cooldown": 5,
+			"effects": [
+				{
+					"context": "RunModifier",
+					"effectType": "Status",
+					"statusType": "Poison",
+					"amount": "1"
+				}
+			]
 		}
 	]
 }

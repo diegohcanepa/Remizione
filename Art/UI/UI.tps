@@ -194,7 +194,6 @@
             <key type="filename">Items-assets/Coin.png</key>
             <key type="filename">Items-assets/SodaCan.png</key>
             <key type="filename">RunModifierIcons-assets/RunModifierDarknessIcon.png</key>
-            <key type="filename">RunModifierIcons-assets/RunModifierPoisonIcon.png</key>
             <key type="filename">UIIcons-assets/Dice.png</key>
             <key type="filename">XboxControls-assets/XboxA.png</key>
             <key type="filename">XboxControls-assets/XboxB.png</key>
@@ -545,6 +544,12 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Meter-assets/OrangeMeter0.png</key>
+            <key type="filename">Meter-assets/OrangeMeter1.png</key>
+            <key type="filename">Meter-assets/OrangeMeter2.png</key>
+            <key type="filename">Meter-assets/OrangeMeter3.png</key>
+            <key type="filename">Meter-assets/OrangeMeter4.png</key>
+            <key type="filename">Meter-assets/OrangeMeter5.png</key>
             <key type="filename">Meter-assets/SkyBlueMeter0.png</key>
             <key type="filename">Meter-assets/SkyBlueMeter1.png</key>
             <key type="filename">Meter-assets/SkyBlueMeter2.png</key>
@@ -668,6 +673,7 @@
             </struct>
             <key type="filename">MouseCursors-assets/MouseCursorAttackIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorMagnifierIcon.png</key>
+            <key type="filename">RunModifierIcons-assets/RunModifierToxicIcon.png</key>
             <key type="filename">UIIcons-assets/CorridorDoorIcon.png</key>
             <key type="filename">UIIcons-assets/FaithIcon.png</key>
             <struct type="IndividualSpriteSettings">
@@ -704,6 +710,7 @@
                 <false/>
             </struct>
             <key type="filename">MouseCursors-assets/MouseCursorEyeIcon.png</key>
+            <key type="filename">UIIcons-assets/StaminaIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
