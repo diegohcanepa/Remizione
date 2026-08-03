@@ -15,9 +15,11 @@ namespace ScaryCastle
 
         private enum MeterPart { LeftEmpty, MiddleEmpty, RightEmpty, LeftFilled, MiddleFilled, RightFilled };
         private readonly ReadOnlyCollection<AtlasImage> images;
-        private readonly List<Sprite> parts = [];
+        private readonly ReadOnlyCollection<Sprite> parts = [];
 
         #endregion
+
+        #region Constructors
 
         // Constructor
         public Meter(Vector2 position, MeterColor color)
@@ -28,30 +30,39 @@ namespace ScaryCastle
         // Constructor
         public Meter(float x, float y, MeterColor color)
         {
+            this.Position = new Vector2(x, y);
+            this.Color = color;
+
             this.images = color switch
             {
                 MeterColor.Green => Atlases.UI.MeterGreen,
+                MeterColor.Orange => Atlases.UI.MeterOrange,
                 MeterColor.Purple => Atlases.UI.MeterPurple,
+                MeterColor.SkyBlue => Atlases.UI.MeterSkyBlue,
                 MeterColor.White => Atlases.UI.MeterWhite,
+
                 _ => throw new NotImplementedException(),
             };
 
-            for (var i = 0; i < MaximumValue; i++)
+            var list = new List<Sprite>();
+            for (var i = 0; i < 10; i++)
             {
-                var part = new Sprite(images[(int)MeterPart.MiddleEmpty]) { X = x, Y = y };
-                parts.Add(part);
-                x += part.BoundingBox.Width - 1;
+                list.Add(new(images[(int)MeterPart.MiddleEmpty]) { X = x, Y = Position.Y });
             }
 
+            parts = new(list);
+            
             Refresh();
         }
+
+        #endregion
 
         #region Private members
 
         // Refresh
         private void Refresh()
         {
-            for (int i = 0; i < parts.Count; i++)
+            for (int i = 0; i < MaximumValue; i++)
             {
                 var segment = parts[i];
                 bool isSegmentFilled = Value > i;
@@ -82,19 +93,20 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            for (int i = 0; i < parts.Count; i++)
+            if (MaximumValue == 0)
+                return;
+
+            for (int i = 0; i < MaximumValue; i++)
             {
                 var segment = parts[i];
                 bool isSegmentFilled = Value > i;
 
-                // Determinar la parte del enum correspondiente
                 MeterPart part;
-
                 if (i == 0)
                 {
                     part = isSegmentFilled ? MeterPart.LeftFilled : MeterPart.LeftEmpty;
                 }
-                else if (i == parts.Count - 1)
+                else if (i == MaximumValue - 1)
                 {
                     part = isSegmentFilled ? MeterPart.RightFilled : MeterPart.RightEmpty;
                 }
@@ -110,11 +122,37 @@ namespace ScaryCastle
 
         #endregion
 
+        // Color
+        public MeterColor Color { get; }
+
         // IsFull
         public bool IsFull => Value == MaximumValue;
 
         // MaximumValue
-        public int MaximumValue { get; set; } = 10;
+        public int MaximumValue
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = int.Clamp(value, 0, parts.Count);
+
+                    var x = this.Position.X;
+                    for (var i = 0; i < field; i++)
+                    {
+                        parts[i].X = x;
+                        parts[i].Y = Position.Y;
+                        x += parts[i].BoundingBox.Width - 1;
+                    }
+
+                    Refresh();
+                }
+            }
+        }
+
+        // Position
+        public Vector2 Position { get; }
 
         // Value
         public int Value

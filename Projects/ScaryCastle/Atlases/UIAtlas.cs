@@ -41,7 +41,9 @@ namespace ScaryCastle
             PickupShadow = this[nameof(PickupShadow)];
             Pixel = this[nameof(Pixel)];
             MeterGreen = CreateReadOnlyCollection("GreenMeter", 0, 5);
+            MeterOrange = CreateReadOnlyCollection("OrangeMeter", 0, 5);
             MeterPurple = CreateReadOnlyCollection("PurpleMeter", 0, 5);
+            MeterSkyBlue = CreateReadOnlyCollection("SkyBlueMeter", 0, 5);
             MeterWhite = CreateReadOnlyCollection("WhiteMeter", 0, 5);
             PopupContainer = this[nameof(PopupContainer)];
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
@@ -51,6 +53,7 @@ namespace ScaryCastle
             SavingIcon = this[nameof(SavingIcon)];
             SpeechTextArrow = this[nameof(SpeechTextArrow)];
             SpeechTextPipe = this[nameof(SpeechTextPipe)];
+            StaminaIcon = this[nameof(StaminaIcon)];
             UIButtonContainerEdge = this[nameof(UIButtonContainerEdge)];
             UIButtonContainerPattern = this[nameof(UIButtonContainerPattern)];
         }
@@ -127,8 +130,14 @@ namespace ScaryCastle
         // MeterGreen
         public ReadOnlyCollection<AtlasImage> MeterGreen { get; }
 
+        // MeterOrange
+        public ReadOnlyCollection<AtlasImage> MeterOrange { get; }
+
         // MeterPurple
         public ReadOnlyCollection<AtlasImage> MeterPurple { get; }
+
+        // MeterSkyBlue
+        public ReadOnlyCollection<AtlasImage> MeterSkyBlue { get; }
 
         // MeterWhite
         public ReadOnlyCollection<AtlasImage> MeterWhite { get; }
@@ -171,6 +180,9 @@ namespace ScaryCastle
 
         // SpeechTextPipe
         public AtlasImage SpeechTextPipe { get; }
+
+        // StaminaIcon
+        public AtlasImage StaminaIcon { get; }
 
         // UIButtonContainerEdge
         public AtlasImage UIButtonContainerEdge { get; }

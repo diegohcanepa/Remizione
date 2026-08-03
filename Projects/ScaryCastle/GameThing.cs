@@ -1189,7 +1189,7 @@ namespace ScaryCastle
         }
 
         // ShowFlyOff
-        public void ShowFlyOff(AtlasImage image, int duration = 1000)
+        public void ShowFlyOff(AtlasImage image, int duration = 2000)
         {
             if (Session.ObjectPools.FlyOffs.Get() is FlyOff flyOff)
                 flyOff.ShowIcon(GetOverheadPosition(), image, duration);
@@ -1253,7 +1253,7 @@ namespace ScaryCastle
 
                     OnTakeDamage(attacker, amount, damageType);
 
-                    if (!IsDead && Session.Player != this)
+                    if (!IsDead)
                         Session.ObjectPools.FlyOffs.Get()?.ShowAmount(this, ColorPalette.HPMeter.Diff, -amount);
 
                     // ComicText si hubo daño real

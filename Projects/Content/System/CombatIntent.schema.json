@@ -63,6 +63,9 @@
         "soundTrigger": {
           "type": "string",
           "description": "Nombre del archivo de sonido a reproducir en el trigger de la accion."
+        },
+        "staminaCost": {
+          "type": "integer"
         }
       },
       "required": [

@@ -53,6 +53,11 @@ namespace ScaryCastle
             // SoundTrigger
             this.SoundTrigger = element.GetObject("soundTrigger", Sound.Get);
 
+            // StaminaCost
+            StaminaCost = element.GetInt32("staminaCost", 0);
+            if (StaminaCost < 0)
+                StaminaCost = 0;
+
             // ActionKind
             ActionKind = element.GetEnum("actionKind", ActionKind.Proximity);
 
@@ -66,6 +71,7 @@ namespace ScaryCastle
         void IAction.Consume(Actor actor)
         {
             actor.Energy -= EnergyCost;
+            actor.Stamina -= StaminaCost;
         }
 
         #endregion
@@ -105,5 +111,8 @@ namespace ScaryCastle
 
         // SoundTrigger
         public Sound? SoundTrigger { get; }
+
+        // StaminaCost
+        public int StaminaCost { get; }
     }
 }

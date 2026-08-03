@@ -20,7 +20,7 @@ namespace ScaryCastle
             this.Atlas = Atlases.Environment;
             this.DefaultImageName = defaultImageName;
             this.PivotOrigin = RectanglePoint.Center;
-            this.Opacity = .65f;
+            this.Opacity = .6f;
             this.effects = effects;
 
             if (amount > 0 && pieces.Count > 0)

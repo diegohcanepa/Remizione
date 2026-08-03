@@ -545,6 +545,26 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Meter-assets/SkyBlueMeter0.png</key>
+            <key type="filename">Meter-assets/SkyBlueMeter1.png</key>
+            <key type="filename">Meter-assets/SkyBlueMeter2.png</key>
+            <key type="filename">Meter-assets/SkyBlueMeter3.png</key>
+            <key type="filename">Meter-assets/SkyBlueMeter4.png</key>
+            <key type="filename">Meter-assets/SkyBlueMeter5.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,2,3</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,2,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">MiniMap-assets/MiniMapCoin.png</key>
             <key type="filename">MiniMap-assets/MiniMapCoinAndLoot.png</key>
             <key type="filename">MiniMap-assets/MiniMapRoom2.png</key>
@@ -735,6 +755,7 @@
             <key type="filename">UIIcons-assets/RedHearts2.png</key>
             <key type="filename">UIIcons-assets/RedHearts3.png</key>
             <key type="filename">UIIcons-assets/RedHearts4.png</key>
+            <key type="filename">UIIcons-assets/StatusPoisonIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

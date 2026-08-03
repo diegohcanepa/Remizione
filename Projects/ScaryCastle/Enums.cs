@@ -137,7 +137,7 @@ namespace ScaryCastle
     public enum MessageKind { CannotPlaceItem, HandsFull, InventoryFull, ItemDiscarded, LiftNotAllowed, NotEnoughCoins, NotEnoughFaith, OutOfReach, OutOfLine, PathCleared, ExtraEnergy, ExtraHeart }
 
     // MeterColor
-    public enum MeterColor { Green, Purple, White }
+    public enum MeterColor { Green, Orange, Purple, SkyBlue, White }
 
     // MouseCursorIcon
     public enum MouseCursorIcon { Cross, Attack, Down, Eye, Hand, Left, Lift, Magnifier, Right, PickUp, Skull, Talk, Up, Wait }

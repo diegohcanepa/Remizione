@@ -9,7 +9,7 @@ namespace ScaryCastle
     /// <summary>
     /// UIStatuses
     /// </summary>
-    public sealed class UIStatuses : GameObject
+    public sealed class UIStatuses : SessionGameObject<GameSession>
     {
         private readonly List<StatusIcon> activeIcons = [];
         private readonly Dictionary<StatusType, StatusIcon> icons = [];
@@ -18,44 +18,12 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public UIStatuses()
-            : base()
+        public UIStatuses(GameSession session)
+            : base(session)
         {
             foreach (var statusType in Enum.GetValues<StatusType>())
             {
                 icons.Add(statusType, new(statusType));
-            }
-        }
-
-        #endregion
-
-        #region Private members
-
-        // Refresh
-        private void Refresh()
-        {
-            activeIcons.Clear();
-            if (Actor == null)
-                return;
-
-            foreach (var status in Actor.StatusManager.Statuses)
-            {
-                if (status.Value > 0)
-                {
-                    var activeIcon = icons[status.StatusType];
-                    activeIcons.Add(activeIcon);
-                }
-            }
-
-            float spacing = 1;
-            float x = 16;
-            float y = 13;
-
-            for (var i = 0; i < activeIcons.Count; i++)
-            {
-                var icon = activeIcons[i];
-                icon.Position = new(x, y);
-                x += icon.BoundingBox.Width + spacing;
             }
         }
 
@@ -118,12 +86,41 @@ namespace ScaryCastle
             }
         }
 
+        // Refresh
+        public void Refresh()
+        {
+            activeIcons.Clear();
+            if (Actor == null)
+                return;
+
+            foreach (var status in Actor.StatusManager.Statuses)
+            {
+                if (status.Value > 0)
+                {
+                    var activeIcon = icons[status.StatusType];
+                    activeIcons.Add(activeIcon);
+                }
+            }
+
+            float spacing = 1;
+            var pos = Session.StatusHUD.HPMeter.BoundingBox.GetPoint(RectanglePoint.RightTop);
+
+            for (var i = 0; i < activeIcons.Count; i++)
+            {
+                var icon = activeIcons[i];
+                icon.Position = pos;
+                pos.X += icon.BoundingBox.Width + spacing;
+            }
+        }
+
         /// <summary>
         /// StatusIcon
         /// </summary>
         private sealed class StatusIcon : GameObject
         {
             private readonly FlatMeter meter;
+            private readonly FloatTween rotationTween = new();
+            private readonly Vector2Tween scaleTween = new();
             private Status? status;
             private readonly Sprite sprite;
 
@@ -135,6 +132,7 @@ namespace ScaryCastle
 
                 this.sprite = new()
                 {
+                    PivotOrigin = RectanglePoint.Center,
                     RenderImage = def.Image
                 };
 
@@ -143,6 +141,23 @@ namespace ScaryCastle
                     MaximumValue = Status.MaxValue
                 };
             }
+
+            #region Private members
+
+            // Shake
+            private void Shake()
+            {
+                if (!sprite.Tweens.IsTweening)
+                {
+                    rotationTween.Start(TweenStyle.QuadraticInOut, 0, 5, 50, 6);
+                    sprite.Tweens.RotationTween = rotationTween;
+
+                    scaleTween.Start(TweenStyle.QuadraticInOut, Vector2.One, Vector2.One * 1.15f, 150, 2);
+                    sprite.Tweens.ScaleTween = scaleTween;
+                }
+            }
+
+            #endregion
 
             // Actor
             public Actor? Actor
@@ -176,7 +191,17 @@ namespace ScaryCastle
                 if (status == null)
                     return;
 
-                meter.Value = status.Value;
+                if (meter.Value != status.Value)
+                {
+                    meter.Value = status.Value;
+                    Shake();
+                }
+                else if (meter.Value >= 8)
+                {
+                    Shake();
+                }
+
+                sprite.Update(gameTime);
                 meter.Update(gameTime);
             }
 

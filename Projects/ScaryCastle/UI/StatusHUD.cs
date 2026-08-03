@@ -15,10 +15,9 @@ namespace ScaryCastle
         private readonly UIPocketItemMeter coinMeter;
         private readonly HUDFaithMeter faithMeter;
         private readonly UIPocketItemMeter goldenKeyMeter;
-        private readonly UIHPMeter hpMeter;
         private readonly UIPassiveItems passiveItems;
         private readonly UIRunModifiers runModifiers;
-        private readonly UIStatuses statuses;
+        private readonly HUDStaminaMeter staminaMeter;
 
         #endregion
 
@@ -29,7 +28,8 @@ namespace ScaryCastle
             : base(session)
         {
             this.faithMeter = new(session);
-            this.hpMeter = new(session);
+            this.staminaMeter = new(session);
+            this.HPMeter = new(session);
             this.bronzeKeyMeter = new(session, PocketItemType.BronzeKey, new(7, -5), false);
             this.goldenKeyMeter = new(session, PocketItemType.GoldenKey, new(22, -5), true);
             this.coinMeter = new(session, PocketItemType.Coin, new(-7, -16), false);
@@ -37,7 +37,7 @@ namespace ScaryCastle
             this.passiveItems = new(session);
             this.MiniMap = new();
             this.runModifiers = new(session);
-            this.statuses = new();
+            this.Statuses = new(session);
         }
 
         #endregion
@@ -48,13 +48,14 @@ namespace ScaryCastle
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera);
-            hpMeter.Draw(gameTime);
+            HPMeter.Draw(gameTime);
             runModifiers.Draw(gameTime);
-            statuses.Draw(gameTime);
+            Statuses.Draw(gameTime);
             passiveItems.Draw(gameTime);
             Game.SpriteBatch.End();
 
             faithMeter.Draw(gameTime);
+            staminaMeter.Draw(gameTime);
             InventoryMeter.Draw(gameTime);
             coinMeter.Draw(gameTime);
             bronzeKeyMeter.Draw(gameTime);
@@ -68,16 +69,20 @@ namespace ScaryCastle
             coinMeter.Update(gameTime);
             bronzeKeyMeter.Update(gameTime);
             runModifiers.Update(gameTime);
-            statuses.Update(gameTime);
+            Statuses.Update(gameTime);
             goldenKeyMeter.Update(gameTime);
             passiveItems.Update(gameTime);
             InventoryMeter.Update(gameTime);
-            hpMeter.Update(gameTime);
+            HPMeter.Update(gameTime);
             faithMeter.Update(gameTime);
+            staminaMeter.Update(gameTime);
             MiniMap.Update(gameTime);
         }
 
         #endregion
+
+        // HPMeter
+        public UIHPMeter HPMeter { get; }
 
         // InventoryMeter
         public UIInventoryMeter InventoryMeter { get; }
@@ -88,7 +93,10 @@ namespace ScaryCastle
         // Reset
         public void Reset()
         {
-            statuses.Actor = Session.Player;
+            Statuses.Actor = Session.Player;
         }
+
+        // Statuses
+        public UIStatuses Statuses { get; }
     }
 }

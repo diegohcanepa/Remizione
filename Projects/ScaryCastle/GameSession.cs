@@ -82,7 +82,7 @@ namespace ScaryCastle
                 };
 
                 console.CommandList.Add("put PotteryA into $Room #at:120,75");
-                console.CommandList.Add("put Rat into $Room");
+                console.CommandList.Add("put StinkyRat into $Room");
                 console.CommandList.Add("put GoldenTrunk into $Room #at:77,77");
                 console.CommandList.Add("add-item Lockpick");
 

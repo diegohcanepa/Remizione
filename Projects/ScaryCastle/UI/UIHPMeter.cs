@@ -32,7 +32,7 @@ namespace ScaryCastle
             heartImages = Atlases.UI.RedHearts;
 
             icons = new Sprite[10];
-            var pos = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, new(16, 3));
+            var pos = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, new(15, 3));
 
             for (var i = 0; i < icons.Length; i++)
             {
@@ -85,6 +85,12 @@ namespace ScaryCastle
 
             lastKnownValue = hp;
             lastKnownMaxValue = maxHp;
+
+            var w = (totalIcons * icons[0].BoundingBox.Width) + (.5f * totalIcons);
+            
+            BoundingBox = new(icons[0].Position.X, icons[0].Position.Y, w, icons[0].BoundingBox.Height);
+
+            Session.StatusHUD.Statuses.Refresh();
         }
 
         #endregion
@@ -129,5 +135,8 @@ namespace ScaryCastle
         }
 
         #endregion
+
+        // BoundingBox
+        public RectangleF BoundingBox { get; private set; }
     }
 }

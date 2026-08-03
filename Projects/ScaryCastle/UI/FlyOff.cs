@@ -17,6 +17,9 @@ namespace ScaryCastle
         private Sprite? activeSprite;
         private readonly Sprite icon = new() { PivotOrigin = RectanglePoint.Bottom, Scale = ScaleInfo.UIElement.Medium };
         private readonly FloatTween opacityTween = new();
+        private readonly FloatTween rotationTween = new();
+        private bool shake;
+        private readonly FloatTween shakeTween = FloatTween.Create(TweenStyle.Linear, 0, .5f, 50, -1);
         private readonly TextSprite text = new(Fonts.CommonOutline) { PivotOrigin = RectanglePoint.Bottom };
         private readonly FloatTween xTween = new();
         private readonly FloatTween yTween = new();
@@ -33,6 +36,8 @@ namespace ScaryCastle
         private void Launch(Vector2 origin, Sprite sprite, Vector2 distance, int duration)
         {
             activeSprite = sprite;
+
+            shake = sprite is not TextSprite;
 
             if (duration < fadeDuration)
                 duration = fadeDuration;
@@ -53,7 +58,15 @@ namespace ScaryCastle
 
             opacityTween.StartDelay = duration - fadeDuration;
             opacityTween.Start(TweenStyle.CubicIn, 1, 0, fadeDuration);
+        
             sprite.Tweens.OpacityTween = opacityTween;
+            sprite.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.Linear, Vector2.Zero, sprite.Scale, 200);
+
+            if (shake)
+            {
+                rotationTween.Start(TweenStyle.QuadraticInOut, 0, 5, 50, duration / 50 / 2);
+                sprite.Tweens.RotationTween = rotationTween;
+            }
         }
 
         // ShowTextCore
@@ -72,12 +85,22 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            activeSprite?.Draw(gameTime);
+            if (activeSprite != null)
+            {
+                if (shake)
+                    activeSprite.X += shakeTween.CurrentValue;
+
+                activeSprite.Draw(gameTime);
+
+                if (shake)
+                    activeSprite.X -= shakeTween.CurrentValue;
+            }
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            shakeTween.Update(gameTime);
             activeSprite?.Update(gameTime);
 
             if (!IsVisible)
@@ -90,9 +113,10 @@ namespace ScaryCastle
         public bool IsVisible => xTween.IsRunning || yTween.IsRunning || opacityTween.IsRunning;
 
         // ShowIcon
-        public void ShowIcon(Vector2 origin, AtlasImage image, int duration = 2000)
+        public void ShowIcon(Vector2 origin, AtlasImage image, int duration)
         {
             icon.RenderImage = image;
+            icon.Scale = ScaleInfo.UIElement.Medium;
             Launch(origin, icon, new Vector2(0, -3), duration);
         }
 

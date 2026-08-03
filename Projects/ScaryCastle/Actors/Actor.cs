@@ -501,6 +501,11 @@ namespace ScaryCastle
             }
         }
 
+        // OnStaminaChanged
+        protected virtual void OnStaminaChanged(int previousValue)
+        {
+        }
+
         // OnStartMoving
         protected override void OnStartMoving()
         {
@@ -524,6 +529,7 @@ namespace ScaryCastle
             if (EnforceTurn)
             {
                 EnforceTurn = false;
+                Stamina++;
                 Session.ProcessTurn(PixelsMoved > 80 ? 1 : 0);
             }
         }
@@ -904,6 +910,28 @@ namespace ScaryCastle
             }
         }
 
+        // MaxStamina
+        [ScriptProperty]
+        public int MaxStamina
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    if (Stamina == 0)
+                    {
+                        Stamina = value;
+                    }
+                    else if (Stamina > field)
+                    {
+                        Stamina = field;
+                    }
+                }
+            }
+        }
+
         // MoveLurk
         public virtual void MoveLurk(GameThing target)
         {
@@ -1207,6 +1235,22 @@ namespace ScaryCastle
         // SpeechSound
         [ScriptProperty(CodingContext.EntityDeclaration)]
         public Sound? SpeechSound { get; set; }
+
+        // Stamina
+        [ScriptProperty]
+        public int Stamina
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    var previousValue = field;
+                    field = Math.Clamp(value, 0, MaxStamina);
+                    OnStaminaChanged(previousValue);
+                }
+            }
+        }
 
         // Stand
         [ScriptMethod()]
