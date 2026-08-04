@@ -6,21 +6,24 @@ using Microsoft.Xna.Framework;
 namespace ScaryCastle
 {
     /// <summary>
-    /// InventoryScene
+    /// InventorySceneNew
     /// </summary>
-    public sealed class InventoryScene : Scene, IInputHandler
+    public sealed class InventorySceneNew : Scene, IInputHandler
     {
         #region Private fields
 
         private readonly Sprite[] amounts = new Sprite[ItemContainer.MaximumCapacity];
         private bool autoHide;
+        private readonly DynamicWindow descriptionWindow;
         private readonly Sprite[] icons = new Sprite[ItemContainer.MaximumCapacity];
-        private readonly TextSprite itemLabel;
         private readonly TextSprite itemDescription;
+        private readonly TextSprite itemLabel;
         private Item? lastSelectedItem;
         private int lastSeenContainerVersion = -1;
-        private readonly Sprite mouseIcon;
-        private readonly TextSprite mouseTip;
+        private readonly Sprite leftMouseTipIcon;
+        private readonly TextSprite leftMouseTip;
+        private readonly Sprite rightMouseTipIcon;
+        private readonly TextSprite rightMouseTip;
         private readonly Sprite[] shadows = new Sprite[ItemContainer.MaximumCapacity];
         private readonly Sprite[] slots = new Sprite[ItemContainer.MaximumCapacity];
 
@@ -29,10 +32,21 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public InventoryScene(ItemContainer itemContainer)
+        public InventorySceneNew(ItemContainer itemContainer)
             : base()
         {
-            this.PausePreviousScenes = false;
+            this.PausePreviousScenes = true;
+
+            // Description window
+            this.descriptionWindow = new DynamicWindow()
+            {
+                BorderColor = new(20, 20, 20),
+                FillColor = new(45, 37, 30),
+                PivotOrigin = RectanglePoint.Bottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom),
+                Height = 28,
+                Width = 140
+            };
 
             // Slots
             for (var i = 0; i < slots.Length; i++)
@@ -40,7 +54,7 @@ namespace ScaryCastle
                 slots[i] = new(Atlases.UI.InventoryItemSlot)
                 {
                     PivotOrigin = RectanglePoint.LeftBottom,
-                    Y = Screen.Area.Bottom - 22
+                    Y = Screen.Area.Bottom - 37
                 };
 
                 icons[i] = new()
@@ -62,7 +76,7 @@ namespace ScaryCastle
                 amounts[i] = new Sprite()
                 {
                     PivotOrigin = RectanglePoint.Top,
-                    Y = slots[i].BoundingBox.Center.Y + 6,
+                    Y = slots[i].BoundingBox.Center.Y + 5,
                     Scale = ScaleInfo.UIElement.Medium
                 };
             }
@@ -72,38 +86,60 @@ namespace ScaryCastle
             // Item name
             itemLabel = new(Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.MouseCursor,
+                Color = ColorPalette.Text.Highlight,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = slots[0].BoundingBox.GetPoint(RectanglePoint.Top, 0, -1),
                 Scale = ScaleInfo.Text.VeryLarge
             };
 
             // Item description
-            itemDescription = new(Fonts.CommonOutline)
+            this.itemDescription = new(Fonts.Common)
             {
                 Color = ColorPalette.Text.Highlight,
-                MaximumWidth = 140,
-                Multiline = false,
-                PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -2),
+                Opacity = .7f,
+                MaximumWidth = (int)descriptionWindow.InnerBounds.Width,
+                Multiline = true,
+                PivotOrigin = RectanglePoint.LeftTop,
+                Position = descriptionWindow.InnerBounds.GetPoint(RectanglePoint.LeftTop),
                 Scale = ScaleInfo.Text.Large,
+                ShadowColor = ColorPalette.Shadow,
+                ShadowOffset = new(.5f),
             };
 
-            // MouseIcon
-            this.mouseIcon = new(Atlases.UI.MouseRightButtonIcon)
-            {
-                PivotOrigin = RectanglePoint.LeftBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 2, -13)
-            };
-
-            // MouseTip
-            mouseTip = new(Fonts.Common)
+            // LeftMouseTip
+            leftMouseTip = new(Fonts.Common)
             {
                 Color = ColorPalette.Text.Highlight,
-                PivotOrigin = RectanglePoint.Left,
-                Position = mouseIcon.BoundingBox.GetPoint(RectanglePoint.Right, 1, 0),
-                Scale = ScaleInfo.Text.ExtraLarge,
-                Text = "@Verb.Examine"
+                PivotOrigin = RectanglePoint.LeftBottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 10, -11),
+                Scale = ScaleInfo.Text.Large,
+                Text = "@Verb.Select"
+            };
+
+            // LeftMouseTipIcon
+            this.leftMouseTipIcon = new(Atlases.UI.MouseLeftButtonIcon)
+            {
+                PivotOrigin = RectanglePoint.Right,
+                Position = leftMouseTip.BoundingBox.GetPoint(RectanglePoint.Left, -1, -1),
+                Scale = ScaleInfo.UIElement.Medium
+            };
+
+            // RightMouseTip
+            this.rightMouseTip = new(Fonts.Common)
+            {
+                Color = ColorPalette.Text.Highlight,
+                PivotOrigin = RectanglePoint.LeftBottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 10, -1),
+                Scale = ScaleInfo.Text.Large,
+                Text = "@Verb.Grab"
+            };
+
+            // RightMouseTipIcon
+            this.rightMouseTipIcon = new(Atlases.UI.MouseRightButtonIcon)
+            {
+                PivotOrigin = RectanglePoint.Right,
+                Position = rightMouseTip.BoundingBox.GetPoint(RectanglePoint.Left, -1, -1),
+                Scale = ScaleInfo.UIElement.Medium
             };
         }
 
@@ -123,14 +159,27 @@ namespace ScaryCastle
                 }
                 else if (ItemContainer.Session.InteractionContext.HeldItem == null && GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item grabbedItem)
                 {
-                    if (grabbedItem.Definition.Image != null)
-                    {
-                        ItemContainer.Session.InteractionContext.HeldItem = grabbedItem;
+                    SelectedItem = grabbedItem;
+
+                   // if (grabbedItem.Definition.Image != null)
+                    //{
+                      //  ItemContainer.Session.InteractionContext.HeldItem = grabbedItem;
                         MouseCursor.PerformClick(false);
-                        Game.SceneManager.Pop();
+                        //Game.SceneManager.Pop();
                         return true;
-                    }
+                    //}
                 }
+
+                //else if (ItemContainer.Session.InteractionContext.HeldItem == null && GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item grabbedItem)
+                //{
+                //    if (grabbedItem.Definition.Image != null)
+                //    {
+                //        ItemContainer.Session.InteractionContext.HeldItem = grabbedItem;
+                //        MouseCursor.PerformClick(false);
+                //        Game.SceneManager.Pop();
+                //        return true;
+                //    }
+                //}
                 else
                 {
                     MouseCursor.Shake();
@@ -140,15 +189,10 @@ namespace ScaryCastle
             if (InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
             {
                 if (GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item item)
-                {
-                    ItemContainer.Session.ShowItemInfo(item);
-                    Sound.Play(SoundNames.Interact);
-                }
-                else
-                {
-                    MouseCursor.PerformClick();
-                    Game.SceneManager.Pop();
-                }
+                    ItemContainer.Session.InteractionContext.HeldItem = item;
+
+                MouseCursor.PerformClick(false);
+                Game.SceneManager.Pop();
             }
 
             return false;
@@ -200,7 +244,7 @@ namespace ScaryCastle
         // Reset
         private void Reset()
         {
-            itemLabel.Clear();
+            SelectedItem = null;
 
             for (var i = 0; i < ItemContainer.Count; i++)
             {
@@ -213,14 +257,6 @@ namespace ScaryCastle
 
         #region Protected members
 
-        // OnActivate
-        protected override void OnActivate()
-        {
-            base.OnActivate();
-            MouseCursor.Icon = MouseCursorIcon.Cross;
-            Reset();
-        }
-
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
@@ -229,8 +265,15 @@ namespace ScaryCastle
 
             Game.SpriteBatch.Begin(Game.Camera);
 
-            mouseIcon.Draw(gameTime);
-            mouseTip.Draw(gameTime);
+            Game.Shapes.DrawRectangle(Screen.Area, ColorPalette.SceneShade);
+
+            descriptionWindow.Draw(gameTime);
+
+            leftMouseTipIcon.Draw(gameTime);
+            leftMouseTip.Draw(gameTime);
+
+            rightMouseTipIcon.Draw(gameTime);
+            rightMouseTip.Draw(gameTime);
 
             itemDescription.Draw(gameTime);
 
@@ -252,7 +295,7 @@ namespace ScaryCastle
                 amounts[i].Draw(gameTime);
             }
 
-            if (lastSelectedItem != null)
+            if (SelectedItem != null)
                 itemLabel.Draw(gameTime);
 
             Game.SpriteBatch.End();
@@ -276,6 +319,10 @@ namespace ScaryCastle
         {
             base.OnLoadContent();
 
+            MouseCursor.Icon = MouseCursorIcon.Arrow;
+
+            Reset();
+
             autoHide = false;
 
             ItemContainer.Session.InteractionContext.HeldItem = null;
@@ -285,6 +332,9 @@ namespace ScaryCastle
                 lastSeenContainerVersion = ItemContainer.ContentVersion;
                 Refresh();
             }
+
+            if (ItemContainer.Count > 0)
+                SelectedItem = ItemContainer[0];
         }
 
         // OnUnloadContent
@@ -309,46 +359,12 @@ namespace ScaryCastle
             {
                 autoHide = InputManager.DefaultPlayer.Mouse.VirtualPosition.Y >= AutoHideThreshold;
             }
-
-            if (GetSelectedItem() is Item item)
-            {
-                if (item != lastSelectedItem)
-                {
-                    if (lastSelectedItem?.Index >= 0)
-                    {
-                        icons[lastSelectedItem.Index].Scale = ScaleInfo.UIElement.Medium;
-                        shadows[lastSelectedItem.Index].Scale = ScaleInfo.UIElement.Medium;
-                    }
-                    else
-                    {
-                        lastSelectedItem = null;
-                    }
-
-                    itemLabel.X = slots[item.Index].BoundingBox.Center.X;
-                    itemLabel.Text = item.DisplayName;
-                    itemDescription.Text = item.ShortDescription;
-                    icons[item.Index].Scale = ScaleInfo.InventoryHeldItem;
-                    shadows[item.Index].Scale = ScaleInfo.InventoryHeldItem;
-                    itemLabel.Tag = item;
-                    lastSelectedItem = item;
-                }
-            }
-            else if (lastSelectedItem != null)
-            {
-                if (lastSelectedItem.Index >= 0)
-                {
-                    icons[lastSelectedItem.Index].Scale = ScaleInfo.UIElement.Medium;
-                    shadows[lastSelectedItem.Index].Scale = ScaleInfo.UIElement.Medium;
-                }
-
-                lastSelectedItem = null;
-            }
         }
 
         #endregion
 
         // AutoHideThreshold
-        public const int AutoHideThreshold = 98;
+        public const int AutoHideThreshold = 74;
 
         // ItemContainer
         public ItemContainer ItemContainer
@@ -380,6 +396,38 @@ namespace ScaryCastle
         public Item? GetSelectedItem()
         {
             return GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition);
+        }
+
+        // SelectedItem
+        public Item? SelectedItem
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    if (field != null)
+                    {
+                        icons[field.Index].Scale = ScaleInfo.UIElement.Medium;
+                        shadows[field.Index].Scale = ScaleInfo.UIElement.Medium;
+                    };
+
+                    field = value;
+
+                    if (field != null)
+                    {
+                        itemLabel.X = slots[field.Index].BoundingBox.Center.X;
+                        itemLabel.Text = field.DisplayName;
+                        itemDescription.Text = field.ShortDescription;
+                        icons[field.Index].Scale = ScaleInfo.InventoryHeldItem;
+                        shadows[field.Index].Scale = ScaleInfo.InventoryHeldItem;
+                    }
+                    else
+                    {
+                        itemLabel.Clear();
+                    }
+                }
+            }
         }
     }
 }

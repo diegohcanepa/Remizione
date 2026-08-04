@@ -12,7 +12,6 @@
 					"context": "Use",
 					"effectType": "HPGain",
 					"amount": "2",
-					"chance": 0.5,
 					"target": "Self",
 					"sound": "AppleBite"
 				}

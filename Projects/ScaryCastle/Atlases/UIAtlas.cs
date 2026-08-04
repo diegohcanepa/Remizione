@@ -33,10 +33,12 @@ namespace ScaryCastle
             InventoryFaithAmounts = CreateReadOnlyCollection("InventoryFaithAmount", 1, 3);
             InventoryItemAmounts = CreateReadOnlyCollection("InventoryItemAmount", 1, 5);
             InventoryItemSlot = this[nameof(InventoryItemSlot)];
+            MagnifierIcon = this[nameof(MagnifierIcon)];
             MessageContainer = this[nameof(MessageContainer)];
             MiniMapCoin = this[nameof(MiniMapCoin)];
             MiniMapCoinAndLoot = this[nameof(MiniMapCoinAndLoot)];
             MiniMapLoot = this[nameof(MiniMapLoot)];
+            MouseLeftButtonIcon = this[nameof(MouseLeftButtonIcon)];
             MouseRightButtonIcon = this[nameof(MouseRightButtonIcon)];
             PickupShadow = this[nameof(PickupShadow)];
             Pixel = this[nameof(Pixel)];
@@ -124,6 +126,9 @@ namespace ScaryCastle
         // InventoryItemSlot
         public AtlasImage InventoryItemSlot { get; }
 
+        // MagnifierIcon
+        public AtlasImage MagnifierIcon { get; }
+
         // MessageContainer
         public AtlasImage MessageContainer { get; }
 
@@ -150,6 +155,9 @@ namespace ScaryCastle
 
         // MiniMapLoot
         public AtlasImage MiniMapLoot { get; }
+
+        // MouseLeftButtonIcon
+        public AtlasImage MouseLeftButtonIcon { get; }
 
         // MouseRightButtonIcon
         public AtlasImage MouseRightButtonIcon { get; }

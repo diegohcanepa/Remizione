@@ -169,6 +169,9 @@ namespace ScaryCastle
                 }
             }
 
+            // Área total ocupada por el window
+            BoundingBox = new(posX, posY, Width, Height);
+
             // El área interna útil también se desplaza con el pivote de forma automática
             InnerBounds = new(posX + 4, posY + 4, Width - 8, Height - 8);
         }
@@ -184,8 +187,9 @@ namespace ScaryCastle
             {
                 fillSprites[i]?.Draw(gameTime);
                 borderSprites[i]?.Draw(gameTime);
-                Game.Shapes.DrawRectangle(InnerBounds, FillColor);
             }
+
+            Game.Shapes.DrawRectangle(InnerBounds, FillColor);
         }
 
         #endregion
@@ -206,6 +210,9 @@ namespace ScaryCastle
                 }
             }
         }
+
+        // BoundingBox
+        public RectangleF BoundingBox { get; private set; }
 
         // FillColor
         public Color FillColor

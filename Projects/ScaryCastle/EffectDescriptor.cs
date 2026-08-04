@@ -192,7 +192,10 @@ namespace ScaryCastle
                 if (effect.EffectType is EffectType.Damage)
                 {
                     if (effect.Amount != null)
+                    {
                         value = GetTemplate(effect.EffectType).Replace("{amount}", effect.Amount.ToString());
+                        value += $" ({Localization.GetValue(effect.DamageType)})";
+                    }
                 }
 
                 if (!string.IsNullOrWhiteSpace(value))

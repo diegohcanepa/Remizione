@@ -20,6 +20,7 @@ namespace ScaryCastle
         private readonly TextSprite itemNameText;
         private readonly GameSession session;
         private readonly TextSprite descriptionText;
+        private readonly DynamicWindow window = new();
 
         #region Constructor
 
@@ -128,7 +129,7 @@ namespace ScaryCastle
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
-            //Game.Shapes.DrawRectangle(Screen.Area, Color.Black);
+            Game.Shapes.DrawRectangle(Screen.Area, Color.Black);
             container.Draw(gameTime);
             imageShadow.Draw(gameTime);
             image.Draw(gameTime);
