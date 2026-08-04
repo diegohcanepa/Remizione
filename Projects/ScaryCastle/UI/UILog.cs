@@ -118,12 +118,12 @@ namespace ScaryCastle
         }
 
         // Show
-        public void Show(LogVerb verb, ItemDefinition itemDefinition, bool isWarning = false)
+        public void Show(LogVerb verb, Item item, bool isWarning = false)
         {
             if (verb == LogVerb.None)
                 return;
 
-            ShowCore(Localization.GetValue(verb), itemDefinition.DisplayName, isWarning, itemDefinition.Image);
+            ShowCore(Localization.GetValue(verb), item.DisplayName, isWarning, item.Definition.Image);
 
             if (verb == LogVerb.Requires)
                 Sound.Play(SoundNames.Error);

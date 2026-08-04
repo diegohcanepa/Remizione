@@ -23,12 +23,15 @@ namespace ScaryCastle.Scripting
         // OnExecute
         protected override void OnExecute()
         {
+            // TODO: Check
+            /*
             if (Session is GameSession session)
             {
                 var verb = Parser.ParseEnum<LogVerb>(this, 0);
                 if (ItemDefinition.Container.Find(Body.Clauses[1]) is ItemDefinition definition)
                     session.TextHUD.Log.Show(verb, definition, HasArg(WarningArg));
             }
+            */
         }
 
         #endregion

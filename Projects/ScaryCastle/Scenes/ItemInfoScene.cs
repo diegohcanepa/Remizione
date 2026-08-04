@@ -185,8 +185,8 @@ namespace ScaryCastle
         {
             this.item = item;
             this.allowDiscard = item.Definition.Behavior == ItemBehavior.Common;
-            this.itemNameText.Text = item.Definition.DisplayName;
-            this.descriptionText.Text = item.Definition.Description;
+            this.itemNameText.Text = item.DisplayName;
+            this.descriptionText.Text = item.Description;
             this.imageShadow.RenderImage = item.Definition.Image;
             this.image.RenderImage = item.Definition.Image;
         }

@@ -10,8 +10,9 @@
 			"effects": [
 				{
 					"context": "Use",
-					"effectType": "Heal",
+					"effectType": "HPGain",
 					"amount": "2",
+					"chance": 0.5,
 					"target": "Self",
 					"sound": "AppleBite"
 				}
@@ -42,7 +43,7 @@
 			"effects": [
 				{
 					"context": "Use",
-					"effectType": "Heal",
+					"effectType": "HPGain",
 					"amount": "2",
 					"target": "Self",
 					"sound": "AppleBite",
@@ -217,7 +218,7 @@
 			"effects": [
 				{
 					"context": "Use",
-					"effectType": "Heal",
+					"effectType": "HPGain",
 					"amount": "4",
 					"target": "Self",
 					"sound": "Drink"

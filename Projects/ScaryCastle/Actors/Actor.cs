@@ -84,6 +84,16 @@ namespace ScaryCastle
 
         #region Private members
 
+        // Fatigue
+        private void Fatigue()
+        {
+            if (Sprite.Animations.Contains(ActorStateNames.Fatigue))
+            {
+                var state = BodyMachine.FindOrCreateState<BodyFatigueState>();
+                BodyMachine.ChangeState(state.GetType());
+            }
+        }
+
         // HandlePendingInteraction
         private void HandlePendingInteraction()
         {
@@ -529,7 +539,11 @@ namespace ScaryCastle
             if (EnforceTurn)
             {
                 EnforceTurn = false;
-                Stamina++;
+                if (ActiveThrowable == null)
+                    Stamina++;
+                else
+                    Stamina--;
+
                 Session.ProcessTurn(PixelsMoved > 80 ? 1 : 0);
             }
         }
@@ -1248,6 +1262,11 @@ namespace ScaryCastle
                     var previousValue = field;
                     field = Math.Clamp(value, 0, MaxStamina);
                     OnStaminaChanged(previousValue);
+                    if (field == 0)
+                    {
+                        DiscardActiveThrowable();
+                        Fatigue();
+                    }
                 }
             }
         }

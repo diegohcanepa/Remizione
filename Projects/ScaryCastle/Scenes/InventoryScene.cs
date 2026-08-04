@@ -14,15 +14,13 @@ namespace ScaryCastle
 
         private readonly Sprite[] amounts = new Sprite[ItemContainer.MaximumCapacity];
         private bool autoHide;
-        private readonly TextSprite goalText;
         private readonly Sprite[] icons = new Sprite[ItemContainer.MaximumCapacity];
         private readonly TextSprite itemLabel;
+        private readonly TextSprite itemDescription;
         private Item? lastSelectedItem;
         private int lastSeenContainerVersion = -1;
-        private int lastSeenRun = -1;
         private readonly Sprite mouseIcon;
         private readonly TextSprite mouseTip;
-        private readonly Sprite scroll = new(Atlases.UI.GetImage("Scroll")) { PivotOrigin = RectanglePoint.Top, Position = Screen.HUDArea.GetPoint(RectanglePoint.Top) };
         private readonly Sprite[] shadows = new Sprite[ItemContainer.MaximumCapacity];
         private readonly Sprite[] slots = new Sprite[ItemContainer.MaximumCapacity];
 
@@ -81,17 +79,15 @@ namespace ScaryCastle
                 Scale = ScaleInfo.Text.VeryLarge
             };
 
-            // GoalText
-            goalText = new(Fonts.Common)
+            // Item description
+            itemDescription = new(Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Highlight * .7f,
-                MaximumWidth = 100,
-                Multiline = true,
-                PivotOrigin = RectanglePoint.LeftTop,
-                Position = scroll.BoundingBox.GetPoint(RectanglePoint.LeftTop, 10, 4.5f),
+                Color = ColorPalette.Text.Terra,
+                MaximumWidth = 140,
+                PivotOrigin = RectanglePoint.Bottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom),
                 Scale = ScaleInfo.Text.Large,
-                ShadowColor = ColorPalette.Shadow,
-                ShadowOffset = new(.5f),
+                Text = "InventoryScene.ItemDescription"
             };
 
             // MouseTip
@@ -238,7 +234,7 @@ namespace ScaryCastle
             mouseIcon.Draw(gameTime);
             mouseTip.Draw(gameTime);
 
-            //goalWindow.Draw(gameTime);
+            itemDescription.Draw(gameTime);
 
             //scroll.Draw(gameTime);
             //goalText.Draw(gameTime);
@@ -291,12 +287,6 @@ namespace ScaryCastle
                 lastSeenContainerVersion = ItemContainer.ContentVersion;
                 Refresh();
             }
-
-            if (lastSeenRun != ItemContainer.Session.RunCount)
-            {
-                lastSeenRun = ItemContainer.Session.RunCount;
-                goalText.Text = TextRepository.GetValue($"RunGoal.{ItemContainer.Session.RunCount + 1}");
-            }
         }
 
         // OnUnloadContent
@@ -332,10 +322,13 @@ namespace ScaryCastle
                         shadows[lastSelectedItem.Index].Scale = ScaleInfo.UIElement.Medium;
                     }
                     else
+                    {
                         lastSelectedItem = null;
+                    }
 
                     itemLabel.X = slots[item.Index].BoundingBox.Center.X;
-                    itemLabel.Text = item.Definition.DisplayName;
+                    itemLabel.Text = item.DisplayName;
+                    itemDescription.Text = item.ShortDescription;
                     icons[item.Index].Scale = ScaleInfo.InventoryHeldItem;
                     shadows[item.Index].Scale = ScaleInfo.InventoryHeldItem;
                     itemLabel.Tag = item;

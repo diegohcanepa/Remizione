@@ -23,6 +23,12 @@ namespace ScaryCastle
                 return;
             }
 
+            if (context.Session.Player != null && !context.Session.Player.CanHandleInput)
+            {
+                MouseCursor.Icon = MouseCursorIcon.Wait;
+                return;
+            }
+
             // Session is awaiting script
             if (context.Session.IsAwaiting)
             {

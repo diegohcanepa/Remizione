@@ -7,7 +7,7 @@
     "effectType": {
       "type": "string",
       "description": "El tipo de acción a ejecutar.",
-      "enum": [ "None", "BronzeKey", "Coin", "CoinLoss", "ComicText", "Damage", "Death", "Energy", "ExtraEnergy", "ExtraHeart", "GoldenKey", "Heal", "Status" ] ,
+      "enum": [ "None", "BronzeKey", "Coin", "CoinLoss", "ComicText", "Damage", "Death", "Energy", "ExtraEnergy", "ExtraHeart", "GoldenKey", "HPGain", "HPLoss", "Status" ] ,
       "default": "None"
     },
     "amount": {

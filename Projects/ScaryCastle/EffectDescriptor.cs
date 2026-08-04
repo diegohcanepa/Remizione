@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 
@@ -129,10 +130,15 @@ namespace ScaryCastle
                         source.Session.GoldenKeys += amount;
                         break;
 
-                    // Heal
-                    case EffectType.Heal:
+                    // HPGain
+                    case EffectType.HPGain:
                         realTarget?.HP += amount;
                         targetActor?.StatusManager.GetStatus(ScaryCastle.StatusType.Poison).Value = 0;
+                        break;
+
+                    // HPLoss
+                    case EffectType.HPLoss:
+                        realTarget?.HP -= amount;
                         break;
 
                     // Status
@@ -159,6 +165,46 @@ namespace ScaryCastle
             }
 
             return false;
+        }
+
+        // GetDescription
+        public static string GetDescription(IList<EffectDescriptor> effects)
+        {
+            static string GetTemplate(EffectType effectType)
+            {
+                return TextRepository.GetValue($"EffectTemplate.{effectType}");
+            }
+
+            var values = new List<string>();
+
+            foreach (var effect in effects)
+            {
+                var value = string.Empty;
+
+                // HPGain / HPLoss
+                if (effect.EffectType is EffectType.HPGain or EffectType.HPLoss)
+                {
+                    if (effect.Amount != null)
+                        value = GetTemplate(effect.EffectType).Replace("{amount}", effect.Amount.ToString());
+                }
+
+                // Damage
+                if (effect.EffectType is EffectType.Damage)
+                {
+                    if (effect.Amount != null)
+                        value = GetTemplate(effect.EffectType).Replace("{amount}", effect.Amount.ToString());
+                }
+
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    if (effect.Chance > 0 && effect.Chance < 1)
+                        value += $" [{effect.Chance * 100}%]";
+
+                    values.Add(value);
+                }
+            }
+
+            return string.Join("/", values);
         }
 
         #endregion

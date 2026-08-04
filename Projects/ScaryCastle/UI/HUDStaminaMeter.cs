@@ -18,10 +18,11 @@ namespace ScaryCastle
         {
             this.icon = new(Atlases.UI.StaminaIcon)
             {
-                Position = new(16, 12)
+                Position = new(17, 12.5f),
+                Scale = ScaleInfo.UIElement.Medium
             };
 
-            this.meter = new(icon.BoundingBox.GetPoint(RectanglePoint.RightTop, 0, 1), MeterColor.Orange);
+            this.meter = new(icon.BoundingBox.GetPoint(RectanglePoint.RightTop, 0, .5f), MeterColor.Orange);
         }
 
         #region Protected members

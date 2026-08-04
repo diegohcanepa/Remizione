@@ -57,7 +57,7 @@ namespace ScaryCastle
     public enum EffectContext { Collect, Contact, Attack, RemainsContact, RunModifier, Update, Use, ProjectileHit, Status, ApplyStatus }
 
     // EffectType
-    public enum EffectType { None, BronzeKey, Coin, CoinLoss, ComicText, Damage, Death, Energy, ExtraEnergy, ExtraHeart, GoldenKey, Heal, Status }
+    public enum EffectType { None, BronzeKey, Coin, CoinLoss, ComicText, Damage, Death, Energy, ExtraEnergy, ExtraHeart, GoldenKey, HPGain, HPLoss, Status }
 
     // EffectTarget
     public enum EffectTarget { Target, Self }

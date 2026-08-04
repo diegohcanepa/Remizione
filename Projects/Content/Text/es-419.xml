@@ -20,6 +20,9 @@
   <String Key="ActorProperty.Grace.Name">Gracia</String>
   <String Key="ActorProperty.Level.Description">El nivel quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Level.Name">Estado de Gracia</String>
+  <String Key="EffectTemplate.Damage">{amount} daño</String>
+  <String Key="EffectTemplate.HPGain">+{amount} Salud</String>
+  <String Key="EffectTemplate.HPLoss">-{amount} Salud</String>
   <String Key="FloatingMessage.Failed">¡Fallaste!</String>
   <String Key="FloatingMessage.Success">¡Éxito!</String>
   <String Key="HitType.Critical">¡Crítico!</String>
@@ -214,6 +217,7 @@
   <String Key="Misc.And">y</String>
   <String Key="Misc.BackToCorridor">¡Vuelve al pasillo!</String>
   <String Key="Misc.Bird">Pájaro</String>
+  <String Key="Misc.Chance">Chances</String>
   <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=—áéíóúÁÉÍÓÚ</String>
   <String Key="Misc.CopyrightDeveloper">© 2024 Indiesruption</String>
   <String Key="Misc.Credits">Remizione
@@ -331,7 +335,6 @@ Bla bla bla</String>
   <String Key="Prop.UnderRideEntrance">Inframundo</String>
   <String Key="Prop.VendingMachine">Máquina expendedora</String>
   <String Key="Prop.WC">Inodoro</String>
-  <String Key="RunGoal.1">Intimar a Mandinga para que regrese al infierno.</String>
   <String Key="StatName.Faith">Fe</String>
   <String Key="StatName.HP">Salud</String>
   <String Key="Verb.Examine">Examinar</String>

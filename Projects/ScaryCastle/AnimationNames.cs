@@ -9,6 +9,7 @@
         internal const string Closed = nameof(Closed);
         internal const string Death = nameof(Death);
         internal const string Default = nameof(Default);
+        internal const string Fatigue = nameof(Fatigue);
         internal const string Fear = nameof(Fear);
         internal const string Hit = nameof(Hit);
         internal const string Hurt = nameof(Hurt);

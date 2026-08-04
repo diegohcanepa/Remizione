@@ -11,12 +11,6 @@ namespace ScaryCastle
     /// </summary>
     public sealed class Item : IAction
     {
-        #region Private fields
-
-        private bool isDisplayTextDiry = true;
-
-        #endregion
-
         #region Constructor
 
         // Constructor
@@ -26,6 +20,9 @@ namespace ScaryCastle
             this.Definition = definition;
             this.Script = inventory.Session.ScriptLibrary.FindRoutine($"{Definition.Name}Outcome");
             this.Amount = definition.InitialAmount;
+            this.DisplayName = Localization.GetItemName(definition);
+            this.Description = Localization.GetItemDescription(definition);
+            this.ShortDescription = EffectDescriptor.GetDescription(definition.EffectDescriptors);
         }
 
         #endregion
@@ -53,21 +50,6 @@ namespace ScaryCastle
 
         #endregion
 
-        #region Private members
-
-        // InvalidateDisplayText
-        private void InvalidateDisplayText()
-        {
-            if (!isDisplayTextDiry)
-                return;
-
-            DisplayText = Definition.DisplayName;
-
-            isDisplayTextDiry = false;
-        }
-
-        #endregion
-
         // Amount
         public int Amount
         {
@@ -77,7 +59,6 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = int.Clamp(value, 0, Definition.IsStackable || Definition.IsDepletable ? GameSettings.MaxItemAmount : 1);
-                    isDisplayTextDiry = true;
                     if (field == 0)
                         Inventory.Remove(this);
                     Inventory.InvalidateContentVersion();
@@ -97,34 +78,18 @@ namespace ScaryCastle
                     Inventory.Remove(this);
 
                 if (Definition.ConsumeVerb != LogVerb.None)
-                    actor.Session.TextHUD.Log.Show(Definition.ConsumeVerb, Definition, true);
+                    actor.Session.TextHUD.Log.Show(Definition.ConsumeVerb, this, true);
             }
-
-            InvalidateDisplayText();
         }
 
         // Definition
         public ItemDefinition Definition { get; }
 
-        // DisplayText
-        public string DisplayText
-        {
-            get
-            {
-                if (isDisplayTextDiry)
-                    InvalidateDisplayText();
+        // Description
+        public string Description { get; }
 
-                return field;
-            }
-
-            private set;
-        } = string.Empty;
-
-        // GetDisplayAmount
-        public string GetDisplayAmount()
-        {
-            return Amount.ToString(CultureInfo.InvariantCulture);
-        }
+        // DisplayName
+        public string DisplayName { get; }
 
         // Index
         public int Index => Inventory.IndexOf(this);
@@ -147,10 +112,13 @@ namespace ScaryCastle
         // Script
         public Script? Script { get; }
 
+        // ShortDescription
+        public string ShortDescription { get; }
+
         // ToString
         public override string ToString()
         {
-            return DisplayText;
+            return DisplayName;
         }
     }
 }

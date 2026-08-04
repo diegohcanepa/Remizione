@@ -27,9 +27,11 @@ namespace ScaryCastle.Scripting
 
                     if (lootProvider.Loot.Behavior == ItemBehavior.Common)
                     {
-                        session.PlayerInventory.Add(lootProvider.Loot);
-                        session.StatusHUD.InventoryMeter.Animate();
-                        session.TextHUD.Log.Show(LogVerb.Found, lootProvider.Loot);
+                        if (session.PlayerInventory.Add(lootProvider.Loot) is Item item)
+                        {
+                            session.StatusHUD.InventoryMeter.Animate();
+                            session.TextHUD.Log.Show(LogVerb.Found, item);
+                        }
                     }
                     else if (lootProvider.Loot.Behavior != ItemBehavior.PlayerAction && session.Player != null)
                     {

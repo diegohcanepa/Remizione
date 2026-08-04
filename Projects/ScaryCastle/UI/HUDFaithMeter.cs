@@ -44,7 +44,7 @@ namespace ScaryCastle
             icon.Position = new(9, 3);
 
             float x = 6.5f;
-            float y = 12;
+            float y = 11;
             while (parts.Count < actor.MaxEnergy)
             {
                 var part = new Sprite(Atlases.UI.FaithMeter[(int)MeterPart.MiddleEmpty]) { X = x, Y = y };

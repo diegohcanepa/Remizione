@@ -9,6 +9,8 @@ namespace Engendro
     /// </summary>
     public class DiceExpression
     {
+        private readonly string displayValue;
+
         #region Constructor
 
         // Constructor
@@ -18,12 +20,14 @@ namespace Engendro
             {
                 IsFixedValue = true;
                 FixedValue = value;
+                displayValue = value.ToString(CultureInfo.InvariantCulture);
             }
             else if (TryParse(expression, out int diceCount, out int diceSides, out int modifier))
             {
                 DiceCount = diceCount;
                 DiceSides = diceSides;
                 Modifier = modifier;
+                displayValue = $"{MinimumValue}-{MaximumValue}";
             }
             else
             {
@@ -133,10 +137,7 @@ namespace Engendro
         // ToString
         public override string ToString()
         {
-            if (IsFixedValue)
-                return FixedValue.ToString(CultureInfo.InvariantCulture);
-            else
-                return $"{DiceCount}d{DiceSides}{(Modifier >= 0 ? "+" : "")}{Modifier}";
+            return displayValue;
         }
 
         // TryParse

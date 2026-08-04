@@ -91,8 +91,6 @@ namespace ScaryCastle
             // SoundTrigger
             this.SoundTrigger = element.GetObject("soundTrigger", Sound.Get);
 
-            this.Description = Localization.GetItemDescription(this);
-            this.DisplayName = Localization.GetItemName(this);
             this.Image = Atlases.UI.FindImage(Name);
 
             this.Price = Quality switch
@@ -140,14 +138,8 @@ namespace ScaryCastle
         // Container
         public static ItemDefinitionContainer Container { get; } = new(element => new ItemDefinition(element));
 
-        // Description
-        public string Description { get; }
-
         // DeselectOnUse
         public bool DeselectOnUse { get; }
-
-        // DisplayName
-        public string DisplayName { get; }
 
         // EnergyCost
         public int EnergyCost { get; }
