@@ -30,11 +30,16 @@ namespace ScaryCastle
             GoldenKeyIcon = this[nameof(GoldenKeyIcon)];
             GooIcon = this[nameof(GooIcon)];
             HeartIcon = this[nameof(HeartIcon)];
-            InventoryFaithAmounts = CreateReadOnlyCollection("InventoryFaithAmount", 1, 3);
+            InventoryFaithCosts = CreateReadOnlyCollection("InventoryFaithCost", 1, 3);
             InventoryItemAmounts = CreateReadOnlyCollection("InventoryItemAmount", 1, 5);
             InventoryItemSlot = this[nameof(InventoryItemSlot)];
             MagnifierIcon = this[nameof(MagnifierIcon)];
             MessageContainer = this[nameof(MessageContainer)];
+            MeterGreen = CreateReadOnlyCollection("GreenMeter", 0, 5);
+            MeterOrange = CreateReadOnlyCollection("OrangeMeter", 0, 5);
+            MeterPurple = CreateReadOnlyCollection("PurpleMeter", 0, 5);
+            MeterSkyBlue = CreateReadOnlyCollection("SkyBlueMeter", 0, 5);
+            MeterWhite = CreateReadOnlyCollection("WhiteMeter", 0, 5);
             MiniMapCoin = this[nameof(MiniMapCoin)];
             MiniMapCoinAndLoot = this[nameof(MiniMapCoinAndLoot)];
             MiniMapLoot = this[nameof(MiniMapLoot)];
@@ -42,13 +47,9 @@ namespace ScaryCastle
             MouseRightButtonIcon = this[nameof(MouseRightButtonIcon)];
             PickupShadow = this[nameof(PickupShadow)];
             Pixel = this[nameof(Pixel)];
-            MeterGreen = CreateReadOnlyCollection("GreenMeter", 0, 5);
-            MeterOrange = CreateReadOnlyCollection("OrangeMeter", 0, 5);
-            MeterPurple = CreateReadOnlyCollection("PurpleMeter", 0, 5);
-            MeterSkyBlue = CreateReadOnlyCollection("SkyBlueMeter", 0, 5);
-            MeterWhite = CreateReadOnlyCollection("WhiteMeter", 0, 5);
             PopupContainer = this[nameof(PopupContainer)];
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
+            QuickInventoryBackground = this[nameof(QuickInventoryBackground)];
             RedHearts = CreateReadOnlyCollection(nameof(RedHearts), 1, 4);
             CountdownSkullIcon = this[nameof(CountdownSkullIcon)];
             Sack = this[nameof(Sack)];
@@ -117,8 +118,8 @@ namespace ScaryCastle
         // HeartIcon
         public AtlasImage HeartIcon { get; }
 
-        // InventoryFaithAmounts
-        public ReadOnlyCollection<AtlasImage> InventoryFaithAmounts { get; }
+        // InventoryFaithCosts
+        public ReadOnlyCollection<AtlasImage> InventoryFaithCosts { get; }
 
         // InventoryItemAmounts
         public ReadOnlyCollection<AtlasImage> InventoryItemAmounts { get; }
@@ -173,6 +174,9 @@ namespace ScaryCastle
 
         // PopupContainerShadow
         public AtlasImage PopupContainerShadow { get; }
+
+        // QuickInventoryBackground
+        public AtlasImage QuickInventoryBackground { get; }
 
         // RedHearts
         public ReadOnlyCollection<AtlasImage> RedHearts { get; }

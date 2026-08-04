@@ -1253,7 +1253,7 @@ namespace ScaryCastle
 
                     OnTakeDamage(attacker, amount, damageType);
 
-                    if (!IsDead)
+                    //if (!IsDead)
                         Session.ObjectPools.FlyOffs.Get()?.ShowAmount(this, ColorPalette.HPMeter.Diff, -amount);
 
                     // ComicText si hubo daño real

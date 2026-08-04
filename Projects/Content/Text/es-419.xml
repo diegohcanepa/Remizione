@@ -339,4 +339,5 @@ Bla bla bla</String>
   <String Key="StatName.Faith">Fe</String>
   <String Key="StatName.HP">Salud</String>
   <String Key="Verb.Examine">Examinar</String>
+  <String Key="Verb.Grab">Agarrar</String>
 </Strings>

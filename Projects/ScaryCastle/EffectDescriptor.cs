@@ -148,7 +148,7 @@ namespace ScaryCastle
                             var status = targetActor.StatusManager.GetStatus(statusType);
                             var wasZero = status.Value == 0;
                             status.Value += amount;
-                            targetActor.ShowStatusReaction(status, wasZero);
+                            targetActor.ShowStatusReaction(status, true);
                         }
                         break;
                 }

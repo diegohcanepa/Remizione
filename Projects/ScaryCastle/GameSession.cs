@@ -23,7 +23,6 @@ namespace ScaryCastle
         private readonly ScriptConsole? console;
         private readonly FloatTween chromaticAberrationTween = new();
         private readonly InventoryScene inventoryScene;
-        private readonly ItemInfoScene itemInfoScene;
         private Vector2? playerPosition;
         private readonly List<GameThing> proceduralThings = [];
         private readonly Dictionary<string, GameThing> proceduralThingsDict = [];
@@ -89,8 +88,6 @@ namespace ScaryCastle
 
                 roomEditor = new RoomEditor(this);
             }
-
-            this.itemInfoScene = new(this);
 
             // Saving icon
             this.savingIcon = new Sprite(Atlases.UI.SavingIcon)
@@ -850,13 +847,6 @@ namespace ScaryCastle
         public void ShowInventory()
         {
             Game.SceneManager.Push(inventoryScene);
-        }
-
-        // ShowItemInfo
-        public void ShowItemInfo(Item item)
-        {
-            itemInfoScene.Show(item);
-            Game.SceneManager.Push(itemInfoScene);
         }
 
         // StatusHUD

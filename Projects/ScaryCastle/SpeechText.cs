@@ -41,6 +41,9 @@ namespace ScaryCastle
         private readonly TextSprite text;
         private readonly TextSprite title;
 
+        private bool isPositionedBelow;
+        private float targetBubbleWidth;
+
         #endregion
 
         #region Constructor
@@ -147,12 +150,21 @@ namespace ScaryCastle
         // GetBubbleArea
         private RectangleF GetBubbleArea(ref Vector2 origin)
         {
-            float w = Math.Max(text.BoundingBox.Width, title.BoundingBox.Width);
-            float h = title.BoundingBox.Height + text.MeasureDisplayText().Y + 2;
+            float w = targetBubbleWidth;
+            float currentHeight = text.MeasureDisplayText().Y;
+            float h = title.BoundingBox.Height + currentHeight + 2;
 
-            bubbleArea = new RectangleF(origin.X - (w / 2), origin.Y - h - pipe.BoundingBox.Height + 1, w, h);
+            if (!isPositionedBelow)
+            {
+                bubbleArea = new RectangleF(origin.X - (w / 2), origin.Y - h - pipeHeight + 1, w, h);
+            }
+            else
+            {
+                float bottomOriginY = Actor.BoundingBox.Bottom + pipeHeight + 2;
+                bubbleArea = new RectangleF(origin.X - (w / 2), bottomOriginY, w, h);
+            }
+
             bubbleArea.Inflate(textPadding);
-
             return bubbleArea;
         }
 
@@ -165,28 +177,18 @@ namespace ScaryCastle
             // Origin
             var origin = Actor.GetOverheadPosition();
             origin.Y -= 1;
-            //origin.X = Actor.X;
 
-            pipe.Effects = SpriteEffects.None;
+            pipe.Effects = isPositionedBelow ? SpriteEffects.FlipVertically : SpriteEffects.None;
             pipe.PivotOrigin = RectanglePoint.Bottom;
-            pipe.Position = origin;
+
             bubbleArea = GetBubbleArea(ref origin);
 
             // Test overlapping (left side)
             if (bubbleArea.Left < vp.Left)
-                bubbleArea.X = vp.X;
-
+                bubbleArea.X = vp.Left;
             // Test overlapping (right side)
             else if (bubbleArea.Right > vp.Right)
                 bubbleArea.X = vp.Right - bubbleArea.Width;
-
-            // Test overlapping (top side)
-            if (bubbleArea.Top < vp.Top)
-                bubbleArea.Y = vp.Y;
-
-            // Test overlapping (bottom side)
-            else if (bubbleArea.Bottom > vp.Bottom)
-                bubbleArea.Y = vp.Bottom - bubbleArea.Height;
 
             bubbleImage.Position = bubbleArea.GetPoint(RectanglePoint.LeftTop, 1, 1);
             bubbleImage.Scale = new Vector2(bubbleArea.Width - 2, bubbleArea.Height - 2);
@@ -196,8 +198,12 @@ namespace ScaryCastle
             bubbleImage2.Position = bbox.GetPoint(RectanglePoint.LeftTop, -1, 1);
             bubbleImage2.Scale = new Vector2(bbox.Width + 2, bbox.Height - 2);
 
-            var pipeBox = pipe.BoundingBox;
+            if (isPositionedBelow)
+                pipe.Position = new Vector2(origin.X, Actor.BoundingBox.Bottom + pipeHeight + 2);
+            else
+                pipe.Position = origin;
 
+            var pipeBox = pipe.BoundingBox;
             bbox = bubbleImage2.BoundingBox;
 
             // Limit pipe (horz)
@@ -207,18 +213,16 @@ namespace ScaryCastle
                 pipe.X = bbox.Right - (pipeBox.Width / 2) - 2;
 
             // Limit pipe (vert)
-            pipe.Y = bubbleArea.Bottom + pipeBox.Height - 1.2f;
-
-            pipeBox = pipe.BoundingBox;
-            if (pipeBox.Bottom > origin.Y + 3)
+            if (isPositionedBelow)
             {
-                pipe.Effects = SpriteEffects.FlipVertically;
-                pipe.Y = Actor.BoundingBox.Bottom + pipeBox.Height + 2;
-                pipeBox = pipe.BoundingBox;
                 bubbleImage.Y = pipeBox.Bottom;
                 bbox = bubbleImage.BoundingBox;
                 bubbleImage2.Position = bbox.GetPoint(RectanglePoint.LeftTop, -1, 1);
                 bubbleImage2.Scale = new Vector2(bbox.Width + 2, bbox.Height - 2);
+            }
+            else
+            {
+                pipe.Y = bubbleArea.Bottom + pipeBox.Height - 1.2f;
             }
 
             title.Position = bubbleImage.BoundingBox.GetPoint(RectanglePoint.LeftTop, 2, 2);
@@ -254,10 +258,8 @@ namespace ScaryCastle
             {
                 if (text.TypingState == RunningState.Stopped)
                 {
-                    //if (Actor.IsStandingOrMoving)
                     Actor.StopTalking();
 
-                    // Made one last scale tween, so pipe ends in a 1:1 scale
                     if (pipeTween.IsRunning)
                         pipeTween.Start(pipeTween.Style, pipe.Scale.Y, 1, pipeTween.Duration);
 
@@ -271,13 +273,11 @@ namespace ScaryCastle
                     State = SpeechTextState.Idle;
                     text.StopTyping();
 
-                    //if (Actor.IsStandingOrMoving)
                     Actor.StopTalking();
 
                     Layout();
                 }
             }
-
             else if (State == SpeechTextState.Idle)
             {
                 if (autoHideCooldown > 0)
@@ -398,13 +398,24 @@ namespace ScaryCastle
 
             this.text.Text = text;
             this.title.Text = title;
+            this.text.Scale = ScaleInfo.Text.Large;
+
+            targetBubbleWidth = Math.Max(this.text.BoundingBox.Width, this.title.BoundingBox.Width);
+            float finalHeight = this.title.BoundingBox.Height + this.text.BoundingBox.Height + 2;
+
+            var vp = Actor.Session.Camera.VisibleBox;
+            vp.Inflate(-10, -10);
+
+            var origin = Actor.GetOverheadPosition();
+            origin.Y -= 1;
+
+            float expectedMaxTop = origin.Y - finalHeight - pipeHeight + 1 - textPadding.Y;
+            isPositionedBelow = expectedMaxTop < vp.Top;
 
             if (awaitInput)
                 autoHideCooldown = 0;
             else
                 autoHideCooldown = text.Length * this.text.TypingSpeed;
-
-            this.text.Scale = ScaleInfo.Text.Large;
 
             // Typing
             if (SpeechTextSettings.Typing && awaitInput)
@@ -429,7 +440,6 @@ namespace ScaryCastle
 
             arrowTween.Start(TweenStyle.QuinticIn, 0, .3f, 150, -1);
 
-            //if (Actor.IsStandingOrMoving)
             Actor.StartTalking();
 
             inputCooldown = 100;

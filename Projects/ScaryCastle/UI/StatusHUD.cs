@@ -56,10 +56,15 @@ namespace ScaryCastle
 
             faithMeter.Draw(gameTime);
             staminaMeter.Draw(gameTime);
-            InventoryMeter.Draw(gameTime);
-            coinMeter.Draw(gameTime);
-            bronzeKeyMeter.Draw(gameTime);
-            goldenKeyMeter.Draw(gameTime);
+
+            if (Session.IsCurrentScene)
+            {
+                InventoryMeter.Draw(gameTime);
+                coinMeter.Draw(gameTime);
+                bronzeKeyMeter.Draw(gameTime);
+                goldenKeyMeter.Draw(gameTime);
+            }
+
             MiniMap.Draw(gameTime);
         }
 

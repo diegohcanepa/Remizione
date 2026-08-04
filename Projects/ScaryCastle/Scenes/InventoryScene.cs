@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 namespace ScaryCastle
 {
     /// <summary>
-    /// InventoryScene
+    /// InventoryScene2
     /// </summary>
     public sealed class InventoryScene : Scene, IInputHandler
     {
@@ -14,13 +14,12 @@ namespace ScaryCastle
 
         private readonly Sprite[] amounts = new Sprite[ItemContainer.MaximumCapacity];
         private bool autoHide;
+        private readonly Sprite background = new(Atlases.UI.QuickInventoryBackground) { PivotOrigin = RectanglePoint.LeftBottom, Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom) };
         private readonly Sprite[] icons = new Sprite[ItemContainer.MaximumCapacity];
         private readonly TextSprite itemLabel;
         private readonly TextSprite itemDescription;
         private Item? lastSelectedItem;
         private int lastSeenContainerVersion = -1;
-        private readonly Sprite mouseIcon;
-        private readonly TextSprite mouseTip;
         private readonly Sprite[] shadows = new Sprite[ItemContainer.MaximumCapacity];
         private readonly Sprite[] slots = new Sprite[ItemContainer.MaximumCapacity];
 
@@ -88,23 +87,6 @@ namespace ScaryCastle
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -2),
                 Scale = ScaleInfo.Text.Large,
             };
-
-            // MouseIcon
-            this.mouseIcon = new(Atlases.UI.MouseRightButtonIcon)
-            {
-                PivotOrigin = RectanglePoint.LeftBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 2, -13)
-            };
-
-            // MouseTip
-            mouseTip = new(Fonts.Common)
-            {
-                Color = ColorPalette.Text.Highlight,
-                PivotOrigin = RectanglePoint.Left,
-                Position = mouseIcon.BoundingBox.GetPoint(RectanglePoint.Right, 1, 0),
-                Scale = ScaleInfo.Text.ExtraLarge,
-                Text = "@Verb.Examine"
-            };
         }
 
         #endregion
@@ -139,16 +121,8 @@ namespace ScaryCastle
 
             if (InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
             {
-                if (GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item item)
-                {
-                    ItemContainer.Session.ShowItemInfo(item);
-                    Sound.Play(SoundNames.Interact);
-                }
-                else
-                {
-                    MouseCursor.PerformClick();
-                    Game.SceneManager.Pop();
-                }
+                MouseCursor.PerformClick();
+                Game.SceneManager.Pop();
             }
 
             return false;
@@ -184,7 +158,7 @@ namespace ScaryCastle
 
                     if (ItemContainer[i].Definition.EnergyCost.IsBetween(1, 3))
                     {
-                        amounts[i].RenderImage = Atlases.UI.InventoryFaithAmounts[ItemContainer[i].Definition.EnergyCost - 1];
+                        amounts[i].RenderImage = Atlases.UI.InventoryFaithCosts[ItemContainer[i].Definition.EnergyCost - 1];
                     }
                     else if (ItemContainer[i].Definition.IsStackable || ItemContainer[i].Definition.IsDepletable)
                     {
@@ -229,13 +203,9 @@ namespace ScaryCastle
 
             Game.SpriteBatch.Begin(Game.Camera);
 
-            mouseIcon.Draw(gameTime);
-            mouseTip.Draw(gameTime);
+            background.Draw(gameTime);
 
             itemDescription.Draw(gameTime);
-
-            //scroll.Draw(gameTime);
-            //goalText.Draw(gameTime);
 
             for (var i = 0; i < ItemContainer.Capacity; i++)
             {
