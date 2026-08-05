@@ -871,33 +871,6 @@ namespace ScaryCastle
             return 1;
         }
 
-        // HasNearbyThreat
-        public bool HasNearbyThreat()
-        {
-            if (IsHostile)
-                return false;
-
-            if (Room != null)
-            {
-                for (var i = 0; i < Room.Children.Count; i++)
-                {
-                    if (Room.Children[i] is GameThing thing)
-                    {
-                        if (thing == this || thing == Session.Player || thing.IsDead || !thing.IsHostile)
-                            continue;
-
-                        if (thing.RuntimeHotspot.BoundingRectangleF.Intersects(RuntimeHotspot.BoundingRectangleF))
-                            return true;
-
-                        if (thing.DistanceTo(this) <= 5)
-                            return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
         // HitTest
         public bool HitTest(Vector2 value)
         {

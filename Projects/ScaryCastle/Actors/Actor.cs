@@ -1177,15 +1177,6 @@ namespace ScaryCastle
             }
             else
             {
-                if (target.HasNearbyThreat())
-                {
-                    StopMoving();
-                    FaceTo(target);
-                    Session.DangerousTarget = target;
-                    Session.AwaitRoutine(RoutineNames.DangerousTargetHandler);
-                    return false;
-                }
-
                 var destination = target.GetApproachPosition(this, Session.InteractionData.IsAttack || ActiveThrowable != null ? ApproachBehavior.ClosestSide : null);
 
                 if (destination != Vector2.Zero)

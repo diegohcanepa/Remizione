@@ -81,7 +81,7 @@ namespace ScaryCastle
             itemDescription = new(Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Highlight,
-                MaximumWidth = 140,
+                MaximumWidth = 200,
                 Multiline = false,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -2),
