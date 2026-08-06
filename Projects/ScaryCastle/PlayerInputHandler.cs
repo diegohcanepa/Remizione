@@ -66,7 +66,7 @@ namespace ScaryCastle
             {
                 if (context.Target is not Prop prop || !prop.IsLiftable)
                 {
-                    Actor.Session.TextHUD.Message.Show(MessageKind.LiftNotAllowed);
+                    Actor.Session.HUD.Message.Show(MessageKind.LiftNotAllowed);
                     MouseCursor.Shake();
                     return;
                 }

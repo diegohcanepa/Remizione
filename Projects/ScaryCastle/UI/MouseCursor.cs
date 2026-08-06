@@ -81,7 +81,7 @@ namespace ScaryCastle
             if (TooltipImage != null)
             {
                 tooltipImage.PivotOrigin = RectanglePoint.LeftTop;
-                tooltipImage.Position = tooltipSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom);
+                tooltipImage.Position = tooltipSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -1);
             }
 
             if (!tooltipSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox))
@@ -92,7 +92,7 @@ namespace ScaryCastle
                 if (TooltipImage != null)
                 {
                     tooltipImage.PivotOrigin = RectanglePoint.RightTop;
-                    tooltipImage.Position = tooltipSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom);
+                    tooltipImage.Position = tooltipSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -1);
                 }
             }
 

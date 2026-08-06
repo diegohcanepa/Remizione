@@ -84,8 +84,6 @@ namespace ScaryCastle
             if (HeldItem?.Amount == 0)
                 HeldItem = null;
 
-            Session.TextHUD.Sentence.Target = Target;
-            Session.TextHUD.BossMeter.Target = Target as Actor;
             MouseCursor.Tooltip = Target?.DisplayName;
 
             if (Target is Prop prop && prop.Definition?.StaminaCost > 0)

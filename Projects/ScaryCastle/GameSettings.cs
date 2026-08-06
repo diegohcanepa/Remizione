@@ -44,6 +44,9 @@
         // MaxItemAmount
         public const int MaxItemAmount = 5;
 
+        // StaminaRechargeThreshold
+        public const int StaminaRechargeThreshold = 50;
+
         // SteamAppID
         public const int SteamAppID = 480;
 

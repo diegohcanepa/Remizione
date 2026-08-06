@@ -78,7 +78,7 @@ namespace ScaryCastle
                     Inventory.Remove(this);
 
                 if (Definition.ConsumeVerb != LogVerb.None)
-                    actor.Session.TextHUD.Log.Show(Definition.ConsumeVerb, this, true);
+                    actor.Session.HUD.Log.Show(Definition.ConsumeVerb, this, true);
             }
         }
 

@@ -1,13 +1,14 @@
 ﻿using Adberration;
 using Engendro;
+using Engendro.Input;
 using Microsoft.Xna.Framework;
 
 namespace ScaryCastle
 {
     /// <summary>
-    /// StatusHUD
+    /// HUD
     /// </summary>
-    public sealed class StatusHUD : SessionGameObject<GameSession>
+    public sealed class HUD : SessionGameObject<GameSession>, IInputHandler
     {
         #region Private fields
 
@@ -20,7 +21,7 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public StatusHUD(GameSession session)
+        public HUD(GameSession session)
             : base(session)
         {
             this.faithMeter = new(session);
@@ -32,6 +33,7 @@ namespace ScaryCastle
             this.MiniMap = new();
             this.runModifiers = new(session);
             this.Statuses = new(session);
+            this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 18));
         }
 
         #endregion
@@ -58,6 +60,11 @@ namespace ScaryCastle
             }
 
             MiniMap.Draw(gameTime);
+
+            Message.Draw(gameTime);
+
+            if (!Message.IsVisible)
+                Log.Draw(gameTime);
         }
 
         // OnUpdate
@@ -69,6 +76,8 @@ namespace ScaryCastle
             PocketItems.Update(gameTime);
             InventoryMeter.Update(gameTime);
             HPMeter.Update(gameTime);
+            Log.Update(gameTime);
+            Message.Update(gameTime);
             faithMeter.Update(gameTime);
             StaminaMeter.Update(gameTime);
             MiniMap.Update(gameTime);
@@ -76,11 +85,29 @@ namespace ScaryCastle
 
         #endregion
 
+        // HandleInput
+        public HandleInputResult HandleInput()
+        {
+            if (Session.IsAwaiting)
+                return HandleInputResult.Unhandled;
+
+            if (Session.IsConsoleVisible)
+                return HandleInputResult.Unhandled;
+
+            return HandleInputResult.Unhandled;
+        }
+
         // HPMeter
         public UIHPMeter HPMeter { get; }
 
         // InventoryMeter
         public UIInventoryMeter InventoryMeter { get; }
+
+        // Log
+        public UILog Log { get; } = new();
+
+        // Message
+        public HUDMessage Message { get; }
 
         // MiniMap
         public UIMiniMap MiniMap { get; }
@@ -92,6 +119,8 @@ namespace ScaryCastle
         public void Reset()
         {
             Statuses.Actor = Session.Player;
+            Message.Hide();
+            Log.Hide();
         }
 
         // StaminaMeter

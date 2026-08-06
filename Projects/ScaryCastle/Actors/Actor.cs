@@ -538,9 +538,10 @@ namespace ScaryCastle
             if (EnforceTurn)
             {
                 EnforceTurn = false;
+                
                 if (ActiveThrowable == null)
                 {
-                    if (PixelsMoved > 50)
+                    if (PixelsMoved > GameSettings.StaminaRechargeThreshold)
                         Stamina++;
                 }
                 else

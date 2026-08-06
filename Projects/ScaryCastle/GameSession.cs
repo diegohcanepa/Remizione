@@ -53,8 +53,7 @@ namespace ScaryCastle
             this.Environment = new Environment();
             this.LootGenerator = new(this);
             this.PocketItemManager = new(this);
-            this.StatusHUD = new StatusHUD(this);
-            this.TextHUD = new TextHUD(this);
+            this.HUD = new HUD(this);
             this.InteractionContext = new(this);
             this.InteractionData = new(this);
             this.DeclaredThings = new(proceduralThings);
@@ -218,9 +217,6 @@ namespace ScaryCastle
         {
             base.OnDraw(gameTime);
 
-            if (IsHUDVisible)
-                StatusHUD.Draw(gameTime);
-
             if (CurrentRun == null)
             {
                 if (savingIcon.Tweens.IsTweening)
@@ -248,10 +244,10 @@ namespace ScaryCastle
             Game.SpriteBatch.Draw(Game.RenderTargets.PreviousTarget, Vector2.Zero, Color.White);
             Game.SpriteBatch.End();
 
-            SpeechText.DrawSpeechTexts(gameTime);
+            if (IsHUDVisible)
+                HUD.Draw(gameTime);
 
-            //if (IsHUDVisible)
-            TextHUD.Draw(gameTime);
+            SpeechText.DrawSpeechTexts(gameTime);
         }
 
         // OnEnterRoom
@@ -268,8 +264,7 @@ namespace ScaryCastle
         // OnExitRoom
         protected override void OnExitRoom(Room currentRoom, Room nextRoom)
         {
-            StatusHUD.Reset();
-            TextHUD.Reset();
+            HUD.Reset();
             ComicTextPool.ReturnAll();
             ObjectPools.FlyOffs.ReturnAll();
 
@@ -286,7 +281,7 @@ namespace ScaryCastle
             if (roomEditor?.HandleInput() == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
-            else if (TextHUD.HandleInput() == HandleInputResult.Handled)
+            else if (HUD.HandleInput() == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
             else
@@ -416,10 +411,7 @@ namespace ScaryCastle
                 RunModifiers.Update(gameTime);
 
                 if (IsHUDVisible)
-                {
-                    StatusHUD.Update(gameTime);
-                    TextHUD.Update(gameTime);
-                }
+                    HUD.Update(gameTime);
 
                 if (!IsAwaiting)
                 {
@@ -468,7 +460,17 @@ namespace ScaryCastle
         protected override void OnOutcomeCompleted(Script script, Thing target)
         {
             base.OnOutcomeCompleted(script, target);
-            ActiveNPC?.CombatDecision = null;
+
+            if (ActiveNPC == null)
+            {
+                if (target is Prop prop && prop.Definition?.StaminaCost > 0)
+                    Player?.Stamina -= prop.Definition.StaminaCost;
+            }
+            else
+            {
+                ActiveNPC?.CombatDecision = null;
+            }
+
             ProcessTurn();
         }
 
@@ -567,7 +569,6 @@ namespace ScaryCastle
 
             RunModifiers.Clear();
             Bosses.Clear();
-            TextHUD.BossMeter.Target = null;
             CleanUpRuntimeEntities();
             PocketItemManager.Reset();
             PlayerInventory.Clear();
@@ -642,6 +643,9 @@ namespace ScaryCastle
             }
         }
 
+        // HUD
+        public HUD HUD { get; }
+
         // InteractionContext
         public InteractionContext InteractionContext { get; }
 
@@ -712,8 +716,7 @@ namespace ScaryCastle
                 {
                     field?.StopMoving();
                     field = value;
-                    StatusHUD.Reset();
-                    TextHUD.Reset();
+                    HUD.Reset();
                     InteractionData.Clear();
                     if (value != null)
                         Camera.Follow(value);
@@ -827,12 +830,6 @@ namespace ScaryCastle
         {
             Game.SceneManager.Push(inventoryScene);
         }
-
-        // StatusHUD
-        public StatusHUD StatusHUD { get; }
-
-        // TextHUD
-        public TextHUD TextHUD { get; }
 
         // VolatileRng (Este es el RNG para gameplay (Drops, IA, combate))
         public Random VolatileRng { get; private set; } = new();

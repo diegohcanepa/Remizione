@@ -116,13 +116,13 @@ namespace ScaryCastle
                     // ExtraEnergy
                     case EffectType.ExtraEnergy:
                         targetActor?.MaxEnergy += amount;
-                        source.Session.TextHUD.Message.Show(MessageKind.ExtraEnergy);
+                        source.Session.HUD.Message.Show(MessageKind.ExtraEnergy);
                         break;
 
                     // ExtraHeart
                     case EffectType.ExtraHeart:
                         realTarget?.MaxHP += amount;
-                        source.Session.TextHUD.Message.Show(MessageKind.ExtraHeart);
+                        source.Session.HUD.Message.Show(MessageKind.ExtraHeart);
                         break;
 
                     // GoldenKey

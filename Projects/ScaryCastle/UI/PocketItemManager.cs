@@ -22,7 +22,7 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = Math.Max(0, value);
-                    Session.StatusHUD.PocketItems.Refresh();
+                    Session.HUD.PocketItems.Refresh();
                 }
             }
         }
@@ -36,7 +36,7 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = Math.Max(0, value);
-                    Session.StatusHUD.PocketItems.Refresh();
+                    Session.HUD.PocketItems.Refresh();
                 }
             }
         }
@@ -62,7 +62,7 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = Math.Max(0, value);
-                    Session.StatusHUD.PocketItems.Refresh();
+                    Session.HUD.PocketItems.Refresh();
                 }
             }
         }

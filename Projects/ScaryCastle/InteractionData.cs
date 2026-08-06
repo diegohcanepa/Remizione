@@ -75,7 +75,7 @@ namespace ScaryCastle
                 {
                     if (Vector2.Distance(target.Position, targetPosition) > 1)
                     {
-                        session.TextHUD.Message.Show(MessageKind.OutOfReach);
+                        session.HUD.Message.Show(MessageKind.OutOfReach);
                     }
                     else
                     {

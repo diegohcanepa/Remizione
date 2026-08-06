@@ -699,7 +699,7 @@ namespace ScaryCastle
                 Session.RunModifiers.Activate(name);
             }
 
-            Session.StatusHUD.MiniMap.CurrentRoom = RoomNode;
+            Session.HUD.MiniMap.CurrentRoom = RoomNode;
         }
 
         // OnChildAdded
