@@ -52,6 +52,7 @@ namespace ScaryCastle
             this.PlayerInventory = new(this);
             this.Environment = new Environment();
             this.LootGenerator = new(this);
+            this.PocketItemManager = new(this);
             this.StatusHUD = new StatusHUD(this);
             this.TextHUD = new TextHUD(this);
             this.InteractionContext = new(this);
@@ -530,29 +531,6 @@ namespace ScaryCastle
         // Bosses
         public List<Actor> Bosses { get; } = [];
 
-        // BronzeKeys
-        public int BronzeKeys
-        {
-            get;
-            set
-            {
-                if (value != field)
-                    field = Math.Max(0, value);
-            }
-        }
-
-        // Coins
-        [ScriptProperty]
-        public int Coins
-        {
-            get;
-            set
-            {
-                if (value != field)
-                    field = Math.Max(0, value);
-            }
-        }
-
         // ComicTextPool
         public ObjectPool<ComicText> ComicTextPool { get; }
 
@@ -591,9 +569,7 @@ namespace ScaryCastle
             Bosses.Clear();
             TextHUD.BossMeter.Target = null;
             CleanUpRuntimeEntities();
-            BronzeKeys = 0;
-            Coins = 0;
-            GoldenKeys = 0;
+            PocketItemManager.Reset();
             PlayerInventory.Clear();
             PlayerStats.Reset();
             InteractionContext.Reset();
@@ -750,6 +726,9 @@ namespace ScaryCastle
 
         // PlayerStats
         public PlayerStats PlayerStats { get; } = new();
+
+        // PocketItemManager
+        public PocketItemManager PocketItemManager { get; }
 
         // PreviousRoom
         [ScriptProperty]

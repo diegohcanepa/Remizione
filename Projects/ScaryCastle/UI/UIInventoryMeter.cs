@@ -31,16 +31,17 @@ namespace ScaryCastle
             this.icon = new(Atlases.UI.Sack)
             {
                 PivotOrigin = RectanglePoint.Center,
-                Position = Screen.Area.GetPoint(RectanglePoint.RightBottom, -10, -10),
+                Position = Screen.Area.GetPoint(RectanglePoint.RightBottom, -12, -16),
+                Scale = new(1.2f)
             };
 
             // Amount
             this.amountText = new TextSprite(Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Highlight,
-                PivotOrigin = RectanglePoint.Right,
-                Position = icon.BoundingBox.GetPoint(RectanglePoint.Left, -1, 1),
-                Scale = ScaleInfo.Text.Giant,
+                PivotOrigin = RectanglePoint.Top,
+                Position = icon.BoundingBox.GetPoint(RectanglePoint.Bottom),
+                Scale = ScaleInfo.Text.ExtraLarge,
                 Spacing = -6
             };
         }

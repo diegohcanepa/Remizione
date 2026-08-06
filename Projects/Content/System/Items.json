@@ -23,7 +23,7 @@
 			"actionKind": "InPlace",
 			"inPlaceEffectType": "Lightning",
 			"isDepletable": false,
-			"energyCost": 1,
+			"energyCost": 3,
 			"effects": [
 				{
 					"context": "Attack",

@@ -91,6 +91,50 @@
       ]
     },
     {
+      "name": "Castle_Std_Common_02",
+      "roomCategory": "Standard",
+      "doorUp": "151,54",
+      "doorLeft": "21,119",
+      "doorRight": "212,95",
+    "doorDown": "152,182",
+      "placeholders": [
+        {
+        "position": "60,64",
+          "placement": "WallFrontHang",
+          "allowTags": "Torch"
+        },
+        {
+          "position": "150,18",
+          "placement": "WallFrontHang",
+          "allowTags": "Torch"
+        },        
+        {
+          "position": "67,91",
+          "placement": "Floor",
+          "fillChance": 0.5,
+          "allowTags": "Pottery,Trunk"
+        },
+        {
+          "position": "115,59",
+          "placement": "Floor",
+          "fillChance": 0.5,
+          "allowTags": "Pottery,Trunk"
+        },
+        {
+          "position": "187,59",
+          "placement": "WallFrontBase",
+          "fillChance": 0.5,
+          "allowTags": "Pottery,Trunk,GateLever"
+        }
+      ],
+      "walkArea": "232,152;12,153;42,91;96,91;114,59;187,60",
+      "walls": [
+        "33,0;33,90;0,150;0,0",
+        "109,0;109,54;92,83;91,0",
+        "192,0;192,54;240,153;240,0"
+      ]
+    },    
+    {
       "name": "Castle_Std_Pit_01",
       "roomCategory": "Standard",
       "doorLeft": "21,80",

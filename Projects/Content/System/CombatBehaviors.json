@@ -66,30 +66,6 @@
       "intents": []
     },
     {
-      "name": "AnabolicRat",
-      "archetype": "Lurker",
-      "intents": [
-        {
-          "name": "Contact",
-          "soundTrigger": "RatAttack",
-          "actionKind": "Proximity",
-          "effects": [
-            {
-              "context": "Contact",
-              "effectType": "Damage",
-              "amount": "1",
-              "comicText": "AghRed"
-            },
-            {
-              "context": "Contact",
-              "amount": "1",
-              "effectType": "CoinLoss"
-            }
-          ]
-        }
-      ]
-    },
-    {
       "name": "Penitent",
       "archetype": "Volatile",
       "intents": [

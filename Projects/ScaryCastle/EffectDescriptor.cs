@@ -79,7 +79,7 @@ namespace ScaryCastle
 
                     // BronzeKey
                     case EffectType.BronzeKey:
-                        source.Session.BronzeKeys += amount;
+                        source.Session.PocketItemManager.BronzeKeys += amount;
                         break;
 
                     // ComicText
@@ -90,12 +90,12 @@ namespace ScaryCastle
 
                     // Coin
                     case EffectType.Coin:
-                        source.Session.Coins += amount;
+                        source.Session.PocketItemManager.Coins += amount;
                         break;
 
                     // CoinLoss
                     case EffectType.CoinLoss:
-                        source.Session.Coins -= amount;
+                        source.Session.PocketItemManager.Coins -= amount;
                         break;
 
                     // Damage
@@ -127,7 +127,7 @@ namespace ScaryCastle
 
                     // GoldenKey
                     case EffectType.GoldenKey:
-                        source.Session.GoldenKeys += amount;
+                        source.Session.PocketItemManager.GoldenKeys += amount;
                         break;
 
                     // HPGain
@@ -143,10 +143,9 @@ namespace ScaryCastle
 
                     // Status
                     case EffectType.Status:
-                        if (effect.StatusType is StatusType statusType && targetActor != null)
+                        if (effect.StatusType is StatusType statusType && targetActor != null && !targetActor.IsDead)
                         {
                             var status = targetActor.StatusManager.GetStatus(statusType);
-                            var wasZero = status.Value == 0;
                             status.Value += amount;
                             targetActor.ShowStatusReaction(status, true);
                         }

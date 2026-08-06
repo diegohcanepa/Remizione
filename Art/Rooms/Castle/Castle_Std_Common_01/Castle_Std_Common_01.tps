@@ -173,6 +173,7 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">Castle_Std_Common_01-assets/Foreground.png</key>
             <key type="filename">Castle_Std_Common_01-assets/View1.png</key>
             <key type="filename">Castle_Std_Common_01-assets/View2.png</key>
             <key type="filename">Castle_Std_Common_01-assets/View3.png</key>

@@ -93,7 +93,7 @@ namespace ScaryCastle
             internal static Vector2 VeryTiny { get; } = new(.4f);
             internal static Vector2 Tiny { get; } = new(.5f);
             internal static Vector2 Small { get; } = new(.6f);
-            internal static Vector2 Medium { get; } = new(.7f);
+            internal static Vector2 Medium { get; } = new(.75f);
             internal static Vector2 Large { get; } = Vector2.One;
         }
 

@@ -2,10 +2,6 @@
   "$schema": "./Actor.schema.json",
   "data": [
     {
-      "name": "AnabolicRat",
-      "rank": "MiniBoss"
-    },
-    {
       "name": "EnviousEye",
       "difficulty": "Normal"
     },

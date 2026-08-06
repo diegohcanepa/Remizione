@@ -50,13 +50,14 @@ namespace ScaryCastle
             PopupContainer = this[nameof(PopupContainer)];
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
             QuickInventoryBackground = this[nameof(QuickInventoryBackground)];
-            RedHearts = CreateReadOnlyCollection(nameof(RedHearts), 1, 4);
+            RedHearts = CreateReadOnlyCollection(nameof(RedHearts), 1, 3);
             CountdownSkullIcon = this[nameof(CountdownSkullIcon)];
             Sack = this[nameof(Sack)];
             SavingIcon = this[nameof(SavingIcon)];
             SpeechTextArrow = this[nameof(SpeechTextArrow)];
             SpeechTextPipe = this[nameof(SpeechTextPipe)];
             StaminaIcon = this[nameof(StaminaIcon)];
+            StaminaMeter = CreateReadOnlyCollection(nameof(StaminaMeter), 0, 5);
             UIButtonContainerEdge = this[nameof(UIButtonContainerEdge)];
             UIButtonContainerPattern = this[nameof(UIButtonContainerPattern)];
         }
@@ -195,6 +196,9 @@ namespace ScaryCastle
 
         // StaminaIcon
         public AtlasImage StaminaIcon { get; }
+
+        // StaminaMeter
+        public ReadOnlyCollection<AtlasImage> StaminaMeter { get; }
 
         // UIButtonContainerEdge
         public AtlasImage UIButtonContainerEdge { get; }

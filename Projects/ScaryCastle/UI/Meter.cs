@@ -73,7 +73,7 @@ namespace ScaryCastle
                 {
                     part = isSegmentFilled ? MeterPart.LeftFilled : MeterPart.LeftEmpty;
                 }
-                else if (i == parts.Count - 1)
+                else if (i == MaximumValue - 1)
                 {
                     part = isSegmentFilled ? MeterPart.RightFilled : MeterPart.RightEmpty;
                 }
@@ -84,6 +84,8 @@ namespace ScaryCastle
 
                 segment.RenderImage = images[(int)part];
             }
+
+            BoundingBox = new(Position, new(MaximumValue * parts[0].BoundingBox.Width, parts[0].BoundingBox.Height));
         }
 
         #endregion
@@ -98,29 +100,14 @@ namespace ScaryCastle
 
             for (int i = 0; i < MaximumValue; i++)
             {
-                var segment = parts[i];
-                bool isSegmentFilled = Value > i;
-
-                MeterPart part;
-                if (i == 0)
-                {
-                    part = isSegmentFilled ? MeterPart.LeftFilled : MeterPart.LeftEmpty;
-                }
-                else if (i == MaximumValue - 1)
-                {
-                    part = isSegmentFilled ? MeterPart.RightFilled : MeterPart.RightEmpty;
-                }
-                else
-                {
-                    part = isSegmentFilled ? MeterPart.MiddleFilled : MeterPart.MiddleEmpty;
-                }
-
-                segment.RenderImage = images[(int)part];
-                segment.Draw(gameTime);
+                parts[i].Draw(gameTime);
             }
         }
 
         #endregion
+
+        // BoundingBox
+        public RectangleF BoundingBox { get; private set; }
 
         // Color
         public MeterColor Color { get; }

@@ -248,6 +248,12 @@
             <key type="filename">FaithMeter-assets/FaithMeter3.png</key>
             <key type="filename">FaithMeter-assets/FaithMeter4.png</key>
             <key type="filename">FaithMeter-assets/FaithMeter5.png</key>
+            <key type="filename">FaithMeter-assets/StaminaMeter0.png</key>
+            <key type="filename">FaithMeter-assets/StaminaMeter1.png</key>
+            <key type="filename">FaithMeter-assets/StaminaMeter2.png</key>
+            <key type="filename">FaithMeter-assets/StaminaMeter3.png</key>
+            <key type="filename">FaithMeter-assets/StaminaMeter4.png</key>
+            <key type="filename">FaithMeter-assets/StaminaMeter5.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -277,9 +283,28 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Inventory-assets/InventoryFaithAmount1.png</key>
-            <key type="filename">Inventory-assets/InventoryFaithAmount2.png</key>
-            <key type="filename">Inventory-assets/InventoryFaithAmount3.png</key>
+            <key type="filename">Inventory-assets/InventoryFaithCost1.png</key>
+            <key type="filename">Inventory-assets/InventoryFaithCost2.png</key>
+            <key type="filename">Inventory-assets/InventoryFaithCost3.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorAttackIcon.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorMagnifierIcon.png</key>
+            <key type="filename">RunModifierIcons-assets/RunModifierToxicIcon.png</key>
+            <key type="filename">UIIcons-assets/CorridorDoorIcon.png</key>
+            <key type="filename">UIIcons-assets/FaithIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,3,5,5</rect>
+                <key>scale9Paddings</key>
+                <rect>3,3,5,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Inventory-assets/InventoryItemAmount1.png</key>
             <key type="filename">Inventory-assets/InventoryItemAmount2.png</key>
             <key type="filename">Inventory-assets/InventoryItemAmount3.png</key>
@@ -316,6 +341,21 @@
                 <rect>4,4,7,8</rect>
                 <key>scale9Paddings</key>
                 <rect>4,4,7,8</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Inventory-assets/QuickInventoryBackground.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>60,7,120,15</rect>
+                <key>scale9Paddings</key>
+                <rect>60,7,120,15</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -575,6 +615,7 @@
             <key type="filename">MiniMap-assets/MiniMapRoom2.png</key>
             <key type="filename">MiniMap-assets/MiniMapRoom3.png</key>
             <key type="filename">MiniMap-assets/MiniMapRoom4.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorArrowIcon.png</key>
             <key type="filename">UI-assets/CheckMark.png</key>
             <key type="filename">UI-assets/PointingHand.png</key>
             <struct type="IndividualSpriteSettings">
@@ -639,7 +680,6 @@
             </struct>
             <key type="filename">MiniMap-assets/MiniMapRoom0.png</key>
             <key type="filename">MiniMap-assets/MiniMapRoom1.png</key>
-            <key type="filename">UIIcons-assets/CoinIcon.png</key>
             <key type="filename">UIIcons-assets/Sack.png</key>
             <key type="filename">UIIcons-assets/SackIcon.png</key>
             <struct type="IndividualSpriteSettings">
@@ -671,30 +711,10 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">MouseCursors-assets/MouseCursorAttackIcon.png</key>
-            <key type="filename">MouseCursors-assets/MouseCursorMagnifierIcon.png</key>
-            <key type="filename">RunModifierIcons-assets/RunModifierToxicIcon.png</key>
-            <key type="filename">UIIcons-assets/CorridorDoorIcon.png</key>
-            <key type="filename">UIIcons-assets/FaithIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,3,5,5</rect>
-                <key>scale9Paddings</key>
-                <rect>3,3,5,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">MouseCursors-assets/MouseCursorDownIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorLeftIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorRightIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorUpIcon.png</key>
-            <key type="filename">UIIcons-assets/GoldenKeyIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -757,10 +777,10 @@
             <key type="filename">MouseCursors-assets/MouseCursorTalkIcon.png</key>
             <key type="filename">UI-assets/ProhibitionIcon.png</key>
             <key type="filename">UIIcons-assets/HeartIcon.png</key>
+            <key type="filename">UIIcons-assets/MagnifierIcon.png</key>
             <key type="filename">UIIcons-assets/RedHearts1.png</key>
             <key type="filename">UIIcons-assets/RedHearts2.png</key>
             <key type="filename">UIIcons-assets/RedHearts3.png</key>
-            <key type="filename">UIIcons-assets/RedHearts4.png</key>
             <key type="filename">UIIcons-assets/StatusPoisonIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -788,6 +808,23 @@
                 <rect>2,3,4,5</rect>
                 <key>scale9Paddings</key>
                 <rect>2,3,4,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">PocketItems-assets/BronzeKeyIcon.png</key>
+            <key type="filename">PocketItems-assets/CoinIcon.png</key>
+            <key type="filename">PocketItems-assets/GoldenKeyIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,3,6,5</rect>
+                <key>scale9Paddings</key>
+                <rect>3,3,6,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1005,21 +1042,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UIIcons-assets/BronzeKeyIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>5,3,10,5</rect>
-                <key>scale9Paddings</key>
-                <rect>5,3,10,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">UIIcons-assets/ConditionMeterUnit.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -1065,6 +1087,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">UIIcons-assets/MouseLeftButtonIcon.png</key>
             <key type="filename">UIIcons-assets/MouseRightButtonIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -1134,6 +1157,7 @@
                     <filename>DialogBox-assets</filename>
                     <filename>RunModifierIcons-assets</filename>
                     <filename>Meter-assets</filename>
+                    <filename>PocketItems-assets</filename>
                 </array>
             </struct>
         </map>

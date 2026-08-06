@@ -173,42 +173,6 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">AnabolicRat-assets/Move01.png</key>
-            <key type="filename">AnabolicRat-assets/Move02.png</key>
-            <key type="filename">AnabolicRat-assets/Move03.png</key>
-            <key type="filename">AnabolicRat-assets/Move04.png</key>
-            <key type="filename">AnabolicRat-assets/Move05.png</key>
-            <key type="filename">AnabolicRat-assets/Stand01.png</key>
-            <key type="filename">AnabolicRat-assets/Stand02.png</key>
-            <key type="filename">AnabolicRat-assets/Stand03.png</key>
-            <key type="filename">Rat-assets/Bite01.png</key>
-            <key type="filename">Rat-assets/Bite02.png</key>
-            <key type="filename">Rat-assets/Bite03.png</key>
-            <key type="filename">StinkyRat-assets/Bite01.png</key>
-            <key type="filename">StinkyRat-assets/Bite02.png</key>
-            <key type="filename">StinkyRat-assets/Bite03.png</key>
-            <key type="filename">StinkyRat-assets/Move01.png</key>
-            <key type="filename">StinkyRat-assets/Move02.png</key>
-            <key type="filename">StinkyRat-assets/Move03.png</key>
-            <key type="filename">StinkyRat-assets/Move04.png</key>
-            <key type="filename">StinkyRat-assets/Move05.png</key>
-            <key type="filename">StinkyRat-assets/Stand01.png</key>
-            <key type="filename">StinkyRat-assets/Stand02.png</key>
-            <key type="filename">StinkyRat-assets/Stand03.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>7,3,14,6</rect>
-                <key>scale9Paddings</key>
-                <rect>7,3,14,6</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Baal-assets/Stand01.png</key>
             <key type="filename">Baal-assets/Stand02.png</key>
             <struct type="IndividualSpriteSettings">
@@ -571,7 +535,6 @@
             <key type="filename">FlyingSkull-assets/Gut0.png</key>
             <key type="filename">FlyingSkull-assets/Gut2.png</key>
             <key type="filename">FlyingSkull-assets/Gut4.png</key>
-            <key type="filename">Skeleton-assets/DebrisPiece3.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -751,6 +714,34 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Rat-assets/Bite01.png</key>
+            <key type="filename">Rat-assets/Bite02.png</key>
+            <key type="filename">Rat-assets/Bite03.png</key>
+            <key type="filename">StinkyRat-assets/Bite01.png</key>
+            <key type="filename">StinkyRat-assets/Bite02.png</key>
+            <key type="filename">StinkyRat-assets/Bite03.png</key>
+            <key type="filename">StinkyRat-assets/Move01.png</key>
+            <key type="filename">StinkyRat-assets/Move02.png</key>
+            <key type="filename">StinkyRat-assets/Move03.png</key>
+            <key type="filename">StinkyRat-assets/Move04.png</key>
+            <key type="filename">StinkyRat-assets/Move05.png</key>
+            <key type="filename">StinkyRat-assets/Stand01.png</key>
+            <key type="filename">StinkyRat-assets/Stand02.png</key>
+            <key type="filename">StinkyRat-assets/Stand03.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,3,14,6</rect>
+                <key>scale9Paddings</key>
+                <rect>7,3,14,6</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Rat-assets/Move01.png</key>
             <key type="filename">Rat-assets/Move02.png</key>
             <key type="filename">Rat-assets/Move03.png</key>
@@ -827,24 +818,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Skeleton-assets/DebrisPiece0.png</key>
-            <key type="filename">Skeleton-assets/DebrisPiece1.png</key>
-            <key type="filename">Skeleton-assets/DebrisPiece2.png</key>
-            <key type="filename">Skeleton-assets/DebrisPiece4.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,1,3,1</rect>
-                <key>scale9Paddings</key>
-                <rect>1,1,3,1</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Skeleton-assets/Headbutt01.png</key>
             <key type="filename">Skeleton-assets/Headbutt02.png</key>
             <key type="filename">Skeleton-assets/Headbutt03.png</key>
@@ -902,7 +875,6 @@
                     <filename>Rat-assets</filename>
                     <filename>StinkyRat-assets</filename>
                     <filename>LootDropper-assets</filename>
-                    <filename>AnabolicRat-assets</filename>
                     <filename>FlyingSkull-assets</filename>
                     <filename>Penitent-assets</filename>
                 </array>

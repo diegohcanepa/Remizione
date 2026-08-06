@@ -72,17 +72,6 @@ namespace ScaryCastle
                 }
             }
 
-            // 4. Check for goo if item requires it
-            var gooCost = context.HeldItem.Definition.EnergyCost;
-            if (gooCost > 0)
-            {
-                if (Actor.Energy < gooCost)
-                {
-                    Actor.Session.TextHUD.Message.Show(MessageKind.NotEnoughFaith);
-                    return;
-                }
-            }
-
             if (Actor.ResolveInteraction(context.Target, context.HeldItem))
                 return;
 

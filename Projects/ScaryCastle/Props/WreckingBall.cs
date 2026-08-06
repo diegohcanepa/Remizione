@@ -60,7 +60,7 @@ namespace ScaryCastle
             if (Room == null || Definition == null)
                 return;
 
-            var hitArea = new RectangleF(X - 5, Y - 3, 10, 7);
+            var hitArea = new RectangleF(X - 5, Y - 5, 10, 10);
             for (var i = 0; i < Room.Children.Count; i++)
             {
                 if (Room.Children[i] == this)
@@ -103,6 +103,7 @@ namespace ScaryCastle
 
             else if (state == TrapState.Cooldown)
             {
+                PlaySound(SoundNames.PneumaticHiss);
                 PlaySound(SoundNames.WreckingBallChain);
                 Tweens.YTween = FloatTween.Create(TweenStyle.QuadraticIn, Y, 0, 1500);
                 Shadow.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.QuadraticIn, Shadow.Scale, Vector2.Zero, 1500);

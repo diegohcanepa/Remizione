@@ -18,11 +18,11 @@ namespace ScaryCastle
         {
             this.icon = new(Atlases.UI.StaminaIcon)
             {
-                Position = new(17, 12.5f),
-                Scale = ScaleInfo.UIElement.Medium
+                PivotOrigin = RectanglePoint.LeftBottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, new(3, -1))
             };
 
-            this.meter = new(icon.BoundingBox.GetPoint(RectanglePoint.RightTop, 0, .5f), MeterColor.Orange);
+            this.meter = new(icon.BoundingBox.GetPoint(RectanglePoint.RightTop, 1, 1), MeterColor.Orange);
         }
 
         #region Protected members
@@ -50,5 +50,14 @@ namespace ScaryCastle
         }
 
         #endregion
+
+        // BoundingBox
+        public RectangleF BoundingBox
+        {
+            get
+            {
+                return RectangleF.Union(icon.BoundingBox, meter.BoundingBox);
+            }
+        }
     }
 }

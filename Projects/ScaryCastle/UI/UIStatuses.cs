@@ -103,7 +103,7 @@ namespace ScaryCastle
             }
 
             float spacing = 1;
-            var pos = Session.StatusHUD.HPMeter.BoundingBox.GetPoint(RectanglePoint.RightTop);
+            var pos = new Vector2(19, 16);
 
             for (var i = 0; i < activeIcons.Count; i++)
             {

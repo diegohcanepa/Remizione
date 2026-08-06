@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 
 namespace ScaryCastle
@@ -137,6 +138,14 @@ namespace ScaryCastle
             if (Action != null && !eventDone && Owner.AnimationPlayer.Frame?.IsTrigger == true)
             {
                 eventDone = true;
+
+                if (Action.EnergyCost > 0 && Owner.Energy <= Action.EnergyCost)
+                {
+                    Sound.Play(SoundNames.Error);
+                    var text = Localization.GetValue(MessageKind.NotEnoughFaith);
+                    Owner.ShowFlyOff(text, ColorPalette.Text.TerraLight, 2500);
+                    return;
+                }
 
                 if (Action.SoundTrigger != null)
                     Owner.PlaySound(Action.SoundTrigger);

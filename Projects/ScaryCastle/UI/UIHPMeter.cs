@@ -89,8 +89,6 @@ namespace ScaryCastle
             var w = (totalIcons * icons[0].BoundingBox.Width) + (.5f * totalIcons);
             
             BoundingBox = new(icons[0].Position.X, icons[0].Position.Y, w, icons[0].BoundingBox.Height);
-
-            Session.StatusHUD.Statuses.Refresh();
         }
 
         #endregion

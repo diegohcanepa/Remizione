@@ -210,7 +210,7 @@
   <String Key="MessageKind.ItemDiscarded">Item descartado.</String>
   <String Key="MessageKind.LiftNotAllowed">No puedes alzar eso.</String>
   <String Key="MessageKind.NotEnoughCoins">No tienes monedas suficientes.</String>
-  <String Key="MessageKind.NotEnoughFaith">Fe insuficiente.</String>
+  <String Key="MessageKind.NotEnoughFaith">Fe insuficiente</String>
   <String Key="MessageKind.OutOfLine">¡Fuera línea!</String>
   <String Key="MessageKind.OutOfReach">Fuera de alcance.</String>
   <String Key="MessageKind.PathCleared">Camino despejado.</String>

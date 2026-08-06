@@ -21,7 +21,7 @@
   <String Key="ActorProperty.Level.Description">El nivel quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Level.Name">State of Grace</String>
   <String Key="DamageType.Physical">Physical</String>
-  <String Key="EffectTemplate.Damage"></String>
+  <String Key="EffectTemplate.Damage" />
   <String Key="EffectTemplate.HPGain">+{amount} Health</String>
   <String Key="EffectTemplate.HPLoss">-{amount} Health</String>
   <String Key="FloatingMessage.Failed">Failed!</String>
@@ -76,7 +76,7 @@
   <String Key="Item.Lockpick.Name">Lockpick</String>
   <String Key="Item.MagneticCard.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.MagneticCard.Name">Magnetic card</String>
-  <String Key="Item.PieceOfWood.Description"></String>
+  <String Key="Item.PieceOfWood.Description" />
   <String Key="Item.PieceOfWood.Name">Piece of wood</String>
   <String Key="Item.Pistol.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </String>
   <String Key="Item.Pistol.Name">Pistol</String>
@@ -210,7 +210,7 @@
   <String Key="MessageKind.ItemDiscarded">Item discarded.</String>
   <String Key="MessageKind.LiftNotAllowed">You can't lift that.</String>
   <String Key="MessageKind.NotEnoughCoins">Not enough coins.</String>
-  <String Key="MessageKind.NotEnoughFaith">You don't have enough faith.</String>
+  <String Key="MessageKind.NotEnoughFaith">Not enough faith</String>
   <String Key="MessageKind.OutOfLine">Out of line!</String>
   <String Key="MessageKind.OutOfReach">Out of reach.</String>
   <String Key="MessageKind.PathCleared">The way is open.</String>
@@ -218,7 +218,7 @@
   <String Key="Misc.And">and</String>
   <String Key="Misc.BackToCorridor">Go back to the hallway!</String>
   <String Key="Misc.Bird">Bird</String>
-  <String Key="Misc.Chance"></String>
+  <String Key="Misc.Chance" />
   <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=—áéíóúÁÉÍÓÚ</String>
   <String Key="Misc.CopyrightDeveloper">© 2024 Indiesruption</String>
   <String Key="Misc.Credits">Remizione
