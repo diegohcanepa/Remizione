@@ -22,7 +22,8 @@ namespace ScaryCastle
         private static OutlineEffect? effect;
         private static readonly Vector2Tween scaleTween = new();
         private static readonly FloatTween shakeTween = new();
-        private static readonly TextSprite textSprite;
+        private static readonly Sprite tooltipImage = new();
+        private static readonly TextSprite tooltipSprite;
 
         #endregion
 
@@ -49,7 +50,7 @@ namespace ScaryCastle
             }
 
             // Text sprite
-            textSprite = new(Fonts.CommonOutline)
+            tooltipSprite = new(Fonts.CommonOutline)
             {
                 PivotOrigin = RectanglePoint.LeftTop,
                 Multiline = true,
@@ -69,22 +70,34 @@ namespace ScaryCastle
         // ClampTextToScreen
         private static void ClampTextToScreen()
         {
-            if (textSprite.IsEmpty)
+            if (tooltipSprite.IsEmpty)
                 return;
 
             var offset = CustomImage == null ? new Vector2(1, 7) : new Vector2(-2, 1);
 
-            textSprite.PivotOrigin = RectanglePoint.Left;
-            textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.Right, -offset.X, offset.Y);
+            tooltipSprite.PivotOrigin = RectanglePoint.Left;
+            tooltipSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.Right, -offset.X, offset.Y);
 
-            if (!textSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox))
+            if (TooltipImage != null)
             {
-                textSprite.PivotOrigin = RectanglePoint.Right;
-                textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.Left, offset.X, offset.Y);
+                tooltipImage.PivotOrigin = RectanglePoint.LeftTop;
+                tooltipImage.Position = tooltipSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom);
             }
 
-            if (textSprite.BoundingBox.Bottom >= Screen.NativeHeight)
-                textSprite.Y -= 10;
+            if (!tooltipSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox))
+            {
+                tooltipSprite.PivotOrigin = RectanglePoint.Right;
+                tooltipSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.Left, offset.X, offset.Y);
+
+                if (TooltipImage != null)
+                {
+                    tooltipImage.PivotOrigin = RectanglePoint.RightTop;
+                    tooltipImage.Position = tooltipSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom);
+                }
+            }
+
+            if (tooltipSprite.BoundingBox.Bottom >= Screen.NativeHeight)
+                tooltipSprite.Y -= 10;
         }
 
         // InvalidateCursorImage
@@ -134,7 +147,10 @@ namespace ScaryCastle
             cursorSprite.X -= shakeTween.IsRunning ? shakeTween.CurrentValue : 0;
 
             if (Icon != MouseCursorIcon.Cross && !IsArrow)
-                textSprite.Draw(gameTime);
+            {
+                tooltipSprite.Draw(gameTime);
+                tooltipImage.Draw(gameTime);
+            }
 
             EngendroGame.Instance.SpriteBatch.End();
         }
@@ -179,7 +195,7 @@ namespace ScaryCastle
             cursorSprite.Scale = defaultScale;
             CustomImage = null;
             HightlightColor = null;
-            textSprite.Color = ColorPalette.Text.MouseCursor;
+            tooltipSprite.Color = ColorPalette.Text.MouseCursor;
             Icon = MouseCursorIcon.Cross;
         }
 
@@ -190,18 +206,25 @@ namespace ScaryCastle
             Sound.Play(SoundNames.Error);
         }
 
-        // Text
-        public static string? Text
+        // Tooltip
+        public static string? Tooltip
         {
-            get => textSprite.Text;
-            set => textSprite.Text = value;
+            get => tooltipSprite.Text;
+            set => tooltipSprite.Text = value;
         }
 
-        // TextColor
-        public static Color TextColor
+        // TooltipColor
+        public static Color TooltipColor
         {
-            get => textSprite.Color;
-            set => textSprite.Color = value;
+            get => tooltipSprite.Color;
+            set => tooltipSprite.Color = value;
+        }
+
+        // TooltipImage
+        public static AtlasImage? TooltipImage
+        {
+            get => tooltipImage.RenderImage;
+            set => tooltipImage.RenderImage = value;
         }
 
         // Update

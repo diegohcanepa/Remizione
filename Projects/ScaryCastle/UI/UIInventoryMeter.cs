@@ -13,10 +13,12 @@ namespace ScaryCastle
 
         private readonly TextSprite amountText;
         private readonly Sprite icon;
+        private readonly Sprite iconShadow;
         private readonly ItemContainer inventory;
         private int lastKnownCount = -1;
         private readonly FloatTween rotationTween = new();
         private readonly Vector2Tween scaleTween = new();
+        private readonly Sprite slot;
 
         #endregion
 
@@ -27,22 +29,37 @@ namespace ScaryCastle
         {
             this.inventory = inventory;
 
-            // Icon
-            this.icon = new(Atlases.UI.Sack)
-            {
-                PivotOrigin = RectanglePoint.Center,
-                Position = Screen.Area.GetPoint(RectanglePoint.RightBottom, -12, -16),
-                Scale = new(1.2f)
-            };
-
             // Amount
             this.amountText = new TextSprite(Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Highlight,
-                PivotOrigin = RectanglePoint.Top,
-                Position = icon.BoundingBox.GetPoint(RectanglePoint.Bottom),
+                PivotOrigin = RectanglePoint.Bottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -10, 0),
                 Scale = ScaleInfo.Text.ExtraLarge,
-                Spacing = -6
+                Text = "00"
+            };
+
+            // Slot
+            this.slot = new(Atlases.UI.InventoryMeterSlot)
+            {
+                PivotOrigin = RectanglePoint.Bottom,
+                Position = amountText.BoundingBox.GetPoint(RectanglePoint.Top, 0, 0)
+            };
+
+            // Icon
+            this.icon = new(Atlases.UI.Sack)
+            {
+                PivotOrigin = RectanglePoint.Center,
+                Position = slot.BoundingBox.Center
+            };
+
+            // IconShadow
+            this.iconShadow = new(icon.RenderImage)
+            {
+                Color = Color.Black,
+                Opacity = ColorPalette.ShadowOpacity,
+                PivotOrigin = RectanglePoint.Center,
+                Position = icon.BoundingBox.GetPoint(RectanglePoint.Center, -1.5f, 1)
             };
         }
 
@@ -54,6 +71,8 @@ namespace ScaryCastle
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera);
+            slot.Draw(gameTime);
+            iconShadow.Draw(gameTime);
             icon.Draw(gameTime);
             Game.SpriteBatch.End();
 

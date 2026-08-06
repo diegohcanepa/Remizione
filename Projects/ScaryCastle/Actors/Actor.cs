@@ -462,7 +462,6 @@ namespace ScaryCastle
                 Rotation -= moveBalancingTween.CurrentValue;
 
             footstepEffect?.Draw(gameTime);
-
         }
 
         // OnEnergyChanged
@@ -540,9 +539,14 @@ namespace ScaryCastle
             {
                 EnforceTurn = false;
                 if (ActiveThrowable == null)
-                    Stamina++;
+                {
+                    if (PixelsMoved > 50)
+                        Stamina++;
+                }
                 else
-                    Stamina--;
+                {
+                    Stamina -= ActiveThrowable.Definition is { } def ? def.StaminaCost : 1;
+                }
 
                 Session.ProcessTurn(PixelsMoved > 80 ? 1 : 0);
             }
@@ -891,8 +895,9 @@ namespace ScaryCastle
 
             StopMoving();
 
-            if (prop != null)
-                FaceTo(prop);
+            FaceTo(prop);
+
+            Stamina -= prop.Definition is { } def ? def.StaminaCost : 1;
 
             var state = BodyMachine.FindOrCreateState<BodyLiftState>();
             state.Target = prop;

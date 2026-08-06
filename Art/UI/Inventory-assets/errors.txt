@@ -1,2 +1,0 @@
-[8/6/2026, 9:00:54 AM] layer "InventoryFaithCost3.png copy": Expected end of input but "c" found.
-[8/6/2026, 9:00:50 AM] layer "InventoryFaithCost3.png copy 2": Expected end of input but "c" found.

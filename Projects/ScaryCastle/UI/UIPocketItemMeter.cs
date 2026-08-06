@@ -10,10 +10,8 @@ namespace ScaryCastle
     /// </summary>
     public class UIPocketItemMeter : GameObject
     {
-        private readonly bool isInitialized;
         private readonly Sprite icon;
         private readonly Vector2 iconScale = Vector2.One;
-        private readonly UIPocketItems owner;
         private readonly FloatTween rotationTween = new();
         private readonly Vector2Tween scaleTween = new();
         private readonly TextSprite valueText;
@@ -21,24 +19,24 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public UIPocketItemMeter(UIPocketItems owner, PocketItemType pocketItemType)
+        public UIPocketItemMeter(PocketItemType pocketItemType)
             : base()
         {
-            this.owner = owner;
             this.PocketItemType = pocketItemType;
-
-            // Icon
-            this.icon = new(Atlases.UI.GetImage($"{pocketItemType}Icon"))
-            {
-                PivotOrigin = RectanglePoint.Bottom
-            };
 
             // Value text
             this.valueText = new(Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Highlight,
-                PivotOrigin = RectanglePoint.Top,
-                Scale = ScaleInfo.Text.ExtraLarge
+                PivotOrigin = RectanglePoint.Bottom,
+                Scale = ScaleInfo.Text.ExtraLarge,
+                Text = "00"
+            };
+
+            // Icon
+            this.icon = new(Atlases.UI.GetImage($"{pocketItemType}Icon"))
+            {
+                PivotOrigin = RectanglePoint.Bottom
             };
 
             this.Value = 0;
@@ -110,13 +108,13 @@ namespace ScaryCastle
         // Position
         public Vector2 Position
         {
-            get => icon.Position;
+            get => valueText.Position;
             set
             {
-                if (value != icon.Position)
+                if (value != valueText.Position)
                 {
-                    icon.Position = value;
-                    valueText.Position = icon.BoundingBox.GetPoint(RectanglePoint.Bottom);
+                    valueText.Position = value;
+                    icon.Position = valueText.BoundingBox.GetPoint(RectanglePoint.Top);
                 }
             }
         }

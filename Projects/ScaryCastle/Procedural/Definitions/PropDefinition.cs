@@ -39,7 +39,13 @@ namespace ScaryCastle
 
             this.Placements = placements.AsReadOnly();
 
+            // RequiresPlaceholder
             RequiresPlaceholder = element.GetBool("requiresPlaceholder", true);
+
+            // StaminaCost
+            StaminaCost = element.GetInt32("staminaCost", 0);
+            if (StaminaCost < 0)
+                StaminaCost = 0;
 
             Container.Add(this);
         }
@@ -54,5 +60,8 @@ namespace ScaryCastle
 
         // RequiresPlaceholder
         public bool RequiresPlaceholder { get; }
+
+        // StaminaCost
+        public int StaminaCost { get; }
     }
 }

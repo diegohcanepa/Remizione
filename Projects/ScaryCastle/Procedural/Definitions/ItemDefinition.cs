@@ -91,6 +91,11 @@ namespace ScaryCastle
             // SoundTrigger
             this.SoundTrigger = element.GetObject("soundTrigger", Sound.Get);
 
+            // StaminaCost
+            StaminaCost = element.GetInt32("staminaCost", 0);
+            if (StaminaCost < 0)
+                StaminaCost = 0;
+
             this.Image = Atlases.UI.FindImage(Name);
 
             this.Price = Quality switch
@@ -194,5 +199,8 @@ namespace ScaryCastle
 
         // SoundTrigger
         public Sound? SoundTrigger { get; }
+
+        // StaminaCost
+        public int StaminaCost { get; }
     }
 }

@@ -24,15 +24,16 @@ namespace ScaryCastle
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
             DialogOptionBullet = this[nameof(DialogOptionBullet)];
             DiscardItemIcon = this[nameof(DiscardItemIcon)];
+            FaithCosts = CreateReadOnlyCollection("FaithCost", 1, 3);
             FaithIcon = this[nameof(FaithIcon)];
             FaithMeter = CreateReadOnlyCollection(nameof(FaithMeter), 0, 5);
             FearIcon = this[nameof(FearIcon)];
             GoldenKeyIcon = this[nameof(GoldenKeyIcon)];
             GooIcon = this[nameof(GooIcon)];
             HeartIcon = this[nameof(HeartIcon)];
-            InventoryFaithCosts = CreateReadOnlyCollection("InventoryFaithCost", 1, 3);
             InventoryItemAmounts = CreateReadOnlyCollection("InventoryItemAmount", 1, 5);
             InventoryItemSlot = this[nameof(InventoryItemSlot)];
+            InventoryMeterSlot = this[nameof(InventoryMeterSlot)];
             MagnifierIcon = this[nameof(MagnifierIcon)];
             MessageContainer = this[nameof(MessageContainer)];
             MeterGreen = CreateReadOnlyCollection("GreenMeter", 0, 5);
@@ -56,6 +57,7 @@ namespace ScaryCastle
             SavingIcon = this[nameof(SavingIcon)];
             SpeechTextArrow = this[nameof(SpeechTextArrow)];
             SpeechTextPipe = this[nameof(SpeechTextPipe)];
+            StaminaCosts = CreateReadOnlyCollection("StaminaCost", 1, 3);
             StaminaIcon = this[nameof(StaminaIcon)];
             StaminaMeter = CreateReadOnlyCollection(nameof(StaminaMeter), 0, 5);
             UIButtonContainerEdge = this[nameof(UIButtonContainerEdge)];
@@ -101,6 +103,9 @@ namespace ScaryCastle
         // DiscardItemIcon
         public AtlasImage DiscardItemIcon { get; }
 
+        // FaithCosts
+        public ReadOnlyCollection<AtlasImage> FaithCosts { get; }
+
         // FaithIcon
         public AtlasImage FaithIcon { get; }
 
@@ -119,14 +124,14 @@ namespace ScaryCastle
         // HeartIcon
         public AtlasImage HeartIcon { get; }
 
-        // InventoryFaithCosts
-        public ReadOnlyCollection<AtlasImage> InventoryFaithCosts { get; }
-
         // InventoryItemAmounts
         public ReadOnlyCollection<AtlasImage> InventoryItemAmounts { get; }
 
         // InventoryItemSlot
         public AtlasImage InventoryItemSlot { get; }
+
+        // InventoryMeterSlot
+        public AtlasImage InventoryMeterSlot { get; }
 
         // MagnifierIcon
         public AtlasImage MagnifierIcon { get; }
@@ -193,6 +198,9 @@ namespace ScaryCastle
 
         // SpeechTextPipe
         public AtlasImage SpeechTextPipe { get; }
+
+        // StaminaCosts
+        public ReadOnlyCollection<AtlasImage> StaminaCosts { get; }
 
         // StaminaIcon
         public AtlasImage StaminaIcon { get; }

@@ -159,7 +159,7 @@ namespace ScaryCastle
                     {
                         amounts[i].Scale = ScaleInfo.UIElement.Large;
                         amounts[i].Y = slots[i].BoundingBox.Center.Y + 8;
-                        amounts[i].RenderImage = Atlases.UI.InventoryFaithCosts[ItemContainer[i].Definition.EnergyCost - 1];
+                        amounts[i].RenderImage = Atlases.UI.FaithCosts[ItemContainer[i].Definition.EnergyCost - 1];
                     }
                     else if (ItemContainer[i].Definition.IsStackable || ItemContainer[i].Definition.IsDepletable)
                     {

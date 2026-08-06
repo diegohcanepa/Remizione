@@ -21,9 +21,9 @@ namespace ScaryCastle
 
             var list = new List<UIPocketItemMeter>
             {
-                new(this, PocketItemType.Coin),
-                new(this, PocketItemType.BronzeKey),
-                new(this, PocketItemType.GoldenKey)
+                new(PocketItemType.Coin),
+                new(PocketItemType.BronzeKey),
+                new(PocketItemType.GoldenKey)
             };
 
             items = new ReadOnlyCollection<UIPocketItemMeter>(list);
@@ -66,7 +66,7 @@ namespace ScaryCastle
         // Refresh
         public void Refresh()
         {
-            var pos = Screen.Area.GetPoint(RectanglePoint.RightBottom, -28, -10.25f);
+            var pos = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -28, 0);
             for (var i = 0; i < items.Count; i++)
             {
                 var count = Manager.GetCount(items[i].PocketItemType);
@@ -74,7 +74,7 @@ namespace ScaryCastle
                 if (count > 0)
                 {
                     items[i].Position = pos;
-                    pos.X -= items[i].BoundingBox.Width + 2;
+                    pos.X -= items[i].BoundingBox.Width + 4;
                 }
             }
         }

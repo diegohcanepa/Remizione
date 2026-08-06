@@ -86,7 +86,16 @@ namespace ScaryCastle
 
             Session.TextHUD.Sentence.Target = Target;
             Session.TextHUD.BossMeter.Target = Target as Actor;
-            MouseCursor.Text = Target?.DisplayName;
+            MouseCursor.Tooltip = Target?.DisplayName;
+
+            if (Target is Prop prop && prop.Definition?.StaminaCost > 0)
+            {
+                MouseCursor.TooltipImage = Atlases.UI.StaminaCosts[prop.Definition.StaminaCost-1];
+            }
+            else
+            {
+                MouseCursor.TooltipImage = null;
+            }
 
             MouseCursorAppearance.Refresh(this);
         }

@@ -41,6 +41,9 @@
             "requiresPlaceholder": {
               "type": "boolean",
               "default": false
+            },
+            "staminaCost": {
+              "type": "integer"
             }
           }
         }

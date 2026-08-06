@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:59f7597a9ccca99aa83252de808a0326:6b1f7837a224e1979e3cf66abde3b998:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:79adb6165b8835dfaabb794e244231be:6a16eb3477fbc882065a8eabaf1f5ce7:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -28,69 +28,70 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="BossMeter.png" x="494" y="295" w="15" h="15"/>
     <sprite n="BossMeterAmount.png" x="110" y="309" w="11" h="13"/>
     <sprite n="BronzeKey.png" x="244" y="171" w="22" h="22"/>
-    <sprite n="BronzeKeyIcon.png" x="379" y="265" w="7" h="11"/>
+    <sprite n="BronzeKeyIcon.png" x="378" y="275" w="7" h="11"/>
     <sprite n="Burger.png" x="244" y="195" w="22" h="22"/>
     <sprite n="CheckMark.png" x="90" y="291" w="6" h="5"/>
     <sprite n="Chili.png" x="244" y="219" w="22" h="22"/>
     <sprite n="CloseWindowButton.png" x="494" y="229" w="16" h="15"/>
     <sprite n="Coin.png" x="470" y="211" w="22" h="22"/>
-    <sprite n="CoinIcon.png" x="50" y="327" w="9" h="9"/>
+    <sprite n="CoinIcon.png" x="378" y="265" w="8" h="8"/>
     <sprite n="ConditionMeterUnit.png" x="508" y="15" w="1" h="2"/>
-    <sprite n="ContextMenuOptionSelector.png" x="316" y="283" w="4" h="5"/>
-    <sprite n="CorridorDoorIcon.png" x="54" y="314" w="10" h="11"/>
+    <sprite n="ContextMenuOptionSelector.png" x="311" y="292" w="4" h="5"/>
+    <sprite n="CorridorDoorIcon.png" x="41" y="314" w="10" h="11"/>
     <sprite n="CountdownSkullIcon.png" x="119" y="258" w="13" h="19"/>
     <sprite n="CreditsBar.png" x="2" y="2" w="480" h="67"/>
-    <sprite n="DialogArrowLarge.png" x="319" y="276" w="7" h="5"/>
+    <sprite n="DialogArrowLarge.png" x="271" y="283" w="7" h="5"/>
     <sprite n="DialogBlockContainer.png" x="2" y="147" w="240" h="53"/>
-    <sprite n="DialogBoxBorderB.png" x="234" y="237" w="4" h="4"/>
-    <sprite n="DialogBoxBorderL.png" x="277" y="300" w="4" h="4"/>
-    <sprite n="DialogBoxBorderLB.png" x="267" y="304" w="4" h="4"/>
-    <sprite n="DialogBoxBorderLT.png" x="257" y="308" w="4" h="4"/>
-    <sprite n="DialogBoxBorderR.png" x="250" y="313" w="4" h="4"/>
-    <sprite n="DialogBoxBorderRB.png" x="311" y="290" w="4" h="4"/>
-    <sprite n="DialogBoxBorderRT.png" x="317" y="290" w="4" h="4"/>
-    <sprite n="DialogBoxBorderT.png" x="323" y="290" w="4" h="4"/>
-    <sprite n="DialogBoxFillB.png" x="311" y="296" w="4" h="4"/>
-    <sprite n="DialogBoxFillL.png" x="300" y="297" w="4" h="4"/>
-    <sprite n="DialogBoxFillLB.png" x="290" y="298" w="4" h="4"/>
-    <sprite n="DialogBoxFillLT.png" x="283" y="303" w="4" h="4"/>
-    <sprite n="DialogBoxFillR.png" x="273" y="306" w="4" h="4"/>
-    <sprite n="DialogBoxFillRB.png" x="263" y="310" w="4" h="4"/>
-    <sprite n="DialogBoxFillRT.png" x="256" y="314" w="4" h="4"/>
-    <sprite n="DialogBoxFillT.png" x="317" y="296" w="4" h="4"/>
-    <sprite n="DialogOptionBullet.png" x="250" y="306" w="5" h="5"/>
-    <sprite n="Dice.png" x="359" y="265" w="8" h="8"/>
+    <sprite n="DialogBoxBorderB.png" x="340" y="285" w="4" h="4"/>
+    <sprite n="DialogBoxBorderL.png" x="346" y="285" w="4" h="4"/>
+    <sprite n="DialogBoxBorderLB.png" x="352" y="285" w="4" h="4"/>
+    <sprite n="DialogBoxBorderLT.png" x="358" y="285" w="4" h="4"/>
+    <sprite n="DialogBoxBorderR.png" x="364" y="285" w="4" h="4"/>
+    <sprite n="DialogBoxBorderRB.png" x="370" y="285" w="4" h="4"/>
+    <sprite n="DialogBoxBorderRT.png" x="405" y="282" w="4" h="4"/>
+    <sprite n="DialogBoxBorderT.png" x="396" y="284" w="4" h="4"/>
+    <sprite n="DialogBoxFillB.png" x="376" y="288" w="4" h="4"/>
+    <sprite n="DialogBoxFillL.png" x="382" y="288" w="4" h="4"/>
+    <sprite n="DialogBoxFillLB.png" x="388" y="288" w="4" h="4"/>
+    <sprite n="DialogBoxFillLT.png" x="340" y="291" w="4" h="4"/>
+    <sprite n="DialogBoxFillR.png" x="333" y="293" w="4" h="4"/>
+    <sprite n="DialogBoxFillRB.png" x="325" y="298" w="4" h="4"/>
+    <sprite n="DialogBoxFillRT.png" x="311" y="299" w="4" h="4"/>
+    <sprite n="DialogBoxFillT.png" x="305" y="300" w="4" h="4"/>
+    <sprite n="DialogOptionBullet.png" x="307" y="277" w="5" h="5"/>
+    <sprite n="Dice.png" x="388" y="265" w="8" h="8"/>
     <sprite n="DiscardItemIcon.png" x="494" y="246" w="16" h="15"/>
     <sprite n="Duck.png" x="408" y="234" w="22" h="22"/>
-    <sprite n="FaithIcon.png" x="61" y="327" w="9" h="9"/>
-    <sprite n="FaithMeter0.png" x="155" y="237" w="6" h="4"/>
-    <sprite n="FaithMeter1.png" x="163" y="237" w="6" h="4"/>
-    <sprite n="FaithMeter2.png" x="171" y="237" w="6" h="4"/>
-    <sprite n="FaithMeter3.png" x="179" y="237" w="6" h="4"/>
-    <sprite n="FaithMeter4.png" x="187" y="237" w="6" h="4"/>
-    <sprite n="FaithMeter5.png" x="195" y="237" w="6" h="4"/>
-    <sprite n="FearIcon.png" x="24" y="338" w="9" h="9"/>
+    <sprite n="FaithCost1.png" x="317" y="299" w="4" h="4"/>
+    <sprite n="FaithCost2.png" x="158" y="237" w="7" h="4"/>
+    <sprite n="FaithCost3.png" x="134" y="237" w="10" h="4"/>
+    <sprite n="FaithIcon.png" x="82" y="326" w="9" h="9"/>
+    <sprite n="FaithMeter0.png" x="176" y="237" w="6" h="4"/>
+    <sprite n="FaithMeter1.png" x="184" y="237" w="6" h="4"/>
+    <sprite n="FaithMeter2.png" x="192" y="237" w="6" h="4"/>
+    <sprite n="FaithMeter3.png" x="200" y="237" w="6" h="4"/>
+    <sprite n="FaithMeter4.png" x="208" y="237" w="6" h="4"/>
+    <sprite n="FaithMeter5.png" x="216" y="237" w="6" h="4"/>
+    <sprite n="FearIcon.png" x="53" y="326" w="9" h="9"/>
     <sprite n="Firecracker.png" x="432" y="234" w="22" h="22"/>
     <sprite n="GoldenKey.png" x="470" y="235" w="22" h="22"/>
-    <sprite n="GoldenKeyIcon.png" x="359" y="275" w="7" h="11"/>
+    <sprite n="GoldenKeyIcon.png" x="387" y="275" w="7" h="11"/>
     <sprite n="GooBottle.png" x="470" y="259" w="22" h="22"/>
-    <sprite n="GooIcon.png" x="319" y="265" w="8" h="9"/>
-    <sprite n="GreenMeter0.png" x="322" y="283" w="4" h="5"/>
-    <sprite n="GreenMeter1.png" x="328" y="283" w="4" h="5"/>
-    <sprite n="GreenMeter2.png" x="334" y="289" w="4" h="5"/>
-    <sprite n="GreenMeter3.png" x="340" y="292" w="4" h="5"/>
-    <sprite n="GreenMeter4.png" x="346" y="292" w="4" h="5"/>
-    <sprite n="GreenMeter5.png" x="352" y="292" w="4" h="5"/>
-    <sprite n="HeartIcon.png" x="2" y="339" w="9" h="9"/>
-    <sprite n="InventoryFaithCost1.png" x="323" y="296" w="4" h="4"/>
-    <sprite n="InventoryFaithCost2.png" x="146" y="237" w="7" h="4"/>
-    <sprite n="InventoryFaithCost3.png" x="134" y="237" w="10" h="4"/>
-    <sprite n="InventoryItemAmount1.png" x="261" y="276" w="8" h="10"/>
-    <sprite n="InventoryItemAmount2.png" x="250" y="282" w="8" h="10"/>
-    <sprite n="InventoryItemAmount3.png" x="260" y="288" w="8" h="10"/>
-    <sprite n="InventoryItemAmount4.png" x="250" y="294" w="8" h="10"/>
-    <sprite n="InventoryItemAmount5.png" x="309" y="265" w="8" h="10"/>
+    <sprite n="GooIcon.png" x="338" y="265" w="8" h="9"/>
+    <sprite n="GreenMeter0.png" x="287" y="294" w="4" h="5"/>
+    <sprite n="GreenMeter1.png" x="275" y="296" w="4" h="5"/>
+    <sprite n="GreenMeter2.png" x="281" y="296" w="4" h="5"/>
+    <sprite n="GreenMeter3.png" x="293" y="294" w="4" h="5"/>
+    <sprite n="GreenMeter4.png" x="299" y="294" w="4" h="5"/>
+    <sprite n="GreenMeter5.png" x="257" y="302" w="4" h="5"/>
+    <sprite n="HeartIcon.png" x="64" y="326" w="9" h="9"/>
+    <sprite n="InventoryItemAmount1.png" x="250" y="281" w="8" h="10"/>
+    <sprite n="InventoryItemAmount2.png" x="298" y="265" w="8" h="10"/>
+    <sprite n="InventoryItemAmount3.png" x="308" y="265" w="8" h="10"/>
+    <sprite n="InventoryItemAmount4.png" x="318" y="265" w="8" h="10"/>
+    <sprite n="InventoryItemAmount5.png" x="328" y="265" w="8" h="10"/>
     <sprite n="InventoryItemSlot.png" x="494" y="211" w="16" h="16"/>
+    <sprite n="InventoryMeterSlot.png" x="494" y="211" w="16" h="16"/>
     <sprite n="ItemInfoContainer.png" x="268" y="211" w="138" h="52"/>
     <sprite n="KeyboardD.png" x="42" y="282" w="14" h="14"/>
     <sprite n="KeyboardDelete.png" x="98" y="258" w="19" h="14"/>
@@ -108,98 +109,101 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Lantern.png" x="408" y="258" w="22" h="22"/>
     <sprite n="Lockpick.png" x="432" y="258" w="22" h="22"/>
     <sprite n="MagneticCard.png" x="470" y="283" w="22" h="22"/>
-    <sprite n="MagnifierIcon.png" x="13" y="339" w="9" h="9"/>
+    <sprite n="MagnifierIcon.png" x="40" y="327" w="9" h="9"/>
     <sprite n="MessageContainer.png" x="134" y="243" w="129" h="9"/>
-    <sprite n="MiniMapCoin.png" x="329" y="296" w="4" h="4"/>
+    <sprite n="MiniMapCoin.png" x="287" y="301" w="4" h="4"/>
     <sprite n="MiniMapCoinAndLoot.png" x="90" y="282" w="6" h="7"/>
     <sprite n="MiniMapContainer.png" x="408" y="211" w="29" h="21"/>
     <sprite n="MiniMapContainerBorder.png" x="439" y="211" w="29" h="21"/>
-    <sprite n="MiniMapHeart.png" x="328" y="276" w="5" h="5"/>
-    <sprite n="MiniMapLoot.png" x="260" y="300" w="5" h="6"/>
-    <sprite n="MiniMapRoom0.png" x="368" y="275" w="7" h="7"/>
-    <sprite n="MiniMapRoom1.png" x="388" y="265" w="7" h="7"/>
-    <sprite n="MiniMapRoom2.png" x="397" y="265" w="7" h="7"/>
-    <sprite n="MiniMapRoom3.png" x="388" y="274" w="7" h="7"/>
-    <sprite n="MiniMapRoom4.png" x="377" y="278" w="7" h="7"/>
+    <sprite n="MiniMapHeart.png" x="314" y="277" w="5" h="5"/>
+    <sprite n="MiniMapLoot.png" x="257" y="294" w="5" h="6"/>
+    <sprite n="MiniMapRoom0.png" x="396" y="275" w="7" h="7"/>
+    <sprite n="MiniMapRoom1.png" x="338" y="276" w="7" h="7"/>
+    <sprite n="MiniMapRoom2.png" x="347" y="276" w="7" h="7"/>
+    <sprite n="MiniMapRoom3.png" x="356" y="276" w="7" h="7"/>
+    <sprite n="MiniMapRoom4.png" x="365" y="276" w="7" h="7"/>
     <sprite n="MissingItem.png" x="2" y="258" w="22" h="22"/>
     <sprite n="MonitorFrame.png" x="268" y="74" w="240" h="135"/>
-    <sprite n="MouseCursorArrowIcon.png" x="368" y="284" w="7" h="7"/>
+    <sprite n="MouseCursorArrowIcon.png" x="298" y="277" w="7" h="7"/>
     <sprite n="MouseCursorAttackIcon.png" x="28" y="314" w="11" h="10"/>
     <sprite n="MouseCursorCrossIcon.png" x="119" y="279" w="12" h="12"/>
-    <sprite n="MouseCursorDownIcon.png" x="28" y="326" w="9" h="10"/>
-    <sprite n="MouseCursorEyeIcon.png" x="78" y="326" w="10" h="9"/>
+    <sprite n="MouseCursorDownIcon.png" x="14" y="327" w="9" h="10"/>
+    <sprite n="MouseCursorEyeIcon.png" x="2" y="327" w="10" h="9"/>
     <sprite n="MouseCursorHandIcon.png" x="123" y="309" w="9" h="12"/>
-    <sprite n="MouseCursorLeftIcon.png" x="39" y="326" w="9" h="10"/>
-    <sprite n="MouseCursorLiftIcon.png" x="329" y="265" w="8" h="9"/>
-    <sprite n="MouseCursorMagnifierIcon.png" x="66" y="314" w="10" h="11"/>
-    <sprite n="MouseCursorPickUpIcon.png" x="277" y="265" w="9" h="8"/>
-    <sprite n="MouseCursorRightIcon.png" x="2" y="327" w="9" h="10"/>
-    <sprite n="MouseCursorSkullIcon.png" x="339" y="265" w="8" h="9"/>
-    <sprite n="MouseCursorTalkIcon.png" x="35" y="338" w="9" h="9"/>
-    <sprite n="MouseCursorUpIcon.png" x="13" y="327" w="9" h="10"/>
-    <sprite n="MouseCursorWaitIcon.png" x="299" y="265" w="8" h="11"/>
-    <sprite n="MouseLeftButtonIcon.png" x="288" y="270" w="8" h="11"/>
-    <sprite n="MouseRightButtonIcon.png" x="277" y="275" w="8" h="11"/>
-    <sprite n="OrangeMeter0.png" x="90" y="326" w="4" h="6"/>
-    <sprite n="OrangeMeter1.png" x="72" y="327" w="4" h="6"/>
-    <sprite n="OrangeMeter2.png" x="72" y="335" w="4" h="6"/>
-    <sprite n="OrangeMeter3.png" x="271" y="276" w="4" h="6"/>
-    <sprite n="OrangeMeter4.png" x="271" y="284" w="4" h="6"/>
-    <sprite n="OrangeMeter5.png" x="342" y="276" w="4" h="6"/>
-    <sprite n="PickupShadow.png" x="288" y="265" w="9" h="3"/>
+    <sprite n="MouseCursorLeftIcon.png" x="2" y="338" w="9" h="10"/>
+    <sprite n="MouseCursorLiftIcon.png" x="348" y="265" w="8" h="9"/>
+    <sprite n="MouseCursorMagnifierIcon.png" x="28" y="326" w="10" h="11"/>
+    <sprite n="MouseCursorPickUpIcon.png" x="266" y="265" w="9" h="8"/>
+    <sprite n="MouseCursorRightIcon.png" x="53" y="314" w="9" h="10"/>
+    <sprite n="MouseCursorSkullIcon.png" x="358" y="265" w="8" h="9"/>
+    <sprite n="MouseCursorTalkIcon.png" x="51" y="337" w="9" h="9"/>
+    <sprite n="MouseCursorUpIcon.png" x="64" y="314" w="9" h="10"/>
+    <sprite n="MouseCursorWaitIcon.png" x="288" y="265" w="8" h="11"/>
+    <sprite n="MouseLeftButtonIcon.png" x="277" y="270" w="8" h="11"/>
+    <sprite n="MouseRightButtonIcon.png" x="261" y="275" w="8" h="11"/>
+    <sprite n="OrangeMeter0.png" x="271" y="275" w="4" h="6"/>
+    <sprite n="OrangeMeter1.png" x="328" y="282" w="4" h="6"/>
+    <sprite n="OrangeMeter2.png" x="321" y="283" w="4" h="6"/>
+    <sprite n="OrangeMeter3.png" x="307" y="284" w="4" h="6"/>
+    <sprite n="OrangeMeter4.png" x="313" y="284" w="4" h="6"/>
+    <sprite n="OrangeMeter5.png" x="287" y="286" w="4" h="6"/>
+    <sprite n="PickupShadow.png" x="277" y="265" w="9" h="3"/>
     <sprite n="Pistol.png" x="26" y="258" w="22" h="22"/>
     <sprite n="Pixel.png" x="508" y="19" w="1" h="1"/>
-    <sprite n="PointingHand.png" x="397" y="274" w="7" h="6"/>
+    <sprite n="PointingHand.png" x="287" y="278" w="7" h="6"/>
     <sprite n="PopupContainer.png" x="2" y="71" w="264" h="74"/>
     <sprite n="PopupContainerShadow.png" x="134" y="254" w="114" h="60"/>
-    <sprite n="ProhibitionIcon.png" x="46" y="338" w="9" h="9"/>
-    <sprite n="PurpleMeter0.png" x="90" y="326" w="4" h="6"/>
-    <sprite n="PurpleMeter1.png" x="72" y="327" w="4" h="6"/>
-    <sprite n="PurpleMeter2.png" x="72" y="335" w="4" h="6"/>
-    <sprite n="PurpleMeter3.png" x="335" y="281" w="4" h="6"/>
-    <sprite n="PurpleMeter4.png" x="348" y="276" w="4" h="6"/>
-    <sprite n="PurpleMeter5.png" x="341" y="284" w="4" h="6"/>
+    <sprite n="ProhibitionIcon.png" x="40" y="338" w="9" h="9"/>
+    <sprite n="PurpleMeter0.png" x="271" y="275" w="4" h="6"/>
+    <sprite n="PurpleMeter1.png" x="328" y="282" w="4" h="6"/>
+    <sprite n="PurpleMeter2.png" x="321" y="283" w="4" h="6"/>
+    <sprite n="PurpleMeter3.png" x="293" y="286" w="4" h="6"/>
+    <sprite n="PurpleMeter4.png" x="299" y="286" w="4" h="6"/>
+    <sprite n="PurpleMeter5.png" x="334" y="285" w="4" h="6"/>
     <sprite n="QuickInventoryBackground.png" x="2" y="202" w="240" h="33"/>
-    <sprite n="RedHearts1.png" x="57" y="338" w="9" h="9"/>
-    <sprite n="RedHearts2.png" x="266" y="265" w="9" h="9"/>
-    <sprite n="RedHearts3.png" x="2" y="339" w="9" h="9"/>
+    <sprite n="RedHearts1.png" x="62" y="337" w="9" h="9"/>
+    <sprite n="RedHearts2.png" x="13" y="339" w="9" h="9"/>
+    <sprite n="RedHearts3.png" x="64" y="326" w="9" h="9"/>
     <sprite n="RunModifierDarknessIcon.png" x="96" y="320" w="11" h="11"/>
     <sprite n="RunModifierToxicIcon.png" x="2" y="314" w="11" h="11"/>
-    <sprite n="Sack.png" x="41" y="314" w="11" h="10"/>
-    <sprite n="SackIcon.png" x="369" y="265" w="8" h="8"/>
+    <sprite n="Sack.png" x="250" y="271" w="9" h="8"/>
+    <sprite n="SackIcon.png" x="398" y="265" w="8" h="8"/>
     <sprite n="SavingIcon.png" x="15" y="314" w="11" h="11"/>
     <sprite n="Scroll.png" x="2" y="237" w="130" h="19"/>
-    <sprite n="SkyBlueMeter0.png" x="322" y="283" w="4" h="5"/>
-    <sprite n="SkyBlueMeter1.png" x="328" y="283" w="4" h="5"/>
-    <sprite n="SkyBlueMeter2.png" x="334" y="289" w="4" h="5"/>
-    <sprite n="SkyBlueMeter3.png" x="305" y="290" w="4" h="5"/>
-    <sprite n="SkyBlueMeter4.png" x="294" y="291" w="4" h="5"/>
-    <sprite n="SkyBlueMeter5.png" x="284" y="296" w="4" h="5"/>
+    <sprite n="SkyBlueMeter0.png" x="287" y="294" w="4" h="5"/>
+    <sprite n="SkyBlueMeter1.png" x="275" y="296" w="4" h="5"/>
+    <sprite n="SkyBlueMeter2.png" x="281" y="296" w="4" h="5"/>
+    <sprite n="SkyBlueMeter3.png" x="250" y="305" w="4" h="5"/>
+    <sprite n="SkyBlueMeter4.png" x="263" y="302" w="4" h="5"/>
+    <sprite n="SkyBlueMeter5.png" x="269" y="302" w="4" h="5"/>
     <sprite n="SodaCan.png" x="50" y="258" w="22" h="22"/>
-    <sprite n="SpeechTextArrow.png" x="227" y="237" w="5" h="4"/>
-    <sprite n="SpeechTextPipe.png" x="335" y="276" w="5" h="3"/>
-    <sprite n="StaminaIcon.png" x="349" y="265" w="8" h="9"/>
-    <sprite n="StaminaMeter0.png" x="155" y="237" w="6" h="4"/>
-    <sprite n="StaminaMeter1.png" x="163" y="237" w="6" h="4"/>
-    <sprite n="StaminaMeter2.png" x="171" y="237" w="6" h="4"/>
-    <sprite n="StaminaMeter3.png" x="203" y="237" w="6" h="4"/>
-    <sprite n="StaminaMeter4.png" x="211" y="237" w="6" h="4"/>
-    <sprite n="StaminaMeter5.png" x="219" y="237" w="6" h="4"/>
-    <sprite n="StatusPoisonIcon.png" x="250" y="271" w="9" h="9"/>
+    <sprite n="SpeechTextArrow.png" x="321" y="277" w="5" h="4"/>
+    <sprite n="SpeechTextPipe.png" x="328" y="277" w="5" h="3"/>
+    <sprite n="StaminaCost1.png" x="275" y="303" w="4" h="4"/>
+    <sprite n="StaminaCost2.png" x="167" y="237" w="7" h="4"/>
+    <sprite n="StaminaCost3.png" x="146" y="237" w="10" h="4"/>
+    <sprite n="StaminaIcon.png" x="368" y="265" w="8" h="9"/>
+    <sprite n="StaminaMeter0.png" x="176" y="237" w="6" h="4"/>
+    <sprite n="StaminaMeter1.png" x="184" y="237" w="6" h="4"/>
+    <sprite n="StaminaMeter2.png" x="192" y="237" w="6" h="4"/>
+    <sprite n="StaminaMeter3.png" x="224" y="237" w="6" h="4"/>
+    <sprite n="StaminaMeter4.png" x="232" y="237" w="6" h="4"/>
+    <sprite n="StaminaMeter5.png" x="260" y="288" w="6" h="4"/>
+    <sprite n="StatusPoisonIcon.png" x="24" y="339" w="9" h="9"/>
     <sprite n="TipBalloon.png" x="456" y="234" w="12" h="13"/>
-    <sprite n="UIButtonContainerEdge.png" x="309" y="277" w="5" h="11"/>
+    <sprite n="UIButtonContainerEdge.png" x="75" y="314" w="5" h="11"/>
     <sprite n="UIButtonContainerPattern.png" x="508" y="2" w="1" h="11"/>
-    <sprite n="UIControlContainerEdgeLeftLarge.png" x="298" y="278" w="5" h="11"/>
-    <sprite n="UIControlContainerEdgeLeftSmall.png" x="277" y="288" w="5" h="10"/>
-    <sprite n="UIControlContainerEdgeRightLarge.png" x="287" y="283" w="5" h="11"/>
-    <sprite n="UIControlContainerEdgeRightSmall.png" x="270" y="292" w="5" h="10"/>
+    <sprite n="UIControlContainerEdgeLeftLarge.png" x="75" y="327" w="5" h="11"/>
+    <sprite n="UIControlContainerEdgeLeftSmall.png" x="250" y="293" w="5" h="10"/>
+    <sprite n="UIControlContainerEdgeRightLarge.png" x="280" y="283" w="5" h="11"/>
+    <sprite n="UIControlContainerEdgeRightSmall.png" x="268" y="290" w="5" h="10"/>
     <sprite n="Verse.png" x="74" y="258" w="22" h="22"/>
-    <sprite n="WhiteMeter0.png" x="90" y="326" w="4" h="6"/>
-    <sprite n="WhiteMeter1.png" x="72" y="327" w="4" h="6"/>
-    <sprite n="WhiteMeter2.png" x="72" y="335" w="4" h="6"/>
-    <sprite n="WhiteMeter3.png" x="347" y="284" w="4" h="6"/>
-    <sprite n="WhiteMeter4.png" x="353" y="284" w="4" h="6"/>
-    <sprite n="WhiteMeter5.png" x="359" y="288" w="4" h="6"/>
+    <sprite n="WhiteMeter0.png" x="271" y="275" w="4" h="6"/>
+    <sprite n="WhiteMeter1.png" x="328" y="282" w="4" h="6"/>
+    <sprite n="WhiteMeter2.png" x="321" y="283" w="4" h="6"/>
+    <sprite n="WhiteMeter3.png" x="327" y="290" w="4" h="6"/>
+    <sprite n="WhiteMeter4.png" x="319" y="291" w="4" h="6"/>
+    <sprite n="WhiteMeter5.png" x="305" y="292" w="4" h="6"/>
     <sprite n="XboxA.png" x="18" y="298" w="14" h="14"/>
     <sprite n="XboxB.png" x="34" y="298" w="14" h="14"/>
     <sprite n="XboxGadgetsSlot.png" x="82" y="298" w="12" h="12"/>

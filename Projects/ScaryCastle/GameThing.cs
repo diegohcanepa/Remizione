@@ -409,7 +409,7 @@ namespace ScaryCastle
             hurtShakeTween?.Update(gameTime);
             shadowSpot.Update(gameTime);
 
-            if (hpMeter != null)
+            if (hpMeter != null && Session.InteractionContext.Target == this)
             {
                 hpMeter.Update(gameTime);
                 hpMeter.Position = GetOverheadPosition(new(0, -3));
