@@ -196,7 +196,7 @@ namespace ScaryCastle
                     imageName = atlasImage.Name;
 
                 remains = new Remains(Session, imageName, Vector2.One, guts, pieceCount, false, Definition?.EffectDescriptors);
-                
+
                 _ = BodySize switch
                 {
                     BodySize.Small => remains.PlaySound(SoundNames.GutsSmall),
@@ -538,15 +538,19 @@ namespace ScaryCastle
             if (EnforceTurn)
             {
                 EnforceTurn = false;
-                
+
                 if (ActiveThrowable == null)
                 {
                     if (PixelsMoved > GameSettings.StaminaRechargeThreshold)
                         Stamina++;
                 }
-                else
+                else if (ActiveThrowable.Definition is { } def)
                 {
-                    Stamina -= ActiveThrowable.Definition is { } def ? def.StaminaCost : 1;
+                    if (def.InteractionCostType == InteractionCostType.Faith)
+                        Energy -= 1;
+
+                    else if (def.InteractionCostType == InteractionCostType.Stamina)
+                        Stamina -= 1;
                 }
 
                 Session.ProcessTurn(PixelsMoved > 80 ? 1 : 0);
@@ -898,7 +902,7 @@ namespace ScaryCastle
 
             FaceTo(prop);
 
-            Stamina -= prop.Definition is { } def ? def.StaminaCost : 1;
+            prop.Definition?.ApplyInteractionCost(this);
 
             var state = BodyMachine.FindOrCreateState<BodyLiftState>();
             state.Target = prop;

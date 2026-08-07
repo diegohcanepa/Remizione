@@ -65,19 +65,6 @@
               ],
               "default": "Common"
             },
-            "consumeVerb": {
-              "type": "string",
-              "enum": [
-                "None",
-                "Consumed",
-                "Obtained",
-                "Found",
-                "Lost",
-                "Requires",
-                "Used"
-              ],
-              "default": "Script"
-            },            
             "deselectOnUse": {
               "type": "boolean",
               "default": false

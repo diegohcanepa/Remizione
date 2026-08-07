@@ -163,7 +163,6 @@
 		},
 		{
 			"name": "Lockpick",
-			"consumeVerb": "Consumed",
 			"actionKind": "Script",
 			"category": "Access",
 			"deselectOnUse": true,

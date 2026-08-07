@@ -42,26 +42,39 @@ namespace ScaryCastle
             // RequiresPlaceholder
             RequiresPlaceholder = element.GetBool("requiresPlaceholder", true);
 
-            // StaminaCost
-            StaminaCost = element.GetInt32("staminaCost", 0);
-            if (StaminaCost < 0)
-                StaminaCost = 0;
+            // InteractionCost
+            InteractionCost = element.GetInt32("interactionCost", 0);
+
+            // InteractionCostType
+            InteractionCostType = element.GetEnum("interactionCostType", InteractionCostType.None);
 
             Container.Add(this);
         }
 
         #endregion
 
+        // ApplyInteractionCost
+        public void ApplyInteractionCost(Actor actor)
+        {
+            if (InteractionCostType == InteractionCostType.Faith)
+                actor.Energy -= InteractionCost;
+            else if (InteractionCostType == InteractionCostType.Stamina)
+                actor.Stamina -= InteractionCost;
+        }
+
         // Container
         public static DataContainer<PropDefinition> Container { get; } = new(element => new PropDefinition(element));
+
+        // InteractionCost
+        public int InteractionCost { get; }
+
+        // InteractionCostType
+        public InteractionCostType InteractionCostType { get; }
 
         // Placements
         public ReadOnlyCollection<PlacementType> Placements { get; }
 
         // RequiresPlaceholder
         public bool RequiresPlaceholder { get; }
-
-        // StaminaCost
-        public int StaminaCost { get; }
     }
 }

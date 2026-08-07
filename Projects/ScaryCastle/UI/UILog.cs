@@ -13,8 +13,7 @@ namespace ScaryCastle
         private readonly FloatTween fadeTween = new() { StartDelay = 2600 };
         private readonly Sprite icon;
         private readonly Sprite iconShadow;
-        private readonly TextSprite nounText;
-        private readonly TextSprite verbText;
+        private readonly TextSprite textSprite;
 
         // Constructor
         public UILog()
@@ -22,7 +21,7 @@ namespace ScaryCastle
             // Icon
             this.icon = new Sprite()
             {
-                PivotOrigin = RectanglePoint.Top,
+                PivotOrigin = RectanglePoint.Bottom,
                 Scale = ScaleInfo.UIElement.Medium
             };
 
@@ -35,46 +34,14 @@ namespace ScaryCastle
                 Scale = ScaleInfo.UIElement.Medium,
             };
 
-            // Verb
-            this.verbText = new(Fonts.CommonOutline)
+            // Text sprite
+            this.textSprite = new(Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Default,
-                PivotOrigin = RectanglePoint.Top,
-                Scale = ScaleInfo.Text.Huge
-            };
-
-            // Noun
-            this.nounText = new(Fonts.CommonOutline)
-            {
-                Color = ColorPalette.Text.Default,
-                PivotOrigin = RectanglePoint.Top,
+                PivotOrigin = RectanglePoint.Bottom,
                 Scale = ScaleInfo.Text.Huge
             };
         }
-
-        #region Private members
-
-        // ShowCore
-        private void ShowCore(string verb, string noun, bool isWarning, AtlasImage? image)
-        {
-            verbText.Color = isWarning ? ColorPalette.Text.Terra : ColorPalette.Text.Green;
-            verbText.Position = new Vector2(Screen.Center.X, 5);
-            verbText.Text = verb;
-
-            nounText.Position = verbText.BoundingBox.GetPoint(RectanglePoint.Bottom);
-            nounText.Text = noun;
-            icon.RenderImage = image;
-            icon.Position = nounText.BoundingBox.GetPoint(RectanglePoint.Bottom, 2, -2);
-
-            iconShadow.Position = icon.BoundingBox.Center;
-            iconShadow.RenderImage = image;
-            iconShadow.X -= 1.5f;
-            iconShadow.Y += .5f;
-
-            fadeTween.Start(TweenStyle.CubicIn, 1, 0, 1000);
-        }
-
-        #endregion
 
         #region Protected members
 
@@ -85,8 +52,7 @@ namespace ScaryCastle
                 return;
 
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
-            verbText.Draw(gameTime);
-            nounText.Draw(gameTime);
+            textSprite.Draw(gameTime);
             Game.SpriteBatch.End();
 
             Game.SpriteBatch.Begin(Game.Camera);
@@ -99,14 +65,12 @@ namespace ScaryCastle
         protected override void OnUpdate(GameTime gameTime)
         {
             fadeTween.Update(gameTime);
-            verbText.Update(gameTime);
-            nounText.Update(gameTime);
+            textSprite.Update(gameTime);
             icon.Update(gameTime);
 
-            verbText.Opacity = fadeTween.IsRunning ? fadeTween.CurrentValue : 1;
-            nounText.Opacity = verbText.Opacity;
-            icon.Opacity = verbText.Opacity;
-            iconShadow.Opacity = verbText.Opacity * ColorPalette.ShadowOpacity;
+            textSprite.Opacity = fadeTween.IsRunning ? fadeTween.CurrentValue : 1;
+            icon.Opacity = textSprite.Opacity;
+            iconShadow.Opacity = textSprite.Opacity * ColorPalette.ShadowOpacity;
         }
 
         #endregion
@@ -118,15 +82,21 @@ namespace ScaryCastle
         }
 
         // Show
-        public void Show(LogVerb verb, Item item, bool isWarning = false)
+        public void Show(Item item, bool isWarning = false)
         {
-            if (verb == LogVerb.None)
-                return;
+            textSprite.Color = isWarning ? ColorPalette.Text.Terra : ColorPalette.Text.Highlight;
+            textSprite.Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -1);
+            textSprite.Text = item.DisplayName;
 
-            ShowCore(Localization.GetValue(verb), item.DisplayName, isWarning, item.Definition.Image);
+            icon.RenderImage = item.Definition.Image;
+            icon.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.Top);
 
-            if (verb == LogVerb.Requires)
-                Sound.Play(SoundNames.Error);
+            iconShadow.Position = icon.BoundingBox.Center;
+            iconShadow.RenderImage = item.Definition.Image;
+            iconShadow.X -= 1.5f;
+            iconShadow.Y += .5f;
+
+            fadeTween.Start(TweenStyle.CubicIn, 1, 0, 1000);
         }
     }
 }

@@ -463,8 +463,8 @@ namespace ScaryCastle
 
             if (ActiveNPC == null)
             {
-                if (target is Prop prop && prop.Definition?.StaminaCost > 0)
-                    Player?.Stamina -= prop.Definition.StaminaCost;
+                if (target is Prop prop && Player != null)
+                    prop.Definition?.ApplyInteractionCost(Player);
             }
             else
             {

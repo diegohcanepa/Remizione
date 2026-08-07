@@ -11,7 +11,8 @@
     {
       "name": "GateLever",
       "requiresPlaceholder": false,
-      "staminaCost": 3,
+      "interactionCost": 3,
+      "interactionCostType": "Stamina",
       "spawnWeight": 0
     },    
     {
@@ -23,7 +24,8 @@
       "name": "PotteryA",
       "dropCoinChanceBonus": 0.5,
       "dropMode": "CoinsOnly",
-      "staminaCost": 1,
+      "interactionCost": 1,
+      "interactionCostType": "Stamina",
       "tags": "Pottery",
       "effects": [
         {
@@ -41,7 +43,8 @@
       "name": "PotteryB",
       "dropCoinChanceBonus": 0.25,
       "dropSackChanceBonus": 0.25,
-      "staminaCost": 2,
+      "interactionCost": 2,
+      "interactionCostType": "Stamina",
       "tags": "Pottery",
       "effects": [
         {

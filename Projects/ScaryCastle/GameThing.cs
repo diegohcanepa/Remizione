@@ -409,7 +409,7 @@ namespace ScaryCastle
             hurtShakeTween?.Update(gameTime);
             shadowSpot.Update(gameTime);
 
-            if (hpMeter != null && Session.InteractionContext.Target == this)
+            if (hpMeter != null)
             {
                 hpMeter.Update(gameTime);
                 hpMeter.Position = GetOverheadPosition(new(0, -3));
@@ -1226,8 +1226,7 @@ namespace ScaryCastle
 
                     OnTakeDamage(attacker, amount, damageType);
 
-                    //if (!IsDead)
-                        Session.ObjectPools.FlyOffs.Get()?.ShowAmount(this, ColorPalette.HPMeter.Diff, -amount);
+                    Session.ObjectPools.FlyOffs.Get()?.ShowAmount(this, ColorPalette.HPMeter.Diff, -amount);
 
                     // ComicText si hubo daño real
                     if (comicTextKind != ComicTextKind.None)

@@ -35,9 +35,6 @@ namespace ScaryCastle
             // Category
             Category = element.GetEnum("category", ItemCategory.Misc);
 
-            // ConsumeVerb
-            ConsumeVerb = element.GetEnum("consumeVerb", LogVerb.None);
-
             // DeselectOnUse
             DeselectOnUse = element.GetBool("deselectOnUse", false);
 
@@ -136,9 +133,6 @@ namespace ScaryCastle
 
         // Category
         public ItemCategory Category { get; }
-
-        // ConsumeVerb
-        public LogVerb ConsumeVerb { get; }
 
         // Container
         public static ItemDefinitionContainer Container { get; } = new(element => new ItemDefinition(element));

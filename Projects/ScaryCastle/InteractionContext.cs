@@ -86,9 +86,12 @@ namespace ScaryCastle
 
             MouseCursor.Tooltip = Target?.DisplayName;
 
-            if (Target is Prop prop && prop.Definition?.StaminaCost > 0)
+            if (Target is Prop prop && prop.Definition?.InteractionCostType is { } costType && costType != InteractionCostType.None)
             {
-                MouseCursor.TooltipImage = Atlases.UI.StaminaCosts[prop.Definition.StaminaCost-1];
+                if (costType == InteractionCostType.Faith)
+                    MouseCursor.TooltipImage = Atlases.UI.FaithCosts[prop.Definition.InteractionCost - 1];
+                else if (costType == InteractionCostType.Stamina)
+                    MouseCursor.TooltipImage = Atlases.UI.StaminaCosts[prop.Definition.InteractionCost - 1];
             }
             else
             {

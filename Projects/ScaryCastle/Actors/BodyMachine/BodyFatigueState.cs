@@ -30,7 +30,7 @@ namespace ScaryCastle
             if (timer <= 0)
             {
                 Owner.Stamina++;
-                if (Owner.Stamina == Owner.MaxStamina)
+                if (Owner.Stamina >= Owner.MaxStamina / 2)
                     Machine.ChangeState<BodyStandState>();
                 else
                     timer = cooldown;

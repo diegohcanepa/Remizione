@@ -23,11 +23,13 @@ namespace ScaryCastle
                 return;
             }
 
+            /*
             if (context.Session.Player != null && !context.Session.Player.CanHandleInput)
             {
                 MouseCursor.Icon = MouseCursorIcon.Wait;
                 return;
             }
+            */
 
             // Session is awaiting script
             if (context.Session.IsAwaiting)
@@ -65,20 +67,26 @@ namespace ScaryCastle
             else
             {
                 if (context.Target != null)
-                    SyncMouseCursor(context.Target.Verb);
+                {
+                    SyncMouseCursor(context, context.Target.Verb);
+                }
                 else
+                {
                     MouseCursor.Icon = MouseCursorIcon.Cross;
+                }
             }
         }
 
         // SyncMouseCursor
-        private static void SyncMouseCursor(Verb verb)
+        private static void SyncMouseCursor(InteractionContext context, Verb verb)
         {
             switch (verb)
             {
                 // Attack
                 case Verb.Attack:
                     MouseCursor.Icon = MouseCursorIcon.Attack;
+                    if (context.Session.Player?.CombatBehavior?.Intents[0] is { } combatIntent && combatIntent.StaminaCost > 0)
+                        MouseCursor.TooltipImage = Atlases.UI.StaminaCosts[combatIntent.StaminaCost - 1];
                     break;
 
                 // Examine

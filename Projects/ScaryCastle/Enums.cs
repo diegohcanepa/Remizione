@@ -82,6 +82,9 @@ namespace ScaryCastle
     // InPlaceEffectType
     public enum InPlaceEffectType { None, Lightning }
 
+    // InteractionCostType
+    public enum InteractionCostType { None, Faith, Stamina }
+
     // ItemBehavior
     public enum ItemBehavior { Common, PocketItem, PlayerAction, StatModifier }
 
@@ -99,9 +102,6 @@ namespace ScaryCastle
 
     // LockType
     public enum LockType { None, BronzeKey, GoldenKey, GateLever, TrapDoorKey }
-
-    // LogVerb
-    public enum LogVerb { None, Consumed, Discarded, Obtained, Found, Lost, Requires, Used }
 
     // LootDropMode
     public enum LootDropMode
