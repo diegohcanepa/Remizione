@@ -113,6 +113,7 @@
 	<FX Name="SmallChunks" Sounds="1..2" />
 	<FX Name="SmallWhooshA" Sounds="1..4" />
 	<FX Name="SpearTrap" />
+	<FX Name="StaminaLoss" />
 	<FX Name="StatusEffectDamage" />
 	<FX Name="StatusPoison" />
 	<FX Name="TestSkillFail" />

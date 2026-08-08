@@ -40,6 +40,7 @@
         internal const string PotteryBreak = nameof(PotteryBreak);
         internal const string PropPlace = nameof(PropPlace);
         internal const string SpearTrap = nameof(SpearTrap);
+        internal const string StaminaLoss = nameof(StaminaLoss);
         internal const string StatusPoison = nameof(StatusPoison);
         internal const string TestSkillFail = nameof(TestSkillFail);
         internal const string Text = nameof(Text);

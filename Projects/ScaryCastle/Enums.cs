@@ -82,9 +82,6 @@ namespace ScaryCastle
     // InPlaceEffectType
     public enum InPlaceEffectType { None, Lightning }
 
-    // InteractionCostType
-    public enum InteractionCostType { None, Faith, Stamina }
-
     // ItemBehavior
     public enum ItemBehavior { Common, PocketItem, PlayerAction, StatModifier }
 

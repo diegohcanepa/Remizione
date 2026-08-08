@@ -9,13 +9,6 @@
       ]
     },
     {
-      "name": "GateLever",
-      "requiresPlaceholder": false,
-      "interactionCost": 3,
-      "interactionCostType": "Stamina",
-      "spawnWeight": 0
-    },    
-    {
       "name": "Goo",
       "requiresPlaceholder": false,
       "spawnWeight": 0.1
@@ -24,8 +17,6 @@
       "name": "PotteryA",
       "dropCoinChanceBonus": 0.5,
       "dropMode": "CoinsOnly",
-      "interactionCost": 1,
-      "interactionCostType": "Stamina",
       "tags": "Pottery",
       "effects": [
         {
@@ -43,8 +34,6 @@
       "name": "PotteryB",
       "dropCoinChanceBonus": 0.25,
       "dropSackChanceBonus": 0.25,
-      "interactionCost": 2,
-      "interactionCostType": "Stamina",
       "tags": "Pottery",
       "effects": [
         {

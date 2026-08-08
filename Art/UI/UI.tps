@@ -712,7 +712,6 @@
             <key type="filename">MouseCursors-assets/MouseCursorMagnifierIcon.png</key>
             <key type="filename">RunModifierIcons-assets/RunModifierToxicIcon.png</key>
             <key type="filename">UIIcons-assets/CorridorDoorIcon.png</key>
-            <key type="filename">UIIcons-assets/FaithIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -792,6 +791,7 @@
             </struct>
             <key type="filename">MouseCursors-assets/MouseCursorTalkIcon.png</key>
             <key type="filename">UI-assets/ProhibitionIcon.png</key>
+            <key type="filename">UIIcons-assets/FaithIcon.png</key>
             <key type="filename">UIIcons-assets/HeartIcon.png</key>
             <key type="filename">UIIcons-assets/MagnifierIcon.png</key>
             <key type="filename">UIIcons-assets/RedHearts1.png</key>

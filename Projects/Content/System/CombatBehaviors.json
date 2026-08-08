@@ -9,7 +9,7 @@
           "name": "Headbutt",
           "soundStart": "WhooshA",
           "actionKind": "Proximity",
-          "staminaCost": 1,
+          "requiresStamina": true,
           "effects": [
             {
               "context": "Attack",

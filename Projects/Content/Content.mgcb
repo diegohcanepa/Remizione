@@ -1390,6 +1390,13 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/SpearTrap.wav;Audio/FX/SpearTrap
 
+#begin Audio/FX/StaminaLoss.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/StaminaLoss.wav;Audio/FX/StaminaLoss
+
 #begin Audio/FX/StatusEffectDamage.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

@@ -35,6 +35,9 @@
         // GameFolder
         public const string GameFolder = "Scary Castle";
 
+        // HeavyMoveThreshold
+        public const int HeavyMoveThreshold = 150;
+
         // InitialInventoryCapacity
         public const int InitialInventoryCapacity = 5;
 
@@ -44,8 +47,8 @@
         // MaxItemAmount
         public const int MaxItemAmount = 5;
 
-        // StaminaRechargeThreshold
-        public const int StaminaRechargeThreshold = 50;
+        // StaminaRechargeMoveThreshold
+        public const int StaminaRechargeMoveThreshold = 50;
 
         // SteamAppID
         public const int SteamAppID = 480;

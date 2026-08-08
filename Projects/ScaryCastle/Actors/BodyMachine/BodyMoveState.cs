@@ -32,9 +32,6 @@ namespace ScaryCastle
                 return AnimationNames.MoveCarry;
         }
 
-        // PixelsMoved
-        public float PixelsMoved { get; private set; }
-
         // Update
         public override void Update(GameTime gameTime)
         {

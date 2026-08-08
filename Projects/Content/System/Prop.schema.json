@@ -22,18 +22,6 @@
         {
           "type": "object",
           "properties": {
-            "interactionCost": {
-              "type": "integer"
-            },
-            "interactionCostType": {
-              "type": "string",
-              "enum": [
-                "None",
-                "Faith",
-                "Stamina"
-              ],
-              "default": "Script"
-            },             
             "placements": {
               "type": "array",
               "items": {

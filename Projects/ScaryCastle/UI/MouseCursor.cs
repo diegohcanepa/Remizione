@@ -22,7 +22,6 @@ namespace ScaryCastle
         private static OutlineEffect? effect;
         private static readonly Vector2Tween scaleTween = new();
         private static readonly FloatTween shakeTween = new();
-        private static readonly Sprite tooltipImage = new();
         private static readonly TextSprite tooltipSprite;
 
         #endregion
@@ -78,22 +77,10 @@ namespace ScaryCastle
             tooltipSprite.PivotOrigin = RectanglePoint.Left;
             tooltipSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.Right, -offset.X, offset.Y);
 
-            if (TooltipImage != null)
-            {
-                tooltipImage.PivotOrigin = RectanglePoint.LeftTop;
-                tooltipImage.Position = tooltipSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -1);
-            }
-
             if (!tooltipSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox))
             {
                 tooltipSprite.PivotOrigin = RectanglePoint.Right;
                 tooltipSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.Left, offset.X, offset.Y);
-
-                if (TooltipImage != null)
-                {
-                    tooltipImage.PivotOrigin = RectanglePoint.RightTop;
-                    tooltipImage.Position = tooltipSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -1);
-                }
             }
 
             if (tooltipSprite.BoundingBox.Bottom >= Screen.NativeHeight)
@@ -145,14 +132,17 @@ namespace ScaryCastle
             cursorSprite.X += shakeTween.IsRunning ? shakeTween.CurrentValue : 0;
             cursorSprite.Draw(gameTime);
             cursorSprite.X -= shakeTween.IsRunning ? shakeTween.CurrentValue : 0;
-
-            if (Icon != MouseCursorIcon.Cross && !IsArrow)
-            {
-                tooltipSprite.Draw(gameTime);
-                tooltipImage.Draw(gameTime);
-            }
-
             EngendroGame.Instance.SpriteBatch.End();
+
+            if (!IsArrow)
+            {
+                if (Icon != MouseCursorIcon.Cross || CustomImage != null)
+                {
+                    EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera, SamplerState.PointClamp);
+                    tooltipSprite.Draw(gameTime);
+                    EngendroGame.Instance.SpriteBatch.End();
+                }
+            }
         }
 
         // HightlightColor
@@ -218,13 +208,6 @@ namespace ScaryCastle
         {
             get => tooltipSprite.Color;
             set => tooltipSprite.Color = value;
-        }
-
-        // TooltipImage
-        public static AtlasImage? TooltipImage
-        {
-            get => tooltipImage.RenderImage;
-            set => tooltipImage.RenderImage = value;
         }
 
         // Update

@@ -116,7 +116,7 @@ namespace ScaryCastle
         public void ShowIcon(Vector2 origin, AtlasImage image, int duration)
         {
             icon.RenderImage = image;
-            icon.Scale = ScaleInfo.UIElement.Medium;
+            icon.Scale = ScaleInfo.UIElement.Large;
             Launch(origin, icon, new Vector2(0, -3), duration);
         }
 
@@ -142,7 +142,7 @@ namespace ScaryCastle
             var deltaX = Random.Shared.Next(3, 6);
             var horzDirection = source.Direction == FacingDirection.Left ? deltaX : -deltaX;
 
-            ShowTextCore(origin, amount.ToString(CultureInfo.InvariantCulture), color, new(horzDirection, -10), ScaleInfo.Text.Huge.X, 1700);
+            ShowTextCore(origin, amount.ToString(CultureInfo.InvariantCulture), color, new(horzDirection, -10), ScaleInfo.Text.Huge.X, 500);
         }
     }
 }

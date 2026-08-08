@@ -85,8 +85,6 @@ namespace ScaryCastle
                 // Attack
                 case Verb.Attack:
                     MouseCursor.Icon = MouseCursorIcon.Attack;
-                    if (context.Session.Player?.CombatBehavior?.Intents[0] is { } combatIntent && combatIntent.StaminaCost > 0)
-                        MouseCursor.TooltipImage = Atlases.UI.StaminaCosts[combatIntent.StaminaCost - 1];
                     break;
 
                 // Examine

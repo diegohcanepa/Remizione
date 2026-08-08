@@ -1,5 +1,4 @@
-﻿using Engendro;
-using Engendro.Input;
+﻿using Engendro.Input;
 
 namespace ScaryCastle
 {
@@ -12,7 +11,6 @@ namespace ScaryCastle
         public InteractionContext(GameSession session)
         {
             this.Session = session;
-            this.CoinDisplayName = TextRepository.GetValue("Prop.Coin");
         }
 
         #region Private members
@@ -64,9 +62,6 @@ namespace ScaryCastle
 
         #endregion
 
-        // CoinDisplayName
-        public string CoinDisplayName { get; }
-
         // HeldItem
         public Item? HeldItem { get; set; }
 
@@ -85,19 +80,6 @@ namespace ScaryCastle
                 HeldItem = null;
 
             MouseCursor.Tooltip = Target?.DisplayName;
-
-            if (Target is Prop prop && prop.Definition?.InteractionCostType is { } costType && costType != InteractionCostType.None)
-            {
-                if (costType == InteractionCostType.Faith)
-                    MouseCursor.TooltipImage = Atlases.UI.FaithCosts[prop.Definition.InteractionCost - 1];
-                else if (costType == InteractionCostType.Stamina)
-                    MouseCursor.TooltipImage = Atlases.UI.StaminaCosts[prop.Definition.InteractionCost - 1];
-            }
-            else
-            {
-                MouseCursor.TooltipImage = null;
-            }
-
             MouseCursorAppearance.Refresh(this);
         }
 

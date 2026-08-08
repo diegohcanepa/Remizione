@@ -59,7 +59,7 @@ namespace ScaryCastle
                 session.Player.ThrowActiveTrowable(target);
                 result = true;
             }
-            else if (target.Verb == Verb.Lift)
+            else if (target.Verb == Verb.Lift && session.InteractionContext.HeldItem == null)
             {
                 if (target is Prop prop && prop.IsLiftable)
                 {

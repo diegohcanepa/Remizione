@@ -460,17 +460,7 @@ namespace ScaryCastle
         protected override void OnOutcomeCompleted(Script script, Thing target)
         {
             base.OnOutcomeCompleted(script, target);
-
-            if (ActiveNPC == null)
-            {
-                if (target is Prop prop && Player != null)
-                    prop.Definition?.ApplyInteractionCost(Player);
-            }
-            else
-            {
-                ActiveNPC?.CombatDecision = null;
-            }
-
+            ActiveNPC?.CombatDecision = null;
             ProcessTurn();
         }
 

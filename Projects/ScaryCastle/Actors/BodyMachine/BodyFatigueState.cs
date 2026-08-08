@@ -7,7 +7,7 @@ namespace ScaryCastle
     /// </summary>
     public sealed class BodyFatigueState : BodyAnimatedState
     {
-        private const int cooldown = 400;
+        private const int cooldown = 500;
         private int timer;
 
         // Constructor
@@ -30,7 +30,7 @@ namespace ScaryCastle
             if (timer <= 0)
             {
                 Owner.Stamina++;
-                if (Owner.Stamina >= Owner.MaxStamina / 2)
+                if (Owner.Stamina >= Owner.MaxStamina)
                     Machine.ChangeState<BodyStandState>();
                 else
                     timer = cooldown;

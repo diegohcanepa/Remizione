@@ -56,6 +56,9 @@
           "$ref": "Projectile.schema.json",
           "description": "Referencia al comportamiento y descriptor del proyectil que este ítem dispara o genera."
         },
+        "requiresStamina": {
+          "type": "boolean"
+        },
         "soundStart": {
           "type": "string",
           "description": "Nombre del archivo de sonido a reproducir cuando comienza la accion."
@@ -63,9 +66,6 @@
         "soundTrigger": {
           "type": "string",
           "description": "Nombre del archivo de sonido a reproducir en el trigger de la accion."
-        },
-        "staminaCost": {
-          "type": "integer"
         }
       },
       "required": [

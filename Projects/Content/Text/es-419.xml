@@ -254,7 +254,7 @@ Bla bla bla</String>
   <String Key="Misc.Stamina">Resistencia</String>
   <String Key="Misc.Threshold">Umbral</String>
   <String Key="Misc.Unknown">???</String>
-  <String Key="Misc.UseWith">Usar con</String>
+  <String Key="Misc.UseWith">Usar {0} con {1}</String>
   <String Key="Misc.Will">VOLUNTAD</String>
   <String Key="Misc.WithPreposition">con</String>
   <String Key="Misc.Yes">Sí</String>

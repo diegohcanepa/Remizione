@@ -66,7 +66,7 @@ namespace ScaryCastle
         // Refresh
         public void Refresh()
         {
-            var pos = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -28, 0);
+            var pos = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -26, 0);
             for (var i = 0; i < items.Count; i++)
             {
                 var count = Manager.GetCount(items[i].PocketItemType);

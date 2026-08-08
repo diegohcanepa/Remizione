@@ -18,6 +18,7 @@ namespace ScaryCastle
 
         private Sprite? activeThrowableSprite;
         private readonly FloatTween alertTween = FloatTween.Create(TweenStyle.Linear, 0, .5f, 50, -1);
+        private FlyOff? energyFlyoff;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
         private readonly AnimatedSprite headSprite;
@@ -25,8 +26,10 @@ namespace ScaryCastle
         private readonly FloatTween moveBalancingTween = new();
         private readonly FloatTween moveVerticalTween = new();
         private readonly List<Vector2> pendingPathNodes = [];
+        private float pixelsTrudged;
         private List<AtlasImage>? remainsPieces;
         private SpeechText? speechText;
+        private FlyOff? staminaFlyoff;
         private readonly ColorTween tintTween = new();
 
         #endregion
@@ -87,10 +90,15 @@ namespace ScaryCastle
         // Fatigue
         private void Fatigue()
         {
-            if (Sprite.Animations.Contains(ActorStateNames.Fatigue))
+            if (MaxStamina > 0)
             {
-                var state = BodyMachine.FindOrCreateState<BodyFatigueState>();
-                BodyMachine.ChangeState(state.GetType());
+                if (Sprite.Animations.Contains(ActorStateNames.Fatigue))
+                {
+                    StopMoving();
+                    var state = BodyMachine.FindOrCreateState<BodyFatigueState>();
+                    BodyMachine.ChangeState(state.GetType());
+                    Session.ProcessTurn(10);
+                }
             }
         }
 
@@ -541,19 +549,11 @@ namespace ScaryCastle
 
                 if (ActiveThrowable == null)
                 {
-                    if (PixelsMoved > GameSettings.StaminaRechargeThreshold)
+                    if (PixelsMoved > GameSettings.StaminaRechargeMoveThreshold)
                         Stamina++;
                 }
-                else if (ActiveThrowable.Definition is { } def)
-                {
-                    if (def.InteractionCostType == InteractionCostType.Faith)
-                        Energy -= 1;
 
-                    else if (def.InteractionCostType == InteractionCostType.Stamina)
-                        Stamina -= 1;
-                }
-
-                Session.ProcessTurn(PixelsMoved > 80 ? 1 : 0);
+                Session.ProcessTurn(PixelsMoved > GameSettings.StaminaRechargeMoveThreshold ? 1 : 0);
             }
         }
 
@@ -591,6 +591,12 @@ namespace ScaryCastle
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
+
+            if (energyFlyoff != null && !energyFlyoff.IsVisible)
+                energyFlyoff = null;
+
+            if (staminaFlyoff != null && !staminaFlyoff.IsVisible)
+                staminaFlyoff = null;
 
             headTween.Update(gameTime);
 
@@ -782,6 +788,8 @@ namespace ScaryCastle
                     var previousValue = field;
                     field = Math.Clamp(value, 0, MaxEnergy);
                     OnEnergyChanged(previousValue);
+                    if (previousValue > field && energyFlyoff == null)
+                        energyFlyoff = ShowFlyOff(Atlases.UI.FaithIcon, 1000);
                 }
             }
         }
@@ -902,7 +910,8 @@ namespace ScaryCastle
 
             FaceTo(prop);
 
-            prop.Definition?.ApplyInteractionCost(this);
+            pixelsTrudged = 0;
+            Stamina--;
 
             var state = BodyMachine.FindOrCreateState<BodyLiftState>();
             state.Target = prop;
@@ -1117,8 +1126,6 @@ namespace ScaryCastle
 
             IsFollowingPath = true;
 
-            BodyMachine.ChangeState<BodyMoveState>();
-
             return MoveToResult.Success;
         }
 
@@ -1126,7 +1133,28 @@ namespace ScaryCastle
         public Vector2? MoveToDestination => pendingPathNodes.Count == 0 ? null : pendingPathNodes[^1];
 
         // PixelsMoved
-        public float PixelsMoved { get; set; }
+        public float PixelsMoved
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    if (ActiveThrowable != null && MaxStamina > 0)
+                    {
+                        var delta = Math.Abs(value - field);
+                        pixelsTrudged += delta;
+                        if (pixelsTrudged > GameSettings.HeavyMoveThreshold)
+                        {
+                            pixelsTrudged = 0;
+                            Stamina--;
+                        }
+                    }
+
+                    field = value;
+                }
+            }
+        }
 
         // PlayerNumber
         [ScriptProperty]
@@ -1267,6 +1295,12 @@ namespace ScaryCastle
                     {
                         DiscardActiveThrowable();
                         Fatigue();
+                    }
+                    else if (previousValue > field && staminaFlyoff == null)
+                    {
+                        pixelsTrudged = 0;
+                        Sound.Play(SoundNames.StaminaLoss);
+                        staminaFlyoff = ShowFlyOff(Atlases.UI.StaminaIcon, 1000);
                     }
                 }
             }
