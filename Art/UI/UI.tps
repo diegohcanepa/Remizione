@@ -244,18 +244,12 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">FaithMeter-assets/FaithMeter0.png</key>
-            <key type="filename">FaithMeter-assets/FaithMeter1.png</key>
-            <key type="filename">FaithMeter-assets/FaithMeter2.png</key>
-            <key type="filename">FaithMeter-assets/FaithMeter3.png</key>
-            <key type="filename">FaithMeter-assets/FaithMeter4.png</key>
-            <key type="filename">FaithMeter-assets/FaithMeter5.png</key>
-            <key type="filename">FaithMeter-assets/StaminaMeter0.png</key>
-            <key type="filename">FaithMeter-assets/StaminaMeter1.png</key>
-            <key type="filename">FaithMeter-assets/StaminaMeter2.png</key>
-            <key type="filename">FaithMeter-assets/StaminaMeter3.png</key>
-            <key type="filename">FaithMeter-assets/StaminaMeter4.png</key>
-            <key type="filename">FaithMeter-assets/StaminaMeter5.png</key>
+            <key type="filename">GooMeter-assets/GooMeter0.png</key>
+            <key type="filename">GooMeter-assets/GooMeter1.png</key>
+            <key type="filename">GooMeter-assets/GooMeter2.png</key>
+            <key type="filename">GooMeter-assets/GooMeter3.png</key>
+            <key type="filename">GooMeter-assets/GooMeter4.png</key>
+            <key type="filename">GooMeter-assets/GooMeter5.png</key>
             <key type="filename">UIIcons-assets/FaithCost2.png</key>
             <key type="filename">UIIcons-assets/StaminaCost2.png</key>
             <struct type="IndividualSpriteSettings">
@@ -1185,11 +1179,11 @@
                     <filename>ItemInfo-assets</filename>
                     <filename>BossMeter-assets</filename>
                     <filename>MiniMap-assets</filename>
-                    <filename>FaithMeter-assets</filename>
                     <filename>DialogBox-assets</filename>
                     <filename>RunModifierIcons-assets</filename>
                     <filename>Meter-assets</filename>
                     <filename>PocketItems-assets</filename>
+                    <filename>GooMeter-assets</filename>
                 </array>
             </struct>
         </map>

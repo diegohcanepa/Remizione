@@ -24,12 +24,11 @@ namespace ScaryCastle
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
             DialogOptionBullet = this[nameof(DialogOptionBullet)];
             DiscardItemIcon = this[nameof(DiscardItemIcon)];
-            FaithCosts = CreateReadOnlyCollection("FaithCost", 1, 3);
-            FaithIcon = this[nameof(FaithIcon)];
-            FaithMeter = CreateReadOnlyCollection(nameof(FaithMeter), 0, 5);
             FearIcon = this[nameof(FearIcon)];
             GoldenKeyIcon = this[nameof(GoldenKeyIcon)];
+            GooCost = CreateReadOnlyCollection("GooCost", 1, 3);
             GooIcon = this[nameof(GooIcon)];
+            GooMeter = CreateReadOnlyCollection(nameof(GooMeter), 0, 5);
             HeartIcon = this[nameof(HeartIcon)];
             InventoryItemAmounts = CreateReadOnlyCollection("InventoryItemAmount", 1, 5);
             InventoryItemSlot = this[nameof(InventoryItemSlot)];
@@ -59,7 +58,6 @@ namespace ScaryCastle
             SpeechTextPipe = this[nameof(SpeechTextPipe)];
             StaminaCosts = CreateReadOnlyCollection("StaminaCost", 1, 3);
             StaminaIcon = this[nameof(StaminaIcon)];
-            StaminaMeter = CreateReadOnlyCollection(nameof(StaminaMeter), 0, 5);
             UIButtonContainerEdge = this[nameof(UIButtonContainerEdge)];
             UIButtonContainerPattern = this[nameof(UIButtonContainerPattern)];
         }
@@ -103,23 +101,20 @@ namespace ScaryCastle
         // DiscardItemIcon
         public AtlasImage DiscardItemIcon { get; }
 
-        // FaithCosts
-        public ReadOnlyCollection<AtlasImage> FaithCosts { get; }
-
-        // FaithIcon
-        public AtlasImage FaithIcon { get; }
-
-        // FaithMeter
-        public ReadOnlyCollection<AtlasImage> FaithMeter { get; }
-
         // FearIcon
         public AtlasImage FearIcon { get; }
 
         // GoldenKeyIcon
         public AtlasImage GoldenKeyIcon { get; }
 
+        // GooCost
+        public ReadOnlyCollection<AtlasImage> GooCost { get; }
+
         // GooIcon
         public AtlasImage GooIcon { get; }
+
+        // GooMeter
+        public ReadOnlyCollection<AtlasImage> GooMeter { get; }
 
         // HeartIcon
         public AtlasImage HeartIcon { get; }
@@ -204,9 +199,6 @@ namespace ScaryCastle
 
         // StaminaIcon
         public AtlasImage StaminaIcon { get; }
-
-        // StaminaMeter
-        public ReadOnlyCollection<AtlasImage> StaminaMeter { get; }
 
         // UIButtonContainerEdge
         public AtlasImage UIButtonContainerEdge { get; }

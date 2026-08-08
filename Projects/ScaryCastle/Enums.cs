@@ -131,7 +131,7 @@ namespace ScaryCastle
     }
 
     // MessageKind
-    public enum MessageKind { CannotPlaceItem, HandsFull, InventoryFull, ItemDiscarded, LiftNotAllowed, NotEnoughCoins, NotEnoughFaith, OutOfReach, OutOfLine, PathCleared, ExtraEnergy, ExtraHeart }
+    public enum MessageKind { CannotPlaceItem, HandsFull, InventoryFull, ItemDiscarded, LiftNotAllowed, NotEnoughCoins, NotEnoughGoo, OutOfReach, OutOfLine, PathCleared, ExtraEnergy, ExtraHeart }
 
     // MeterColor
     public enum MeterColor { Green, Orange, Purple, SkyBlue, White }

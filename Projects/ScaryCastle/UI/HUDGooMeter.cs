@@ -7,9 +7,9 @@ using System.Collections.Generic;
 namespace ScaryCastle
 {
     /// <summary>
-    /// HUDFaithMeter
+    /// HUDGooMeter
     /// </summary>
-    public sealed class HUDFaithMeter : SessionGameObject<GameSession>
+    public sealed class HUDGooMeter : SessionGameObject<GameSession>
     {
         #region Private fields
 
@@ -17,14 +17,14 @@ namespace ScaryCastle
 
         private Actor? actor;
         private const float fillSpeed = 8;
-        private readonly Sprite icon = new(Atlases.UI.FaithIcon) { PivotOrigin = RectanglePoint.Top };
+        private readonly Sprite icon = new(Atlases.UI.GooIcon) { PivotOrigin = RectanglePoint.Top };
         private readonly List<Sprite> parts = [];
         private float visualValue;
 
         #endregion
 
         // Constructor
-        public HUDFaithMeter(GameSession session)
+        public HUDGooMeter(GameSession session)
             : base(session)
         {
         }
@@ -43,11 +43,11 @@ namespace ScaryCastle
 
             icon.Position = new(9, 3);
 
-            float x = 6.5f;
+            float x = 6;
             float y = 12;
             while (parts.Count < actor.MaxEnergy)
             {
-                var part = new Sprite(Atlases.UI.FaithMeter[(int)MeterPart.MiddleEmpty]) { X = x, Y = y };
+                var part = new Sprite(Atlases.UI.GooMeter[(int)MeterPart.MiddleEmpty]) { X = x, Y = y };
                 parts.Add(part);
                 y += part.BoundingBox.Height - 1;
             }
@@ -89,7 +89,7 @@ namespace ScaryCastle
                     part = isSegmentFilled ? MeterPart.MiddleFilled : MeterPart.MiddleEmpty;
                 }
 
-                segment.RenderImage = Atlases.UI.FaithMeter[(int)part];
+                segment.RenderImage = Atlases.UI.GooMeter[(int)part];
                 segment.Draw(gameTime);
             }
 

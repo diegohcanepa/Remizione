@@ -203,7 +203,7 @@
   <String Key="MessageKind.ItemDiscarded">Item descartado.</String>
   <String Key="MessageKind.LiftNotAllowed">No puedes alzar eso.</String>
   <String Key="MessageKind.NotEnoughCoins">No tienes monedas suficientes.</String>
-  <String Key="MessageKind.NotEnoughFaith">Fe insuficiente</String>
+  <String Key="MessageKind.NotEnoughGoo">Baba insuficiente</String>
   <String Key="MessageKind.OutOfLine">¡Fuera línea!</String>
   <String Key="MessageKind.OutOfReach">Fuera de alcance.</String>
   <String Key="MessageKind.PathCleared">Camino despejado.</String>
@@ -329,7 +329,7 @@ Bla bla bla</String>
   <String Key="Prop.UnderRideEntrance">Inframundo</String>
   <String Key="Prop.VendingMachine">Máquina expendedora</String>
   <String Key="Prop.WC">Inodoro</String>
-  <String Key="StatName.Faith">Fe</String>
+  <String Key="StatName.Goo">Baba</String>
   <String Key="StatName.HP">Salud</String>
   <String Key="Verb.Examine">Examinar</String>
   <String Key="Verb.Grab">Agarrar</String>

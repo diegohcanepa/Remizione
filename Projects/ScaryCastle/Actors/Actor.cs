@@ -789,7 +789,7 @@ namespace ScaryCastle
                     field = Math.Clamp(value, 0, MaxEnergy);
                     OnEnergyChanged(previousValue);
                     if (previousValue > field && energyFlyoff == null)
-                        energyFlyoff = ShowFlyOff(Atlases.UI.FaithIcon, 1000);
+                        energyFlyoff = ShowFlyOff(Atlases.UI.GooIcon, 1000);
                 }
             }
         }

@@ -12,7 +12,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly HUDFaithMeter faithMeter;
+        private readonly HUDGooMeter gooMeter;
         private readonly UIPassiveItems passiveItems;
         private readonly UIRunModifiers runModifiers;
 
@@ -24,7 +24,7 @@ namespace ScaryCastle
         public HUD(GameSession session)
             : base(session)
         {
-            this.faithMeter = new(session);
+            this.gooMeter = new(session);
             this.StaminaMeter = new(session);
             this.HPMeter = new(session);
             this.InventoryMeter = new(session.PlayerInventory);
@@ -50,7 +50,7 @@ namespace ScaryCastle
             passiveItems.Draw(gameTime);
             Game.SpriteBatch.End();
 
-            faithMeter.Draw(gameTime);
+            gooMeter.Draw(gameTime);
             StaminaMeter.Draw(gameTime);
 
             if (Session.IsCurrentScene)
@@ -78,7 +78,7 @@ namespace ScaryCastle
             HPMeter.Update(gameTime);
             Log.Update(gameTime);
             Message.Update(gameTime);
-            faithMeter.Update(gameTime);
+            gooMeter.Update(gameTime);
             StaminaMeter.Update(gameTime);
             MiniMap.Update(gameTime);
         }
