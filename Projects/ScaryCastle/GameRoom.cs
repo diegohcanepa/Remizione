@@ -517,15 +517,15 @@ namespace ScaryCastle
         // CanUseLightingSystem
         public bool CanUseLightingSystem => Session.LightingSystem && LightingSystem;
 
+        // ControlMouseCursor
+        public virtual bool ControlMouseCursor => false;
+
         // DustParticleKind
         [ScriptProperty]
         public DustParticleKind DustParticleKind { get; set; } = DustParticleKind.Ash;
 
         // FollowPlayer
         public bool FollowPlayer { get; set; } = true;
-
-        // HasAmbientLights
-        public bool HasAmbientLights { get; private set; }
 
         // IsProcedural
         [ScriptProperty]
@@ -567,7 +567,7 @@ namespace ScaryCastle
         // RefreshAmbientLightSources
         public void RefreshAmbientLightSources()
         {
-            var hasAmbientLights = false;
+            var hasAmbientLights = !IsProcedural;
 
             for (var i = 0; i < Lights.Count; i++)
             {

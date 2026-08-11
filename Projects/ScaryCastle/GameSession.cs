@@ -177,8 +177,8 @@ namespace ScaryCastle
         // SyncProceduralMusic
         private void SyncProceduralMusic()
         {
-            AudioManager.Music.Stop();
-            AudioManager.Music.CurrentTag = string.Empty;
+            //AudioManager.Music.Stop();
+            //AudioManager.Music.CurrentTag = string.Empty;
 
             /*
             if (Room is ProceduralRoom proceduralRoom)
@@ -423,8 +423,11 @@ namespace ScaryCastle
                 }
             }
 
-            if (IsCurrentScene)
-                InteractionContext.Refresh();
+            //if (IsCurrentScene)
+            {
+                if (Room == null || !Room.ControlMouseCursor)
+                    InteractionContext.Refresh();
+            }
 
             /*
             if (Player != null && Player.ActiveThrowable == null)

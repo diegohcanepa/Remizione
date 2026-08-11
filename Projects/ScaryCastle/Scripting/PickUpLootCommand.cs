@@ -30,7 +30,7 @@ namespace ScaryCastle.Scripting
                         if (session.PlayerInventory.Add(lootProvider.Loot) is Item item)
                         {
                             session.HUD.InventoryMeter.Animate();
-                            session.HUD.Log.Show(item);
+                            session.HUD.Log.Show(item.DisplayName, item.Definition.Image);
                         }
                     }
                     else if (lootProvider.Loot.Behavior != ItemBehavior.PlayerAction && session.Player != null)

@@ -228,7 +228,6 @@
             <key type="filename">DialogBox-assets/DialogBoxFillRT.png</key>
             <key type="filename">DialogBox-assets/DialogBoxFillT.png</key>
             <key type="filename">UI-assets/DialogOptionBullet.png</key>
-            <key type="filename">UIIcons-assets/FaithCost1.png</key>
             <key type="filename">UIIcons-assets/StaminaCost1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -250,7 +249,6 @@
             <key type="filename">GooMeter-assets/GooMeter3.png</key>
             <key type="filename">GooMeter-assets/GooMeter4.png</key>
             <key type="filename">GooMeter-assets/GooMeter5.png</key>
-            <key type="filename">UIIcons-assets/FaithCost2.png</key>
             <key type="filename">UIIcons-assets/StaminaCost2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -655,6 +653,7 @@
                 <false/>
             </struct>
             <key type="filename">MiniMap-assets/MiniMapLoot.png</key>
+            <key type="filename">UIIcons-assets/GooCost1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -785,7 +784,6 @@
             </struct>
             <key type="filename">MouseCursors-assets/MouseCursorTalkIcon.png</key>
             <key type="filename">UI-assets/ProhibitionIcon.png</key>
-            <key type="filename">UIIcons-assets/FaithIcon.png</key>
             <key type="filename">UIIcons-assets/HeartIcon.png</key>
             <key type="filename">UIIcons-assets/MagnifierIcon.png</key>
             <key type="filename">UIIcons-assets/RedHearts1.png</key>
@@ -1082,22 +1080,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UIIcons-assets/FaithCost3.png</key>
-            <key type="filename">UIIcons-assets/StaminaCost3.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,1,5,2</rect>
-                <key>scale9Paddings</key>
-                <rect>3,1,5,2</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">UIIcons-assets/FearIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -1110,6 +1092,36 @@
                 <rect>3,3,5,6</rect>
                 <key>scale9Paddings</key>
                 <rect>3,3,5,6</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">UIIcons-assets/GooCost2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,5,3</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,5,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">UIIcons-assets/GooCost3.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,2,7,3</rect>
+                <key>scale9Paddings</key>
+                <rect>3,2,7,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1126,6 +1138,21 @@
                 <rect>2,3,4,6</rect>
                 <key>scale9Paddings</key>
                 <rect>2,3,4,6</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">UIIcons-assets/StaminaCost3.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,1,5,2</rect>
+                <key>scale9Paddings</key>
+                <rect>3,1,5,2</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

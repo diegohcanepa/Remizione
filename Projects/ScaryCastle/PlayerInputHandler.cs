@@ -27,8 +27,11 @@ namespace ScaryCastle
                 return HandleInputResult.Handled;
 
             // Right button
-            if (TestMouseRightButtonClick())
-                return HandleInputResult.Handled;
+            if (Actor.Session.IsHUDVisible)
+            {
+                if (TestMouseRightButtonClick())
+                    return HandleInputResult.Handled;
+            }
 
             return HandleInputResult.Unhandled;
         }

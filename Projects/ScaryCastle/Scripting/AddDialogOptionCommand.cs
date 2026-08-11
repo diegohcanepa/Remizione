@@ -3,7 +3,7 @@
 namespace ScaryCastle.Scripting
 {
     // AddDialogOptionCommand
-    // Syntax: {Id:Integer} {"Text"} [#condition:FlagCondition] [#lid:Integer] [#requires:Id[,Id...]] [#requires-read:Id[,Id...]]
+    // Syntax: {Id:Integer} {"Text"} [#condition:FlagCondition] [#lid:Integer] [#requires-read:Id[,Id...]] [#requires-read:Id[,Id...]]
     internal sealed class AddDialogOptionCommand : LocalizableCommand
     {
         private const string RequiresReadArg = "#requires-read";

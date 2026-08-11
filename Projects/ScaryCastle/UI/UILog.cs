@@ -82,17 +82,17 @@ namespace ScaryCastle
         }
 
         // Show
-        public void Show(Item item, bool isWarning = false)
+        public void Show(string displayName, AtlasImage image)
         {
-            textSprite.Color = isWarning ? ColorPalette.Text.Terra : ColorPalette.Text.Highlight;
+            textSprite.Color = ColorPalette.Text.Highlight;
             textSprite.Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -1);
-            textSprite.Text = item.DisplayName;
+            textSprite.Text = displayName;
 
-            icon.RenderImage = item.Definition.Image;
+            icon.RenderImage = image;
             icon.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.Top);
 
             iconShadow.Position = icon.BoundingBox.Center;
-            iconShadow.RenderImage = item.Definition.Image;
+            iconShadow.RenderImage = image;
             iconShadow.X -= 1.5f;
             iconShadow.Y += .5f;
 

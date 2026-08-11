@@ -2,6 +2,8 @@
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ScaryCastle.Scripting;
+using System.Globalization;
 
 namespace ScaryCastle
 {
@@ -101,7 +103,7 @@ namespace ScaryCastle
                 lines[i].Update(gameTime);
             }
 
-            MouseCursor.Icon = IsTypingText ? MouseCursorIcon.Wait : MouseCursorIcon.Hand;
+            MouseCursor.Icon = Session.AwaitingScript?.CurrentStatement is AwaitInputCommand ? MouseCursorIcon.Hand : MouseCursorIcon.Wait;
         }
 
         #endregion
@@ -112,7 +114,7 @@ namespace ScaryCastle
             if (!pushText)
             {
                 lineIndex++;
-                if (lineIndex == lines.Length - 3)
+                if (lineIndex == lines.Length - 2)
                 {
                     pushText = true;
                     lineIndex--;
@@ -132,11 +134,14 @@ namespace ScaryCastle
             Layout();
 
             lines[lineIndex].Color = color ? Color.White * .7f : Color.White;
-            lines[lineIndex].Text = text.ToUpper();
+            lines[lineIndex].Text = text.ToUpper(CultureInfo.CurrentCulture);
 
             if (!fast)
                 lines[lineIndex].StartTyping(Sound.Get(SoundNames.Keyboard)?.PopInstance());
         }
+
+        // ControlMouseCursor
+        public override bool ControlMouseCursor => true;
 
         // IsTypingText
         public bool IsTypingText => lineIndex >= 0 && lines[lineIndex].IsTyping;
