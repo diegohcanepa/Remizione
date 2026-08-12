@@ -1,7 +1,6 @@
 ﻿using Adberration;
 using Adberration.Scripting;
 using Engendro;
-using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using ScaryCastle.Props;
 using ScaryCastle.Scripting;
@@ -501,6 +500,7 @@ namespace ScaryCastle
             if (RunCount == 0)
             {
                 PlayerInventory.Add(ItemNames.Apple);
+                PlayerInventory.Add(ItemNames.GooBottle);
                 PlayerInventory.Add(ItemNames.BargainCross);
             }
 

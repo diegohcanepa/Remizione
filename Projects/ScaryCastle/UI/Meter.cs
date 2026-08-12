@@ -51,7 +51,7 @@ namespace ScaryCastle
             }
 
             parts = new(list);
-            
+
             Refresh();
         }
 

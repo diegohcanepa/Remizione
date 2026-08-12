@@ -2,7 +2,6 @@
 using Engendro;
 using Engendro.Audio;
 using System.Collections.ObjectModel;
-using System.Globalization;
 
 namespace ScaryCastle
 {

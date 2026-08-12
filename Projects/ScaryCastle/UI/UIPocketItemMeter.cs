@@ -1,7 +1,6 @@
 ﻿using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
-using System.Globalization;
 
 namespace ScaryCastle
 {
@@ -94,13 +93,7 @@ namespace ScaryCastle
         #endregion
 
         // BoundingBox
-        public RectangleF BoundingBox
-        {
-            get
-            {
-                return RectangleF.Union(icon.BoundingBox, valueText.BoundingBox);
-            }
-        }
+        public RectangleF BoundingBox => RectangleF.Union(icon.BoundingBox, valueText.BoundingBox);
 
         // PocketItemType
         public PocketItemType PocketItemType { get; }

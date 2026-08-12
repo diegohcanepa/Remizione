@@ -58,7 +58,7 @@ namespace ScaryCastle
 
             opacityTween.StartDelay = duration - fadeDuration;
             opacityTween.Start(TweenStyle.CubicIn, 1, 0, fadeDuration);
-        
+
             sprite.Tweens.OpacityTween = opacityTween;
             sprite.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.Linear, Vector2.Zero, sprite.Scale, 200);
 

@@ -37,7 +37,7 @@ namespace ScaryCastle
             if (Timer >= 0)
             {
                 Timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                
+
                 if (Timer >= Definition.Cooldown)
                 {
                     if (manager.Session.Player is Actor player)

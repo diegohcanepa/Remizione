@@ -1299,7 +1299,6 @@ namespace ScaryCastle
                     else if (previousValue > field && staminaFlyoff == null)
                     {
                         pixelsTrudged = 0;
-                        Sound.Play(SoundNames.StaminaLoss);
                         staminaFlyoff = ShowFlyOff(Atlases.UI.StaminaIcon, 1000);
                     }
                 }

@@ -52,12 +52,6 @@ namespace ScaryCastle
         #endregion
 
         // BoundingBox
-        public RectangleF BoundingBox
-        {
-            get
-            {
-                return RectangleF.Union(icon.BoundingBox, meter.BoundingBox);
-            }
-        }
+        public RectangleF BoundingBox => RectangleF.Union(icon.BoundingBox, meter.BoundingBox);
     }
 }
