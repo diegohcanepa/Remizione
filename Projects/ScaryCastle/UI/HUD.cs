@@ -49,7 +49,6 @@ namespace ScaryCastle
             Statuses.Draw(gameTime);
             passiveItems.Draw(gameTime);
             Game.SpriteBatch.End();
-
             gooMeter.Draw(gameTime);
             StaminaMeter.Draw(gameTime);
 

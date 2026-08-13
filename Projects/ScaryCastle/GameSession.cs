@@ -47,6 +47,7 @@ namespace ScaryCastle
             : base(game, new ScaryCastlePersistenceModel(), ContentManagerExtension.EncodePath(game.Content, ContentFolder.System, "ScriptLibrary.esl"), slotNumber)
         {
             this.Game = game;
+            this.RunManager = new(this);
             this.RunModifiers = new(this);
             this.PlayerInventory = new(this);
             this.Environment = new Environment();
@@ -216,7 +217,7 @@ namespace ScaryCastle
         {
             base.OnDraw(gameTime);
 
-            if (CurrentRun == null)
+            if (RunInProgress)
             {
                 if (savingIcon.Tweens.IsTweening)
                 {
@@ -306,6 +307,10 @@ namespace ScaryCastle
         {
             if (sessionNode == null || sessionNode.Attributes == null)
                 throw new InvalidOperationException("Session node attributes not found.");
+
+            // FloorNumber
+            if (sessionNode.Attributes[nameof(FloorNumber)]?.Value is string floorNumberValue)
+                FloorNumber = XmlConvert.ToInt32(floorNumberValue);
 
             // Player
             if (sessionNode.Attributes[nameof(Player)]?.Value is string player)
@@ -405,7 +410,7 @@ namespace ScaryCastle
                 console?.Update(gameTime);
             }
 
-            if (CurrentRun != null)
+            if (RunInProgress)
             {
                 RunModifiers.Update(gameTime);
 
@@ -446,6 +451,9 @@ namespace ScaryCastle
         // OnWrite
         protected override void OnWrite(XmlWriter output)
         {
+            // FloorNumber
+            output.WriteAttributeString(nameof(FloorNumber), XmlConvert.ToString(FloorNumber));
+
             // Player
             if (Player != null)
                 output.WriteAttributeString(nameof(Player), Player.Name);
@@ -482,8 +490,10 @@ namespace ScaryCastle
         // BeginRun
         public void BeginRun(int? seed = null)
         {
-            if (CurrentRun != null)
+            if (RunInProgress)
                 throw new InvalidOperationException("A run is already in progress.");
+
+            RunInProgress = true;
 
             // 1. Establecemos el Seed de la run para la TOPOLOGÍA (fijo o por tiempo)
             RunSeed = seed ?? System.Environment.TickCount;
@@ -494,8 +504,6 @@ namespace ScaryCastle
             // 3. RNG Volátil: CAOS TOTAL. Sin parámetros, .NET genera una semilla impredecible.
             VolatileRng = new Random(RunSeed);
 
-            CurrentRun = new Run(this, 15);
-
             PlayerInventory.Capacity = GameSettings.InitialInventoryCapacity;
             if (RunCount == 0)
             {
@@ -504,13 +512,14 @@ namespace ScaryCastle
                 PlayerInventory.Add(ItemNames.ServantCross);
             }
 
-            CurrentRun.NextFloor();
+            // TODO: Check totalRooms
+            RunManager.GenerateFloor(FloorNumber + 1, 15);
 
             if (Player != null)
             {
                 Player.Reheal();
                 Player.Recharge();
-                var startRoom = CurrentRun.FloorMap[new(0, 0)].Room;
+                var startRoom = RunManager.FloorMap[new(0, 0)].Room;
                 startRoom.Children.Add(Player);
                 if (startRoom.WalkArea != null)
                     Player.Position = startRoom.WalkArea.Polygon.BoundingRectangleF.Center;
@@ -537,9 +546,6 @@ namespace ScaryCastle
             EndRun();
         }
 
-        // CurrentRun
-        public Run? CurrentRun { get; private set; }
-
         // DangerousTarget
         [ScriptProperty]
         public GameThing? DangerousTarget { get; set; }
@@ -555,10 +561,8 @@ namespace ScaryCastle
         [ScriptMethod]
         public void EndRun()
         {
-            if (CurrentRun == null)
+            if (!RunInProgress)
                 return;
-
-            CurrentRun = null;
 
             RunModifiers.Clear();
             Bosses.Clear();
@@ -576,6 +580,8 @@ namespace ScaryCastle
                 Player.MaxEnergy = 5;
                 Player.Energy = 5;
             }
+
+            FloorNumber++;
 
             // 1. Force an immediate collection of all generations (0, 1, and 2).
             // 'Forced' tells the GC to ignore its internal heuristics and run immediately.
@@ -601,6 +607,9 @@ namespace ScaryCastle
         {
             return proceduralThingsDict.TryGetValue(name, out var result) ? result : null;
         }
+
+        // FloorNumber
+        public int FloorNumber { get; private set; }
 
         // Game
         public new ScaryCastleGame Game { get; }
@@ -788,6 +797,12 @@ namespace ScaryCastle
         // RunCount
         [ScriptProperty]
         public int RunCount { get; set; }
+
+        // RunInProgress
+        public bool RunInProgress { get; private set; }
+
+        // RunManager
+        public RunManager RunManager { get; }
 
         // RunModifiers
         public RunModifierManager RunModifiers { get; }

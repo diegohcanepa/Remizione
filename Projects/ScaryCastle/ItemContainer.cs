@@ -97,7 +97,7 @@ namespace ScaryCastle
                 item = new Item(this, definition);
                 Add(item);
 
-                if (Session.CurrentRun != null)
+                if (Session.RunInProgress)
                 {
                     if (item.Definition.LuckModifier != 0)
                     {
@@ -199,7 +199,7 @@ namespace ScaryCastle
         // Remove
         public bool Remove(string name)
         {
-            return Find(name) is Item item ? Remove(item) : false;
+            return Find(name) is Item item && Remove(item);
         }
 
         // Session

@@ -74,9 +74,6 @@ namespace ScaryCastle
             slot.Draw(gameTime);
             iconShadow.Draw(gameTime);
             icon.Draw(gameTime);
-            Game.SpriteBatch.End();
-
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
             amountText.Draw(gameTime);
             Game.SpriteBatch.End();
         }

@@ -313,7 +313,7 @@ namespace ScaryCastle
         // SpawnActors
         private void SpawnActors()
         {
-            if (WalkArea == null || Session.CurrentRun == null)
+            if (WalkArea == null || !Session.RunInProgress)
                 return;
 
             var candidates = GetCandidateDefinitions<ActorDefinition, Actor>(ActorDefinition.Container.All);
@@ -378,7 +378,7 @@ namespace ScaryCastle
 
             for (int i = 0; i < points.Count; i++)
             {
-                SpawnThing<Actor>(Session.CurrentRun, pendingSpawns[i].Name, points[i], actorsSpawnCounter);
+                SpawnThing<Actor>(Session.RunManager, pendingSpawns[i].Name, points[i], actorsSpawnCounter);
             }
         }
 
@@ -432,7 +432,7 @@ namespace ScaryCastle
         // SpawnProps
         private void SpawnProps()
         {
-            if (Session.CurrentRun == null)
+            if (!Session.RunInProgress)
                 return;
 
             var candidates = GetCandidateDefinitions<PropDefinition, Prop>(PropDefinition.Container.All);
@@ -456,7 +456,7 @@ namespace ScaryCastle
 
                     if (phState == PlaceholderState.GateLever)
                     {
-                        SpawnThing<Prop>(Session.CurrentRun, nameof(PlaceholderState.GateLever), ph.Position, propsSpawnCounter);
+                        SpawnThing<Prop>(Session.RunManager, nameof(PlaceholderState.GateLever), ph.Position, propsSpawnCounter);
                         RoomNode.SetPlaceholderState(ph, PlaceholderState.Used);
                         continue;
                     }
@@ -480,7 +480,7 @@ namespace ScaryCastle
                         if (!def.PassesMaxPerRoomConstraint(propsSpawnCounter.GetCount(def.Name)))
                             continue;
 
-                        if (!def.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns.GetCount(def.Name)))
+                        if (!def.PassesMaxPerRunConstraint(Session.RunManager.Spawns.GetCount(def.Name)))
                             continue;
 
                         var finalWeight = AdjustWeight(RoomNode.TopographicDifficulty, def.Difficulty, def.SpawnWeight, null);
@@ -493,7 +493,7 @@ namespace ScaryCastle
                     if (PropDefinition.Container.Find(item.Name) is not PropDefinition chosen)
                         continue;
 
-                    SpawnThing<Prop>(Session.CurrentRun, chosen.Name, ph.Position, propsSpawnCounter);
+                    SpawnThing<Prop>(Session.RunManager, chosen.Name, ph.Position, propsSpawnCounter);
 
                     RoomNode.SetPlaceholderState(ph, PlaceholderState.Used);
                 }
@@ -516,7 +516,7 @@ namespace ScaryCastle
                 if (!def.PassesMaxPerRoomConstraint(propsSpawnCounter.GetCount(def.Name)))
                     continue;
 
-                if (!def.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns.GetCount(def.Name)))
+                if (!def.PassesMaxPerRunConstraint(Session.RunManager.Spawns.GetCount(def.Name)))
                     continue;
 
                 // CRUCE CON LA DIFICULTAD TOPOGRÁFICA DE LA RUN:
@@ -561,7 +561,7 @@ namespace ScaryCastle
                 instance.Position = spawnPosition;
                 Children.Add(instance);
 
-                Session.CurrentRun.Spawns.Increment(chosen.Name);
+                Session.RunManager.Spawns.Increment(chosen.Name);
                 propsSpawnCounter.Increment(chosen.Name);
 
                 // EXCLUSIÓN POR REGISTRO (Tu regla del MaxPerRoom)
@@ -572,7 +572,7 @@ namespace ScaryCastle
         }
 
         // SpawnThing
-        private T SpawnThing<T>(Run run, string name, Vector2 position, CounterBank counterBank)
+        private T SpawnThing<T>(RunManager run, string name, Vector2 position, CounterBank counterBank)
             where T : GameThing
         {
             var instance = CreateThingClone<T>(name);
@@ -644,7 +644,7 @@ namespace ScaryCastle
             where TDefinition : ThingDefinition where TThing : GameThing
         {
             var outList = new List<TDefinition>();
-            if (Session.CurrentRun == null)
+            if (!Session.RunInProgress)
                 return outList;
 
             foreach (var definition in definitions)
@@ -674,7 +674,7 @@ namespace ScaryCastle
                 if (!definition.PassesRunConstraints(Session.RunCount))
                     continue;
 
-                if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns))
+                if (!definition.PassesMaxPerRunConstraint(Session.RunManager.Spawns))
                     continue;
 
                 if (!TagScope.Test(RoomNode.Definition.Scope, RoomNode.Definition.Pools, definition.Tags))

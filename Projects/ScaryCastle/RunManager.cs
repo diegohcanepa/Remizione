@@ -7,9 +7,9 @@ using System.Collections.ObjectModel;
 namespace ScaryCastle
 {
     /// <summary>
-    /// Run
+    /// RunManager
     /// </summary>
-    public sealed class Run
+    public sealed class RunManager
     {
         #region Private fields
 
@@ -17,19 +17,15 @@ namespace ScaryCastle
         private const int gridRadius = 4; // Radio 4 significa de -4 a 4 (Matriz de 9x9)
         private readonly RoomRegistry registry = new();
         private readonly GameSession session;
-        private readonly int totalRooms;
 
         #endregion
 
         #region Constructor
 
         // Constructor
-        public Run(GameSession session, int totalRooms)
+        public RunManager(GameSession session)
         {
-            CodeContract.ValidRange(totalRooms, 10, 20, nameof(totalRooms));
-
             this.session = session;
-            this.totalRooms = totalRooms;
         }
 
         #endregion
@@ -77,7 +73,7 @@ namespace ScaryCastle
         }
 
         // ExecutePhase1_Layout
-        private void ExecutePhase1_Layout(Random rng)
+        private void ExecutePhase1_Layout(Random rng, int totalRooms)
         {
             int totalLayoutAttempts = 0;
             const int maxLayoutAttempts = 1000;
@@ -511,28 +507,23 @@ namespace ScaryCastle
 
         #endregion
 
-        // CurrentFloor
-        public int CurrentFloor { get; private set; } = -1;
-
         // FloorMap
         public ReadOnlyDictionary<Point, RoomNode> FloorMap => new(floorMap);
 
-        // NextFloor
-        public void NextFloor(int floorIncrement = 1)
+        // GenerateFloor
+        public void GenerateFloor(int floorNumber, int totalRooms)
         {
-            if (CurrentFloor >= 0)
-                CleanUp();
+            CodeContract.GreaterThanZero(floorNumber, nameof(floorNumber));
+            CodeContract.ValidRange(totalRooms, 10, 20, nameof(totalRooms));
 
-            CurrentFloor += floorIncrement;
-            if (CurrentFloor > 666)
-                CurrentFloor = 666;
+            CleanUp();
 
             // El seed de este piso lo dicta el RNG Maestro. 
             // Si recargas la run, el orden de pisos será exactamente igual.
             int currentFloorSeed = session.MasterRunRng.Next();
             var floorRng = new Random(currentFloorSeed);
 
-            ExecutePhase1_Layout(floorRng);
+            ExecutePhase1_Layout(floorRng, totalRooms);
             ExecutePhase2_Labeling(floorRng);
             ExecutePhase3_InjectSecrets(floorRng);
             ExecutePhase4_AssignDefinitions(floorRng);
