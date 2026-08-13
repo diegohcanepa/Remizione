@@ -197,7 +197,7 @@ namespace ScaryCastle
     public enum StatusType { Poison }
 
     // Tag
-    public enum Tag { Ceiling, Floor, GateLever, Poison, Pottery, Torch, Trap, TrapDoor, Trunk, WallDecoration }
+    public enum Tag { Ceiling, Floor, GateLever, Poison, Pottery, Torch, Trap, TrapDoor, Trunk, WallDecoration, Window }
 
     // TestPolygon
     public enum TestPolygon { Hotspot, Collider }

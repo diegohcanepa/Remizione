@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:5653dd23a300524566aefa5e4afa6668:4cbb8f233935298c0b552d8ddb8457e5:5039389849ae7f9cf7d847dafb0258d3$ -->
+<!-- $TexturePacker:SmartUpdate:0b623901d1f036c05d358c1aaf6e5e6d:a30a223fe7972eb63edc877dec696d11:5039389849ae7f9cf7d847dafb0258d3$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -24,13 +24,16 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Foreground.png" x="2" y="139" w="244" h="40"/>
     <sprite n="Gate.png" x="386" y="2" w="31" h="45"/>
     <sprite n="Hub.png" x="2" y="2" w="346" h="135"/>
-    <sprite n="LeftGateClosed.png" x="385" y="86" w="15" h="66"/>
-    <sprite n="LeftGateOpenBack.png" x="429" y="85" w="12" h="49"/>
+    <sprite n="LeftGateClosed.png" x="464" y="32" w="15" h="66"/>
+    <sprite n="LeftGateOpenBack.png" x="430" y="69" w="12" h="49"/>
     <sprite n="LeftGateOpenFront.png" x="350" y="77" w="18" h="61"/>
-    <sprite n="LeftWall.png" x="411" y="69" w="16" h="58"/>
+    <sprite n="LeftWall.png" x="385" y="86" w="16" h="58"/>
     <sprite n="Lever01.png" x="370" y="77" w="13" h="14"/>
-    <sprite n="Lever02.png" x="429" y="69" w="13" h="14"/>
-    <sprite n="RightTunnelPatch.png" x="444" y="32" w="17" h="56"/>
+    <sprite n="Lever02.png" x="370" y="93" w="13" h="14"/>
+    <sprite n="RightGateClosed.png" x="444" y="95" w="15" h="66"/>
+    <sprite n="RightGateOpenBack.png" x="370" y="109" w="12" h="49"/>
+    <sprite n="RightGateOpenFront.png" x="444" y="32" w="18" h="61"/>
+    <sprite n="RightTunnelPatch.png" x="411" y="69" w="17" h="56"/>
     <sprite n="Skull01.png" x="419" y="2" w="27" h="28"/>
     <sprite n="Skull02.png" x="448" y="2" w="27" h="28"/>
     <sprite n="Skull03.png" x="477" y="2" w="27" h="28"/>

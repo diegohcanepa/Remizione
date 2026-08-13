@@ -770,7 +770,7 @@ namespace ScaryCastle
             {
                 Room.Children.Add(ActiveThrowable);
                 ActiveThrowable.Position = Position;
-                ActiveThrowable.Y += 2;
+                ActiveThrowable.Y += ActiveThrowable.RuntimeCollider.BoundingRectangleF.Height;
                 ActiveThrowable = null;
                 PlaySound(SoundNames.PropPlace);
             }

@@ -234,6 +234,7 @@
                 <false/>
             </struct>
             <key type="filename">Hub-assets/LeftGateClosed.png</key>
+            <key type="filename">Hub-assets/RightGateClosed.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -249,6 +250,7 @@
                 <false/>
             </struct>
             <key type="filename">Hub-assets/LeftGateOpenBack.png</key>
+            <key type="filename">Hub-assets/RightGateOpenBack.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -264,6 +266,7 @@
                 <false/>
             </struct>
             <key type="filename">Hub-assets/LeftGateOpenFront.png</key>
+            <key type="filename">Hub-assets/RightGateOpenFront.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

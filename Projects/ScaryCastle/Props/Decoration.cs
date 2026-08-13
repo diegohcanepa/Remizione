@@ -1,4 +1,6 @@
-﻿namespace ScaryCastle.Props
+﻿using Engendro;
+
+namespace ScaryCastle.Props
 {
     /// <summary>
     /// Decoration
@@ -18,7 +20,7 @@
         protected override void OnLoad()
         {
             base.OnLoad();
-            AnimationPlayer.GoTo(Engendro.FramePosition.Random);
+            AnimationPlayer.GoTo(FramePosition.Random);
         }
     }
 }

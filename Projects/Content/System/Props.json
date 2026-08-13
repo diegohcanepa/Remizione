@@ -2,6 +2,14 @@
   "$schema": "./Prop.schema.json",
   "data": [
     {
+      "name": "CastleWindow",
+      "maxPerRoom": -1,
+      "tags": "Window",
+      "placements": [
+        "WallFrontHang"      
+      ]
+    },
+    {
       "name": "DevilCarvedFace",
       "tags": "WallDecoration",
       "placements": [

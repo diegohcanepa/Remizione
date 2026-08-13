@@ -12,6 +12,16 @@
       "doorDown": "152,145",
       "placeholders": [
         {
+          "position": "47,19",
+          "placement": "WallFrontHang",
+          "allowTags": "Window"
+        },
+        {
+          "position": "194,19",
+          "placement": "WallFrontHang",
+          "allowTags": "Window"
+        },
+        {
           "position": "69,18",
           "placement": "WallFrontHang",
           "allowTags": "Torch"
