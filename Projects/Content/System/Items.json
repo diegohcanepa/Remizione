@@ -18,7 +18,7 @@
 			]
 		},
 		{
-			"name": "BargainCross",
+			"name": "ServantCross",
 			"animationName": "UseCross",
 			"actionKind": "InPlace",
 			"inPlaceEffectType": "Lightning",

@@ -379,7 +379,6 @@
                 <false/>
             </struct>
             <key type="filename">Items-assets/Apple.png</key>
-            <key type="filename">Items-assets/BargainCross.png</key>
             <key type="filename">Items-assets/Battery.png</key>
             <key type="filename">Items-assets/BittenApple.png</key>
             <key type="filename">Items-assets/BronzeKey.png</key>
@@ -387,6 +386,7 @@
             <key type="filename">Items-assets/Duck.png</key>
             <key type="filename">Items-assets/Lockpick.png</key>
             <key type="filename">Items-assets/MissingItem.png</key>
+            <key type="filename">Items-assets/ServantCross.png</key>
             <key type="filename">Items-assets/Verse.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>

@@ -44,8 +44,6 @@
   <String Key="InputBinding.UseItem">Usar</String>
   <String Key="Item.Apple.Description">Una manzana como cualquier otra.</String>
   <String Key="Item.Apple.Name">Manzana</String>
-  <String Key="Item.BargainCross.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
-  <String Key="Item.BargainCross.Name">Cruz barata</String>
   <String Key="Item.Battery.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Battery.Name">Batería</String>
   <String Key="Item.BittenApple.Description">Masa fétida que supura un almíbar con olor a pie descuidado. Recuperas salud por el shock, pero tu esófago tiene un 35% de chances de que le caiga mal.</String>
@@ -82,6 +80,8 @@
   <String Key="Item.Pistol.Name">Pistola</String>
   <String Key="Item.RedPill.Description">Suplemento deportivo</String>
   <String Key="Item.RedPill.Name">Píldora</String>
+  <String Key="Item.ServantCross.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
+  <String Key="Item.ServantCross.Name">Cruz del Siervo</String>
   <String Key="Item.SodaCan.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.SodaCan.Name">Caca-Cola</String>
   <String Key="Item.Ticket.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>

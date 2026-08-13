@@ -21,7 +21,7 @@
   <String Key="ActorProperty.Level.Description">El nivel quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Level.Name">State of Grace</String>
   <String Key="DamageType.Physical">Physical</String>
-  <String Key="EffectTemplate.Damage"></String>
+  <String Key="EffectTemplate.Damage" />
   <String Key="EffectTemplate.HPGain">+{amount} Health</String>
   <String Key="EffectTemplate.HPLoss">-{amount} Health</String>
   <String Key="FloatingMessage.Failed">Failed!</String>
@@ -44,8 +44,6 @@
   <String Key="InputBinding.UseItem">Use</String>
   <String Key="Item.Apple.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Apple.Name">Apple</String>
-  <String Key="Item.BargainCross.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
-  <String Key="Item.BargainCross.Name">Bargain cross</String>
   <String Key="Item.Battery.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Battery.Name">Battery</String>
   <String Key="Item.BittenApple.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
@@ -76,12 +74,14 @@
   <String Key="Item.Lockpick.Name">Lockpick</String>
   <String Key="Item.MagneticCard.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.MagneticCard.Name">Magnetic card</String>
-  <String Key="Item.PieceOfWood.Description"></String>
+  <String Key="Item.PieceOfWood.Description" />
   <String Key="Item.PieceOfWood.Name">Piece of wood</String>
   <String Key="Item.Pistol.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </String>
   <String Key="Item.Pistol.Name">Pistol</String>
   <String Key="Item.RedPill.Description">Sports supplement</String>
   <String Key="Item.RedPill.Name">Pill</String>
+  <String Key="Item.ServantCross.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
+  <String Key="Item.ServantCross.Name">Servant's Cross</String>
   <String Key="Item.SodaCan.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.SodaCan.Name">Caca-Cola</String>
   <String Key="Item.Ticket.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
@@ -211,7 +211,7 @@
   <String Key="Misc.And">and</String>
   <String Key="Misc.BackToCorridor">Go back to the hallway!</String>
   <String Key="Misc.Bird">Bird</String>
-  <String Key="Misc.Chance"></String>
+  <String Key="Misc.Chance" />
   <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=—áéíóúÁÉÍÓÚ</String>
   <String Key="Misc.CopyrightDeveloper">© 2024 Indiesruption</String>
   <String Key="Misc.Credits">Remizione

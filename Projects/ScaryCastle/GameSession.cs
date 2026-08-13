@@ -501,7 +501,7 @@ namespace ScaryCastle
             {
                 PlayerInventory.Add(ItemNames.Apple);
                 PlayerInventory.Add(ItemNames.GooBottle);
-                PlayerInventory.Add(ItemNames.BargainCross);
+                PlayerInventory.Add(ItemNames.ServantCross);
             }
 
             CurrentRun.NextFloor();
@@ -650,7 +650,7 @@ namespace ScaryCastle
 
         // IsHUDVisible
         [ScriptProperty]
-        public bool IsHUDVisible => CurrentRun != null && Player != null && !Player.IsDead;
+        public bool IsHUDVisible => Room?.IsProcedural == true;
 
         // KillEnemies
         [ScriptMethod]
