@@ -83,7 +83,7 @@ namespace ScaryCastle
     public enum InPlaceEffectType { None, Lightning }
 
     // ItemBehavior
-    public enum ItemBehavior { Common, PocketItem, PlayerAction, StatModifier }
+    public enum ItemBehavior { Sack, Pocket, PlayerAction, StatModifier }
 
     // ItemCategory
     public enum ItemCategory { Access, Explosive, Food, Luck, Medicine, Misc, Money, Pills, Sacred }
@@ -131,7 +131,7 @@ namespace ScaryCastle
     }
 
     // MessageKind
-    public enum MessageKind { CannotPlaceItem, HandsFull, InventoryFull, ItemDiscarded, LiftNotAllowed, NotEnoughCoins, NotEnoughGoo, OutOfReach, OutOfLine, PathCleared, ExtraEnergy, ExtraHeart }
+    public enum MessageKind { CannotPlaceItem, GateOpened, HandsFull, InventoryFull, ItemDiscarded, LiftNotAllowed, NotEnoughCoins, NotEnoughGoo, OutOfReach, OutOfLine, PathCleared, ExtraEnergy, ExtraHeart }
 
     // MeterColor
     public enum MeterColor { Green, Orange, Purple, SkyBlue, White }
@@ -171,6 +171,9 @@ namespace ScaryCastle
 
     // ProjectileTrajectoryType
     public enum ProjectileTrajectoryType { Linear, Parabolic }
+
+    // PuzzleKind
+    public enum PuzzleKind { BronzeKey, GateLever }
 
     // Realm
     public enum Realm { Earthly, Infernal, Celestial }

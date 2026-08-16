@@ -17,31 +17,31 @@ namespace ScaryCastle.Scripting
             if (Session is not GameSession session)
                 return;
 
-            if (session.OutcomeTarget is ILootContainer<ItemDefinition> lootProvider)
+            if (session.OutcomeTarget is ILootContainer<ItemDefinition> lootContainer)
             {
                 session.OutcomeTarget.Unparent();
 
-                if (lootProvider.Loot != null)
+                if (lootContainer.Loot == null)
+                    return;
+
+                lootContainer.Loot.PickupSound?.Play();
+
+                if (lootContainer.Loot.Behavior == ItemBehavior.Sack)
                 {
-                    lootProvider.Loot.PickupSound?.Play();
-
-                    if (lootProvider.Loot.Behavior == ItemBehavior.Common)
+                    if (session.PlayerInventory.Add(lootContainer.Loot) is Item item)
                     {
-                        if (session.PlayerInventory.Add(lootProvider.Loot) is Item item)
-                        {
-                            session.HUD.InventoryMeter.Animate();
+                        session.HUD.InventoryMeter.Animate();
 
-                            if (item.Definition.Image != null)
-                                session.HUD.Log.Show(item.DisplayName, item.Definition.Image);
-                        }
-                        else if (lootProvider.Loot.Behavior != ItemBehavior.PlayerAction && session.Player != null)
-                        {
-                            EffectDescriptor.Apply(lootProvider.Loot.EffectDescriptors, session.Player, null, EffectContext.Collect);
-                        }
-
-                        lootProvider.Loot = null;
+                        if (item.Definition.Image != null)
+                            session.HUD.Log.Show(item.DisplayName, item.Definition.Image);
                     }
                 }
+                else if (lootContainer.Loot.Behavior != ItemBehavior.PlayerAction && session.Player != null)
+                {
+                    EffectDescriptor.Apply(lootContainer.Loot.EffectDescriptors, session.Player, null, EffectContext.Collect);
+                }
+
+                lootContainer.Loot = null;
             }
         }
     }

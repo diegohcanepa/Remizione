@@ -12,7 +12,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly HUDGooMeter gooMeter;
+        private readonly UIGooMeter gooMeter;
         private readonly UIPassiveItems passiveItems;
         private readonly UIRunModifiers runModifiers;
 
@@ -33,7 +33,7 @@ namespace ScaryCastle
             this.MiniMap = new();
             this.runModifiers = new(session);
             this.Statuses = new(session);
-            this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 18));
+            this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 14));
         }
 
         #endregion
@@ -50,7 +50,9 @@ namespace ScaryCastle
             passiveItems.Draw(gameTime);
             Game.SpriteBatch.End();
             gooMeter.Draw(gameTime);
-            StaminaMeter.Draw(gameTime);
+
+            if (!Session.IsConsoleVisible)
+                StaminaMeter.Draw(gameTime);
 
             if (Session.IsCurrentScene)
             {
@@ -106,7 +108,7 @@ namespace ScaryCastle
         public UILog Log { get; } = new();
 
         // Message
-        public HUDMessage Message { get; }
+        public UIMessage Message { get; }
 
         // MiniMap
         public UIMiniMap MiniMap { get; }
@@ -123,7 +125,7 @@ namespace ScaryCastle
         }
 
         // StaminaMeter
-        public HUDStaminaMeter StaminaMeter { get; }
+        public UIStaminaMeter StaminaMeter { get; }
 
         // Statuses
         public UIStatuses Statuses { get; }

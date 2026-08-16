@@ -11,7 +11,7 @@ namespace ScaryCastle
     /// </summary>
     public sealed class FlyOff : SessionGameObject<GameSession>
     {
-        private const int fadeDuration = 250;
+        private const int fadeDuration = 200;
         private static readonly float defaultScale = ScaleInfo.Text.VeryLarge.X;
 
         private Sprite? activeSprite;
@@ -70,12 +70,12 @@ namespace ScaryCastle
         }
 
         // ShowTextCore
-        private void ShowTextCore(Vector2 origin, string value, Color color, Vector2 distance, float scale, int duration)
+        private void ShowTextCore(Vector2 origin, string value, Color color, Vector2 distance, float scale)
         {
             text.Color = color;
             text.Scale = new(scale);
             text.Text = value;
-            Launch(origin, text, distance, duration);
+            Launch(origin, text, distance, Math.Max(1000, value.Length * 100));
         }
 
         #endregion
@@ -113,23 +113,23 @@ namespace ScaryCastle
         public bool IsVisible => xTween.IsRunning || yTween.IsRunning || opacityTween.IsRunning;
 
         // ShowIcon
-        public void ShowIcon(Vector2 origin, AtlasImage image, int duration)
+        public void ShowIcon(Vector2 origin, AtlasImage image, bool high = false)
         {
             icon.RenderImage = image;
             icon.Scale = ScaleInfo.UIElement.Large;
-            Launch(origin, icon, new Vector2(0, -3), duration);
+            Launch(origin, icon, new Vector2(0, high ? -5 : 1), 2000);
         }
 
         // ShowText
-        public void ShowText(Vector2 origin, string value, Color color, int duration = 1000)
+        public void ShowText(Vector2 origin, string value, Color color)
         {
-            ShowText(origin, value, color, defaultScale, duration);
+            ShowText(origin, value, color, defaultScale);
         }
 
         // ShowText
-        public void ShowText(Vector2 origin, string value, Color color, float scale, int duration = 1000)
+        public void ShowText(Vector2 origin, string value, Color color, float scale)
         {
-            ShowTextCore(origin, value, color, new Vector2(0, -6), scale, duration);
+            ShowTextCore(origin, value, color, new Vector2(0, -6), scale);
         }
 
         // ShowAmount
@@ -142,7 +142,7 @@ namespace ScaryCastle
             var deltaX = Random.Shared.Next(3, 6);
             var horzDirection = source.Direction == FacingDirection.Left ? deltaX : -deltaX;
 
-            ShowTextCore(origin, amount.ToString(CultureInfo.InvariantCulture), color, new(horzDirection, -10), ScaleInfo.Text.Huge.X, 500);
+            ShowTextCore(origin, amount.ToString(CultureInfo.InvariantCulture), color, new(horzDirection, -10), ScaleInfo.Text.Huge.X);
         }
     }
 }

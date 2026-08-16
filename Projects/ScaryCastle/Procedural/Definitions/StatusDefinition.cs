@@ -31,13 +31,13 @@ namespace ScaryCastle
             // Image
             this.Image = Atlases.UI.GetImage($"Status{StatusType}Icon");
 
-            Container.Add(this);
+            Data.Add(this);
         }
 
         #endregion
 
-        // Container
-        public static DataContainer<StatusDefinition> Container { get; } = new(element => new StatusDefinition(element));
+        // Data
+        public static DataContainer<StatusDefinition> Data { get; } = new(element => new StatusDefinition(element));
 
         // Image
         public AtlasImage Image { get; }

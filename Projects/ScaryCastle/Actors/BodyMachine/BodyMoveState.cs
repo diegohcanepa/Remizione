@@ -45,8 +45,14 @@ namespace ScaryCastle
                 lastPosition = currentPosition;
             }
 
-            if (!Owner.IsMoving)
+            if (Owner.Stamina == 0 && Owner.MaxStamina > 0)
+            {
+                Owner.Fatigue();
+            }
+            else if (!Owner.IsMoving)
+            {
                 Machine.ChangeState<BodyStandState>();
+            }
         }
     }
 }

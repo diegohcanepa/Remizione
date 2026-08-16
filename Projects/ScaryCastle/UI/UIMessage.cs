@@ -6,19 +6,19 @@ using Microsoft.Xna.Framework.Graphics;
 namespace ScaryCastle
 {
     /// <summary>
-    /// HUDMessage
+    /// UIMessage
     /// </summary>
-    public sealed class HUDMessage : GameObject
+    public sealed class UIMessage : GameObject
     {
         private readonly Sprite container = new(Atlases.UI.GetImage("MessageContainer")) { PivotOrigin = RectanglePoint.Center };
         private readonly FloatTween fadeTween = new();
         private readonly Sprite icon = new() { PivotOrigin = RectanglePoint.Right };
         private readonly TextSprite messageText;
-        private readonly Vector2 scale = ScaleInfo.Text.Huge;
+        private readonly Vector2 scale = ScaleInfo.Text.Large;
         private readonly Vector2Tween scaleTween = new();
 
         // Constructor
-        public HUDMessage(RectanglePoint pivotOrigin, Vector2 position)
+        public UIMessage(RectanglePoint pivotOrigin, Vector2 position)
         {
             this.messageText = new(Fonts.Common)
             {
@@ -121,7 +121,7 @@ namespace ScaryCastle
         }
 
         // Show
-        public void Show(string text, Color color, int duration = 2000)
+        public void Show(string text, Color color, int duration = 3000)
         {
             messageText.Color = color;
             messageText.Text = text;
@@ -130,7 +130,7 @@ namespace ScaryCastle
             scaleTween.Start(TweenStyle.CubicIn, scale * .8f, scale, 50);
             messageText.Tweens.ScaleTween = scaleTween;
             container.Position = messageText.Position;
-            container.Y += 3;
+            container.Y += 2;
             IsVisible = true;
         }
     }

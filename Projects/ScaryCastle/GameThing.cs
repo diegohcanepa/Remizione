@@ -1162,11 +1162,11 @@ namespace ScaryCastle
         }
 
         // ShowFlyOff
-        public FlyOff? ShowFlyOff(AtlasImage image, int duration = 2000)
+        public FlyOff? ShowFlyOff(AtlasImage image, bool high = false)
         {
             if (Session.ObjectPools.FlyOffs.Get() is FlyOff flyOff)
             {
-                flyOff.ShowIcon(GetOverheadPosition(), image, duration);
+                flyOff.ShowIcon(GetOverheadPosition(), image, high);
                 return flyOff;
             }
 
@@ -1174,11 +1174,11 @@ namespace ScaryCastle
         }
 
         // ShowFlyOff
-        public FlyOff? ShowFlyOff(string text, Color color, int duration = 1000)
+        public FlyOff? ShowFlyOff(string text, Color color)
         {
             if (Session.ObjectPools.FlyOffs.Get() is FlyOff flyOff)
             {
-                flyOff.ShowText(GetOverheadPosition(), text, color, duration);
+                flyOff.ShowText(GetOverheadPosition(), text, color, 3000);
                 return flyOff;
             }
 

@@ -76,7 +76,7 @@ namespace ScaryCastle
                     Scale = ScaleInfo.Text.VeryLarge,
                 };
 
-                console = new(this, InputBindings.Console, consoleText, new RectangleF(0, 240, 480, 30))
+                console = new(this, InputBindings.Console, consoleText, new RectangleF(0, 115, 240, 20))
                 {
                     TextErrorColor = ColorPalette.Text.Terra
                 };
@@ -308,10 +308,6 @@ namespace ScaryCastle
             if (sessionNode == null || sessionNode.Attributes == null)
                 throw new InvalidOperationException("Session node attributes not found.");
 
-            // FloorNumber
-            if (sessionNode.Attributes[nameof(FloorNumber)]?.Value is string floorNumberValue)
-                FloorNumber = XmlConvert.ToInt32(floorNumberValue);
-
             // Player
             if (sessionNode.Attributes[nameof(Player)]?.Value is string player)
                 Player = FindEntity<Actor>(player);
@@ -354,7 +350,7 @@ namespace ScaryCastle
             {
                 if (script.ScriptType == ScriptType.Outcome && script.OverloadName.Length > 0)
                 {
-                    if (ItemDefinition.Container.Find(script.OverloadName) == null)
+                    if (ItemDefinition.Data.Find(script.OverloadName) == null)
                         throw new InvalidOperationException($"The item definition supplied in [{script.Name}] does not exist.");
                 }
             }
@@ -378,12 +374,12 @@ namespace ScaryCastle
                 }
             }
 
-            foreach (var actorDef in ActorDefinition.Container.All)
+            foreach (var actorDef in ActorDefinition.Data.All)
             {
                 actorDef.AssertScriptDeclaration(this);
             }
 
-            foreach (var propDef in PropDefinition.Container.All)
+            foreach (var propDef in PropDefinition.Data.All)
             {
                 propDef.AssertScriptDeclaration(this);
             }
@@ -451,9 +447,6 @@ namespace ScaryCastle
         // OnWrite
         protected override void OnWrite(XmlWriter output)
         {
-            // FloorNumber
-            output.WriteAttributeString(nameof(FloorNumber), XmlConvert.ToString(FloorNumber));
-
             // Player
             if (Player != null)
                 output.WriteAttributeString(nameof(Player), Player.Name);
@@ -494,6 +487,7 @@ namespace ScaryCastle
                 throw new InvalidOperationException("A run is already in progress.");
 
             RunInProgress = true;
+            FloorIndex = 0;
 
             // 1. Establecemos el Seed de la run para la TOPOLOGÍA (fijo o por tiempo)
             RunSeed = seed ?? System.Environment.TickCount;
@@ -512,13 +506,13 @@ namespace ScaryCastle
                 PlayerInventory.Add(ItemNames.ServantCross);
             }
 
-            // TODO: Check totalRooms
-            RunManager.GenerateFloor(FloorNumber + 1, 15);
+            RunManager.GenerateFloor(RunDescriptor.Data.All[RunCount].Floors[FloorIndex]);
 
             if (Player != null)
             {
                 Player.Reheal();
-                Player.Recharge();
+                Player.Energy = 0;
+                Player.Stamina = 2;
                 var startRoom = RunManager.FloorMap[new(0, 0)].Room;
                 startRoom.Children.Add(Player);
                 if (startRoom.WalkArea != null)
@@ -564,6 +558,7 @@ namespace ScaryCastle
             if (!RunInProgress)
                 return;
 
+            FloorIndex = -1;
             RunModifiers.Clear();
             Bosses.Clear();
             CleanUpRuntimeEntities();
@@ -580,8 +575,6 @@ namespace ScaryCastle
                 Player.MaxEnergy = 5;
                 Player.Energy = 5;
             }
-
-            FloorNumber++;
 
             // 1. Force an immediate collection of all generations (0, 1, and 2).
             // 'Forced' tells the GC to ignore its internal heuristics and run immediately.
@@ -608,8 +601,8 @@ namespace ScaryCastle
             return proceduralThingsDict.TryGetValue(name, out var result) ? result : null;
         }
 
-        // FloorNumber
-        public int FloorNumber { get; private set; }
+        // FloorIndex
+        public int FloorIndex { get; private set; } = -1;
 
         // Game
         public new ScaryCastleGame Game { get; }

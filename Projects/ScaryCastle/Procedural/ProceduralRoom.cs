@@ -164,7 +164,7 @@ namespace ScaryCastle
             {
                 if (actors.Count > 0)
                 {
-                    actors[0].ItemReward = ItemDefinition.Container.Get(ItemNames.BronzeKey);
+                    actors[0].ItemReward = ItemDefinition.Data.Get(ItemNames.BronzeKey);
                     actors.RemoveAt(0);
                     pendingKeys--;
                     if (pendingKeys <= 0)
@@ -316,7 +316,7 @@ namespace ScaryCastle
             if (WalkArea == null || !Session.RunInProgress)
                 return;
 
-            var candidates = GetCandidateDefinitions<ActorDefinition, Actor>(ActorDefinition.Container.All);
+            var candidates = GetCandidateDefinitions<ActorDefinition, Actor>(ActorDefinition.Data.All);
 
             if (candidates.Count == 0)
                 return;
@@ -340,7 +340,7 @@ namespace ScaryCastle
                 if (table.GetValue() is not ChanceTableItem item)
                     break;
 
-                if (ActorDefinition.Container.Find(item.Name) is not ActorDefinition chosen)
+                if (ActorDefinition.Data.Find(item.Name) is not ActorDefinition chosen)
                     continue;
 
                 int packSize = chosen.RollPackSize(Random);
@@ -435,7 +435,7 @@ namespace ScaryCastle
             if (!Session.RunInProgress)
                 return;
 
-            var candidates = GetCandidateDefinitions<PropDefinition, Prop>(PropDefinition.Container.All);
+            var candidates = GetCandidateDefinitions<PropDefinition, Prop>(PropDefinition.Data.All);
 
             if (candidates.Count == 0)
                 return;
@@ -490,7 +490,7 @@ namespace ScaryCastle
                     if (table.GetValue() is not ChanceTableItem item)
                         continue;
 
-                    if (PropDefinition.Container.Find(item.Name) is not PropDefinition chosen)
+                    if (PropDefinition.Data.Find(item.Name) is not PropDefinition chosen)
                         continue;
 
                     SpawnThing<Prop>(Session.RunManager, chosen.Name, ph.Position, propsSpawnCounter);
@@ -545,7 +545,7 @@ namespace ScaryCastle
                 if (freeTable.GetValue() is not ChanceTableItem item)
                     break;
 
-                if (PropDefinition.Container.Find(item.Name) is not PropDefinition chosen)
+                if (PropDefinition.Data.Find(item.Name) is not PropDefinition chosen)
                     continue;
 
                 // Pedimos el punto al WalkArea

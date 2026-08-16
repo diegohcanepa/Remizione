@@ -29,11 +29,11 @@ namespace ScaryCastle
             if (MinPackSize > MaxPackSize)
                 RaiseValidationError(this, $"Minimum pack size exceeds the maximum pack size.");
 
-            Container.Add(this);
+            Data.Add(this);
         }
 
-        // Container
-        public static DataContainer<ActorDefinition> Container { get; } = new(element => new ActorDefinition(element));
+        // Data
+        public static DataContainer<ActorDefinition> Data { get; } = new(element => new ActorDefinition(element));
 
         // MinPackSize
         public int MinPackSize { get; }

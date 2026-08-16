@@ -30,7 +30,7 @@ namespace ScaryCastle
                 AreaOfEffect = 0;
 
             // Behavior
-            Behavior = element.GetEnum("behavior", ItemBehavior.Common);
+            Behavior = element.GetEnum("behavior", ItemBehavior.Sack);
 
             // Category
             Category = element.GetEnum("category", ItemCategory.Misc);
@@ -105,7 +105,7 @@ namespace ScaryCastle
 
             IsPassive = LightModifier != 0 || LuckModifier != 0;
 
-            if (Behavior != ItemBehavior.Common)
+            if (Behavior != ItemBehavior.Sack)
             {
                 IsDepletable = false;
                 IsStackable = false;
@@ -114,7 +114,7 @@ namespace ScaryCastle
             if (ActionKind == ActionKind.Projectile && Projectile == null)
                 RaiseValidationError(this, "Items with Projectile usage mode must have a Projectile defined.", nameof(ActionKind));
 
-            Container.Add(this);
+            Data.Add(this);
         }
 
         #endregion
@@ -134,8 +134,8 @@ namespace ScaryCastle
         // Category
         public ItemCategory Category { get; }
 
-        // Container
-        public static ItemDefinitionContainer Container { get; } = new(element => new ItemDefinition(element));
+        // Data
+        public static ItemDefinitionContainer Data { get; } = new(element => new ItemDefinition(element));
 
         // DeselectOnUse
         public bool DeselectOnUse { get; }

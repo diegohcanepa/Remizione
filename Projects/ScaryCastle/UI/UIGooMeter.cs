@@ -7,9 +7,9 @@ using System.Collections.Generic;
 namespace ScaryCastle
 {
     /// <summary>
-    /// HUDGooMeter
+    /// UIGooMeter
     /// </summary>
-    public sealed class HUDGooMeter : SessionGameObject<GameSession>
+    public sealed class UIGooMeter : SessionGameObject<GameSession>
     {
         #region Private fields
 
@@ -24,7 +24,7 @@ namespace ScaryCastle
         #endregion
 
         // Constructor
-        public HUDGooMeter(GameSession session)
+        public UIGooMeter(GameSession session)
             : base(session)
         {
         }

@@ -26,7 +26,7 @@ namespace ScaryCastle
         private RoomDefinition(JsonElement element)
             : base(element)
         {
-            if (!RunModifierDefinition.Container.IsLoaded)
+            if (!RunModifierDefinition.Data.IsLoaded)
                 throw new InvalidOperationException("Run modifier definitions load required.");
 
             AllowEnemies = element.GetBool("allowEnemies", true);
@@ -101,7 +101,7 @@ namespace ScaryCastle
                 RunModifiers = new(runModifiersData.Split(','));
                 foreach (var value in RunModifiers)
                 {
-                    if (RunModifierDefinition.Container.Find(value) is null)
+                    if (RunModifierDefinition.Data.Find(value) is null)
                         RaiseValidationError(this, $"The name '{value}' is not a valid run modifier.");
                 }
             }
@@ -138,7 +138,7 @@ namespace ScaryCastle
             Placeholders = new(placeholders);
             Walls = walls.AsReadOnly();
 
-            Container.Add(this);
+            Data.Add(this);
         }
 
         #endregion
@@ -160,8 +160,8 @@ namespace ScaryCastle
         // BossPosition
         public Vector2? BossPosition { get; }
 
-        // Container
-        public static DataContainer<RoomDefinition> Container { get; } = new(element => new RoomDefinition(element));
+        // Data
+        public static DataContainer<RoomDefinition> Data { get; } = new(element => new RoomDefinition(element));
 
         // DoorDown
         public Vector2? DoorDown { get; }

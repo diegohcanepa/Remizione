@@ -23,16 +23,16 @@ namespace ScaryCastle
             // Scope
             this.Scope = element.GetEnum("scope", RunModifierScope.Room);
 
-            Container.Add(this);
+            Data.Add(this);
         }
 
         #endregion
 
-        // Container
-        public static DataContainer<RunModifierDefinition> Container { get; } = new(element => new RunModifierDefinition(element));
-
         // Cooldown
         public int Cooldown { get; }
+
+        // Data
+        public static DataContainer<RunModifierDefinition> Data { get; } = new(element => new RunModifierDefinition(element));
 
         // Image
         public AtlasImage Image { get; }

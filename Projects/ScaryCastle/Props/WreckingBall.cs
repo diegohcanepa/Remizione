@@ -40,9 +40,9 @@ namespace ScaryCastle
 
             IdleDuration = room.RoomNode.Definition.Difficulty switch
             {
-                Difficulty.Easy => 10,
-                Difficulty.Normal => 8,
-                Difficulty.Hard => 6,
+                Difficulty.Easy => 8,
+                Difficulty.Normal => 6,
+                Difficulty.Hard => 3,
                 _ => throw new NotImplementedException(),
             };
         }

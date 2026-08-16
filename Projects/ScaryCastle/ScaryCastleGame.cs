@@ -49,13 +49,14 @@ namespace ScaryCastle
         // InitializeProceduralContent
         private void InitializeProceduralContent()
         {
-            RunModifierDefinition.Container.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "RunModifiers.json"));
-            StatusDefinition.Container.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Statuses.json"));
-            CombatBehavior.Container.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "CombatBehaviors.json"));
-            ItemDefinition.Container.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Items.json"));
-            RoomDefinition.Container.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Rooms.json"));
-            ActorDefinition.Container.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Actors.json"));
-            PropDefinition.Container.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Props.json"));
+            RunDescriptor.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Runs.json"));
+            RunModifierDefinition.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "RunModifiers.json"));
+            StatusDefinition.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Statuses.json"));
+            CombatBehavior.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "CombatBehaviors.json"));
+            ItemDefinition.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Items.json"));
+            RoomDefinition.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Rooms.json"));
+            ActorDefinition.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Actors.json"));
+            PropDefinition.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Props.json"));
         }
 
 #if !QUICK_START

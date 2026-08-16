@@ -62,9 +62,9 @@ namespace ScaryCastle
                 table.Add("None", emptyWeight, 1, null);
 
             // Filtro Principal
-            for (int i = 0; i < ItemDefinition.Container.All.Count; i++)
+            for (int i = 0; i < ItemDefinition.Data.All.Count; i++)
             {
-                var itemDef = ItemDefinition.Container.All[i];
+                var itemDef = ItemDefinition.Data.All[i];
 
                 if (itemDef.Name == nameof(Coin) || itemDef.Behavior == ItemBehavior.PlayerAction)
                     continue;
@@ -99,9 +99,9 @@ namespace ScaryCastle
             // Fallback: Si se garantizaba un drop pero fallaron los filtros estrictos
             if (result == null && guaranteeDrop)
             {
-                for (int i = 0; i < ItemDefinition.Container.All.Count; i++)
+                for (int i = 0; i < ItemDefinition.Data.All.Count; i++)
                 {
-                    var fallbackDef = ItemDefinition.Container.All[i];
+                    var fallbackDef = ItemDefinition.Data.All[i];
                     if (fallbackDef.Quality <= 1)
                         table.Add(fallbackDef.Name, fallbackDef.SpawnWeight, 1, fallbackDef);
                 }
@@ -244,7 +244,7 @@ namespace ScaryCastle
 
             // 6. Selección de Item
             if (def.DropMode == LootDropMode.Custom && !string.IsNullOrEmpty(thing.CustomDropName))
-                return ItemDefinition.Container.Find(thing.CustomDropName);
+                return ItemDefinition.Data.Find(thing.CustomDropName);
 
             return GetLoot(room.RoomNode, t.Definition.PreferredLootRealm, t.Definition.PreferredLootCategory, null, t.Definition.QualityBoost, guaranteeDrop);
         }

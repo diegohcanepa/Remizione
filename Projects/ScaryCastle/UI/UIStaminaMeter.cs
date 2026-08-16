@@ -5,15 +5,15 @@ using Microsoft.Xna.Framework;
 namespace ScaryCastle
 {
     /// <summary>
-    /// HUDStaminaMeter
+    /// UIStaminaMeter
     /// </summary>
-    public sealed class HUDStaminaMeter : SessionGameObject<GameSession>
+    public sealed class UIStaminaMeter : SessionGameObject<GameSession>
     {
         private readonly Sprite icon;
         private readonly Meter meter;
 
         // Constructor
-        public HUDStaminaMeter(GameSession session)
+        public UIStaminaMeter(GameSession session)
             : base(session)
         {
             this.icon = new(Atlases.UI.StaminaIcon)

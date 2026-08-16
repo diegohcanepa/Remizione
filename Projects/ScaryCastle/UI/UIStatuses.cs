@@ -128,7 +128,7 @@ namespace ScaryCastle
             public StatusIcon(StatusType statusType)
             {
                 this.StatusType = statusType;
-                var def = StatusDefinition.Container.Get(statusType.ToString());
+                var def = StatusDefinition.Data.Get(statusType.ToString());
 
                 this.sprite = new()
                 {

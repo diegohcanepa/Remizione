@@ -44,7 +44,7 @@ namespace ScaryCastle
 
             Intents = new(intents);
 
-            Container.Add(this);
+            Data.Add(this);
         }
 
         #endregion
@@ -52,8 +52,8 @@ namespace ScaryCastle
         // Archetype
         public CombatArchetype Archetype { get; }
 
-        // Container
-        public static DataContainer<CombatBehavior> Container { get; } = new(element => new CombatBehavior(element));
+        // Data
+        public static DataContainer<CombatBehavior> Data { get; } = new(element => new CombatBehavior(element));
 
         // DefaultIntent
         public CombatIntent? DefaultIntent { get; }

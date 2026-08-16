@@ -21,6 +21,7 @@ namespace ScaryCastle
         {
             base.Enter();
             timer = cooldown;
+            Owner.Stamina++;
         }
 
         // Update

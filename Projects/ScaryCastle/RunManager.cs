@@ -335,7 +335,7 @@ namespace ScaryCastle
         }
 
         // ExecutePhase5_TopologyAndLocks
-        private void ExecutePhase5_TopologyAndLocks(Random rng)
+        private void ExecutePhase5_TopologyAndLocks(Random rng, FloorDescriptor floorDescriptor)
         {
             int maxDistance = GetMaxFloorDistance();
 
@@ -380,13 +380,18 @@ namespace ScaryCastle
                                 continue;
                             }
 
-                            var bronzeKeyChance = targetDiff switch
+                            float bronzeKeyChance = 0;
+
+                            if (floorDescriptor.AllowedPuzzles.Contains(PuzzleKind.BronzeKey))
                             {
-                                Difficulty.Easy => 0.2f,
-                                Difficulty.Normal => 0.2f,
-                                Difficulty.Hard => 0.4f,
-                                _ => 0.4f
-                            };
+                                bronzeKeyChance = targetDiff switch
+                                {
+                                    Difficulty.Easy => 0.2f,
+                                    Difficulty.Normal => 0.2f,
+                                    Difficulty.Hard => 0.4f,
+                                    _ => throw new NotImplementedException(),
+                                };
+                            }
 
                             // 1. Candado de Bronce
                             if (rng.NextDouble() <= bronzeKeyChance)
@@ -398,7 +403,7 @@ namespace ScaryCastle
                             }
 
                             // 2. Reja con Palanca (solo si el asset asignado en Fase 4 tiene placeholder y no pusimos reja aún)
-                            else if (!hasGateInCurrentNode &&
+                            else if (floorDescriptor.AllowedPuzzles.Contains(PuzzleKind.GateLever) && !hasGateInCurrentNode &&
                                      currentNode.Definition.Placeholders.GetPlaceholdersByTag(Tag.GateLever) is { } phList &&
                                      phList.Count > 0)
                             {
@@ -511,11 +516,8 @@ namespace ScaryCastle
         public ReadOnlyDictionary<Point, RoomNode> FloorMap => new(floorMap);
 
         // GenerateFloor
-        public void GenerateFloor(int floorNumber, int totalRooms)
+        public void GenerateFloor(FloorDescriptor floorDescriptor)
         {
-            CodeContract.GreaterThanZero(floorNumber, nameof(floorNumber));
-            CodeContract.ValidRange(totalRooms, 10, 20, nameof(totalRooms));
-
             CleanUp();
 
             // El seed de este piso lo dicta el RNG Maestro. 
@@ -523,11 +525,11 @@ namespace ScaryCastle
             int currentFloorSeed = session.MasterRunRng.Next();
             var floorRng = new Random(currentFloorSeed);
 
-            ExecutePhase1_Layout(floorRng, totalRooms);
+            ExecutePhase1_Layout(floorRng, floorDescriptor.RoomCount);
             ExecutePhase2_Labeling(floorRng);
             ExecutePhase3_InjectSecrets(floorRng);
             ExecutePhase4_AssignDefinitions(floorRng);
-            ExecutePhase5_TopologyAndLocks(floorRng);
+            ExecutePhase5_TopologyAndLocks(floorRng, floorDescriptor);
             ExecutePhase6_PrepareRooms(floorRng);
 
             StartNode = floorMap[Point.Zero];

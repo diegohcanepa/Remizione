@@ -58,8 +58,8 @@
             "behavior": {
               "type": "string",
               "enum": [
-                "Common",
-                "PocketItem",
+                "Sack",
+                "Pocket",
                 "PlayerAction",
                 "StatModifier"
               ],

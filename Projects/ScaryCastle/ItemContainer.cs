@@ -74,14 +74,14 @@ namespace ScaryCastle
         // Add
         public Item? Add(string name)
         {
-            var definition = ItemDefinition.Container.Find(name) ?? throw new InvalidOperationException("Item definition not found.");
+            var definition = ItemDefinition.Data.Find(name) ?? throw new InvalidOperationException("Item definition not found.");
             return Add(definition);
         }
 
         // Add
         public Item? Add(ItemDefinition definition)
         {
-            if (definition.Behavior is not ItemBehavior.Common and not ItemBehavior.PlayerAction)
+            if (definition.Behavior is not ItemBehavior.Sack and not ItemBehavior.PlayerAction)
                 return null;
 
             if (!HasSpace(definition))

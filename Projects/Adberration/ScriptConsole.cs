@@ -182,7 +182,7 @@ namespace Adberration
             if (!IsActive)
                 return;
 
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
+            Game.SpriteBatch.Begin(Game.Camera);
 
             Game.Shapes.DrawRectangle(BackgroundArea, Color.Black);
             textSprite.Draw(gameTime);

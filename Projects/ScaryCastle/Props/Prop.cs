@@ -28,7 +28,7 @@ namespace ScaryCastle
             this.IgnoreKnockback = true;
             this.Verb = Verb.Use;
             this.IsHittable = false;
-            this.Definition = PropDefinition.Container.Find(DeclaredName);
+            this.Definition = PropDefinition.Data.Find(DeclaredName);
 
             // Shadow
             this.Shadow = new Sprite()

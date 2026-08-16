@@ -1,0 +1,16 @@
+{
+  "data": [
+    {
+      "runIndex": 1,
+      "floors": [
+        {
+          "allowedPuzzles": [
+            "BronzeKey"
+          ],
+          "roomCount": 8,
+          "theme": "Castle"
+        }
+      ]
+    }
+  ]
+}

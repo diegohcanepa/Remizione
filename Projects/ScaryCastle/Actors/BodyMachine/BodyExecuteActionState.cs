@@ -79,7 +79,7 @@ namespace ScaryCastle
                 if (!missChance.Roll())
                     EffectDescriptor.Apply(action.EffectDescriptors, Owner, Target, EffectContext.Attack);
                 else
-                    Owner.ShowFlyOff(missText, Color.WhiteSmoke, 2000);
+                    Owner.ShowFlyOff(missText, Color.WhiteSmoke);
 
                 //Owner.Session.InterruptAwaitingScript();
             }
@@ -143,7 +143,7 @@ namespace ScaryCastle
                 {
                     Sound.Play(SoundNames.Error);
                     var text = Localization.GetValue(MessageKind.NotEnoughGoo);
-                    Owner.ShowFlyOff(text, ColorPalette.Text.TerraLight, 2500);
+                    Owner.ShowFlyOff(text, ColorPalette.Text.TerraLight);
                     return;
                 }
 

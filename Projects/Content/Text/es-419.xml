@@ -198,6 +198,7 @@
   <String Key="MessageKind.CannotPlaceItem">No hay suficiente espacio en el terreno.</String>
   <String Key="MessageKind.ExtraEnergy">¡Puedes retener más baba!</String>
   <String Key="MessageKind.ExtraHeart">¡Te sientes más fuerte!</String>
+  <String Key="MessageKind.GateOpened">Una puerta de rejas se abrió.</String>
   <String Key="MessageKind.HandsFull">Tienes las manos ocupadas.</String>
   <String Key="MessageKind.InventoryFull">No te queda espacio.</String>
   <String Key="MessageKind.ItemDiscarded">Item descartado.</String>

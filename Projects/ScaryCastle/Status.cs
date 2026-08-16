@@ -12,7 +12,7 @@
         {
             this.manager = manager;
             this.StatusType = statusType;
-            this.Definition = StatusDefinition.Container.Get(statusType.ToString());
+            this.Definition = StatusDefinition.Data.Get(statusType.ToString());
         }
 
         // Apply

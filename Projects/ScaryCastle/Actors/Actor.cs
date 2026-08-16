@@ -17,7 +17,6 @@ namespace ScaryCastle
         #region Private fields
 
         private Sprite? activeThrowableSprite;
-        private readonly FloatTween alertTween = FloatTween.Create(TweenStyle.Linear, 0, .5f, 50, -1);
         private FlyOff? energyFlyoff;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
@@ -28,6 +27,7 @@ namespace ScaryCastle
         private readonly List<Vector2> pendingPathNodes = [];
         private float pixelsTrudged;
         private List<AtlasImage>? remainsPieces;
+        private readonly FloatTween shakeTween = FloatTween.Create(TweenStyle.Linear, 0, .5f, 40, -1);
         private SpeechText? speechText;
         private FlyOff? staminaFlyoff;
         private readonly ColorTween tintTween = new();
@@ -40,7 +40,7 @@ namespace ScaryCastle
         public Actor(GameSession session, string name)
             : base(session, name)
         {
-            this.Definition = ActorDefinition.Container.Find(DeclaredName);
+            this.Definition = ActorDefinition.Data.Find(DeclaredName);
             this.Atlas = Atlases.Actors;
             this.ApproachBehavior = ApproachBehavior.FaceToFace;
             this.DeathWord = ComicTextKind.PlopRed;
@@ -48,7 +48,7 @@ namespace ScaryCastle
             this.IgnoreWalkArea = false;
             this.Verb = Verb.Talk;
             this.Faction = Definition == null ? Faction.Good : Definition.Faction;
-            this.CombatBehavior = CombatBehavior.Container.Find(DeclaredName);
+            this.CombatBehavior = CombatBehavior.Data.Find(DeclaredName);
             this.StatusManager = new(this);
 
             headSprite = new AnimatedSprite()
@@ -86,21 +86,6 @@ namespace ScaryCastle
         #endregion
 
         #region Private members
-
-        // Fatigue
-        private void Fatigue()
-        {
-            if (MaxStamina > 0)
-            {
-                if (Sprite.Animations.Contains(ActorStateNames.Fatigue))
-                {
-                    StopMoving();
-                    var state = BodyMachine.FindOrCreateState<BodyFatigueState>();
-                    BodyMachine.ChangeState(state.GetType());
-                    Session.ProcessTurn(10);
-                }
-            }
-        }
 
         // HandlePendingInteraction
         private void HandlePendingInteraction()
@@ -431,7 +416,7 @@ namespace ScaryCastle
 
             var shake = !Session.IsAwaiting && RemainingTurns == 0 && IsHostile;
             if (shake)
-                X += alertTween.CurrentValue;
+                X += shakeTween.CurrentValue;
 
             if (tintTween.IsRunning)
                 Color = tintTween.CurrentValue;
@@ -464,7 +449,7 @@ namespace ScaryCastle
                 Y += moveVerticalTween.CurrentValue;
 
             if (shake)
-                X -= alertTween.CurrentValue;
+                X -= shakeTween.CurrentValue;
 
             if (moveBalancingTween.IsRunning)
                 Rotation -= moveBalancingTween.CurrentValue;
@@ -499,7 +484,7 @@ namespace ScaryCastle
             IsAlert = true;
             ResetRemainingTurns(true);
             OpacityFactor = 1;
-            alertTween.RandomizeTime();
+            shakeTween.RandomizeTime();
             Stand();
         }
 
@@ -539,6 +524,7 @@ namespace ScaryCastle
         protected override void OnStopMoving()
         {
             base.OnStopMoving();
+            
             FastMove = false;
             moveVerticalTween.Stop();
             moveBalancingTween.Stop();
@@ -610,7 +596,7 @@ namespace ScaryCastle
             UpdateFootstep();
             footstepEffect?.Update(gameTime);
             BodyMachine.Update(gameTime);
-            alertTween.Update(gameTime);
+            shakeTween.Update(gameTime);
             tintTween.Update(gameTime);
 
             if (!Session.IsAwaiting && !IsMoving)
@@ -751,6 +737,7 @@ namespace ScaryCastle
             {
                 if (ActiveThrowable.MaxHP > 0)
                 {
+                    StopMoving();
                     var thrownObject = new ThrownProp(this, ActiveThrowable);
                     thrownObject.Drop();
                     ActiveThrowable = null;
@@ -789,7 +776,7 @@ namespace ScaryCastle
                     field = Math.Clamp(value, 0, MaxEnergy);
                     OnEnergyChanged(previousValue);
                     if (previousValue > field && energyFlyoff == null)
-                        energyFlyoff = ShowFlyOff(Atlases.UI.GooIcon, 1000);
+                        energyFlyoff = ShowFlyOff(Atlases.UI.GooIcon);
                 }
             }
         }
@@ -830,6 +817,22 @@ namespace ScaryCastle
         // FastMoveFactor
         [ScriptProperty(CodingContext.EntityDeclaration)]
         public float FastMoveFactor { get; set; } = 1;
+
+        // Fatigue
+        public bool Fatigue()
+        {
+            if (MaxStamina > 0 && Sprite.Animations.Contains(ActorStateNames.Fatigue))
+            {
+                StopMoving();
+                DiscardActiveThrowable();
+                var state = BodyMachine.FindOrCreateState<BodyFatigueState>();
+                BodyMachine.ChangeState(state.GetType());
+                Session.ProcessTurn(10);
+                return true;
+            }
+
+            return false;
+        }
 
         // Flee
         public virtual void Flee()
@@ -1262,7 +1265,7 @@ namespace ScaryCastle
                 // Poison
                 case StatusType.Poison:
                     if (showIcon)
-                        ShowFlyOff(status.Definition.Image);
+                        ShowFlyOff(status.Definition.Image, true);
                     tintTween.Start(TweenStyle.QuadraticInOut, Color.White, Color.Green, 150, 2);
                     PlaySound(SoundNames.StatusPoison);
                     break;
@@ -1290,16 +1293,13 @@ namespace ScaryCastle
                 {
                     var previousValue = field;
                     field = Math.Clamp(value, 0, MaxStamina);
+                    
                     OnStaminaChanged(previousValue);
-                    if (field == 0)
-                    {
-                        DiscardActiveThrowable();
-                        Fatigue();
-                    }
-                    else if (previousValue > field && staminaFlyoff == null)
+                    
+                    if (field > 0 && previousValue > field && staminaFlyoff == null)
                     {
                         pixelsTrudged = 0;
-                        staminaFlyoff = ShowFlyOff(Atlases.UI.StaminaIcon, 1000);
+                        staminaFlyoff = ShowFlyOff(Atlases.UI.StaminaIcon);
                     }
                 }
             }
