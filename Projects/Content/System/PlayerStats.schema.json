@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Player Stats",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/PlayerStat"
+      }
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "PlayerStat": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "miArray": {
+          "type": "array",
+          "values": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "minItems": 5,
+          "maxItems": 5,
+          "items": false
+        }
+      },
+      "required": [
+        "runIndex"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

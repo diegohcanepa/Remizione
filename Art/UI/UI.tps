@@ -325,21 +325,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">ItemInfo-assets/ItemInfoContainer.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>54,14,107,28</rect>
-                <key>scale9Paddings</key>
-                <rect>54,14,107,28</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Items-assets/Apple.png</key>
             <key type="filename">Items-assets/Battery.png</key>
             <key type="filename">Items-assets/BittenApple.png</key>
@@ -368,7 +353,6 @@
             <key type="filename">Items-assets/Burger.png</key>
             <key type="filename">Items-assets/Coin.png</key>
             <key type="filename">Items-assets/SodaCan.png</key>
-            <key type="filename">RunModifierIcons-assets/RunModifierDarknessIcon.png</key>
             <key type="filename">UIIcons-assets/Dice.png</key>
             <key type="filename">XboxControls-assets/XboxA.png</key>
             <key type="filename">XboxControls-assets/XboxB.png</key>
@@ -670,7 +654,15 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">MonitorFrame-assets/MonitorFrame.png</key>
+            <key type="filename">Modifiers-assets/PlayerModifierLuckIcon.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorTalkIcon.png</key>
+            <key type="filename">UI-assets/ProhibitionIcon.png</key>
+            <key type="filename">UIIcons-assets/HeartIcon.png</key>
+            <key type="filename">UIIcons-assets/MagnifierIcon.png</key>
+            <key type="filename">UIIcons-assets/RedHearts1.png</key>
+            <key type="filename">UIIcons-assets/RedHearts2.png</key>
+            <key type="filename">UIIcons-assets/RedHearts3.png</key>
+            <key type="filename">UIIcons-assets/StatusPoisonIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -679,15 +671,16 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>60,34,120,67</rect>
+                <rect>2,2,5,5</rect>
                 <key>scale9Paddings</key>
-                <rect>60,34,120,67</rect>
+                <rect>2,2,5,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Modifiers-assets/RunModifierDarknessIcon.png</key>
+            <key type="filename">Modifiers-assets/RunModifierToxicIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorAttackIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorMagnifierIcon.png</key>
-            <key type="filename">RunModifierIcons-assets/RunModifierToxicIcon.png</key>
             <key type="filename">UIIcons-assets/CorridorDoorIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -700,6 +693,21 @@
                 <rect>3,3,5,5</rect>
                 <key>scale9Paddings</key>
                 <rect>3,3,5,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">MonitorFrame-assets/MonitorFrame.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>60,34,120,67</rect>
+                <key>scale9Paddings</key>
+                <rect>60,34,120,67</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -763,28 +771,6 @@
                 <rect>2,2,5,4</rect>
                 <key>scale9Paddings</key>
                 <rect>2,2,5,4</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">MouseCursors-assets/MouseCursorTalkIcon.png</key>
-            <key type="filename">UI-assets/ProhibitionIcon.png</key>
-            <key type="filename">UIIcons-assets/HeartIcon.png</key>
-            <key type="filename">UIIcons-assets/MagnifierIcon.png</key>
-            <key type="filename">UIIcons-assets/RedHearts1.png</key>
-            <key type="filename">UIIcons-assets/RedHearts2.png</key>
-            <key type="filename">UIIcons-assets/RedHearts3.png</key>
-            <key type="filename">UIIcons-assets/StatusPoisonIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,5,5</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,5,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1187,13 +1173,12 @@
                     <filename>Items-assets</filename>
                     <filename>Inventory-assets</filename>
                     <filename>MonitorFrame-assets</filename>
-                    <filename>ItemInfo-assets</filename>
                     <filename>MiniMap-assets</filename>
                     <filename>DialogBox-assets</filename>
-                    <filename>RunModifierIcons-assets</filename>
                     <filename>Meter-assets</filename>
                     <filename>PocketItems-assets</filename>
                     <filename>GooMeter-assets</filename>
+                    <filename>Modifiers-assets</filename>
                 </array>
             </struct>
         </map>
