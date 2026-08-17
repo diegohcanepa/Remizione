@@ -95,6 +95,7 @@
 			<Word>await-dialog-block</Word>
 			<Word>await-dialog</Word>
 			<Word>await-enter-room</Word>
+			<Word>await-examine-item</Word>
 			<Word>await-input</Word>
 			<Word>await-message</Word>
 			<Word>await-monitor-text</Word>

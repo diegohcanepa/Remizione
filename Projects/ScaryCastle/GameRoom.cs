@@ -626,8 +626,8 @@ namespace ScaryCastle
         // Session
         public new GameSession Session { get; }
 
-        // TurnOffLights
-        public void TurnOffLights()
+        // TurnOffAmbientLights
+        public void TurnOffAmbientLights()
         {
             for (var i = 0; i < Children.Count; i++)
             {

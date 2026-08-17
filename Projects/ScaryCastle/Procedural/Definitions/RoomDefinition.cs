@@ -50,9 +50,6 @@ namespace ScaryCastle
             LockType = element.GetEnum("lockType", LockType.None);
             MusicTag = element.GetString("musicTag");
 
-            if (element.GetString("bossPosition") is string bossPositionValue && !string.IsNullOrWhiteSpace(bossPositionValue))
-                BossPosition = DataConvert.ToVector2(bossPositionValue);
-
             if (element.GetString("interactiveActorPosition") is string interactiveActorPositionValue && !string.IsNullOrWhiteSpace(interactiveActorPositionValue))
                 InteractiveActorPosition = DataConvert.ToVector2(interactiveActorPositionValue);
 
@@ -156,9 +153,6 @@ namespace ScaryCastle
 
         // AllowEnemies
         public bool AllowEnemies { get; }
-
-        // BossPosition
-        public Vector2? BossPosition { get; }
 
         // Data
         public static DataContainer<RoomDefinition> Data { get; } = new(element => new RoomDefinition(element));

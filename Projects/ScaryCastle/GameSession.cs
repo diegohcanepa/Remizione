@@ -1,6 +1,7 @@
 ﻿using Adberration;
 using Adberration.Scripting;
 using Engendro;
+using Engendro.Input;
 using Microsoft.Xna.Framework;
 using ScaryCastle.Props;
 using ScaryCastle.Scripting;
@@ -149,10 +150,10 @@ namespace ScaryCastle
             AotTypeRegistry.Register("animate-actor", typeof(AnimateActorCommand));
             AotTypeRegistry.Register("attach-light", typeof(AttachLightCommand), CodingContext.EntityDeclaration);
             AotTypeRegistry.Register("await-approach", typeof(AwaitApproachCommand));
-            AotTypeRegistry.Register("await-boss-intro", typeof(AwaitBossIntroCommand));
             AotTypeRegistry.Register("await-credits", typeof(AwaitCreditsCommand));
             AotTypeRegistry.Register("await-devil-hand", typeof(AwaitDevilHandCommand));
             AotTypeRegistry.Register("await-dialog-block", typeof(AwaitDialogBlockCommand));
+            AotTypeRegistry.Register("await-examine-item", typeof(AwaitExamineItemCommand));
             AotTypeRegistry.Register("await-input", typeof(AwaitInputCommand));
             AotTypeRegistry.Register("await-monitor-text", typeof(AwaitMonitorTextCommand));
             AotTypeRegistry.Register("await-npc-turn", typeof(AwaitNPCTurnCommand));
@@ -432,7 +433,7 @@ namespace ScaryCastle
             /*
             if (Player != null && Player.ActiveThrowable == null)
             {
-                if (!IsAwaiting && IsCurrentScene && CurrentRun != null)
+                if (!IsAwaiting && IsCurrentScene && RunInProgress)
                 {
                     if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
                     {
@@ -522,13 +523,6 @@ namespace ScaryCastle
             }
         }
 
-        // Boss
-        [ScriptProperty]
-        public Actor? Boss => Bosses.Count > 0 ? Bosses[0] : null;
-
-        // Bosses
-        public List<Actor> Bosses { get; } = [];
-
         // ComicTextPool
         public ObjectPool<ComicText> ComicTextPool { get; }
 
@@ -560,7 +554,6 @@ namespace ScaryCastle
 
             FloorIndex = -1;
             RunModifiers.Clear();
-            Bosses.Clear();
             CleanUpRuntimeEntities();
             PocketItemManager.Reset();
             PlayerInventory.Clear();
@@ -637,6 +630,9 @@ namespace ScaryCastle
                 return false;
             }
         }
+
+        // HoveredItem
+        public Item? HoveredItem { get; set; }
 
         // HUD
         public HUD HUD { get; }
@@ -832,7 +828,8 @@ namespace ScaryCastle
             Game.SceneManager.Push(inventoryScene);
         }
 
-        // VolatileRng (Este es el RNG para gameplay (Drops, IA, combate))
+        // VolatileRng
+        // Used for gameplay (Drops, IA, combate)
         public Random VolatileRng { get; private set; } = new();
     }
 }

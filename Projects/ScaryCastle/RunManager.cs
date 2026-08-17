@@ -172,7 +172,7 @@ namespace ScaryCastle
             // --- INYECCIÓN DEL BOSS (Reemplazo obligatorio) ---
             if (deadEnds.Count > 0)
             {
-                deadEnds[0].Category = RoomCategory.Boss;
+                deadEnds[0].Category = RoomCategory.End;
                 deadEnds.RemoveAt(0); // Lo sacamos para que no lo use otra sala
             }
             else
@@ -194,7 +194,7 @@ namespace ScaryCastle
                     }
                 }
 
-                furthestNode?.Category = RoomCategory.Boss;
+                furthestNode?.Category = RoomCategory.End;
             }
 
             // --- INYECCIÓN DE TREASURE Y STORE (Uso de Dead-Ends o Adosado) ---
@@ -302,7 +302,7 @@ namespace ScaryCastle
                 // Caso B: Es una sala Mandatoria (Boss, Treasure, Store) y no encuentra asset en su dificultad
                 if (def == null)
                 {
-                    if (node.Category is RoomCategory.Treasure or RoomCategory.Store or RoomCategory.Boss)
+                    if (node.Category is RoomCategory.Treasure or RoomCategory.Store or RoomCategory.End)
                     {
                         // Si era Hard, probamos en Normal
                         if (localRoomDiff == Difficulty.Hard)
@@ -512,6 +512,9 @@ namespace ScaryCastle
 
         #endregion
 
+        // FloorDescriptor
+        public FloorDescriptor? FloorDescriptor { get; private set; }
+
         // FloorMap
         public ReadOnlyDictionary<Point, RoomNode> FloorMap => new(floorMap);
 
@@ -519,6 +522,8 @@ namespace ScaryCastle
         public void GenerateFloor(FloorDescriptor floorDescriptor)
         {
             CleanUp();
+
+            this.FloorDescriptor = floorDescriptor;
 
             // El seed de este piso lo dicta el RNG Maestro. 
             // Si recargas la run, el orden de pisos será exactamente igual.

@@ -173,44 +173,6 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">BossMeter-assets/BossMeter.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>23,4,45,8</rect>
-                <key>scale9Paddings</key>
-                <rect>23,4,45,8</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">BossMeter-assets/BossMeterAmount.png</key>
-            <key type="filename">Items-assets/AppleOn.png</key>
-            <key type="filename">Items-assets/Burger.png</key>
-            <key type="filename">Items-assets/Coin.png</key>
-            <key type="filename">Items-assets/SodaCan.png</key>
-            <key type="filename">RunModifierIcons-assets/RunModifierDarknessIcon.png</key>
-            <key type="filename">UIIcons-assets/Dice.png</key>
-            <key type="filename">XboxControls-assets/XboxA.png</key>
-            <key type="filename">XboxControls-assets/XboxB.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>4,4,7,7</rect>
-                <key>scale9Paddings</key>
-                <rect>4,4,7,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">DialogBox-assets/DialogBoxBorderB.png</key>
             <key type="filename">DialogBox-assets/DialogBoxBorderL.png</key>
             <key type="filename">DialogBox-assets/DialogBoxBorderLB.png</key>
@@ -399,6 +361,28 @@
                 <rect>6,6,11,11</rect>
                 <key>scale9Paddings</key>
                 <rect>6,6,11,11</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Items-assets/AppleOn.png</key>
+            <key type="filename">Items-assets/Burger.png</key>
+            <key type="filename">Items-assets/Coin.png</key>
+            <key type="filename">Items-assets/SodaCan.png</key>
+            <key type="filename">RunModifierIcons-assets/RunModifierDarknessIcon.png</key>
+            <key type="filename">UIIcons-assets/Dice.png</key>
+            <key type="filename">XboxControls-assets/XboxA.png</key>
+            <key type="filename">XboxControls-assets/XboxB.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,4,7,7</rect>
+                <key>scale9Paddings</key>
+                <rect>4,4,7,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1204,7 +1188,6 @@
                     <filename>Inventory-assets</filename>
                     <filename>MonitorFrame-assets</filename>
                     <filename>ItemInfo-assets</filename>
-                    <filename>BossMeter-assets</filename>
                     <filename>MiniMap-assets</filename>
                     <filename>DialogBox-assets</filename>
                     <filename>RunModifierIcons-assets</filename>

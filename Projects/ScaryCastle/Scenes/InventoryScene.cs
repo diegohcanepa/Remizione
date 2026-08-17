@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 namespace ScaryCastle
 {
     /// <summary>
-    /// InventoryScene2
+    /// InventoryScene
     /// </summary>
     public sealed class InventoryScene : Scene, IInputHandler
     {
@@ -119,8 +119,17 @@ namespace ScaryCastle
 
             if (InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
             {
-                MouseCursor.PerformClick();
-                Game.SceneManager.Pop();
+                if (GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item item)
+                {
+                    ItemContainer.Session.HoveredItem = item;
+                    ItemContainer.Session.AwaitRoutine(RoutineNames.ExamineHoveredItem);
+                    Game.SceneManager.Pop();
+                }
+                else
+                {
+                    MouseCursor.PerformClick();
+                    Game.SceneManager.Pop();
+                }
             }
 
             return false;
@@ -130,14 +139,14 @@ namespace ScaryCastle
         private void Refresh()
         {
             float screenWidth = Screen.NativeWidth;
-            int slotCount = ItemContainer.Capacity;
+            int slotCount = ItemContainer.Count;
             float slotWidth = slots[0].BoundingBox.Width;
             float spacing = 1;
 
             float rowWidth = (slotCount * slotWidth) + ((slotCount - 1) * spacing);
             float startingX = (screenWidth - rowWidth) / 2;
 
-            for (int i = 0; i < slotCount; i++)
+            for (int i = 0; i < ItemContainer.Count; i++)
             {
                 slots[i].X = startingX + (i * (slotWidth + spacing));
                 icons[i].RenderImage = null;
@@ -205,9 +214,7 @@ namespace ScaryCastle
 
             background.Draw(gameTime);
 
-            itemDescription.Draw(gameTime);
-
-            for (var i = 0; i < ItemContainer.Capacity; i++)
+            for (var i = 0; i < ItemContainer.Count; i++)
             {
                 slots[i].Draw(gameTime);
 
@@ -223,7 +230,10 @@ namespace ScaryCastle
             }
 
             if (lastSelectedItem != null)
+            {
                 itemLabel.Draw(gameTime);
+                itemDescription.Draw(gameTime);
+            }
 
             Game.SpriteBatch.End();
         }

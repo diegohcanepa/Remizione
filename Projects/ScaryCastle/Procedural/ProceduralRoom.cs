@@ -652,11 +652,11 @@ namespace ScaryCastle
                 if (definition is ActorDefinition actorDefinition)
                 {
                     // Si es un Boss real, SOLO puede aparecer en la habitación etiquetada como Boss
-                    if (actorDefinition.Rank == ActorRank.Boss && RoomNode.Category != RoomCategory.Boss)
+                    if (actorDefinition.Rank == ActorRank.Boss && RoomNode.Category != RoomCategory.End)
                         continue;
 
                     // Y viceversa: en la sala del Boss no queremos que spawneen murciélagos comunes como plato principal
-                    if (RoomNode.Category == RoomCategory.Boss && actorDefinition.Rank != ActorRank.Boss)
+                    if (RoomNode.Category == RoomCategory.End && actorDefinition.Rank != ActorRank.Boss)
                         continue;
                 }
 
@@ -760,6 +760,9 @@ namespace ScaryCastle
             PrepareView();
             PrepareLights();
             DistributeBronzeKeys();
+
+            if (Session.RunManager.FloorDescriptor?.Darkness == true)
+                TurnOffAmbientLights();
         }
 
         // OnRefreshAmbientLightSources

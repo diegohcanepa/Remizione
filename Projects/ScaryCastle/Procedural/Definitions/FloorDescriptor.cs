@@ -14,6 +14,9 @@ namespace ScaryCastle
         // Constructor
         public FloorDescriptor(JsonElement element)
         {
+            // Darkness
+            this.Darkness = element.GetBool("darkness", false);
+
             // RoomCount
             if (element.GetInt32("roomCount") is not int roomCount)
                 throw new InvalidOperationException("Missing roomCount property.");
@@ -45,6 +48,9 @@ namespace ScaryCastle
 
         // AllowedPuzzles
         public ReadOnlyCollection<PuzzleKind> AllowedPuzzles { get; }
+
+        // Darkness
+        public bool Darkness { get; }
 
         // RoomCount
         public int RoomCount { get; }

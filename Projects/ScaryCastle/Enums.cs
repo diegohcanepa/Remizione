@@ -188,7 +188,7 @@ namespace ScaryCastle
     public enum RoomTheme { Castle }
 
     // RoomCategory
-    public enum RoomCategory { Start, Boss, Treasure, Store, Special, Secret, Standard }
+    public enum RoomCategory { Start, End, Treasure, Store, Special, Secret, Standard }
 
     // RunModifierScope
     public enum RunModifierScope { Room, Run }

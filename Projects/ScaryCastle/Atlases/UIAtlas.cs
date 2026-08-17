@@ -12,8 +12,6 @@ namespace ScaryCastle
         public UIAtlas()
             : base(EngendroGame.Instance.Content, "UI", ContentManagerExtension.EncodePath(ContentFolder.Atlases, "UI"), false)
         {
-            BossMeter = this[nameof(BossMeter)];
-            BossMeterAmount = this[nameof(BossMeterAmount)];
             BronzeKeyIcon = this[nameof(BronzeKeyIcon)];
             CheckMark = this[nameof(CheckMark)];
             CloseWindowButton = this[nameof(CloseWindowButton)];
@@ -61,12 +59,6 @@ namespace ScaryCastle
             UIButtonContainerEdge = this[nameof(UIButtonContainerEdge)];
             UIButtonContainerPattern = this[nameof(UIButtonContainerPattern)];
         }
-
-        // BossMeter
-        public AtlasImage BossMeter { get; }
-
-        // BossMeterAmount
-        public AtlasImage BossMeterAmount { get; }
 
         // BronzeKeyIcon
         public AtlasImage BronzeKeyIcon { get; }

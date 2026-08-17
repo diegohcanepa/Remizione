@@ -48,6 +48,9 @@
             ]
           }
         },
+        "darkness": {
+          "type": "boolean"
+        },
         "roomCount": {
           "type": "integer",
           "minimum": 5
