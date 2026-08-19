@@ -28,12 +28,12 @@ namespace ScaryCastle.Scripting
 
                 if (lootContainer.Loot.Behavior == ItemBehavior.Sack)
                 {
-                    if (session.PlayerInventory.Add(lootContainer.Loot) is Item item)
+                    if (session.CurrentRun?.PlayerInventory.Add(lootContainer.Loot) is Item item)
                     {
-                        session.HUD.InventoryMeter.Animate();
+                        session.RunHUD?.InventoryMeter.Animate();
 
                         if (item.Definition.Image != null)
-                            session.HUD.Log.Show(item.DisplayName, item.Definition.Image);
+                            session.RunHUD?.Log.Show(item.DisplayName, item.Definition.Image);
                     }
                 }
                 else if (lootContainer.Loot.Behavior != ItemBehavior.PlayerAction && session.Player != null)

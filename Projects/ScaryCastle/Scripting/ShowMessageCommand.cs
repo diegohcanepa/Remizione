@@ -21,7 +21,7 @@ namespace ScaryCastle.Scripting
             if (Session is GameSession session)
             {
                 var value = Parser.ParseEnum<MessageKind>(this, 0);
-                session.HUD.Message.Show(value);
+                session.RunHUD?.Message.Show(value);
             }
         }
 

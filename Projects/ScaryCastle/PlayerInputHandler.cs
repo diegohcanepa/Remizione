@@ -27,7 +27,7 @@ namespace ScaryCastle
                 return HandleInputResult.Handled;
 
             // Right button
-            if (Actor.Session.IsHUDVisible)
+            if (Actor.Session.CurrentRun != null)
             {
                 if (TestMouseRightButtonClick())
                     return HandleInputResult.Handled;
@@ -69,7 +69,7 @@ namespace ScaryCastle
             {
                 if (context.Target is not Prop prop || !prop.IsLiftable)
                 {
-                    Actor.Session.HUD.Message.Show(MessageKind.LiftNotAllowed);
+                    Actor.Session.RunHUD?.Message.Show(MessageKind.LiftNotAllowed);
                     MouseCursor.Shake();
                     return;
                 }

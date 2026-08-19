@@ -1,5 +1,4 @@
-﻿using Adberration;
-using Engendro;
+﻿using Engendro;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
@@ -8,19 +7,21 @@ namespace ScaryCastle
     /// <summary>
     /// UIRunModifiers
     /// </summary>
-    public sealed class UIRunModifiers : SessionGameObject<GameSession>
+    public sealed class UIRunModifiers : GameObject
     {
         private readonly List<ModifierIcon> activeIcons = [];
         private readonly Dictionary<string, ModifierIcon> icons = [];
         private int lastKnownVersion = -1;
+        private readonly RunState runState;
 
         #region Constructor
 
         // Constructor
-        public UIRunModifiers(GameSession session)
-            : base(session)
+        public UIRunModifiers(RunState runState)
         {
-            foreach (var modifier in Session.RunModifiers.All)
+            this.runState = runState;
+
+            foreach (var modifier in runState.Modifiers.All)
             {
                 icons[modifier.Name] = new(modifier.Definition.Image);
             }
@@ -35,10 +36,10 @@ namespace ScaryCastle
         {
             activeIcons.Clear();
 
-            if (Session.RunModifiers.ActiveCount == 0)
+            if (runState.Modifiers.ActiveCount == 0)
                 return;
 
-            foreach (var modifier in Session.RunModifiers.ActiveModifiers)
+            foreach (var modifier in runState.Modifiers.ActiveModifiers)
             {
                 activeIcons.Add(icons[modifier.Name]);
             }
@@ -93,10 +94,10 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (lastKnownVersion != Session.RunModifiers.ContentVersion)
+            if (lastKnownVersion != runState.Modifiers.ContentVersion)
             {
                 Refresh();
-                lastKnownVersion = Session.RunModifiers.ContentVersion;
+                lastKnownVersion = runState.Modifiers.ContentVersion;
             }
 
             for (var i = 0; i < activeIcons.Count; i++)

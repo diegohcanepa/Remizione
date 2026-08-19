@@ -17,12 +17,15 @@ namespace ScaryCastle.Scripting
             if (Session is not GameSession session)
                 return false;
 
-            if (session.OutcomeTarget is ILootContainer<ItemDefinition> lootContainer && lootContainer.Loot != null)
+            if (session.CurrentRun != null)
             {
-                if (!session.PlayerInventory.HasSpace(lootContainer.Loot))
+                if (session.OutcomeTarget is ILootContainer<ItemDefinition> lootContainer && lootContainer.Loot != null)
                 {
-                    session.HUD.Message.Show(MessageKind.InventoryFull);
-                    return false;
+                    if (!session.CurrentRun.PlayerInventory.HasSpace(lootContainer.Loot))
+                    {
+                        session.RunHUD?.Message.Show(MessageKind.InventoryFull);
+                        return false;
+                    }
                 }
             }
 

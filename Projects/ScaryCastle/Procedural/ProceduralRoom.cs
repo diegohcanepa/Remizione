@@ -298,15 +298,18 @@ namespace ScaryCastle
         // RefreshRunModifiers
         private void RefreshRunModifiers()
         {
-            var hasDarknessModifier = Session.RunModifiers.IsActive(RunModifierNames.Darkness);
+            if (Session.CurrentRun == null)
+                return;
+
+            var hasDarknessModifier = Session.CurrentRun.Modifiers.IsActive(RunModifierNames.Darkness);
 
             if (AmbientLights && hasDarknessModifier)
             {
-                Session.RunModifiers.Deactivate(RunModifierNames.Darkness);
+                Session.CurrentRun.Modifiers.Deactivate(RunModifierNames.Darkness);
             }
             else if (!AmbientLights && !hasDarknessModifier)
             {
-                Session.RunModifiers.Activate(RunModifierNames.Darkness);
+                Session.CurrentRun.Modifiers.Activate(RunModifierNames.Darkness);
             }
         }
 
@@ -701,12 +704,15 @@ namespace ScaryCastle
             if (!RoomNode.Visited)
                 RoomNode.Visited = true;
 
-            foreach (var name in RoomNode.Definition.RunModifiers)
+            if (Session.CurrentRun != null)
             {
-                Session.RunModifiers.Activate(name);
+                foreach (var name in RoomNode.Definition.RunModifiers)
+                {
+                    Session.CurrentRun.Modifiers.Activate(name);
+                }
             }
 
-            Session.HUD.MiniMap.CurrentRoom = RoomNode;
+            Session.RunHUD?.MiniMap.CurrentRoom = RoomNode;
         }
 
         // OnChildAdded
@@ -741,7 +747,7 @@ namespace ScaryCastle
         protected override void OnDeactivate()
         {
             base.OnDeactivate();
-            Session.RunModifiers.Clear(RunModifierScope.Room);
+            Session.CurrentRun?.Modifiers.Clear(RunModifierScope.Room);
         }
 
         // OnLoad

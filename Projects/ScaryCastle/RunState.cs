@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Microsoft.Xna.Framework;
 using System;
 
 namespace ScaryCastle
@@ -12,9 +13,10 @@ namespace ScaryCastle
         public RunState(GameSession session, int seed, RunDescriptor descriptor)
         {
             this.Session = session;
-
             this.Seed = seed;
             this.Descriptor = descriptor;
+
+            this.LootGenerator = new(this);
 
             this.MasterRunRng = new(seed);
             this.VolatileRng = new(seed);
@@ -32,6 +34,9 @@ namespace ScaryCastle
 
         // FloorIndex
         public int FloorIndex { get; private set; } = -1;
+
+        // LootGenerator
+        public LootGenerator LootGenerator { get; }
 
         // MasterRunRng
         public Random MasterRunRng { get; }
@@ -72,6 +77,12 @@ namespace ScaryCastle
             var floorLayout = FloorGenerator.Generate(this, FloorDescriptor);
             startRoom = floorLayout.StartNode.Room;
             return true;
+        }
+
+        // Update
+        public void Update(GameTime gameTime)
+        {
+            Modifiers.Update(gameTime);
         }
 
         // VolatileRng

@@ -154,7 +154,7 @@ namespace ScaryCastle
 
         // CanBeUnlockedWithPocketItem
         [ScriptProperty]
-        public bool CanBeUnlockedWithPocketItem => (LockType == LockType.BronzeKey && Session.PocketItemManager.BronzeKeys > 0) ||
+        public bool CanBeUnlockedWithPocketItem => (LockType == LockType.BronzeKey && Session.CurrentRun?.PocketItems.BronzeKeys > 0) ||
                        (LockType == LockType.GoldenKey && Session.GoldenKeys > 0);
 
         // Connect
@@ -248,9 +248,9 @@ namespace ScaryCastle
         [ScriptMethod(CodingContext.Execution)]
         public void UnlockWithPocketItem()
         {
-            if (LockType == LockType.BronzeKey && Session.PocketItemManager.BronzeKeys > 0)
+            if (LockType == LockType.BronzeKey && Session.CurrentRun?.PocketItems.BronzeKeys > 0)
             {
-                Session.PocketItemManager.BronzeKeys--;
+                Session.CurrentRun.PocketItems.BronzeKeys--;
                 LockType = LockType.None;
             }
             else if (LockType == LockType.GoldenKey && Session.GoldenKeys > 0)

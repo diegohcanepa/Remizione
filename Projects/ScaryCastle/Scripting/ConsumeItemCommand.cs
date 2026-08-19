@@ -22,7 +22,7 @@ namespace ScaryCastle.Scripting
             if (Session is not GameSession session || session.Player == null)
                 return;
 
-            if (session.PlayerInventory.Find(definition.Name) is Item item)
+            if (session.CurrentRun?.PlayerInventory.Find(definition.Name) is Item item)
                 item.Consume(session.Player);
         }
     }

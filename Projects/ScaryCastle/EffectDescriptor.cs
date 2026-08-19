@@ -78,7 +78,7 @@ namespace ScaryCastle
 
                     // BronzeKey
                     case EffectType.BronzeKey:
-                        source.Session.PocketItemManager.BronzeKeys += amount;
+                        source.Session.CurrentRun?.PocketItems.BronzeKeys += amount;
                         break;
 
                     // ComicText
@@ -89,12 +89,12 @@ namespace ScaryCastle
 
                     // Coin
                     case EffectType.Coin:
-                        source.Session.PocketItemManager.Coins += amount;
+                        source.Session.CurrentRun?.PocketItems.Coins += amount;
                         break;
 
                     // CoinLoss
                     case EffectType.CoinLoss:
-                        source.Session.PocketItemManager.Coins -= amount;
+                        source.Session.CurrentRun?.PocketItems.Coins -= amount;
                         break;
 
                     // Damage
@@ -115,18 +115,16 @@ namespace ScaryCastle
                     // ExtraEnergy
                     case EffectType.ExtraEnergy:
                         targetActor?.MaxEnergy += amount;
-                        source.Session.HUD.Message.Show(MessageKind.ExtraEnergy);
                         break;
 
                     // ExtraHeart
                     case EffectType.ExtraHeart:
                         realTarget?.MaxHP += amount;
-                        source.Session.HUD.Message.Show(MessageKind.ExtraHeart);
                         break;
 
                     // GoldenKey
                     case EffectType.GoldenKey:
-                        source.Session.PocketItemManager.GoldenKeys += amount;
+                        source.Session.CurrentRun?.PocketItems.GoldenKeys += amount;
                         break;
 
                     // HPGain

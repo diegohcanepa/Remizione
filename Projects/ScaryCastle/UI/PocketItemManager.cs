@@ -22,7 +22,7 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = Math.Max(0, value);
-                    Session.HUD.PocketItems.Refresh();
+                    Session.RunHUD?.PocketItems.Refresh();
                 }
             }
         }
@@ -36,7 +36,7 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = Math.Max(0, value);
-                    Session.HUD.PocketItems.Refresh();
+                    Session.RunHUD?.PocketItems.Refresh();
                 }
             }
         }
@@ -44,11 +44,14 @@ namespace ScaryCastle
         // GetCount
         public int GetCount(PocketItemType pocketItemType)
         {
+            if (Session.CurrentRun == null)
+                return 0;
+
             return pocketItemType switch
             {
-                PocketItemType.BronzeKey => Session.PocketItemManager.BronzeKeys,
-                PocketItemType.Coin => Session.PocketItemManager.Coins,
-                PocketItemType.GoldenKey => Session.PocketItemManager.GoldenKeys,
+                PocketItemType.BronzeKey => Session.CurrentRun.PocketItems.BronzeKeys,
+                PocketItemType.Coin => Session.CurrentRun.PocketItems.Coins,
+                PocketItemType.GoldenKey => Session.CurrentRun.PocketItems.GoldenKeys,
                 _ => throw new NotImplementedException(),
             };
         }
@@ -62,7 +65,7 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = Math.Max(0, value);
-                    Session.HUD.PocketItems.Refresh();
+                    Session.RunHUD?.PocketItems.Refresh();
                 }
             }
         }

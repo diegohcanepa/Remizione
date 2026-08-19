@@ -1,5 +1,4 @@
-﻿using Adberration;
-using Engendro;
+﻿using Engendro;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 
@@ -8,7 +7,7 @@ namespace ScaryCastle
     /// <summary>
     /// HUD
     /// </summary>
-    public sealed class HUD : SessionGameObject<GameSession>, IInputHandler
+    public sealed class RunHUD : GameObject, IInputHandler
     {
         #region Private fields
 
@@ -16,25 +15,26 @@ namespace ScaryCastle
         private readonly UIPassiveItems passiveItems;
         private readonly UIPlayerTraits playerTraits;
         private readonly UIRunModifiers runModifiers;
+        private readonly RunState runState;
 
         #endregion
 
         #region Constructor
 
         // Constructor
-        public HUD(GameSession session)
-            : base(session)
+        public RunHUD(RunState runState)
         {
-            this.gooMeter = new(session);
-            this.StaminaMeter = new(session);
-            this.HPMeter = new(session);
-            this.InventoryMeter = new(session.PlayerInventory);
-            this.passiveItems = new(session);
-            this.playerTraits = new(session);
-            this.PocketItems = new(session.PocketItemManager);
+            this.runState = runState;
+            this.gooMeter = new(runState.Session);
+            this.StaminaMeter = new(runState.Session);
+            this.HPMeter = new(runState.Session);
+            this.InventoryMeter = new(runState.PlayerInventory);
+            this.passiveItems = new(runState.Session);
+            this.playerTraits = new(runState.Session);
+            this.PocketItems = new(runState.PocketItems);
             this.MiniMap = new();
-            this.runModifiers = new(session);
-            this.Statuses = new(session);
+            this.runModifiers = new(runState);
+            this.Statuses = new(runState.Session);
             this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 14));
         }
 
@@ -52,13 +52,13 @@ namespace ScaryCastle
             passiveItems.Draw(gameTime);
             playerTraits.Draw(gameTime);
             Game.SpriteBatch.End();
-            
+
             gooMeter.Draw(gameTime);
 
-            if (!Session.IsConsoleVisible)
+            if (!runState.Session.IsConsoleVisible)
                 StaminaMeter.Draw(gameTime);
 
-            if (Session.IsCurrentScene)
+            if (runState.Session.IsCurrentScene)
             {
                 InventoryMeter.Draw(gameTime);
                 PocketItems.Draw(gameTime);
@@ -94,10 +94,10 @@ namespace ScaryCastle
         // HandleInput
         public HandleInputResult HandleInput()
         {
-            if (Session.IsAwaiting)
+            if (runState.Session.IsAwaiting)
                 return HandleInputResult.Unhandled;
 
-            if (Session.IsConsoleVisible)
+            if (runState.Session.IsConsoleVisible)
                 return HandleInputResult.Unhandled;
 
             return HandleInputResult.Unhandled;
@@ -124,7 +124,7 @@ namespace ScaryCastle
         // Reset
         public void Reset()
         {
-            Statuses.Actor = Session.Player;
+            Statuses.Actor = runState.Session.Player;
             Message.Hide();
             Log.Hide();
         }

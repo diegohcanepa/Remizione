@@ -463,9 +463,12 @@ namespace ScaryCastle
         // PrepareLoot
         protected void PrepareLoot()
         {
-            ItemReward = Session.LootGenerator.RollForLoot(this);
+            if (Session.CurrentRun == null)
+                return;
+
+            ItemReward = Session.CurrentRun.LootGenerator.RollForLoot(this);
             if (ItemReward == null)
-                CoinReward = Session.LootGenerator.RollForCoin(this);
+                CoinReward = Session.CurrentRun.LootGenerator.RollForCoin(this);
         }
 
         #endregion

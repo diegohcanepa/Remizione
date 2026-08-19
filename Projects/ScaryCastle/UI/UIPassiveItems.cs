@@ -9,7 +9,7 @@ namespace ScaryCastle
     public sealed class UIPassiveItems : GameObject
     {
         private readonly Sprite[] icons;
-        private int lastSeenInventoryVersion = -1;
+        //private int lastSeenInventoryVersion = -1;
 
         private readonly GameSession session;
 
@@ -46,6 +46,9 @@ namespace ScaryCastle
                 icons[i].RenderImage = null;
             }
 
+            // TODO: Check
+
+            /*
             var index = 0;
             var iconPos = Screen.Area.GetPoint(RectanglePoint.RightBottom, -30, -5);
             for (var i = session.PlayerInventory.Count - 1; i >= 0; i--)
@@ -59,6 +62,7 @@ namespace ScaryCastle
                     index++;
                 }
             }
+            */
         }
 
         #endregion
@@ -80,11 +84,15 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            // TODO: Check
+
+            /*
             if (lastSeenInventoryVersion != session.PlayerInventory.ContentVersion)
             {
                 lastSeenInventoryVersion = session.PlayerInventory.ContentVersion;
                 Refresh();
             }
+            */
         }
 
         #endregion

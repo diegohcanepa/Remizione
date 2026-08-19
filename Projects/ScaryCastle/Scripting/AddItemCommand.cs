@@ -26,7 +26,7 @@ namespace ScaryCastle.Scripting
             if (Session is not GameSession session)
                 return;
 
-            session.PlayerInventory.Add(definition.Name);
+            session.CurrentRun?.PlayerInventory.Add(definition.Name);
         }
     }
 }

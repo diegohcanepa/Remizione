@@ -13,11 +13,8 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private static readonly Dictionary<Point, RoomNode> floorMap = [];
         private const int gridRadius = 4; // Radio 4 significa de -4 a 4 (Matriz de 9x9)
         private static readonly RoomRegistry registry = new();
-        private static readonly CounterBank spawns = new();
-
 
         #endregion
 
@@ -33,7 +30,7 @@ namespace ScaryCastle
         }
 
         // CountExistingNeighbors
-        private static int CountExistingNeighbors(Point p)
+        private static int CountExistingNeighbors(Dictionary<Point, RoomNode> floorMap, Point p)
         {
             int count = 0;
             if (floorMap.ContainsKey(p + new Point(0, -1))) count++;
@@ -44,7 +41,7 @@ namespace ScaryCastle
         }
 
         // ExecutePhase1_Layout
-        private static void ExecutePhase1_Layout(Random rng, int totalRooms)
+        private static void ExecutePhase1_Layout(Dictionary<Point, RoomNode> floorMap, Random rng, int totalRooms)
         {
             int totalLayoutAttempts = 0;
             const int maxLayoutAttempts = 1000;
@@ -88,7 +85,7 @@ namespace ScaryCastle
                     // --- REGLA DE ORO DE ADYACENCIA ---
                     // Si la posición propuesta tiene más de 1 vecino, generaría un bucle.
                     // Lo descartamos para forzar la expansión arbórea sin colisiones.
-                    if (CountExistingNeighbors(newPos) > 1)
+                    if (CountExistingNeighbors(floorMap, newPos) > 1)
                         continue;
 
                     // El nodo superó los filtros, lo consolidamos
@@ -114,7 +111,7 @@ namespace ScaryCastle
         }
 
         // ExecutePhase2_Labeling
-        private static void ExecutePhase2_Labeling(Random rng)
+        private static void ExecutePhase2_Labeling(Dictionary<Point, RoomNode> floorMap, Random rng)
         {
             // 1. El START ya está fijado, pero nos aseguramos por las dudas
             floorMap[Point.Zero].Category = RoomCategory.Start;
@@ -240,14 +237,14 @@ namespace ScaryCastle
         }
 
         // ExecutePhase3_InjectSecrets
-        private static void ExecutePhase3_InjectSecrets(Random rng)
+        private static void ExecutePhase3_InjectSecrets(Dictionary<Point, RoomNode> floorMap, Random rng)
         {
         }
 
         // ExecutePhase4_AssignDefinitions
-        private static void ExecutePhase4_AssignDefinitions(Random rng, CounterBank spawns)
+        private static void ExecutePhase4_AssignDefinitions(Dictionary<Point, RoomNode> floorMap, Random rng, CounterBank spawns)
         {
-            int maxDistance = GetMaxFloorDistance();
+            int maxDistance = GetMaxFloorDistance(floorMap);
 
             foreach (var node in floorMap.Values)
             {
@@ -303,9 +300,9 @@ namespace ScaryCastle
         }
 
         // ExecutePhase5_TopologyAndLocks
-        private static void ExecutePhase5_TopologyAndLocks(Random rng, FloorDescriptor floorDescriptor)
+        private static void ExecutePhase5_TopologyAndLocks(Dictionary<Point, RoomNode> floorMap, Random rng, FloorDescriptor floorDescriptor)
         {
-            int maxDistance = GetMaxFloorDistance();
+            int maxDistance = GetMaxFloorDistance(floorMap);
 
             var visited = new HashSet<RoomNode>();
             var queue = new Queue<RoomNode>();
@@ -412,7 +409,7 @@ namespace ScaryCastle
         }
 
         // ExecutePhase6_PrepareRooms
-        private static void ExecutePhase6_PrepareRooms(GameSession session, Random floorRng)
+        private static void ExecutePhase6_PrepareRooms(Dictionary<Point, RoomNode> floorMap, GameSession session, Random floorRng)
         {
             foreach (var node in floorMap.Values)
             {
@@ -449,7 +446,7 @@ namespace ScaryCastle
         }
 
         // GetMaxFloorDistance
-        private static int GetMaxFloorDistance()
+        private static int GetMaxFloorDistance(Dictionary<Point, RoomNode> floorMap)
         {
             int max = 0;
             foreach (var node in floorMap.Values)
@@ -483,19 +480,18 @@ namespace ScaryCastle
         // Generate
         public static FloorLayout Generate(RunState runState, FloorDescriptor descriptor)
         {
-            floorMap.Clear();
-            spawns.Clear();
+            Dictionary<Point, RoomNode> floorMap = [];
 
             int currentFloorSeed = runState.MasterRunRng.Next();
             var floorRng = new Random(currentFloorSeed);
 
             // Las fases ahora reciben el diccionario y el rng local por parámetro
-            ExecutePhase1_Layout(floorRng, descriptor.RoomCount);
-            ExecutePhase2_Labeling(floorRng);
-            ExecutePhase3_InjectSecrets(floorRng);
-            ExecutePhase4_AssignDefinitions(floorRng, runState.Spawns);
-            ExecutePhase5_TopologyAndLocks(floorRng, descriptor);
-            ExecutePhase6_PrepareRooms(runState.Session, floorRng);
+            ExecutePhase1_Layout(floorMap, floorRng, descriptor.RoomCount);
+            ExecutePhase2_Labeling(floorMap, floorRng);
+            ExecutePhase3_InjectSecrets(floorMap, floorRng);
+            ExecutePhase4_AssignDefinitions(floorMap, floorRng, runState.Spawns);
+            ExecutePhase5_TopologyAndLocks(floorMap, floorRng, descriptor);
+            ExecutePhase6_PrepareRooms(floorMap, runState.Session, floorRng);
 
             return new FloorLayout(new ReadOnlyDictionary<Point, RoomNode>(floorMap), floorMap[Point.Zero]);
         }

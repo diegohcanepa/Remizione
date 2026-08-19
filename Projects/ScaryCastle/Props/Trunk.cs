@@ -38,7 +38,7 @@ namespace ScaryCastle
         {
             if (IsOpen)
             {
-                if (Session.LootGenerator.RollForLoot(this) is ItemDefinition loot)
+                if (Session.CurrentRun?.LootGenerator.RollForLoot(this) is ItemDefinition loot)
                 {
                     this.Loot = loot;
                     DisplayNameKey = $"Item.{loot.Name}.Name";

@@ -19,7 +19,9 @@ namespace ScaryCastle
 
             // RoomCount
             if (element.GetInt32("roomCount") is not int roomCount)
+            {
                 throw new InvalidOperationException("Missing roomCount property.");
+            }
             else
             {
                 this.RoomCount = roomCount;

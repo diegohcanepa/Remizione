@@ -30,7 +30,7 @@
             if (target != null)
             {
                 // Calculamos la métrica espacial de entrada
-                var darkness = source.Session.RunModifiers.IsActive(RunModifierNames.Darkness);
+                var darkness = source.Session.CurrentRun?.Modifiers.IsActive(RunModifierNames.Darkness) == true;
                 var isVisible = !darkness || source.Hotspot.BoundingRectangleF.Intersects(GameRoom.PlayerLightBounds);
 
                 float distance = source.DistanceToTarget(target);

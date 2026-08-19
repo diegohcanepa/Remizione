@@ -21,7 +21,7 @@ namespace ScaryCastle
 
         private readonly ScriptConsole? console;
         private readonly FloatTween chromaticAberrationTween = new();
-        private readonly InventoryScene inventoryScene;
+        private InventoryScene? inventoryScene;
         private Vector2? playerPosition;
         private readonly List<GameThing> proceduralThings = [];
         private readonly Dictionary<string, GameThing> proceduralThingsDict = [];
@@ -47,16 +47,10 @@ namespace ScaryCastle
             : base(game, new ScaryCastlePersistenceModel(), ContentManagerExtension.EncodePath(game.Content, ContentFolder.System, "ScriptLibrary.esl"), slotNumber)
         {
             this.Game = game;
-            this.RunModifiers = new(this);
-            this.PlayerInventory = new(this);
             this.Environment = new Environment();
-            this.LootGenerator = new(this);
-            this.PocketItemManager = new(this);
-            this.HUD = new HUD(this);
             this.InteractionContext = new(this);
             this.InteractionData = new(this);
             this.DeclaredThings = new(proceduralThings);
-            this.inventoryScene = new(PlayerInventory);
 
             ObjectPools = new ObjectPools(this);
             ComicTextPool = new ObjectPool<ComicText>(() => new ComicText(), 100);
@@ -110,24 +104,22 @@ namespace ScaryCastle
 
             if (RunIndex == 0)
             {
-                PlayerInventory.Add(ItemNames.Apple);
-                PlayerInventory.Add(ItemNames.GooBottle);
-                PlayerInventory.Add(ItemNames.ServantCross);
+                CurrentRun.PlayerInventory.Add(ItemNames.Apple);
+                CurrentRun.PlayerInventory.Add(ItemNames.GooBottle);
+                CurrentRun.PlayerInventory.Add(ItemNames.ServantCross);
                 CurrentRun.Traits.Add(TraitType.Luck);
                 CurrentRun.Traits.Add(TraitType.Lockpicking);
             }
 
-            PlayerInventory.Capacity = GameSettings.PlayerDefaults.InventoryCapacity;
+            CurrentRun.PlayerInventory.Capacity = GameSettings.PlayerDefaults.InventoryCapacity;
             Player.MaxHP = GameSettings.PlayerDefaults.MaxHP;
             Player.MaxEnergy = GameSettings.PlayerDefaults.MaxEnergy;
             Player.MaxStamina = GameSettings.PlayerDefaults.MaxStamina;
 
-            Player.Reheal();
-
             if (RunIndex == 0)
                 Player.Energy = 0;
             else
-                Player.Reheal();
+                Player.Recharge();
         }
 
         // RegisterAotTypes
@@ -271,8 +263,7 @@ namespace ScaryCastle
             Game.SpriteBatch.Draw(Game.RenderTargets.PreviousTarget, Vector2.Zero, Color.White);
             Game.SpriteBatch.End();
 
-            if (IsHUDVisible)
-                HUD.Draw(gameTime);
+            RunHUD?.Draw(gameTime);
 
             SpeechText.DrawSpeechTexts(gameTime);
         }
@@ -291,7 +282,7 @@ namespace ScaryCastle
         // OnExitRoom
         protected override void OnExitRoom(Room currentRoom, Room nextRoom)
         {
-            HUD.Reset();
+            RunHUD?.Reset();
             ComicTextPool.ReturnAll();
             ObjectPools.FlyOffs.ReturnAll();
 
@@ -308,7 +299,7 @@ namespace ScaryCastle
             if (roomEditor?.HandleInput() == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
-            else if (HUD.HandleInput() == HandleInputResult.Handled)
+            else if (RunHUD?.HandleInput() == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
             else
@@ -435,10 +426,9 @@ namespace ScaryCastle
 
             if (CurrentRun != null)
             {
-                RunModifiers.Update(gameTime);
+                CurrentRun.Update(gameTime);
 
-                if (IsHUDVisible)
-                    HUD.Update(gameTime);
+                RunHUD?.Update(gameTime);
 
                 if (!IsAwaiting)
                 {
@@ -510,7 +500,7 @@ namespace ScaryCastle
             if (CurrentRun.FloorDescriptor != null)
                 CleanUpRuntimeEntities();
 
-            if (CurrentRun.TryGenerateNextFloor(out ProceduralRoom? startRoom) == true && startRoom != null)
+            if (CurrentRun.TryGenerateNextFloor(out ProceduralRoom? startRoom) && startRoom != null)
             {
                 if (Player != null)
                 {
@@ -549,6 +539,9 @@ namespace ScaryCastle
             // 2. Create run
             CurrentRun = new RunState(this, runSeed, descriptor);
 
+            RunHUD = new(CurrentRun);
+            inventoryScene = new(CurrentRun.PlayerInventory);
+
             PreparePlayerForRun();
             AdvanceToNextFloor();
         }
@@ -586,6 +579,7 @@ namespace ScaryCastle
                 return;
 
             CurrentRun = null;
+            inventoryScene = null;
             CleanUpRuntimeEntities();
 
             InteractionContext.Reset();
@@ -646,9 +640,6 @@ namespace ScaryCastle
         // HoveredItem
         public Item? HoveredItem { get; set; }
 
-        // HUD
-        public HUD HUD { get; }
-
         // InteractionContext
         public InteractionContext InteractionContext { get; }
 
@@ -657,10 +648,6 @@ namespace ScaryCastle
 
         // IsConsoleVisible
         public bool IsConsoleVisible => console?.IsActive ?? false;
-
-        // IsHUDVisible
-        [ScriptProperty]
-        public bool IsHUDVisible => Room?.IsProcedural == true;
 
         // KillEnemies
         [ScriptMethod]
@@ -679,9 +666,6 @@ namespace ScaryCastle
         // LightingSystem
         [ScriptProperty]
         public bool LightingSystem { get; set; } = true;
-
-        // LootGenerator
-        public LootGenerator LootGenerator { get; }
 
         // MasterRunRng (RNG supremo de la partida entera. Solo se usa para generar pisos.)
         public Random MasterRunRng { get; private set; } = new();
@@ -719,19 +703,13 @@ namespace ScaryCastle
                 {
                     field?.StopMoving();
                     field = value;
-                    HUD.Reset();
+                    RunHUD?.Reset();
                     InteractionData.Clear();
                     if (value != null)
                         Camera.Follow(value);
                 }
             }
         }
-
-        // PlayerInventory
-        public ItemContainer PlayerInventory { get; }
-
-        // PocketItemManager
-        public PocketItemManager PocketItemManager { get; }
 
         // PreviousRoom
         [ScriptProperty]
@@ -792,12 +770,12 @@ namespace ScaryCastle
         [ScriptProperty]
         public new GameRoom? Room => (GameRoom?)base.Room;
 
+        // RunHUD
+        public RunHUD? RunHUD { get; private set; }
+
         // RunIndex
         [ScriptProperty]
         public int RunIndex { get; set; }
-
-        // RunModifiers
-        public RunModifierManager RunModifiers { get; }
 
         // ShakeCamera
         public void ShakeCamera(ImpactType impactType)
@@ -824,11 +802,8 @@ namespace ScaryCastle
         // ShowInventory
         public void ShowInventory()
         {
-            Game.SceneManager.Push(inventoryScene);
+            if (inventoryScene != null)
+                Game.SceneManager.Push(inventoryScene);
         }
-
-        // VolatileRng
-        // Used for gameplay (Drops, IA, combate)
-        public Random VolatileRng { get; private set; } = new();
     }
 }

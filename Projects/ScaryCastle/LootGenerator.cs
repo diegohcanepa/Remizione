@@ -9,12 +9,12 @@ namespace ScaryCastle
     /// </summary>
     public sealed class LootGenerator
     {
-        private readonly GameSession session;
+        private readonly RunState runState;
 
         // Constructor
-        public LootGenerator(GameSession session)
+        public LootGenerator(RunState runState)
         {
-            this.session = session;
+            this.runState = runState;
         }
 
         #region Private members
@@ -84,7 +84,7 @@ namespace ScaryCastle
                 if (lootCategory.HasValue && itemDef.Category != lootCategory.Value)
                     continue;
 
-                if (!itemDef.IsStackable && session.PlayerInventory.Find(itemDef.Name) != null)
+                if (!itemDef.IsStackable && runState.PlayerInventory.Find(itemDef.Name) != null)
                     continue;
 
                 float weight = AdjustWeightByQuality(def.Difficulty, itemDef.Quality, itemDef.SpawnWeight);
@@ -94,7 +94,7 @@ namespace ScaryCastle
                 table.Add(itemDef.Name, weight, 1, itemDef);
             }
 
-            ItemDefinition? result = table.GetValue(session.VolatileRng)?.Context as ItemDefinition;
+            ItemDefinition? result = table.GetValue(runState.VolatileRng)?.Context as ItemDefinition;
 
             // Fallback: Si se garantizaba un drop pero fallaron los filtros estrictos
             if (result == null && guaranteeDrop)
@@ -106,7 +106,7 @@ namespace ScaryCastle
                         table.Add(fallbackDef.Name, fallbackDef.SpawnWeight, 1, fallbackDef);
                 }
 
-                result = table.GetValue(session.VolatileRng)?.Context as ItemDefinition;
+                result = table.GetValue(runState.VolatileRng)?.Context as ItemDefinition;
             }
 
             return result;
@@ -142,8 +142,7 @@ namespace ScaryCastle
 
             // 3. Suma de modificadores
             // Suerte: Cada punto de Luck suma un +10% de probabilidad de encontrar monedas
-            if (session.CurrentRun != null)
-                chance += session.CurrentRun.Traits.GetTotalTraitValue(TraitType.Luck);
+            chance += runState.Traits.GetTotalTraitValue(TraitType.Luck);
 
             // Bonus de la instancia (Si quieres un +30% de chances, pasas 0.3f)
             chance += thingDef.DropCoinChanceBonus;
@@ -152,15 +151,15 @@ namespace ScaryCastle
             // a menos que el diseño pida 100% garantizado)
             float finalChance = MathHelper.Clamp(chance, 0, .98f);
 
-            if (session.VolatileRng.NextDouble() > finalChance)
+            if (runState.VolatileRng.NextDouble() > finalChance)
                 return 0;
 
             // 5. Cantidad de monedas (Lógica de cantidad según dificultad)
             return thingDef.Difficulty switch
             {
                 Difficulty.Easy => 1,
-                Difficulty.Normal => session.VolatileRng.Next(1, 2), // 1 a 2 monedas
-                Difficulty.Hard => session.VolatileRng.Next(1, 3),   // 2 a 4 monedas
+                Difficulty.Normal => runState.VolatileRng.Next(1, 2), // 1 a 2 monedas
+                Difficulty.Hard => runState.VolatileRng.Next(1, 3),   // 2 a 4 monedas
                 _ => 1
             };
         }
@@ -189,7 +188,7 @@ namespace ScaryCastle
             if (def.DropMode is LootDropMode.None or LootDropMode.SackOnly or LootDropMode.Custom)
                 return 0;
 
-            if (thing is not IThingDefinition t || t.Definition == null || session.Room is not ProceduralRoom)
+            if (thing is not IThingDefinition t || t.Definition == null)
                 return 0;
 
             // 2. Calculamos la cantidad pasando el multiplicador de la instancia
@@ -199,6 +198,9 @@ namespace ScaryCastle
         // RollForLoot
         public ItemDefinition? RollForLoot(GameThing thing, bool guaranteeDrop = false)
         {
+            if (runState.Session.Room is not ProceduralRoom room)
+                return null;
+
             if ((thing as IThingDefinition)?.Definition is not { } def)
                 return null;
 
@@ -206,7 +208,7 @@ namespace ScaryCastle
             if (def.DropMode is LootDropMode.None or LootDropMode.CoinsOnly)
                 return null;
 
-            if (thing is not IThingDefinition t || t.Definition == null || session.Room is not ProceduralRoom room)
+            if (thing is not IThingDefinition t || t.Definition == null)
                 return null;
 
             // 2. Lógica de Garantía (Usamos un valor centinela como 1.0 o una flag)
@@ -227,8 +229,7 @@ namespace ScaryCastle
 
                 // 4. Suma de modificadores (Simple y sólido)
                 // Suerte: Cada punto de Luck es un +5% plano
-                if (session.CurrentRun != null)
-                    chance += session.CurrentRun.Traits.GetTotalTraitValue(TraitType.Luck);
+                chance += runState.Traits.GetTotalTraitValue(TraitType.Luck);
 
                 // Bonus de la instancia (Aquí es donde sumas tu .3f para un 30%)
                 // IMPORTANTE: Cambia mentalmente 'Multiplier' por 'Bonus'
@@ -238,7 +239,7 @@ namespace ScaryCastle
                 // Nunca dejamos que sea 100% a menos que sea guaranteeDrop explícito
                 float finalChance = MathHelper.Clamp(chance, 0, .95f);
 
-                if (session.VolatileRng.NextDouble() > finalChance)
+                if (runState.VolatileRng.NextDouble() > finalChance)
                     return null;
             }
 
