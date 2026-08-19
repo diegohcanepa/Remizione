@@ -205,6 +205,9 @@ namespace ScaryCastle
     // TestPolygon
     public enum TestPolygon { Hotspot, Collider }
 
+    // TraitType
+    public enum TraitType { Lockpicking, Luck }
+
     // TrapState
     public enum TrapState { None, Idle, Warning, Activating, Active, Cooldown, Disabled }
 

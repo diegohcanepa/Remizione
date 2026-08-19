@@ -59,10 +59,10 @@ namespace ScaryCastle
         #region Protected members
 
         // RaiseValidationError
-        protected static void RaiseValidationError(Definition definition, string message, string? relatedProperty = null)
+        protected static void RaiseValidationError(INamedObject obj, string message, string? relatedProperty = null)
         {
             relatedProperty = relatedProperty == null ? string.Empty : "." + relatedProperty;
-            throw new InvalidOperationException($"[{definition.Name}{relatedProperty}]: {message}");
+            throw new InvalidOperationException($"[{obj.Name}{relatedProperty}]: {message}");
         }
 
         #endregion

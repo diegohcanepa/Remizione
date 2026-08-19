@@ -1,0 +1,13 @@
+{
+  "$schema": "./TraitDescriptors.schema.json",
+  "data": [
+    {
+      "name": "Luck",
+      "value": 0.1
+    },
+    {
+      "name": "Lockpicking",
+      "value": 0.1
+    }
+  ]
+}

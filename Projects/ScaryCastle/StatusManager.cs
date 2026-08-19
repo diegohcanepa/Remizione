@@ -34,6 +34,15 @@ namespace ScaryCastle
                 status.Value += amount;
         }
 
+        // Clear
+        public void Clear()
+        {
+            for (var i = 0; i < statusList.Count; i++)
+            {
+                statusList[i].Value = 0;
+            }
+        }
+
         // ContentVersion
         public int ContentVersion { get; set; }
 
@@ -45,15 +54,6 @@ namespace ScaryCastle
 
         // Owner
         public Actor Owner { get; }
-
-        // Reset
-        public void Reset()
-        {
-            for (var i = 0; i < statusList.Count; i++)
-            {
-                statusList[i].Value = 0;
-            }
-        }
 
         // Statuses
         public ReadOnlyCollection<Status> Statuses { get; }

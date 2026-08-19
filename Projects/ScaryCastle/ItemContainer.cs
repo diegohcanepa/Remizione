@@ -63,7 +63,7 @@ namespace ScaryCastle
         // RemoveItem
         protected override void RemoveItem(int index)
         {
-            Session.PlayerStats.RemoveAllModifiers(this[index]);
+            //Session.PlayerStats.RemoveAllModifiers(this[index]);
             base.RemoveItem(index);
             InvalidateAmbientLightColor();
             InvalidateContentVersion();
@@ -97,6 +97,7 @@ namespace ScaryCastle
                 item = new Item(this, definition);
                 Add(item);
 
+                /*
                 if (Session.RunInProgress)
                 {
                     if (item.Definition.LuckModifier != 0)
@@ -109,6 +110,7 @@ namespace ScaryCastle
                         InvalidateAmbientLightColor();
                     }
                 }
+                */
             }
             else
             {
@@ -133,7 +135,7 @@ namespace ScaryCastle
                     InvalidateContentVersion();
                 }
             }
-        } = 6;
+        } = GameSettings.PlayerDefaults.InventoryCapacity;
 
         // ContentVersion
         public int ContentVersion { get; private set; }

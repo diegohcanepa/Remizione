@@ -49,8 +49,8 @@ namespace ScaryCastle
         // InitializeProceduralContent
         private void InitializeProceduralContent()
         {
-            PlayerStat.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "PlayerStats.json"));
-            RunDescriptor.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Runs.json"));
+            TraitDescriptor.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "TraitDescriptors.json"));
+            RunDescriptor.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "RunDescriptors.json"));
             RunModifierDefinition.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "RunModifiers.json"));
             StatusDefinition.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Statuses.json"));
             CombatBehavior.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "CombatBehaviors.json"));

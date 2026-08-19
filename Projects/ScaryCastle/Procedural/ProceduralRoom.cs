@@ -313,7 +313,7 @@ namespace ScaryCastle
         // SpawnActors
         private void SpawnActors()
         {
-            if (WalkArea == null || !Session.RunInProgress)
+            if (WalkArea == null || Session.CurrentRun == null)
                 return;
 
             var candidates = GetCandidateDefinitions<ActorDefinition, Actor>(ActorDefinition.Data.All);
@@ -378,7 +378,7 @@ namespace ScaryCastle
 
             for (int i = 0; i < points.Count; i++)
             {
-                SpawnThing<Actor>(Session.RunManager, pendingSpawns[i].Name, points[i], actorsSpawnCounter);
+                SpawnThing<Actor>(Session.CurrentRun, pendingSpawns[i].Name, points[i], actorsSpawnCounter);
             }
         }
 
@@ -432,7 +432,7 @@ namespace ScaryCastle
         // SpawnProps
         private void SpawnProps()
         {
-            if (!Session.RunInProgress)
+            if (Session.CurrentRun == null)
                 return;
 
             var candidates = GetCandidateDefinitions<PropDefinition, Prop>(PropDefinition.Data.All);
@@ -454,9 +454,9 @@ namespace ScaryCastle
                     if (phState == PlaceholderState.Used)
                         continue;
 
-                    if (phState == PlaceholderState.GateLever)
+                    if (Session.CurrentRun != null && phState == PlaceholderState.GateLever)
                     {
-                        SpawnThing<Prop>(Session.RunManager, nameof(PlaceholderState.GateLever), ph.Position, propsSpawnCounter);
+                        SpawnThing<Prop>(Session.CurrentRun, nameof(PlaceholderState.GateLever), ph.Position, propsSpawnCounter);
                         RoomNode.SetPlaceholderState(ph, PlaceholderState.Used);
                         continue;
                     }
@@ -480,7 +480,7 @@ namespace ScaryCastle
                         if (!def.PassesMaxPerRoomConstraint(propsSpawnCounter.GetCount(def.Name)))
                             continue;
 
-                        if (!def.PassesMaxPerRunConstraint(Session.RunManager.Spawns.GetCount(def.Name)))
+                        if (Session.CurrentRun != null && !def.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns.GetCount(def.Name)))
                             continue;
 
                         var finalWeight = AdjustWeight(RoomNode.TopographicDifficulty, def.Difficulty, def.SpawnWeight, null);
@@ -493,7 +493,8 @@ namespace ScaryCastle
                     if (PropDefinition.Data.Find(item.Name) is not PropDefinition chosen)
                         continue;
 
-                    SpawnThing<Prop>(Session.RunManager, chosen.Name, ph.Position, propsSpawnCounter);
+                    if (Session.CurrentRun != null)
+                        SpawnThing<Prop>(Session.CurrentRun, chosen.Name, ph.Position, propsSpawnCounter);
 
                     RoomNode.SetPlaceholderState(ph, PlaceholderState.Used);
                 }
@@ -516,8 +517,11 @@ namespace ScaryCastle
                 if (!def.PassesMaxPerRoomConstraint(propsSpawnCounter.GetCount(def.Name)))
                     continue;
 
-                if (!def.PassesMaxPerRunConstraint(Session.RunManager.Spawns.GetCount(def.Name)))
-                    continue;
+                if (Session.CurrentRun != null)
+                {
+                    if (!def.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns.GetCount(def.Name)))
+                        continue;
+                }
 
                 // CRUCE CON LA DIFICULTAD TOPOGRÁFICA DE LA RUN:
                 // Si el cuarto es Easy y la baba es Hard, el peso se desploma (ej: de 1.0f a 0.02f)
@@ -561,7 +565,7 @@ namespace ScaryCastle
                 instance.Position = spawnPosition;
                 Children.Add(instance);
 
-                Session.RunManager.Spawns.Increment(chosen.Name);
+                Session.CurrentRun?.Spawns.Increment(chosen.Name);
                 propsSpawnCounter.Increment(chosen.Name);
 
                 // EXCLUSIÓN POR REGISTRO (Tu regla del MaxPerRoom)
@@ -572,7 +576,7 @@ namespace ScaryCastle
         }
 
         // SpawnThing
-        private T SpawnThing<T>(RunManager run, string name, Vector2 position, CounterBank counterBank)
+        private T SpawnThing<T>(RunState run, string name, Vector2 position, CounterBank counterBank)
             where T : GameThing
         {
             var instance = CreateThingClone<T>(name);
@@ -644,7 +648,7 @@ namespace ScaryCastle
             where TDefinition : ThingDefinition where TThing : GameThing
         {
             var outList = new List<TDefinition>();
-            if (!Session.RunInProgress)
+            if (Session.CurrentRun == null)
                 return outList;
 
             foreach (var definition in definitions)
@@ -671,11 +675,14 @@ namespace ScaryCastle
                 if (thing is not TThing)
                     continue;
 
-                if (!definition.PassesRunConstraints(Session.RunCount))
+                if (!definition.PassesRunConstraints(Session.RunIndex))
                     continue;
 
-                if (!definition.PassesMaxPerRunConstraint(Session.RunManager.Spawns))
-                    continue;
+                if (Session.CurrentRun != null)
+                {
+                    if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns))
+                        continue;
+                }
 
                 if (!TagScope.Test(RoomNode.Definition.Scope, RoomNode.Definition.Pools, definition.Tags))
                     continue;
@@ -761,7 +768,7 @@ namespace ScaryCastle
             PrepareLights();
             DistributeBronzeKeys();
 
-            if (Session.RunManager.FloorDescriptor?.Darkness == true)
+            if (Session.CurrentRun?.FloorDescriptor?.Darkness == true)
                 TurnOffAmbientLights();
         }
 

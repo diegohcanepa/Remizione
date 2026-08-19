@@ -1,12 +1,14 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Runs",
   "type": "object",
   "properties": {
+    "$schema": {
+      "type": "string"
+    },    
     "data": {
       "type": "array",
       "items": {
-        "$ref": "#/$defs/Run"
+        "$ref": "#/$defs/RunDescriptor"
       }
     }
   },
@@ -15,11 +17,11 @@
   ],
   "additionalProperties": false,
   "$defs": {
-    "Run": {
+    "RunDescriptor": {
       "type": "object",
       "properties": {
-        "runIndex": {
-          "type": "integer"
+        "name": {
+          "type": "string"
         },
         "floors": {
           "type": "array",
@@ -29,7 +31,7 @@
         }
       },
       "required": [
-        "runIndex",
+        "name",
         "floors"
       ],
       "additionalProperties": false
@@ -63,7 +65,7 @@
         }
       },
       "required": [
-        "rooms",
+        "roomCount",
         "theme"
       ],
       "additionalProperties": false

@@ -1,7 +1,6 @@
 ﻿using Adberration;
 using Adberration.Scripting;
 using Engendro;
-using Engendro.Input;
 using Microsoft.Xna.Framework;
 using ScaryCastle.Props;
 using ScaryCastle.Scripting;
@@ -48,7 +47,6 @@ namespace ScaryCastle
             : base(game, new ScaryCastlePersistenceModel(), ContentManagerExtension.EncodePath(game.Content, ContentFolder.System, "ScriptLibrary.esl"), slotNumber)
         {
             this.Game = game;
-            this.RunManager = new(this);
             this.RunModifiers = new(this);
             this.PlayerInventory = new(this);
             this.Environment = new Environment();
@@ -103,6 +101,34 @@ namespace ScaryCastle
         #endregion
 
         #region Private members
+
+        // PreparePlayerForRun
+        private void PreparePlayerForRun()
+        {
+            if (Player == null || CurrentRun == null)
+                throw new InvalidOperationException("No player and/or run is available.");
+
+            if (RunIndex == 0)
+            {
+                PlayerInventory.Add(ItemNames.Apple);
+                PlayerInventory.Add(ItemNames.GooBottle);
+                PlayerInventory.Add(ItemNames.ServantCross);
+                CurrentRun.Traits.Add(TraitType.Luck);
+                CurrentRun.Traits.Add(TraitType.Lockpicking);
+            }
+
+            PlayerInventory.Capacity = GameSettings.PlayerDefaults.InventoryCapacity;
+            Player.MaxHP = GameSettings.PlayerDefaults.MaxHP;
+            Player.MaxEnergy = GameSettings.PlayerDefaults.MaxEnergy;
+            Player.MaxStamina = GameSettings.PlayerDefaults.MaxStamina;
+
+            Player.Reheal();
+
+            if (RunIndex == 0)
+                Player.Energy = 0;
+            else
+                Player.Reheal();
+        }
 
         // RegisterAotTypes
         private static void RegisterAotTypes()
@@ -218,7 +244,7 @@ namespace ScaryCastle
         {
             base.OnDraw(gameTime);
 
-            if (RunInProgress)
+            if (CurrentRun != null)
             {
                 if (savingIcon.Tweens.IsTweening)
                 {
@@ -318,8 +344,8 @@ namespace ScaryCastle
                 playerPosition = DataConvert.ToVector2(playerPositionValue);
 
             // RunCount
-            if (sessionNode.Attributes[nameof(RunCount)]?.Value is string runCountValue)
-                RunCount = XmlConvert.ToInt32(runCountValue);
+            if (sessionNode.Attributes[nameof(RunIndex)]?.Value is string runCountValue)
+                RunIndex = XmlConvert.ToInt32(runCountValue);
         }
 
         // OnResume
@@ -407,7 +433,7 @@ namespace ScaryCastle
                 console?.Update(gameTime);
             }
 
-            if (RunInProgress)
+            if (CurrentRun != null)
             {
                 RunModifiers.Update(gameTime);
 
@@ -457,7 +483,7 @@ namespace ScaryCastle
                 output.WriteAttributeString(nameof(playerPosition), DataConvert.ToString(playerPosition.Value));
 
             // RunCount
-            output.WriteAttributeString(nameof(RunCount), XmlConvert.ToString(RunCount));
+            output.WriteAttributeString(nameof(RunIndex), XmlConvert.ToString(RunIndex));
         }
 
         // OnOutcomeCompleted
@@ -474,6 +500,34 @@ namespace ScaryCastle
         [ScriptProperty]
         public Actor? ActiveNPC { get; private set; }
 
+        // AdvanceToNextFloor
+        [ScriptMethod]
+        public void AdvanceToNextFloor()
+        {
+            if (CurrentRun == null)
+                return;
+
+            if (CurrentRun.FloorDescriptor != null)
+                CleanUpRuntimeEntities();
+
+            if (CurrentRun.TryGenerateNextFloor(out ProceduralRoom? startRoom) == true && startRoom != null)
+            {
+                if (Player != null)
+                {
+                    startRoom.Children.Add(Player);
+                    if (startRoom.WalkArea != null)
+                        Player.Position = startRoom.WalkArea.Polygon.BoundingRectangleF.Center;
+
+                    Camera.Follow(Player, true);
+                    EnterRoom(startRoom);
+                }
+            }
+            else
+            {
+                CompleteRun();
+            }
+        }
+
         // BeginRun
         [ScriptMethod]
         public void BeginRun()
@@ -484,43 +538,19 @@ namespace ScaryCastle
         // BeginRun
         public void BeginRun(int? seed = null)
         {
-            if (RunInProgress)
+            if (CurrentRun != null)
                 throw new InvalidOperationException("A run is already in progress.");
 
-            RunInProgress = true;
-            FloorIndex = 0;
+            var runSeed = seed ?? System.Environment.TickCount;
 
-            // 1. Establecemos el Seed de la run para la TOPOLOGÍA (fijo o por tiempo)
-            RunSeed = seed ?? System.Environment.TickCount;
+            // 1. Get descriptor
+            var descriptor = RunDescriptor.Data.All[RunIndex];
 
-            // 2. RNG Maestro: DETERMINISTA. Usa el RunSeed para que los cuartos sean iguales.
-            MasterRunRng = new Random(RunSeed);
+            // 2. Create run
+            CurrentRun = new RunState(this, runSeed, descriptor);
 
-            // 3. RNG Volátil: CAOS TOTAL. Sin parámetros, .NET genera una semilla impredecible.
-            VolatileRng = new Random(RunSeed);
-
-            PlayerInventory.Capacity = GameSettings.InitialInventoryCapacity;
-            if (RunCount == 0)
-            {
-                PlayerInventory.Add(ItemNames.Apple);
-                PlayerInventory.Add(ItemNames.GooBottle);
-                PlayerInventory.Add(ItemNames.ServantCross);
-            }
-
-            RunManager.GenerateFloor(RunDescriptor.Data.All[RunCount].Floors[FloorIndex]);
-
-            if (Player != null)
-            {
-                Player.Reheal();
-                Player.Energy = 0;
-                Player.Stamina = 2;
-                var startRoom = RunManager.FloorMap[new(0, 0)].Room;
-                startRoom.Children.Add(Player);
-                if (startRoom.WalkArea != null)
-                    Player.Position = startRoom.WalkArea.Polygon.BoundingRectangleF.Center;
-                Camera.Follow(Player, true);
-                EnterRoom(startRoom);
-            }
+            PreparePlayerForRun();
+            AdvanceToNextFloor();
         }
 
         // ComicTextPool
@@ -530,9 +560,12 @@ namespace ScaryCastle
         [ScriptMethod]
         public void CompleteRun()
         {
-            RunCount++;
+            RunIndex++;
             EndRun();
         }
+
+        // CurrentRun
+        public RunState? CurrentRun { get; private set; }
 
         // DangerousTarget
         [ScriptProperty]
@@ -549,38 +582,20 @@ namespace ScaryCastle
         [ScriptMethod]
         public void EndRun()
         {
-            if (!RunInProgress)
+            if (CurrentRun == null)
                 return;
 
-            FloorIndex = -1;
-            RunModifiers.Clear();
+            CurrentRun = null;
             CleanUpRuntimeEntities();
-            PocketItemManager.Reset();
-            PlayerInventory.Clear();
-            PlayerStats.Reset();
+
             InteractionContext.Reset();
             InteractionContext.HeldItem = null;
 
             if (Player != null)
             {
+                Player.StatusManager.Clear();
                 Player.Reheal();
-                Player.Recharge();
-                Player.MaxEnergy = 5;
-                Player.Energy = 5;
             }
-
-            // 1. Force an immediate collection of all generations (0, 1, and 2).
-            // 'Forced' tells the GC to ignore its internal heuristics and run immediately.
-            // 'true' makes the call blocking (execution halts until the GC finishes).
-            GC.Collect(2, GCCollectionMode.Forced, true);
-
-            // 2. Wait for objects with finalizers (destructors) to finish their cleanup logic.
-            GC.WaitForPendingFinalizers();
-
-            // 3. Collect again.
-            // This is necessary because objects finalized in step 2 are now officially
-            // marked as "garbage" and can finally be released from memory in this pass.
-            GC.Collect(2, GCCollectionMode.Forced, true);
 
             Save();
         }
@@ -593,9 +608,6 @@ namespace ScaryCastle
         {
             return proceduralThingsDict.TryGetValue(name, out var result) ? result : null;
         }
-
-        // FloorIndex
-        public int FloorIndex { get; private set; } = -1;
 
         // Game
         public new ScaryCastleGame Game { get; }
@@ -718,9 +730,6 @@ namespace ScaryCastle
         // PlayerInventory
         public ItemContainer PlayerInventory { get; }
 
-        // PlayerStats
-        public PlayerStats PlayerStats { get; } = new();
-
         // PocketItemManager
         public PocketItemManager PocketItemManager { get; }
 
@@ -783,22 +792,12 @@ namespace ScaryCastle
         [ScriptProperty]
         public new GameRoom? Room => (GameRoom?)base.Room;
 
-        // RunCount
+        // RunIndex
         [ScriptProperty]
-        public int RunCount { get; set; }
-
-        // RunInProgress
-        public bool RunInProgress { get; private set; }
-
-        // RunManager
-        public RunManager RunManager { get; }
+        public int RunIndex { get; set; }
 
         // RunModifiers
         public RunModifierManager RunModifiers { get; }
-
-        // RunSeed
-        [ScriptProperty]
-        public int RunSeed { get; private set; }
 
         // ShakeCamera
         public void ShakeCamera(ImpactType impactType)

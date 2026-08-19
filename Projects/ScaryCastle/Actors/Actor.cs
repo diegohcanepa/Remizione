@@ -524,7 +524,7 @@ namespace ScaryCastle
         protected override void OnStopMoving()
         {
             base.OnStopMoving();
-            
+
             FastMove = false;
             moveVerticalTween.Stop();
             moveBalancingTween.Stop();
@@ -1293,9 +1293,9 @@ namespace ScaryCastle
                 {
                     var previousValue = field;
                     field = Math.Clamp(value, 0, MaxStamina);
-                    
+
                     OnStaminaChanged(previousValue);
-                    
+
                     if (field > 0 && previousValue > field && staminaFlyoff == null)
                     {
                         pixelsTrudged = 0;

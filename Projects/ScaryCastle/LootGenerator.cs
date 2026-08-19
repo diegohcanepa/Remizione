@@ -142,8 +142,8 @@ namespace ScaryCastle
 
             // 3. Suma de modificadores
             // Suerte: Cada punto de Luck suma un +10% de probabilidad de encontrar monedas
-            if (session.RunInProgress)
-                chance += session.PlayerStats.Luck.Value * 0.1f;
+            if (session.CurrentRun != null)
+                chance += session.CurrentRun.Traits.GetTotalTraitValue(TraitType.Luck);
 
             // Bonus de la instancia (Si quieres un +30% de chances, pasas 0.3f)
             chance += thingDef.DropCoinChanceBonus;
@@ -227,10 +227,10 @@ namespace ScaryCastle
 
                 // 4. Suma de modificadores (Simple y sólido)
                 // Suerte: Cada punto de Luck es un +5% plano
-                if (session.RunInProgress)
-                    chance += session.PlayerStats.Luck.Value * 0.05f;
+                if (session.CurrentRun != null)
+                    chance += session.CurrentRun.Traits.GetTotalTraitValue(TraitType.Luck);
 
-                // Bonus de la instancia (Aquí es donde sumas tu 0.30f si quieres un +30%)
+                // Bonus de la instancia (Aquí es donde sumas tu .3f para un 30%)
                 // IMPORTANTE: Cambia mentalmente 'Multiplier' por 'Bonus'
                 chance += def.DropSackChanceBonus;
 

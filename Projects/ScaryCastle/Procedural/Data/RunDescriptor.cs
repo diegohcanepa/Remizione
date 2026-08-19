@@ -1,5 +1,4 @@
-﻿using Engendro;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json;
@@ -9,7 +8,7 @@ namespace ScaryCastle
     /// <summary>
     /// RunDescriptor
     /// </summary>
-    public sealed class RunDescriptor : INamedObject
+    public sealed class RunDescriptor : NamedDescriptor
     {
         private readonly List<FloorDescriptor> floors = [];
 
@@ -17,10 +16,8 @@ namespace ScaryCastle
 
         // Constructor
         public RunDescriptor(JsonElement element)
+            : base(element)
         {
-            Index = element.GetProperty("runIndex").GetInt32();
-            Name = $"Run_{Index}";
-
             // Floors
             if (element.TryGetProperty("floors", out JsonElement floorsElement))
             {
@@ -45,11 +42,5 @@ namespace ScaryCastle
 
         // Floors
         public ReadOnlyCollection<FloorDescriptor> Floors { get; }
-
-        // Index
-        public int Index { get; }
-
-        // Name
-        public string Name { get; }
     }
 }

@@ -38,14 +38,20 @@
         // HeavyMoveThreshold
         public const int HeavyMoveThreshold = 150;
 
-        // InitialInventoryCapacity
-        public const int InitialInventoryCapacity = 5;
-
         // LogFileName
         public const string LogFileName = "ErrorLog.txt";
 
         // MaxItemAmount
         public const int MaxItemAmount = 5;
+
+        // PlayerDefaults
+        internal static class PlayerDefaults
+        {
+            public const int InventoryCapacity = 5;
+            public const int MaxEnergy = 4;
+            public const int MaxHP = 4;
+            public const int MaxStamina = 5;
+        }
 
         // StaminaRechargeMoveThreshold
         public const int StaminaRechargeMoveThreshold = 50;

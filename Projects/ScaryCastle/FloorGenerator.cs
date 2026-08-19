@@ -7,50 +7,21 @@ using System.Collections.ObjectModel;
 namespace ScaryCastle
 {
     /// <summary>
-    /// RunManager
+    /// FloorGenerator
     /// </summary>
-    public sealed class RunManager
+    public static class FloorGenerator
     {
         #region Private fields
 
-        private readonly Dictionary<Point, RoomNode> floorMap = [];
+        private static readonly Dictionary<Point, RoomNode> floorMap = [];
         private const int gridRadius = 4; // Radio 4 significa de -4 a 4 (Matriz de 9x9)
-        private readonly RoomRegistry registry = new();
-        private readonly GameSession session;
+        private static readonly RoomRegistry registry = new();
+        private static readonly CounterBank spawns = new();
 
-        #endregion
-
-        #region Constructor
-
-        // Constructor
-        public RunManager(GameSession session)
-        {
-            this.session = session;
-        }
 
         #endregion
 
         #region Private members
-
-        // CleanUp
-        private void CleanUp()
-        {
-            session.CleanUpRuntimeEntities();
-            session.InteractionContext.HeldItem = null;
-
-            // 1. Force an immediate collection of all generations (0, 1, and 2).
-            // 'Forced' tells the GC to ignore its internal heuristics and run immediately.
-            // 'true' makes the call blocking (execution halts until the GC finishes).
-            GC.Collect(2, GCCollectionMode.Forced, true);
-
-            // 2. Wait for objects with finalizers (destructors) to finish their cleanup logic.
-            GC.WaitForPendingFinalizers();
-
-            // 3. Collect again.
-            // This is necessary because objects finalized in step 2 are now officially
-            // marked as "garbage" and can finally be released from memory in this pass.
-            GC.Collect(2, GCCollectionMode.Forced, true);
-        }
 
         // ConnectNodes
         private static void ConnectNodes(RoomNode a, RoomNode b, Point directionFromAToB)
@@ -62,7 +33,7 @@ namespace ScaryCastle
         }
 
         // CountExistingNeighbors
-        private int CountExistingNeighbors(Point p)
+        private static int CountExistingNeighbors(Point p)
         {
             int count = 0;
             if (floorMap.ContainsKey(p + new Point(0, -1))) count++;
@@ -73,7 +44,7 @@ namespace ScaryCastle
         }
 
         // ExecutePhase1_Layout
-        private void ExecutePhase1_Layout(Random rng, int totalRooms)
+        private static void ExecutePhase1_Layout(Random rng, int totalRooms)
         {
             int totalLayoutAttempts = 0;
             const int maxLayoutAttempts = 1000;
@@ -133,10 +104,7 @@ namespace ScaryCastle
 
                 // 3. Validación de Topología
                 if (floorMap.Count == totalRooms)
-                {
-                    StartNode = floorMap[Point.Zero];
                     break; // Salimos del while(true), la mancha está lista
-                }
 
                 // Si se estancó (ej: se arrinconó solo por RNG), hacemos rollback y reintentamos
                 totalLayoutAttempts++;
@@ -146,7 +114,7 @@ namespace ScaryCastle
         }
 
         // ExecutePhase2_Labeling
-        private void ExecutePhase2_Labeling(Random rng)
+        private static void ExecutePhase2_Labeling(Random rng)
         {
             // 1. El START ya está fijado, pero nos aseguramos por las dudas
             floorMap[Point.Zero].Category = RoomCategory.Start;
@@ -272,12 +240,12 @@ namespace ScaryCastle
         }
 
         // ExecutePhase3_InjectSecrets
-        private void ExecutePhase3_InjectSecrets(Random rng)
+        private static void ExecutePhase3_InjectSecrets(Random rng)
         {
         }
 
         // ExecutePhase4_AssignDefinitions
-        private void ExecutePhase4_AssignDefinitions(Random rng)
+        private static void ExecutePhase4_AssignDefinitions(Random rng, CounterBank spawns)
         {
             int maxDistance = GetMaxFloorDistance();
 
@@ -288,7 +256,7 @@ namespace ScaryCastle
                 node.TopographicDifficulty = localRoomDiff;
 
                 // 2. Intentamos buscar la definición del asset que calce con la topología
-                var def = registry.GetValidDefinition(node, localRoomDiff, Spawns, rng);
+                var def = registry.GetValidDefinition(node, localRoomDiff, spawns, rng);
 
                 // --- SISTEMA DE FALLBACK SEGURO (Degradación Escalonada) ---
 
@@ -296,7 +264,7 @@ namespace ScaryCastle
                 if (def == null && node.Category == RoomCategory.Special)
                 {
                     node.Category = RoomCategory.Standard;
-                    def = registry.GetValidDefinition(node, localRoomDiff, Spawns, rng);
+                    def = registry.GetValidDefinition(node, localRoomDiff, spawns, rng);
                 }
 
                 // Caso B: Es una sala Mandatoria (Boss, Treasure, Store) y no encuentra asset en su dificultad
@@ -307,11 +275,11 @@ namespace ScaryCastle
                         // Si era Hard, probamos en Normal
                         if (localRoomDiff == Difficulty.Hard)
                         {
-                            def = registry.GetValidDefinition(node, Difficulty.Normal, Spawns, rng);
+                            def = registry.GetValidDefinition(node, Difficulty.Normal, spawns, rng);
                         }
 
                         // Si sigue siendo null (o si originalmente era Normal), probamos en Easy
-                        def ??= registry.GetValidDefinition(node, Difficulty.Easy, Spawns, rng);
+                        def ??= registry.GetValidDefinition(node, Difficulty.Easy, spawns, rng);
                     }
 
                     // --- PLAN B RÍGIDO: SALVAGUARDA DE DISEÑO ---
@@ -320,7 +288,7 @@ namespace ScaryCastle
                     if (def == null)
                     {
                         node.Category = RoomCategory.Standard;
-                        def = registry.GetValidDefinition(node, localRoomDiff, Spawns, rng);
+                        def = registry.GetValidDefinition(node, localRoomDiff, spawns, rng);
                     }
                 }
 
@@ -330,12 +298,12 @@ namespace ScaryCastle
 
                 // Consolidamos el asset y sumamos al banco de spawns
                 node.Definition = def;
-                Spawns.Increment(def.Name);
+                spawns.Increment(def.Name);
             }
         }
 
         // ExecutePhase5_TopologyAndLocks
-        private void ExecutePhase5_TopologyAndLocks(Random rng, FloorDescriptor floorDescriptor)
+        private static void ExecutePhase5_TopologyAndLocks(Random rng, FloorDescriptor floorDescriptor)
         {
             int maxDistance = GetMaxFloorDistance();
 
@@ -444,7 +412,7 @@ namespace ScaryCastle
         }
 
         // ExecutePhase6_PrepareRooms
-        private void ExecutePhase6_PrepareRooms(Random floorRng)
+        private static void ExecutePhase6_PrepareRooms(GameSession session, Random floorRng)
         {
             foreach (var node in floorMap.Values)
             {
@@ -481,7 +449,7 @@ namespace ScaryCastle
         }
 
         // GetMaxFloorDistance
-        private int GetMaxFloorDistance()
+        private static int GetMaxFloorDistance()
         {
             int max = 0;
             foreach (var node in floorMap.Values)
@@ -512,48 +480,24 @@ namespace ScaryCastle
 
         #endregion
 
-        // FloorDescriptor
-        public FloorDescriptor? FloorDescriptor { get; private set; }
-
-        // FloorMap
-        public ReadOnlyDictionary<Point, RoomNode> FloorMap => new(floorMap);
-
-        // GenerateFloor
-        public void GenerateFloor(FloorDescriptor floorDescriptor)
+        // Generate
+        public static FloorLayout Generate(RunState runState, FloorDescriptor descriptor)
         {
-            CleanUp();
+            floorMap.Clear();
+            spawns.Clear();
 
-            this.FloorDescriptor = floorDescriptor;
-
-            // El seed de este piso lo dicta el RNG Maestro. 
-            // Si recargas la run, el orden de pisos será exactamente igual.
-            int currentFloorSeed = session.MasterRunRng.Next();
+            int currentFloorSeed = runState.MasterRunRng.Next();
             var floorRng = new Random(currentFloorSeed);
 
-            ExecutePhase1_Layout(floorRng, floorDescriptor.RoomCount);
+            // Las fases ahora reciben el diccionario y el rng local por parámetro
+            ExecutePhase1_Layout(floorRng, descriptor.RoomCount);
             ExecutePhase2_Labeling(floorRng);
             ExecutePhase3_InjectSecrets(floorRng);
-            ExecutePhase4_AssignDefinitions(floorRng);
-            ExecutePhase5_TopologyAndLocks(floorRng, floorDescriptor);
-            ExecutePhase6_PrepareRooms(floorRng);
+            ExecutePhase4_AssignDefinitions(floorRng, runState.Spawns);
+            ExecutePhase5_TopologyAndLocks(floorRng, descriptor);
+            ExecutePhase6_PrepareRooms(runState.Session, floorRng);
 
-            StartNode = floorMap[Point.Zero];
-
-            int totalKeys = 0;
-            foreach (var node in floorMap.Values)
-            {
-                totalKeys += node.BronzeKeys;
-            }
-            TotalBronzeKeys = totalKeys;
+            return new FloorLayout(new ReadOnlyDictionary<Point, RoomNode>(floorMap), floorMap[Point.Zero]);
         }
-
-        // Spawns
-        public CounterBank Spawns { get; } = new();
-
-        // StartNode
-        public RoomNode? StartNode { get; private set; }
-
-        // TotalBronzeKeys
-        public int TotalBronzeKeys { get; private set; }
     }
 }

@@ -232,8 +232,9 @@ namespace ScaryCastle
             {
                 if (!AmbientLights)
                 {
+                    // TODO: Check old stat
                     playerLight.Color = Session.PlayerInventory.AmbientLightColor ?? defaultPlayerLightColor;
-                    playerLight.Scale = defaultPlayerLightScale * Session.PlayerStats.AmbientLight.Value;
+                    playerLight.Scale = defaultPlayerLightScale;// * Session.PlayerStats.AmbientLight.Value;
                     playerLight.Position = Session.Player.GetAnchoredPosition(15, 15);
                     playerLight.Draw(gameTime);
                 }
