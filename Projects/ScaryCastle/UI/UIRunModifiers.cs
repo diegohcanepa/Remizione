@@ -12,16 +12,16 @@ namespace ScaryCastle
         private readonly List<ModifierIcon> activeIcons = [];
         private readonly Dictionary<string, ModifierIcon> icons = [];
         private int lastKnownVersion = -1;
-        private readonly RunState runState;
+        private readonly Run run;
 
         #region Constructor
 
         // Constructor
-        public UIRunModifiers(RunState runState)
+        public UIRunModifiers(Run run)
         {
-            this.runState = runState;
+            this.run = run;
 
-            foreach (var modifier in runState.Modifiers.All)
+            foreach (var modifier in run.Modifiers.All)
             {
                 icons[modifier.Name] = new(modifier.Definition.Image);
             }
@@ -36,10 +36,10 @@ namespace ScaryCastle
         {
             activeIcons.Clear();
 
-            if (runState.Modifiers.ActiveCount == 0)
+            if (run.Modifiers.ActiveCount == 0)
                 return;
 
-            foreach (var modifier in runState.Modifiers.ActiveModifiers)
+            foreach (var modifier in run.Modifiers.ActiveModifiers)
             {
                 activeIcons.Add(icons[modifier.Name]);
             }
@@ -94,10 +94,10 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (lastKnownVersion != runState.Modifiers.ContentVersion)
+            if (lastKnownVersion != run.Modifiers.ContentVersion)
             {
                 Refresh();
-                lastKnownVersion = runState.Modifiers.ContentVersion;
+                lastKnownVersion = run.Modifiers.ContentVersion;
             }
 
             for (var i = 0; i < activeIcons.Count; i++)

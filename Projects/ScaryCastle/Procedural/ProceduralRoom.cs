@@ -579,7 +579,7 @@ namespace ScaryCastle
         }
 
         // SpawnThing
-        private T SpawnThing<T>(RunState run, string name, Vector2 position, CounterBank counterBank)
+        private T SpawnThing<T>(Run run, string name, Vector2 position, CounterBank counterBank)
             where T : GameThing
         {
             var instance = CreateThingClone<T>(name);

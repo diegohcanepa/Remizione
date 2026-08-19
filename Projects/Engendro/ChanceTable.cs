@@ -28,6 +28,12 @@ namespace Engendro
             items.Add(new(name, amount, weight, context));
         }
 
+        // Clear
+        public void Clear()
+        {
+            items.Clear();
+        }
+
         // Count
         public int Count => items.Count;
 

@@ -5,12 +5,12 @@ using System;
 namespace ScaryCastle
 {
     /// <summary>
-    /// RunState
+    /// Run
     /// </summary>
-    public sealed class RunState
+    public sealed class Run
     {
         // Constructor
-        public RunState(GameSession session, int seed, RunDescriptor descriptor)
+        public Run(GameSession session, int seed, RunDescriptor descriptor)
         {
             this.Session = session;
             this.Seed = seed;
@@ -74,7 +74,8 @@ namespace ScaryCastle
             FloorIndex++;
             FloorDescriptor = Descriptor.Floors[FloorIndex];
 
-            var floorLayout = FloorGenerator.Generate(this, FloorDescriptor);
+            var floorGenerator = new FloorGenerator();
+            var floorLayout = floorGenerator.Generate(this, FloorDescriptor);
             startRoom = floorLayout.StartNode.Room;
             return true;
         }

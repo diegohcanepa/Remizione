@@ -537,7 +537,7 @@ namespace ScaryCastle
             var descriptor = RunDescriptor.Data.All[RunIndex];
 
             // 2. Create run
-            CurrentRun = new RunState(this, runSeed, descriptor);
+            CurrentRun = new Run(this, runSeed, descriptor);
 
             RunHUD = new(CurrentRun);
             inventoryScene = new(CurrentRun.PlayerInventory);
@@ -558,7 +558,7 @@ namespace ScaryCastle
         }
 
         // CurrentRun
-        public RunState? CurrentRun { get; private set; }
+        public Run? CurrentRun { get; private set; }
 
         // DangerousTarget
         [ScriptProperty]

@@ -9,12 +9,12 @@ namespace ScaryCastle
     /// </summary>
     public sealed class LootGenerator
     {
-        private readonly RunState runState;
+        private readonly Run run;
 
         // Constructor
-        public LootGenerator(RunState runState)
+        public LootGenerator(Run run)
         {
-            this.runState = runState;
+            this.run = run;
         }
 
         #region Private members
@@ -34,8 +34,10 @@ namespace ScaryCastle
         }
 
         // GetLoot
-        private ItemDefinition? GetLoot(RoomNode node, Realm? lootRealm, ItemCategory? lootCategory, ItemCategory[]? denyCategories = null, int qualityBoost = 0, bool guaranteeDrop = false)
+        private ItemDefinition? GetLoot(RoomNode node, Realm? lootRealm, ItemCategory? lootCategory, ItemCategory[]? denyCategories = null, int qualityBoost = 0)
         {
+            const string NoneValue = "None";
+
             RoomDefinition def = node.Definition;
 
             // Integración de diseño: Los tesoros mejoran el qualityBoost
@@ -50,7 +52,7 @@ namespace ScaryCastle
             var table = new ChanceTable();
 
             // Lógica de "Empty Drop"
-            float emptyWeight = (qualityBoost > 0 || guaranteeDrop) ? 0f : def.Difficulty switch
+            float emptyWeight = qualityBoost > 0 ? 0 : def.Difficulty switch
             {
                 Difficulty.Easy => 15f,
                 Difficulty.Normal => 5f,
@@ -59,7 +61,7 @@ namespace ScaryCastle
             };
 
             if (emptyWeight > 0)
-                table.Add("None", emptyWeight, 1, null);
+                table.Add(NoneValue, emptyWeight, 1, null);
 
             // Filtro Principal
             for (int i = 0; i < ItemDefinition.Data.All.Count; i++)
@@ -75,16 +77,16 @@ namespace ScaryCastle
                 if (IsDenied(itemDef.Category, denyCategories))
                     continue;
 
-                if (itemDef.Quality > maxQ)
-                    continue;
-
                 if (lootRealm.HasValue && itemDef.Realm != lootRealm.Value)
                     continue;
 
                 if (lootCategory.HasValue && itemDef.Category != lootCategory.Value)
                     continue;
 
-                if (!itemDef.IsStackable && runState.PlayerInventory.Find(itemDef.Name) != null)
+                if (!itemDef.IsStackable && run.PlayerInventory.Find(itemDef.Name) != null)
+                    continue;
+
+                if (itemDef.Quality > maxQ)
                     continue;
 
                 float weight = AdjustWeightByQuality(def.Difficulty, itemDef.Quality, itemDef.SpawnWeight);
@@ -94,22 +96,7 @@ namespace ScaryCastle
                 table.Add(itemDef.Name, weight, 1, itemDef);
             }
 
-            ItemDefinition? result = table.GetValue(runState.VolatileRng)?.Context as ItemDefinition;
-
-            // Fallback: Si se garantizaba un drop pero fallaron los filtros estrictos
-            if (result == null && guaranteeDrop)
-            {
-                for (int i = 0; i < ItemDefinition.Data.All.Count; i++)
-                {
-                    var fallbackDef = ItemDefinition.Data.All[i];
-                    if (fallbackDef.Quality <= 1)
-                        table.Add(fallbackDef.Name, fallbackDef.SpawnWeight, 1, fallbackDef);
-                }
-
-                result = table.GetValue(runState.VolatileRng)?.Context as ItemDefinition;
-            }
-
-            return result;
+            return table.GetValue(run.VolatileRng)?.Context as ItemDefinition;
         }
 
         // IsDenied
@@ -134,15 +121,15 @@ namespace ScaryCastle
             // 2. Base por dificultad (Valores planos de probabilidad)
             float chance = thingDef.Difficulty switch
             {
-                Difficulty.Easy => 0.1f,   // 10%
-                Difficulty.Normal => 0.3f, // 30%
-                Difficulty.Hard => 0.5f,   // 50%
-                _ => 0.1f
+                Difficulty.Easy => .1f,   // 10%
+                Difficulty.Normal => .3f, // 30%
+                Difficulty.Hard => .5f,   // 50%
+                _ => .1f
             };
 
             // 3. Suma de modificadores
             // Suerte: Cada punto de Luck suma un +10% de probabilidad de encontrar monedas
-            chance += runState.Traits.GetTotalTraitValue(TraitType.Luck);
+            chance += run.Traits.GetTotalTraitValue(TraitType.Luck);
 
             // Bonus de la instancia (Si quieres un +30% de chances, pasas 0.3f)
             chance += thingDef.DropCoinChanceBonus;
@@ -151,15 +138,15 @@ namespace ScaryCastle
             // a menos que el diseño pida 100% garantizado)
             float finalChance = MathHelper.Clamp(chance, 0, .98f);
 
-            if (runState.VolatileRng.NextDouble() > finalChance)
+            if (run.VolatileRng.NextDouble() > finalChance)
                 return 0;
 
             // 5. Cantidad de monedas (Lógica de cantidad según dificultad)
             return thingDef.Difficulty switch
             {
                 Difficulty.Easy => 1,
-                Difficulty.Normal => runState.VolatileRng.Next(1, 2), // 1 a 2 monedas
-                Difficulty.Hard => runState.VolatileRng.Next(1, 3),   // 2 a 4 monedas
+                Difficulty.Normal => 1,
+                Difficulty.Hard => run.VolatileRng.Next(1, 3),
                 _ => 1
             };
         }
@@ -188,66 +175,43 @@ namespace ScaryCastle
             if (def.DropMode is LootDropMode.None or LootDropMode.SackOnly or LootDropMode.Custom)
                 return 0;
 
-            if (thing is not IThingDefinition t || t.Definition == null)
-                return 0;
-
             // 2. Calculamos la cantidad pasando el multiplicador de la instancia
-            return RollCoinAmount(t.Definition);
+            return RollCoinAmount(def);
         }
 
         // RollForLoot
-        public ItemDefinition? RollForLoot(GameThing thing, bool guaranteeDrop = false)
+        public ItemDefinition? RollForLoot(GameThing thing)
         {
-            if (runState.Session.Room is not ProceduralRoom room)
+            if (run.Session.Room is not ProceduralRoom room)
                 return null;
 
             if ((thing as IThingDefinition)?.Definition is not { } def)
                 return null;
 
-            // 1. Validaciones de estado (Bánatelo rápido)
             if (def.DropMode is LootDropMode.None or LootDropMode.CoinsOnly)
                 return null;
 
-            if (thing is not IThingDefinition t || t.Definition == null)
-                return null;
-
-            // 2. Lógica de Garantía (Usamos un valor centinela como 1.0 o una flag)
-            // Si el bonus es 1.0 (100%) o más, es drop garantizado.
-            if (def.DropSackChanceBonus >= 1.0f)
-                guaranteeDrop = true;
-
-            if (!guaranteeDrop)
-            {
-                // 3. Base por dificultad (Valores planos)
-                float chance = t.Definition.Difficulty switch
-                {
-                    Difficulty.Easy => 0.05f,   // 5%
-                    Difficulty.Normal => 0.12f, // 12%
-                    Difficulty.Hard => 0.25f,   // 25%
-                    _ => 0.02f
-                };
-
-                // 4. Suma de modificadores (Simple y sólido)
-                // Suerte: Cada punto de Luck es un +5% plano
-                chance += runState.Traits.GetTotalTraitValue(TraitType.Luck);
-
-                // Bonus de la instancia (Aquí es donde sumas tu .3f para un 30%)
-                // IMPORTANTE: Cambia mentalmente 'Multiplier' por 'Bonus'
-                chance += def.DropSackChanceBonus;
-
-                // 5. El "Roll" con Cap
-                // Nunca dejamos que sea 100% a menos que sea guaranteeDrop explícito
-                float finalChance = MathHelper.Clamp(chance, 0, .95f);
-
-                if (runState.VolatileRng.NextDouble() > finalChance)
-                    return null;
-            }
-
-            // 6. Selección de Item
+            // Custom drop
             if (def.DropMode == LootDropMode.Custom && !string.IsNullOrEmpty(thing.CustomDropName))
                 return ItemDefinition.Data.Find(thing.CustomDropName);
 
-            return GetLoot(room.RoomNode, t.Definition.PreferredLootRealm, t.Definition.PreferredLootCategory, null, t.Definition.QualityBoost, guaranteeDrop);
+            float chance = def.Difficulty switch
+            {
+                Difficulty.Easy => 0.05f,
+                Difficulty.Normal => 0.12f,
+                Difficulty.Hard => 0.25f,
+                _ => 0.02f
+            };
+
+            chance += run.Traits.GetTotalTraitValue(TraitType.Luck);
+            chance += def.DropSackChanceBonus;
+
+            float finalChance = MathHelper.Clamp(chance, 0f, 0.95f);
+
+            if (run.VolatileRng.NextDouble() > finalChance)
+                return null;
+
+            return GetLoot(room.RoomNode, def.PreferredLootRealm, def.PreferredLootCategory, null, def.QualityBoost);
         }
     }
 }

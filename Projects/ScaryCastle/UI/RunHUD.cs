@@ -15,26 +15,26 @@ namespace ScaryCastle
         private readonly UIPassiveItems passiveItems;
         private readonly UIPlayerTraits playerTraits;
         private readonly UIRunModifiers runModifiers;
-        private readonly RunState runState;
+        private readonly Run run;
 
         #endregion
 
         #region Constructor
 
         // Constructor
-        public RunHUD(RunState runState)
+        public RunHUD(Run run)
         {
-            this.runState = runState;
-            this.gooMeter = new(runState.Session);
-            this.StaminaMeter = new(runState.Session);
-            this.HPMeter = new(runState.Session);
-            this.InventoryMeter = new(runState.PlayerInventory);
-            this.passiveItems = new(runState.Session);
-            this.playerTraits = new(runState.Session);
-            this.PocketItems = new(runState.PocketItems);
+            this.run = run;
+            this.gooMeter = new(run.Session);
+            this.StaminaMeter = new(run.Session);
+            this.HPMeter = new(run.Session);
+            this.InventoryMeter = new(run.PlayerInventory);
+            this.passiveItems = new(run.Session);
+            this.playerTraits = new(run.Session);
+            this.PocketItems = new(run.PocketItems);
             this.MiniMap = new();
-            this.runModifiers = new(runState);
-            this.Statuses = new(runState.Session);
+            this.runModifiers = new(run);
+            this.Statuses = new(run.Session);
             this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 14));
         }
 
@@ -55,10 +55,10 @@ namespace ScaryCastle
 
             gooMeter.Draw(gameTime);
 
-            if (!runState.Session.IsConsoleVisible)
+            if (!run.Session.IsConsoleVisible)
                 StaminaMeter.Draw(gameTime);
 
-            if (runState.Session.IsCurrentScene)
+            if (run.Session.IsCurrentScene)
             {
                 InventoryMeter.Draw(gameTime);
                 PocketItems.Draw(gameTime);
@@ -94,10 +94,10 @@ namespace ScaryCastle
         // HandleInput
         public HandleInputResult HandleInput()
         {
-            if (runState.Session.IsAwaiting)
+            if (run.Session.IsAwaiting)
                 return HandleInputResult.Unhandled;
 
-            if (runState.Session.IsConsoleVisible)
+            if (run.Session.IsConsoleVisible)
                 return HandleInputResult.Unhandled;
 
             return HandleInputResult.Unhandled;
@@ -124,7 +124,7 @@ namespace ScaryCastle
         // Reset
         public void Reset()
         {
-            Statuses.Actor = runState.Session.Player;
+            Statuses.Actor = run.Session.Player;
             Message.Hide();
             Log.Hide();
         }

@@ -9,19 +9,19 @@ namespace ScaryCastle
     /// <summary>
     /// FloorGenerator
     /// </summary>
-    public static class FloorGenerator
+    public sealed class FloorGenerator
     {
         #region Private fields
 
         private const int gridRadius = 4; // Radio 4 significa de -4 a 4 (Matriz de 9x9)
-        private static readonly RoomRegistry registry = new();
+        private readonly RoomRegistry registry = new();
 
         #endregion
 
         #region Private members
 
         // ConnectNodes
-        private static void ConnectNodes(RoomNode a, RoomNode b, Point directionFromAToB)
+        private void ConnectNodes(RoomNode a, RoomNode b, Point directionFromAToB)
         {
             if (directionFromAToB == new Point(0, -1)) { a.Up = b; b.Down = a; }
             else if (directionFromAToB == new Point(0, 1)) { a.Down = b; b.Up = a; }
@@ -30,7 +30,7 @@ namespace ScaryCastle
         }
 
         // CountExistingNeighbors
-        private static int CountExistingNeighbors(Dictionary<Point, RoomNode> floorMap, Point p)
+        private int CountExistingNeighbors(Dictionary<Point, RoomNode> floorMap, Point p)
         {
             int count = 0;
             if (floorMap.ContainsKey(p + new Point(0, -1))) count++;
@@ -41,7 +41,7 @@ namespace ScaryCastle
         }
 
         // ExecutePhase1_Layout
-        private static void ExecutePhase1_Layout(Dictionary<Point, RoomNode> floorMap, Random rng, int totalRooms)
+        private void ExecutePhase1_Layout(Dictionary<Point, RoomNode> floorMap, Random rng, int totalRooms)
         {
             int totalLayoutAttempts = 0;
             const int maxLayoutAttempts = 1000;
@@ -111,7 +111,7 @@ namespace ScaryCastle
         }
 
         // ExecutePhase2_Labeling
-        private static void ExecutePhase2_Labeling(Dictionary<Point, RoomNode> floorMap, Random rng)
+        private void ExecutePhase2_Labeling(Dictionary<Point, RoomNode> floorMap, Random rng)
         {
             // 1. El START ya está fijado, pero nos aseguramos por las dudas
             floorMap[Point.Zero].Category = RoomCategory.Start;
@@ -237,12 +237,12 @@ namespace ScaryCastle
         }
 
         // ExecutePhase3_InjectSecrets
-        private static void ExecutePhase3_InjectSecrets(Dictionary<Point, RoomNode> floorMap, Random rng)
+        private void ExecutePhase3_InjectSecrets(Dictionary<Point, RoomNode> floorMap, Random rng)
         {
         }
 
         // ExecutePhase4_AssignDefinitions
-        private static void ExecutePhase4_AssignDefinitions(Dictionary<Point, RoomNode> floorMap, Random rng, CounterBank spawns)
+        private void ExecutePhase4_AssignDefinitions(Dictionary<Point, RoomNode> floorMap, Random rng, CounterBank spawns)
         {
             int maxDistance = GetMaxFloorDistance(floorMap);
 
@@ -300,7 +300,7 @@ namespace ScaryCastle
         }
 
         // ExecutePhase5_TopologyAndLocks
-        private static void ExecutePhase5_TopologyAndLocks(Dictionary<Point, RoomNode> floorMap, Random rng, FloorDescriptor floorDescriptor)
+        private void ExecutePhase5_TopologyAndLocks(Dictionary<Point, RoomNode> floorMap, Random rng, FloorDescriptor floorDescriptor)
         {
             int maxDistance = GetMaxFloorDistance(floorMap);
 
@@ -409,7 +409,7 @@ namespace ScaryCastle
         }
 
         // ExecutePhase6_PrepareRooms
-        private static void ExecutePhase6_PrepareRooms(Dictionary<Point, RoomNode> floorMap, GameSession session, Random floorRng)
+        private void ExecutePhase6_PrepareRooms(Dictionary<Point, RoomNode> floorMap, GameSession session, Random floorRng)
         {
             foreach (var node in floorMap.Values)
             {
@@ -427,7 +427,7 @@ namespace ScaryCastle
         }
 
         // GetDoorDirectionFromPoint
-        private static DoorDirection GetDoorDirectionFromPoint(Point direction)
+        private DoorDirection GetDoorDirectionFromPoint(Point direction)
         {
             return direction switch
             {
@@ -440,13 +440,13 @@ namespace ScaryCastle
         }
 
         // GetManhattanDistance
-        private static int GetManhattanDistance(Point a, Point b)
+        private int GetManhattanDistance(Point a, Point b)
         {
             return Math.Abs(a.X - b.X) + Math.Abs(a.Y - b.Y);
         }
 
         // GetMaxFloorDistance
-        private static int GetMaxFloorDistance(Dictionary<Point, RoomNode> floorMap)
+        private int GetMaxFloorDistance(Dictionary<Point, RoomNode> floorMap)
         {
             int max = 0;
             foreach (var node in floorMap.Values)
@@ -458,7 +458,7 @@ namespace ScaryCastle
         }
 
         // GetProgressiveDifficulty
-        private static Difficulty GetProgressiveDifficulty(Point position, int maxDistance)
+        private Difficulty GetProgressiveDifficulty(Point position, int maxDistance)
         {
             if (maxDistance == 0)
                 return Difficulty.Easy;
@@ -478,20 +478,20 @@ namespace ScaryCastle
         #endregion
 
         // Generate
-        public static FloorLayout Generate(RunState runState, FloorDescriptor descriptor)
+        public FloorLayout Generate(Run run, FloorDescriptor descriptor)
         {
             Dictionary<Point, RoomNode> floorMap = [];
 
-            int currentFloorSeed = runState.MasterRunRng.Next();
+            int currentFloorSeed = run.MasterRunRng.Next();
             var floorRng = new Random(currentFloorSeed);
 
             // Las fases ahora reciben el diccionario y el rng local por parámetro
             ExecutePhase1_Layout(floorMap, floorRng, descriptor.RoomCount);
             ExecutePhase2_Labeling(floorMap, floorRng);
             ExecutePhase3_InjectSecrets(floorMap, floorRng);
-            ExecutePhase4_AssignDefinitions(floorMap, floorRng, runState.Spawns);
+            ExecutePhase4_AssignDefinitions(floorMap, floorRng, run.Spawns);
             ExecutePhase5_TopologyAndLocks(floorMap, floorRng, descriptor);
-            ExecutePhase6_PrepareRooms(floorMap, runState.Session, floorRng);
+            ExecutePhase6_PrepareRooms(floorMap, run.Session, floorRng);
 
             return new FloorLayout(new ReadOnlyDictionary<Point, RoomNode>(floorMap), floorMap[Point.Zero]);
         }
