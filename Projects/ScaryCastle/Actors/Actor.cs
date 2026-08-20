@@ -30,6 +30,7 @@ namespace ScaryCastle
         private readonly FloatTween shakeTween = FloatTween.Create(TweenStyle.Linear, 0, .5f, 40, -1);
         private SpeechText? speechText;
         private FlyOff? staminaFlyoff;
+        private readonly Dictionary<StatusType, Status> statuses = [];
         private readonly ColorTween tintTween = new();
 
         #endregion

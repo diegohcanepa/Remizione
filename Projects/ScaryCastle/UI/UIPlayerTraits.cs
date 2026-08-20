@@ -49,9 +49,9 @@ namespace ScaryCastle
             if (Session.CurrentRun == null)
                 return;
 
-            if (lastKnownVersion != Session.CurrentRun.Traits.ContentVersion)
+            if (lastKnownVersion != Session.CurrentRun.Traits.Version)
             {
-                lastKnownVersion = Session.CurrentRun.Traits.ContentVersion;
+                lastKnownVersion = Session.CurrentRun.Traits.Version;
                 Refresh();
             }
         }
@@ -71,10 +71,10 @@ namespace ScaryCastle
                 icons[i].RenderImage = null;
             }
 
-            activeCount = Session.CurrentRun.Traits.Traits.Count;
+            activeCount = Session.CurrentRun.Traits.Count;
             for (var i = 0; i < activeCount; i++)
             {
-                icons[i].RenderImage = Session.CurrentRun.Traits.Traits[i].Image;
+                icons[i].RenderImage = Session.CurrentRun.Traits[i].Image;
             }
 
             float spacing = 0;

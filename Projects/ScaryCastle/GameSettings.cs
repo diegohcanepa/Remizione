@@ -49,7 +49,7 @@
         {
             public const int InventoryCapacity = 5;
             public const int MaxEnergy = 4;
-            public const int MaxHP = 4;
+            public const int MaxHP = 8;
             public const int MaxStamina = 5;
         }
 

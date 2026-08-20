@@ -11,9 +11,13 @@ namespace ScaryCastle
     /// </summary>
     public sealed class UIStatuses : SessionGameObject<GameSession>
     {
-        private readonly List<StatusIcon> activeIcons = [];
-        private readonly Dictionary<StatusType, StatusIcon> icons = [];
+        #region private fields
+
+        private readonly List<StatusMeter> activeMeters = [];
+        private readonly Dictionary<StatusType, StatusMeter> allMeters = [];
         private int lastKnownVersion = -1;
+
+        #endregion
 
         #region Constructor
 
@@ -21,9 +25,10 @@ namespace ScaryCastle
         public UIStatuses(GameSession session)
             : base(session)
         {
+            // Cache all status meters
             foreach (var statusType in Enum.GetValues<StatusType>())
             {
-                icons.Add(statusType, new(statusType));
+                allMeters.Add(statusType, new(this, statusType));
             }
         }
 
@@ -37,9 +42,9 @@ namespace ScaryCastle
             if (Actor == null)
                 return;
 
-            for (var i = 0; i < activeIcons.Count; i++)
+            for (var i = 0; i < activeMeters.Count; i++)
             {
-                activeIcons[i].Draw(gameTime);
+                activeMeters[i].Draw(gameTime);
             }
         }
 
@@ -55,9 +60,9 @@ namespace ScaryCastle
                 lastKnownVersion = Actor.StatusManager.ContentVersion;
             }
 
-            for (var i = 0; i < activeIcons.Count; i++)
+            for (var i = 0; i < activeMeters.Count; i++)
             {
-                activeIcons[i].Update(gameTime);
+                activeMeters[i].Update(gameTime);
             }
         }
 
@@ -72,15 +77,6 @@ namespace ScaryCastle
                 if (value != field)
                 {
                     field = value;
-
-                    if (field != null)
-                    {
-                        foreach (var icon in icons.Values)
-                        {
-                            icon.Actor = field;
-                        }
-                    }
-
                     Refresh();
                 }
             }
@@ -89,44 +85,49 @@ namespace ScaryCastle
         // Refresh
         public void Refresh()
         {
-            activeIcons.Clear();
+            for (int i = 0; i < activeMeters.Count; i++)
+            {
+                activeMeters[i].Status = null;
+            }
+
+            activeMeters.Clear();
+            
             if (Actor == null)
                 return;
 
             foreach (var status in Actor.StatusManager.Statuses)
             {
-                if (status.Value > 0)
-                {
-                    var activeIcon = icons[status.StatusType];
-                    activeIcons.Add(activeIcon);
-                }
+                var meter = allMeters[status.StatusType];
+                meter.Status = status;
+                activeMeters.Add(meter);
             }
 
             float spacing = 1;
             var pos = new Vector2(19, 16);
 
-            for (var i = 0; i < activeIcons.Count; i++)
+            for (var i = 0; i < activeMeters.Count; i++)
             {
-                var icon = activeIcons[i];
+                var icon = activeMeters[i];
                 icon.Position = pos;
                 pos.X += icon.BoundingBox.Width + spacing;
             }
         }
 
         /// <summary>
-        /// StatusIcon
+        /// StatusMeter
         /// </summary>
-        private sealed class StatusIcon : GameObject
+        private sealed class StatusMeter : GameObject
         {
             private readonly FlatMeter meter;
+            private readonly UIStatuses owner;
             private readonly FloatTween rotationTween = new();
             private readonly Vector2Tween scaleTween = new();
-            private Status? status;
             private readonly Sprite sprite;
 
             // Constructor
-            public StatusIcon(StatusType statusType)
+            public StatusMeter(UIStatuses owner, StatusType statusType)
             {
+                this.owner = owner;
                 this.StatusType = statusType;
                 var def = StatusDefinition.Data.Get(statusType.ToString());
 
@@ -159,26 +160,12 @@ namespace ScaryCastle
 
             #endregion
 
-            // Actor
-            public Actor? Actor
-            {
-                get;
-                set
-                {
-                    if (value != field)
-                    {
-                        field = value;
-                        status = field?.StatusManager.GetStatus(StatusType);
-                    }
-                }
-            }
-
             #region Protected members
 
             // OnDraw
             protected override void OnDraw(GameTime gameTime)
             {
-                if (status == null)
+                if (Status == null)
                     return;
 
                 sprite.Draw(gameTime);
@@ -188,12 +175,12 @@ namespace ScaryCastle
             // OnUpdate
             protected override void OnUpdate(GameTime gameTime)
             {
-                if (status == null)
+                if (Status == null)
                     return;
 
-                if (meter.Value != status.Value)
+                if (meter.Value != Status.Value)
                 {
-                    meter.Value = status.Value;
+                    meter.Value = Status.Value;
                     Shake();
                 }
                 else if (meter.Value >= 8)
@@ -220,6 +207,9 @@ namespace ScaryCastle
                     meter.Position = sprite.BoundingBox.GetPoint(RectanglePoint.Bottom);
                 }
             }
+
+            // Status
+            public Status? Status { get; set; }
 
             // StatusType
             public StatusType StatusType { get; }

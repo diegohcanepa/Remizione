@@ -16,10 +16,20 @@
         }
 
         // Apply
-        private void Apply()
+        public void Apply(int amount)
         {
-            EffectDescriptor.Apply(Definition.EffectDescriptors, manager.Owner, manager.Owner, EffectContext.ApplyStatus);
-            Value = 0;
+            if (amount <= 0)
+                return;
+
+            Value += amount;
+
+            if (Value >= MaxValue)
+            {
+                EffectDescriptor.Apply(Definition.EffectDescriptors, manager.Owner, manager.Owner, EffectContext.ApplyStatus);
+                Value = 0;
+            }
+
+            manager.ContentVersion++;
         }
 
         // Definition
@@ -32,19 +42,6 @@
         public StatusType StatusType { get; }
 
         // Value
-        public int Value
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = int.Clamp(value, 0, MaxValue);
-                    if (field == MaxValue)
-                        Apply();
-                    manager.ContentVersion++;
-                }
-            }
-        }
+        public int Value { get; private set; }
     }
 }

@@ -60,7 +60,7 @@ namespace ScaryCastle
         public CounterBank Spawns { get; } = new();
 
         // Traits
-        public PlayerTraits Traits { get; } = new();
+        public TraitCollection Traits { get; } = new();
 
         // TryGenerateNextFloor
         public bool TryGenerateNextFloor(out ProceduralRoom? startRoom)

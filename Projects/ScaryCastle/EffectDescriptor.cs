@@ -130,7 +130,7 @@ namespace ScaryCastle
                     // HPGain
                     case EffectType.HPGain:
                         realTarget?.HP += amount;
-                        targetActor?.StatusManager.GetStatus(ScaryCastle.StatusType.Poison).Value = 0;
+                        targetActor?.StatusManager.Discard(ScaryCastle.StatusType.Poison);
                         break;
 
                     // HPLoss
@@ -142,8 +142,7 @@ namespace ScaryCastle
                     case EffectType.Status:
                         if (effect.StatusType is StatusType statusType && targetActor != null && !targetActor.IsDead)
                         {
-                            var status = targetActor.StatusManager.GetStatus(statusType);
-                            status.Value += amount;
+                            var status = targetActor.StatusManager.Apply(statusType, amount);
                             targetActor.ShowStatusReaction(status, true);
                         }
                         break;

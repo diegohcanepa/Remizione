@@ -9,47 +9,59 @@ namespace ScaryCastle
     /// </summary>
     public sealed class StatusManager
     {
-        private readonly Dictionary<StatusType, Status> statuses = [];
+        private readonly Dictionary<StatusType, Status> statusByType = [];
         private readonly List<Status> statusList = [];
 
         // Constructor
         public StatusManager(Actor owner)
         {
             this.Owner = owner;
-
-            foreach (var statusType in Enum.GetValues<StatusType>())
-            {
-                var status = new Status(this, statusType);
-                statuses.Add(statusType, status);
-                statusList.Add(status);
-            }
-
             this.Statuses = new(statusList);
         }
 
-        // Add
-        public void Add(StatusType statusType, int amount)
+        // Apply
+        public Status Apply(StatusType statusType, int amount)
         {
-            if (statuses.TryGetValue(statusType, out Status? status))
-                status.Value += amount;
+            if (!statusByType.TryGetValue(statusType, out Status? status))
+            {
+                status = new Status(this, statusType);
+                statusByType.Add(statusType, status);
+                statusList.Add(status);
+            }
+
+            status.Apply(amount);
+
+            if (status.Value == 0)
+                Discard(statusType);
+
+            return status;
         }
 
         // Clear
         public void Clear()
         {
-            for (var i = 0; i < statusList.Count; i++)
-            {
-                statusList[i].Value = 0;
-            }
+            statusByType.Clear();
+            statusList.Clear();
         }
 
         // ContentVersion
         public int ContentVersion { get; set; }
 
-        // GetStatus
-        public Status GetStatus(StatusType statusType)
+        // Discard
+        public void Discard(StatusType statusType)
         {
-            return statuses[statusType];
+            if (statusByType.TryGetValue(statusType, out Status? status))
+            {
+                statusByType.Remove(statusType);
+                statusList.Remove(status);
+                ContentVersion++;
+            }
+        }
+
+        // Find
+        public Status? Find(StatusType statusType)
+        {
+            return statusByType.TryGetValue(statusType, out Status? status) ? status : null;
         }
 
         // Owner
