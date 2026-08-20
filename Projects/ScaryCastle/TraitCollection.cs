@@ -5,9 +5,9 @@ namespace ScaryCastle
     /// <summary>
     /// TraitCollection
     /// </summary>
-    public sealed class TraitCollection : VersionedCollection<TraitDescriptor>
+    public sealed class TraitCollection : VersionedCollection<TraitDefinition>
     {
-        private readonly Dictionary<TraitDescriptor, float> valuesByTrait = [];
+        private readonly Dictionary<TraitDefinition, float> valuesByTrait = [];
 
         #region Protected members
 
@@ -19,7 +19,7 @@ namespace ScaryCastle
         }
 
         // InsertItem
-        protected override void InsertItem(int index, TraitDescriptor item)
+        protected override void InsertItem(int index, TraitDefinition item)
         {
             base.InsertItem(index, item);
 
@@ -46,14 +46,14 @@ namespace ScaryCastle
         // Add
         public void Add(TraitType traitType)
         {
-            if (TraitDescriptor.Data.Find(traitType.ToString()) is TraitDescriptor traitDescriptor)
+            if (TraitDefinition.Data.Find(traitType.ToString()) is TraitDefinition traitDescriptor)
                 Add(traitDescriptor);
         }
 
         // GetTotalTraitValue
         public float GetTotalTraitValue(TraitType traitType)
         {
-            if (TraitDescriptor.Data.Find(traitType.ToString()) is TraitDescriptor traitDescriptor)
+            if (TraitDefinition.Data.Find(traitType.ToString()) is TraitDefinition traitDescriptor)
             {
                 return valuesByTrait.TryGetValue(traitDescriptor, out var value) ? value : 0;
             }

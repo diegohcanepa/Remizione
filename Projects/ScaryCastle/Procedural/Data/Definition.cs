@@ -11,32 +11,35 @@ namespace ScaryCastle
     /// </summary>
     public abstract class Definition : INamedObject
     {
-        private static readonly HashSet<string> definitions = [];
         private readonly List<EffectDescriptor> effectDescriptors = [];
+        private static readonly HashSet<string> usedNames = [];
 
         #region Constructor
 
         // Constructor
-        protected Definition(JsonElement element, bool uniqueName = true)
+        protected Definition(JsonElement element, NameValidationRule nameValidationRule = NameValidationRule.Strict)
         {
             this.Name = element.GetProperty("name").GetString() ?? throw new InvalidOperationException("Name not found.");
 
             CodeContract.ValidName(this.Name, string.Empty);
 
-            // Name cannot be a realm 
-            if (Enum.IsDefined(typeof(Realm), Name))
-                RaiseValidationError(this, $"The name '{Name}' cannot be used because it is an item realm.");
-
-            // Name cannot be a category
-            if (Enum.IsDefined(typeof(ItemCategory), Name))
-                RaiseValidationError(this, $"The name '{Name}' cannot be used because it is an item category.");
-
-            if (uniqueName)
+            if (nameValidationRule == NameValidationRule.Strict)
             {
-                if (definitions.Contains(Name))
+                // Name cannot be a realm 
+                if (Enum.IsDefined(typeof(Realm), Name))
+                    RaiseValidationError(this, $"The name '{Name}' cannot be used because it is an item realm.");
+
+                // Name cannot be a category
+                if (Enum.IsDefined(typeof(ItemCategory), Name))
+                    RaiseValidationError(this, $"The name '{Name}' cannot be used because it is an item category.");
+            }
+
+            if (nameValidationRule != NameValidationRule.AllowDuplicates)
+            {
+                if (usedNames.Contains(Name))
                     RaiseValidationError(this, $"The name '{Name}' cannot be used because it is already being used by another definition.");
                 else
-                    definitions.Add(Name);
+                    usedNames.Add(Name);
             }
 
             // SpawnWeight

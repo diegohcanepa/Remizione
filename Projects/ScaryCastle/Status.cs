@@ -5,12 +5,10 @@
     /// </summary>
     public sealed class Status
     {
-        private readonly StatusManager manager;
-
         // Constructor
-        public Status(StatusManager manager, StatusType statusType)
+        public Status(StatusContainer container, StatusType statusType)
         {
-            this.manager = manager;
+            this.Container = container;
             this.StatusType = statusType;
             this.Definition = StatusDefinition.Data.Get(statusType.ToString());
         }
@@ -25,12 +23,15 @@
 
             if (Value >= MaxValue)
             {
-                EffectDescriptor.Apply(Definition.EffectDescriptors, manager.Owner, manager.Owner, EffectContext.ApplyStatus);
+                EffectDescriptor.Apply(Definition.EffectDescriptors, Container.Owner, Container.Owner, EffectContext.ApplyStatus);
                 Value = 0;
             }
 
-            manager.ContentVersion++;
+            Container.ContentVersion++;
         }
+
+        // Container
+        public StatusContainer Container { get; }
 
         // Definition
         public StatusDefinition Definition { get; }

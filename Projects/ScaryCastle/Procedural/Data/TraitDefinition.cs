@@ -1,28 +1,33 @@
 ﻿using Engendro;
+using System;
 using System.Text.Json;
 
 namespace ScaryCastle
 {
     /// <summary>
-    /// TraitDescriptor
+    /// TraitDefinition
     /// </summary>
-    public sealed class TraitDescriptor : NamedDescriptor
+    public sealed class TraitDefinition : Definition
     {
         // Constructor
-        public TraitDescriptor(JsonElement element)
-            : base(element)
+        public TraitDefinition(JsonElement element)
+            : base(element, NameValidationRule.Unique)
         {
             this.Image = Atlases.UI.GetImage($"Trait{Name}Icon");
+            this.TraitType = Enum.Parse<TraitType>(Name);
             this.Value = element.GetFloat("value", 0);
 
             Data.Add(this);
         }
 
         // Data
-        public static DataContainer<TraitDescriptor> Data { get; } = new(element => new(element));
+        public static DataContainer<TraitDefinition> Data { get; } = new(element => new(element));
 
         // Image
         public AtlasImage Image { get; }
+
+        // TraitType
+        public TraitType TraitType { get; }
 
         // Value
         public float Value { get; }

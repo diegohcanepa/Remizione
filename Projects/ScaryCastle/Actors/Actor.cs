@@ -1266,7 +1266,7 @@ namespace ScaryCastle
                 // Poison
                 case StatusType.Poison:
                     if (showIcon)
-                        ShowFlyOff(status.Definition.Image, true);
+                        ShowFlyOff(status.Definition.Image);
                     tintTween.Start(TweenStyle.QuadraticInOut, Color.White, Color.Green, 150, 2);
                     PlaySound(SoundNames.StatusPoison);
                     break;
@@ -1329,7 +1329,7 @@ namespace ScaryCastle
         }
 
         // StatusManager
-        public StatusManager StatusManager { get; }
+        public StatusContainer StatusManager { get; }
 
         // StopTalking
         public void StopTalking()

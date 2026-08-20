@@ -10,11 +10,11 @@ namespace ScaryCastle
     public sealed class Run
     {
         // Constructor
-        public Run(GameSession session, int seed, RunDescriptor descriptor)
+        public Run(GameSession session, int seed, RunDefinition definition)
         {
             this.Session = session;
             this.Seed = seed;
-            this.Descriptor = descriptor;
+            this.Definition = definition;
 
             this.LootGenerator = new(this);
 
@@ -26,8 +26,8 @@ namespace ScaryCastle
             this.Modifiers = new RunModifierManager(session);
         }
 
-        // Descriptor
-        public RunDescriptor Descriptor { get; }
+        // Definition
+        public RunDefinition Definition { get; }
 
         // FloorDescriptor
         public FloorDescriptor? FloorDescriptor { get; private set; }
@@ -65,14 +65,14 @@ namespace ScaryCastle
         // TryGenerateNextFloor
         public bool TryGenerateNextFloor(out ProceduralRoom? startRoom)
         {
-            if (FloorIndex >= Descriptor.Floors.Count - 1)
+            if (FloorIndex >= Definition.Floors.Count - 1)
             {
                 startRoom = null;
                 return false;
             }
 
             FloorIndex++;
-            FloorDescriptor = Descriptor.Floors[FloorIndex];
+            FloorDescriptor = Definition.Floors[FloorIndex];
 
             var floorGenerator = new FloorGenerator();
             var floorLayout = floorGenerator.Generate(this, FloorDescriptor);

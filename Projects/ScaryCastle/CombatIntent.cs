@@ -12,7 +12,7 @@ namespace ScaryCastle
     {
         // Constructor
         public CombatIntent(JsonElement element)
-            : base(element, false)
+            : base(element, NameValidationRule.AllowDuplicates)
         {
             // AnimationName
             AnimationName = element.GetString("animationName");

@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace ScaryCastle
 {
     /// <summary>
-    /// StatusManager
+    /// StatusContainer
     /// </summary>
-    public sealed class StatusManager
+    public sealed class StatusContainer
     {
         private readonly Dictionary<StatusType, Status> statusByType = [];
         private readonly List<Status> statusList = [];
 
         // Constructor
-        public StatusManager(Actor owner)
+        public StatusContainer(Actor owner)
         {
             this.Owner = owner;
             this.Statuses = new(statusList);

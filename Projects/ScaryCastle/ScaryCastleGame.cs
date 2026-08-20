@@ -46,11 +46,11 @@ namespace ScaryCastle
 
         #region Private members
 
-        // InitializeProceduralContent
-        private void InitializeProceduralContent()
+        // LoadDataContent
+        private void LoadDataContent()
         {
-            TraitDescriptor.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "TraitDescriptors.json"));
-            RunDescriptor.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "RunDescriptors.json"));
+            TraitDefinition.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "TraitDefinitions.json"));
+            RunDefinition.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "RunDefinitions.json"));
             RunModifierDefinition.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "RunModifiers.json"));
             StatusDefinition.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Statuses.json"));
             CombatBehavior.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "CombatBehaviors.json"));
@@ -137,7 +137,7 @@ namespace ScaryCastle
 
             UserSettingsData.Apply(this, userSettings);
 
-            InitializeProceduralContent();
+            LoadDataContent();
 
 #if QUICK_START
             QuickStart();

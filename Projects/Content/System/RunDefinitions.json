@@ -1,8 +1,8 @@
 {
-  "$schema": "./RunDescriptors.schema.json",
+  "$schema": "./RunDefinition.schema.json",
   "data": [
     {
-      "name": "Run1",
+      "name": "Run0",
       "floors": [
         {
           "allowedPuzzles": [

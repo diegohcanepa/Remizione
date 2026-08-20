@@ -1758,8 +1758,8 @@
 #begin System/Rooms.json
 /copy:System/Rooms.json
 
-#begin System/RunDescriptors.json
-/copy:System/RunDescriptors.json
+#begin System/RunDefinitions.json
+/copy:System/RunDefinitions.json
 
 #begin System/RunModifiers.json
 /copy:System/RunModifiers.json
@@ -1773,8 +1773,8 @@
 #begin System/Statuses.json
 /copy:System/Statuses.json
 
-#begin System/TraitDescriptors.json
-/copy:System/TraitDescriptors.json
+#begin System/TraitDefinitions.json
+/copy:System/TraitDefinitions.json
 
 #begin Text/en-us.lpkg
 /copy:Text/en-us.lpkg

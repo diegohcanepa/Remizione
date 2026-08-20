@@ -1,40 +1,41 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "RunDefinition.schema.json",
+  "title": "Run Definition",
   "type": "object",
   "properties": {
-    "$schema": {
-      "type": "string"
-    },    
     "data": {
       "type": "array",
       "items": {
-        "$ref": "#/$defs/RunDescriptor"
+        "$ref": "#/$defs/RunDefinition"
       }
     }
   },
   "required": [
     "data"
   ],
-  "additionalProperties": false,
   "$defs": {
-    "RunDescriptor": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
+    "RunDefinition": {
+      "allOf": [
+        {
+          "$ref": "./Definition.schema.json"
         },
-        "floors": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/Floor"
-          }
+        {
+          "type": "object",
+          "properties": {
+            "floors": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Floor"
+              }
+            }
+          },
+          "required": [
+            "floors"
+          ]
         }
-      },
-      "required": [
-        "name",
-        "floors"
       ],
-      "additionalProperties": false
+      "unevaluatedProperties": false
     },
     "Floor": {
       "type": "object",

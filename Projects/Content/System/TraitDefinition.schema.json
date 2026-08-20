@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "TraitDefinition.schema.json",
+  "title": "Trait Definition",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/TraitDefinition"
+      }
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "$defs": {
+    "TraitDefinition": {
+      "allOf": [
+        {
+          "$ref": "./Definition.schema.json"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "value": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "value"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    }
+  }
+}

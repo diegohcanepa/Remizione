@@ -1165,11 +1165,11 @@ namespace ScaryCastle
         }
 
         // ShowFlyOff
-        public FlyOff? ShowFlyOff(AtlasImage image, bool high = false)
+        public FlyOff? ShowFlyOff(AtlasImage image)
         {
             if (Session.ObjectPools.FlyOffs.Get() is FlyOff flyOff)
             {
-                flyOff.ShowIcon(GetOverheadPosition(), image, high);
+                flyOff.ShowIcon(GetOverheadPosition(), image);
                 return flyOff;
             }
 

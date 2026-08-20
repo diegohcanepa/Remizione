@@ -25,9 +25,6 @@ namespace ScaryCastle
             // MeterForeColor
             this.MeterForeColor = element.GetColor("meterForeColor", Color.White);
 
-            // Scope
-            this.Scope = element.GetEnum("scope", RunModifierScope.Room);
-
             // Image
             this.Image = Atlases.UI.GetImage($"Status{StatusType}Icon");
 
@@ -37,7 +34,7 @@ namespace ScaryCastle
         #endregion
 
         // Data
-        public static DataContainer<StatusDefinition> Data { get; } = new(element => new StatusDefinition(element));
+        public static DataContainer<StatusDefinition> Data { get; } = new(element => new(element));
 
         // Image
         public AtlasImage Image { get; }
@@ -47,9 +44,6 @@ namespace ScaryCastle
 
         // MeterForeColor
         public Color MeterForeColor { get; }
-
-        // Scope
-        public RunModifierScope Scope { get; }
 
         // StatusType
         public StatusType StatusType { get; }

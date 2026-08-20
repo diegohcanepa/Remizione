@@ -256,7 +256,6 @@ namespace ScaryCastle
             */
 
             console?.Draw(gameTime);
-            roomEditor?.Draw(gameTime);
 
             Game.RenderTargets.Swap();
             Game.SpriteBatch.Begin(effect: ScaryCastleGame.Effects.CRT.Effect);
@@ -266,6 +265,8 @@ namespace ScaryCastle
             RunHUD?.Draw(gameTime);
 
             SpeechText.DrawSpeechTexts(gameTime);
+
+            roomEditor?.Draw(gameTime);
         }
 
         // OnEnterRoom
@@ -534,10 +535,10 @@ namespace ScaryCastle
             var runSeed = seed ?? System.Environment.TickCount;
 
             // 1. Get descriptor
-            var descriptor = RunDescriptor.Data.All[RunIndex];
+            var runDefinition = RunDefinition.Data.Get($"Run{RunIndex}");
 
             // 2. Create run
-            CurrentRun = new Run(this, runSeed, descriptor);
+            CurrentRun = new Run(this, runSeed, runDefinition);
 
             RunHUD = new(CurrentRun);
             inventoryScene = new(CurrentRun.PlayerInventory);

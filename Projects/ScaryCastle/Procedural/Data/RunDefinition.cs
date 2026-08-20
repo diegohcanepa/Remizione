@@ -6,17 +6,17 @@ using System.Text.Json;
 namespace ScaryCastle
 {
     /// <summary>
-    /// RunDescriptor
+    /// RunDefinition
     /// </summary>
-    public sealed class RunDescriptor : NamedDescriptor
+    public sealed class RunDefinition : Definition
     {
         private readonly List<FloorDescriptor> floors = [];
 
         #region Constructor
 
         // Constructor
-        public RunDescriptor(JsonElement element)
-            : base(element)
+        public RunDefinition(JsonElement element)
+            : base(element, NameValidationRule.Unique)
         {
             // Floors
             if (element.TryGetProperty("floors", out JsonElement floorsElement))
@@ -38,7 +38,7 @@ namespace ScaryCastle
         #endregion
 
         // Data
-        public static DataContainer<RunDescriptor> Data { get; } = new(element => new RunDescriptor(element));
+        public static DataContainer<RunDefinition> Data { get; } = new(element => new(element));
 
         // Floors
         public ReadOnlyCollection<FloorDescriptor> Floors { get; }

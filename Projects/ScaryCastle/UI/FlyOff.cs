@@ -16,10 +16,20 @@ namespace ScaryCastle
 
         private Sprite? activeSprite;
         private readonly Sprite icon = new() { PivotOrigin = RectanglePoint.Bottom, Scale = ScaleInfo.UIElement.Medium };
+        private static readonly Vector2[] LaunchOffsets =
+        [
+            new(-3f, -5f), // Izquierda, subida media
+            new( 3f, -8f), // Derecha, subida máxima
+            new(-5f, -2f), // Izquierda apertura, subida corta
+            new( 5f, -5f), // Derecha apertura, subida media
+            new(-1f, -8f), // Centro-izquierda, subida máxima
+            new( 1f, -2f)  // Centro-derecha, subida corta
+        ];
         private readonly FloatTween opacityTween = new();
         private readonly FloatTween rotationTween = new();
         private bool shake;
         private readonly FloatTween shakeTween = FloatTween.Create(TweenStyle.Linear, 0, .5f, 50, -1);
+        private static int spawnIndex = 0;
         private readonly TextSprite text = new(Fonts.CommonOutline) { PivotOrigin = RectanglePoint.Bottom };
         private readonly FloatTween xTween = new();
         private readonly FloatTween yTween = new();
@@ -33,8 +43,11 @@ namespace ScaryCastle
         #region Private members
 
         // Launch
-        private void Launch(Vector2 origin, Sprite sprite, Vector2 distance, int duration)
+        private void Launch(Vector2 origin, Sprite sprite, int duration)
         {
+            var distance = LaunchOffsets[spawnIndex];
+            spawnIndex = (spawnIndex + 1) % LaunchOffsets.Length;
+
             activeSprite = sprite;
 
             shake = sprite is not TextSprite;
@@ -57,7 +70,7 @@ namespace ScaryCastle
             }
 
             opacityTween.StartDelay = duration - fadeDuration;
-            opacityTween.Start(TweenStyle.CubicIn, 1, 0, fadeDuration);
+            opacityTween.Start(TweenStyle.QuadraticIn, 1, 0, fadeDuration);
 
             sprite.Tweens.OpacityTween = opacityTween;
             sprite.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.Linear, Vector2.Zero, sprite.Scale, 200);
@@ -75,7 +88,7 @@ namespace ScaryCastle
             text.Color = color;
             text.Scale = new(scale);
             text.Text = value;
-            Launch(origin, text, distance, Math.Max(1000, value.Length * 100));
+            Launch(origin, text, Math.Max(1000, value.Length * 100));
         }
 
         #endregion
@@ -113,11 +126,11 @@ namespace ScaryCastle
         public bool IsVisible => xTween.IsRunning || yTween.IsRunning || opacityTween.IsRunning;
 
         // ShowIcon
-        public void ShowIcon(Vector2 origin, AtlasImage image, bool high = false)
+        public void ShowIcon(Vector2 origin, AtlasImage image)
         {
             icon.RenderImage = image;
             icon.Scale = ScaleInfo.UIElement.Large;
-            Launch(origin, icon, new Vector2(0, high ? -5 : 1), 2000);
+            Launch(origin, icon, 2000);
         }
 
         // ShowText

@@ -139,6 +139,14 @@ namespace ScaryCastle
     // MouseCursorIcon
     public enum MouseCursorIcon { Cross, Arrow, Attack, Down, Eye, Hand, Left, Lift, Magnifier, Right, PickUp, Skull, Talk, Up, Wait }
 
+    // NameValidationRule
+    public enum NameValidationRule
+    {
+        AllowDuplicates, // No requiere ser único
+        Unique,          // Único entre nombres de su mismo tipo
+        Strict           // Único estricto (no puede colisionar con categorías, realms ni ids)
+    }
+
     // PlaceholderState
     public enum PlaceholderState { Pending, GateLever, Used }
 

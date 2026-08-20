@@ -135,7 +135,7 @@ namespace ScaryCastle
         // DrawText
         private static void DrawText(GameTime gameTime, TextSprite text, string value, Color color)
         {
-            DrawText(gameTime, text, value, color, ScaleInfo.Text.Small);
+            DrawText(gameTime, text, value, color, ScaleInfo.Text.Tiny);
         }
 
         // DrawText
@@ -158,7 +158,7 @@ namespace ScaryCastle
 
             // Name
             var value = SelectedThing.Name + " (" + SelectedThing.GetType().Name + ")" + (SelectedThing.Persistent ? " [persistent]" : string.Empty);
-            DrawText(gameTime, text, value, ColorPalette.HighlightedText, ScaleInfo.Text.Small);
+            DrawText(gameTime, text, value, ColorPalette.HighlightedText, ScaleInfo.Text.Tiny);
 
             // Animation Name
             var animationName = SelectedThing.AnimationPlayer.Animation?.Name ?? string.Empty;
