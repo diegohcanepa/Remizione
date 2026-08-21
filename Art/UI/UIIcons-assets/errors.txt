@@ -1,2 +1,0 @@
-[8/8/2026, 12:36:24 PM] layer "GooCost3.png copy": Expected end of input but "c" found.
-[8/8/2026, 12:36:20 PM] layer "GooCost3.png copy 2": Expected end of input but "c" found.

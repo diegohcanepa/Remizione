@@ -6,16 +6,10 @@
 	<Ambience Name="Night" />
 	
 	<!-- Music -->
-	<Music Name="Arrival" />
-	<Music Name="Combat1" Tags="BossFight" />
-	<Music Name="FirstSteps" />
 	<Music Name="GameOver" />
-	<Music Name="Monitor" Tags="Monitor,Ride" />
-	<Music Name="PilgrimPath01" Tags="Ride" />
-	<Music Name="Ride01" Tags="Ride" />
-	<Music Name="Run01" Tags="Ride" />
-	<Music Name="ThemePark" Tags="ThemePark" />
-	<Music Name="Toilet" Tags="Toilet" />
+	<Music Name="K63" />
+	<Music Name="Owland" />
+	<Music Name="Sister" />
 	
 	<!-- FX -->
 	<FX Name="Alarm" Volume=".5" />

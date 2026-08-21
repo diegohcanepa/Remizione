@@ -13,9 +13,9 @@ namespace ScaryCastle
 
         private readonly UIGooMeter gooMeter;
         private readonly UIPassiveItems passiveItems;
-        private readonly UIPlayerTraits playerTraits;
         private readonly UIRunModifiers runModifiers;
         private readonly Run run;
+        private readonly UITraits traits;
 
         #endregion
 
@@ -30,7 +30,7 @@ namespace ScaryCastle
             this.HPMeter = new(run.Session);
             this.InventoryMeter = new(run.PlayerInventory);
             this.passiveItems = new(run.Session);
-            this.playerTraits = new(run.Session);
+            this.traits = new(run.Session);
             this.PocketItems = new(run.PocketItems);
             this.MiniMap = new();
             this.runModifiers = new(run);
@@ -50,7 +50,7 @@ namespace ScaryCastle
             runModifiers.Draw(gameTime);
             Statuses.Draw(gameTime);
             passiveItems.Draw(gameTime);
-            playerTraits.Draw(gameTime);
+            traits.Draw(gameTime);
             Game.SpriteBatch.End();
 
             gooMeter.Draw(gameTime);
@@ -75,7 +75,7 @@ namespace ScaryCastle
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            playerTraits.Update(gameTime);
+            traits.Update(gameTime);
             runModifiers.Update(gameTime);
             Statuses.Update(gameTime);
             passiveItems.Update(gameTime);

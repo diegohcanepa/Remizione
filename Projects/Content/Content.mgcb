@@ -1579,27 +1579,6 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/ZapLoop.wav;Audio/FX/ZapLoop
 
-#begin Audio/Music/Arrival.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/Music/Arrival.wav;Audio/Music/Arrival
-
-#begin Audio/Music/Combat1.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/Music/Combat1.wav;Audio/Music/Combat1
-
-#begin Audio/Music/FirstSteps.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/Music/FirstSteps.wav;Audio/Music/FirstSteps
-
 #begin Audio/Music/GameOver.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -1607,47 +1586,26 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/Music/GameOver.wav;Audio/Music/GameOver
 
-#begin Audio/Music/Monitor.wav
+#begin Audio/Music/K63.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
-/build:Audio/Music/Monitor.wav;Audio/Music/Monitor
+/build:Audio/Music/K63.wav;Audio/Music/K63
 
-#begin Audio/Music/PilgrimPath01.wav
+#begin Audio/Music/Owland.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
-/build:Audio/Music/PilgrimPath01.wav;Audio/Music/PilgrimPath01
+/build:Audio/Music/Owland.wav;Audio/Music/Owland
 
-#begin Audio/Music/Ride01.wav
+#begin Audio/Music/Sister.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
-/build:Audio/Music/Ride01.wav;Audio/Music/Ride01
-
-#begin Audio/Music/Run01.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/Music/Run01.wav;Audio/Music/Run01
-
-#begin Audio/Music/ThemePark.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/Music/ThemePark.wav;Audio/Music/ThemePark
-
-#begin Audio/Music/Toilet.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/Music/Toilet.wav;Audio/Music/Toilet
+/build:Audio/Music/Sister.wav;Audio/Music/Sister
 
 #begin Fonts/Common.bmp
 /importer:LocalizedFontTextureImporter

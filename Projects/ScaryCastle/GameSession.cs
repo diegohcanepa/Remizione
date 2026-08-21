@@ -1,6 +1,7 @@
 ﻿using Adberration;
 using Adberration.Scripting;
 using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using ScaryCastle.Props;
 using ScaryCastle.Scripting;
@@ -196,10 +197,9 @@ namespace ScaryCastle
         // SyncProceduralMusic
         private void SyncProceduralMusic()
         {
-            //AudioManager.Music.Stop();
-            //AudioManager.Music.CurrentTag = string.Empty;
+            AudioManager.Music.Stop();
+            AudioManager.Music.CurrentTag = string.Empty;
 
-            /*
             if (Room is ProceduralRoom proceduralRoom)
             {
                 var tag = proceduralRoom.RoomNode.Definition.MusicTag;
@@ -209,7 +209,6 @@ namespace ScaryCastle
 
                 AudioManager.Music.PlayTag(tag);
             }
-            */
         }
 
         #endregion

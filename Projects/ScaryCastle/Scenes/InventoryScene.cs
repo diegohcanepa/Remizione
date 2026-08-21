@@ -19,6 +19,10 @@ namespace ScaryCastle
         private readonly TextSprite itemDescription;
         private Item? lastSelectedItem;
         private int lastSeenContainerVersion = -1;
+        private readonly Sprite leftButtonIcon;
+        private readonly TextSprite leftButtonLabel;
+        private readonly Sprite rightButtonIcon;
+        private readonly TextSprite rightButtonLabel;
         private readonly Sprite[] shadows = new Sprite[ItemContainer.MaximumCapacity];
         private readonly Sprite[] slots = new Sprite[ItemContainer.MaximumCapacity];
 
@@ -84,6 +88,42 @@ namespace ScaryCastle
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -2),
                 Scale = ScaleInfo.Text.Large,
+            };
+
+            // Right button icon
+            this.rightButtonIcon = new(Atlases.UI.MouseRightButtonIcon)
+            {
+                PivotOrigin = RectanglePoint.LeftBottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 2, -1),
+                Scale = ScaleInfo.UIElement.Medium
+            };
+
+            // Left button icon
+            this.leftButtonIcon = new(Atlases.UI.MouseLeftButtonIcon)
+            {
+                PivotOrigin = RectanglePoint.LeftBottom,
+                Position = rightButtonIcon.BoundingBox.GetPoint(RectanglePoint.LeftTop, 0, -1),
+                Scale = ScaleInfo.UIElement.Medium
+            };
+
+            // Right button label
+            this.rightButtonLabel = new(Fonts.Common)
+            {
+                Color = ColorPalette.Text.Highlight,
+                PivotOrigin = RectanglePoint.Left,
+                Position = rightButtonIcon.BoundingBox.GetPoint(RectanglePoint.Right, 1, 0),
+                Scale = ScaleInfo.Text.Large,
+                Text = "@Verb.Examine"
+            };
+
+            // Left button label
+            this.leftButtonLabel = new(Fonts.Common)
+            {
+                Color = ColorPalette.Text.Highlight,
+                PivotOrigin = RectanglePoint.Left,
+                Position = leftButtonIcon.BoundingBox.GetPoint(RectanglePoint.Right, 1, 0),
+                Scale = ScaleInfo.Text.Large,
+                Text = "@Verb.Grab"
             };
         }
 
@@ -213,6 +253,12 @@ namespace ScaryCastle
             Game.SpriteBatch.Begin(Game.Camera);
 
             background.Draw(gameTime);
+
+            leftButtonIcon.Draw(gameTime);
+            leftButtonLabel.Draw(gameTime);
+
+            rightButtonIcon.Draw(gameTime);
+            rightButtonLabel.Draw(gameTime);
 
             for (var i = 0; i < ItemContainer.Count; i++)
             {

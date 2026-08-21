@@ -6,9 +6,9 @@ using System.Collections.Generic;
 namespace ScaryCastle
 {
     /// <summary>
-    /// UIPlayerTraits
+    /// UITraits
     /// </summary>
-    public sealed class UIPlayerTraits : SessionGameObject<GameSession>
+    public sealed class UITraits : SessionGameObject<GameSession>
     {
         private int activeCount;
         private readonly List<Sprite> icons = [];
@@ -17,7 +17,7 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public UIPlayerTraits(GameSession session)
+        public UITraits(GameSession session)
             : base(session)
         {
             for (var i = 0; i < 20; i++)
