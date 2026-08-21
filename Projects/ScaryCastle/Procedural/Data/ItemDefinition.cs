@@ -113,8 +113,6 @@ namespace ScaryCastle
 
             if (ActionKind == ActionKind.Projectile && Projectile == null)
                 RaiseValidationError(this, "Items with Projectile usage mode must have a Projectile defined.", nameof(ActionKind));
-
-            Data.Add(this);
         }
 
         #endregion

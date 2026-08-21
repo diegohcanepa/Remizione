@@ -27,8 +27,6 @@ namespace ScaryCastle
 
             // Image
             this.Image = Atlases.UI.GetImage($"Status{StatusType}Icon");
-
-            Data.Add(this);
         }
 
         #endregion

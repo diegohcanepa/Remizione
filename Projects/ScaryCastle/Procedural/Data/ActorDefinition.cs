@@ -28,8 +28,6 @@ namespace ScaryCastle
             // Name cannot be a category
             if (MinPackSize > MaxPackSize)
                 RaiseValidationError(this, $"Minimum pack size exceeds the maximum pack size.");
-
-            Data.Add(this);
         }
 
         // Data

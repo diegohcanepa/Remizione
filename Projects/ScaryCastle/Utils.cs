@@ -167,21 +167,5 @@ namespace ScaryCastle
                 pos.Y -= controlList[i].BoundingBox.Height + spacing;
             }
         }
-
-        // LoadJsonData
-        internal static void LoadJsonData<T>(string fileName, Func<JsonElement, T> onCreate, string rootName = "data")
-        {
-            using var input = TitleContainer.OpenStream(fileName);
-            using JsonDocument doc = JsonDocument.Parse(input);
-            var root = doc.RootElement;
-
-            if (!root.TryGetProperty(rootName, out JsonElement arrayElement) || arrayElement.ValueKind != JsonValueKind.Array)
-                throw new InvalidDataException();
-
-            foreach (JsonElement element in arrayElement.EnumerateArray())
-            {
-                onCreate(element);
-            }
-        }
     }
 }

@@ -1,7 +1,10 @@
 ﻿using Engendro;
+using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Text.Json;
 
 namespace ScaryCastle
@@ -11,7 +14,7 @@ namespace ScaryCastle
     /// </summary>
     public class DataContainer<T> where T : INamedObject
     {
-        private readonly Dictionary<string, T> data = [];
+        private FrozenDictionary<string, T> data = FrozenDictionary.Create<string, T>();
         private readonly List<T> dataList = [];
         private readonly Func<JsonElement, T> onCreate;
 
@@ -20,13 +23,6 @@ namespace ScaryCastle
         {
             this.onCreate = onCreate;
             this.All = dataList.AsReadOnly();
-        }
-
-        // Add
-        public void Add(T definition)
-        {
-            data.Add(definition.Name, definition);
-            dataList.Add(definition);
         }
 
         // All
@@ -53,7 +49,23 @@ namespace ScaryCastle
             if (data.Count > 0)
                 throw new InvalidOperationException("Data already loaded.");
 
-            Utils.LoadJsonData(fileName, onCreate);
+            using var input = TitleContainer.OpenStream(fileName);
+            using JsonDocument doc = JsonDocument.Parse(input);
+            var root = doc.RootElement;
+
+            if (!root.TryGetProperty("data", out JsonElement arrayElement) || arrayElement.ValueKind != JsonValueKind.Array)
+                throw new InvalidDataException();
+
+            var dict = new Dictionary<string, T>();
+
+            foreach (JsonElement element in arrayElement.EnumerateArray())
+            {
+                var obj = onCreate(element);
+                dict.Add(obj.Name, obj);
+                dataList.Add(obj);
+            }
+
+            data = dict.ToFrozenDictionary();
 
             IsLoaded = true;
         }

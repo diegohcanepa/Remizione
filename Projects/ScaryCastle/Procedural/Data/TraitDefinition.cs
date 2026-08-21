@@ -16,8 +16,6 @@ namespace ScaryCastle
             this.Image = Atlases.UI.GetImage($"Trait{Name}Icon");
             this.TraitType = Enum.Parse<TraitType>(Name);
             this.Value = element.GetFloat("value", 0);
-
-            Data.Add(this);
         }
 
         // Data

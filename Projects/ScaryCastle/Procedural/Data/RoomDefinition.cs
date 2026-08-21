@@ -134,8 +134,6 @@ namespace ScaryCastle
             Lights = lights.AsReadOnly();
             Placeholders = new(placeholders);
             Walls = walls.AsReadOnly();
-
-            Data.Add(this);
         }
 
         #endregion

@@ -31,8 +31,6 @@ namespace ScaryCastle
 
             if (Floors.Count == 0)
                 throw new InvalidOperationException("Run descriptor must specify at least 1 floor.");
-
-            Data.Add(this);
         }
 
         #endregion

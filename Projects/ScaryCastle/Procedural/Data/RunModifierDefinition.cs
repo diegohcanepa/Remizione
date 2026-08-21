@@ -22,8 +22,6 @@ namespace ScaryCastle
 
             // Scope
             this.Scope = element.GetEnum("scope", RunModifierScope.Room);
-
-            Data.Add(this);
         }
 
         #endregion

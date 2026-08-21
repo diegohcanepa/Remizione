@@ -43,8 +43,6 @@ namespace ScaryCastle
             TurnInterval = element.GetInt32("turnInterval", 2);
 
             Intents = new(intents);
-
-            Data.Add(this);
         }
 
         #endregion

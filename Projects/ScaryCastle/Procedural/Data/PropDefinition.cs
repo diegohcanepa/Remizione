@@ -41,8 +41,6 @@ namespace ScaryCastle
 
             // RequiresPlaceholder
             RequiresPlaceholder = element.GetBool("requiresPlaceholder", true);
-
-            Data.Add(this);
         }
 
         #endregion
