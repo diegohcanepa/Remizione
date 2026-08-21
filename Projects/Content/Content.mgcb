@@ -1579,6 +1579,27 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/ZapLoop.wav;Audio/FX/ZapLoop
 
+#begin Audio/Music/Castle1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/Music/Castle1.wav;Audio/Music/Castle1
+
+#begin Audio/Music/Castle2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/Music/Castle2.wav;Audio/Music/Castle2
+
+#begin Audio/Music/Castle3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/Music/Castle3.wav;Audio/Music/Castle3
+
 #begin Audio/Music/GameOver.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

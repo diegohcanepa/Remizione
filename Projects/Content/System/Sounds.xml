@@ -6,6 +6,9 @@
 	<Ambience Name="Night" />
 	
 	<!-- Music -->
+	<Music Name="Castle1" Tags="Castle" />
+	<Music Name="Castle2" Tags="Castle" />
+	<Music Name="Castle3" Tags="Castle" />
 	<Music Name="GameOver" />
 	<Music Name="K63" />
 	<Music Name="Owland" />

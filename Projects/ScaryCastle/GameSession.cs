@@ -205,7 +205,7 @@ namespace ScaryCastle
                 var tag = proceduralRoom.RoomNode.Definition.MusicTag;
 
                 if (string.IsNullOrWhiteSpace(tag))
-                    tag = MusicTag.Ride;
+                    tag = MusicTag.Castle;
 
                 AudioManager.Music.PlayTag(tag);
             }
