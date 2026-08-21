@@ -29,7 +29,7 @@ namespace Engendro.Audio
         #region Constructor
 
         // Constructor
-        private Sound(string name, SoundCategory category, string[]? soundNames, string[]? tags, int maxInstances, float volume, float pan, float pitch, Ratio pitchVariance, SoundPopMode popMode, bool transitionAware, bool pauseAware, string caption)
+        private Sound(string name, SoundCategory category, IList<string> soundNames, string[]? tags, int maxInstances, float volume, float pan, float pitch, Ratio pitchVariance, SoundPopMode popMode, bool transitionAware, bool pauseAware, string caption)
         {
             // Name cannot be empty
             CodeContract.NotEmpty(name, nameof(name));
@@ -64,10 +64,10 @@ namespace Engendro.Audio
             this.PitchVariance = pitchVariance;
             this.Caption = caption;
 
-            if (soundNames == null || soundNames.Length == 0)
+            if (soundNames == null || soundNames.Count == 0)
                 soundNames = [Name];
 
-            for (var i = 0; i < soundNames.Length; i++)
+            for (var i = 0; i < soundNames.Count; i++)
             {
                 assetNames.Add(soundNames[i]);
                 soundEffects.Add(soundNames[i], null);
@@ -207,11 +207,10 @@ namespace Engendro.Audio
         // Create
         public static Sound Create(string name, SoundSettings settings)
         {
-            var soundNames = string.IsNullOrWhiteSpace(settings.SoundNames) ? null : settings.SoundNames.Split(',');
             var tags = string.IsNullOrWhiteSpace(settings.Tags) ? null : settings.Tags.Split(',');
 
             return new Sound(name, settings.Category,
-                                               soundNames,
+                                               settings.Sounds,
                                                tags,
                                                settings.MaxInstances,
                                                settings.Volume,

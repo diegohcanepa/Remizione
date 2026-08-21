@@ -14,15 +14,12 @@ namespace ScaryCastle
         private readonly Sprite[] amounts = new Sprite[ItemContainer.MaximumCapacity];
         private bool autoHide;
         private readonly Sprite background = new(Atlases.UI.QuickInventoryBackground) { PivotOrigin = RectanglePoint.LeftBottom, Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom) };
+        private readonly Sprite examineIcon;
         private readonly Sprite[] icons = new Sprite[ItemContainer.MaximumCapacity];
         private readonly TextSprite itemLabel;
         private readonly TextSprite itemDescription;
         private Item? lastSelectedItem;
         private int lastSeenContainerVersion = -1;
-        private readonly Sprite leftButtonIcon;
-        private readonly TextSprite leftButtonLabel;
-        private readonly Sprite rightButtonIcon;
-        private readonly TextSprite rightButtonLabel;
         private readonly Sprite[] shadows = new Sprite[ItemContainer.MaximumCapacity];
         private readonly Sprite[] slots = new Sprite[ItemContainer.MaximumCapacity];
 
@@ -90,40 +87,11 @@ namespace ScaryCastle
                 Scale = ScaleInfo.Text.Large,
             };
 
-            // Right button icon
-            this.rightButtonIcon = new(Atlases.UI.MouseRightButtonIcon)
+            // Examine icon
+            this.examineIcon = new(Atlases.UI.GetImage("ExamineItem"))
             {
-                PivotOrigin = RectanglePoint.LeftBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 2, -1),
-                Scale = ScaleInfo.UIElement.Medium
-            };
-
-            // Left button icon
-            this.leftButtonIcon = new(Atlases.UI.MouseLeftButtonIcon)
-            {
-                PivotOrigin = RectanglePoint.LeftBottom,
-                Position = rightButtonIcon.BoundingBox.GetPoint(RectanglePoint.LeftTop, 0, -1),
-                Scale = ScaleInfo.UIElement.Medium
-            };
-
-            // Right button label
-            this.rightButtonLabel = new(Fonts.Common)
-            {
-                Color = ColorPalette.Text.Highlight,
-                PivotOrigin = RectanglePoint.Left,
-                Position = rightButtonIcon.BoundingBox.GetPoint(RectanglePoint.Right, 1, 0),
-                Scale = ScaleInfo.Text.Large,
-                Text = "@Verb.Examine"
-            };
-
-            // Left button label
-            this.leftButtonLabel = new(Fonts.Common)
-            {
-                Color = ColorPalette.Text.Highlight,
-                PivotOrigin = RectanglePoint.Left,
-                Position = leftButtonIcon.BoundingBox.GetPoint(RectanglePoint.Right, 1, 0),
-                Scale = ScaleInfo.Text.Large,
-                Text = "@Verb.Grab"
+                PivotOrigin = RectanglePoint.RightBottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -2, -3)
             };
         }
 
@@ -181,7 +149,7 @@ namespace ScaryCastle
             float screenWidth = Screen.NativeWidth;
             int slotCount = ItemContainer.Count;
             float slotWidth = slots[0].BoundingBox.Width;
-            float spacing = 1;
+            float spacing = 0;
 
             float rowWidth = (slotCount * slotWidth) + ((slotCount - 1) * spacing);
             float startingX = (screenWidth - rowWidth) / 2;
@@ -240,7 +208,6 @@ namespace ScaryCastle
         protected override void OnActivate()
         {
             base.OnActivate();
-            MouseCursor.Icon = MouseCursorIcon.Cross;
             Reset();
         }
 
@@ -254,11 +221,7 @@ namespace ScaryCastle
 
             background.Draw(gameTime);
 
-            leftButtonIcon.Draw(gameTime);
-            leftButtonLabel.Draw(gameTime);
-
-            rightButtonIcon.Draw(gameTime);
-            rightButtonLabel.Draw(gameTime);
+            examineIcon.Draw(gameTime);
 
             for (var i = 0; i < ItemContainer.Count; i++)
             {
@@ -338,6 +301,8 @@ namespace ScaryCastle
 
             if (GetSelectedItem() is Item item)
             {
+                MouseCursor.Icon = MouseCursorIcon.Hand;
+
                 if (item != lastSelectedItem)
                 {
                     if (lastSelectedItem?.Index >= 0)
@@ -361,6 +326,8 @@ namespace ScaryCastle
             }
             else if (lastSelectedItem != null)
             {
+                MouseCursor.Icon = MouseCursorIcon.Cross;
+
                 if (lastSelectedItem.Index >= 0)
                 {
                     icons[lastSelectedItem.Index].Scale = ScaleInfo.UIElement.Medium;

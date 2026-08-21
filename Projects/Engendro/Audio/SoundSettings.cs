@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Engendro.Audio
 {
@@ -63,8 +64,8 @@ namespace Engendro.Audio
         // PopMode
         public SoundPopMode PopMode { get; set; }
 
-        // SoundNames
-        public string? SoundNames { get; set; }
+        // Sounds
+        public List<string> Sounds { get; set; } = [];
 
         // Tags
         public string? Tags { get; set; }

@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Sounds",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "Ambience": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/AudioItem"
+      }
+    },
+    "Music": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/AudioItem"
+      }
+    },
+    "FX": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/AudioItem"
+      }
+    }
+  },
+  "required": [
+    "Ambience",
+    "Music",
+    "FX"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "AudioItem": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "caption": {
+          "type": "string"
+        },
+        "maxInstances": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "pan": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "default": 1.0
+        },
+        "pauseAware": {
+          "type": "boolean",
+          "default": true
+        },
+        "pitch": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "default": 1.0
+        },
+        "pitchVariance": {
+          "type": "number",
+          "minimum": 0.0
+        },
+        "popMode": {
+          "type": "string",
+          "enum": [
+            "Cyclic",
+            "Random"
+          ]
+        },
+        "soundCount": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1
+        },
+        "tags": {
+          "type": "string"
+        },
+        "transitionAware": {
+          "type": "boolean",
+          "default": false
+        },
+        "volume": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "default": 1.0
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -2,9 +2,7 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using System;
-using System.IO;
-using System.Linq;
-using System.Xml;
+using System.Text.Json;
 
 namespace Engendro.Audio
 {
@@ -13,29 +11,17 @@ namespace Engendro.Audio
     /// </summary>
     public static class AudioManager
     {
-        private static readonly string[] validAttributes = ["Caption", "Looped", "MaxInstances", "Name", "Pan", "Pitch", "PitchVariance", "PopMode", "Sounds", "Tags", "TransitionAware", "PauseAware", "Volume"];
-
         #region Private members
 
-        // LoadCore
-        private static void LoadCore(XmlDocument doc, SoundCategoryName category)
+        // ParseCategory
+        private static void ParseCategory(JsonElement root, SoundCategoryName category)
         {
-            foreach (XmlNode? node in doc.GetElementsByTagName(category.ToString()))
+            if (!root.TryGetProperty(category.ToString(), out var array) || array.ValueKind != JsonValueKind.Array)
+                return;
+
+            foreach (var element in array.EnumerateArray())
             {
-                var attributes = node?.Attributes;
-                if (attributes == null)
-                    continue;
-
-                for (var i = 0; i < attributes.Count; i++)
-                {
-                    if (!validAttributes.Contains(attributes[i].Name))
-                        throw new InvalidOperationException($"'{attributes[i].Name}' attribute in sound data file is not valid.");
-                }
-
-                // Name
-                var name = attributes["Name"]?.Value;
-                if (name == null)
-                    continue;
+                var name = element.GetProperty("name").GetString()!;
 
                 SoundSettings settings = new()
                 {
@@ -43,70 +29,52 @@ namespace Engendro.Audio
                 };
 
                 // Caption
-                if (attributes["Caption"]?.Value is string caption)
+                if (element.GetString("caption") is string caption && !string.IsNullOrWhiteSpace(caption))
                     settings.Caption = caption;
 
                 // MaxInstances
-                if (attributes["MaxInstances"]?.Value is string maxInstances)
-                    settings.MaxInstances = XmlConvert.ToInt32(maxInstances);
+                if (element.GetInt32("maxInstances") is int maxInstances)
+                    settings.MaxInstances = maxInstances;
 
                 // Pan
-                if (attributes["Pan"]?.Value is string pan)
-                    settings.Pan = XmlConvert.ToSingle(pan);
+                if (element.GetFloat("pan") is float pan)
+                    settings.Pan = pan;
+
+                // PauseAware
+                if (element.GetBool("pauseAware") is bool pauseAware)
+                    settings.PauseAware = pauseAware;
 
                 // Pitch
-                if (attributes["Pitch"]?.Value is string pitch)
-                    settings.Pitch = XmlConvert.ToSingle(pitch);
+                if (element.GetFloat("pitch") is float pitch)
+                    settings.Pitch = pitch;
 
                 // PitchVariance
-                if (attributes["PitchVariance"]?.Value is string pitchVariance)
-                    settings.PitchVariance = XmlConvert.ToSingle(pitchVariance);
+                if (element.GetFloat("pitchVariance") is float pitchVariance)
+                    settings.PitchVariance = pitchVariance;
 
                 // PopMode
-                if (attributes["PopMode"]?.Value is string popMode)
-                    settings.PopMode = Enum.Parse<SoundPopMode>(popMode);
+                if (element.GetEnum<SoundPopMode>("popMode") is SoundPopMode popMode)
+                    settings.PopMode = popMode;
 
-                // Sounds
-                if (attributes["Sounds"]?.Value is string soundNames)
+                // SoundCount
+                if (element.GetInt32("soundCount") is int soundCount)
                 {
-                    soundNames = soundNames.Replace("..", Int32Range.Separator);
-
-                    // Range format
-                    if (Int32Range.TryParse(soundNames, out var result))
+                    for (var i = 0; i < soundCount; i++)
                     {
-                        var names = new string[result.Delta + 1];
-                        for (var i = 0; i < names.Length; i++)
-                        {
-                            names[i] = name + XmlConvert.ToString(i + 1);
-                        }
-
-                        settings.SoundNames = string.Join(',', names);
-                    }
-                    else
-                    {
-                        settings.SoundNames = soundNames;
+                        settings.Sounds.Add($"{name}{i + 1}");
                     }
                 }
 
                 // Tags
-                if (attributes["Tags"]?.Value is string tags)
-                    settings.Tags = tags;
+                settings.Tags = element.GetString("tags");
 
                 // TransitionAware
-                if (attributes["TransitionAware"]?.Value is string transitionAware)
-                    settings.TransitionAware = XmlConvert.ToBoolean(transitionAware);
-                else
-                    settings.TransitionAware = settings.Category != MusicCategory;
-
-                // PauseAware
-                if (attributes["PauseAware"]?.Value is string pauseAware)
-                    settings.PauseAware = XmlConvert.ToBoolean(pauseAware);
-                else
-                    settings.PauseAware = settings.Category != MusicCategory && settings.Category != AmbienceCategory;
+                if (element.GetBool("transitionAware") is bool transitionAware)
+                    settings.TransitionAware = transitionAware;
 
                 // Volume
-                if (attributes["Volume"]?.Value is string volume)
-                    settings.Volume = XmlConvert.ToSingle(volume);
+                if (element.GetFloat("volume") is float volume)
+                    settings.Volume = volume;
 
                 Sound.Create(name, settings);
             }
@@ -191,6 +159,19 @@ namespace Engendro.Audio
             };
         }
 
+        // Load
+        public static void Load(string fileName)
+        {
+            using var input = TitleContainer.OpenStream(fileName);
+            using JsonDocument doc = JsonDocument.Parse(input);
+            var root = doc.RootElement;
+
+            ParseCategory(root, SoundCategoryName.Ambience);
+            ParseCategory(root, SoundCategoryName.FX);
+            ParseCategory(root, SoundCategoryName.Music);
+            ParseCategory(root, SoundCategoryName.Voice);
+        }
+
         // LoadAllSounds
         public static void LoadAll()
         {
@@ -198,25 +179,6 @@ namespace Engendro.Audio
             foreach (var sound in Sound.Sounds)
             {
                 sound.Load(DefaultContent);
-            }
-        }
-
-        // Load
-        public static void Load(string fileName)
-        {
-            try
-            {
-                using var input = TitleContainer.OpenStream(fileName);
-                XmlDocument doc = new();
-                doc.Load(input);
-
-                LoadCore(doc, SoundCategoryName.Ambience);
-                LoadCore(doc, SoundCategoryName.Music);
-                LoadCore(doc, SoundCategoryName.FX);
-                LoadCore(doc, SoundCategoryName.Voice);
-            }
-            catch (FileNotFoundException)
-            {
             }
         }
 

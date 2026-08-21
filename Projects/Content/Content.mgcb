@@ -1746,8 +1746,8 @@
 #begin System/ScriptLibrary.esl
 /copy:System/ScriptLibrary.esl
 
-#begin System/Sounds.xml
-/copy:System/Sounds.xml
+#begin System/Sounds.json
+/copy:System/Sounds.json
 
 #begin System/Statuses.json
 /copy:System/Statuses.json
