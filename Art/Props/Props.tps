@@ -666,6 +666,7 @@
                 <false/>
             </struct>
             <key type="filename">Props-assets/BluePill.png</key>
+            <key type="filename">Props-assets/OrangePill.png</key>
             <key type="filename">Props-assets/RedPill.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>

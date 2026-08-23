@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using Microsoft.Xna.Framework;
 using System;
 
 namespace ScaryCastle
@@ -19,129 +18,81 @@ namespace ScaryCastle
 
         #region Private members
 
-        // AdjustWeightByQuality
-        private static float AdjustWeightByQuality(Difficulty difficulty, int itemQuality, float baseWeight)
+        // CanSpawn
+        private bool CanSpawn(ItemDefinition itemDef, int maxQ, Realm? realm, ItemCategory? category)
         {
-            float finalWeight = baseWeight;
-            int roomVal = (int)difficulty;
+            // Coin or player action
+            if (itemDef.Name == nameof(Coin) || itemDef.Behavior == ItemBehavior.PlayerAction)
+                return false;
 
-            if (roomVal == 2 && itemQuality <= 1)
-                finalWeight *= 0.1f;
-            else if (roomVal == 2 && itemQuality >= 4)
-                finalWeight *= 3.0f;
+            // Can spawn or match quality?
+            if (itemDef.SpawnWeight <= 0 || itemDef.Quality > maxQ)
+                return false;
 
-            return finalWeight;
+            // Match realm
+            if (realm.HasValue && itemDef.Realm != realm)
+                return false;
+
+            // Match category
+            if (category.HasValue && itemDef.Category != category.Value)
+                return false;
+
+            // Avoid dropping duplicates for non-stackable items
+            if (!itemDef.IsStackable && run.PlayerInventory.Find(itemDef.Name) != null)
+                return false;
+
+            return true;
         }
 
-        // GetLoot
-        private ItemDefinition? GetLoot(RoomNode node, Realm? lootRealm, ItemCategory? lootCategory, ItemCategory[]? denyCategories = null, int qualityBoost = 0)
+        // CheckDropSuccess
+        private bool CheckDropSuccess(ThingDefinition def)
         {
-            const string NoneValue = "None";
-
-            RoomDefinition def = node.Definition;
-
-            // Integración de diseño: Los tesoros mejoran el qualityBoost
-            if (node.Category == RoomCategory.Treasure)
-                qualityBoost += 2;
-
-            int maxQ = Math.Clamp(((int)def.Difficulty * 2) + 1 + qualityBoost, 0, 5);
-
-            lootRealm ??= def.PreferredLootRealm;
-            lootCategory ??= def.PreferredLootCategory;
-
-            var table = new ChanceTable();
-
-            // Lógica de "Empty Drop"
-            float emptyWeight = qualityBoost > 0 ? 0 : def.Difficulty switch
+            // Calculate base chances based on thing difficulty
+            float chance = def.Difficulty switch
             {
-                Difficulty.Easy => 15f,
-                Difficulty.Normal => 5f,
-                Difficulty.Hard => 1.5f,
-                _ => 10.0f
+                Difficulty.Easy => 0.05f,
+                Difficulty.Normal => 0.12f,
+                Difficulty.Hard => 0.25f,
+                _ => 0.02f
             };
 
-            if (emptyWeight > 0)
-                table.Add(NoneValue, emptyWeight, 1, null);
+            // Up to 10% of more chances depending on the current floor
+            chance += run.FloorProgress * 0.1f;
 
-            // Filtro Principal
-            for (int i = 0; i < ItemDefinition.Data.All.Count; i++)
-            {
-                var itemDef = ItemDefinition.Data.All[i];
+            // Player's luck
+            chance += run.Traits.GetTotalTraitValue(TraitType.Luck);
 
-                if (itemDef.Name == nameof(Coin) || itemDef.Behavior == ItemBehavior.PlayerAction)
-                    continue;
+            // Extra chances
+            chance += def.DropSackChanceBonus;
 
-                if (itemDef.SpawnWeight <= 0)
-                    continue;
-
-                if (IsDenied(itemDef.Category, denyCategories))
-                    continue;
-
-                if (lootRealm.HasValue && itemDef.Realm != lootRealm.Value)
-                    continue;
-
-                if (lootCategory.HasValue && itemDef.Category != lootCategory.Value)
-                    continue;
-
-                if (!itemDef.IsStackable && run.PlayerInventory.Find(itemDef.Name) != null)
-                    continue;
-
-                if (itemDef.Quality > maxQ)
-                    continue;
-
-                float weight = AdjustWeightByQuality(def.Difficulty, itemDef.Quality, itemDef.SpawnWeight);
-                if (qualityBoost > 0 && itemDef.Quality >= 3)
-                    weight *= 1.5f + qualityBoost;
-
-                table.Add(itemDef.Name, weight, 1, itemDef);
-            }
-
-            return table.GetValue(run.VolatileRng)?.Context as ItemDefinition;
-        }
-
-        // IsDenied
-        private static bool IsDenied(ItemCategory cat, ItemCategory[]? denies)
-        {
-            if (denies == null) return false;
-            for (int i = 0; i < denies.Length; i++)
-            {
-                if (denies[i] == cat) return true;
-            }
-            return false;
+            // There is alwqays a 5% chance og getting nothing
+            return run.VolatileRng.NextDouble() <= float.Clamp(chance, 0, .95f);
         }
 
         // RollCoinAmount
         private int RollCoinAmount(ThingDefinition thingDef)
         {
-            // 1. Bloqueo rápido: Si el bonus es negativo o el modo de drop lo prohíbe, 0 monedas.
-            // (Asumimos que el chequeo de DropMode se hace en TryDropCoins antes de llamar aquí)
-            if (thingDef.DropCoinChanceBonus < 0)
-                return 0;
-
-            // 2. Base por dificultad (Valores planos de probabilidad)
+            // Probabilidad base por dificultad
             float chance = thingDef.Difficulty switch
             {
-                Difficulty.Easy => .1f,   // 10%
-                Difficulty.Normal => .3f, // 30%
-                Difficulty.Hard => .5f,   // 50%
-                _ => .1f
+                Difficulty.Easy => 0.1f,
+                Difficulty.Normal => 0.3f,
+                Difficulty.Hard => 0.5f,
+                _ => 0.1f
             };
 
-            // 3. Suma de modificadores
-            // Suerte: Cada punto de Luck suma un +10% de probabilidad de encontrar monedas
+            // Modificadores de Suerte y Bonus
             chance += run.Traits.GetTotalTraitValue(TraitType.Luck);
-
-            // Bonus de la instancia (Si quieres un +30% de chances, pasas 0.3f)
             chance += thingDef.DropCoinChanceBonus;
 
-            // 4. El Roll (Con un cap de 98% para dejar siempre un margen mínimo de error, 
-            // a menos que el diseño pida 100% garantizado)
-            float finalChance = MathHelper.Clamp(chance, 0, .98f);
+            // Cap de seguridad (max 95%)
+            float finalChance = float.Clamp(chance, 0, .95f);
 
+            // Tirada de dados
             if (run.VolatileRng.NextDouble() > finalChance)
                 return 0;
 
-            // 5. Cantidad de monedas (Lógica de cantidad según dificultad)
+            // Cantidad entregada si la tirada tuvo éxito
             return thingDef.Difficulty switch
             {
                 Difficulty.Easy => 1,
@@ -151,19 +102,54 @@ namespace ScaryCastle
             };
         }
 
-        #endregion
-
-        // GetPrice
-        public static int GetPrice(ItemDefinition item)
+        // SelectLootItem
+        private ItemDefinition? SelectLootItem(RoomNode node, ThingDefinition entityDef)
         {
-            return item.Quality switch
+            var roomDef = node.Definition;
+            int qualityBoost = entityDef.QualityBoost;
+
+            if (node.Category == RoomCategory.Treasure)
+                qualityBoost += 2;
+
+            // Si estás en el Piso 1, maxQ se mantiene bajo (0-2) evitando épicos/legendarios desbalanceados.
+            // En los pisos finales, el techo se eleva a 4-5.
+            float progress = run.FloorProgress;
+            int floorBonus = (int)(progress * 2f);
+            int maxQ = Math.Clamp(((int)roomDef.Difficulty * 2) + 1 + qualityBoost + floorBonus, 0, 5);
+
+            var table = new ChanceTable();
+
+            // Reducción del "Empty Drop" en pisos profundos
+            float emptyWeight = qualityBoost > 0 ? 0 : 10f * (1.0f - (progress * 0.6f));
+            if (emptyWeight > 0)
+                table.Add("None", emptyWeight, 1, null);
+
+            Realm? lootRealm = entityDef.PreferredLootRealm ?? roomDef.PreferredLootRealm;
+            ItemCategory? lootCategory = entityDef.PreferredLootCategory ?? roomDef.PreferredLootCategory;
+
+            for (int i = 0; i < ItemDefinition.Data.All.Count; i++)
             {
-                0 or 1 => 5,
-                2 or 3 => 10,
-                4 or 5 => 15,
-                _ => 5
-            };
+                var itemDef = ItemDefinition.Data.All[i];
+
+                if (!CanSpawn(itemDef, maxQ, lootRealm, lootCategory))
+                    continue;
+
+                float weight = itemDef.SpawnWeight;
+
+                // Escala de peso para ítems valiosos según progreso y bonus de sala
+                if (itemDef.Quality >= 3)
+                    weight *= 1f + (progress * 1.5f);
+
+                if (qualityBoost > 0 && itemDef.Quality >= 3)
+                    weight *= 1.5f + qualityBoost;
+
+                table.Add(itemDef.Name, weight, 1, itemDef);
+            }
+
+            return table.GetValue(run.VolatileRng)?.Context as ItemDefinition;
         }
+
+        #endregion
 
         // RollForCoin
         public int RollForCoin(GameThing thing)
@@ -171,11 +157,11 @@ namespace ScaryCastle
             if ((thing as IThingDefinition)?.Definition is not { } def)
                 return 0;
 
-            // 1. FILTRO DE INSTANCIA: Si el bicho está seteado para no dar nada o solo dar bolsa, abortamos.
+            // 1. Filtro rápido de DropMode
             if (def.DropMode is LootDropMode.None or LootDropMode.SackOnly or LootDropMode.Custom)
                 return 0;
 
-            // 2. Calculamos la cantidad pasando el multiplicador de la instancia
+            // 2. Procesa la tirada y cantidad de monedas en el método dedicado
             return RollCoinAmount(def);
         }
 
@@ -188,30 +174,20 @@ namespace ScaryCastle
             if ((thing as IThingDefinition)?.Definition is not { } def)
                 return null;
 
+            // 1. Check drop mode
             if (def.DropMode is LootDropMode.None or LootDropMode.CoinsOnly)
                 return null;
 
-            // Custom drop
+            // 2. Check for custom drop
             if (def.DropMode == LootDropMode.Custom && !string.IsNullOrEmpty(thing.CustomDropName))
                 return ItemDefinition.Data.Find(thing.CustomDropName);
 
-            float chance = def.Difficulty switch
-            {
-                Difficulty.Easy => 0.05f,
-                Difficulty.Normal => 0.12f,
-                Difficulty.Hard => 0.25f,
-                _ => 0.02f
-            };
-
-            chance += run.Traits.GetTotalTraitValue(TraitType.Luck);
-            chance += def.DropSackChanceBonus;
-
-            float finalChance = MathHelper.Clamp(chance, 0f, 0.95f);
-
-            if (run.VolatileRng.NextDouble() > finalChance)
+            // 3. Will drop?
+            if (!CheckDropSuccess(def))
                 return null;
 
-            return GetLoot(room.RoomNode, def.PreferredLootRealm, def.PreferredLootCategory, null, def.QualityBoost);
+            // 4. Return loot
+            return SelectLootItem(room.RoomNode, def);
         }
     }
 }

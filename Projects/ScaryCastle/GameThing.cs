@@ -239,7 +239,8 @@ namespace ScaryCastle
             if (ItemReward != null)
             {
                 Prop? loot;
-                if (AotTypeRegistry.Find(ItemReward.Name) is AotTypeEntry entry && typeof(PickableLoot).IsAssignableFrom(entry.Type))
+                //if (AotTypeRegistry.Find(ItemReward.Name) is AotTypeEntry entry && typeof(PickableLoot).IsAssignableFrom(entry.Type))
+                if (ItemReward.Behavior == ItemBehavior.Pocket || ItemReward.Behavior == ItemBehavior.InstantEffect)
                 {
                     loot = room.CreateThingClone<Prop>(ItemReward.Name);
                 }

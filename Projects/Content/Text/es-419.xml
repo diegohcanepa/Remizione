@@ -48,8 +48,7 @@
   <String Key="Item.Battery.Name">Batería</String>
   <String Key="Item.BittenApple.Description">Masa fétida que supura un almíbar con olor a pie descuidado. Recuperas salud por el shock, pero tu esófago tiene un 35% de chances de que le caiga mal.</String>
   <String Key="Item.BittenApple.Name">Manzana mordida</String>
-  <String Key="Item.BluePill.Description">Proteína gástrica</String>
-  <String Key="Item.BluePill.Name">Píldora</String>
+  <String Key="Item.BluePill.Name">Proteína gástrica</String>
   <String Key="Item.BronzeKey.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.BronzeKey.Name">Llave de bronce</String>
   <String Key="Item.Chili.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</String>
@@ -74,12 +73,12 @@
   <String Key="Item.Lockpick.Name">Ganzúa</String>
   <String Key="Item.MagneticCard.Description">Utiliza esta tarjeta con la máquina lectora de la torre para abrirte camino.</String>
   <String Key="Item.MagneticCard.Name">Tarjeta magnética</String>
+  <String Key="Item.OrangePill.Name">Suplemento deportivo</String>
   <String Key="Item.PieceOfWood.Description">Un pedazo de madera viejo. Si juntas los suficientes podrás pedirle un cofre al Señor.</String>
   <String Key="Item.PieceOfWood.Name">Trozo de madera</String>
   <String Key="Item.Pistol.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </String>
   <String Key="Item.Pistol.Name">Pistola</String>
-  <String Key="Item.RedPill.Description">Suplemento deportivo</String>
-  <String Key="Item.RedPill.Name">Píldora</String>
+  <String Key="Item.RedPill.Name">Comprimido miocardíaco</String>
   <String Key="Item.ServantCross.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.ServantCross.Name">Cruz del Siervo</String>
   <String Key="Item.SodaCan.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>

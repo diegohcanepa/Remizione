@@ -61,7 +61,7 @@
                 "Sack",
                 "Pocket",
                 "PlayerAction",
-                "StatModifier"
+                "InstantEffect"
               ],
               "default": "Common"
             },

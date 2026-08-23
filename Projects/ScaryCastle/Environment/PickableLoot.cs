@@ -16,7 +16,7 @@ namespace ScaryCastle
             ApproachBehavior = ApproachBehavior.ClosestSide;
             DepthOffset = 20;
             IgnoreWalkArea = false;
-            Loot = ItemDefinition.Data.Find(GetType().Name);
+            Loot = ItemDefinition.Data.Find(DeclaredName);
             Verb = Verb.PickUp;
         }
 

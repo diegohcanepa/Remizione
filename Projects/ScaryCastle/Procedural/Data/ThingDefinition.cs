@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json;
@@ -23,10 +24,10 @@ namespace ScaryCastle
             : base(element)
         {
             // DropCoinChanceBonus
-            DropCoinChanceBonus = element.GetFloat("dropCoinChanceBonus", 0);
+            DropCoinChanceBonus = MathF.Max(0, element.GetFloat("dropCoinChanceBonus", 0));
 
             // DropSackChanceBonus
-            DropSackChanceBonus = element.GetFloat("dropSackChanceBonus", 0);
+            DropSackChanceBonus = MathF.Max(0, element.GetFloat("dropSackChanceBonus", 0));
 
             // DropMode
             DropMode = element.GetEnum("dropMode", LootDropMode.Standard);

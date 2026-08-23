@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json;
+using YamlDotNet.Serialization.Schemas;
 
 namespace ScaryCastle
 {

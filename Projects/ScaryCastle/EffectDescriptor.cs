@@ -107,19 +107,14 @@ namespace ScaryCastle
                         realTarget?.TakeDamage(source, effect.DamageType, int.MaxValue, effect.ComicText, effect.GetKnockbackForce());
                         break;
 
-                    // Energy
-                    case EffectType.Energy:
+                    // EnergyGain
+                    case EffectType.EnergyGain:
                         targetActor?.Energy += amount;
                         break;
 
-                    // ExtraEnergy
-                    case EffectType.ExtraEnergy:
-                        targetActor?.MaxEnergy += amount;
-                        break;
-
-                    // ExtraHeart
-                    case EffectType.ExtraHeart:
-                        realTarget?.MaxHP += amount;
+                    // EnergyLoss
+                    case EffectType.EnergyLoss:
+                        targetActor?.Energy -= amount;
                         break;
 
                     // GoldenKey
@@ -136,6 +131,48 @@ namespace ScaryCastle
                     // HPLoss
                     case EffectType.HPLoss:
                         realTarget?.HP -= amount;
+                        break;
+
+                    // MaxEnergyGain
+                    case EffectType.MaxEnergyGain:
+                        targetActor?.MaxEnergy += amount;
+                        break;
+
+                    // MaxEnergyLoss
+                    case EffectType.MaxEnergyLoss:
+                        if (targetActor?.MaxEnergy > 3)
+                            targetActor.MaxEnergy -= amount;
+                        break;
+
+                    // MaxHPGain
+                    case EffectType.MaxHPGain:
+                        realTarget?.MaxHP += amount;
+                        break;
+
+                    // MaxHPLoss
+                    case EffectType.MaxHPLoss:
+                        realTarget?.MaxHP -= amount;
+                        break;
+
+                    // MaxStaminaGain
+                    case EffectType.MaxStaminaGain:
+                        targetActor?.MaxStamina += amount;
+                        break;
+
+                    // MaxStaminaLoss
+                    case EffectType.MaxStaminaLoss:
+                        if (targetActor?.MaxStamina > 3)
+                            targetActor.MaxStamina -= amount;
+                        break;
+
+                    // StaminaGain
+                    case EffectType.StaminaGain:
+                        targetActor?.Stamina += amount;
+                        break;
+
+                    // StaminaLoss
+                    case EffectType.StaminaLoss:
+                        targetActor?.Stamina -= amount;
                         break;
 
                     // Status

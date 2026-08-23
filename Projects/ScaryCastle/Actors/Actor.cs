@@ -934,8 +934,11 @@ namespace ScaryCastle
             {
                 if (value != field)
                 {
+                    var prevValue = field;
+
                     field = value;
-                    if (Energy == 0)
+                    
+                    if (Energy == 0 && prevValue == 0)
                     {
                         Energy = value;
                     }
@@ -956,8 +959,11 @@ namespace ScaryCastle
             {
                 if (value != field)
                 {
+                    var prevValue = field;
+
                     field = value;
-                    if (Stamina == 0)
+
+                    if (Stamina == 0 && prevValue == 0)
                     {
                         Stamina = value;
                     }

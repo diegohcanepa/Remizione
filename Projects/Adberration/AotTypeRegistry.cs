@@ -36,6 +36,9 @@ namespace Adberration
             if (types.ContainsKey(keyName))
                 return;
 
+            if (type.IsAbstract)
+                throw new InvalidOperationException($"'{type.Name}' is an abstract type and cannot be registered.");
+
             types.Add(keyName, new AotTypeEntry(keyName, type, context));
         }
 

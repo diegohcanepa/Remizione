@@ -52,13 +52,13 @@
 		},
 		{
 			"name": "BluePill",
-			"behavior": "StatModifier",
+			"behavior": "InstantEffect",
 			"actionKind": "Self",
 			"category": "Pills",
 			"effects": [
 				{
 					"context": "Collect",
-					"effectType": "ExtraEnergy",
+					"effectType": "MaxEnergyGain",
 					"amount": "1",
 					"target": "Self"
 				}
@@ -136,7 +136,7 @@
 			"effects": [
 				{
 					"context": "Use",
-					"effectType": "Energy",
+					"effectType": "EnergyGain",
 					"amount": "99",
 					"target": "Self"
 				}
@@ -170,6 +170,20 @@
 			"isStackable": true
 		},
 		{
+			"name": "OrangePill",
+			"behavior": "InstantEffect",
+			"actionKind": "Self",
+			"category": "Pills",
+			"effects": [
+				{
+					"context": "Collect",
+					"effectType": "MaxStaminaGain",
+					"amount": "1",
+					"target": "Self"
+				}
+			]			
+		},
+		{
 			"name": "Pistol",
 			"initialAmount": 5,
 			"category": "Misc",
@@ -196,13 +210,13 @@
 		},
 		{
 			"name": "RedPill",
-			"behavior": "StatModifier",
+			"behavior": "InstantEffect",
 			"actionKind": "Self",
 			"category": "Pills",
 			"effects": [
 				{
 					"context": "Collect",
-					"effectType": "ExtraHeart",
+					"effectType": "MaxHPGain",
 					"amount": "2",
 					"target": "Self"
 				}
