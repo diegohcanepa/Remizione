@@ -123,7 +123,7 @@ namespace ScaryCastle
                 Refresh();
             }
 
-            if (actor == null || actor.IsDead)
+            if (actor == null)
                 return;
 
             if (lastKnownValue != actor.HP || lastKnownMaxValue != actor.MaxHP)

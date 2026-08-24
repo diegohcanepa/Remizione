@@ -122,7 +122,7 @@ namespace ScaryCastle
             // Reducción del "Empty Drop" en pisos profundos
             float emptyWeight = qualityBoost > 0 ? 0 : 10f * (1.0f - (progress * 0.6f));
             if (emptyWeight > 0)
-                table.Add("None", emptyWeight, 1, null);
+                table.Add(ChanceTable.Nothing, emptyWeight, 1, null);
 
             Realm? lootRealm = entityDef.PreferredLootRealm ?? roomDef.PreferredLootRealm;
             ItemCategory? lootCategory = entityDef.PreferredLootCategory ?? roomDef.PreferredLootCategory;

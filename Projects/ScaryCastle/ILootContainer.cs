@@ -3,8 +3,8 @@
     /// <summary>
     /// ILootContainer
     /// </summary>
-    public interface ILootContainer<T> where T : Definition
+    public interface ILootContainer
     {
-        T? Loot { get; set; }
+        ItemDefinition? Loot { get; set; }
     }
 }

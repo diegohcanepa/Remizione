@@ -1,6 +1,7 @@
 ﻿using Adberration;
 using Engendro;
 using Microsoft.Xna.Framework;
+using ScaryCastle.Procedural;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -35,7 +36,6 @@ namespace ScaryCastle
             this.LightingSystem = true;
             this.UnloadMode = UnloadMode.Manual;
 
-            // MAGIA PURA Y LIMPIA:
             this.randomSeed = seed;
             this.Random = new Random(this.randomSeed);
 
@@ -74,7 +74,7 @@ namespace ScaryCastle
             // Add placeholders
             foreach (var placeholder in roomNode.Definition.Placeholders)
             {
-                AddPlaceholder(placeholder);
+                placeholders.Add(placeholder);
             }
 
             // Add walls
@@ -87,25 +87,6 @@ namespace ScaryCastle
         #endregion
 
         #region Private members
-
-        // CalculateEnemyBudget
-        private int CalculateEnemyBudget()
-        {
-            // 1. Definimos el presupuesto estrictamente por la zona geográfica
-            var (min, max) = RoomNode.TopographicDifficulty switch
-            {
-                Difficulty.Easy => (1, 1),   // Muy tranquilo
-                Difficulty.Normal => (2, 2), // Reto estándar
-                Difficulty.Hard => (2, 3),   // Presión alta
-                _ => (0, 0)
-            };
-
-            // 2. Variación aleatoria (-1, 0, +1) para inyectar imprevisibilidad
-            int finalBudget = Random.Next(min - 1, max + 2);
-
-            // 3. Clamp final para garantizar un límite mínimo y máximo absoluto en el cuarto
-            return Math.Clamp(finalBudget, 1, 4); // Nunca 0, nunca más de 4 patrullas/patotas base
-        }
 
         // DistributeBronzeKeys
         private void DistributeBronzeKeys()
@@ -196,42 +177,54 @@ namespace ScaryCastle
             }
         }
 
-        // GetSpawnPoints
-        private List<Vector2> GetSpawnPoints(Polygon polygon, int count, int cellSize)
+        // GetCandidateDefinitions
+        private List<TDefinition> GetCandidateDefinitions<TDefinition, TThing>(IList<TDefinition> definitions)
+            where TDefinition : ThingDefinition where TThing : GameThing
         {
-            var cells = new List<Vector2>();
-            var area = polygon.BoundingRectangle;
+            var outList = new List<TDefinition>();
+            if (Session.CurrentRun == null)
+                return outList;
 
-            for (int y = area.Top; y < area.Bottom; y += cellSize)
+            foreach (var definition in definitions)
             {
-                for (int x = area.Left; x < area.Right; x += cellSize)
+                if (definition is ActorDefinition actorDefinition)
                 {
-                    float cx = x + (cellSize * 0.5f);
-                    float cy = y + (cellSize * 0.5f);
+                    // Si es un Boss real, SOLO puede aparecer en la habitación etiquetada como Boss
+                    if (actorDefinition.Rank == ActorRank.Boss && RoomNode.Category != RoomCategory.End)
+                        continue;
 
-                    float offsetRange = cellSize * 0.25f;
-                    cx += (float)((Random.NextDouble() * offsetRange * 2) - offsetRange);
-                    cy += (float)((Random.NextDouble() * offsetRange * 2) - offsetRange);
-
-                    var candidate = new Vector2(cx, cy);
-
-                    if (polygon.Contains(candidate))
-                    {
-                        cells.Add(candidate);
-                    }
+                    // Y viceversa: en la sala del Boss no queremos que spawneen murciélagos comunes como plato principal
+                    if (RoomNode.Category == RoomCategory.End && actorDefinition.Rank != ActorRank.Boss)
+                        continue;
                 }
+
+                if (definition.RoomTheme.HasValue && definition.RoomTheme != RoomNode.Definition.Theme)
+                    continue;
+
+                if (definition.RequiresDeadEnd && RoomNode.ConnectionCount() > 1)
+                    continue;
+
+                var thing = Session.FindDeclaredThing(definition.Name) ?? throw new InvalidOperationException($"There is no declared thing named '{definition.Name}'. ");
+
+                if (thing is not TThing)
+                    continue;
+
+                if (!definition.PassesRunConstraints(Session.RunIndex))
+                    continue;
+
+                if (Session.CurrentRun != null)
+                {
+                    if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns))
+                        continue;
+                }
+
+                if (!TagScope.Test(RoomNode.Definition.Scope, RoomNode.Definition.Pools, definition.Tags))
+                    continue;
+
+                outList.Add(definition);
             }
 
-            for (int i = cells.Count - 1; i > 0; i--)
-            {
-                int j = Random.Next(i + 1);
-                (cells[i], cells[j]) = (cells[j], cells[i]);
-            }
-
-            if (cells.Count > count)
-                cells.RemoveRange(count, cells.Count - count);
-
-            return cells;
+            return outList;
         }
 
         // LockDoorsAccordingly
@@ -330,12 +323,12 @@ namespace ScaryCastle
                 if (!RoomNode.Definition.AllowEnemies && c.Faction == Faction.Evil)
                     continue;
 
-                var finalWeight = AdjustWeight(RoomNode.TopographicDifficulty, c.Difficulty, c.SpawnWeight, c.Rank);
+                var finalWeight = ProceduralUtils.AdjustWeight(RoomNode.TopographicDifficulty, c.Difficulty, c.SpawnWeight, c.Rank);
                 table.Add(c.Name, finalWeight);
             }
 
             var pendingSpawns = new List<ActorDefinition>();
-            int remainingInstances = CalculateEnemyBudget();
+            int remainingInstances = ProceduralUtils.CalculateEnemyBudget(RoomNode, Random);
             int safety = (candidates.Count * 2) + 10;
 
             while (table.Count > 0 && remainingInstances > 0 && safety-- > 0)
@@ -377,7 +370,7 @@ namespace ScaryCastle
                 return;
 
             var safePoly = new Polygon(WalkArea.Polygon.Vertices, -45);
-            var points = GetSpawnPoints(safePoly, pendingSpawns.Count, 45);
+            var points = ProceduralUtils.GetSpawnPoints(safePoly, pendingSpawns.Count, 45, Random);
 
             for (int i = 0; i < points.Count; i++)
             {
@@ -486,7 +479,7 @@ namespace ScaryCastle
                         if (Session.CurrentRun != null && !def.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns.GetCount(def.Name)))
                             continue;
 
-                        var finalWeight = AdjustWeight(RoomNode.TopographicDifficulty, def.Difficulty, def.SpawnWeight, null);
+                        var finalWeight = ProceduralUtils.AdjustWeight(RoomNode.TopographicDifficulty, def.Difficulty, def.SpawnWeight, null);
                         table.Add(def.Name, finalWeight);
                     }
 
@@ -509,6 +502,7 @@ namespace ScaryCastle
                 return;
 
             var freeTable = new ChanceTable();
+            var totalItemWeights = 0f;
 
             foreach (var def in candidates)
             {
@@ -528,17 +522,18 @@ namespace ScaryCastle
 
                 // CRUCE CON LA DIFICULTAD TOPOGRÁFICA DE LA RUN:
                 // Si el cuarto es Easy y la baba es Hard, el peso se desploma (ej: de 1.0f a 0.02f)
-                var finalWeight = AdjustWeight(RoomNode.TopographicDifficulty, def.Difficulty, def.SpawnWeight, null);
-
-                // Si el peso es 0.1f, tiene un 90% de chances de quedar afuera de entrada.
-                // Esto rompe el monopolio de la ruleta cuando hay un solo elemento en el JSON.
-                if (Random.NextDouble() > finalWeight)
-                    continue;
+                var finalWeight = ProceduralUtils.AdjustWeight(RoomNode.TopographicDifficulty, def.Difficulty, def.SpawnWeight, null);
 
                 freeTable.Add(def.Name, finalWeight);
+                totalItemWeights += finalWeight;
             }
 
-            if (freeTable.Count == 0)
+            // INYECCIÓN DEL VACÍO: Si el peso total no llega a 1.0f, el resto es chance de no spawnear nada.
+            var emptyWeight = Math.Max(0f, 1.0f - totalItemWeights);
+            if (emptyWeight > 0)
+                freeTable.Add(ChanceTable.Nothing, emptyWeight);
+
+            if (freeTable.Count == 0 || (freeTable.Count == 1 && emptyWeight > 0))
                 return;
 
             var occupiedPositions = new List<Vector2>();
@@ -597,104 +592,6 @@ namespace ScaryCastle
         #endregion
 
         #region Protected members
-
-        // AddPlaceholder
-        protected void AddPlaceholder(Placeholder placeholder)
-        {
-            placeholders.Add(placeholder);
-        }
-
-        // AdjustWeight
-        protected static float AdjustWeight(Difficulty roomDiff, Difficulty thingDiff, float baseWeight, ActorRank? rank)
-        {
-            int distance = (int)roomDiff - (int)thingDiff;
-
-            // 1. Modificador por choque de dificultades (Topografía vs Definición)
-            float roomMultiplier = distance switch
-            {
-                2 => 0.05f,   // Sala Hard, Enemigo Easy -> Desalentamos masillas en el clímax
-                1 => 0.25f,   // Sala Normal, Enemigo Easy
-                0 => 1.0f,    // Calce ideal
-                -1 => 0.10f,  // Out of Depth leve: Sala Easy, Enemigo Normal -> 10% de chances base
-                -2 => 0.02f,  // Out of Depth severo: Sala Easy, Enemigo Hard -> 2% de chances base
-                _ => 1.0f
-            };
-
-            // 2. Modificador por jerarquía de combate (El filtro salvaje)
-            float rankMultiplier = 1.0f;
-            if (rank.HasValue)
-            {
-                rankMultiplier = rank.Value switch
-                {
-                    // El Boss real tiene peso plano porque ya está blindado por su filtro de sala dedicado
-                    ActorRank.Boss => 1.0f,
-
-                    // Si es un MiniBoss y está queriendo irrumpir en una zona que no es Hard, 
-                    // le pegamos un hachazo drástico a su peso para que sea una rareza absoluta.
-                    ActorRank.MiniBoss => roomDiff switch
-                    {
-                        Difficulty.Easy => 0.10f,   // Hachazo del 90%. Combinado con el -2 de arriba, da un 0.002% real. Épico si sale.
-                        Difficulty.Normal => 0.30f, // Hachazo del 70%. Aparece a mitad de camino de forma muy esporádica.
-                        Difficulty.Hard => 1.0f,   // Peso completo: es su hábitat natural.
-                        _ => 1.0f
-                    },
-
-                    _ => 1.0f
-                };
-            }
-
-            return baseWeight * roomMultiplier * rankMultiplier;
-        }
-
-        // GetCandidateDefinitions
-        protected List<TDefinition> GetCandidateDefinitions<TDefinition, TThing>(IList<TDefinition> definitions)
-            where TDefinition : ThingDefinition where TThing : GameThing
-        {
-            var outList = new List<TDefinition>();
-            if (Session.CurrentRun == null)
-                return outList;
-
-            foreach (var definition in definitions)
-            {
-                if (definition is ActorDefinition actorDefinition)
-                {
-                    // Si es un Boss real, SOLO puede aparecer en la habitación etiquetada como Boss
-                    if (actorDefinition.Rank == ActorRank.Boss && RoomNode.Category != RoomCategory.End)
-                        continue;
-
-                    // Y viceversa: en la sala del Boss no queremos que spawneen murciélagos comunes como plato principal
-                    if (RoomNode.Category == RoomCategory.End && actorDefinition.Rank != ActorRank.Boss)
-                        continue;
-                }
-
-                if (definition.RoomTheme.HasValue && definition.RoomTheme != RoomNode.Definition.Theme)
-                    continue;
-
-                if (definition.RequiresDeadEnd && RoomNode.ConnectionCount() > 1)
-                    continue;
-
-                var thing = Session.FindDeclaredThing(definition.Name) ?? throw new InvalidOperationException($"There is no declared thing named '{definition.Name}'. ");
-
-                if (thing is not TThing)
-                    continue;
-
-                if (!definition.PassesRunConstraints(Session.RunIndex))
-                    continue;
-
-                if (Session.CurrentRun != null)
-                {
-                    if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns))
-                        continue;
-                }
-
-                if (!TagScope.Test(RoomNode.Definition.Scope, RoomNode.Definition.Pools, definition.Tags))
-                    continue;
-
-                outList.Add(definition);
-            }
-
-            return outList;
-        }
 
         // OnActivate
         protected override void OnActivate()

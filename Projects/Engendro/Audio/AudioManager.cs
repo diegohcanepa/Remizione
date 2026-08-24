@@ -71,6 +71,8 @@ namespace Engendro.Audio
                 // TransitionAware
                 if (element.GetBool("transitionAware") is bool transitionAware)
                     settings.TransitionAware = transitionAware;
+                else if (category == SoundCategoryName.Music)
+                    settings.TransitionAware = false;
 
                 // Volume
                 if (element.GetFloat("volume") is float volume)
@@ -190,7 +192,7 @@ namespace Engendro.Audio
         }
 
         // Music
-        public static Music Music { get; } = new Music();
+        public static Music Music { get; } = new();
 
         // MusicCategory
         public static SoundCategory MusicCategory { get; } = new SoundCategory(SoundCategoryName.Music.ToString());

@@ -18,23 +18,6 @@
 			]
 		},
 		{
-			"name": "ServantCross",
-			"animationName": "UseCross",
-			"actionKind": "InPlace",
-			"inPlaceEffectType": "Lightning",
-			"isDepletable": false,
-			"energyCost": 1,
-			"effects": [
-				{
-					"context": "Attack",
-					"effectType": "Damage",
-					"damageType": "Physical",
-					"amount": "1d4",
-					"comicText": "Kapow"
-				}
-			]
-		},
-		{
 			"name": "BittenApple",
 			"category": "Food",
 			"actionKind": "Self",
@@ -221,6 +204,23 @@
 					"target": "Self"
 				}
 			]			
+		},
+		{
+			"name": "ServantCross",
+			"animationName": "UseCross",
+			"actionKind": "InPlace",
+			"inPlaceEffectType": "Lightning",
+			"isDepletable": false,
+			"energyCost": 1,
+			"effects": [
+				{
+					"context": "Attack",
+					"effectType": "Damage",
+					"damageType": "Physical",
+					"amount": "1d4",
+					"comicText": "Kapow"
+				}
+			]
 		},
 		{
 			"name": "SodaCan",

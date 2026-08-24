@@ -8,7 +8,7 @@ namespace ScaryCastle
     /// <summary>
     /// Trunk
     /// </summary>
-    public class Trunk : Openable, ILootContainer<ItemDefinition>
+    public class Trunk : Openable, ILootContainer
     {
         private readonly Sprite lootImage;
 
