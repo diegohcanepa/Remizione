@@ -9,7 +9,6 @@
         internal const string BronzeKey = nameof(BronzeKey);
         internal const string Coin = nameof(Coin);
         internal const string GooBottle = nameof(GooBottle);
-        internal const string Headbutt = nameof(Headbutt);
         internal const string Lift = nameof(Lift);
         internal const string ServantCross = nameof(ServantCross);
     }

@@ -441,7 +441,7 @@ namespace ScaryCastle
             if (AllowFireflyParticles)
                 fireflyEmitter?.Update(gameTime);
 
-            // Floating texts
+            // FlOffs
             for (var i = 0; i < Session.ObjectPools.FlyOffs.InUse.Count; i++)
             {
                 Session.ObjectPools.FlyOffs.InUse[i].Update(gameTime);

@@ -29,9 +29,6 @@ namespace ScaryCastle
         // Cooldown
         public int Cooldown { get; }
 
-        // Data
-        public static DataContainer<RunModifierDefinition> Data { get; } = new(element => new(element));
-
         // Image
         public AtlasImage Image { get; }
 

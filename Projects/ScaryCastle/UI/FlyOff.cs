@@ -29,7 +29,7 @@ namespace ScaryCastle
         private readonly FloatTween rotationTween = new();
         private bool shake;
         private readonly FloatTween shakeTween = FloatTween.Create(TweenStyle.Linear, 0, .5f, 50, -1);
-        private static int spawnIndex = 0;
+        private static int spawnIndex;
         private readonly TextSprite text = new(Fonts.CommonOutline) { PivotOrigin = RectanglePoint.Bottom };
         private readonly FloatTween xTween = new();
         private readonly FloatTween yTween = new();
@@ -83,7 +83,7 @@ namespace ScaryCastle
         }
 
         // ShowTextCore
-        private void ShowTextCore(Vector2 origin, string value, Color color, Vector2 distance, float scale)
+        private void ShowTextCore(Vector2 origin, string value, Color color, float scale)
         {
             text.Color = color;
             text.Scale = new(scale);
@@ -126,10 +126,10 @@ namespace ScaryCastle
         public bool IsVisible => xTween.IsRunning || yTween.IsRunning || opacityTween.IsRunning;
 
         // ShowIcon
-        public void ShowIcon(Vector2 origin, AtlasImage image)
+        public void ShowIcon(Vector2 origin, AtlasImage image, float scale = 1)
         {
             icon.RenderImage = image;
-            icon.Scale = ScaleInfo.UIElement.Large;
+            icon.Scale = new(scale);
             Launch(origin, icon, 2000);
         }
 
@@ -142,7 +142,7 @@ namespace ScaryCastle
         // ShowText
         public void ShowText(Vector2 origin, string value, Color color, float scale)
         {
-            ShowTextCore(origin, value, color, new Vector2(0, -6), scale);
+            ShowTextCore(origin, value, color, scale);
         }
 
         // ShowAmount
@@ -155,7 +155,7 @@ namespace ScaryCastle
             var deltaX = Random.Shared.Next(3, 6);
             var horzDirection = source.Direction == FacingDirection.Left ? deltaX : -deltaX;
 
-            ShowTextCore(origin, amount.ToString(CultureInfo.InvariantCulture), color, new(horzDirection, -10), ScaleInfo.Text.Huge.X);
+            ShowTextCore(origin, amount.ToString(CultureInfo.InvariantCulture), color, ScaleInfo.Text.Huge.X);
         }
     }
 }

@@ -31,9 +31,6 @@ namespace ScaryCastle
 
         #endregion
 
-        // Data
-        public static DataContainer<StatusDefinition> Data { get; } = new(element => new(element));
-
         // Image
         public AtlasImage Image { get; }
 

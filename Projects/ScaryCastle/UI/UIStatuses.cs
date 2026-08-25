@@ -129,7 +129,7 @@ namespace ScaryCastle
             {
                 this.owner = owner;
                 this.StatusType = statusType;
-                var def = StatusDefinition.Data.Get(statusType.ToString());
+                var def = GameData.Statuses.Get(statusType.ToString());
 
                 this.sprite = new()
                 {

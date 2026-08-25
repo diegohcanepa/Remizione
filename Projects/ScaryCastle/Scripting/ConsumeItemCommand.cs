@@ -13,7 +13,7 @@ namespace ScaryCastle.Scripting
             : base(script, source, body, 1)
         {
             var itemName = Parser.ParseName(this, 0);
-            definition = ItemDefinition.Data.Get(itemName);
+            definition = GameData.Items.Get(itemName);
         }
 
         // OnExecute

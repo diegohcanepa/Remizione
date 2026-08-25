@@ -46,20 +46,6 @@ namespace ScaryCastle
 
         #region Private members
 
-        // LoadDataContent
-        private void LoadDataContent()
-        {
-            TraitDefinition.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "TraitDefinitions.json"));
-            RunDefinition.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "RunDefinitions.json"));
-            RunModifierDefinition.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "RunModifiers.json"));
-            StatusDefinition.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Statuses.json"));
-            CombatBehavior.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "CombatBehaviors.json"));
-            ItemDefinition.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Items.json"));
-            RoomDefinition.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Rooms.json"));
-            ActorDefinition.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Actors.json"));
-            PropDefinition.Data.Load(ContentManagerExtension.EncodePath(Content, ContentFolder.System, "Props.json"));
-        }
-
 #if !QUICK_START
         // DefaultStart
         private void DefaultStart()
@@ -137,7 +123,7 @@ namespace ScaryCastle
 
             UserSettingsData.Apply(this, userSettings);
 
-            LoadDataContent();
+            GameData.Load();
 
 #if QUICK_START
             QuickStart();

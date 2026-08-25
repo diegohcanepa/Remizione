@@ -19,7 +19,7 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        private CombatBehavior(JsonElement element)
+        public CombatBehavior(JsonElement element)
         {
             this.Name = element.GetProperty("name").GetString() ?? throw new InvalidOperationException("Name not found.");
             CodeContract.ValidName(this.Name, string.Empty);
@@ -49,9 +49,6 @@ namespace ScaryCastle
 
         // Archetype
         public CombatArchetype Archetype { get; }
-
-        // Data
-        public static DataContainer<CombatBehavior> Data { get; } = new(element => new CombatBehavior(element));
 
         // DefaultIntent
         public CombatIntent? DefaultIntent { get; }

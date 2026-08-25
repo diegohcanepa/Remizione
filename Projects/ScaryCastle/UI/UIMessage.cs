@@ -73,7 +73,7 @@ namespace ScaryCastle
         public bool IsVisible { get; private set; }
 
         // Show
-        public void Show(MessageKind message, int duration = 2000)
+        public void Show(MessageKind message, int duration = 3000)
         {
             var text = Localization.GetValue(message);
             icon.RenderImage = null;

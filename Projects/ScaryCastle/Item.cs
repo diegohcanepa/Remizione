@@ -34,8 +34,6 @@ namespace ScaryCastle
 
         ReadOnlyCollection<EffectDescriptor> IAction.EffectDescriptors => Definition.EffectDescriptors;
 
-        int IAction.EnergyCost => Definition.EnergyCost;
-
         InPlaceEffectType IAction.InPlaceEffectType => Definition.InPlaceEffectType;
 
         ProjectileDescriptor? IAction.Projectile => Definition.Projectile;
@@ -68,7 +66,7 @@ namespace ScaryCastle
         // Consume
         public void Consume(Actor actor)
         {
-            actor.Energy -= Definition.EnergyCost;
+            actor.ApplyAction(this);
 
             if (Definition.IsDepletable)
             {
@@ -86,6 +84,9 @@ namespace ScaryCastle
 
         // DisplayName
         public string DisplayName { get; }
+
+        // EnergyCost
+        public int EnergyCost => Definition.EnergyCost;
 
         // Index
         public int Index => Inventory.IndexOf(this);
@@ -110,6 +111,9 @@ namespace ScaryCastle
 
         // ShortDescription
         public string ShortDescription { get; }
+
+        // StaminaCost
+        public int StaminaCost => Definition.StaminaCost;
 
         // ToString
         public override string ToString()

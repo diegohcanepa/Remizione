@@ -46,14 +46,14 @@ namespace ScaryCastle
         // Add
         public void Add(TraitType traitType)
         {
-            if (TraitDefinition.Data.Find(traitType.ToString()) is TraitDefinition traitDescriptor)
+            if (GameData.Traits.Find(traitType.ToString()) is TraitDefinition traitDescriptor)
                 Add(traitDescriptor);
         }
 
         // GetTotalTraitValue
         public float GetTotalTraitValue(TraitType traitType)
         {
-            if (TraitDefinition.Data.Find(traitType.ToString()) is TraitDefinition traitDescriptor)
+            if (GameData.Traits.Find(traitType.ToString()) is TraitDefinition traitDescriptor)
             {
                 return valuesByTrait.TryGetValue(traitDescriptor, out var value) ? value : 0;
             }

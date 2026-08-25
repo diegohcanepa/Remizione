@@ -28,9 +28,7 @@ namespace ScaryCastle
             this.Category = element.GetEnum("category", CombatIntentCategory.Basic);
 
             // EnergyCost
-            EnergyCost = element.GetInt32("energyCost", 0);
-            if (EnergyCost < 0)
-                EnergyCost = 0;
+            EnergyCost = Math.Max(0, element.GetInt32("energyCost", 0));
 
             // InPlaceEffectType
             InPlaceEffectType = element.GetEnum("inPlaceEffectType", InPlaceEffectType.None);
@@ -47,14 +45,14 @@ namespace ScaryCastle
             // MissChance
             MissChance = Math.Max(0, element.GetFloat("missChance", 0));
 
-            // RequiresStamina
-            RequiresStamina = element.GetBool("requiresStamina", false);
-
             // SoundStart
             this.SoundStart = element.GetObject("soundStart", Sound.Get);
 
             // SoundTrigger
             this.SoundTrigger = element.GetObject("soundTrigger", Sound.Get);
+
+            // StaminaCost
+            StaminaCost = Math.Max(0, element.GetInt32("staminaCost", 0));
 
             // ActionKind
             ActionKind = element.GetEnum("actionKind", ActionKind.Proximity);
@@ -68,8 +66,7 @@ namespace ScaryCastle
         // Consume
         void IAction.Consume(Actor actor)
         {
-            actor.Energy -= EnergyCost;
-            actor.Stamina--;
+            actor.ApplyAction(this);
         }
 
         #endregion
@@ -104,13 +101,13 @@ namespace ScaryCastle
         // Projectile
         public ProjectileDescriptor? Projectile { get; }
 
-        // RequiresStamina
-        public bool RequiresStamina { get; }
-
         // SoundStart
         public Sound? SoundStart { get; }
 
         // SoundTrigger
         public Sound? SoundTrigger { get; }
+
+        // StaminaCost
+        public int StaminaCost { get; }
     }
 }

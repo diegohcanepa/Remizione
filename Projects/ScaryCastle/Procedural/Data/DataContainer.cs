@@ -14,15 +14,13 @@ namespace ScaryCastle
     /// </summary>
     public class DataContainer<T> where T : INamedObject
     {
-        private FrozenDictionary<string, T> data = FrozenDictionary.Create<string, T>();
-        private readonly List<T> dataList = [];
-        private readonly Func<JsonElement, T> onCreate;
+        private readonly FrozenDictionary<string, T> data = FrozenDictionary.Create<string, T>();
 
         // Constructor
-        public DataContainer(Func<JsonElement, T> onCreate)
+        public DataContainer(FrozenDictionary<string, T> data)
         {
-            this.onCreate = onCreate;
-            this.All = dataList.AsReadOnly();
+            this.data = data;
+            this.All = data.Values.AsReadOnly();
         }
 
         // All
@@ -38,36 +36,6 @@ namespace ScaryCastle
         public T Get(string name)
         {
             return data[name];
-        }
-
-        // IsLoaded
-        public bool IsLoaded { get; private set; }
-
-        // Load
-        public void Load(string fileName)
-        {
-            if (data.Count > 0)
-                throw new InvalidOperationException("Data already loaded.");
-
-            using var input = TitleContainer.OpenStream(fileName);
-            using JsonDocument doc = JsonDocument.Parse(input);
-            var root = doc.RootElement;
-
-            if (!root.TryGetProperty("data", out JsonElement arrayElement) || arrayElement.ValueKind != JsonValueKind.Array)
-                throw new InvalidDataException();
-
-            var dict = new Dictionary<string, T>();
-
-            foreach (JsonElement element in arrayElement.EnumerateArray())
-            {
-                var obj = onCreate(element);
-                dict.Add(obj.Name, obj);
-                dataList.Add(obj);
-            }
-
-            data = dict.ToFrozenDictionary();
-
-            IsLoaded = true;
         }
     }
 }

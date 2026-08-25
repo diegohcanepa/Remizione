@@ -17,7 +17,6 @@ namespace ScaryCastle
         #region Private fields
 
         private Sprite? activeThrowableSprite;
-        private FlyOff? energyFlyoff;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
         private readonly AnimatedSprite headSprite;
@@ -29,8 +28,6 @@ namespace ScaryCastle
         private List<AtlasImage>? remainsPieces;
         private readonly FloatTween shakeTween = FloatTween.Create(TweenStyle.Linear, 0, .5f, 40, -1);
         private SpeechText? speechText;
-        private FlyOff? staminaFlyoff;
-        private readonly Dictionary<StatusType, Status> statuses = [];
         private readonly ColorTween tintTween = new();
 
         #endregion
@@ -41,7 +38,7 @@ namespace ScaryCastle
         public Actor(GameSession session, string name)
             : base(session, name)
         {
-            this.Definition = ActorDefinition.Data.Find(DeclaredName);
+            this.Definition = GameData.Actors.Find(DeclaredName);
             this.Atlas = Atlases.Actors;
             this.ApproachBehavior = ApproachBehavior.FaceToFace;
             this.DeathWord = ComicTextKind.PlopRed;
@@ -49,7 +46,7 @@ namespace ScaryCastle
             this.IgnoreWalkArea = false;
             this.Verb = Verb.Talk;
             this.Faction = Definition == null ? Faction.Good : Definition.Faction;
-            this.CombatBehavior = CombatBehavior.Data.Find(DeclaredName);
+            this.CombatBehavior = GameData.CombatBehaviors.Find(DeclaredName);
             this.StatusManager = new(this);
 
             headSprite = new AnimatedSprite()
@@ -579,12 +576,6 @@ namespace ScaryCastle
         {
             base.OnUpdate(gameTime);
 
-            if (energyFlyoff != null && !energyFlyoff.IsVisible)
-                energyFlyoff = null;
-
-            if (staminaFlyoff != null && !staminaFlyoff.IsVisible)
-                staminaFlyoff = null;
-
             headTween.Update(gameTime);
 
             if (AnimationSettings.DetachedHead)
@@ -659,6 +650,26 @@ namespace ScaryCastle
 
         // AnimationSettings
         public ActorAnimationSettings AnimationSettings { get; } = new();
+
+        // ApplyAction
+        public void ApplyAction(IAction action)
+        {
+            // Energy penalty
+            if (action.EnergyCost > 0)
+            {
+                Energy -= action.EnergyCost;
+                if (IsPlayer)
+                    ShowFlyOff(Atlases.UI.GooIcon);
+            }
+
+            // Stamina penalty
+            if (action.StaminaCost > 0)
+            {
+                Stamina -= action.StaminaCost;
+                if (IsPlayer)
+                    ShowFlyOff(Atlases.UI.StaminaIcon);
+            }
+        }
 
         // BeginTurn
         public Script? BeginTurn()
@@ -776,8 +787,6 @@ namespace ScaryCastle
                     var previousValue = field;
                     field = Math.Clamp(value, 0, MaxEnergy);
                     OnEnergyChanged(previousValue);
-                    if (previousValue > field && energyFlyoff == null)
-                        energyFlyoff = ShowFlyOff(Atlases.UI.GooIcon);
                 }
             }
         }
@@ -914,8 +923,10 @@ namespace ScaryCastle
 
             FaceTo(prop);
 
-            pixelsTrudged = 0;
             Stamina--;
+
+            if (IsPlayer)
+                ShowFlyOff(Atlases.UI.StaminaIcon);
 
             var state = BodyMachine.FindOrCreateState<BodyLiftState>();
             state.Target = prop;
@@ -1303,11 +1314,8 @@ namespace ScaryCastle
 
                     OnStaminaChanged(previousValue);
 
-                    if (field > 0 && previousValue > field && staminaFlyoff == null)
-                    {
+                    if (field > 0 && previousValue > field)
                         pixelsTrudged = 0;
-                        staminaFlyoff = ShowFlyOff(Atlases.UI.StaminaIcon);
-                    }
                 }
             }
         }

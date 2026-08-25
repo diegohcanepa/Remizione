@@ -18,9 +18,6 @@ namespace ScaryCastle
             this.Value = element.GetFloat("value", 0);
         }
 
-        // Data
-        public static DataContainer<TraitDefinition> Data { get; } = new(element => new(element));
-
         // Image
         public AtlasImage Image { get; }
 

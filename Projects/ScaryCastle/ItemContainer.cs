@@ -74,7 +74,7 @@ namespace ScaryCastle
         // Add
         public Item? Add(string name)
         {
-            var definition = ItemDefinition.Data.Find(name) ?? throw new InvalidOperationException("Item definition not found.");
+            var definition = GameData.Items.Find(name) ?? throw new InvalidOperationException("Item definition not found.");
             return Add(definition);
         }
 

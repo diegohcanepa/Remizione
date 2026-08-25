@@ -126,12 +126,6 @@
 			]
 		},
 		{
-			"name": "Headbutt",
-			"behavior": "PlayerAction",
-			"actionKind": "Proximity",
-			"category": "Misc"
-		},
-		{
 			"name": "Lantern",
 			"actionKind": "Self",
 			"category": "Misc",
@@ -209,9 +203,9 @@
 			"name": "ServantCross",
 			"animationName": "UseCross",
 			"actionKind": "InPlace",
+			"energyCost": 1,
 			"inPlaceEffectType": "Lightning",
 			"isDepletable": false,
-			"energyCost": 1,
 			"effects": [
 				{
 					"context": "Attack",

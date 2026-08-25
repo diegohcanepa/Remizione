@@ -68,7 +68,7 @@ namespace ScaryCastle
             {
                 if (context.Target != null)
                 {
-                    SyncMouseCursor(context, context.Target.Verb);
+                    SyncMouseCursor(context.Target.Verb);
                 }
                 else
                 {
@@ -78,7 +78,7 @@ namespace ScaryCastle
         }
 
         // SyncMouseCursor
-        private static void SyncMouseCursor(InteractionContext context, Verb verb)
+        private static void SyncMouseCursor(Verb verb)
         {
             switch (verb)
             {

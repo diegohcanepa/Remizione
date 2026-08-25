@@ -127,9 +127,9 @@ namespace ScaryCastle
             Realm? lootRealm = entityDef.PreferredLootRealm ?? roomDef.PreferredLootRealm;
             ItemCategory? lootCategory = entityDef.PreferredLootCategory ?? roomDef.PreferredLootCategory;
 
-            for (int i = 0; i < ItemDefinition.Data.All.Count; i++)
+            for (int i = 0; i < GameData.Items.All.Count; i++)
             {
-                var itemDef = ItemDefinition.Data.All[i];
+                var itemDef = GameData.Items.All[i];
 
                 if (!CanSpawn(itemDef, maxQ, lootRealm, lootCategory))
                     continue;
@@ -180,7 +180,7 @@ namespace ScaryCastle
 
             // 2. Check for custom drop
             if (def.DropMode == LootDropMode.Custom && !string.IsNullOrEmpty(thing.CustomDropName))
-                return ItemDefinition.Data.Find(thing.CustomDropName);
+                return GameData.Items.Find(thing.CustomDropName);
 
             // 3. Will drop?
             if (!CheckDropSuccess(def))

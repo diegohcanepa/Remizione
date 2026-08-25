@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
+using System;
 using System.Text.Json;
 
 namespace ScaryCastle
@@ -13,7 +14,7 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        private ItemDefinition(JsonElement element)
+        public ItemDefinition(JsonElement element)
             : base(element)
         {
             // ActionKind
@@ -39,9 +40,7 @@ namespace ScaryCastle
             DeselectOnUse = element.GetBool("deselectOnUse", false);
 
             // EnergyCost
-            EnergyCost = element.GetInt32("energyCost", 0);
-            if (EnergyCost < 0)
-                EnergyCost = 0;
+            EnergyCost = Math.Max(0, element.GetInt32("energyCost", 0));
 
             // InitialAmount
             InitialAmount = int.Clamp(element.GetInt32("initialAmount", 1), 1, GameSettings.MaxItemAmount);
@@ -89,9 +88,7 @@ namespace ScaryCastle
             this.SoundTrigger = element.GetObject("soundTrigger", Sound.Get);
 
             // StaminaCost
-            StaminaCost = element.GetInt32("staminaCost", 0);
-            if (StaminaCost < 0)
-                StaminaCost = 0;
+            StaminaCost = Math.Max(0, element.GetInt32("staminaCost", 0));
 
             this.Image = Atlases.UI.FindImage(Name);
 
@@ -131,9 +128,6 @@ namespace ScaryCastle
 
         // Category
         public ItemCategory Category { get; }
-
-        // Data
-        public static ItemDefinitionContainer Data { get; } = new(element => new ItemDefinition(element));
 
         // DeselectOnUse
         public bool DeselectOnUse { get; }

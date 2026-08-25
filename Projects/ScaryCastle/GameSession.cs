@@ -8,6 +8,7 @@ using ScaryCastle.Scripting;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Xml;
 
 namespace ScaryCastle
@@ -45,7 +46,7 @@ namespace ScaryCastle
 
         // Constructor
         public GameSession(ScaryCastleGame game, int slotNumber)
-            : base(game, new ScaryCastlePersistenceModel(), ContentManagerExtension.EncodePath(game.Content, ContentFolder.System, "ScriptLibrary.esl"), slotNumber)
+            : base(game, new ScaryCastlePersistenceModel(), Path.Combine("Content", ContentFolder.System.ToString(), "ScriptLibrary.esl"), slotNumber)
         {
             this.Game = game;
             this.Environment = new Environment();
@@ -363,7 +364,7 @@ namespace ScaryCastle
             {
                 if (script.ScriptType == ScriptType.Outcome && script.OverloadName.Length > 0)
                 {
-                    if (ItemDefinition.Data.Find(script.OverloadName) == null)
+                    if (GameData.Items.Find(script.OverloadName) == null)
                         throw new InvalidOperationException($"The item definition supplied in [{script.Name}] does not exist.");
                 }
             }
@@ -387,12 +388,12 @@ namespace ScaryCastle
                 }
             }
 
-            foreach (var actorDef in ActorDefinition.Data.All)
+            foreach (var actorDef in GameData.Actors.All)
             {
                 actorDef.AssertScriptDeclaration(this);
             }
 
-            foreach (var propDef in PropDefinition.Data.All)
+            foreach (var propDef in GameData.Props.All)
             {
                 propDef.AssertScriptDeclaration(this);
             }
@@ -529,7 +530,7 @@ namespace ScaryCastle
             var runSeed = seed ?? System.Environment.TickCount;
 
             // 1. Get descriptor
-            var runDefinition = RunDefinition.Data.Get($"Run{RunIndex}");
+            var runDefinition = GameData.Runs.Get($"Run{RunIndex}");
 
             // 2. Create run
             CurrentRun = new Run(this, runSeed, runDefinition);

@@ -45,9 +45,6 @@ namespace ScaryCastle
 
         #endregion
 
-        // Data
-        public static DataContainer<PropDefinition> Data { get; } = new(element => new PropDefinition(element));
-
         // Placements
         public ReadOnlyCollection<PlacementType> Placements { get; }
 

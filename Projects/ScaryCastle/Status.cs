@@ -10,7 +10,7 @@
         {
             this.Container = container;
             this.StatusType = statusType;
-            this.Definition = StatusDefinition.Data.Get(statusType.ToString());
+            this.Definition = GameData.Statuses.Get(statusType.ToString());
         }
 
         // Apply

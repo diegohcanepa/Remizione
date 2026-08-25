@@ -1,5 +1,5 @@
 {
-	"$schema": "./TraitDefinition.schema.json",
+	"$schema": "./Trait.schema.json",
 	"data": [
     {
       "name": "Luck",

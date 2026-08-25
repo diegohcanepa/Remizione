@@ -1737,11 +1737,11 @@
 #begin System/Rooms.json
 /copy:System/Rooms.json
 
-#begin System/RunDefinitions.json
-/copy:System/RunDefinitions.json
-
 #begin System/RunModifiers.json
 /copy:System/RunModifiers.json
+
+#begin System/Runs.json
+/copy:System/Runs.json
 
 #begin System/ScriptLibrary.esl
 /copy:System/ScriptLibrary.esl
@@ -1752,8 +1752,8 @@
 #begin System/Statuses.json
 /copy:System/Statuses.json
 
-#begin System/TraitDefinitions.json
-/copy:System/TraitDefinitions.json
+#begin System/Traits.json
+/copy:System/Traits.json
 
 #begin Text/en-us.lpkg
 /copy:Text/en-us.lpkg

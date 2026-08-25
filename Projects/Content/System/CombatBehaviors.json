@@ -1,4 +1,4 @@
-{
+  {
   "$schema": "./CombatBehavior.schema.json",
   "data": [
     {
@@ -9,7 +9,7 @@
           "name": "Headbutt",
           "soundStart": "WhooshA",
           "actionKind": "Proximity",
-          "requiresStamina": true,
+          "staminaCost": 1,
           "effects": [
             {
               "context": "Attack",

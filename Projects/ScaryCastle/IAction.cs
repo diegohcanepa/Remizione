@@ -41,5 +41,8 @@ namespace ScaryCastle
 
         // SoundTrigger
         Sound? SoundTrigger { get; }
+
+        // StaminaCost
+        int StaminaCost { get; }
     }
 }

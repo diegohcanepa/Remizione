@@ -114,7 +114,12 @@ namespace ScaryCastle
 
                     // EnergyLoss
                     case EffectType.EnergyLoss:
-                        targetActor?.Energy -= amount;
+                        if (targetActor != null)
+                        {
+                            targetActor.Energy -= amount;
+                            if (targetActor.IsPlayer)
+                                targetActor.ShowFlyOff(Atlases.UI.GooIcon);
+                        }
                         break;
 
                     // GoldenKey
@@ -146,7 +151,11 @@ namespace ScaryCastle
 
                     // MaxHPGain
                     case EffectType.MaxHPGain:
-                        realTarget?.MaxHP += amount;
+                        if (realTarget != null)
+                        {
+                            realTarget.MaxHP += amount;
+                            realTarget.Session.RunHUD?.Message.Show(MessageKind.ExtraHeart);
+                        }
                         break;
 
                     // MaxHPLoss
@@ -172,7 +181,12 @@ namespace ScaryCastle
 
                     // StaminaLoss
                     case EffectType.StaminaLoss:
-                        targetActor?.Stamina -= amount;
+                        if (targetActor != null)
+                        {
+                            targetActor.Stamina -= amount;
+                            if (targetActor.IsPlayer)
+                                targetActor.ShowFlyOff(Atlases.UI.StaminaIcon);
+                        }
                         break;
 
                     // Status

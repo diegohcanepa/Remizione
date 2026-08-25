@@ -1,5 +1,5 @@
 {
-  "$schema": "./RunDefinition.schema.json",
+  "$schema": "./Run.schema.json",
   "data": [
     {
       "name": "Run0",

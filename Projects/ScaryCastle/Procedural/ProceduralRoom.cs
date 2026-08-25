@@ -145,7 +145,7 @@ namespace ScaryCastle
             {
                 if (actors.Count > 0)
                 {
-                    actors[0].ItemReward = ItemDefinition.Data.Get(ItemNames.BronzeKey);
+                    actors[0].ItemReward = GameData.Items.Get(ItemNames.BronzeKey);
                     actors.RemoveAt(0);
                     pendingKeys--;
                     if (pendingKeys <= 0)
@@ -312,7 +312,7 @@ namespace ScaryCastle
             if (WalkArea == null || Session.CurrentRun == null)
                 return;
 
-            var candidates = GetCandidateDefinitions<ActorDefinition, Actor>(ActorDefinition.Data.All);
+            var candidates = GetCandidateDefinitions<ActorDefinition, Actor>(GameData.Actors.All);
 
             if (candidates.Count == 0)
                 return;
@@ -336,7 +336,7 @@ namespace ScaryCastle
                 if (table.GetValue() is not ChanceTableItem item)
                     break;
 
-                if (ActorDefinition.Data.Find(item.Name) is not ActorDefinition chosen)
+                if (GameData.Actors.Find(item.Name) is not ActorDefinition chosen)
                     continue;
 
                 int packSize = chosen.RollPackSize(Random);
@@ -431,7 +431,7 @@ namespace ScaryCastle
             if (Session.CurrentRun == null)
                 return;
 
-            var candidates = GetCandidateDefinitions<PropDefinition, Prop>(PropDefinition.Data.All);
+            var candidates = GetCandidateDefinitions<PropDefinition, Prop>(GameData.Props.All);
 
             if (candidates.Count == 0)
                 return;
@@ -486,7 +486,7 @@ namespace ScaryCastle
                     if (table.GetValue() is not ChanceTableItem item)
                         continue;
 
-                    if (PropDefinition.Data.Find(item.Name) is not PropDefinition chosen)
+                    if (GameData.Props.Find(item.Name) is not PropDefinition chosen)
                         continue;
 
                     if (Session.CurrentRun != null)
@@ -547,7 +547,7 @@ namespace ScaryCastle
                 if (freeTable.GetValue() is not ChanceTableItem item)
                     break;
 
-                if (PropDefinition.Data.Find(item.Name) is not PropDefinition chosen)
+                if (GameData.Props.Find(item.Name) is not PropDefinition chosen)
                     continue;
 
                 // Pedimos el punto al WalkArea

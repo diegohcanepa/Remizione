@@ -69,14 +69,14 @@
               "type": "boolean",
               "default": false
             },
+            "energyCost": {
+              "type": "integer"
+            },
             "isDepletable": {
               "type": "boolean"
             },
             "isStackable": {
               "type": "boolean"
-            },
-            "energyCost": {
-              "type": "integer"
             },
             "initialAmount": {
               "type": "integer",
@@ -111,8 +111,11 @@
             "projectile": {
               "$ref": "Projectile.schema.json",
               "description": "Referencia al comportamiento y descriptor del proyectil que este ítem dispara o genera."
-            },            
+            },
             "skillChance": {
+              "type": "integer"
+            },
+            "staminaCost": {
               "type": "integer"
             },
             "soundStart": {
@@ -122,14 +125,11 @@
             "soundTrigger": {
               "type": "string",
               "description": "Nombre del archivo de sonido a reproducir en el trigger de la accion."
-            },
-            "staminaCost": {
-              "type": "integer"
             }
           },
           "required": [
             "actionKind"
-          ]          
+          ]
         }
       ],
       "unevaluatedProperties": false

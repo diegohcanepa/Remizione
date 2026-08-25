@@ -12,7 +12,7 @@ namespace ScaryCastle
             // AssertItemDefinition
             public ItemDefinition AssertItemDefinition(string name)
             {
-                var def = ItemDefinition.Data.Find(name);
+                var def = GameData.Items.Find(name);
                 return def ?? throw new ScriptException(script, $"Item definition [{name}] does not exist.");
             }
         }

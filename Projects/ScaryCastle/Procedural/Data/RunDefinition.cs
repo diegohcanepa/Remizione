@@ -35,9 +35,6 @@ namespace ScaryCastle
 
         #endregion
 
-        // Data
-        public static DataContainer<RunDefinition> Data { get; } = new(element => new(element));
-
         // Floors
         public ReadOnlyCollection<FloorDescriptor> Floors { get; }
     }
