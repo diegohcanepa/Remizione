@@ -20,7 +20,7 @@ namespace ScaryCastle
         private readonly PathNode findPathEndNode = new();
         private readonly PathNode findPathStartNode = new();
         private readonly List<IHoleArea> holeAreas = [];
-        private readonly NamedObjectCollection<HoleArea> holes = [];
+        private readonly NamedCollection<HoleArea> holes = [];
         private readonly IReadOnlyPolygon inflatedPolygon;
         private readonly List<PathNode> linkedNodes = [];
         private readonly List<PathNode> walkAreaNodes = [];

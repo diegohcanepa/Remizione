@@ -57,7 +57,7 @@ namespace Engendro
         }
 
         // NotDuplicate
-        public static void NotDuplicate<T>(NamedObjectReadOnlyCollection<T> collection, string name, string paramName) where T : class, INamedObject
+        public static void NotDuplicate<T>(NamedReadOnlyCollection<T> collection, string name, string paramName) where T : class, INamedObject
         {
             if (collection.Contains(name))
                 throw new ArgumentException("Name already exists in the collection.", paramName);

@@ -1,4 +1,5 @@
-﻿using Engendro.Input;
+﻿using Engendro;
+using Engendro.Input;
 
 namespace ScaryCastle
 {
@@ -18,6 +19,12 @@ namespace ScaryCastle
         // CanScanTarget
         private bool CanScanTarget()
         {
+            if (TransitionManager.CurrentTransition.IsRunning)
+                return false;
+
+            if (TransitionManager.CurrentTransition.TransitionState == TransitionState.In)
+                return false;
+
             // Modal speech text active
             if (SpeechText.ModalInstance != null)
                 return false;

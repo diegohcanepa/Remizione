@@ -120,7 +120,7 @@ namespace Engendro
         public int RemainingMilliseconds { get; private set; }
 
         // TransitionState
-        public TransitionState TransitionState { get; private set; }
+        public TransitionState TransitionState { get; private set; } = TransitionState.Out;
 
         // TweenStyle
         public TweenStyle TweenStyle { get; set; }

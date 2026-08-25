@@ -21,7 +21,7 @@ namespace ScaryCastle
                 Ambient = true,
                 Color = new(210, 132, 100),
                 PivotOrigin = RectanglePoint.Center,
-                LightKind = LightKind.Fire,
+                LightKind = LightKind.Default,
                 Passes = 2,
                 Position = new(9),
                 Scale = new(12, 18)

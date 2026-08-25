@@ -4,20 +4,20 @@ using System.Collections.ObjectModel;
 namespace Engendro
 {
     /// <summary>
-    /// NamedObjectCollection
+    /// NamedCollection
     /// </summary>
-    public class NamedObjectCollection<T> : Collection<T> where T : class, INamedObject
+    public class NamedCollection<T> : Collection<T> where T : class, INamedObject
     {
         #region Constructors
 
         // Constructor
-        public NamedObjectCollection()
+        public NamedCollection()
             : base()
         {
         }
 
         // Constructor
-        public NamedObjectCollection(IList<T> list)
+        public NamedCollection(IList<T> list)
             : base(list)
         {
         }
@@ -35,24 +35,50 @@ namespace Engendro
             base.InsertItem(index, item);
         }
 
+        // SetItem
+        protected override void SetItem(int index, T item)
+        {
+            var existingIndex = IndexOf(item.Name);
+
+            // Si el nombre ya existe y NO es el elemento que estamos reemplazando
+            if (existingIndex != -1 && existingIndex != index)
+                CodeContract.ThrowDuplicatedNameException(nameof(item));
+
+            base.SetItem(index, item);
+        }
+
         #endregion
 
         // Contains
         public bool Contains(string name)
         {
-            return NamedObjectCollectionHelper.Contains(this, name);
+            return Find(name) != null;
         }
 
         // Find
         public T? Find(string name)
         {
-            return NamedObjectCollectionHelper.Find(this, name);
+            for (var i = 0; i < Count; i++)
+            {
+                if (this[i].Name == name)
+                    return this[i];
+            }
+
+            return default;
         }
 
         // IndexOf
         public int IndexOf(string name)
         {
-            return NamedObjectCollectionHelper.IndexOf(this, name);
+            for (var i = 0; i < Count; i++)
+            {
+                if (this[i].Name == name)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
         }
 
         // Remove

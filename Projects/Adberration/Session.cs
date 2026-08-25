@@ -33,7 +33,7 @@ namespace Adberration
         private readonly Stack<Script> busyRoomsScripts = new();
         private bool canRun;
         private readonly Dictionary<string, Entity> entities = [];
-        private readonly NamedObjectCollection<Entity> entityList = [];
+        private readonly NamedCollection<Entity> entityList = [];
         private string? musicTagRoomScope;
         private string? musicTagScriptScope;
         private long nextEntityId;
@@ -63,7 +63,7 @@ namespace Adberration
             this.ScriptProcessor = new ScriptProcessor(this);
             this.ScriptLibrary = new ScriptLibrary(this, scriptLibraryPath);
             this.ScriptEnvironment = new ScriptEnvironment(this);
-            this.Entities = new NamedObjectReadOnlyCollection<Entity>(entityList);
+            this.Entities = new NamedReadOnlyCollection<Entity>(entityList);
             this.Camera = new Camera("Room") { CullingBoxScale = new Vector2(4) };
             this.PersistenceModel = persistenceModel;
             this.SaveFileName = saveFileNumber >= 0 ? SaveFile.EncodeName(saveFileNumber) : string.Empty;
@@ -1012,7 +1012,7 @@ namespace Adberration
         }
 
         // Entities
-        public NamedObjectReadOnlyCollection<Entity> Entities { get; }
+        public NamedReadOnlyCollection<Entity> Entities { get; }
 
         // FindEntity
         public Entity? FindEntity(string name)

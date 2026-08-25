@@ -23,7 +23,7 @@ namespace ScaryCastle
             }
 
             // 2. Clasificación de definiciones cargadas
-            var all = GameData.Rooms.All;
+            var all = GameData.Rooms;
             for (int i = 0; i < all.Count; i++)
             {
                 var def = all[i];

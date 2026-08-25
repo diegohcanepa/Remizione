@@ -127,9 +127,9 @@ namespace ScaryCastle
             Realm? lootRealm = entityDef.PreferredLootRealm ?? roomDef.PreferredLootRealm;
             ItemCategory? lootCategory = entityDef.PreferredLootCategory ?? roomDef.PreferredLootCategory;
 
-            for (int i = 0; i < GameData.Items.All.Count; i++)
+            for (int i = 0; i < GameData.Items.Count; i++)
             {
-                var itemDef = GameData.Items.All[i];
+                var itemDef = GameData.Items[i];
 
                 if (!CanSpawn(itemDef, maxQ, lootRealm, lootCategory))
                     continue;

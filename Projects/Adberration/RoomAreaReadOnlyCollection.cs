@@ -7,7 +7,7 @@ namespace Adberration
     /// <summary>
     /// RoomAreaReadOnlyCollection
     /// </summary>
-    public class RoomAreaReadOnlyCollection<T> : NamedObjectReadOnlyCollection<T> where T : Room.Area
+    public class RoomAreaReadOnlyCollection<T> : NamedReadOnlyCollection<T> where T : Room.Area
     {
         // AreaReadOnlyCollection
         public RoomAreaReadOnlyCollection(IList<T> list)

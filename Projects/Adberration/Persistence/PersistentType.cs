@@ -10,14 +10,14 @@ namespace Adberration.Persistence
     /// </summary>
     public sealed class PersistentType
     {
-        private readonly NamedObjectCollection<PersistentProperty> mappedProperties = [];
+        private readonly NamedCollection<PersistentProperty> mappedProperties = [];
 
         // Constructor
         internal PersistentType([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)] Type type, PersistentTypeScope persistenceScope)
         {
             this.Type = type;
             this.PersistenceScope = persistenceScope;
-            this.MappedProperties = new NamedObjectReadOnlyCollection<PersistentProperty>(mappedProperties);
+            this.MappedProperties = new NamedReadOnlyCollection<PersistentProperty>(mappedProperties);
 
             if (!typeof(Entity).GetTypeInfo().IsAssignableFrom(type))
                 throw new ArgumentException("Type is not an entity type.", nameof(type));
@@ -42,7 +42,7 @@ namespace Adberration.Persistence
         }
 
         // MappedProperties
-        public NamedObjectReadOnlyCollection<PersistentProperty> MappedProperties { get; }
+        public NamedReadOnlyCollection<PersistentProperty> MappedProperties { get; }
 
         // PersistenceScope
         public PersistentTypeScope PersistenceScope { get; }

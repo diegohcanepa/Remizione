@@ -54,7 +54,7 @@ namespace ScaryCastle
         public CombatIntent? DefaultIntent { get; }
 
         // Intents
-        public NamedObjectReadOnlyCollection<CombatIntent> Intents { get; }
+        public NamedReadOnlyCollection<CombatIntent> Intents { get; }
 
         // Name
         public string Name { get; }

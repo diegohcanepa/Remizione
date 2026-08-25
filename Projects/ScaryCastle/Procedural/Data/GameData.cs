@@ -16,8 +16,8 @@ namespace ScaryCastle
         #region Private members
 
         // Load
-        private static DataContainer<T> Load<T>(string fileName, Func<JsonElement, T> onCreate)
-            where T : INamedObject
+        private static FrozenNamedCollection<T> Load<T>(string fileName, Func<JsonElement, T> onCreate)
+            where T : class, INamedObject
         {
             fileName = Path.Combine("Content", ContentFolder.System.ToString(), fileName);
 
@@ -28,30 +28,30 @@ namespace ScaryCastle
             if (!root.TryGetProperty("data", out JsonElement arrayElement) || arrayElement.ValueKind != JsonValueKind.Array)
                 throw new InvalidDataException();
 
-            var dict = new Dictionary<string, T>();
+            var list = new List<T>();
 
             foreach (JsonElement element in arrayElement.EnumerateArray())
             {
                 var obj = onCreate(element);
-                dict.Add(obj.Name, obj);
+                list.Add(obj);
             }
 
-            return new DataContainer<T>(dict.ToFrozenDictionary());
+            return new FrozenNamedCollection<T>(list);
         }
 
         #endregion
 
         // Actors
-        public static DataContainer<ActorDefinition> Actors { get; private set; } = null!;
+        public static FrozenNamedCollection<ActorDefinition> Actors { get; private set; } = null!;
 
         // CombatBehaviors
-        public static DataContainer<CombatBehavior> CombatBehaviors { get; private set; } = null!;
+        public static FrozenNamedCollection<CombatBehavior> CombatBehaviors { get; private set; } = null!;
 
         // IsLoaded
         public static bool IsLoaded { get; private set; }
 
         // Items
-        public static DataContainer<ItemDefinition> Items { get; private set; } = null!;
+        public static FrozenNamedCollection<ItemDefinition> Items { get; private set; } = null!;
 
         // Load
         public static void Load()
@@ -72,22 +72,22 @@ namespace ScaryCastle
         }
 
         // Props
-        public static DataContainer<PropDefinition> Props { get; private set; } = null!;
+        public static FrozenNamedCollection<PropDefinition> Props { get; private set; } = null!;
 
         // Rooms
-        public static DataContainer<RoomDefinition> Rooms { get; private set; } = null!;
+        public static FrozenNamedCollection<RoomDefinition> Rooms { get; private set; } = null!;
 
         // RunModifiers
-        public static DataContainer<RunModifierDefinition> RunModifiers { get; private set; } = null!;
+        public static FrozenNamedCollection<RunModifierDefinition> RunModifiers { get; private set; } = null!;
 
         // Runs
-        public static DataContainer<RunDefinition> Runs { get; private set; } = null!;
+        public static FrozenNamedCollection<RunDefinition> Runs { get; private set; } = null!;
 
         // Statuses
-        public static DataContainer<StatusDefinition> Statuses { get; private set; } = null!;
+        public static FrozenNamedCollection<StatusDefinition> Statuses { get; private set; } = null!;
 
         // Traits
-        public static DataContainer<TraitDefinition> Traits { get; private set; } = null!;
+        public static FrozenNamedCollection<TraitDefinition> Traits { get; private set; } = null!;
     }
 }
  

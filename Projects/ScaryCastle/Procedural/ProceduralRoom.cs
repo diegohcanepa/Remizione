@@ -312,7 +312,7 @@ namespace ScaryCastle
             if (WalkArea == null || Session.CurrentRun == null)
                 return;
 
-            var candidates = GetCandidateDefinitions<ActorDefinition, Actor>(GameData.Actors.All);
+            var candidates = GetCandidateDefinitions<ActorDefinition, Actor>(GameData.Actors);
 
             if (candidates.Count == 0)
                 return;
@@ -431,7 +431,7 @@ namespace ScaryCastle
             if (Session.CurrentRun == null)
                 return;
 
-            var candidates = GetCandidateDefinitions<PropDefinition, Prop>(GameData.Props.All);
+            var candidates = GetCandidateDefinitions<PropDefinition, Prop>(GameData.Props);
 
             if (candidates.Count == 0)
                 return;

@@ -388,12 +388,12 @@ namespace ScaryCastle
                 }
             }
 
-            foreach (var actorDef in GameData.Actors.All)
+            foreach (var actorDef in GameData.Actors)
             {
                 actorDef.AssertScriptDeclaration(this);
             }
 
-            foreach (var propDef in GameData.Props.All)
+            foreach (var propDef in GameData.Props)
             {
                 propDef.AssertScriptDeclaration(this);
             }
@@ -561,7 +561,7 @@ namespace ScaryCastle
         public GameThing? DangerousTarget { get; set; }
 
         // DeclaredThings
-        public NamedObjectReadOnlyCollection<GameThing> DeclaredThings { get; }
+        public NamedReadOnlyCollection<GameThing> DeclaredThings { get; }
 
         // DialogOptionId
         [ScriptProperty]

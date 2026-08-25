@@ -10,6 +10,7 @@ namespace ScaryCastle.Effects
         private bool isInitialized;
         private const string param_chromaticAberration = "ChromaticAberration";
         private const string param_curvature = "Curvature";
+        private const string param_scanlineCount = "ScanlineCount";
         private const string param_scanlineIntensity = "ScanlineIntensity";
 
         // Constructor
@@ -42,6 +43,12 @@ namespace ScaryCastle.Effects
         // Reset
         public void Reset()
         {
+            Effect.Parameters[param_curvature].SetValue(0.04f);
+            Effect.Parameters[param_scanlineCount].SetValue(100);
+            Effect.Parameters[param_scanlineIntensity].SetValue(0.09f);
+            Effect.Parameters[param_chromaticAberration].SetValue(0f);
+
+            /*
             if (MonitorStyle)
             {
                 Effect.Parameters[param_curvature].SetValue(0);
@@ -58,6 +65,7 @@ namespace ScaryCastle.Effects
                 Effect.Parameters[param_scanlineIntensity].SetValue(0.03f);
                 Effect.Parameters[param_chromaticAberration].SetValue(0.0004f);
             }
+            */
 
             isInitialized = true;
         }

@@ -296,7 +296,6 @@ Bla bla bla</String>
   <String Key="Prop.ATM">Cajero automático</String>
   <String Key="Prop.Bag">Bolsa</String>
   <String Key="Prop.Carrusel">Calesita</String>
-  <String Key="Prop.ChambersOfTerror">Cámaras del Terror</String>
   <String Key="Prop.Coin">Moneda</String>
   <String Key="Prop.Cross">Cruz</String>
   <String Key="Prop.CrucifiedMan">Hombre crucificado</String>
@@ -309,6 +308,7 @@ Bla bla bla</String>
   <String Key="Prop.GhostTrain">Tren fantasma</String>
   <String Key="Prop.Goo">Baba</String>
   <String Key="Prop.HomeOfTomorrow">La Casa del Mañana</String>
+  <String Key="Prop.IronGate">Puerta de hierro</String>
   <String Key="Prop.Lever">Palanca</String>
   <String Key="Prop.OwlEmblem">Emblema de búho</String>
   <String Key="Prop.PortableToilet">Pequeño purgatorio</String>

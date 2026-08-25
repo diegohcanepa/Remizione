@@ -48,7 +48,7 @@ namespace ScaryCastle
             : base(session, name)
         {
             this.Session = session;
-            this.Lights = new NamedObjectReadOnlyCollection<Light>(lights);
+            this.Lights = new NamedReadOnlyCollection<Light>(lights);
             this.TriggerAreas = new RoomAreaReadOnlyCollection<TriggerArea>(triggerAreas);
             this.WalkAreas = new RoomAreaReadOnlyCollection<WalkArea>(walkAreas);
             this.Walls = new(walls);
@@ -544,7 +544,7 @@ namespace ScaryCastle
         public Color LightMapColor { get; set; } = new Color(20, 20, 25);
 
         // Lights
-        public NamedObjectReadOnlyCollection<Light> Lights { get; }
+        public NamedReadOnlyCollection<Light> Lights { get; }
 
         // MonitorStyle
         public bool MonitorStyle { get; init; }

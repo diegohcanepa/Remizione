@@ -8,14 +8,14 @@ namespace Engendro
     /// </summary>
     public class AnimatedSprite : Sprite
     {
-        private readonly NamedObjectCollection<SpriteAnimation> animations = [];
+        private readonly NamedCollection<SpriteAnimation> animations = [];
 
         #region Constructors
 
         // Constructor
         public AnimatedSprite()
         {
-            this.Animations = new NamedObjectReadOnlyCollection<SpriteAnimation>(animations);
+            this.Animations = new NamedReadOnlyCollection<SpriteAnimation>(animations);
             this.Player = new SpriteAnimationPlayer(this);
         }
 
@@ -119,7 +119,7 @@ namespace Engendro
         }
 
         // Animations
-        public NamedObjectReadOnlyCollection<SpriteAnimation> Animations { get; }
+        public NamedReadOnlyCollection<SpriteAnimation> Animations { get; }
 
         // Atlas
         public Atlas? Atlas

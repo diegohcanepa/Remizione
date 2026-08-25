@@ -21,7 +21,7 @@ namespace Engendro.Audio
         private int indexOfLastNamePopped = -1;
         private readonly List<SoundInstance?> instancePool;
         private static readonly Dictionary<string, Sound> instancesByName = [];
-        private static readonly NamedObjectCollection<Sound> instanceList = [];
+        private static readonly NamedCollection<Sound> instanceList = [];
         private readonly Dictionary<string, SoundEffect?> soundEffects = [];
 
         #endregion
@@ -494,7 +494,7 @@ namespace Engendro.Audio
         }
 
         // Sounds
-        public static NamedObjectReadOnlyCollection<Sound> Sounds { get; } = new(instanceList);
+        public static NamedReadOnlyCollection<Sound> Sounds { get; } = new(instanceList);
 
         // Stop
         public void Stop()
