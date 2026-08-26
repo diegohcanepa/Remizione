@@ -55,7 +55,7 @@ namespace ScaryCastle
             internal static Vector4 Highlight { get; } = (Color.WhiteSmoke * .6f).ToVector4();
 
             // SubText
-            internal static Color SubText { get; } = Text.Terra;
+            internal static Color SubText { get; } = Text.TerraLight;
 
             // Tooltip
             internal static Color Tooltip { get; } = new(247, 232, 213);

@@ -29,7 +29,6 @@ namespace ScaryCastle
         private bool isHotspotDirty = true;
         private Vector2 knockbackVelocity;
         private const float KnockbackFriction = 0.90f; // Ajustá este valor (0.8 - 0.95)
-        private bool lootPrepared;
         private PathNode[]? pathNodes;
         private int renderLayerDepth;
         private readonly ShadowSpot shadowSpot;
@@ -222,6 +221,17 @@ namespace ScaryCastle
 
         #region Protected members
 
+        // AssignLoot
+        protected void AssignLoot()
+        {
+            if (Session.CurrentRun == null)
+                return;
+
+            ItemReward = Session.CurrentRun.LootGenerator.RollForLoot(this);
+            if (ItemReward == null)
+                CoinReward = Session.CurrentRun.LootGenerator.RollForCoin(this);
+        }
+
         // CanCheckCollisions
         protected virtual bool CanCheckCollisions()
         {
@@ -234,13 +244,12 @@ namespace ScaryCastle
             if (Session.Room is not ProceduralRoom room)
                 return;
 
-            if (ItemReward == null)
-                PrepareLoot();
+            if (Definition?.DropTrigger == LootDropTrigger.OnImpact)
+                AssignLoot();
 
             if (ItemReward != null)
             {
                 Prop? loot;
-                //if (AotTypeRegistry.Find(ItemReward.Name) is AotTypeEntry entry && typeof(PickableLoot).IsAssignableFrom(entry.Type))
                 if (ItemReward.Behavior is ItemBehavior.Pocket or ItemBehavior.InstantEffect)
                 {
                     loot = room.CreateThingClone<Prop>(ItemReward.Name);
@@ -376,6 +385,9 @@ namespace ScaryCastle
             isCollisionDirty = true;
             InvalidateCollisionPolygons();
             InvalidateWalkArea();
+
+            if (Definition?.DropTrigger == LootDropTrigger.OnDeath)
+                AssignLoot();
         }
 
         // OnTakeDamage
@@ -462,19 +474,6 @@ namespace ScaryCastle
         protected override void OnUpdateEmittingSound(SoundInstance instance, float masterVolume)
         {
             Utils.ApplySoundEmitter(this, instance, masterVolume);
-        }
-
-        // PrepareLoot
-        protected void PrepareLoot()
-        {
-            if (Session.CurrentRun == null || ItemReward != null)
-                return;
-
-            ItemReward = Session.CurrentRun.LootGenerator.RollForLoot(this);
-            if (ItemReward == null)
-                CoinReward = Session.CurrentRun.LootGenerator.RollForCoin(this);
-
-            lootPrepared = true;
         }
 
         #endregion

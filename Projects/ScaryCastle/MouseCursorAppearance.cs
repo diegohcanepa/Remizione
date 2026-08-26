@@ -140,6 +140,8 @@ namespace ScaryCastle
         // SyncText
         private static void SyncText(GameThing target)
         {
+            const string surpriseLabel = "[?]";
+
             MouseCursor.Tooltip = target.DisplayName;
 
             MouseCursor.SubTextColor = ColorPalette.MouseCursor.SubText;
@@ -154,7 +156,7 @@ namespace ScaryCastle
             }
             else if (target.Definition?.DropTrigger == LootDropTrigger.OnImpact)
             {
-                MouseCursor.SubText = "???";
+                MouseCursor.SubText = surpriseLabel;
             }
             else
             {

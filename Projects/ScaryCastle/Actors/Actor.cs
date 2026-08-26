@@ -478,9 +478,6 @@ namespace ScaryCastle
             OpacityFactor = 1;
             shakeTween.RandomizeTime();
             Stand();
-
-            if (Definition?.DropTrigger == LootDropTrigger.OnDeath)
-                PrepareLoot();
         }
 
         // OnMoveToCompleted
