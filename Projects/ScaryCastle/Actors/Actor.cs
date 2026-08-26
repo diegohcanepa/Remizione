@@ -12,7 +12,7 @@ namespace ScaryCastle
     /// <summary>
     /// Actor
     /// </summary>
-    public class Actor : GameThing, IInputHandler, IThingDefinition
+    public class Actor : GameThing, IInputHandler
     {
         #region Private fields
 
@@ -74,12 +74,6 @@ namespace ScaryCastle
 
             ResetRemainingTurns();
         }
-
-        #endregion
-
-        #region IThingDefinition
-
-        ThingDefinition? IThingDefinition.Definition => this.Definition;
 
         #endregion
 
@@ -484,7 +478,9 @@ namespace ScaryCastle
             OpacityFactor = 1;
             shakeTween.RandomizeTime();
             Stand();
-            PrepareLoot();
+
+            if (Definition?.DropTrigger == LootDropTrigger.OnDeath)
+                PrepareLoot();
         }
 
         // OnMoveToCompleted
@@ -740,7 +736,7 @@ namespace ScaryCastle
         public CombatDecisionType CombatDecisionType => CombatDecision?.Type ?? CombatDecisionType.None;
 
         // Definition
-        public ActorDefinition? Definition { get; }
+        public override ActorDefinition? Definition { get; }
 
         // DiscardActiveThrowable
         [ScriptMethod]

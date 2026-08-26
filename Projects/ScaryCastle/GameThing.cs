@@ -274,6 +274,9 @@ namespace ScaryCastle
                     }
                 }
             }
+
+            ItemReward = null;
+            CoinReward = 0;
         }
 
         // GetDisplayName
@@ -464,7 +467,7 @@ namespace ScaryCastle
         // PrepareLoot
         protected void PrepareLoot()
         {
-            if (Session.CurrentRun == null || lootPrepared || ItemReward != null)
+            if (Session.CurrentRun == null || ItemReward != null)
                 return;
 
             ItemReward = Session.CurrentRun.LootGenerator.RollForLoot(this);
@@ -600,6 +603,9 @@ namespace ScaryCastle
         // CustomDropName
         [ScriptProperty]
         public string CustomDropName { get; set; } = string.Empty;
+
+        // Definition
+        public virtual ThingDefinition? Definition { get; }
 
         // Die
         [ScriptMethod]
@@ -1050,6 +1056,9 @@ namespace ScaryCastle
         // IsKnockbackInProgress
         public bool IsKnockbackInProgress => knockbackVelocity != Vector2.Zero;
 
+        // LootDisplayName
+        public string LootDisplayName { get; private set; } = string.Empty;
+
         // MaxHP
         [ScriptProperty]
         public int MaxHP
@@ -1151,18 +1160,7 @@ namespace ScaryCastle
         } = new();
 
         // ItemReward
-        public ItemDefinition? ItemReward
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    SyncHPMeter();
-                }
-            }
-        }
+        public ItemDefinition? ItemReward { get; set; }
 
         // Session
         public new GameSession Session { get; }

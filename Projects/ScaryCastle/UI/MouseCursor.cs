@@ -15,7 +15,6 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private static readonly TextSprite altSprite = new(Fonts.CommonOutline) { Color = ColorPalette.Text.Terra, Scale = ScaleInfo.Text.Medium };
         private static readonly ColorTween customImageColorTween = ColorTween.Create(TweenStyle.CubicInOut, Color.White, new(210, 210, 210), 500, -1);
         private static readonly AtlasImage?[] cursorImages;
         private static readonly Sprite cursorSprite;
@@ -23,6 +22,7 @@ namespace ScaryCastle
         private static OutlineEffect? effect;
         private static readonly Vector2Tween scaleTween = new();
         private static readonly FloatTween shakeTween = new();
+        private static readonly TextSprite subTextSprite = new(Fonts.CommonOutline) { Color = ColorPalette.Text.Terra, Scale = ScaleInfo.Text.Medium };
         private static readonly TextSprite tooltipSprite;
 
         #endregion
@@ -78,29 +78,29 @@ namespace ScaryCastle
             tooltipSprite.PivotOrigin = RectanglePoint.Left;
             tooltipSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.Right, -offset.X, offset.Y);
 
-            if (!altSprite.IsEmpty)
+            if (!subTextSprite.IsEmpty)
             {
-                altSprite.PivotOrigin = RectanglePoint.LeftTop;
-                altSprite.Position = tooltipSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom);
+                subTextSprite.PivotOrigin = RectanglePoint.LeftTop;
+                subTextSprite.Position = tooltipSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -1);
             }
 
             if (!tooltipSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox) ||
-                (!altSprite.IsEmpty && !altSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox)))
+                (!subTextSprite.IsEmpty && !subTextSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox)))
             {
                 tooltipSprite.PivotOrigin = RectanglePoint.Right;
                 tooltipSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.Left, offset.X, offset.Y);
 
-                if (!altSprite.IsEmpty)
+                if (!subTextSprite.IsEmpty)
                 {
-                    altSprite.PivotOrigin = RectanglePoint.RightTop;
-                    altSprite.Position = tooltipSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom);
+                    subTextSprite.PivotOrigin = RectanglePoint.RightTop;
+                    subTextSprite.Position = tooltipSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -1);
                 }
             }
 
             if (tooltipSprite.BoundingBox.Bottom >= Screen.NativeHeight)
             {
                 tooltipSprite.Y -= 10;
-                altSprite.Y -= 10;
+                subTextSprite.Y -= 10;
             }
         }
 
@@ -113,13 +113,6 @@ namespace ScaryCastle
         }
 
         #endregion
-
-        // AtlText
-        public static string? AtlText
-        {
-            get => altSprite.Text;
-            set => altSprite.Text = value;
-        }
 
         // Color
         public static Color Color
@@ -164,7 +157,7 @@ namespace ScaryCastle
                 {
                     EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera, SamplerState.PointClamp);
                     tooltipSprite.Draw(gameTime);
-                    altSprite.Draw(gameTime);
+                    subTextSprite.Draw(gameTime);
                     EngendroGame.Instance.SpriteBatch.End();
                 }
             }
@@ -206,11 +199,14 @@ namespace ScaryCastle
         // Reset
         public static void Reset()
         {
+            tooltipSprite.Text = null;
+            subTextSprite.Text = null;
             cursorSprite.Color = Color.White;
             cursorSprite.Scale = defaultScale;
             CustomImage = null;
             HightlightColor = null;
-            tooltipSprite.Color = ColorPalette.Text.MouseCursor;
+            tooltipSprite.Color = ColorPalette.MouseCursor.Tooltip;
+            subTextSprite.Color = ColorPalette.MouseCursor.SubText;
             Icon = MouseCursorIcon.Cross;
         }
 
@@ -218,6 +214,20 @@ namespace ScaryCastle
         public static void Shake()
         {
             shakeTween.Start(TweenStyle.CubicInOut, 0, 1, 50, 4);
+        }
+
+        // SubText
+        public static string? SubText
+        {
+            get => subTextSprite.Text;
+            set => subTextSprite.Text = value;
+        }
+
+        // SubTextColor
+        public static Color SubTextColor
+        {
+            get => subTextSprite.Color;
+            set => subTextSprite.Color = value;
         }
 
         // Tooltip

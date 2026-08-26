@@ -9,7 +9,7 @@ namespace ScaryCastle
     /// <summary>
     /// Prop
     /// </summary>
-    public class Prop : GameThing, IThingDefinition
+    public class Prop : GameThing
     {
         #region Private fields
 
@@ -37,12 +37,6 @@ namespace ScaryCastle
                 PivotOrigin = RectanglePoint.Bottom,
             };
         }
-
-        #endregion
-
-        #region IThingDefinition
-
-        ThingDefinition? IThingDefinition.Definition => this.Definition;
 
         #endregion
 
@@ -176,7 +170,7 @@ namespace ScaryCastle
         }
 
         // Definition
-        public PropDefinition? Definition { get; }
+        public override PropDefinition? Definition { get; }
 
         // GetThrowableImageName
         public virtual string GetThrowableImageName()

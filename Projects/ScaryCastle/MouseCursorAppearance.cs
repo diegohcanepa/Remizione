@@ -68,7 +68,7 @@ namespace ScaryCastle
             {
                 if (context.Target != null)
                 {
-                    SyncMouseCursor(context.Target.Verb);
+                    SyncIcon(context.Target.Verb);
                 }
                 else
                 {
@@ -77,8 +77,8 @@ namespace ScaryCastle
             }
         }
 
-        // SyncMouseCursor
-        private static void SyncMouseCursor(Verb verb)
+        // SyncIcon
+        private static void SyncIcon(Verb verb)
         {
             switch (verb)
             {
@@ -137,6 +137,31 @@ namespace ScaryCastle
             }
         }
 
+        // SyncText
+        private static void SyncText(GameThing target)
+        {
+            MouseCursor.Tooltip = target.DisplayName;
+
+            MouseCursor.SubTextColor = ColorPalette.MouseCursor.SubText;
+
+            if (target.ItemReward != null)
+            {
+                MouseCursor.SubText = Localization.GetItemName(target.ItemReward);
+            }
+            else if (target.CoinReward > 0)
+            {
+                MouseCursor.SubText = Localization.GetItemName(GameData.Items.Get(ItemNames.Coin));
+            }
+            else if (target.Definition?.DropTrigger == LootDropTrigger.OnImpact)
+            {
+                MouseCursor.SubText = "???";
+            }
+            else
+            {
+                MouseCursor.SubText = null;
+            }
+        }
+
         #endregion
 
         // Refresh
@@ -144,6 +169,8 @@ namespace ScaryCastle
         {
             MouseCursor.Reset();
             RefreshCursor(context);
+            if (context.Target != null)
+                SyncText(context.Target);
         }
     }
 }

@@ -154,15 +154,15 @@ namespace ScaryCastle
         // RollForCoin
         public int RollForCoin(GameThing thing)
         {
-            if ((thing as IThingDefinition)?.Definition is not { } def)
+            if (thing.Definition == null)
                 return 0;
 
             // 1. Filtro rápido de DropMode
-            if (def.DropMode is LootDropMode.None or LootDropMode.SackOnly or LootDropMode.Custom)
+            if (thing.Definition.DropMode is LootDropMode.None or LootDropMode.SackOnly or LootDropMode.Custom)
                 return 0;
 
             // 2. Procesa la tirada y cantidad de monedas en el método dedicado
-            return RollCoinAmount(def);
+            return RollCoinAmount(thing.Definition);
         }
 
         // RollForLoot
@@ -171,23 +171,23 @@ namespace ScaryCastle
             if (run.Session.Room is not ProceduralRoom room)
                 return null;
 
-            if ((thing as IThingDefinition)?.Definition is not { } def)
+            if (thing.Definition == null)
                 return null;
 
             // 1. Check drop mode
-            if (def.DropMode is LootDropMode.None or LootDropMode.CoinsOnly)
+            if (thing.Definition.DropMode is LootDropMode.None or LootDropMode.CoinsOnly)
                 return null;
 
             // 2. Check for custom drop
-            if (def.DropMode == LootDropMode.Custom && !string.IsNullOrEmpty(thing.CustomDropName))
+            if (thing.Definition.DropMode == LootDropMode.Custom && !string.IsNullOrEmpty(thing.CustomDropName))
                 return GameData.Items.Find(thing.CustomDropName);
 
             // 3. Will drop?
-            if (!CheckDropSuccess(def))
+            if (!CheckDropSuccess(thing.Definition))
                 return null;
 
             // 4. Return loot
-            return SelectLootItem(room.RoomNode, def);
+            return SelectLootItem(room.RoomNode, thing.Definition);
         }
     }
 }

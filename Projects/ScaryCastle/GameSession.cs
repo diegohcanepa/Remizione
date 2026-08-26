@@ -258,7 +258,8 @@ namespace ScaryCastle
             Game.SpriteBatch.Draw(Game.RenderTargets.PreviousTarget, Vector2.Zero, Color.White);
             Game.SpriteBatch.End();
 
-            RunHUD?.Draw(gameTime);
+            if (Player != null && !Player.IsDead)
+                RunHUD?.Draw(gameTime);
 
             SpeechText.DrawSpeechTexts(gameTime);
 
@@ -379,7 +380,7 @@ namespace ScaryCastle
                 if (entity is not GameThing thing)
                     continue;
 
-                if (thing is not IThingDefinition)
+                if (thing.Definition == null)
                     continue;
 
                 if (thing.InstanceKind == EntityInstanceKind.Declared)
