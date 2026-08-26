@@ -484,6 +484,7 @@ namespace ScaryCastle
             OpacityFactor = 1;
             shakeTween.RandomizeTime();
             Stand();
+            PrepareLoot();
         }
 
         // OnMoveToCompleted
@@ -948,7 +949,7 @@ namespace ScaryCastle
                     var prevValue = field;
 
                     field = value;
-                    
+
                     if (Energy == 0 && prevValue == 0)
                     {
                         Energy = value;

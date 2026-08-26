@@ -15,7 +15,6 @@ namespace ScaryCastle
             BronzeKeyIcon = this[nameof(BronzeKeyIcon)];
             CheckMark = this[nameof(CheckMark)];
             CloseWindowButton = this[nameof(CloseWindowButton)];
-            Coin = this[nameof(Coin)];
             CoinIcon = this[nameof(CoinIcon)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
@@ -65,9 +64,6 @@ namespace ScaryCastle
 
         // CheckMark
         public AtlasImage CheckMark { get; }
-
-        // Coin
-        public AtlasImage Coin { get; }
 
         // CoinIcon
         public AtlasImage CoinIcon { get; }

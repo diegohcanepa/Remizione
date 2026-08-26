@@ -1,7 +1,7 @@
 ﻿using Engendro;
+using Engendro.Collections;
 using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
@@ -11,7 +11,7 @@ namespace ScaryCastle
     /// <summary>
     /// GameData
     /// </summary>
-    internal static class GameData
+    public static class GameData
     {
         #region Private members
 
@@ -90,4 +90,3 @@ namespace ScaryCastle
         public static FrozenNamedCollection<TraitDefinition> Traits { get; private set; } = null!;
     }
 }
- 

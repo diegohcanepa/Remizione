@@ -87,6 +87,23 @@ namespace ScaryCastle
                 HeldItem = null;
 
             MouseCursor.Tooltip = Target?.DisplayName;
+
+            if (Target != null)
+            {
+                if (Target.ItemReward != null)
+                    MouseCursor.AtlText = Localization.GetItemName(Target.ItemReward);
+
+                else if (Target.CoinReward > 0)
+                    MouseCursor.AtlText = Localization.GetItemName(GameData.Items.Get(ItemNames.Coin));
+
+                else
+                    MouseCursor.AtlText = null;
+            }
+            else
+            {
+                MouseCursor.AtlText = null;
+            }
+
             MouseCursorAppearance.Refresh(this);
         }
 

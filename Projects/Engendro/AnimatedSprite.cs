@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Engendro.Collections;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
 namespace Engendro

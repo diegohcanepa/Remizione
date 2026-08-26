@@ -25,9 +25,6 @@ namespace ScaryCastle
         // CreditLine
         internal static Color CreditLine { get; } = new(230, 230, 212);
 
-        // DefaultDarknessLight
-        internal static Color DefaultDarknessLight { get; } = Color.WhiteSmoke * .75f;
-
         // HighlightedText
         internal static Color HighlightedText { get; } = new(215, 215, 170);
 
@@ -38,9 +35,6 @@ namespace ScaryCastle
             internal static Color Diff { get; } = Text.Orange;
             internal static Color Fore { get; } = new(168, 45, 45);
         }
-
-        // HUDMessage
-        internal static Color HUDMessage { get; } = new(227, 213, 200);
 
         // MenuItemTextActive
         internal static Color MenuItemTextActive { get; } = new(240, 240, 240);
@@ -93,7 +87,6 @@ namespace ScaryCastle
 
         // Text
         internal static class Text
-
         {
             internal static Color Dark { get; } = new(163, 122, 123);
             internal static Color Default { get; } = new(163, 167, 194);
@@ -124,9 +117,6 @@ namespace ScaryCastle
 
         // TextWhite
         internal static Color TextWhite { get; } = new(223, 224, 232);
-
-        // TextLastSave
-        internal static Color TextLastSave { get; } = new(71, 115, 80);
 
         // TextStandardMenuTitle
         internal static Color TextStandardMenuTitle { get; } = new(227, 213, 200);

@@ -15,6 +15,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
+        private static readonly TextSprite altSprite = new(Fonts.CommonOutline) { Color = ColorPalette.Text.Terra, Scale = ScaleInfo.Text.Medium };
         private static readonly ColorTween customImageColorTween = ColorTween.Create(TweenStyle.CubicInOut, Color.White, new(210, 210, 210), 500, -1);
         private static readonly AtlasImage?[] cursorImages;
         private static readonly Sprite cursorSprite;
@@ -77,14 +78,30 @@ namespace ScaryCastle
             tooltipSprite.PivotOrigin = RectanglePoint.Left;
             tooltipSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.Right, -offset.X, offset.Y);
 
-            if (!tooltipSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox))
+            if (!altSprite.IsEmpty)
+            {
+                altSprite.PivotOrigin = RectanglePoint.LeftTop;
+                altSprite.Position = tooltipSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom);
+            }
+
+            if (!tooltipSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox) ||
+                (!altSprite.IsEmpty && !altSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox)))
             {
                 tooltipSprite.PivotOrigin = RectanglePoint.Right;
                 tooltipSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.Left, offset.X, offset.Y);
+
+                if (!altSprite.IsEmpty)
+                {
+                    altSprite.PivotOrigin = RectanglePoint.RightTop;
+                    altSprite.Position = tooltipSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom);
+                }
             }
 
             if (tooltipSprite.BoundingBox.Bottom >= Screen.NativeHeight)
+            {
                 tooltipSprite.Y -= 10;
+                altSprite.Y -= 10;
+            }
         }
 
         // InvalidateCursorImage
@@ -96,6 +113,13 @@ namespace ScaryCastle
         }
 
         #endregion
+
+        // AtlText
+        public static string? AtlText
+        {
+            get => altSprite.Text;
+            set => altSprite.Text = value;
+        }
 
         // Color
         public static Color Color
@@ -140,6 +164,7 @@ namespace ScaryCastle
                 {
                     EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera, SamplerState.PointClamp);
                     tooltipSprite.Draw(gameTime);
+                    altSprite.Draw(gameTime);
                     EngendroGame.Instance.SpriteBatch.End();
                 }
             }
@@ -193,7 +218,6 @@ namespace ScaryCastle
         public static void Shake()
         {
             shakeTween.Start(TweenStyle.CubicInOut, 0, 1, 50, 4);
-            Sound.Play(SoundNames.Error);
         }
 
         // Tooltip

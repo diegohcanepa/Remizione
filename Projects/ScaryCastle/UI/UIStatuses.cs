@@ -91,7 +91,7 @@ namespace ScaryCastle
             }
 
             activeMeters.Clear();
-            
+
             if (Actor == null)
                 return;
 

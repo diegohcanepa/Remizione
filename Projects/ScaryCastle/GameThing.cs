@@ -29,6 +29,7 @@ namespace ScaryCastle
         private bool isHotspotDirty = true;
         private Vector2 knockbackVelocity;
         private const float KnockbackFriction = 0.90f; // Ajustá este valor (0.8 - 0.95)
+        private bool lootPrepared;
         private PathNode[]? pathNodes;
         private int renderLayerDepth;
         private readonly ShadowSpot shadowSpot;
@@ -256,7 +257,6 @@ namespace ScaryCastle
                     room.Children.Add(loot);
                 }
             }
-
             else if (CoinReward > 0)
             {
                 for (int i = 0; i < CoinReward; i++)
@@ -464,12 +464,14 @@ namespace ScaryCastle
         // PrepareLoot
         protected void PrepareLoot()
         {
-            if (Session.CurrentRun == null)
+            if (Session.CurrentRun == null || lootPrepared || ItemReward != null)
                 return;
 
             ItemReward = Session.CurrentRun.LootGenerator.RollForLoot(this);
             if (ItemReward == null)
                 CoinReward = Session.CurrentRun.LootGenerator.RollForCoin(this);
+
+            lootPrepared = true;
         }
 
         #endregion
@@ -524,7 +526,18 @@ namespace ScaryCastle
         }
 
         // CoinReward
-        public int CoinReward { get; set; }
+        public int CoinReward
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    SyncHPMeter();
+                }
+            }
+        }
 
         // Collider
         [ScriptProperty]
@@ -1138,7 +1151,18 @@ namespace ScaryCastle
         } = new();
 
         // ItemReward
-        public ItemDefinition? ItemReward { get; set; }
+        public ItemDefinition? ItemReward
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    SyncHPMeter();
+                }
+            }
+        }
 
         // Session
         public new GameSession Session { get; }
@@ -1166,11 +1190,11 @@ namespace ScaryCastle
         }
 
         // ShowFlyOff
-        public FlyOff? ShowFlyOff(AtlasImage image, float scale = .75f)
+        public FlyOff? ShowFlyOff(AtlasImage image)
         {
             if (Session.ObjectPools.FlyOffs.Get() is FlyOff flyOff)
             {
-                flyOff.ShowIcon(GetOverheadPosition(), image, scale);
+                flyOff.ShowIcon(GetOverheadPosition(), image);
                 return flyOff;
             }
 

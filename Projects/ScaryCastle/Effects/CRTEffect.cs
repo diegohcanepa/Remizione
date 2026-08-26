@@ -45,7 +45,7 @@ namespace ScaryCastle.Effects
         {
             Effect.Parameters[param_curvature].SetValue(0.04f);
             Effect.Parameters[param_scanlineCount].SetValue(100);
-            Effect.Parameters[param_scanlineIntensity].SetValue(0.09f);
+            Effect.Parameters[param_scanlineIntensity].SetValue(0.07f);
             Effect.Parameters[param_chromaticAberration].SetValue(0f);
 
             /*

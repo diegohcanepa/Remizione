@@ -53,6 +53,7 @@
   <String Key="Item.BronzeKey.Name">Llave de bronce</String>
   <String Key="Item.Chili.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</String>
   <String Key="Item.Chili.Name">Chile picante</String>
+  <String Key="Item.Coin.Name">Moneda</String>
   <String Key="Item.Duck.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Duck.Name">Patito de hule</String>
   <String Key="Item.Firecracker.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>

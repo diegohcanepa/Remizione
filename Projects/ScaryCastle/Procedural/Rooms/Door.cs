@@ -180,9 +180,6 @@ namespace ScaryCastle
         [ScriptProperty]
         public DoorDirection DoorDirection { get; }
 
-        // IsEmittingLight
-        public override bool IsEmittingLight => Room != null && Room.AmbientLights && base.IsEmittingLight;
-
         // Prepare
         [ScriptMethod]
         public void Prepare()
@@ -204,19 +201,6 @@ namespace ScaryCastle
                 else if (DoorDirection == DoorDirection.Down && proceduralRoom.RoomNode.Down != null)
                 {
                     assetPrefix = GetVisualAssetName(proceduralRoom.RoomNode, proceduralRoom.RoomNode.Down, DoorDirection);
-
-                    //if (!proceduralRoom.HasAmbientLightSources)
-                    {
-                        this.AttachedLight = new("Light")
-                        {
-                            Color = new(240, 181, 65),
-                            LightKind = LightKind.Default,
-                            PivotOrigin = RectanglePoint.Center,
-                            Scale = new(3, 4)
-                        };
-
-                        AttachedLightPosition = new(16, 20);
-                    }
                 }
                 else if (DoorDirection == DoorDirection.Left && proceduralRoom.RoomNode.Left != null)
                 {

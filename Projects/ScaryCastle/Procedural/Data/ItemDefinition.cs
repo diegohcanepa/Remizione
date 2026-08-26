@@ -100,6 +100,9 @@ namespace ScaryCastle
                 _ => 5
             };
 
+            DisplayNameKey = $"Item.{Name}.Name";
+            DescriptionKey = $"Item.{Name}.Description";
+
             IsPassive = LightModifier != 0 || LuckModifier != 0;
 
             if (Behavior != ItemBehavior.Sack)
@@ -129,8 +132,14 @@ namespace ScaryCastle
         // Category
         public ItemCategory Category { get; }
 
+        // DescriptionKey
+        public string DescriptionKey { get; }
+
         // DeselectOnUse
         public bool DeselectOnUse { get; }
+
+        // DisplayNameKey
+        public string DisplayNameKey { get; }
 
         // EnergyCost
         public int EnergyCost { get; }

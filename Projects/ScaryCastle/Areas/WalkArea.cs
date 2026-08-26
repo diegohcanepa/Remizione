@@ -1,6 +1,7 @@
 ﻿using Adberration;
 using Adberration.Scripting;
 using Engendro;
+using Engendro.Collections;
 using Engendro.PathFinding;
 using Microsoft.Xna.Framework;
 using System;

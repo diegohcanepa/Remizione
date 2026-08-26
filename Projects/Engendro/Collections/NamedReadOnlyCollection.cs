@@ -1,8 +1,7 @@
-﻿using System.Collections.Frozen;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Engendro
+namespace Engendro.Collections
 {
     /// <summary>
     /// NamedReadOnlyCollection

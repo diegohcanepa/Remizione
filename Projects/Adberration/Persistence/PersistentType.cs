@@ -1,4 +1,4 @@
-﻿using Engendro;
+﻿using Engendro.Collections;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;

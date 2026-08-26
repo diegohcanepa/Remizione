@@ -264,7 +264,6 @@
                 <false/>
             </struct>
             <key type="filename">Inventory-assets/InventoryItemSlot.png</key>
-            <key type="filename">Items-assets/GoldenKey.png</key>
             <key type="filename">Items-assets/GooBottle.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -328,7 +327,6 @@
             <key type="filename">Items-assets/Apple.png</key>
             <key type="filename">Items-assets/Battery.png</key>
             <key type="filename">Items-assets/BittenApple.png</key>
-            <key type="filename">Items-assets/BronzeKey.png</key>
             <key type="filename">Items-assets/Chili.png</key>
             <key type="filename">Items-assets/Duck.png</key>
             <key type="filename">Items-assets/Lockpick.png</key>
@@ -351,7 +349,6 @@
             </struct>
             <key type="filename">Items-assets/AppleOn.png</key>
             <key type="filename">Items-assets/Burger.png</key>
-            <key type="filename">Items-assets/Coin.png</key>
             <key type="filename">Items-assets/SodaCan.png</key>
             <key type="filename">UIIcons-assets/Dice.png</key>
             <key type="filename">XboxControls-assets/XboxA.png</key>

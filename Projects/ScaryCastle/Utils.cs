@@ -3,8 +3,6 @@ using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
-using System.IO;
-using System.Text.Json;
 
 namespace ScaryCastle
 {
