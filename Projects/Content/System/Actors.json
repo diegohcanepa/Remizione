@@ -33,6 +33,11 @@
       "maxPerRun": 1
     },
     {
+      "name": "Sister",
+      "difficulty": "Normal",
+      "isUnique": true
+    },    
+    {
       "name": "Skeleton"
     },
     {

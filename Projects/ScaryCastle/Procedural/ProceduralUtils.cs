@@ -27,22 +27,22 @@ namespace ScaryCastle.Procedural
             };
 
             // 2. Modificador por jerarquía de combate (El filtro salvaje)
-            float rankMultiplier = 1.0f;
+            var rankMultiplier = 1.0f;
             if (rank.HasValue)
             {
                 rankMultiplier = rank.Value switch
                 {
                     // El Boss real tiene peso plano porque ya está blindado por su filtro de sala dedicado
-                    ActorRank.Boss => 1.0f,
+                    ActorRank.Boss => 1,
 
                     // Si es un MiniBoss y está queriendo irrumpir en una zona que no es Hard, 
                     // le pegamos un hachazo drástico a su peso para que sea una rareza absoluta.
                     ActorRank.MiniBoss => roomDiff switch
                     {
-                        Difficulty.Easy => 0.10f,   // Hachazo del 90%. Combinado con el -2 de arriba, da un 0.002% real. Épico si sale.
-                        Difficulty.Normal => 0.30f, // Hachazo del 70%. Aparece a mitad de camino de forma muy esporádica.
-                        Difficulty.Hard => 1.0f,   // Peso completo: es su hábitat natural.
-                        _ => 1.0f
+                        Difficulty.Easy => .10f,   // Hachazo del 90%. Combinado con el -2 de arriba, da un 0.002% real. Épico si sale.
+                        Difficulty.Normal => .30f, // Hachazo del 70%. Aparece a mitad de camino de forma muy esporádica.
+                        Difficulty.Hard => 1,   // Peso completo: es su hábitat natural.
+                        _ => 1
                     },
 
                     _ => 1.0f

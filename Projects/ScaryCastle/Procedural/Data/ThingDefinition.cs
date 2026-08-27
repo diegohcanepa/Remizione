@@ -38,11 +38,11 @@ namespace ScaryCastle
             // Faction
             Faction = element.GetEnum("faction", Faction.Evil);
 
+            // IsUnique
+            IsUnique = element.GetBool("isUnique", false);
+
             // MaxPerRoom
             MaxPerRoom = element.GetInt32("maxPerRoom", 1);
-
-            // RequiresDeadEnd
-            RequiresDeadEnd = element.GetBool("requiresDeadEnd", false);
 
             // RoomTheme
             RoomTheme = element.GetEnum<RoomTheme>("roomTheme");
@@ -64,8 +64,8 @@ namespace ScaryCastle
         // AssertScriptDeclaration
         public void AssertScriptDeclaration(GameSession session)
         {
-            if (session.FindDeclaredThing(Name) == null)
-                RaiseValidationError(this, "No script declaration.");
+            if (session.FindProceduralThing(Name) is not GameThing thing)
+                RaiseValidationError(this, $"'{Name}' has no script declaration.");
         }
 
         // DropMode
@@ -86,6 +86,9 @@ namespace ScaryCastle
         // Faction
         public Faction Faction { get; init; }
 
+        // IsUnique
+        public bool IsUnique { get; }
+
         // MaxPerRoom
         public int MaxPerRoom { get; }
 
@@ -94,9 +97,6 @@ namespace ScaryCastle
         {
             return MaxPerRoom == -1 || instanceCount < MaxPerRoom;
         }
-
-        // RequiresDeadEnd
-        public bool RequiresDeadEnd { get; }
 
         // RoomTheme
         public RoomTheme? RoomTheme { get; }

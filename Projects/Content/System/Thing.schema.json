@@ -46,12 +46,13 @@
             "Evil"
           ]
         },
+        "isUnique": {
+          "type": "boolean",
+          "default": false
+        },
         "maxPerRoom": {
           "type": "integer",
           "default": -1
-        },
-        "requiresDeadEnd": {
-          "type": "boolean"
         },
         "roomTheme": {
           "type": "string",

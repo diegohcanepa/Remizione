@@ -16,6 +16,31 @@
     "data"
   ],
   "$defs": {
+    "FeaturedActor": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "position": {
+          "type": "string"
+        },
+        "facingDirection": {
+          "type": "string",
+          "enum": [
+            "Left",
+            "Right"
+          ],
+          "default": "Right"
+        }
+      },
+      "required": [
+        "name",
+        "position",
+        "facingDirection"
+      ],
+      "additionalProperties": false
+    },
     "Room": {
       "description": "Definición completa de un Room.",
       "allOf": [
@@ -53,10 +78,6 @@
               "type": "boolean",
               "default": false
             },
-            "isMandatory": {
-              "type": "boolean",
-              "default": false
-            },
             "lockType": {
               "type": "string",
               "default": "None",
@@ -65,9 +86,6 @@
                 "GoldenKey",
                 "SilverKey"
               ]
-            },
-            "requiresDeadEnd": {
-              "type": "boolean"
             },
             "roomCategory": {
               "type": "string",
@@ -86,10 +104,10 @@
               "type": "boolean",
               "default": true
             },
+            "featuredActor": {
+              "$ref": "#/$defs/FeaturedActor"
+            },            
             "interactiveActorPosition": {
-              "type": "string"
-            },
-            "playerPosition": {
               "type": "string"
             },
             "leverPosition": {
@@ -162,7 +180,7 @@
             },
             "runModifiers": {
               "type": "string"
-            },            
+            },
             "theme": {
               "type": "string",
               "default": "BlueStone",

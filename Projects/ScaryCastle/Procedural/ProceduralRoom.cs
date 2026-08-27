@@ -187,6 +187,9 @@ namespace ScaryCastle
 
             foreach (var definition in definitions)
             {
+                if (definition.IsUnique)
+                    continue;
+
                 if (definition is ActorDefinition actorDefinition)
                 {
                     // Si es un Boss real, SOLO puede aparecer en la habitación etiquetada como Boss
@@ -201,10 +204,7 @@ namespace ScaryCastle
                 if (definition.RoomTheme.HasValue && definition.RoomTheme != RoomNode.Definition.Theme)
                     continue;
 
-                if (definition.RequiresDeadEnd && RoomNode.ConnectionCount() > 1)
-                    continue;
-
-                var thing = Session.FindDeclaredThing(definition.Name) ?? throw new InvalidOperationException($"There is no declared thing named '{definition.Name}'. ");
+                var thing = Session.GetProceduralThing(definition.Name);
 
                 if (thing is not TThing)
                     continue;

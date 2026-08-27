@@ -26,50 +26,61 @@ namespace ScaryCastle
         public RoomDefinition(JsonElement element)
             : base(element)
         {
-            AllowEnemies = element.GetBool("allowEnemies", true);
-            DoorDown = element.GetVector2("doorDown");
-            DoorLeft = element.GetVector2("doorLeft");
-            DoorRight = element.GetVector2("doorRight");
-            DoorUp = element.GetVector2("doorUp");
-            ExactMatch = element.GetBool("exactMatch", false);
+            // AllowEnemies
+            this.AllowEnemies = element.GetBool("allowEnemies", true);
 
+            // DoorDown
+            this.DoorDown = element.GetVector2("doorDown");
+
+            // DoorLeft
+            this.DoorLeft = element.GetVector2("doorLeft");
+
+            // DoorRight
+            this.DoorRight = element.GetVector2("doorRight");
+
+            // DoorUp
+            this.DoorUp = element.GetVector2("doorUp");
+
+            // ExactMatch
+            this.ExactMatch = element.GetBool("exactMatch", false);
+
+            // ExitApproachPosition
             if (element.GetString("exitApproachPosition") is string exitApproachPositionValue && !string.IsNullOrWhiteSpace(exitApproachPositionValue))
                 ExitApproachPosition = DataConvert.ToVector2(exitApproachPositionValue);
 
-            ExitHotspot = element.GetString("exitHotspot", string.Empty);
+            // ExitHotspot
+            this.ExitHotspot = element.GetString("exitHotspot", string.Empty);
             if (!string.IsNullOrWhiteSpace(ExitHotspot))
                 Polygon.GetVertices(ExitHotspot);
 
-            IsMandatory = element.GetBool("isMandatory", false);
+            // FeaturedActor
+            if (element.TryGetProperty("featuredActor", out JsonElement featuredActorElement) &&
+                featuredActorElement.ValueKind == JsonValueKind.Object)
+            {
+                this.FeaturedActor = new FeaturedActorDescriptor(featuredActorElement);
+            }
 
-            LightMapColor = element.GetColor("lightMapColor", new Color(20, 20, 20));
+            // LightMapColor
+            this.LightMapColor = element.GetColor("lightMapColor", new Color(20, 20, 20));
 
-            LockType = element.GetEnum("lockType", LockType.None);
-            MusicTag = element.GetString("musicTag");
+            // LockType
+            this.LockType = element.GetEnum("lockType", LockType.None);
 
+            // MusicTag
+            this.MusicTag = element.GetString("musicTag");
+
+            // InteractiveActorPosition
             if (element.GetString("interactiveActorPosition") is string interactiveActorPositionValue && !string.IsNullOrWhiteSpace(interactiveActorPositionValue))
-                InteractiveActorPosition = DataConvert.ToVector2(interactiveActorPositionValue);
+                this.InteractiveActorPosition = DataConvert.ToVector2(interactiveActorPositionValue);
 
-            if (element.GetString("leftGatePosition") is string leftGatePositionValue && !string.IsNullOrWhiteSpace(leftGatePositionValue))
-                LeftGatePosition = DataConvert.ToVector2(leftGatePositionValue);
-
-            if (element.GetString("leverPosition") is string leverPositionValue && !string.IsNullOrWhiteSpace(leverPositionValue))
-                LeverPosition = DataConvert.ToVector2(leverPositionValue);
-
-            if (element.GetString("playerPosition") is string playerPositionValue && !string.IsNullOrWhiteSpace(playerPositionValue))
-                PlayerPosition = DataConvert.ToVector2(playerPositionValue);
-
-            if (element.GetString("rightGatePosition") is string rightGatePositionValue && !string.IsNullOrWhiteSpace(rightGatePositionValue))
-                RightGatePosition = DataConvert.ToVector2(rightGatePositionValue);
-
-            RequiresDeadEnd = element.GetBool("requiresDeadEnd", false);
-
+            // RoomCategory
             if (element.GetEnum<RoomCategory>("roomCategory") is not RoomCategory roomCategory)
                 throw new InvalidOperationException("Missing roomCategory property.");
             else
                 this.RoomCategory = roomCategory;
 
-            Theme = element.GetEnum("theme", RoomTheme.Castle);
+            // Theme
+            this.Theme = element.GetEnum("theme", RoomTheme.Castle);
 
             // Lights
             if (element.TryGetProperty("lights", out JsonElement lightsElement))
@@ -142,6 +153,14 @@ namespace ScaryCastle
         {
             if (DoorLeft == null && DoorDown == null && DoorRight == null && DoorUp == null)
                 RaiseValidationError(this, $"Must have at least one door.");
+
+            if (FeaturedActor != null)
+            {
+                if (GameData.Actors.Find(FeaturedActor.Name) is not ActorDefinition actorDefinition)
+                    RaiseValidationError(this, $"Actor '{FeaturedActor.Name}' has no definition.", nameof(FeaturedActor));
+                else if (!actorDefinition.IsUnique)
+                    RaiseValidationError(this, $"Actor '{FeaturedActor.Name}' must be flagged as unique.", nameof(FeaturedActor));
+            }
         }
 
         #endregion
@@ -170,6 +189,9 @@ namespace ScaryCastle
         // ExitHotspot
         public string ExitHotspot { get; }
 
+        // FeaturedActor
+        public FeaturedActorDescriptor? FeaturedActor { get; }
+
         // HasDownDoor
         public bool HasDownDoor => DoorDown != null;
 
@@ -185,15 +207,6 @@ namespace ScaryCastle
         // InteractiveActorPosition
         public Vector2? InteractiveActorPosition { get; }
 
-        // IsMandatory
-        public bool IsMandatory { get; }
-
-        // LeftGatePosition
-        public Vector2 LeftGatePosition { get; }
-
-        // LeverPosition
-        public Vector2? LeverPosition { get; }
-
         // LightMapColor
         public Color LightMapColor { get; }
 
@@ -208,15 +221,6 @@ namespace ScaryCastle
 
         // Placeholders
         public ReadOnlyPlaceholderCollection Placeholders { get; }
-
-        // PlayerPosition
-        public Vector2 PlayerPosition { get; }
-
-        // RequiresDeadEnd
-        public bool RequiresDeadEnd { get; }
-
-        // RightGatePosition
-        public Vector2 RightGatePosition { get; }
 
         // RoomCategory
         public RoomCategory RoomCategory { get; }

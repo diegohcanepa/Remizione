@@ -66,9 +66,9 @@ namespace ScaryCastle
             Traits = Load("Traits.json", e => new TraitDefinition(e));
 
             Items = Load("Items.json", e => new ItemDefinition(e));
-            Rooms = Load("Rooms.json", e => new RoomDefinition(e));
             Actors = Load("Actors.json", e => new ActorDefinition(e));
             Props = Load("Props.json", e => new PropDefinition(e));
+            Rooms = Load("Rooms.json", e => new RoomDefinition(e));
         }
 
         // Props

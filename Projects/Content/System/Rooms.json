@@ -41,6 +41,11 @@
       "doorLeft": "21,80",
       "doorRight": "220,80",
       "doorDown": "152,145",
+      "featuredActor": {
+        "name": "Sister",
+        "facingDirection": "Right",
+        "position": "100,100"
+      },
       "placeholders": [
         {
           "position": "69,18",

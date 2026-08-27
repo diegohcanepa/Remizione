@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using ScaryCastle.Props;
 using ScaryCastle.Scripting;
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -26,8 +27,7 @@ namespace ScaryCastle
         private readonly FloatTween chromaticAberrationTween = new();
         private InventoryScene? inventoryScene;
         private Vector2? playerPosition;
-        private readonly List<GameThing> proceduralThings = [];
-        private readonly Dictionary<string, GameThing> proceduralThingsDict = [];
+        private FrozenDictionary<string, GameThing>? proceduralCatalog;
         private readonly RoomEditor? roomEditor;
         private readonly Sprite savingIcon;
 
@@ -53,7 +53,6 @@ namespace ScaryCastle
             this.Environment = new Environment();
             this.InteractionContext = new(this);
             this.InteractionData = new(this);
-            this.DeclaredThings = new(proceduralThings);
 
             ObjectPools = new ObjectPools(this);
             ComicTextPool = new ObjectPool<ComicText>(() => new ComicText(), 100);
@@ -375,6 +374,8 @@ namespace ScaryCastle
         // OnStarted
         protected override void OnStarted()
         {
+            Dictionary<string, GameThing> dict = [];
+
             foreach (var entity in Entities)
             {
                 if (entity is not GameThing thing)
@@ -384,11 +385,10 @@ namespace ScaryCastle
                     continue;
 
                 if (thing.InstanceKind == EntityInstanceKind.Declared)
-                {
-                    proceduralThings.Add(thing);
-                    proceduralThingsDict.Add(thing.DeclaredName, thing);
-                }
+                    dict.Add(thing.DeclaredName, thing);
             }
+
+            proceduralCatalog = dict.ToFrozenDictionary();
 
             foreach (var actorDef in GameData.Actors)
             {
@@ -562,9 +562,6 @@ namespace ScaryCastle
         [ScriptProperty]
         public GameThing? DangerousTarget { get; set; }
 
-        // DeclaredThings
-        public NamedReadOnlyCollection<GameThing> DeclaredThings { get; }
-
         // DialogOptionId
         [ScriptProperty]
         public int DialogOptionId { get; set; }
@@ -595,14 +592,23 @@ namespace ScaryCastle
         // Environment
         public Environment Environment { get; }
 
-        // FindDeclaredThing
-        public GameThing? FindDeclaredThing(string name)
+        // FindProceduralThing
+        public GameThing? FindProceduralThing(string name)
         {
-            return proceduralThingsDict.TryGetValue(name, out var result) ? result : null;
+            if (proceduralCatalog == null)
+                return null;
+
+            return proceduralCatalog.TryGetValue(name, out var result) ? result : null;
         }
 
         // Game
         public new ScaryCastleGame Game { get; }
+
+        // GetProceduralThing
+        public GameThing GetProceduralThing(string name)
+        {
+            return proceduralCatalog == null ? throw new InvalidOperationException() : proceduralCatalog[name];
+        }
 
         // GoldenKeys
         [ScriptProperty]

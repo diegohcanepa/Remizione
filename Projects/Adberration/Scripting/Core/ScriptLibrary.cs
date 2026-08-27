@@ -33,6 +33,72 @@ namespace Adberration.Scripting
 
         #region Private members
 
+        // Compile
+        private void Compile()
+        {
+            List<Script> discardList = [];
+
+            // Compile declarations
+            CompilationPhase = CompilationPhase.Declarations;
+            foreach (var script in AllScripts)
+            {
+                if (script.HasCapability(ScriptCapability.EntityDeclaration))
+                {
+                    script.Compile();
+                    Session.ScriptProcessor.RunScript(script);
+
+                    if (script.HasCapability(ScriptCapability.Discard))
+                    {
+                        discardList.Add(script);
+                    }
+                }
+            }
+
+            // Compile cloning scripts
+            CompilationPhase = CompilationPhase.Cloning;
+            foreach (var script in AllScripts)
+            {
+                if (script.ScriptType == ScriptType.Cloning)
+                {
+                    script.Compile();
+                    Session.ScriptProcessor.RunScript(script);
+
+                    if (script.HasCapability(ScriptCapability.Discard))
+                    {
+                        discardList.Add(script);
+                    }
+                }
+            }
+
+            // Remove useless scripts
+            for (var i = 0; i < discardList.Count; i++)
+            {
+                scripts.Remove(discardList[i].Signature);
+            }
+
+            // Compile routines
+            CompilationPhase = CompilationPhase.Routines;
+            foreach (var script in AllScripts)
+            {
+                if (script.ScriptType is ScriptType.Routine or ScriptType.NewSession)
+                {
+                    script.Compile();
+                }
+            }
+
+            // Compile all other scripts (outcomes)
+            CompilationPhase = CompilationPhase.Outcomes;
+            foreach (var script in AllScripts)
+            {
+                if (script.HasCapability(ScriptCapability.EntityDeclaration))
+                {
+                    continue;
+                }
+
+                script.Compile();
+            }
+        }
+
         // LoadCore
         private void LoadCore()
         {
@@ -150,73 +216,6 @@ namespace Adberration.Scripting
         // CompilationPhase
         internal CompilationPhase CompilationPhase { get; private set; }
 
-        // Compile
-        internal void Compile()
-        {
-            List<Script> discardList = [];
-
-            // Compile declarations
-            CompilationPhase = CompilationPhase.Declarations;
-            foreach (var script in AllScripts)
-            {
-                if (script.HasCapability(ScriptCapability.EntityDeclaration))
-                {
-                    script.Compile();
-                    Session.ScriptProcessor.RunScript(script);
-
-                    if (script.HasCapability(ScriptCapability.Discard))
-                    {
-                        discardList.Add(script);
-                    }
-                }
-            }
-
-            // Compile cloning scripts
-            CompilationPhase = CompilationPhase.Cloning;
-            foreach (var script in AllScripts)
-            {
-                if (script.ScriptType == ScriptType.Cloning)
-                {
-                    script.Compile();
-                    Session.ScriptProcessor.RunScript(script);
-
-                    if (script.HasCapability(ScriptCapability.Discard))
-                    {
-                        discardList.Add(script);
-                    }
-                }
-            }
-
-            // Remove useless scripts
-            for (var i = 0; i < discardList.Count; i++)
-            {
-                scripts.Remove(discardList[i].Signature);
-            }
-
-            // Compile routines
-            CompilationPhase = CompilationPhase.Routines;
-            foreach (var script in AllScripts)
-            {
-                if (script.ScriptType is ScriptType.Routine or ScriptType.NewSession)
-                {
-                    script.Compile();
-                }
-            }
-
-            // Compile all other scripts (outcomes)
-            CompilationPhase = CompilationPhase.Outcomes;
-            foreach (var script in AllScripts)
-            {
-                if (script.HasCapability(ScriptCapability.EntityDeclaration))
-                {
-                    continue;
-                }
-
-                script.Compile();
-                TotalRuntimeStatements += script.StatementCount;
-            }
-        }
-
         // FindDeclaration
         internal Script? FindDeclaration(string name)
         {
@@ -240,8 +239,13 @@ namespace Adberration.Scripting
         // Load
         internal void Load()
         {
+            if (IsLoaded)
+                throw new InvalidOperationException("Script library already loaded.");
+
             LoadCore();
             Compile();
+
+            IsLoaded = true;
         }
 
         #endregion
@@ -273,21 +277,14 @@ namespace Adberration.Scripting
             return FindScript(ScriptType.Routine, name);
         }
 
-        // IsDeclared
-        public bool IsDeclared(string entityName)
-        {
-            CodeContract.NotEmpty(entityName, nameof(entityName));
-            return declarations.ContainsKey(entityName);
-        }
+        // IsLoaded
+        public bool IsLoaded { get; private set; }
 
         // Path
         public string Path { get; }
 
         // Session
         public Session Session { get; }
-
-        // TotalRuntimeStatements
-        public int TotalRuntimeStatements { get; private set; }
 
         // Version
         public string? Version { get; private set; }
