@@ -39,6 +39,15 @@ namespace ScaryCastle
             return new FrozenNamedCollection<T>(list);
         }
 
+        // TextRepository_Loaded
+        private static void TextRepository_Loaded()
+        {
+            foreach (var item in Items)
+            {
+                item.RefreshLocalizedValues();
+            }
+        }
+
         #endregion
 
         // Actors
@@ -69,6 +78,8 @@ namespace ScaryCastle
             Actors = Load("Actors.json", e => new ActorDefinition(e));
             Props = Load("Props.json", e => new PropDefinition(e));
             Rooms = Load("Rooms.json", e => new RoomDefinition(e));
+
+            TextRepository.Loaded += TextRepository_Loaded;
         }
 
         // Props

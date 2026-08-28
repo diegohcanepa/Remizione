@@ -8,10 +8,12 @@ namespace ScaryCastle
     /// </summary>
     internal static class MouseCursorAppearance
     {
+        private static GameThing? lastKnownTarget;
+
         #region Private members
 
-        // RefreshCursor
-        private static void RefreshCursor(InteractionContext context)
+        // RefreshIcon
+        private static void RefreshIcon(InteractionContext context)
         {
             if (context.Target == context.Session.Player && context.HeldItem == null)
                 return;
@@ -148,11 +150,11 @@ namespace ScaryCastle
 
             if (target.ItemReward != null)
             {
-                MouseCursor.SubText = Localization.GetItemName(target.ItemReward);
+                MouseCursor.SubText = target.ItemReward.DisplayName;
             }
             else if (target.CoinReward > 0)
             {
-                MouseCursor.SubText = Localization.GetItemName(GameData.Items.Get(ItemNames.Coin));
+                MouseCursor.SubText = GameData.Items.Get(ItemNames.Coin).DisplayName;
             }
             else if (target.Definition?.DropTrigger == LootDropTrigger.OnImpact)
             {
@@ -169,10 +171,13 @@ namespace ScaryCastle
         // Refresh
         internal static void Refresh(InteractionContext context)
         {
-            MouseCursor.Reset();
-            RefreshCursor(context);
-            if (context.Target != null)
+            RefreshIcon(context);
+
+            if (context.Target != null && context.Target != lastKnownTarget)
+            {
                 SyncText(context.Target);
+                lastKnownTarget = context.Target;
+            }
         }
     }
 }

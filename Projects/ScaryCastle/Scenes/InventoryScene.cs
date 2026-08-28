@@ -301,8 +301,6 @@ namespace ScaryCastle
 
             if (GetSelectedItem() is Item item)
             {
-                MouseCursor.Icon = MouseCursorIcon.Hand;
-
                 if (item != lastSelectedItem)
                 {
                     if (lastSelectedItem?.Index >= 0)
@@ -316,7 +314,7 @@ namespace ScaryCastle
                     }
 
                     itemLabel.X = slots[item.Index].BoundingBox.Center.X;
-                    itemLabel.Text = item.DisplayName;
+                    itemLabel.Text = item.Definition.DisplayName;
                     itemDescription.Text = item.ShortDescription;
                     icons[item.Index].Scale = ScaleInfo.InventoryHeldItem;
                     shadows[item.Index].Scale = ScaleInfo.InventoryHeldItem;

@@ -386,7 +386,7 @@ namespace ScaryCastle
             InvalidateCollisionPolygons();
             InvalidateWalkArea();
 
-            if (Definition?.DropTrigger == LootDropTrigger.OnDeath)
+            if (MaxHP > 0 && Definition?.DropTrigger == LootDropTrigger.OnDeath)
                 AssignLoot();
         }
 

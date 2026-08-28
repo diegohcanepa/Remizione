@@ -134,10 +134,10 @@ namespace Engendro
         // InvalidateLocalizableText
         private void InvalidateLocalizableText()
         {
-            if (TextRepositoryKey == null || textRepositoryLoadCount == TextRepository.LoadCount)
+            if (TextRepositoryKey == null || textRepositoryLoadCount == TextRepository.ContentVersion)
                 return;
 
-            textRepositoryLoadCount = TextRepository.LoadCount;
+            textRepositoryLoadCount = TextRepository.ContentVersion;
 
             if (TextRepositoryKey == null)
                 text = null;
@@ -773,7 +773,7 @@ namespace Engendro
                     if (value != null && TextRepository.IsKeyReference(value))
                     {
                         TextRepositoryKey = value;
-                        textRepositoryLoadCount = TextRepository.LoadCount;
+                        textRepositoryLoadCount = TextRepository.ContentVersion;
                     }
                     else
                     {

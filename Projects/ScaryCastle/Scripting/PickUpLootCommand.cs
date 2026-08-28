@@ -34,7 +34,7 @@ namespace ScaryCastle.Scripting
                     session.RunHUD?.InventoryMeter.Animate();
 
                     if (item.Definition.Image != null)
-                        session.RunHUD?.Log.Show(item.DisplayName, item.Definition.Image);
+                        session.RunHUD?.Log.Show(item.Definition.DisplayName, item.Definition.Image);
                 }
             }
             else if (lootContainer.Loot.Behavior != ItemBehavior.PlayerAction && session.Player != null)

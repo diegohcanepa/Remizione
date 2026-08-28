@@ -67,6 +67,28 @@ namespace ScaryCastle
 
         #region Private members
 
+        // CanShowText
+        private static bool CanShowText
+        {
+            get
+            {
+                if (CustomImage != null)
+                {
+                    return true;
+                }
+                else if (Icon is MouseCursorIcon.Up or MouseCursorIcon.Down or
+                            MouseCursorIcon.Right or MouseCursorIcon.Left or
+                            MouseCursorIcon.Cross or MouseCursorIcon.Wait)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+
         // ClampTextToScreen
         private static void ClampTextToScreen()
         {
@@ -151,15 +173,12 @@ namespace ScaryCastle
             cursorSprite.X -= shakeTween.IsRunning ? shakeTween.CurrentValue : 0;
             EngendroGame.Instance.SpriteBatch.End();
 
-            if (!IsArrow)
+            if (CanShowText)
             {
-                if (Icon != MouseCursorIcon.Cross || CustomImage != null)
-                {
-                    EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera, SamplerState.PointClamp);
-                    tooltipSprite.Draw(gameTime);
-                    subTextSprite.Draw(gameTime);
-                    EngendroGame.Instance.SpriteBatch.End();
-                }
+                EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera, SamplerState.PointClamp);
+                tooltipSprite.Draw(gameTime);
+                subTextSprite.Draw(gameTime);
+                EngendroGame.Instance.SpriteBatch.End();
             }
         }
 
@@ -179,10 +198,6 @@ namespace ScaryCastle
                 }
             }
         }
-
-        // IsArrow
-        public static bool IsArrow => Icon is MouseCursorIcon.Up or MouseCursorIcon.Down or
-                                      MouseCursorIcon.Right or MouseCursorIcon.Left;
 
         // PerformClick
         public static void PerformClick(bool animate = true)

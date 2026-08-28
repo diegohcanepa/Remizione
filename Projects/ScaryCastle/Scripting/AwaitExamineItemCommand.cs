@@ -21,7 +21,7 @@ namespace ScaryCastle.Scripting
         protected override void OnExecute()
         {
             if (gameSession?.HoveredItem != null)
-                gameSession.Player?.Say(gameSession.HoveredItem.Description, true);
+                gameSession.Player?.Say(gameSession.HoveredItem.Definition.Description, true);
         }
 
         #endregion

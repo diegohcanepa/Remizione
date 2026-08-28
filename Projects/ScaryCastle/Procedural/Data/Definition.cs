@@ -61,6 +61,11 @@ namespace ScaryCastle
 
         #region Protected members
 
+        // OnRefreshLocalizedValues
+        protected virtual void OnRefreshLocalizedValues()
+        {
+        }
+
         // RaiseValidationError
         protected static void RaiseValidationError(INamedObject obj, string message, string? relatedProperty = null)
         {
@@ -75,6 +80,12 @@ namespace ScaryCastle
 
         // Name
         public string Name { get; }
+
+        // RefreshLocalizedValues
+        public void RefreshLocalizedValues()
+        {
+            OnRefreshLocalizedValues();
+        }
 
         // SpawnWeight
         public Ratio SpawnWeight { get; }

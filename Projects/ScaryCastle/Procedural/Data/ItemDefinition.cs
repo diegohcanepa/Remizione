@@ -100,9 +100,6 @@ namespace ScaryCastle
                 _ => 5
             };
 
-            DisplayNameKey = $"Item.{Name}.Name";
-            DescriptionKey = $"Item.{Name}.Description";
-
             IsPassive = LightModifier != 0 || LuckModifier != 0;
 
             if (Behavior != ItemBehavior.Sack)
@@ -113,6 +110,21 @@ namespace ScaryCastle
 
             if (ActionKind == ActionKind.Projectile && Projectile == null)
                 RaiseValidationError(this, "Items with Projectile usage mode must have a Projectile defined.", nameof(ActionKind));
+
+            RefreshLocalizedValues();
+        }
+
+        #endregion
+
+        #region Protected members
+
+        // OnRefreshLocalizedValues
+        protected override void OnRefreshLocalizedValues()
+        {
+            base.OnRefreshLocalizedValues();
+            
+            this.DisplayName = TextRepository.GetValue($"Item.{Name}.Name");
+            this.Description = TextRepository.GetValue($"Item.{Name}.Description");
         }
 
         #endregion
@@ -132,14 +144,14 @@ namespace ScaryCastle
         // Category
         public ItemCategory Category { get; }
 
-        // DescriptionKey
-        public string DescriptionKey { get; }
+        // Description
+        public string Description { get; private set; } = string.Empty;
 
         // DeselectOnUse
         public bool DeselectOnUse { get; }
 
-        // DisplayNameKey
-        public string DisplayNameKey { get; }
+        // DisplayName
+        public string DisplayName { get; private set; } = string.Empty;
 
         // EnergyCost
         public int EnergyCost { get; }

@@ -376,6 +376,7 @@ namespace ScaryCastle
         {
             Dictionary<string, GameThing> dict = [];
 
+            // Collect all things that has a data-driven definition
             foreach (var entity in Entities)
             {
                 if (entity is not GameThing thing)
@@ -723,6 +724,9 @@ namespace ScaryCastle
         public void ProcessTurn(int turnPenalty = 0)
         {
             if (Room is not ProceduralRoom room)
+                return;
+
+            if (Player?.IsDead == true)
                 return;
 
             if (turnPenalty != 0)

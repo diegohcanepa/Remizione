@@ -323,7 +323,20 @@ namespace ScaryCastle
                 if (!RoomNode.Definition.AllowEnemies && c.Faction == Faction.Evil)
                     continue;
 
-                var finalWeight = ProceduralUtils.AdjustWeight(RoomNode.TopographicDifficulty, c.Difficulty, c.SpawnWeight, c.Rank);
+                // 1. Peso matemático puro por choque de dificultades (Topografía vs Entidad)
+                var finalWeight = ProceduralUtils.AdjustWeight(RoomNode.TopographicDifficulty, c.Difficulty, c.SpawnWeight);
+
+                // Si es un MiniBoss, le pegamos el hachazo según la dificultad de la sala
+                if (c.Rank == ActorRank.MiniBoss)
+                {
+                    finalWeight *= RoomNode.TopographicDifficulty switch
+                    {
+                        Difficulty.Easy => .1f,   // Rareza extrema
+                        Difficulty.Normal => .3f, // Esporádico
+                        _ => 1f                   // Hard u otros
+                    };
+                }
+
                 table.Add(c.Name, finalWeight);
             }
 
@@ -479,7 +492,7 @@ namespace ScaryCastle
                         if (Session.CurrentRun != null && !def.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns.GetCount(def.Name)))
                             continue;
 
-                        var finalWeight = ProceduralUtils.AdjustWeight(RoomNode.TopographicDifficulty, def.Difficulty, def.SpawnWeight, null);
+                        var finalWeight = ProceduralUtils.AdjustWeight(RoomNode.TopographicDifficulty, def.Difficulty, def.SpawnWeight);
                         table.Add(def.Name, finalWeight);
                     }
 
@@ -522,7 +535,7 @@ namespace ScaryCastle
 
                 // CRUCE CON LA DIFICULTAD TOPOGRÁFICA DE LA RUN:
                 // Si el cuarto es Easy y la baba es Hard, el peso se desploma (ej: de 1.0f a 0.02f)
-                var finalWeight = ProceduralUtils.AdjustWeight(RoomNode.TopographicDifficulty, def.Difficulty, def.SpawnWeight, null);
+                var finalWeight = ProceduralUtils.AdjustWeight(RoomNode.TopographicDifficulty, def.Difficulty, def.SpawnWeight);
 
                 freeTable.Add(def.Name, finalWeight);
                 totalItemWeights += finalWeight;

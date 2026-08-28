@@ -19,8 +19,6 @@ namespace ScaryCastle
             this.Definition = definition;
             this.Script = inventory.Session.ScriptLibrary.FindRoutine($"{Definition.Name}Outcome");
             this.Amount = definition.InitialAmount;
-            this.DisplayName = Localization.GetItemName(definition);
-            this.Description = Localization.GetItemDescription(definition);
             this.ShortDescription = EffectDescriptor.GetDescription(definition.EffectDescriptors);
         }
 
@@ -79,12 +77,6 @@ namespace ScaryCastle
         // Definition
         public ItemDefinition Definition { get; }
 
-        // Description
-        public string Description { get; }
-
-        // DisplayName
-        public string DisplayName { get; }
-
         // EnergyCost
         public int EnergyCost => Definition.EnergyCost;
 
@@ -118,7 +110,7 @@ namespace ScaryCastle
         // ToString
         public override string ToString()
         {
-            return DisplayName;
+            return Definition.DisplayName;
         }
     }
 }

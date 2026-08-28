@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -15,8 +16,9 @@ namespace Engendro
     {
         #region Private fields
 
+        [ThreadStatic]
         private static readonly StringBuilder sb = new();
-        private static Dictionary<string, string> texts = [];
+        private static FrozenDictionary<string, string> texts = FrozenDictionary<string, string>.Empty;
 
         #endregion
 
@@ -53,7 +55,7 @@ namespace Engendro
                         var value = r.ReadElementContentAsString();
 
                         // Normalize carriage returns and line feeds
-                        value = Regex.Replace(value, "\r\n|\n|\r", Environment.NewLine);
+                        value = value.Replace("\r\n", "\n").Replace('\r', '\n').Replace("\n", Environment.NewLine);
 
                         result[key] = value;
                     }
@@ -69,8 +71,8 @@ namespace Engendro
         private static void LoadCore(string fileName, LanguagePackage? languagePackage)
         {
             FileName = fileName;
-            texts = CreateDictionary(fileName);
-            LoadCount++;
+            texts = CreateDictionary(fileName).ToFrozenDictionary();
+            ContentVersion++;
             LanguagePackage = languagePackage;
             Loaded?.Invoke();
         }
@@ -92,7 +94,7 @@ namespace Engendro
         // Clear
         public static void Clear()
         {
-            texts.Clear();
+            texts = FrozenDictionary<string, string>.Empty;
         }
 
         // ContainsKey
@@ -101,29 +103,30 @@ namespace Engendro
             return texts.ContainsKey(key);
         }
 
+        // ContentVersion
+        public static int ContentVersion { get; private set; }
+
         // FileName
         public static string FileName { get; private set; } = string.Empty;
 
-        // FindMissingChars
+        // FindMissingGlyphs
         public static char[] FindMissingGlyphs(SpriteFont spriteFont, LanguagePackage languagePackage)
         {
-            List<char> result = [];
-
+            HashSet<char> result = [];
+            
             var glyphDictionary = spriteFont.GetGlyphs();
 
             foreach (var value in AsDictionary(languagePackage).Values)
             {
-                if (value != null)
+                if (value == null)
+                    continue;
+
+                for (var i = 0; i < value.Length; i++)
                 {
-                    for (var i = 0; i < value.Length; i++)
+                    var c = value[i];
+                    if (!glyphDictionary.ContainsKey(c))
                     {
-                        if (!glyphDictionary.ContainsKey(value[i]))
-                        {
-                            if (!result.Contains(value[i]))
-                            {
-                                result.Add(value[i]);
-                            }
-                        }
+                        result.Add(c);
                     }
                 }
             }
@@ -187,9 +190,6 @@ namespace Engendro
         {
             LoadCore(fileName, null);
         }
-
-        // LoadCount
-        public static int LoadCount { get; private set; }
 
         // Loaded
         public static event Notify? Loaded;
