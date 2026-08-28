@@ -557,19 +557,19 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/Drink.wav;Audio/FX/Drink
 
+#begin Audio/FX/DrinkDrool.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/DrinkDrool.wav;Audio/FX/DrinkDrool
+
 #begin Audio/FX/DrinkFromBottle.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/DrinkFromBottle.wav;Audio/FX/DrinkFromBottle
-
-#begin Audio/FX/DrinkGoo.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/FX/DrinkGoo.wav;Audio/FX/DrinkGoo
 
 #begin Audio/FX/EatPill.wav
 /importer:WavImporter
@@ -900,20 +900,6 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/GhostTrainMonsterLaugh.wav;Audio/FX/GhostTrainMonsterLaugh
 
-#begin Audio/FX/GooBoost.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/FX/GooBoost.wav;Audio/FX/GooBoost
-
-#begin Audio/FX/GooBoostFull.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/FX/GooBoostFull.wav;Audio/FX/GooBoostFull
-
 #begin Audio/FX/GutsLarge.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -1074,6 +1060,20 @@
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/LootSack.wav;Audio/FX/LootSack
+
+#begin Audio/FX/Miracle1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/Miracle1.wav;Audio/FX/Miracle1
+
+#begin Audio/FX/Miracle2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/Miracle2.wav;Audio/FX/Miracle2
 
 #begin Audio/FX/Modem.wav
 /importer:WavImporter

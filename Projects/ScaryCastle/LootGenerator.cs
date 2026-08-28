@@ -154,9 +154,6 @@ namespace ScaryCastle
         // RollForCoin
         public int RollForCoin(GameThing thing)
         {
-            if (thing.Room is not ProceduralRoom room)
-                return 0;
-
             if (thing.Definition == null)
                 return 0;
 
@@ -171,7 +168,11 @@ namespace ScaryCastle
         // RollForLoot
         public ItemDefinition? RollForLoot(GameThing thing)
         {
-            if (thing.Room is not ProceduralRoom room)
+            ProceduralRoom? room = thing.Room as ProceduralRoom;
+            if (room == null)
+                room = thing.Session.Room as ProceduralRoom;
+
+            if (room == null)
                 return null;
 
             if (thing.Definition == null)

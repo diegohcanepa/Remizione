@@ -7,9 +7,9 @@ using System.Collections.Generic;
 namespace ScaryCastle
 {
     /// <summary>
-    /// UIGooMeter
+    /// UIDroolMeter
     /// </summary>
-    public sealed class UIGooMeter : SessionGameObject<GameSession>
+    public sealed class UIDroolMeter : SessionGameObject<GameSession>
     {
         #region Private fields
 
@@ -17,14 +17,14 @@ namespace ScaryCastle
 
         private Actor? actor;
         private const float fillSpeed = 8;
-        private readonly Sprite icon = new(Atlases.UI.GooIcon) { PivotOrigin = RectanglePoint.Top };
+        private readonly Sprite icon = new(Atlases.UI.DroolIcon) { PivotOrigin = RectanglePoint.Top };
         private readonly List<Sprite> parts = [];
         private float visualValue;
 
         #endregion
 
         // Constructor
-        public UIGooMeter(GameSession session)
+        public UIDroolMeter(GameSession session)
             : base(session)
         {
         }
@@ -47,7 +47,7 @@ namespace ScaryCastle
             float y = 12;
             while (parts.Count < actor.MaxEnergy)
             {
-                var part = new Sprite(Atlases.UI.GooMeter[(int)MeterPart.MiddleEmpty]) { X = x, Y = y };
+                var part = new Sprite(Atlases.UI.DroolMeter[(int)MeterPart.MiddleEmpty]) { X = x, Y = y };
                 parts.Add(part);
                 y += part.BoundingBox.Height - 1;
             }
@@ -89,7 +89,7 @@ namespace ScaryCastle
                     part = isSegmentFilled ? MeterPart.MiddleFilled : MeterPart.MiddleEmpty;
                 }
 
-                segment.RenderImage = Atlases.UI.GooMeter[(int)part];
+                segment.RenderImage = Atlases.UI.DroolMeter[(int)part];
                 segment.Draw(gameTime);
             }
 

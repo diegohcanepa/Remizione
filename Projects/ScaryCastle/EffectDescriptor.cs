@@ -118,8 +118,13 @@ namespace ScaryCastle
                         {
                             targetActor.Energy -= amount;
                             if (targetActor.IsPlayer)
-                                targetActor.ShowFlyOff(Atlases.UI.GooIcon);
+                                targetActor.ShowFlyOff(Atlases.UI.DroolIcon);
                         }
+                        break;
+
+                    // EnergyRestore
+                    case EffectType.EnergyRestore:
+                        targetActor?.Recharge();
                         break;
 
                     // GoldenKey
@@ -136,6 +141,11 @@ namespace ScaryCastle
                     // HPLoss
                     case EffectType.HPLoss:
                         realTarget?.HP -= amount;
+                        break;
+
+                    // HPRestore
+                    case EffectType.HPRestore:
+                        realTarget?.Reheal();
                         break;
 
                     // MaxEnergyGain
@@ -189,6 +199,11 @@ namespace ScaryCastle
                         }
                         break;
 
+                    // StaminaRestore
+                    case EffectType.StaminaRestore:
+                        targetActor?.Rest();
+                        break;
+
                     // Status
                     case EffectType.Status:
                         if (effect.StatusType is StatusType statusType && targetActor != null && !targetActor.IsDead)
@@ -227,13 +242,6 @@ namespace ScaryCastle
             {
                 var value = string.Empty;
 
-                // HPGain / HPLoss
-                if (effect.EffectType is EffectType.HPGain or EffectType.HPLoss)
-                {
-                    if (effect.Amount != null)
-                        value = GetTemplate(effect.EffectType).Replace("{amount}", effect.Amount.ToString());
-                }
-
                 // Damage
                 if (effect.EffectType is EffectType.Damage)
                 {
@@ -242,6 +250,19 @@ namespace ScaryCastle
                         value = GetTemplate(effect.EffectType).Replace("{amount}", effect.Amount.ToString());
                         value += $" ({Localization.GetValue(effect.DamageType)})";
                     }
+                }
+
+                // HPGain / HPLoss
+                if (effect.EffectType is EffectType.HPGain or EffectType.HPLoss)
+                {
+                    if (effect.Amount != null)
+                        value += GetTemplate(effect.EffectType).Replace("{amount}", effect.Amount.ToString());
+                }
+
+                // EnergyRestore
+                if (effect.EffectType is EffectType.EnergyRestore)
+                {
+                    value += GetTemplate(effect.EffectType);
                 }
 
                 if (!string.IsNullOrWhiteSpace(value))

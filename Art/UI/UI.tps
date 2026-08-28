@@ -205,12 +205,12 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">GooMeter-assets/GooMeter0.png</key>
-            <key type="filename">GooMeter-assets/GooMeter1.png</key>
-            <key type="filename">GooMeter-assets/GooMeter2.png</key>
-            <key type="filename">GooMeter-assets/GooMeter3.png</key>
-            <key type="filename">GooMeter-assets/GooMeter4.png</key>
-            <key type="filename">GooMeter-assets/GooMeter5.png</key>
+            <key type="filename">DroolMeter-assets/DroolMeter0.png</key>
+            <key type="filename">DroolMeter-assets/DroolMeter1.png</key>
+            <key type="filename">DroolMeter-assets/DroolMeter2.png</key>
+            <key type="filename">DroolMeter-assets/DroolMeter3.png</key>
+            <key type="filename">DroolMeter-assets/DroolMeter4.png</key>
+            <key type="filename">DroolMeter-assets/DroolMeter5.png</key>
             <key type="filename">UIIcons-assets/StaminaCost2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -248,7 +248,8 @@
             <key type="filename">Inventory-assets/InventoryItemAmount5.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorLiftIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorSkullIcon.png</key>
-            <key type="filename">UIIcons-assets/GooIcon.png</key>
+            <key type="filename">UIIcons-assets/DroolCost1.png</key>
+            <key type="filename">UIIcons-assets/DroolIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -264,7 +265,6 @@
                 <false/>
             </struct>
             <key type="filename">Inventory-assets/InventoryItemSlot.png</key>
-            <key type="filename">Items-assets/GooBottle.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -328,6 +328,7 @@
             <key type="filename">Items-assets/Battery.png</key>
             <key type="filename">Items-assets/BittenApple.png</key>
             <key type="filename">Items-assets/Chili.png</key>
+            <key type="filename">Items-assets/DroolBottle.png</key>
             <key type="filename">Items-assets/Duck.png</key>
             <key type="filename">Items-assets/Lockpick.png</key>
             <key type="filename">Items-assets/MissingItem.png</key>
@@ -618,7 +619,6 @@
                 <false/>
             </struct>
             <key type="filename">MiniMap-assets/MiniMapLoot.png</key>
-            <key type="filename">UIIcons-assets/GooCost1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -1048,6 +1048,36 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">UIIcons-assets/DroolCost2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,2,6,5</rect>
+                <key>scale9Paddings</key>
+                <rect>3,2,6,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">UIIcons-assets/DroolCost3.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,2,8,5</rect>
+                <key>scale9Paddings</key>
+                <rect>4,2,8,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">UIIcons-assets/ExamineItem.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -1075,36 +1105,6 @@
                 <rect>3,3,5,6</rect>
                 <key>scale9Paddings</key>
                 <rect>3,3,5,6</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UIIcons-assets/GooCost2.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,5,3</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,5,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UIIcons-assets/GooCost3.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,2,7,3</rect>
-                <key>scale9Paddings</key>
-                <rect>3,2,7,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1190,8 +1190,8 @@
                     <filename>DialogBox-assets</filename>
                     <filename>Meter-assets</filename>
                     <filename>PocketItems-assets</filename>
-                    <filename>GooMeter-assets</filename>
                     <filename>Modifiers-assets</filename>
+                    <filename>DroolMeter-assets</filename>
                 </array>
             </struct>
         </map>

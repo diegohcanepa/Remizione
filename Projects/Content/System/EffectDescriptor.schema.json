@@ -7,7 +7,7 @@
     "effectType": {
       "type": "string",
       "description": "El tipo de acción a ejecutar.",
-      "enum": [ "None", "BronzeKey", "Coin", "CoinLoss", "ComicText", "Damage", "Death", "EnergyGain", "EnergyLoss", "HPGain", "HPLoss", "StaminaGain", "StaminaLoss", "MaxEnergyGain", "MaxEnergyLoss", "MaxHPGain", "MaxHPLoss", "MaxStaminaGain", "MaxStaminaLoss", "GoldenKey", "Status" ] ,
+      "enum": [ "None", "BronzeKey", "Coin", "CoinLoss", "ComicText", "Damage", "Death", "EnergyGain", "EnergyLoss", "EnergyRestore", "HPGain", "HPLoss", "HPRestore", "StaminaGain", "StaminaLoss", "StaminaRestore", "MaxEnergyGain", "MaxEnergyLoss", "MaxHPGain", "MaxHPLoss", "MaxStaminaGain", "MaxStaminaLoss", "GoldenKey", "Status" ] ,
       "default": "None"
     },
     "amount": {

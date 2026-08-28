@@ -21,7 +21,8 @@
   <String Key="ActorProperty.Level.Description">El nivel quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="ActorProperty.Level.Name">State of Grace</String>
   <String Key="DamageType.Physical">Physical</String>
-  <String Key="EffectTemplate.Damage"></String>
+  <String Key="EffectTemplate.Damage" />
+  <String Key="EffectTemplate.EnergyRestore" />
   <String Key="EffectTemplate.HPGain">+{amount} Health</String>
   <String Key="EffectTemplate.HPLoss">-{amount} Health</String>
   <String Key="FloatingMessage.Failed">Failed!</String>
@@ -54,6 +55,8 @@
   <String Key="Item.Chili.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</String>
   <String Key="Item.Chili.Name">Hot chili</String>
   <String Key="Item.Coin.Name">Coin</String>
+  <String Key="Item.DroolBottle.Description"></String>
+  <String Key="Item.DroolBottle.Name">Holy Drool™</String>
   <String Key="Item.Duck.Description">Official ride merch. Chuck ’em, pick ’em up, chuck ’em again — the circle of quack.</String>
   <String Key="Item.Duck.Name">Rubber duck</String>
   <String Key="Item.Firecracker.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
@@ -62,8 +65,6 @@
   <String Key="Item.Gold.Name">Gold dust</String>
   <String Key="Item.GoldenKey.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.GoldenKey.Name">Golden key</String>
-  <String Key="Item.GooBottle.Description">Fresh saliva from the Supreme. It hydrates you with fanaticism to the max.</String>
-  <String Key="Item.GooBottle.Name">Goo bottle</String>
   <String Key="Item.Headbutt.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Headbutt.Name">Headbutt</String>
   <String Key="Item.Lantern.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
@@ -75,7 +76,7 @@
   <String Key="Item.MagneticCard.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
   <String Key="Item.MagneticCard.Name">Magnetic card</String>
   <String Key="Item.OrangePill.Name">Sports supplement</String>
-  <String Key="Item.PieceOfWood.Description"></String>
+  <String Key="Item.PieceOfWood.Description" />
   <String Key="Item.PieceOfWood.Name">Piece of wood</String>
   <String Key="Item.Pistol.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </String>
   <String Key="Item.Pistol.Name">Pistol</String>
@@ -196,7 +197,7 @@
   <String Key="MessageBox.SlotDeleted">The slot has been deleted.</String>
   <String Key="MessageBox.Warning">Warning!</String>
   <String Key="MessageKind.CannotPlaceItem">There is not enough space on the ground.</String>
-  <String Key="MessageKind.ExtraEnergy">You can hold more goo!</String>
+  <String Key="MessageKind.ExtraEnergy">Holy Drool capacity increased!</String>
   <String Key="MessageKind.ExtraHeart">You feel stronger!</String>
   <String Key="MessageKind.GateOpened">A metal gate opened.</String>
   <String Key="MessageKind.HandsFull">Your hands are full.</String>
@@ -204,14 +205,14 @@
   <String Key="MessageKind.ItemDiscarded">Item discarded.</String>
   <String Key="MessageKind.LiftNotAllowed">You can't lift that.</String>
   <String Key="MessageKind.NotEnoughCoins">Not enough coins.</String>
-  <String Key="MessageKind.NotEnoughGoo">Not enough goo</String>
+  <String Key="MessageKind.NotEnoughDrool">Not enough Holy Drool</String>
   <String Key="MessageKind.OutOfLine">Out of line!</String>
   <String Key="MessageKind.OutOfReach">Out of reach.</String>
   <String Key="MessageKind.PathCleared">The way is open.</String>
   <String Key="Misc.All">All</String>
   <String Key="Misc.And">and</String>
   <String Key="Misc.BackToCorridor">Go back to the hallway!</String>
-  <String Key="Misc.Chance"></String>
+  <String Key="Misc.Chance" />
   <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=—áéíóúÁÉÍÓÚ</String>
   <String Key="Misc.CopyrightDeveloper">© 2024 Indiesruption</String>
   <String Key="Misc.Credits">Remizione
@@ -302,12 +303,12 @@ Bla bla bla</String>
   <String Key="Prop.CrucifiedMan">Crucified man</String>
   <String Key="Prop.DepositMachine">Deposit machine</String>
   <String Key="Prop.Door">Door</String>
+  <String Key="Prop.Drool">Drool</String>
   <String Key="Prop.EnergyBolt">Energy bolt</String>
   <String Key="Prop.FerrisWheel">Ferris wheel</String>
   <String Key="Prop.FoodStall">Food stall</String>
   <String Key="Prop.Gate">Gate</String>
   <String Key="Prop.GhostTrain">Ghost train</String>
-  <String Key="Prop.Goo">Goo</String>
   <String Key="Prop.HomeOfTomorrow">The Home of Tomorrow</String>
   <String Key="Prop.IronGate">Iron gate</String>
   <String Key="Prop.Lever">Lever</String>
@@ -330,8 +331,6 @@ Bla bla bla</String>
   <String Key="Prop.UnderRideEntrance">Under ride</String>
   <String Key="Prop.VendingMachine">Vending machine</String>
   <String Key="Prop.WC">W.C.</String>
-  <String Key="StatName.Goo">Goo</String>
-  <String Key="StatName.HP">Health</String>
   <String Key="Verb.Examine">Examine</String>
   <String Key="Verb.Grab">Grab</String>
 </Strings>

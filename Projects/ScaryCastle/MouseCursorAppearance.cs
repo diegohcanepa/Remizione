@@ -15,6 +15,9 @@ namespace ScaryCastle
         // RefreshIcon
         private static void RefreshIcon(InteractionContext context)
         {
+            if (context.HeldItem?.Definition.Image != MouseCursor.CustomImage)
+                MouseCursor.CustomImage = context.HeldItem?.Definition.Image;
+
             if (context.Target == context.Session.Player && context.HeldItem == null)
                 return;
 
@@ -56,6 +59,7 @@ namespace ScaryCastle
                 else if (context.Session.ActiveNPC.CombatDecisionType is CombatDecisionType.Attack or CombatDecisionType.Charge or CombatDecisionType.Curse)
                 {
                     MouseCursor.Icon = MouseCursorIcon.Skull;
+                    MouseCursor.CustomImage = null;
                 }
 
                 return;
@@ -140,30 +144,41 @@ namespace ScaryCastle
         }
 
         // SyncText
-        private static void SyncText(GameThing target)
+        private static void SyncText(GameThing? target)
         {
             const string surpriseLabel = "[?]";
+
+            if (target == null)
+            {
+               MouseCursor.Tooltip = null;
+               MouseCursor.SubText = null;
+               return;
+            }
 
             MouseCursor.Tooltip = target.DisplayName;
 
             MouseCursor.SubTextColor = ColorPalette.MouseCursor.SubText;
 
-            if (target.ItemReward != null)
+            if (target.RevealLoot)
             {
-                MouseCursor.SubText = target.ItemReward.DisplayName;
+                if (target.ItemReward != null)
+                {
+                    MouseCursor.SubText = target.ItemReward.DisplayName;
+                    return;
+                }
+                else if (target.CoinReward > 0)
+                {
+                    MouseCursor.SubText = GameData.Items.Get(ItemNames.Coin).DisplayName;
+                    return;
+                }
+                else if (target.Definition?.DropTrigger == LootDropTrigger.OnImpact)
+                {
+                    MouseCursor.SubText = surpriseLabel;
+                    return;
+                }
             }
-            else if (target.CoinReward > 0)
-            {
-                MouseCursor.SubText = GameData.Items.Get(ItemNames.Coin).DisplayName;
-            }
-            else if (target.Definition?.DropTrigger == LootDropTrigger.OnImpact)
-            {
-                MouseCursor.SubText = surpriseLabel;
-            }
-            else
-            {
-                MouseCursor.SubText = null;
-            }
+
+            MouseCursor.SubText = null;
         }
 
         #endregion
@@ -173,7 +188,7 @@ namespace ScaryCastle
         {
             RefreshIcon(context);
 
-            if (context.Target != null && context.Target != lastKnownTarget)
+            if (context.Target != lastKnownTarget)
             {
                 SyncText(context.Target);
                 lastKnownTarget = context.Target;

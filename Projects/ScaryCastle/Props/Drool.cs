@@ -6,19 +6,19 @@ using Microsoft.Xna.Framework;
 namespace ScaryCastle
 {
     /// <summary>
-    /// Goo
+    /// Drool
     /// </summary>
-    public sealed class Goo : Prop
+    public sealed class Drool : Prop
     {
         // Constructor
-        public Goo(GameSession session, string name)
+        public Drool(GameSession session, string name)
             : base(session, name)
         {
             ApproachBehavior = ApproachBehavior.Over;
             AutoPlayAnimation = false;
             Atlas = Atlases.Props;
             CollisionDetection = false;
-            DisplayNameKey = "Prop.Goo";
+            DisplayNameKey = "Prop.Drool";
             PivotOrigin = RectanglePoint.Center;
             Opacity = .7f;
             RenderLayer = RenderLayer.Background;

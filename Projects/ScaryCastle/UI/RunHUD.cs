@@ -11,7 +11,7 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private readonly UIGooMeter gooMeter;
+        private readonly UIDroolMeter droolMeter;
         private readonly UIPassiveItems passiveItems;
         private readonly UIRunModifiers runModifiers;
         private readonly Run run;
@@ -25,7 +25,7 @@ namespace ScaryCastle
         public RunHUD(Run run)
         {
             this.run = run;
-            this.gooMeter = new(run.Session);
+            this.droolMeter = new(run.Session);
             this.StaminaMeter = new(run.Session);
             this.HPMeter = new(run.Session);
             this.InventoryMeter = new(run.PlayerInventory);
@@ -53,7 +53,7 @@ namespace ScaryCastle
             traits.Draw(gameTime);
             Game.SpriteBatch.End();
 
-            gooMeter.Draw(gameTime);
+            droolMeter.Draw(gameTime);
 
             if (!run.Session.IsConsoleVisible)
                 StaminaMeter.Draw(gameTime);
@@ -84,7 +84,7 @@ namespace ScaryCastle
             HPMeter.Update(gameTime);
             Log.Update(gameTime);
             Message.Update(gameTime);
-            gooMeter.Update(gameTime);
+            droolMeter.Update(gameTime);
             StaminaMeter.Update(gameTime);
             MiniMap.Update(gameTime);
         }

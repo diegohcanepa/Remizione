@@ -98,11 +98,10 @@ namespace ScaryCastle
             if (!InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
                 return false;
 
-            MouseCursor.PerformClick();
-
             // Drop throwable
             if (Actor.ActiveThrowable != null)
             {
+                MouseCursor.PerformClick();
                 Actor.DropActiveThrowable();
                 return true;
             }
@@ -112,12 +111,13 @@ namespace ScaryCastle
             // Drop held item
             if (Actor.Session.InteractionContext.HeldItem != null)
             {
-                Sound.Play(SoundNames.Interact);
+                MouseCursor.PerformClick(false);
                 Actor.Session.InteractionContext.HeldItem = null;
                 Actor.Session.InteractionData.Clear();
             }
             else
             {
+                MouseCursor.PerformClick();
                 Actor.Session.ShowInventory();
             }
 

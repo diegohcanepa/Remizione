@@ -48,6 +48,7 @@ namespace ScaryCastle
             this.Faction = Definition == null ? Faction.Good : Definition.Faction;
             this.CombatBehavior = GameData.CombatBehaviors.Find(DeclaredName);
             this.StatusManager = new(this);
+            this.RevealLoot = true;
 
             headSprite = new AnimatedSprite()
             {
@@ -653,7 +654,7 @@ namespace ScaryCastle
             {
                 Energy -= action.EnergyCost;
                 if (IsPlayer)
-                    ShowFlyOff(Atlases.UI.GooIcon);
+                    ShowFlyOff(Atlases.UI.DroolIcon);
             }
 
             // Stamina penalty
@@ -1260,6 +1261,13 @@ namespace ScaryCastle
             }
 
             return true;
+        }
+
+        // Rest
+        [ScriptMethod]
+        public virtual void Rest()
+        {
+            Stamina = MaxStamina;
         }
 
         // Say

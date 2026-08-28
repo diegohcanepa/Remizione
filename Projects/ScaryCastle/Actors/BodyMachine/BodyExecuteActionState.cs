@@ -142,7 +142,7 @@ namespace ScaryCastle
                 if (Action.EnergyCost > 0 && Owner.Energy < Action.EnergyCost)
                 {
                     Sound.Play(SoundNames.Error);
-                    var text = Localization.GetValue(MessageKind.NotEnoughGoo);
+                    var text = Localization.GetValue(MessageKind.NotEnoughDrool);
                     Owner.ShowFlyOff(text, ColorPalette.Text.TerraLight);
                     return;
                 }

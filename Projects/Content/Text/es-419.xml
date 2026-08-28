@@ -22,6 +22,7 @@
   <String Key="ActorProperty.Level.Name">Estado de Gracia</String>
   <String Key="DamageType.Physical">Físico</String>
   <String Key="EffectTemplate.Damage">{amount} daño</String>
+  <String Key="EffectTemplate.EnergyRestore">Recarga de baba</String>
   <String Key="EffectTemplate.HPGain">+{amount} Salud</String>
   <String Key="EffectTemplate.HPLoss">-{amount} Salud</String>
   <String Key="FloatingMessage.Failed">¡Fallaste!</String>
@@ -54,6 +55,8 @@
   <String Key="Item.Chili.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</String>
   <String Key="Item.Chili.Name">Chile picante</String>
   <String Key="Item.Coin.Name">Moneda</String>
+  <String Key="Item.DroolBottle.Description">Es una botella de Baba Bendita™. Te hidrata de fanatismo hasta el tope.</String>
+  <String Key="Item.DroolBottle.Name">Baba Bendita™</String>
   <String Key="Item.Duck.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Duck.Name">Patito de hule</String>
   <String Key="Item.Firecracker.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
@@ -62,8 +65,6 @@
   <String Key="Item.Gold.Name">Polvo de oro</String>
   <String Key="Item.GoldenKey.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.GoldenKey.Name">Llave dorada</String>
-  <String Key="Item.GooBottle.Description">Es una botella de Baba Bendita™. Te hidrata de fanatismo hasta el tope.</String>
-  <String Key="Item.GooBottle.Name">Botella de baba</String>
   <String Key="Item.Headbutt.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Headbutt.Name">Cabecear</String>
   <String Key="Item.Lantern.Description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</String>
@@ -196,7 +197,7 @@
   <String Key="MessageBox.SlotDeleted">La ranura ha sido eliminada.</String>
   <String Key="MessageBox.Warning">¡Atención!</String>
   <String Key="MessageKind.CannotPlaceItem">No hay suficiente espacio en el terreno.</String>
-  <String Key="MessageKind.ExtraEnergy">¡Puedes retener más baba!</String>
+  <String Key="MessageKind.ExtraEnergy">¡Aumentó la capacidad de Baba Bendita!</String>
   <String Key="MessageKind.ExtraHeart">¡Te sientes más fuerte!</String>
   <String Key="MessageKind.GateOpened">Una puerta de rejas se abrió.</String>
   <String Key="MessageKind.HandsFull">Tienes las manos ocupadas.</String>
@@ -204,7 +205,7 @@
   <String Key="MessageKind.ItemDiscarded">Item descartado.</String>
   <String Key="MessageKind.LiftNotAllowed">No puedes alzar eso.</String>
   <String Key="MessageKind.NotEnoughCoins">No tienes monedas suficientes.</String>
-  <String Key="MessageKind.NotEnoughGoo">Baba insuficiente</String>
+  <String Key="MessageKind.NotEnoughDrool">No tienes suficiente Baba Bendita</String>
   <String Key="MessageKind.OutOfLine">¡Fuera línea!</String>
   <String Key="MessageKind.OutOfReach">Fuera de alcance.</String>
   <String Key="MessageKind.PathCleared">Camino despejado.</String>
@@ -302,12 +303,12 @@ Bla bla bla</String>
   <String Key="Prop.CrucifiedMan">Hombre crucificado</String>
   <String Key="Prop.DepositMachine">Máquina de depósito</String>
   <String Key="Prop.Door">Puerta</String>
+  <String Key="Prop.Drool">Baba</String>
   <String Key="Prop.EnergyBolt">Chispa</String>
   <String Key="Prop.FerrisWheel">Rueda de la fortuna</String>
   <String Key="Prop.FoodStall">Puesto de comida</String>
   <String Key="Prop.Gate">Portón</String>
   <String Key="Prop.GhostTrain">Tren fantasma</String>
-  <String Key="Prop.Goo">Baba</String>
   <String Key="Prop.HomeOfTomorrow">La Casa del Mañana</String>
   <String Key="Prop.IronGate">Puerta de hierro</String>
   <String Key="Prop.Lever">Palanca</String>
@@ -330,8 +331,6 @@ Bla bla bla</String>
   <String Key="Prop.UnderRideEntrance">Inframundo</String>
   <String Key="Prop.VendingMachine">Máquina expendedora</String>
   <String Key="Prop.WC">Inodoro</String>
-  <String Key="StatName.Goo">Baba</String>
-  <String Key="StatName.HP">Salud</String>
   <String Key="Verb.Examine">Examinar</String>
   <String Key="Verb.Grab">Agarrar</String>
 </Strings>

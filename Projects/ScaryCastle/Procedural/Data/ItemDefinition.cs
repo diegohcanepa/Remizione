@@ -125,6 +125,7 @@ namespace ScaryCastle
             
             this.DisplayName = TextRepository.GetValue($"Item.{Name}.Name");
             this.Description = TextRepository.GetValue($"Item.{Name}.Description");
+            this.EffectDescription = EffectDescriptor.GetDescription(EffectDescriptors);
         }
 
         #endregion
@@ -152,6 +153,9 @@ namespace ScaryCastle
 
         // DisplayName
         public string DisplayName { get; private set; } = string.Empty;
+
+        // EffectDescription
+        public string EffectDescription { get; private set; } = string.Empty;
 
         // EnergyCost
         public int EnergyCost { get; }

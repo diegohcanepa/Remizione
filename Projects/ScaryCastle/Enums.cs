@@ -57,7 +57,7 @@ namespace ScaryCastle
     public enum EffectContext { Collect, Contact, Attack, RemainsContact, RunModifier, Update, Use, ProjectileHit, Status, ApplyStatus }
 
     // EffectType
-    public enum EffectType { None, BronzeKey, Coin, CoinLoss, ComicText, Damage, Death, EnergyGain, EnergyLoss, HPGain, HPLoss, StaminaGain, StaminaLoss, MaxEnergyGain, MaxEnergyLoss, MaxHPGain, MaxHPLoss, MaxStaminaGain, MaxStaminaLoss, GoldenKey, Status }
+    public enum EffectType { None, BronzeKey, Coin, CoinLoss, ComicText, Damage, Death, EnergyGain, EnergyLoss, EnergyRestore, HPGain, HPLoss, HPRestore, StaminaGain, StaminaLoss, StaminaRestore, MaxEnergyGain, MaxEnergyLoss, MaxHPGain, MaxHPLoss, MaxStaminaGain, MaxStaminaLoss, GoldenKey, Status }
 
     // EffectTarget
     public enum EffectTarget { Target, Self }
@@ -131,7 +131,7 @@ namespace ScaryCastle
     }
 
     // MessageKind
-    public enum MessageKind { CannotPlaceItem, GateOpened, HandsFull, InventoryFull, ItemDiscarded, LiftNotAllowed, NotEnoughCoins, NotEnoughGoo, OutOfReach, OutOfLine, PathCleared, ExtraEnergy, ExtraHeart }
+    public enum MessageKind { CannotPlaceItem, GateOpened, HandsFull, InventoryFull, ItemDiscarded, LiftNotAllowed, NotEnoughCoins, NotEnoughDrool, OutOfReach, OutOfLine, PathCleared, ExtraEnergy, ExtraHeart }
 
     // MeterColor
     public enum MeterColor { Green, Orange, Purple, SkyBlue, White }

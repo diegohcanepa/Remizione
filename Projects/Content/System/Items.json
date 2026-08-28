@@ -110,8 +110,8 @@
 			]			
 		},		
 		{
-			"name": "GooBottle",
-			"animationName": "ConsumeGooBottle",
+			"name": "DroolBottle",
+			"animationName": "ConsumeDroolBottle",
 			"category": "Food",
 			"deselectOnUse": true,
 			"actionKind": "Self",
@@ -119,8 +119,7 @@
 			"effects": [
 				{
 					"context": "Use",
-					"effectType": "EnergyGain",
-					"amount": "99",
+					"effectType": "EnergyRestore",
 					"target": "Self"
 				}
 			]

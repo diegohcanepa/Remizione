@@ -79,7 +79,7 @@ namespace ScaryCastle
             // Item description
             itemDescription = new(Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Highlight,
+                Color = ColorPalette.Text.TerraLight,
                 MaximumWidth = 200,
                 Multiline = false,
                 PivotOrigin = RectanglePoint.Bottom,
@@ -174,7 +174,7 @@ namespace ScaryCastle
                     if (ItemContainer[i].Definition.EnergyCost.IsBetween(1, 3))
                     {
                         amounts[i].Y = slots[i].BoundingBox.Center.Y + 7;
-                        amounts[i].RenderImage = Atlases.UI.GooCost[ItemContainer[i].Definition.EnergyCost - 1];
+                        amounts[i].RenderImage = Atlases.UI.DroolCost[ItemContainer[i].Definition.EnergyCost - 1];
                     }
                     else if (ItemContainer[i].Definition.IsStackable || ItemContainer[i].Definition.IsDepletable)
                     {
@@ -315,7 +315,7 @@ namespace ScaryCastle
 
                     itemLabel.X = slots[item.Index].BoundingBox.Center.X;
                     itemLabel.Text = item.Definition.DisplayName;
-                    itemDescription.Text = item.ShortDescription;
+                    itemDescription.Text = item.Definition.EffectDescription;
                     icons[item.Index].Scale = ScaleInfo.InventoryHeldItem;
                     shadows[item.Index].Scale = ScaleInfo.InventoryHeldItem;
                     itemLabel.Tag = item;

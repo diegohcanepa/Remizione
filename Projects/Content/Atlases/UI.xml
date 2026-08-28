@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:58f26ae1ac410b1549a71d53e5f42058:7c34a617bb00706e80bc50a9df2a7208:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:ec2039d2c38b6036c02b6787315c791c:2f3700d48eb64b6b4d3387600aeca310:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -56,22 +56,22 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="DialogOptionBullet.png" x="29" y="247" w="5" h="5"/>
     <sprite n="Dice.png" x="29" y="313" w="8" h="8"/>
     <sprite n="DiscardItemIcon.png" x="397" y="290" w="16" h="15"/>
-    <sprite n="Duck.png" x="244" y="195" w="22" h="22"/>
+    <sprite n="DroolBottle.png" x="244" y="195" w="22" h="22"/>
+    <sprite n="DroolCost1.png" x="2" y="323" w="8" h="9"/>
+    <sprite n="DroolCost2.png" x="461" y="315" w="12" h="9"/>
+    <sprite n="DroolCost3.png" x="415" y="291" w="16" h="9"/>
+    <sprite n="DroolIcon.png" x="2" y="323" w="8" h="9"/>
+    <sprite n="DroolMeter0.png" x="11" y="299" w="6" h="4"/>
+    <sprite n="DroolMeter1.png" x="35" y="299" w="6" h="4"/>
+    <sprite n="DroolMeter2.png" x="46" y="268" w="6" h="4"/>
+    <sprite n="DroolMeter3.png" x="42" y="247" w="6" h="4"/>
+    <sprite n="DroolMeter4.png" x="42" y="253" w="6" h="4"/>
+    <sprite n="DroolMeter5.png" x="47" y="259" w="6" h="4"/>
+    <sprite n="Duck.png" x="244" y="219" w="22" h="22"/>
     <sprite n="ExamineItem.png" x="360" y="283" w="19" h="11"/>
     <sprite n="FearIcon.png" x="458" y="339" w="9" h="9"/>
-    <sprite n="Firecracker.png" x="244" y="219" w="22" h="22"/>
+    <sprite n="Firecracker.png" x="462" y="211" w="22" h="22"/>
     <sprite n="GoldenKeyIcon.png" x="2" y="286" w="7" h="11"/>
-    <sprite n="GooBottle.png" x="462" y="211" w="22" h="22"/>
-    <sprite n="GooCost1.png" x="2" y="323" w="8" h="9"/>
-    <sprite n="GooCost2.png" x="461" y="315" w="12" h="9"/>
-    <sprite n="GooCost3.png" x="415" y="291" w="16" h="9"/>
-    <sprite n="GooIcon.png" x="2" y="323" w="8" h="9"/>
-    <sprite n="GooMeter0.png" x="11" y="299" w="6" h="4"/>
-    <sprite n="GooMeter1.png" x="35" y="299" w="6" h="4"/>
-    <sprite n="GooMeter2.png" x="46" y="268" w="6" h="4"/>
-    <sprite n="GooMeter3.png" x="42" y="247" w="6" h="4"/>
-    <sprite n="GooMeter4.png" x="42" y="253" w="6" h="4"/>
-    <sprite n="GooMeter5.png" x="47" y="259" w="6" h="4"/>
     <sprite n="GreenMeter0.png" x="34" y="268" w="4" h="5"/>
     <sprite n="GreenMeter1.png" x="35" y="261" w="4" h="5"/>
     <sprite n="GreenMeter2.png" x="39" y="275" w="4" h="5"/>

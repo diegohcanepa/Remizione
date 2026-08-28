@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:d2cd2aa7f644458591a4a13711444bed:d951d0a1ca8a787b969d1b86e74e90a2:b23792595b5c0e9561078184f535bec7$ -->
+<!-- $TexturePacker:SmartUpdate:574e7bdb61735224a9cfd624ff3a55b7:d951d0a1ca8a787b969d1b86e74e90a2:b23792595b5c0e9561078184f535bec7$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -83,16 +83,16 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Edmund-assets/Consume02.png" x="312" y="113" w="28" h="25"/>
     <sprite n="Edmund-assets/Consume03.png" x="282" y="133" w="28" h="25"/>
     <sprite n="Edmund-assets/Consume04.png" x="342" y="113" w="28" h="25"/>
-    <sprite n="Edmund-assets/ConsumeGooBottle01.png" x="372" y="113" w="28" h="25"/>
-    <sprite n="Edmund-assets/ConsumeGooBottle02.png" x="402" y="113" w="28" h="25"/>
-    <sprite n="Edmund-assets/ConsumeGooBottle03.png" x="432" y="129" w="28" h="25"/>
-    <sprite n="Edmund-assets/ConsumeGooBottle04.png" x="462" y="137" w="28" h="25"/>
-    <sprite n="Edmund-assets/DrinkGoo01.png" x="402" y="86" w="28" h="25"/>
-    <sprite n="Edmund-assets/DrinkGoo02.png" x="432" y="102" w="28" h="25"/>
-    <sprite n="Edmund-assets/DrinkGoo03.png" x="160" y="156" w="28" h="25"/>
-    <sprite n="Edmund-assets/DrinkGoo04.png" x="122" y="170" w="28" h="25"/>
-    <sprite n="Edmund-assets/DrinkGoo05.png" x="92" y="180" w="28" h="25"/>
-    <sprite n="Edmund-assets/DrinkGoo06.png" x="32" y="195" w="28" h="25"/>
+    <sprite n="Edmund-assets/ConsumeDroolBottle01.png" x="372" y="113" w="28" h="25"/>
+    <sprite n="Edmund-assets/ConsumeDroolBottle02.png" x="402" y="113" w="28" h="25"/>
+    <sprite n="Edmund-assets/ConsumeDroolBottle03.png" x="432" y="129" w="28" h="25"/>
+    <sprite n="Edmund-assets/ConsumeDroolBottle04.png" x="462" y="137" w="28" h="25"/>
+    <sprite n="Edmund-assets/DrinkDrool01.png" x="402" y="86" w="28" h="25"/>
+    <sprite n="Edmund-assets/DrinkDrool02.png" x="432" y="102" w="28" h="25"/>
+    <sprite n="Edmund-assets/DrinkDrool03.png" x="160" y="156" w="28" h="25"/>
+    <sprite n="Edmund-assets/DrinkDrool04.png" x="122" y="170" w="28" h="25"/>
+    <sprite n="Edmund-assets/DrinkDrool05.png" x="92" y="180" w="28" h="25"/>
+    <sprite n="Edmund-assets/DrinkDrool06.png" x="32" y="195" w="28" h="25"/>
     <sprite n="Edmund-assets/EatPill01.png" x="482" y="110" w="28" h="25"/>
     <sprite n="Edmund-assets/EatPill02.png" x="312" y="113" w="28" h="25"/>
     <sprite n="Edmund-assets/EatPill03.png" x="282" y="133" w="28" h="25"/>

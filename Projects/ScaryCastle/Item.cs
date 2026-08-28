@@ -19,7 +19,6 @@ namespace ScaryCastle
             this.Definition = definition;
             this.Script = inventory.Session.ScriptLibrary.FindRoutine($"{Definition.Name}Outcome");
             this.Amount = definition.InitialAmount;
-            this.ShortDescription = EffectDescriptor.GetDescription(definition.EffectDescriptors);
         }
 
         #endregion
@@ -100,9 +99,6 @@ namespace ScaryCastle
 
         // Script
         public Script? Script { get; }
-
-        // ShortDescription
-        public string ShortDescription { get; }
 
         // StaminaCost
         public int StaminaCost => Definition.StaminaCost;

@@ -87,7 +87,7 @@ namespace ScaryCastle
 
             else if (message == MessageKind.ExtraEnergy)
             {
-                icon.RenderImage = Atlases.UI.GooIcon;
+                icon.RenderImage = Atlases.UI.DroolIcon;
             }
 
             else if (message == MessageKind.ExtraHeart)
@@ -95,9 +95,9 @@ namespace ScaryCastle
                 icon.RenderImage = Atlases.UI.HeartIcon;
             }
 
-            else if (message == MessageKind.NotEnoughGoo)
+            else if (message == MessageKind.NotEnoughDrool)
             {
-                icon.RenderImage = Atlases.UI.GooIcon;
+                icon.RenderImage = Atlases.UI.DroolIcon;
                 Sound.Play(SoundNames.Error);
             }
 

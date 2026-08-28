@@ -1055,6 +1055,9 @@ namespace ScaryCastle
         // IsKnockbackInProgress
         public bool IsKnockbackInProgress => knockbackVelocity != Vector2.Zero;
 
+        // ItemReward
+        public ItemDefinition? ItemReward { get; set; }
+
         // LootDisplayName
         public string LootDisplayName { get; private set; } = string.Empty;
 
@@ -1116,6 +1119,9 @@ namespace ScaryCastle
         [ScriptProperty]
         public string ResistanceTableName { get; set; }
 
+        // RevealLoot
+        public virtual bool RevealLoot { get; init; }
+
         // Room
         public new GameRoom? Room => Parent as GameRoom;
 
@@ -1157,9 +1163,6 @@ namespace ScaryCastle
                 return field;
             }
         } = new();
-
-        // ItemReward
-        public ItemDefinition? ItemReward { get; set; }
 
         // Session
         public new GameSession Session { get; }

@@ -107,7 +107,7 @@ namespace ScaryCastle
             if (RunIndex == 0)
             {
                 CurrentRun.PlayerInventory.Add(ItemNames.Apple);
-                CurrentRun.PlayerInventory.Add(ItemNames.GooBottle);
+                CurrentRun.PlayerInventory.Add(ItemNames.DroolBottle);
                 CurrentRun.PlayerInventory.Add(ItemNames.ServantCross);
                 CurrentRun.Traits.Add(TraitType.Luck);
                 CurrentRun.Traits.Add(TraitType.Lockpicking);
@@ -142,7 +142,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(GameRoom));
             AotTypeRegistry.Register(typeof(GateLever));
             AotTypeRegistry.Register(typeof(GoldenKey));
-            AotTypeRegistry.Register(typeof(Goo));
+            AotTypeRegistry.Register(typeof(Drool));
             AotTypeRegistry.Register(typeof(HellGoat));
             AotTypeRegistry.Register(typeof(Monitor));
             AotTypeRegistry.Register(typeof(NumberSix));
@@ -811,7 +811,10 @@ namespace ScaryCastle
         public void ShowInventory()
         {
             if (inventoryScene != null)
+            {
+                RunHUD?.Log.Hide();
                 Game.SceneManager.Push(inventoryScene);
+            }
         }
     }
 }
