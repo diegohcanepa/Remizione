@@ -2,13 +2,27 @@
   "$schema": "./Run.schema.json",
   "data": [
     {
-      "name": "Run0",
+      "name": "First",
       "floors": [
         {
           "allowedPuzzles": [
             "BronzeKey"
           ],
           "roomCount": 8,
+          "theme": "Castle"
+        },
+        {
+          "allowedPuzzles": [
+            "BronzeKey"
+          ],
+          "roomCount": 10,
+          "theme": "Castle"
+        },
+        {
+          "allowedPuzzles": [
+            "BronzeKey"
+          ],
+          "roomCount": 10,
           "theme": "Castle"
         }
       ]

@@ -54,7 +54,8 @@
         "tags": {
           "type": "string"
         }
-      }
+      },
+      "required": ["difficulty"]
     }
   ]
 }

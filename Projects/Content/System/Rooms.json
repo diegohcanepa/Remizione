@@ -30,12 +30,23 @@
           "position": "170,18",
           "placement": "WallFrontHang",
           "allowTags": "Torch"
+        },
+        {
+          "position": "63,62",
+          "placement": "Floor",
+          "allowTags": "Grate"
+        },        
+        {
+          "position": "147,67",
+          "placement": "Floor",
+          "allowTags": "Grate"
         }
       ],
       "walkArea": "207,55;218,77;198,103;231,103;237,109;8,109;37,48;46,48;47,58;63,62;86,46;155,46;159,61;185,61;188,55"
     },
     {
       "name": "Castle_Std_Common_01",
+      "difficulty": "Easy",
       "roomCategory": "Standard",
       "doorUp": "126,41",
       "doorLeft": "21,80",
@@ -107,11 +118,12 @@
     },
     {
       "name": "Castle_Std_Common_02",
+      "difficulty": "Easy",
       "roomCategory": "Standard",
       "doorUp": "151,54",
       "doorLeft": "21,119",
       "doorRight": "212,95",
-    "doorDown": "152,182",
+      "doorDown": "152,182",
       "placeholders": [
         {
         "position": "60,64",
@@ -151,6 +163,7 @@
     },    
     {
       "name": "Castle_Std_Pit_01",
+      "difficulty": "Normal",
       "roomCategory": "Standard",
       "doorLeft": "21,80",
       "doorRight": "220,80",
@@ -162,6 +175,11 @@
           "placement": "Floor",
           "fillChance": 0.5,
           "allowTags": "Trap"
+        },
+        {
+          "position": "126,81",
+          "placement": "Floor",
+          "fillChance": 0.9
         },
         {
           "position": "172,72",

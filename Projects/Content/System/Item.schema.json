@@ -35,6 +35,9 @@
               ],
               "default": "Script"
             },
+            "allowDiscard": {
+              "type": "boolean"
+            },            
             "animationName": {
               "type": "string"
             },

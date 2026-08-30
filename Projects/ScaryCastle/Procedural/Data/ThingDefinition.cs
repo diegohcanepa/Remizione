@@ -11,11 +11,7 @@ namespace ScaryCastle
     /// </summary>
     public abstract class ThingDefinition : EntityDefinition
     {
-        #region Private fields
-
         private readonly List<EffectDescriptor> effects = [];
-
-        #endregion
 
         #region Constructor
 
@@ -42,7 +38,7 @@ namespace ScaryCastle
             IsUnique = element.GetBool("isUnique", false);
 
             // MaxPerRoom
-            MaxPerRoom = element.GetInt32("maxPerRoom", 1);
+            MaxPerRoom = element.GetInt32("maxPerRoom", -1);
 
             // RoomTheme
             RoomTheme = element.GetEnum<RoomTheme>("roomTheme");

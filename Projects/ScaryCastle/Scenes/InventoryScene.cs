@@ -1,6 +1,8 @@
-﻿using Engendro;
+﻿using Adberration.Scripting;
+using Engendro;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
+using ScaryCastle.Scripting;
 
 namespace ScaryCastle
 {
@@ -129,14 +131,16 @@ namespace ScaryCastle
             {
                 if (GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item item)
                 {
-                    ItemContainer.Session.HoveredItem = item;
-                    ItemContainer.Session.AwaitRoutine(RoutineNames.ExamineHoveredItem);
-                    Game.SceneManager.Pop();
-                }
-                else
-                {
-                    MouseCursor.PerformClick();
-                    Game.SceneManager.Pop();
+                    if (ItemContainer.Session.ScriptLibrary.FindItemRoutine(item.Name, Verb.Examine) is Script script)
+                    {
+                        ItemContainer.Session.AwaitScript(script);
+                        Game.SceneManager.Pop();
+                    }
+                    else
+                    {
+                        MouseCursor.PerformClick();
+                        Game.SceneManager.Pop();
+                    }
                 }
             }
 

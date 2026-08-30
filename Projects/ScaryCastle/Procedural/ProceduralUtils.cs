@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration;
+using Engendro;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -10,45 +11,111 @@ namespace ScaryCastle.Procedural
     /// </summary>
     internal static class ProceduralUtils
     {
-        // AdjustWeight
-        internal static float AdjustWeight(Difficulty roomDiff, Difficulty difficulty, float baseWeight)
+        // AdjustActorWeight
+        internal static float AdjustActorWeight(Difficulty roomDiff, Difficulty difficulty, float baseWeight)
         {
-            int distance = (int)roomDiff - (int)difficulty;
-
-            // 1. Modificador por choque de dificultades (Topografía vs Definición)
-            float roomMultiplier = distance switch
+            switch (roomDiff)
             {
-                2 => 0.05f,   // Sala Hard, Enemigo Easy -> Desalentamos masillas en el clímax
-                1 => 0.25f,   // Sala Normal, Enemigo Easy
-                0 => 1.0f,    // Calce ideal
-                -1 => 0.10f,  // Out of Depth leve: Sala Easy, Enemigo Normal -> 10% de chances base
-                -2 => 0.02f,  // Out of Depth severo: Sala Easy, Enemigo Hard -> 2% de chances base
-                _ => 1.0f
-            };
+                case Difficulty.Easy:
+                    // Sala Easy: SOLO enemigos Easy.
+                    if (difficulty == Difficulty.Easy) return baseWeight * 1.00f;
+                    return 0.00f;
 
-            return baseWeight * roomMultiplier;
+                case Difficulty.Normal:
+                    // Sala Normal: Enemigos Normales (100%) y Masillas Easy (35%).
+                    if (difficulty == Difficulty.Normal) return baseWeight * 1.00f;
+                    if (difficulty == Difficulty.Easy) return baseWeight * 0.35f;
+                    return 0.00f;
+
+                case Difficulty.Hard:
+                    // Sala Hard: Enemigos Hard (100%) y Normales de soporte (50%).
+                    if (difficulty == Difficulty.Hard) return baseWeight * 1.00f;
+                    if (difficulty == Difficulty.Normal) return baseWeight * 0.50f;
+                    return 0.00f;
+
+                default:
+                    return 0.00f;
+            }
+        }
+
+        // AdjustPropWeight
+        internal static float AdjustPropWeight(Difficulty roomDiff, Difficulty difficulty, float baseWeight)
+        {
+            // Para los Props, la dificultad de la sala actúa como un TOPE.
+            // Una Antorcha (Easy) puede estar en cualquier sala. 
+            // Un Cofre (Hard) NO puede estar en una sala Easy.
+            if (difficulty > roomDiff)
+                return 0.00f; // El prop es demasiado difícil para esta sala
+
+            // Si el prop es de dificultad menor o igual a la sala, sale con su peso normal.
+            return baseWeight;
         }
 
         // CalculateEnemyBudget
-        internal static int CalculateEnemyBudget(RoomNode roomNode, Random rng)
+        internal static int CalculateEnemyBudget(RoomNode roomNode, float runProgress, Random rng)
         {
-            // 1. Definimos el presupuesto estrictamente por la zona geográfica
-            var (min, max) = roomNode.TopographicDifficulty switch
+            // Presupuesto base austero pero suficiente para la aventura
+            int baseBudget = roomNode.TopographicDifficulty switch
             {
-                Difficulty.Easy => (1, 1),   // Muy tranquilo
-                Difficulty.Normal => (2, 2), // Reto estándar
-                Difficulty.Hard => (2, 3),   // Presión alta
-                _ => (0, 0)
+                Difficulty.Easy => rng.Next(2, 4),   // 2 a 3 pts (Ideal para 1-3 masillas o un pack)
+                Difficulty.Normal => rng.Next(4, 7),   // 4 a 6 pts
+                Difficulty.Hard => rng.Next(7, 11),  // 7 a 10 pts
+                _ => 2
             };
 
-            // 2. Variación aleatoria (-1, 0, +1) para inyectar imprevisibilidad
-            int finalBudget = rng.Next(min - 1, max + 2);
+            // Escalado de volumen por avance de piso (+0 a +3 puntos maximo hacia el final)
+            int extraBudget = (int)Math.Round(runProgress * 3.0f);
 
-            // 3. Clamp final para garantizar un límite mínimo y máximo absoluto en el cuarto
-            return Math.Clamp(finalBudget, 1, 4); // Nunca 0, nunca más de 4 patrullas/patotas base
+            return baseBudget + extraBudget;
         }
 
-        // GetSpawnPoints
+        // GetCandidateDefinitions
+        internal static List<TDefinition> GetCandidateDefinitions<TDefinition>(Run run, RoomNode roomNode, IList<TDefinition> definitions)
+            where TDefinition : ThingDefinition
+        {
+            var outList = new List<TDefinition>();
+
+            foreach (var definition in definitions)
+            {
+                if (definition.IsUnique)
+                    continue;
+
+                if (definition.MinFloor > run.FloorIndex)
+                    continue;
+
+                if (definition is ActorDefinition actorDefinition)
+                {
+                    // Si es un Boss real, SOLO puede aparecer en la habitación etiquetada como Boss
+                    if (actorDefinition.Rank == ActorRank.Boss && roomNode.Category != RoomCategory.End)
+                        continue;
+
+                    // Y viceversa: en la sala del Boss no queremos que spawneen murciélagos comunes como plato principal
+                    if (roomNode.Category == RoomCategory.End && actorDefinition.Rank != ActorRank.Boss)
+                        continue;
+                }
+
+                if (definition.RoomTheme.HasValue && definition.RoomTheme != roomNode.Definition.Theme)
+                    continue;
+
+                if (run.Session.GetProceduralThing(definition.Name) == null)
+                    continue;
+
+                if (!definition.PassesRunConstraints(run.Session.RunIndex))
+                    continue;
+
+                if (!definition.PassesMaxPerRunConstraint(run.Spawns))
+                    continue;
+
+                if (!TagScope.Test(roomNode.Definition.Scope, roomNode.Definition.Pools, definition.Tags))
+                    continue;
+
+                outList.Add(definition);
+            }
+
+            return outList;
+        }
+
+        // GetSpawnPoints (Geometria inalterada)
         internal static List<Vector2> GetSpawnPoints(Polygon polygon, int count, int cellSize, Random rng)
         {
             var cells = new List<Vector2>();

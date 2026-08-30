@@ -11,6 +11,7 @@ using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace ScaryCastle
@@ -171,7 +172,6 @@ namespace ScaryCastle
             AotTypeRegistry.Register("await-credits", typeof(AwaitCreditsCommand));
             AotTypeRegistry.Register("await-devil-hand", typeof(AwaitDevilHandCommand));
             AotTypeRegistry.Register("await-dialog-block", typeof(AwaitDialogBlockCommand));
-            AotTypeRegistry.Register("await-examine-item", typeof(AwaitExamineItemCommand));
             AotTypeRegistry.Register("await-input", typeof(AwaitInputCommand));
             AotTypeRegistry.Register("await-monitor-text", typeof(AwaitMonitorTextCommand));
             AotTypeRegistry.Register("await-npc-turn", typeof(AwaitNPCTurnCommand));
@@ -360,15 +360,7 @@ namespace ScaryCastle
         // OnScriptLibraryLoaded
         protected override void OnScriptLibraryLoaded()
         {
-            // Check overloads
-            foreach (var script in ScriptLibrary.AllScripts)
-            {
-                if (script.ScriptType == ScriptType.Outcome && script.OverloadName.Length > 0)
-                {
-                    if (GameData.Items.Find(script.OverloadName) == null)
-                        throw new InvalidOperationException($"The item definition supplied in [{script.Name}] does not exist.");
-                }
-            }
+            GameDataValidator.Validate(ScriptLibrary);
         }
 
         // OnStarted
@@ -509,6 +501,9 @@ namespace ScaryCastle
 
                     Camera.Follow(Player, true);
                     EnterRoom(startRoom);
+
+                    if (ScriptLibrary.FindRunRoutine(CurrentRun, RunStage.Start) is Script script)
+                        AwaitScript(script);
                 }
             }
             else
@@ -521,19 +516,13 @@ namespace ScaryCastle
         [ScriptMethod]
         public void BeginRun()
         {
-            BeginRun(null);
-        }
-
-        // BeginRun
-        public void BeginRun(int? seed = null)
-        {
             if (CurrentRun != null)
                 throw new InvalidOperationException("A run is already in progress.");
 
-            var runSeed = seed ?? System.Environment.TickCount;
+            var runSeed = Seed == 0 ? System.Environment.TickCount : Seed;
 
             // 1. Get descriptor
-            var runDefinition = GameData.Runs.Get($"Run{RunIndex}");
+            var runDefinition = GameData.Runs[RunIndex];
 
             // 2. Create run
             CurrentRun = new Run(this, runSeed, runDefinition);
@@ -641,9 +630,6 @@ namespace ScaryCastle
                 return false;
             }
         }
-
-        // HoveredItem
-        public Item? HoveredItem { get; set; }
 
         // InteractionContext
         public InteractionContext InteractionContext { get; }
@@ -784,6 +770,10 @@ namespace ScaryCastle
         // RunIndex
         [ScriptProperty]
         public int RunIndex { get; set; }
+
+        // Seed
+        [ScriptProperty]
+        public int Seed { get; set; }
 
         // ShakeCamera
         public void ShakeCamera(ImpactType impactType)

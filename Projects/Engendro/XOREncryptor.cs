@@ -43,9 +43,7 @@ namespace Engendro
         public static Stream AsStream(Stream input, string key)
         {
             if (input.Length == 0)
-            {
                 return new MemoryStream();
-            }
 
             var text = AsString(input, key);
 
@@ -56,9 +54,7 @@ namespace Engendro
         public static string AsString(Stream input, string key)
         {
             if (input.Length == 0)
-            {
                 return string.Empty;
-            }
 
             using StreamReader r = new(input);
             var text = r.ReadToEnd();

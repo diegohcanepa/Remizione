@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration.Scripting;
+using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
@@ -19,6 +20,9 @@ namespace ScaryCastle
         {
             // ActionKind
             ActionKind = element.GetEnum("actionKind", ActionKind.Script);
+
+            // AllowDiscard
+            AllowDiscard = element.GetBool("allowDiscard", true);
 
             // AnimationName
             AnimationName = element.GetString("animationName");
@@ -132,6 +136,9 @@ namespace ScaryCastle
 
         // ActionKind
         public ActionKind ActionKind { get; }
+
+        // AllowDiscard
+        public bool AllowDiscard { get; }
 
         // AnimationName
         public string AnimationName { get; }

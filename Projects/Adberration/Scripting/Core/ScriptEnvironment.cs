@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
@@ -15,12 +16,12 @@ namespace Adberration.Scripting
 
         private readonly Dictionary<string, string> constants = [];
         private readonly Dictionary<string, Counter> counters = [];
-        private readonly Dictionary<Type, ScriptEntity> entities = [];
+        private FrozenDictionary<Type, ScriptEntity> entities = FrozenDictionary<Type, ScriptEntity>.Empty;
         private readonly Dictionary<string, Flag> flags = [];
         private readonly Session session;
-        private readonly Dictionary<string, ScriptMethod> sessionMethods = [];
-        private readonly Dictionary<string, ScriptProperty> sessionProperties = [];
-        private readonly Dictionary<string, ScriptStatement> statements = [];
+        private FrozenDictionary<string, ScriptMethod> sessionMethods = FrozenDictionary<string, ScriptMethod>.Empty;
+        private FrozenDictionary<string, ScriptProperty> sessionProperties = FrozenDictionary<string, ScriptProperty>.Empty;
+        private FrozenDictionary<string, ScriptStatement> statements = FrozenDictionary<string, ScriptStatement>.Empty;
 
         #endregion
 
@@ -125,6 +126,7 @@ namespace Adberration.Scripting
             IsActive = true;
 
             // Statements
+            Dictionary<string, ScriptStatement> statementsDict = [];
             var statementType = typeof(Statement);
             foreach (var entry in AotTypeRegistry.Types)
             {
@@ -133,10 +135,12 @@ namespace Adberration.Scripting
                     continue;
 
                 var instance = new ScriptStatement(session, entry.KeyName, entry.Type, entry.Context);
-                statements.Add(entry.KeyName, instance);
+                statementsDict.Add(entry.KeyName, instance);
             }
+            statements = statementsDict.ToFrozenDictionary();
 
             // Entities
+            Dictionary<Type, ScriptEntity> entitiesDict = [];
             var entityType = typeof(Entity);
             foreach (var typeInfo in AotTypeRegistry.Types)
             {
@@ -145,10 +149,12 @@ namespace Adberration.Scripting
                     continue;
 
                 var instance = new ScriptEntity(session, typeInfo.Type);
-                entities.Add(instance.Type, instance);
+                entitiesDict.Add(instance.Type, instance);
             }
+            entities = entitiesDict.ToFrozenDictionary();
 
             // Register session properties
+            Dictionary<string, ScriptProperty> sessionPropertiesDict = [];
             foreach (var propertyInfo in session.GetType().GetRuntimeProperties())
             {
                 var attribute = propertyInfo.GetCustomAttribute<ScriptPropertyAttribute>();
@@ -156,22 +162,25 @@ namespace Adberration.Scripting
                 {
                     ScriptProperty property = new(session, propertyInfo.Name, propertyInfo, attribute.Context);
 
-                    // Ensure property does not exists (hiding member feaure 'new' keyword)
+                    // Ensure property does not exists (hiding member feature 'new' keyword)
                     if (!sessionProperties.ContainsKey(property.Name))
-                        sessionProperties[propertyInfo.Name] = property;
+                        sessionPropertiesDict[propertyInfo.Name] = property;
                 }
             }
+            sessionProperties = sessionPropertiesDict.ToFrozenDictionary();
 
             // Register session methods
+            Dictionary<string, ScriptMethod> sessionMethodsDict = [];
             foreach (var methodInfo in session.GetType().GetRuntimeMethods())
             {
                 var attribute = methodInfo.GetCustomAttribute<ScriptMethodAttribute>();
                 if (attribute != null)
                 {
                     ScriptMethod method = new(session, methodInfo.Name, methodInfo, attribute.Context);
-                    sessionMethods[method.Name] = method;
+                    sessionMethodsDict[method.Name] = method;
                 }
             }
+            sessionMethods = sessionMethodsDict.ToFrozenDictionary();
         }
 
         // CheckCodingContext

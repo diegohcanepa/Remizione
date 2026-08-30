@@ -4,7 +4,6 @@ using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Xml;
 
 namespace Engendro
@@ -16,7 +15,6 @@ namespace Engendro
     {
         #region Private fields
 
-        [ThreadStatic]
         private static readonly StringBuilder sb = new();
         private static FrozenDictionary<string, string> texts = FrozenDictionary<string, string>.Empty;
 
@@ -27,12 +25,12 @@ namespace Engendro
         #region Private members
 
         // CreateDictionary
-        private static Dictionary<string, string> CreateDictionary(string fileName)
+        private static Dictionary<string, string> CreateDictionary(string path)
         {
             Dictionary<string, string> result = [];
             XmlReaderSettings settings = new() { CloseInput = true };
 
-            using (var stm = TitleContainer.OpenStream(fileName))
+            using (var stm = TitleContainer.OpenStream(path))
             {
                 var input = !XOREncryptor.IsEncryptedXml(stm) ? stm : XOREncryptor.AsStream(stm, XOREncryptor.EncryptionKey);
 
@@ -45,12 +43,9 @@ namespace Engendro
                 if (r.GetAttribute("PublishVersion") is string publishVersionValue)
                     PublishVersion = XmlConvert.ToInt32(publishVersionValue);
 
-                r.Read();
-                r.Read();
-
-                while (r.Name == "String")
+                while (r.ReadToFollowing("String"))
                 {
-                    if (r["Key"] is string key)
+                    if (r.GetAttribute("Key") is string key)
                     {
                         var value = r.ReadElementContentAsString();
 
@@ -59,8 +54,6 @@ namespace Engendro
 
                         result[key] = value;
                     }
-
-                    r.Read();
                 }
             }
 
@@ -68,10 +61,10 @@ namespace Engendro
         }
 
         // LoadCore
-        private static void LoadCore(string fileName, LanguagePackage? languagePackage)
+        private static void LoadCore(string path, LanguagePackage? languagePackage)
         {
-            FileName = fileName;
-            texts = CreateDictionary(fileName).ToFrozenDictionary();
+            Path = path;
+            texts = CreateDictionary(path).ToFrozenDictionary();
             ContentVersion++;
             LanguagePackage = languagePackage;
             Loaded?.Invoke();
@@ -86,9 +79,9 @@ namespace Engendro
         }
 
         // AsDictionary
-        public static Dictionary<string, string> AsDictionary(string fileName)
+        public static Dictionary<string, string> AsDictionary(string path)
         {
-            return CreateDictionary(fileName);
+            return CreateDictionary(path);
         }
 
         // Clear
@@ -106,14 +99,11 @@ namespace Engendro
         // ContentVersion
         public static int ContentVersion { get; private set; }
 
-        // FileName
-        public static string FileName { get; private set; } = string.Empty;
-
         // FindMissingGlyphs
         public static char[] FindMissingGlyphs(SpriteFont spriteFont, LanguagePackage languagePackage)
         {
             HashSet<char> result = [];
-            
+
             var glyphDictionary = spriteFont.GetGlyphs();
 
             foreach (var value in AsDictionary(languagePackage).Values)
@@ -149,7 +139,6 @@ namespace Engendro
             if (replacements.Length == 0)
                 return result;
 
-            // Optimizar reemplazos con StringBuilder
             sb.Clear();
             sb.Append(result);
 
@@ -167,7 +156,7 @@ namespace Engendro
         // IsKeyReference
         public static bool IsKeyReference(string text)
         {
-            return text.StartsWith(KeyReferenceSymbol, StringComparison.InvariantCulture);
+            return text.StartsWith(KeyReferenceSymbol, StringComparison.Ordinal);
         }
 
         // KeyReferenceSymbol
@@ -186,13 +175,16 @@ namespace Engendro
         }
 
         // Load
-        public static void Load(string fileName)
+        public static void Load(string path)
         {
-            LoadCore(fileName, null);
+            LoadCore(path, null);
         }
 
         // Loaded
         public static event Notify? Loaded;
+
+        // Path
+        public static string Path { get; private set; } = string.Empty;
 
         // PublishVersion
         public static int PublishVersion { get; private set; }

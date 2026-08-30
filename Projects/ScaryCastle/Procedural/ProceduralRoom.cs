@@ -177,56 +177,6 @@ namespace ScaryCastle
             }
         }
 
-        // GetCandidateDefinitions
-        private List<TDefinition> GetCandidateDefinitions<TDefinition, TThing>(IList<TDefinition> definitions)
-            where TDefinition : ThingDefinition where TThing : GameThing
-        {
-            var outList = new List<TDefinition>();
-            if (Session.CurrentRun == null)
-                return outList;
-
-            foreach (var definition in definitions)
-            {
-                if (definition.IsUnique)
-                    continue;
-
-                if (definition is ActorDefinition actorDefinition)
-                {
-                    // Si es un Boss real, SOLO puede aparecer en la habitación etiquetada como Boss
-                    if (actorDefinition.Rank == ActorRank.Boss && RoomNode.Category != RoomCategory.End)
-                        continue;
-
-                    // Y viceversa: en la sala del Boss no queremos que spawneen murciélagos comunes como plato principal
-                    if (RoomNode.Category == RoomCategory.End && actorDefinition.Rank != ActorRank.Boss)
-                        continue;
-                }
-
-                if (definition.RoomTheme.HasValue && definition.RoomTheme != RoomNode.Definition.Theme)
-                    continue;
-
-                var thing = Session.GetProceduralThing(definition.Name);
-
-                if (thing is not TThing)
-                    continue;
-
-                if (!definition.PassesRunConstraints(Session.RunIndex))
-                    continue;
-
-                if (Session.CurrentRun != null)
-                {
-                    if (!definition.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns))
-                        continue;
-                }
-
-                if (!TagScope.Test(RoomNode.Definition.Scope, RoomNode.Definition.Pools, definition.Tags))
-                    continue;
-
-                outList.Add(definition);
-            }
-
-            return outList;
-        }
-
         // LockDoorsAccordingly
         private void LockDoorsAccordingly()
         {
@@ -312,39 +262,62 @@ namespace ScaryCastle
             if (WalkArea == null || Session.CurrentRun == null)
                 return;
 
-            var candidates = GetCandidateDefinitions<ActorDefinition, Actor>(GameData.Actors);
+            // 1. Tirada de Presencia (El pacing de aventura)
+            // ¿Esta sala debería tener combate o ser de pura exploración?
+            float combatChance = RoomNode.TopographicDifficulty switch
+            {
+                Difficulty.Easy => 0.35f,   // 65% de las veces la sala Easy queda vacía de enemigos
+                Difficulty.Normal => 0.60f, // 40% vacía
+                Difficulty.Hard => 0.85f,   // 15% vacía
+                _ => 0.50f
+            };
 
+            if (Random.NextSingle() > combatChance)
+                return;
+
+            var candidates = ProceduralUtils.GetCandidateDefinitions<ActorDefinition>(Session.CurrentRun, RoomNode, GameData.Actors);
             if (candidates.Count == 0)
                 return;
 
-            var table = new ChanceTable();
+            // 2. Filtrar a los que tienen permiso estricto de existir acá
+            var validCandidates = new List<ActorDefinition>();
             foreach (var c in candidates)
             {
                 if (!RoomNode.Definition.AllowEnemies && c.Faction == Faction.Evil)
                     continue;
 
-                // 1. Peso matemático puro por choque de dificultades (Topografía vs Entidad)
-                var finalWeight = ProceduralUtils.AdjustWeight(RoomNode.TopographicDifficulty, c.Difficulty, c.SpawnWeight);
+                if (!c.PassesMaxPerRoomConstraint(actorsSpawnCounter.GetCount(c.Name)))
+                    continue;
 
-                // Si es un MiniBoss, le pegamos el hachazo según la dificultad de la sala
-                if (c.Rank == ActorRank.MiniBoss)
-                {
-                    finalWeight *= RoomNode.TopographicDifficulty switch
-                    {
-                        Difficulty.Easy => .1f,   // Rareza extrema
-                        Difficulty.Normal => .3f, // Esporádico
-                        _ => 1f                   // Hard u otros
-                    };
-                }
-
-                table.Add(c.Name, finalWeight);
+                validCandidates.Add(c);
             }
 
-            var pendingSpawns = new List<ActorDefinition>();
-            int remainingInstances = ProceduralUtils.CalculateEnemyBudget(RoomNode, Random);
-            int safety = (candidates.Count * 2) + 10;
+            if (validCandidates.Count == 0)
+                return;
 
-            while (table.Count > 0 && remainingInstances > 0 && safety-- > 0)
+            // 3. Obtener el presupuesto escalado por el progreso de la run
+            int remainingBudget = ProceduralUtils.CalculateEnemyBudget(RoomNode, Session.CurrentRun.Progress, Random);
+
+            // 4. Armar la tabla de probabilidades relativas
+            var table = new ChanceTable();
+            foreach (var c in validCandidates)
+            {
+                float finalWeight = ProceduralUtils.AdjustActorWeight(RoomNode.TopographicDifficulty, c.Difficulty, c.SpawnWeight);
+
+                if (finalWeight > 0f)
+                {
+                    table.Add(c.Name, finalWeight);
+                }
+            }
+
+            if (table.Count == 0)
+                return;
+
+            var pendingSpawns = new List<ActorDefinition>();
+            int safetyLimit = (validCandidates.Count * 2) + 10;
+
+            // 5. Bucle de consumo de presupuesto con Puntos de Amenaza (Threat Cost)
+            while (table.Count > 0 && remainingBudget > 0 && safetyLimit-- > 0)
             {
                 if (table.GetValue() is not ChanceTableItem item)
                     break;
@@ -352,8 +325,27 @@ namespace ScaryCastle
                 if (GameData.Actors.Find(item.Name) is not ActorDefinition chosen)
                     continue;
 
+                // Definimos cuánto cuesta este enemigo en el ecosistema de aventura
+                int entityCost = chosen.Difficulty switch
+                {
+                    Difficulty.Easy => 1,
+                    Difficulty.Normal => 3, // Cuesta el triple que una masilla
+                    Difficulty.Hard => 6,   // Ocupa gran parte de una sala avanzada
+                    _ => 2
+                };
+
+                // Si es impagable, lo sacamos de la ruleta para que el resto del presupuesto lo usen los masillas
+                if (remainingBudget < entityCost)
+                {
+                    table.Remove(item.Name);
+                    continue;
+                }
+
                 int packSize = chosen.RollPackSize(Random);
-                int targetSpawnCount = Math.Min(packSize, remainingInstances);
+
+                // Calculamos cuántos de este pack podemos pagar realmente
+                int maxAffordable = remainingBudget / entityCost;
+                int targetSpawnCount = Math.Min(packSize, maxAffordable);
                 int successfulGroupSpawns = 0;
 
                 for (int p = 0; p < targetSpawnCount; p++)
@@ -372,20 +364,38 @@ namespace ScaryCastle
 
                     pendingSpawns.Add(chosen);
                     successfulGroupSpawns++;
-                    remainingInstances--;
+                    remainingBudget -= entityCost; // Consumimos el costo real
                 }
 
                 if (successfulGroupSpawns == 0)
+                {
                     table.Remove(item.Name);
+                }
+                else
+                {
+                    int totalPending = 0;
+                    for (int i = 0; i < pendingSpawns.Count; i++)
+                    {
+                        if (pendingSpawns[i].Name == chosen.Name) totalPending++;
+                    }
+
+                    if (!chosen.PassesMaxPerRoomConstraint(actorsSpawnCounter.GetCount(chosen.Name) + totalPending))
+                    {
+                        table.Remove(item.Name);
+                    }
+                }
             }
 
             if (pendingSpawns.Count == 0)
                 return;
 
+            // 6. Inyección física segura
             var safePoly = new Polygon(WalkArea.Polygon.Vertices, -45);
             var points = ProceduralUtils.GetSpawnPoints(safePoly, pendingSpawns.Count, 45, Random);
 
-            for (int i = 0; i < points.Count; i++)
+            int spawnsToExecute = Math.Min(pendingSpawns.Count, points.Count);
+
+            for (int i = 0; i < spawnsToExecute; i++)
             {
                 SpawnThing<Actor>(Session.CurrentRun, pendingSpawns[i].Name, points[i], actorsSpawnCounter);
             }
@@ -441,11 +451,10 @@ namespace ScaryCastle
         // SpawnProps
         private void SpawnProps()
         {
-            if (Session.CurrentRun == null)
+            if (Session.CurrentRun is not Run run)
                 return;
 
-            var candidates = GetCandidateDefinitions<PropDefinition, Prop>(GameData.Props);
-
+            var candidates = ProceduralUtils.GetCandidateDefinitions<PropDefinition>(run, RoomNode, GameData.Props);
             if (candidates.Count == 0)
                 return;
 
@@ -463,17 +472,19 @@ namespace ScaryCastle
                     if (phState == PlaceholderState.Used)
                         continue;
 
-                    if (Session.CurrentRun != null && phState == PlaceholderState.GateLever)
+                    if (phState == PlaceholderState.GateLever)
                     {
-                        SpawnThing<Prop>(Session.CurrentRun, nameof(PlaceholderState.GateLever), ph.Position, propsSpawnCounter);
+                        SpawnThing<Prop>(run, nameof(PlaceholderState.GateLever), ph.Position, propsSpawnCounter);
                         RoomNode.SetPlaceholderState(ph, PlaceholderState.Used);
                         continue;
                     }
 
+                    // El FillChance del propio Placeholder en la sala (ej. 100% o el % que tenga el slot)
                     if (!ph.FillChance.Roll(Random))
                         continue;
 
-                    var table = new ChanceTable();
+                    // 1. Filtrar candidatos compatibles con este placeholder específico
+                    var phTable = new ChanceTable();
 
                     foreach (var def in candidates)
                     {
@@ -489,81 +500,82 @@ namespace ScaryCastle
                         if (!def.PassesMaxPerRoomConstraint(propsSpawnCounter.GetCount(def.Name)))
                             continue;
 
-                        if (Session.CurrentRun != null && !def.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns.GetCount(def.Name)))
+                        if (!def.PassesMaxPerRunConstraint(run.Spawns.GetCount(def.Name)))
                             continue;
 
-                        var finalWeight = ProceduralUtils.AdjustWeight(RoomNode.TopographicDifficulty, def.Difficulty, def.SpawnWeight);
-                        table.Add(def.Name, finalWeight);
+                        // Ajustamos el peso por la dificultad topográfica
+                        float finalWeight = ProceduralUtils.AdjustPropWeight(RoomNode.TopographicDifficulty, def.Difficulty, def.SpawnWeight);
+
+                        if (finalWeight > 0f)
+                        {
+                            phTable.Add(def.Name, finalWeight);
+                        }
                     }
 
-                    if (table.GetValue() is not ChanceTableItem item)
+                    if (phTable.Count == 0)
                         continue;
 
-                    if (GameData.Props.Find(item.Name) is not PropDefinition chosen)
-                        continue;
-
-                    if (Session.CurrentRun != null)
-                        SpawnThing<Prop>(Session.CurrentRun, chosen.Name, ph.Position, propsSpawnCounter);
-
-                    RoomNode.SetPlaceholderState(ph, PlaceholderState.Used);
+                    // 2. Selección en la ruleta del Placeholder
+                    // Al usarse una ChanceTable exclusiva para las opciones del placeholder,
+                    // si la Antorcha tiene peso 1.0f (y es la única o la de mayor peso), 
+                    // la pared SIEMPRE se va a poblar.
+                    if (phTable.GetValue() is ChanceTableItem item &&
+                        GameData.Props.Find(item.Name) is PropDefinition chosen)
+                    {
+                        SpawnThing<Prop>(run, chosen.Name, ph.Position, propsSpawnCounter);
+                        RoomNode.SetPlaceholderState(ph, PlaceholderState.Used);
+                    }
                 }
             }
 
             #endregion
 
+            #region Props Libres en WalkArea
+
             if (WalkArea == null)
                 return;
 
-            var freeTable = new ChanceTable();
-            var totalItemWeights = 0f;
-
+            // 1. Filtrar candidatos que NO requieran placeholder y cumplan las restricciones de conteo
+            var freeCandidates = new List<PropDefinition>();
             foreach (var def in candidates)
             {
-                // Si la definición dice que SÍ necesita un placeholder, la salteamos (ya se procesó arriba)
                 if (def.RequiresPlaceholder)
                     continue;
 
-                // Control estricto de topes (Si pusiste MaxPerRoom = 1 en el JSON para la baba, acá se frena)
                 if (!def.PassesMaxPerRoomConstraint(propsSpawnCounter.GetCount(def.Name)))
                     continue;
 
-                if (Session.CurrentRun != null)
-                {
-                    if (!def.PassesMaxPerRunConstraint(Session.CurrentRun.Spawns.GetCount(def.Name)))
-                        continue;
-                }
+                if (!def.PassesMaxPerRunConstraint(run.Spawns.GetCount(def.Name)))
+                    continue;
 
-                // CRUCE CON LA DIFICULTAD TOPOGRÁFICA DE LA RUN:
-                // Si el cuarto es Easy y la baba es Hard, el peso se desploma (ej: de 1.0f a 0.02f)
-                var finalWeight = ProceduralUtils.AdjustWeight(RoomNode.TopographicDifficulty, def.Difficulty, def.SpawnWeight);
-
-                freeTable.Add(def.Name, finalWeight);
-                totalItemWeights += finalWeight;
+                freeCandidates.Add(def);
             }
 
-            // INYECCIÓN DEL VACÍO: Si el peso total no llega a 1.0f, el resto es chance de no spawnear nada.
-            var emptyWeight = Math.Max(0f, 1.0f - totalItemWeights);
-            if (emptyWeight > 0)
-                freeTable.Add(ChanceTable.Nothing, emptyWeight);
-
-            if (freeTable.Count == 0 || (freeTable.Count == 1 && emptyWeight > 0))
+            if (freeCandidates.Count == 0)
                 return;
 
             var occupiedPositions = new List<Vector2>();
-            int maxAttemptsInRoom = Random.Next(1, 3);
+            int maxAttemptsInRoom = Random.Next(1, 3); // 1 a 2 intentos de apariciones libres por sala
 
-            // 3. Hacemos girar la ruleta hasta agotar los intentos o vaciar las opciones legales
-            while (maxAttemptsInRoom > 0 && freeTable.Count > 0)
+            // 2. Bucle de apariciones por Tirada Absoluta
+            while (maxAttemptsInRoom > 0 && freeCandidates.Count > 0)
             {
                 maxAttemptsInRoom--;
 
-                if (freeTable.GetValue() is not ChanceTableItem item)
-                    break;
+                // Elegimos un candidato al azar del pool de elegibles
+                var chosen = freeCandidates.GetRandomItem(Random);
 
-                if (GameData.Props.Find(item.Name) is not PropDefinition chosen)
+                if (chosen == null)
                     continue;
 
-                // Pedimos el punto al WalkArea
+                // Calculamos su probabilidad ajustada por la dificultad topográfica de la sala (0.0f a 1.0f)
+                float finalChance = ProceduralUtils.AdjustPropWeight(RoomNode.TopographicDifficulty, chosen.Difficulty, chosen.SpawnWeight);
+
+                // Tirada Absoluta: Si el dado no supera la probabilidad, este intento queda VACÍO de forma natural
+                if (Random.NextSingle() > MathHelper.Clamp(finalChance, 0f, 1f))
+                    continue;
+
+                // Si pasó la tirada de rareza, pedimos la posición al WalkArea
                 Vector2 spawnPosition = WalkArea.RandomWalkablePoint(Random);
 
                 if (spawnPosition == Vector2.Zero || occupiedPositions.Contains(spawnPosition))
@@ -571,19 +583,20 @@ namespace ScaryCastle
 
                 occupiedPositions.Add(spawnPosition);
 
-                // Clonación e inyección directa en MonoGame
+                // Instanciación directa
                 var instance = CreateThingClone<Prop>(chosen.Name);
                 instance.Position = spawnPosition;
                 Children.Add(instance);
 
-                Session.CurrentRun?.Spawns.Increment(chosen.Name);
+                run.Spawns.Increment(chosen.Name);
                 propsSpawnCounter.Increment(chosen.Name);
 
-                // EXCLUSIÓN POR REGISTRO (Tu regla del MaxPerRoom)
-                // Si la baba tenía MaxPerRoom = 1 y ya spawneó, la borramos de la ruleta para el siguiente tiro
+                // Si el prop alcanzó su límite por sala, lo removemos del pool de candidatos
                 if (!chosen.PassesMaxPerRoomConstraint(propsSpawnCounter.GetCount(chosen.Name)))
-                    freeTable.Remove(chosen.Name);
+                    freeCandidates.Remove(chosen);
             }
+
+            #endregion
         }
 
         // SpawnThing

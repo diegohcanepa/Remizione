@@ -602,23 +602,6 @@ namespace ScaryCastle
             OnRefreshAmbientLightSources();
         }
 
-        // RestoreAfterGateway
-        [ScriptMethod]
-        public void RestoreAfterGateway()
-        {
-            if (lastKnownPlayerPosition.HasValue && Session.Player != null)
-            {
-                Session.Player.Position = lastKnownPlayerPosition.Value;
-                Session.Player.Direction = lastKnownPlayerDirection;
-                Children.Add(Session.Player);
-                Session.Player.FlipHorizontally();
-                Session.Camera.Follow(Session.Player, true);
-            }
-
-            if (!string.IsNullOrWhiteSpace(lastKnownMusicTag))
-                AudioManager.Music.PlayTag(lastKnownMusicTag);
-        }
-
         // SelectWalkArea
         public void SelectWalkArea(string name)
         {

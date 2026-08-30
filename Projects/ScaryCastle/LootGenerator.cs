@@ -57,7 +57,7 @@ namespace ScaryCastle
             };
 
             // Up to 10% of more chances depending on the current floor
-            chance += run.FloorProgress * 0.1f;
+            chance += run.Progress * 0.1f;
 
             // Player's luck
             chance += run.Traits.GetTotalTraitValue(TraitType.Luck);
@@ -113,7 +113,7 @@ namespace ScaryCastle
 
             // Si estás en el Piso 1, maxQ se mantiene bajo (0-2) evitando épicos/legendarios desbalanceados.
             // En los pisos finales, el techo se eleva a 4-5.
-            float progress = run.FloorProgress;
+            float progress = run.Progress;
             int floorBonus = (int)(progress * 2f);
             int maxQ = Math.Clamp(((int)roomDef.Difficulty * 2) + 1 + qualityBoost + floorBonus, 0, 5);
 

@@ -5,7 +5,6 @@
     /// </summary>
     internal static class RoutineNames
     {
-        internal const string ExamineHoveredItem = nameof(ExamineHoveredItem);
         internal const string DeathByHealth = nameof(DeathByHealth);
         internal const string DeathByMandinga = nameof(DeathByMandinga);
     }

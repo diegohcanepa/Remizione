@@ -50,8 +50,8 @@ namespace ScaryCastle
         // PocketItems
         public PocketItemManager PocketItems { get; }
 
-        // FloorProgress
-        public float FloorProgress => (FloorIndex + 1f) / Definition.Floors.Count;
+        // Progress
+        public float Progress => (FloorIndex + 1f) / Definition.Floors.Count;
 
         // Seed
         public int Seed { get; }

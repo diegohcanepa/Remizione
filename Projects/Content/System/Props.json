@@ -2,7 +2,16 @@
   "$schema": "./Prop.schema.json",
   "data": [
     {
+      "name": "CastleGrate",
+      "difficulty": "Easy",
+      "maxPerRoom": 1,
+      "tags": "Grate",
+      "spawnWeight": 0.1,
+      "placements": ["Floor"]
+    },    
+    {
       "name": "CastleWindow",
+      "difficulty": "Easy",
       "maxPerRoom": -1,
       "tags": "Window",
       "placements": [
@@ -11,6 +20,7 @@
     },
     {
       "name": "DevilCarvedFace",
+      "difficulty": "Easy",
       "tags": "WallDecoration",
       "placements": [
         "WallFrontHang"      
@@ -18,11 +28,13 @@
     },
     {
       "name": "Drool",
+      "difficulty": "Normal",
       "requiresPlaceholder": false,
       "spawnWeight": 0.1
     },
     {
       "name": "PotteryA",
+      "difficulty": "Easy",
       "dropCoinChanceBonus": 0.5,
       "dropMode": "CoinsOnly",
       "tags": "Pottery",
@@ -40,6 +52,7 @@
     },
     {
       "name": "PotteryB",
+      "difficulty": "Normal",
       "dropCoinChanceBonus": 0.25,
       "dropSackChanceBonus": 0.25,
       "tags": "Pottery",
@@ -57,16 +70,19 @@
     },
     {
       "name": "PotteryC",
+      "difficulty": "Normal",
       "minFloor": 10,
       "placements": []
     },
     {
       "name": "PotteryD",
+      "difficulty": "Normal",
       "minFloor": 10,
       "placements": []
     },
     {
       "name": "PotteryE",
+      "difficulty": "Normal",
       "minFloor": 10,
       "placements": []
     },
@@ -86,6 +102,7 @@
     },
     {
       "name": "Torch",
+      "difficulty": "Easy",
       "tags": "Torch",
       "maxPerRoom": -1,
       "placements": [
@@ -93,6 +110,7 @@
       ]
     },    {
       "name": "Trunk",
+      "difficulty": "Easy",
       "tags": "Trunk",
       "effects": [
         {
@@ -111,6 +129,7 @@
     {
       "name": "GoldenTrunk",
       "tags": "Trunk",
+      "difficulty": "Normal",
       "effects": [
         {
           "context": "Contact",
@@ -127,6 +146,7 @@
     },
     {
       "name": "Vent",
+      "difficulty": "Easy",
       "tags": "WallDecoration",
       "placements": [
         "WallFrontHang"      
@@ -135,11 +155,13 @@
     {
       "name": "TrapDoor",
       "tags": "TrapDoor",
+      "difficulty": "Hard",
       "placements": ["Floor"],
       "maxPerRun": 10
     },        
     {
       "name": "WreckingBall",
+      "difficulty": "Normal",
       "tags": "Trap",
       "effects": [
         {

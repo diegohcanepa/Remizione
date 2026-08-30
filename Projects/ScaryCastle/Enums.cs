@@ -201,6 +201,9 @@ namespace ScaryCastle
     // RunModifierScope
     public enum RunModifierScope { Room, Run }
 
+    // RunStage
+    public enum RunStage { Start, End }
+
     // SpeechTextState
     public enum SpeechTextState { Hidden, Typing, Idle }
 
@@ -208,7 +211,7 @@ namespace ScaryCastle
     public enum StatusType { Poison }
 
     // Tag
-    public enum Tag { Ceiling, Floor, GateLever, Poison, Pottery, Torch, Trap, TrapDoor, Trunk, WallDecoration, Window }
+    public enum Tag { Ceiling, Floor, GateLever, Grate, Poison, Pottery, Torch, Trap, TrapDoor, Trunk, WallDecoration, Window }
 
     // TestPolygon
     public enum TestPolygon { Hotspot, Collider }

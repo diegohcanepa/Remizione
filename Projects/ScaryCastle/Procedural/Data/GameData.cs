@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration.Scripting;
+using Engendro;
 using Engendro.Collections;
 using Microsoft.Xna.Framework;
 using System;
@@ -80,6 +81,8 @@ namespace ScaryCastle
             Rooms = Load("Rooms.json", e => new RoomDefinition(e));
 
             TextRepository.Loaded += TextRepository_Loaded;
+
+            IsLoaded = true;
         }
 
         // Props
