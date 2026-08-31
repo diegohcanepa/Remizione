@@ -204,6 +204,14 @@ namespace ScaryCastle
     // RunStage
     public enum RunStage { Start, End }
 
+    // SpawnScope
+    public enum SpawnScope
+    {
+        Anywhere,       // Props universales, antorchas, sangre (entran en End, Store, Standard, etc.)
+        StandardOnly,   // Enemigos comunes, trampas estándar (NO entran en End, Store, Treasure)
+        RestrictedOnly  // Requiere coincidencia exacta con RequiredRoomCategory (Bosses, NPCs, Pedestales)
+    }
+
     // SpeechTextState
     public enum SpeechTextState { Hidden, Typing, Idle }
 

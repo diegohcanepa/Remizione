@@ -17,7 +17,7 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        protected ThingDefinition(JsonElement element)
+        protected ThingDefinition(JsonElement element, SpawnScope defaultSpawnScope)
             : base(element)
         {
             // DropCoinChanceBonus
@@ -38,11 +38,14 @@ namespace ScaryCastle
             // MaxPerRoom
             MaxPerRoom = element.GetInt32("maxPerRoom", -1);
 
-            // RequiredRoomCategory
-            RequiredRoomCategory = element.GetEnum<RoomCategory>("requiredRoomCategory");
-
             // RoomTheme
             RoomTheme = element.GetEnum<RoomTheme>("roomTheme");
+
+            // SpawnScope
+            SpawnScope = element.GetEnum("spawnScope", defaultSpawnScope);
+
+            // TargetRoomCategory
+            TargetRoomCategory = element.GetEnum<RoomCategory>("targetRoomCategory");
 
             // Effects
             if (element.TryGetProperty("effects", out JsonElement effectsArray))
@@ -93,10 +96,13 @@ namespace ScaryCastle
             return MaxPerRoom == -1 || instanceCount < MaxPerRoom;
         }
 
-        // RequiredRoomCategory
-        public RoomCategory? RequiredRoomCategory { get; }
-
         // RoomTheme
         public RoomTheme? RoomTheme { get; }
+
+        // SpawnScope
+        public SpawnScope SpawnScope { get; }
+
+        // TargetRoomCategory
+        public RoomCategory? TargetRoomCategory { get; }
     }
 }

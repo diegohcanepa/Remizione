@@ -205,6 +205,9 @@ namespace ScaryCastle
         // InteractiveActorPosition
         public Vector2? InteractiveActorPosition { get; }
 
+        // IsRestricted
+        public bool IsRestricted => RoomCategory is not RoomCategory.Standard and not RoomCategory.Start and not RoomCategory.End;
+
         // LightMapColor
         public Color LightMapColor { get; }
 

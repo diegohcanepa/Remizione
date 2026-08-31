@@ -82,6 +82,14 @@ namespace ScaryCastle.Procedural
                 if (definition.MinFloor > run.FloorIndex)
                     continue;
 
+                // Si exige sala específica y no coincide, afuera.
+                if (definition.TargetRoomCategory.HasValue && definition.TargetRoomCategory != roomNode.Category)
+                    continue;
+
+                // 2. Si es de ámbito StandardOnly y estamos en una sala restringida, afuera.
+                if (definition.SpawnScope == SpawnScope.StandardOnly && roomNode.Definition.IsRestricted)
+                    continue;
+
                 if (definition is ActorDefinition actorDefinition)
                 {
                     // Si es un Boss real, SOLO puede aparecer en la habitación etiquetada como Boss

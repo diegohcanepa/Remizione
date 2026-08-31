@@ -271,6 +271,14 @@
         "Run"
       ]
     },
+    "SpawnScope": {
+      "type": "string",
+      "enum": [
+        "Anywhere",
+        "StandardOnly",
+        "RestrictedOnly"
+      ]
+    },    
     "StatusType": {
       "type": "string",
       "enum": [

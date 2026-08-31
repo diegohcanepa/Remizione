@@ -17,7 +17,7 @@ namespace ScaryCastle
 
         // Constructor
         public PropDefinition(JsonElement element)
-            : base(element)
+            : base(element, SpawnScope.Anywhere)
         {
             Faction = element.GetEnum("faction", Faction.Good);
 

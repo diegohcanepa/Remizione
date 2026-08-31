@@ -11,7 +11,7 @@ namespace ScaryCastle
     {
         // Constructor
         public ActorDefinition(JsonElement element)
-            : base(element)
+            : base(element, SpawnScope.StandardOnly)
         {
             // Faction
             Faction = element.GetEnum("faction", Faction.Evil);

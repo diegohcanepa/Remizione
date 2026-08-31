@@ -33,11 +33,14 @@
           "type": "integer",
           "default": -1
         },
-        "requiredRoomCategory": {
-          "type": "string"
-        },
         "roomTheme": {
           "$ref": "enums.schema.json#/$defs/RoomTheme"
+        },
+        "spawnScope": {
+          "$ref": "enums.schema.json#/$defs/SpawnScope"
+        },
+        "targeRoomCategory": {
+          "$ref": "enums.schema.json#/$defs/RoomCategory"
         },
         "xp": {
           "type": "integer",
