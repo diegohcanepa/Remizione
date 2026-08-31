@@ -25,17 +25,7 @@
             "placements": {
               "type": "array",
               "items": {
-                "type": "string",
-                "enum": [
-                  "Floor",
-                  "WallFrontBase",
-                  "WallFrontHang",
-                  "WallLeftBase",
-                  "WallLeftHang",
-                  "WallRightBase",
-                  "WallRightHang",
-                  "Ceiling"
-                ]
+                "$ref": "enums.schema.json#/$defs/PlacementType"
               }
             },
             "requiresPlaceholder": {

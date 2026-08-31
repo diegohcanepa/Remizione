@@ -5,10 +5,7 @@
   "type": "object",
   "properties": {
     "effectType": {
-      "type": "string",
-      "description": "El tipo de acción a ejecutar.",
-      "enum": [ "None", "BronzeKey", "Coin", "CoinLoss", "ComicText", "Damage", "Death", "EnergyGain", "EnergyLoss", "EnergyRestore", "HPGain", "HPLoss", "HPRestore", "StaminaGain", "StaminaLoss", "StaminaRestore", "MaxEnergyGain", "MaxEnergyLoss", "MaxHPGain", "MaxHPLoss", "MaxStaminaGain", "MaxStaminaLoss", "GoldenKey", "Status" ] ,
-      "default": "None"
+      "$ref": "enums.schema.json#/$defs/EffectType"
     },
     "amount": {
       "type": "string",
@@ -23,42 +20,26 @@
       "description": "Probabilidad de que el efecto se aplique."
     },    
     "comicText": {
-      "type": "string",
-      "enum": [ "None", "AghGreen", "AghRed", "AghPurple", "BoomPurple", "BoomRed", "BangBlue", "BangRed", "CrackBlue", "CrackYellow", "CuackPurple", "CuackYellow", "Kapow", "KapowStrong", "OuchBlue", "OuchGreen", "PlopRed", "PlopYellow", "SlapBlue", "SlapRed", "Zap" ],
-      "default": "None"
+      "$ref": "enums.schema.json#/$defs/ComicTextKind"
     },
     "context": {
-      "type": "string",
-      "description": "Contexto en donde es aplicable el efecto.",
-      "enum": [ "Collect", "Contact", "Attack", "Update", "RemainsContact", "Use", "ProjectileHit", "RunModifier", "Status", "ApplyStatus" ],
-      "default": "Contact"
+      "$ref": "enums.schema.json#/$defs/EffectContext"
     },
     "damageType": {
-      "type": "string",
-      "description": "Si es daño, qué tipo es.",
-      "enum": [ "None", "Physical", "Acid", "Curse", "Explosive", "Fire", "Ice", "Lightning", "Poison" ],
-      "default": "None"
+      "$ref": "enums.schema.json#/$defs/DamageType"
     },
     "knockback": {
-      "type": "string",
-      "description": "intensidad del knockback.",
-      "enum": [ "None", "Low", "Medium", "High" ],
-      "default": "Low"
+      "$ref": "enums.schema.json#/$defs/KnockbackIntensity"
     },
     "target": {
-      "type": "string",
-      "description": "A quién se aplica el efecto.",
-      "enum": [ "Self", "Target" ],
-      "default": "Target"
+      "$ref": "enums.schema.json#/$defs/EffectTarget"
     },
     "sound": {
       "type": "string",
       "description": "Nombre del archivo de sonido a reproducir."
     },
     "statusType": {
-      "type": "string",
-      "enum": [ "Poison" ],
-      "default": "None"
+      "$ref": "enums.schema.json#/$defs/StatusType"
     }
   },
   "required": [ "effectType", "context" ],

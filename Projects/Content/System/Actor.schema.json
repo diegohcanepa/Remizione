@@ -33,13 +33,7 @@
               "minimum": 1
             },
             "rank": {
-              "type": "string",
-              "enum": [
-                "Common",
-                "MiniBoss",
-                "Boss"
-              ],
-              "default": "Common"
+              "$ref": "enums.schema.json#/$defs/ActorRank"
             }
           }
         }

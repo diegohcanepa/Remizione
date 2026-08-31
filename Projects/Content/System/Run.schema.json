@@ -44,11 +44,7 @@
           "type": "array",
           "uniqueItems": true,
           "items": {
-            "type": "string",
-            "enum": [
-              "BronzeKey",
-              "GateLever"
-            ]
+            "$ref": "enums.schema.json#/$defs/PuzzleKind"
           }
         },
         "darkness": {
@@ -59,10 +55,7 @@
           "minimum": 5
         },
         "theme": {
-          "type": "string",
-          "enum": [
-            "Castle"
-          ]
+          "$ref": "enums.schema.json#/$defs/RoomTheme"
         }
       },
       "required": [

@@ -9,12 +9,7 @@
       "type": "object",
       "properties": {
         "difficulty": {
-          "type": "string",
-          "enum": [
-            "Easy",
-            "Normal",
-            "Hard"
-          ]
+          "$ref": "enums.schema.json#/$defs/Difficulty"
         },
         "maxPerRun": {
           "type": "integer",
@@ -29,23 +24,10 @@
           "type": "string"
         },
         "preferredLootCategory": {
-          "type": "string",
-          "enum": [
-            "Explosive",
-            "Food",
-            "Luck",
-            "Medicine",
-            "Misc",
-            "Pills"
-          ]
+          "$ref": "enums.schema.json#/$defs/ItemCategory"
         },
         "preferredLootRealm": {
-          "type": "string",
-          "enum": [
-            "Earthly",
-            "Infernal",
-            "Celestial"
-          ]
+          "$ref": "enums.schema.json#/$defs/Realm"
         },
         "qualityBoost": {
           "type": "integer",

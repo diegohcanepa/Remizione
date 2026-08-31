@@ -1,0 +1,281 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Enums",
+  "$defs": {
+    "ActionKind": {
+      "type": "string",
+      "enum": [
+        "Script",
+        "Proximity",
+        "InPlace",
+        "Projectile",
+        "Self"
+      ]
+    },
+    "ActorRank": {
+      "type": "string",
+      "enum": [
+        "Common",
+        "MiniBoss",
+        "Boss"
+      ]
+    },
+    "CombatArchetypeName": {
+      "type": "string",
+      "enum": [
+        "Lurker",
+        "Harasser",
+        "KamikazeFlyer",
+        "Stalker",
+        "Tactical",
+        "Berserk",
+        "Coward",
+        "Volatile"
+      ]
+    },
+    "ComicTextKind": {
+      "type": "string",
+      "enum": [
+        "None",
+        "AghGreen",
+        "AghRed",
+        "AghPurple",
+        "BoomPurple",
+        "BoomRed",
+        "BangBlue",
+        "BangRed",
+        "CrackBlue",
+        "CrackYellow",
+        "CuackPurple",
+        "CuackYellow",
+        "Kapow",
+        "KapowStrong",
+        "OuchBlue",
+        "OuchGreen",
+        "PlopRed",
+        "PlopYellow",
+        "SlapBlue",
+        "SlapRed",
+        "Zap"
+      ]
+    },
+    "DamageType": {
+      "type": "string",
+      "enum": [
+        "None",
+        "Physical",
+        "Acid",
+        "Explosive",
+        "Fire",
+        "Ice",
+        "Lightning",
+        "Poison"
+      ]
+    },
+    "Difficulty": {
+      "type": "string",
+      "enum": [
+        "Easy",
+        "Normal",
+        "Hard"
+      ]
+    },
+    "EffectContext": {
+      "type": "string",
+      "enum": [
+        "Collect",
+        "Contact",
+        "Attack",
+        "Update",
+        "RemainsContact",
+        "Use",
+        "ProjectileHit",
+        "RunModifier",
+        "Status",
+        "ApplyStatus"
+      ]
+    },
+    "EffectTarget": {
+      "type": "string",
+      "enum": [
+        "Self",
+        "Target"
+      ]
+    },
+    "EffectType": {
+      "type": "string",
+      "enum": [
+        "None",
+        "BronzeKey",
+        "Coin",
+        "CoinLoss",
+        "ComicText",
+        "Damage",
+        "Death",
+        "EnergyGain",
+        "EnergyLoss",
+        "EnergyRestore",
+        "HPGain",
+        "HPLoss",
+        "HPRestore",
+        "StaminaGain",
+        "StaminaLoss",
+        "StaminaRestore",
+        "MaxEnergyGain",
+        "MaxEnergyLoss",
+        "MaxHPGain",
+        "MaxHPLoss",
+        "MaxStaminaGain",
+        "MaxStaminaLoss",
+        "GoldenKey",
+        "Status"
+      ]
+    },
+    "FacingDirection": {
+      "type": "string",
+      "enum": [
+        "Left",
+        "Right"
+      ]
+    },
+    "Faction": {
+      "type": "string",
+      "enum": [
+        "Good",
+        "Evil"
+      ]
+    },
+    "InPlaceEffectType": {
+      "type": "string",
+      "enum": [
+        "None",
+        "Lightning"
+      ]
+    },
+    "ItemBehavior": {
+      "type": "string",
+      "enum": [
+        "Sack",
+        "Pocket",
+        "PlayerAction",
+        "InstantEffect"
+      ]
+    },
+    "ItemCategory": {
+      "type": "string",
+      "enum": [
+        "Access",
+        "Explosive",
+        "Food",
+        "Luck",
+        "Medicine",
+        "Misc",
+        "Money",
+        "Pills",
+        "Sacred"
+      ]
+    },
+    "KnockbackIntensity": {
+      "type": "string",
+      "enum": [
+        "None",
+        "Low",
+        "Medium",
+        "High"
+      ]
+    },
+    "LootDropMode": {
+      "type": "string",
+      "enum": [
+        "Standard",
+        "CoinsOnly",
+        "SackOnly",
+        "Custom",
+        "None"
+      ]
+    },
+    "LockType": {
+      "type": "string",
+      "enum": [
+        "None",
+        "BronzeKey",
+        "GoldenKey",
+        "GateLever",
+        "TrapDoorKey"
+      ]
+    },
+    "LootDropTrigger": {
+      "type": "string",
+      "enum": [
+        "OnDeath",
+        "OnImpact"
+      ]
+    },
+    "PlacementType": {
+      "type": "string",
+      "enum": [
+        "Floor",
+        "WallFrontBase",
+        "WallFrontHang",
+        "WallLeftBase",
+        "WallLeftHang",
+        "WallRightBase",
+        "WallRightHang",
+        "Ceiling"
+      ]
+    },
+    "ProjectileTrajectoryType": {
+      "type": "string",
+      "enum": [
+        "Linear",
+        "Parabolic"
+      ]
+    },
+    "PuzzleKind": {
+      "type": "string",
+      "enum": [
+        "BronzeKey",
+        "GateLever"
+      ]
+    },
+    "Realm": {
+      "type": "string",
+      "enum": [
+        "Earthly",
+        "Infernal",
+        "Celestial"
+      ]
+    },
+    "RoomCategory": {
+      "type": "string",
+      "enum": [
+        "Start",
+        "End",
+        "Treasure",
+        "Store",
+        "Special",
+        "Secret",
+        "Standard"
+      ]
+    },
+    "RoomTheme": {
+      "type": "string",
+      "enum": [
+        "Castle"
+      ]
+    },
+    "RunModifierScope": {
+      "type": "string",
+      "enum": [
+        "Room",
+        "Run"
+      ]
+    },
+    "StatusType": {
+      "type": "string",
+      "enum": [
+        "Poison"
+      ]
+    }
+  }
+}

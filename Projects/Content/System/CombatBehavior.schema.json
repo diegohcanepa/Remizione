@@ -6,7 +6,6 @@
   "properties": {
     "data": {
       "type": "array",
-      "description": "Lista de configuraciones de comportamiento de combate.",
       "items": {
         "$ref": "#/$defs/CombatBehavior"
       }
@@ -18,30 +17,16 @@
   "$defs": {
     "CombatBehavior": {
       "type": "object",
-      "description": "Define la personalidad y el pool de intenciones de un actor.",
       "properties": {
         "name": {
-          "type": "string",
-          "description": "El nombre del comportamiento. Debe coincidir con el Name del Actor para el linkeo."
-        },
+          "type": "string"
+         },
         "archetype": {
-          "type": "string",
-          "enum": [
-            "Lurker",
-            "Harasser",
-            "KamikazeFlyer",
-            "Stalker",
-            "Tactical",
-            "Berserk",
-            "Coward",
-            "Volatile"
-          ],
-          "default": "Lurker"
+          "$ref": "enums.schema.json#/$defs/CombatArchetypeName"
         },
         "intents": {
           "type": "array",
-          "description": "Lista de intenciones (ataques, estados, etc.) de este bicho.",
-          "items": {
+           "items": {
             "$ref": "./CombatIntent.schema.json"
           },
           "minItems": 0

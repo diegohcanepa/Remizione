@@ -20,9 +20,6 @@ namespace ScaryCastle
         protected ThingDefinition(JsonElement element)
             : base(element)
         {
-            // AllowedRoomCategories
-            AllowedRoomCategories = ReadOnlyEnumSet<RoomCategory>.FromJsonOrEmpty(element, "allowedRoomCategories");
-
             // DropCoinChanceBonus
             DropCoinChanceBonus = MathF.Max(0, element.GetFloat("dropCoinChanceBonus", 0));
 
@@ -41,6 +38,9 @@ namespace ScaryCastle
             // MaxPerRoom
             MaxPerRoom = element.GetInt32("maxPerRoom", -1);
 
+            // RequiredRoomCategory
+            RequiredRoomCategory = element.GetEnum<RoomCategory>("requiredRoomCategory");
+
             // RoomTheme
             RoomTheme = element.GetEnum<RoomTheme>("roomTheme");
 
@@ -58,9 +58,6 @@ namespace ScaryCastle
         }
 
         #endregion
-
-        // AllowedRoomCategories
-        public ReadOnlyEnumSet<RoomCategory> AllowedRoomCategories { get; }
 
         // AssertScriptDeclaration
         public void AssertScriptDeclaration(GameSession session)
@@ -95,6 +92,9 @@ namespace ScaryCastle
         {
             return MaxPerRoom == -1 || instanceCount < MaxPerRoom;
         }
+
+        // RequiredRoomCategory
+        public RoomCategory? RequiredRoomCategory { get; }
 
         // RoomTheme
         public RoomTheme? RoomTheme { get; }

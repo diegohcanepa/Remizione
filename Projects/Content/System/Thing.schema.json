@@ -8,9 +8,6 @@
     {
       "type": "object",
       "properties": {
-        "allowedRoomCategories": {
-          "type": "string"
-        },
         "dropCoinChanceBonus": {
           "type": "number",
           "default": 0,
@@ -24,40 +21,23 @@
           "maximum": 1.0
         },
         "dropMode": {
-          "type": "string",
-          "enum": [
-            "Standard",
-            "CoinsOnly",
-            "SackOnly",
-            "Custom",
-            "None"
-          ],
-          "default": "Standard"
+          "$ref": "enums.schema.json#/$defs/LootDropMode"
         },
         "dropTrigger": {
-          "type": "string",
-          "enum": [
-            "OnDeath",
-            "OnImpact"
-          ],
-          "default": "OnDeath"
+          "$ref": "enums.schema.json#/$defs/LootDropTrigger"
         },
         "faction": {
-          "type": "string",
-          "enum": [
-            "Good",
-            "Evil"
-          ]
+          "$ref": "enums.schema.json#/$defs/Faction"
         },
         "maxPerRoom": {
           "type": "integer",
           "default": -1
         },
+        "requiredRoomCategory": {
+          "type": "string"
+        },
         "roomTheme": {
-          "type": "string",
-          "enum": [
-            "Castle"
-          ]
+          "$ref": "enums.schema.json#/$defs/RoomTheme"
         },
         "xp": {
           "type": "integer",

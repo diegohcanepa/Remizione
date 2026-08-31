@@ -39,7 +39,7 @@ namespace ScaryCastle
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Video, Voices, System, Text }
 
     // DamageType
-    public enum DamageType { None, Physical, Acid, Explosive, Fire, Ice, Lightning }
+    public enum DamageType { None, Physical, Acid, Explosive, Fire, Ice, Lightning, Poison }
 
     // DeityHandKind
     public enum DeityHandKind { Devil, God }

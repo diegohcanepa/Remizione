@@ -25,15 +25,7 @@
           "type": "object",
           "properties": {
             "actionKind": {
-              "type": "string",
-              "enum": [
-                "InPlace",
-                "Projectile",
-                "Proximity",
-                "Script",
-                "Self"
-              ],
-              "default": "Script"
+              "$ref": "enums.schema.json#/$defs/ActionKind"
             },
             "allowDiscard": {
               "type": "boolean"
@@ -42,35 +34,17 @@
               "type": "string"
             },
             "category": {
-              "type": "string",
-              "enum": [
-                "Access",
-                "Explosive",
-                "Food",
-                "Luck",
-                "Medicine",
-                "Money",
-                "Misc",
-                "Pills"
-              ]
+              "$ref": "enums.schema.json#/$defs/ItemCategory"
             },
             "areaOfEffect": {
               "type": "integer",
               "default": 0
             },
             "behavior": {
-              "type": "string",
-              "enum": [
-                "Sack",
-                "Pocket",
-                "PlayerAction",
-                "InstantEffect"
-              ],
-              "default": "Common"
+              "$ref": "enums.schema.json#/$defs/ItemBehavior"
             },
             "deselectOnUse": {
-              "type": "boolean",
-              "default": false
+              "type": "boolean"
             },
             "energyCost": {
               "type": "integer"
@@ -88,12 +62,7 @@
               "minimum": 1
             },
             "inPlaceEffectType": {
-              "type": "string",
-              "enum": [
-                "None",
-                "Lightning"
-              ],
-              "default": "Lightning"
+              "$ref": "enums.schema.json#/$defs/InPlaceEffectType"
             },
             "lightColor": {
               "type": "string"

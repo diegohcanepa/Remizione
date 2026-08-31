@@ -27,12 +27,7 @@
               "type": "integer"
             },
             "scope": {
-              "type": "string",
-              "enum": [
-                "Room",
-                "Run"
-              ],
-              "default": "Room"
+              "$ref": "enums.schema.json#/$defs/RunModifierScope"
             }
           }
         }

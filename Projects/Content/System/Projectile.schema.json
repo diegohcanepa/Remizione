@@ -5,10 +5,7 @@
   "type": "object",
   "properties": {
     "trajectory": {
-      "type": "string",
-      "description": "El tipo de trayectoria que describirá el proyectil al avanzar.",
-      "enum": [ "Linear", "Parabolic" ],
-      "default": "Linear"
+      "$ref": "enums.schema.json#/$defs/ProjectileTrajectoryType"
     },
     "speed": {
       "type": "number",

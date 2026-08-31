@@ -26,12 +26,7 @@
           "type": "string"
         },
         "facingDirection": {
-          "type": "string",
-          "enum": [
-            "Left",
-            "Right"
-          ],
-          "default": "Right"
+          "$ref": "enums.schema.json#/$defs/FacingDirection"
         }
       },
       "required": [
@@ -79,26 +74,10 @@
               "default": false
             },
             "lockType": {
-              "type": "string",
-              "default": "None",
-              "enum": [
-                "None",
-                "GoldenKey",
-                "SilverKey"
-              ]
+              "$ref": "enums.schema.json#/$defs/LockType"
             },
             "roomCategory": {
-              "type": "string",
-              "default": "Standard",
-              "enum": [
-                "Start",
-                "Boss",
-                "Treasure",
-                "Save",
-                "Special",
-                "Secret",
-                "Standard"
-              ]
+              "$ref": "enums.schema.json#/$defs/RoomCategory"
             },
             "allowEnemies": {
               "type": "boolean",
@@ -153,17 +132,7 @@
                     "type": "string"
                   },
                   "placement": {
-                    "type": "string",
-                    "enum": [
-                      "Floor",
-                      "WallFrontBase",
-                      "WallFrontHang",
-                      "WallLeftBase",
-                      "WallLeftHang",
-                      "WallRightBase",
-                      "WallRightHang",
-                      "Ceiling"
-                    ]
+                    "$ref": "enums.schema.json#/$defs/PlacementType"                    
                   },
                   "fillChance": {
                     "type": "number",
@@ -182,11 +151,7 @@
               "type": "string"
             },
             "theme": {
-              "type": "string",
-              "default": "BlueStone",
-              "enum": [
-                "BlueStone"
-              ]
+              "$ref": "enums.schema.json#/$defs/RoomTheme"
             },
             "walkArea": {
               "type": "string"
