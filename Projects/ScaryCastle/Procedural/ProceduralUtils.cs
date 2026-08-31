@@ -1,5 +1,4 @@
-﻿using Adberration;
-using Engendro;
+﻿using Engendro;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -77,7 +76,7 @@ namespace ScaryCastle.Procedural
 
             foreach (var definition in definitions)
             {
-                if (definition.IsUnique)
+                if (definition.SpawnWeight == 0)
                     continue;
 
                 if (definition.MinFloor > run.FloorIndex)

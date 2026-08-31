@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Collections;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,6 +20,9 @@ namespace ScaryCastle
         protected ThingDefinition(JsonElement element)
             : base(element)
         {
+            // AllowedRoomCategories
+            AllowedRoomCategories = ReadOnlyEnumSet<RoomCategory>.FromJsonOrEmpty(element, "allowedRoomCategories");
+
             // DropCoinChanceBonus
             DropCoinChanceBonus = MathF.Max(0, element.GetFloat("dropCoinChanceBonus", 0));
 
@@ -34,15 +38,13 @@ namespace ScaryCastle
             // Faction
             Faction = element.GetEnum("faction", Faction.Evil);
 
-            // IsUnique
-            IsUnique = element.GetBool("isUnique", false);
-
             // MaxPerRoom
             MaxPerRoom = element.GetInt32("maxPerRoom", -1);
 
             // RoomTheme
             RoomTheme = element.GetEnum<RoomTheme>("roomTheme");
 
+            // Effects
             if (element.TryGetProperty("effects", out JsonElement effectsArray))
             {
                 foreach (var effectJson in effectsArray.EnumerateArray())
@@ -57,10 +59,13 @@ namespace ScaryCastle
 
         #endregion
 
+        // AllowedRoomCategories
+        public ReadOnlyEnumSet<RoomCategory> AllowedRoomCategories { get; }
+
         // AssertScriptDeclaration
         public void AssertScriptDeclaration(GameSession session)
         {
-            if (session.FindProceduralThing(Name) is not GameThing thing)
+            if (session.FindProceduralThing(Name) is null)
                 RaiseValidationError(this, $"'{Name}' has no script declaration.");
         }
 
@@ -81,9 +86,6 @@ namespace ScaryCastle
 
         // Faction
         public Faction Faction { get; init; }
-
-        // IsUnique
-        public bool IsUnique { get; }
 
         // MaxPerRoom
         public int MaxPerRoom { get; }

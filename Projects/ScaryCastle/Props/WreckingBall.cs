@@ -123,7 +123,7 @@ namespace ScaryCastle
             {
                 Atlas = Atlases.Props;
                 DefaultImageName = $"WreckingBallCrack{Random.Shared.Next(1, 4)}";
-                PivotOrigin = Engendro.RectanglePoint.Center;
+                PivotOrigin = RectanglePoint.Center;
                 RenderLayer = RenderLayer.Background;
             }
         }

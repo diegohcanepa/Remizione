@@ -158,8 +158,6 @@ namespace ScaryCastle
             {
                 if (GameData.Actors.Find(FeaturedActor.Name) is not ActorDefinition actorDefinition)
                     RaiseValidationError(this, $"Actor '{FeaturedActor.Name}' has no definition.", nameof(FeaturedActor));
-                else if (!actorDefinition.IsUnique)
-                    RaiseValidationError(this, $"Actor '{FeaturedActor.Name}' must be flagged as unique.", nameof(FeaturedActor));
             }
         }
 

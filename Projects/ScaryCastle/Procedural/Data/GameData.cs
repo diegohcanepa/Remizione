@@ -1,5 +1,4 @@
-﻿using Adberration.Scripting;
-using Engendro;
+﻿using Engendro;
 using Engendro.Collections;
 using Microsoft.Xna.Framework;
 using System;

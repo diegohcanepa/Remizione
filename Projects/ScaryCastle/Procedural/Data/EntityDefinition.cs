@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Collections;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -28,10 +29,10 @@ namespace ScaryCastle
                 QualityBoost = 0;
 
             // Tags
-            Tags = TagReadOnlyCollection.FromJson(element, "tags");
+            Tags = ReadOnlyEnumSet<Tag>.FromJsonOrEmpty(element, "tags");
 
             // Pools
-            Pools = TagReadOnlyCollection.FromJson(element, "pools");
+            Pools = ReadOnlyEnumSet<Tag>.FromJsonOrEmpty(element, "pools");
         }
 
         #endregion
@@ -92,7 +93,7 @@ namespace ScaryCastle
         }
 
         // Pools
-        public TagReadOnlyCollection Pools { get; }
+        public ReadOnlyEnumSet<Tag> Pools { get; }
 
         // PreferredLootCategory
         public ItemCategory? PreferredLootCategory { get; }
@@ -104,6 +105,6 @@ namespace ScaryCastle
         public int QualityBoost { get; }
 
         // Tags
-        public TagReadOnlyCollection Tags { get; }
+        public ReadOnlyEnumSet<Tag> Tags { get; }
     }
 }

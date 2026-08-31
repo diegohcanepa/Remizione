@@ -21,7 +21,7 @@ namespace ScaryCastle
         #region Private members
 
         // ConnectNodes
-        private void ConnectNodes(RoomNode a, RoomNode b, Point directionFromAToB)
+        private static void ConnectNodes(RoomNode a, RoomNode b, Point directionFromAToB)
         {
             if (directionFromAToB == new Point(0, -1)) { a.Up = b; b.Down = a; }
             else if (directionFromAToB == new Point(0, 1)) { a.Down = b; b.Up = a; }
@@ -30,7 +30,7 @@ namespace ScaryCastle
         }
 
         // CountExistingNeighbors
-        private int CountExistingNeighbors(Dictionary<Point, RoomNode> floorMap, Point p)
+        private static int CountExistingNeighbors(Dictionary<Point, RoomNode> floorMap, Point p)
         {
             int count = 0;
             if (floorMap.ContainsKey(p + new Point(0, -1))) count++;
@@ -40,8 +40,17 @@ namespace ScaryCastle
             return count;
         }
 
+        // CreateInstance
+        private static ProceduralRoom CreateInstance(GameSession session, RoomNode roomNode, int roomSeed)
+        {
+            if (Activator.CreateInstance(typeof(ProceduralRoom), session, roomNode, roomSeed) is not ProceduralRoom result)
+                throw new InvalidOperationException($"Cannot create instance [{roomNode.Definition.Name}]");
+
+            return result;
+        }
+
         // ExecutePhase1_Layout
-        private void ExecutePhase1_Layout(Dictionary<Point, RoomNode> floorMap, Random rng, int totalRooms)
+        private static void ExecutePhase1_Layout(Dictionary<Point, RoomNode> floorMap, Random rng, int totalRooms)
         {
             int totalLayoutAttempts = 0;
             const int maxLayoutAttempts = 1000;
@@ -111,7 +120,7 @@ namespace ScaryCastle
         }
 
         // ExecutePhase2_Labeling
-        private void ExecutePhase2_Labeling(Dictionary<Point, RoomNode> floorMap, Random rng)
+        private static void ExecutePhase2_Labeling(Dictionary<Point, RoomNode> floorMap, Random rng)
         {
             // 1. El START ya está fijado, pero nos aseguramos por las dudas
             floorMap[Point.Zero].Category = RoomCategory.Start;
@@ -237,7 +246,7 @@ namespace ScaryCastle
         }
 
         // ExecutePhase3_InjectSecrets
-        private void ExecutePhase3_InjectSecrets(Dictionary<Point, RoomNode> floorMap, Random rng)
+        private static void ExecutePhase3_InjectSecrets(Dictionary<Point, RoomNode> floorMap, Random rng)
         {
         }
 
@@ -300,7 +309,7 @@ namespace ScaryCastle
         }
 
         // ExecutePhase5_TopologyAndLocks
-        private void ExecutePhase5_TopologyAndLocks(Dictionary<Point, RoomNode> floorMap, Random rng, FloorDescriptor floorDescriptor)
+        private static void ExecutePhase5_TopologyAndLocks(Dictionary<Point, RoomNode> floorMap, Random rng, FloorDescriptor floorDescriptor)
         {
             int maxDistance = GetMaxFloorDistance(floorMap);
 
@@ -409,7 +418,7 @@ namespace ScaryCastle
         }
 
         // ExecutePhase6_PrepareRooms
-        private void ExecutePhase6_PrepareRooms(Dictionary<Point, RoomNode> floorMap, GameSession session, Random floorRng)
+        private static void ExecutePhase6_PrepareRooms(Dictionary<Point, RoomNode> floorMap, GameSession session, Random floorRng)
         {
             foreach (var node in floorMap.Values)
             {
@@ -417,7 +426,7 @@ namespace ScaryCastle
                 int roomSeed = floorRng.Next();
 
                 // Se lo pasamos a la fábrica
-                node.Room = ProceduralRoom.CreateInstance(session, node, roomSeed);
+                node.Room = CreateInstance(session, node, roomSeed);
             }
 
             foreach (var node in floorMap.Values)
@@ -427,7 +436,7 @@ namespace ScaryCastle
         }
 
         // GetDoorDirectionFromPoint
-        private DoorDirection GetDoorDirectionFromPoint(Point direction)
+        private static DoorDirection GetDoorDirectionFromPoint(Point direction)
         {
             return direction switch
             {
@@ -440,13 +449,13 @@ namespace ScaryCastle
         }
 
         // GetManhattanDistance
-        private int GetManhattanDistance(Point a, Point b)
+        private static int GetManhattanDistance(Point a, Point b)
         {
             return Math.Abs(a.X - b.X) + Math.Abs(a.Y - b.Y);
         }
 
         // GetMaxFloorDistance
-        private int GetMaxFloorDistance(Dictionary<Point, RoomNode> floorMap)
+        private static int GetMaxFloorDistance(Dictionary<Point, RoomNode> floorMap)
         {
             int max = 0;
             foreach (var node in floorMap.Values)
@@ -458,7 +467,7 @@ namespace ScaryCastle
         }
 
         // GetProgressiveDifficulty
-        private Difficulty GetProgressiveDifficulty(Point position, int maxDistance)
+        private static Difficulty GetProgressiveDifficulty(Point position, int maxDistance)
         {
             if (maxDistance == 0)
                 return Difficulty.Easy;

@@ -6,28 +6,16 @@
     public static class GameSettings
     {
         // Build
-        public const int Build = 105;
+        public const int Build = 1255;
 
         // CameraFollowSpeed
         public const float CameraSmoothSpeed = 2;
 
-        // ConditionCooldown
-        public const int ConditionCooldown = 10000;
-
         // ContentRootDirectory
         public const string ContentRootDirectory = "Content";
 
-        // CountdownDuration
-        public const int CountdownDuration = 66;
-
-        // CountdownCritical
-        public const int CountdownCritical = 9;
-
         // DarknessMissChancePenalty
         public const float DarknessMissChancePenalty = .2f;
-
-        // DeathCoooldown
-        public const int DeathCoooldown = 15000;
 
         // DefaultTransitionDuration
         public const int DefaultTransitionDuration = 500;
@@ -49,7 +37,7 @@
         {
             public const int InventoryCapacity = 5;
             public const int MaxEnergy = 4;
-            public const int MaxHP = 2;
+            public const int MaxHP = 4;
             public const int MaxStamina = 5;
         }
 

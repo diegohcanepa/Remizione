@@ -1,5 +1,4 @@
-﻿using Adberration.Scripting;
-using Engendro;
+﻿using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
@@ -126,7 +125,7 @@ namespace ScaryCastle
         protected override void OnRefreshLocalizedValues()
         {
             base.OnRefreshLocalizedValues();
-            
+
             this.DisplayName = TextRepository.GetValue($"Item.{Name}.Name");
             this.Description = TextRepository.GetValue($"Item.{Name}.Description");
             this.EffectDescription = EffectDescriptor.GetDescription(EffectDescriptors);

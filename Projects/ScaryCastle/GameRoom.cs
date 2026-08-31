@@ -1,7 +1,6 @@
 ﻿using Adberration;
 using Adberration.Scripting;
 using Engendro;
-using Engendro.Audio;
 using Engendro.Collections;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -27,9 +26,6 @@ namespace ScaryCastle
         private RenderTarget2D? lightMapTarget;
         private readonly List<Light> lights = [];
         private readonly List<ILightSource> lightSources = [];
-        private string lastKnownMusicTag = string.Empty;
-        private FacingDirection lastKnownPlayerDirection;
-        private Vector2? lastKnownPlayerPosition;
         private static readonly Light playerLight = new("PlayerLight")
         {
             LightKind = LightKind.Player,
@@ -552,19 +548,6 @@ namespace ScaryCastle
 
         // PlayerLightBounds
         public static RectangleF PlayerLightBounds => playerLight.BoundingBox;
-
-        // PreserveBeforeGateway
-        [ScriptMethod]
-        public void PreserveBeforeGateway()
-        {
-            if (Session.Player != null)
-            {
-                lastKnownPlayerDirection = Session.Player.Direction;
-                lastKnownPlayerPosition = Session.Player.Position;
-            }
-
-            lastKnownMusicTag = AudioManager.Music.CurrentTag;
-        }
 
         // RefreshAmbientLightSources
         public void RefreshAmbientLightSources()

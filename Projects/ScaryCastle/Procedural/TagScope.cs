@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Engendro.Collections;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace ScaryCastle
@@ -18,30 +19,30 @@ namespace ScaryCastle
         }
 
         // AllowPools
-        public TagReadOnlyCollection AllowPools { get; }
+        public ReadOnlyEnumSet<Tag> AllowPools { get; }
 
         // AllowTags
-        public TagReadOnlyCollection AllowTags { get; }
+        public ReadOnlyEnumSet<Tag> AllowTags { get; }
 
         // DenyPools
-        public TagReadOnlyCollection DenyPools { get; }
+        public ReadOnlyEnumSet<Tag> DenyPools { get; }
 
         // DenyTags
-        public TagReadOnlyCollection DenyTags { get; }
+        public ReadOnlyEnumSet<Tag> DenyTags { get; }
 
         // FromJson
         public static TagScope FromJson(JsonElement element)
         {
-            var allowPools = TagReadOnlyCollection.FromJson(element, "allowPools");
-            var denyPools = TagReadOnlyCollection.FromJson(element, "denyPools");
-            var allowTags = TagReadOnlyCollection.FromJson(element, "allowTags");
-            var denyTags = TagReadOnlyCollection.FromJson(element, "denyTags");
+            var allowPools = ReadOnlyEnumSet<Tag>.FromJsonOrEmpty(element, "allowPools");
+            var denyPools = ReadOnlyEnumSet<Tag>.FromJsonOrEmpty(element, "denyPools");
+            var allowTags = ReadOnlyEnumSet<Tag>.FromJsonOrEmpty(element, "allowTags");
+            var denyTags = ReadOnlyEnumSet<Tag>.FromJsonOrEmpty(element, "denyTags");
 
             return new TagScope(allowPools, denyPools, allowTags, denyTags);
         }
 
         // Test
-        public static bool Test(TagScope scope, TagReadOnlyCollection pools, TagReadOnlyCollection tags)
+        public static bool Test(TagScope scope, ReadOnlyEnumSet<Tag> pools, ReadOnlyEnumSet<Tag> tags)
         {
             // DenyPools
             if (scope.DenyPools.Count > 0)

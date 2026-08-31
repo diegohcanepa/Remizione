@@ -8,6 +8,9 @@
     {
       "type": "object",
       "properties": {
+        "allowedRoomCategories": {
+          "type": "string"
+        },
         "dropCoinChanceBonus": {
           "type": "number",
           "default": 0,
@@ -45,10 +48,6 @@
             "Good",
             "Evil"
           ]
-        },
-        "isUnique": {
-          "type": "boolean",
-          "default": false
         },
         "maxPerRoom": {
           "type": "integer",

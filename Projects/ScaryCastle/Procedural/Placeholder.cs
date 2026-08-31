@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Collections;
 using Microsoft.Xna.Framework;
 using System;
 using System.Text.Json;
@@ -13,7 +14,7 @@ namespace ScaryCastle
         // Constructor
         public Placeholder(JsonElement element)
         {
-            AllowTags = TagReadOnlyCollection.FromJson(element, "allowTags");
+            AllowTags = ReadOnlyEnumSet<Tag>.FromJsonOrEmpty(element, "allowTags");
             FillChance = element.GetFloat("fillChance", 1);
             FlipImage = element.GetBool("flipImage", false);
 
@@ -27,7 +28,7 @@ namespace ScaryCastle
         }
 
         // AllowTags
-        public TagReadOnlyCollection AllowTags { get; }
+        public ReadOnlyEnumSet<Tag> AllowTags { get; }
 
         // FillChance
         public Ratio FillChance { get; set; }

@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using ScaryCastle.Procedural;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace ScaryCastle
@@ -47,8 +46,6 @@ namespace ScaryCastle
                 PivotOrigin = RectanglePoint.LeftTop,
                 RenderLayer = RenderLayer.Foreground
             };
-
-            this.Doors = doors.AsReadOnly();
 
             Zoom = 1.15f;
             AtlasName = roomNode.Definition.Name ?? string.Empty;
@@ -190,7 +187,7 @@ namespace ScaryCastle
         // PrepareLights
         private void PrepareLights()
         {
-            foreach (var door in Doors)
+            foreach (var door in doors)
             {
                 var doorLight = AddLight(door.Name);
                 //doorLight.Ambient = true;
@@ -275,7 +272,7 @@ namespace ScaryCastle
             if (Random.NextSingle() > combatChance)
                 return;
 
-            var candidates = ProceduralUtils.GetCandidateDefinitions<ActorDefinition>(Session.CurrentRun, RoomNode, GameData.Actors);
+            var candidates = ProceduralUtils.GetCandidateDefinitions(Session.CurrentRun, RoomNode, GameData.Actors);
             if (candidates.Count == 0)
                 return;
 
@@ -454,7 +451,7 @@ namespace ScaryCastle
             if (Session.CurrentRun is not Run run)
                 return;
 
-            var candidates = ProceduralUtils.GetCandidateDefinitions<PropDefinition>(run, RoomNode, GameData.Props);
+            var candidates = ProceduralUtils.GetCandidateDefinitions(run, RoomNode, GameData.Props);
             if (candidates.Count == 0)
                 return;
 
@@ -710,16 +707,6 @@ namespace ScaryCastle
 
         #endregion
 
-        // CreateInstance
-        public static ProceduralRoom CreateInstance(GameSession session, RoomNode roomNode, int roomSeed)
-        {
-            // Get type from AOT registry
-            if (Activator.CreateInstance(typeof(ProceduralRoom), session, roomNode, roomSeed) is not ProceduralRoom result)
-                throw new InvalidOperationException($"Cannot create instance [{roomNode.Definition.Name}]");
-
-            return result;
-        }
-
         // CreateThingClone
         public T CreateThingClone<T>(string declaredName) where T : GameThing
         {
@@ -730,9 +717,6 @@ namespace ScaryCastle
 
             return result;
         }
-
-        // Doors
-        public ReadOnlyCollection<Door> Doors { get; }
 
         // GetPlayerPosition
         public Vector2 GetPlayerPosition(int previousRoomIndex, out Door? targetDoor)

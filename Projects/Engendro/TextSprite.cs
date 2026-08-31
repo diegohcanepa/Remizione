@@ -139,10 +139,7 @@ namespace Engendro
 
             textRepositoryLoadCount = TextRepository.ContentVersion;
 
-            if (TextRepositoryKey == null)
-                text = null;
-            else
-                text = TextRepository.GetValue(TextRepositoryKey);
+            text = TextRepositoryKey == null ? null : TextRepository.GetValue(TextRepositoryKey);
 
             Invalidate();
 

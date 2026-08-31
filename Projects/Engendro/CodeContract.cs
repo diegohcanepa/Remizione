@@ -35,10 +35,7 @@ namespace Engendro
         // IsValidName
         public static bool IsValidName(string name)
         {
-            if (string.IsNullOrWhiteSpace(name) || Regex.Count(name, @"[0-9a-zA-Z-_]") < name.Length)
-                return false;
-            else
-                return true;
+            return !string.IsNullOrWhiteSpace(name) && Regex.Count(name, @"[0-9a-zA-Z-_]") >= name.Length;
         }
 
         // NotDisposed

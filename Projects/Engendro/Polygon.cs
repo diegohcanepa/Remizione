@@ -489,7 +489,9 @@ namespace Engendro
                 {
                     if (Geometry.DistanceToSegment(start, v1, v2) > epsilon &&
                         Geometry.DistanceToSegment(end, v1, v2) > epsilon)
+                    {
                         return true;
+                    }
                 }
             }
 

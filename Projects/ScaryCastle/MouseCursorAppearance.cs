@@ -150,9 +150,9 @@ namespace ScaryCastle
 
             if (target == null)
             {
-               MouseCursor.Tooltip = null;
-               MouseCursor.SubText = null;
-               return;
+                MouseCursor.Tooltip = null;
+                MouseCursor.SubText = null;
+                return;
             }
 
             MouseCursor.Tooltip = target.DisplayName;
