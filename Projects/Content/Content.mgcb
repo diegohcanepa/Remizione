@@ -1476,12 +1476,12 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/TowerDoorClose.wav;Audio/FX/TowerDoorClose
 
-#begin Audio/FX/TrapDoorOpen.wav
+#begin Audio/FX/TrapdoorOpen.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
-/build:Audio/FX/TrapDoorOpen.wav;Audio/FX/TrapDoorOpen
+/build:Audio/FX/TrapdoorOpen.wav;Audio/FX/TrapdoorOpen
 
 #begin Audio/FX/TrunkLocked.wav
 /importer:WavImporter

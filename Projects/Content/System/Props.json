@@ -10,7 +10,7 @@
       "placements": ["Floor"]
     },    
     {
-      "name": "CastleTrapDoor",
+      "name": "CastleTrapdoor",
       "targeRoomCategory": "End",
       "difficulty": "Hard",
       "placements": ["Floor"],

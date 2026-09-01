@@ -212,6 +212,11 @@ namespace ScaryCastle
                             targetActor.ShowStatusReaction(status, true);
                         }
                         break;
+
+                    // TrapdoorKey
+                    case EffectType.TrapdoorKey:
+                        source.Session.CurrentRun?.PocketItems.TrapdoorKeys += amount;
+                        break;
                 }
             }
         }

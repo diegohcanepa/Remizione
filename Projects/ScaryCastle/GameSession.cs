@@ -130,6 +130,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(BloodyEye));
             AotTypeRegistry.Register(typeof(Pill));
             AotTypeRegistry.Register(typeof(BronzeKey));
+            AotTypeRegistry.Register(typeof(CastleTrapdoor));
             AotTypeRegistry.Register(typeof(CloseUpRoom));
             AotTypeRegistry.Register(typeof(Coin));
             AotTypeRegistry.Register(typeof(CreditsRoom));
@@ -154,7 +155,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(SpearTrap));
             AotTypeRegistry.Register(typeof(StinkyRat));
             AotTypeRegistry.Register(typeof(Torch));
-            AotTypeRegistry.Register(typeof(CastleTrapDoor));
+            AotTypeRegistry.Register(typeof(TrapdoorKey));
             AotTypeRegistry.Register(typeof(Trunk));
             AotTypeRegistry.Register(typeof(WreckingBall));
 

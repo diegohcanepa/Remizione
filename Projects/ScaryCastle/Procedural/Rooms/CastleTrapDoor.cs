@@ -1,14 +1,14 @@
 ﻿namespace ScaryCastle
 {
     /// <summary>
-    /// CastkeTrapDoor
+    /// CastkeTrapdoor
     /// </summary>
-    public sealed class CastleTrapDoor : Openable
+    public sealed class CastleTrapdoor : Openable
     {
         #region Constructor
 
         // Constructor
-        public CastleTrapDoor(GameSession session, string name)
+        public CastleTrapdoor(GameSession session, string name)
             : base(session, name)
         {
             Atlas = Atlases.Props;

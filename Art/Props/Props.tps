@@ -188,8 +188,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">CastleTrapDoor-assets/CastleTrapDoor01.png</key>
-            <key type="filename">CastleTrapDoor-assets/CastleTrapDoor02.png</key>
+            <key type="filename">CastleTrapdoor-assets/CastleTrapdoor01.png</key>
+            <key type="filename">CastleTrapdoor-assets/CastleTrapdoor02.png</key>
             <key type="filename">VendingMachine-assets/VendingMachine.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -997,7 +997,7 @@
                     <filename>DoorUp-assets</filename>
                     <filename>CastleWindow-assets</filename>
                     <filename>CastleGrate-assets</filename>
-                    <filename>CastleTrapDoor-assets</filename>
+                    <filename>CastleTrapdoor-assets</filename>
                 </array>
             </struct>
         </map>

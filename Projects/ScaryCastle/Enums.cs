@@ -57,7 +57,7 @@ namespace ScaryCastle
     public enum EffectContext { Collect, Contact, Attack, RemainsContact, RunModifier, Update, Use, ProjectileHit, Status, ApplyStatus }
 
     // EffectType
-    public enum EffectType { None, BronzeKey, Coin, CoinLoss, ComicText, Damage, Death, EnergyGain, EnergyLoss, EnergyRestore, HPGain, HPLoss, HPRestore, StaminaGain, StaminaLoss, StaminaRestore, MaxEnergyGain, MaxEnergyLoss, MaxHPGain, MaxHPLoss, MaxStaminaGain, MaxStaminaLoss, GoldenKey, Status }
+    public enum EffectType { None, BronzeKey, Coin, CoinLoss, ComicText, Damage, Death, EnergyGain, EnergyLoss, EnergyRestore, HPGain, HPLoss, HPRestore, StaminaGain, StaminaLoss, StaminaRestore, MaxEnergyGain, MaxEnergyLoss, MaxHPGain, MaxHPLoss, MaxStaminaGain, MaxStaminaLoss, GoldenKey, Status, TrapdoorKey }
 
     // EffectTarget
     public enum EffectTarget { Target, Self }
@@ -192,7 +192,7 @@ namespace ScaryCastle
     public enum PlayerNumber { None = -1, One = 0, Two = 1, Three = 2, Four = 3 }
 
     // PocketItemType
-    public enum PocketItemType { BronzeKey, Coin, GoldenKey }
+    public enum PocketItemType { BronzeKey, Coin, GoldenKey, TrapdoorKey }
 
     // PositioningMode
     public enum PositioningMode

@@ -64,6 +64,7 @@
   <String Key="Item.RedPill.Name">Comprimido miocardíaco</String>
   <String Key="Item.ServantCross.Name">Cruz del Siervo</String>
   <String Key="Item.SodaCan.Name">Caca-Cola</String>
+  <String Key="Item.TrapdoorKey.Name">Llave de trampilla</String>
   <String Key="Item.Verse.Name">Versículo</String>
   <String Key="ItemCategory.Consumable">Consumible</String>
   <String Key="ItemCategory.Gadget">Cosita</String>

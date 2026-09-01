@@ -230,6 +230,22 @@
 					"sound": "Drink"
 				}
 			]
+		},
+		{
+			"name": "TrapdoorKey",
+			"behavior": "Pocket",
+			"actionKind": "Self",
+			"category": "Access",
+			"pickupSound": "PickupKey",
+			"spawnWeight": 0,
+			"effects": [
+				{
+					"context": "Collect",
+					"effectType": "TrapdoorKey",
+					"amount": "1",
+					"target": "Self"
+				}
+			]			
 		}
 	]
 }

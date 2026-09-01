@@ -128,7 +128,8 @@
         "MaxStaminaGain",
         "MaxStaminaLoss",
         "GoldenKey",
-        "Status"
+        "Status",
+        "TrapdoorKey"
       ]
     },
     "FacingDirection": {

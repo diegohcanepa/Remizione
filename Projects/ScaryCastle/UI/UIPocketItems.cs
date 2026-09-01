@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -19,12 +20,12 @@ namespace ScaryCastle
         {
             this.Manager = manager;
 
-            var list = new List<UIPocketItemMeter>
+            var list = new List<UIPocketItemMeter>();
+
+            foreach (var value in Enum.GetValues<PocketItemType>())
             {
-                new(PocketItemType.Coin),
-                new(PocketItemType.BronzeKey),
-                new(PocketItemType.GoldenKey)
-            };
+                list.Add(new(value));
+            }
 
             items = new ReadOnlyCollection<UIPocketItemMeter>(list);
 

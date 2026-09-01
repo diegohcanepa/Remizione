@@ -114,7 +114,7 @@
     { "name": "Text", "volume": 0.8 },
     { "name": "TowerDoorClose" },
     { "name": "Thunder", "soundCount": 4 },
-    { "name": "TrapDoorOpen" },
+    { "name": "TrapdoorOpen" },
     { "name": "TrunkLocked" },
     { "name": "TrunkOpen" },
     { "name": "UIHover", "soundCount": 3, "volume": 0.2 },
