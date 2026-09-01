@@ -10,33 +10,6 @@ namespace ScaryCastle.Procedural
     /// </summary>
     internal static class ProceduralUtils
     {
-        // AdjustActorWeight
-        internal static float AdjustActorWeight(Difficulty roomDiff, Difficulty difficulty, float baseWeight)
-        {
-            switch (roomDiff)
-            {
-                case Difficulty.Easy:
-                    // Sala Easy: SOLO enemigos Easy.
-                    if (difficulty == Difficulty.Easy) return baseWeight * 1.00f;
-                    return 0.00f;
-
-                case Difficulty.Normal:
-                    // Sala Normal: Enemigos Normales (100%) y Masillas Easy (35%).
-                    if (difficulty == Difficulty.Normal) return baseWeight * 1.00f;
-                    if (difficulty == Difficulty.Easy) return baseWeight * 0.35f;
-                    return 0.00f;
-
-                case Difficulty.Hard:
-                    // Sala Hard: Enemigos Hard (100%) y Normales de soporte (50%).
-                    if (difficulty == Difficulty.Hard) return baseWeight * 1.00f;
-                    if (difficulty == Difficulty.Normal) return baseWeight * 0.50f;
-                    return 0.00f;
-
-                default:
-                    return 0.00f;
-            }
-        }
-
         // AdjustPropWeight
         internal static float AdjustPropWeight(Difficulty roomDiff, Difficulty difficulty, float baseWeight)
         {
@@ -48,24 +21,6 @@ namespace ScaryCastle.Procedural
 
             // Si el prop es de dificultad menor o igual a la sala, sale con su peso normal.
             return baseWeight;
-        }
-
-        // CalculateEnemyBudget
-        internal static int CalculateEnemyBudget(RoomNode roomNode, float runProgress, Random rng)
-        {
-            // Presupuesto base austero pero suficiente para la aventura
-            int baseBudget = roomNode.TopographicDifficulty switch
-            {
-                Difficulty.Easy => rng.Next(2, 4),   // 2 a 3 pts (Ideal para 1-3 masillas o un pack)
-                Difficulty.Normal => rng.Next(4, 7),   // 4 a 6 pts
-                Difficulty.Hard => rng.Next(7, 11),  // 7 a 10 pts
-                _ => 2
-            };
-
-            // Escalado de volumen por avance de piso (+0 a +3 puntos maximo hacia el final)
-            int extraBudget = (int)Math.Round(runProgress * 3.0f);
-
-            return baseBudget + extraBudget;
         }
 
         // GetCandidateDefinitions
@@ -147,6 +102,18 @@ namespace ScaryCastle.Procedural
                 cells.RemoveRange(count, cells.Count - count);
 
             return cells;
+        }
+
+        // IsValidActorForRoom
+        internal static bool IsValidActorForRoom(Difficulty roomDiff, Difficulty actorDiff)
+        {
+            return roomDiff switch
+            {
+                Difficulty.Easy => actorDiff == Difficulty.Easy,
+                Difficulty.Normal => actorDiff is Difficulty.Normal or Difficulty.Easy,
+                Difficulty.Hard => true,
+                _ => false
+            };
         }
     }
 }

@@ -21,6 +21,7 @@ namespace ScaryCastle
         private SpriteFrame? footstepLastUsedFrame;
         private readonly AnimatedSprite headSprite;
         private readonly FloatTween headTween = new();
+        private Vector2? lastKnownLiftPosition;
         private readonly FloatTween moveBalancingTween = new();
         private readonly FloatTween moveVerticalTween = new();
         private readonly List<Vector2> pendingPathNodes = [];
@@ -504,6 +505,8 @@ namespace ScaryCastle
         // OnStartMoving
         protected override void OnStartMoving()
         {
+            lastKnownLiftPosition = null;
+
             BodyMachine.ChangeState<BodyMoveState>();
 
             if (AnimationSettings.MoveBounce)
@@ -740,19 +743,20 @@ namespace ScaryCastle
         [ScriptMethod]
         public void DiscardActiveThrowable()
         {
-            if (ActiveThrowable != null)
+            if (ActiveThrowable == null)
+                return;
+
+            if (ActiveThrowable.MaxHP > 0)
             {
-                if (ActiveThrowable.MaxHP > 0)
-                {
-                    StopMoving();
-                    var thrownObject = new ThrownProp(this, ActiveThrowable);
-                    thrownObject.Drop();
-                    ActiveThrowable = null;
-                }
-                else
-                {
-                    DropActiveThrowable();
-                }
+                StopMoving();
+                var thrownObject = new ThrownProp(this, ActiveThrowable);
+                thrownObject.Drop();
+                ActiveThrowable = null;
+                lastKnownLiftPosition = null;
+            }
+            else
+            {
+                DropActiveThrowable();
             }
         }
 
@@ -760,14 +764,25 @@ namespace ScaryCastle
         [ScriptMethod]
         public void DropActiveThrowable()
         {
-            if (ActiveThrowable != null && Room != null)
+            if (ActiveThrowable == null || Room == null)
+                return;
+
+            Room.Children.Add(ActiveThrowable);
+
+            if (lastKnownLiftPosition == null)
             {
-                Room.Children.Add(ActiveThrowable);
                 ActiveThrowable.Position = Position;
                 ActiveThrowable.Y += ActiveThrowable.RuntimeCollider.BoundingRectangleF.Height;
-                ActiveThrowable = null;
-                PlaySound(SoundNames.PropPlace);
             }
+            else
+            {
+                ActiveThrowable.Position = lastKnownLiftPosition.Value;
+                lastKnownLiftPosition = null;
+            }
+
+            ActiveThrowable = null;
+
+            PlaySound(SoundNames.PropPlace);
         }
 
         // Energy
@@ -925,6 +940,7 @@ namespace ScaryCastle
 
             var state = BodyMachine.FindOrCreateState<BodyLiftState>();
             state.Target = prop;
+            lastKnownLiftPosition = prop.Position;
             BodyMachine.ChangeState(state.GetType());
 
             if (IsPlayer)

@@ -9,11 +9,15 @@ namespace ScaryCastle
     /// </summary>
     public class UIPocketItemMeter : GameObject
     {
+        #region Private members
+
         private readonly Sprite icon;
         private readonly Vector2 iconScale = Vector2.One;
         private readonly FloatTween rotationTween = new();
         private readonly Vector2Tween scaleTween = new();
         private readonly TextSprite valueText;
+
+        #endregion
 
         #region Constructor
 
@@ -33,7 +37,7 @@ namespace ScaryCastle
             };
 
             // Icon
-            this.icon = new(Atlases.UI.GetImage($"{pocketItemType}Icon"))
+            this.icon = new(Atlases.UI.GetImage($"{pocketItemType}"))
             {
                 PivotOrigin = RectanglePoint.Bottom
             };

@@ -13,17 +13,14 @@ namespace ScaryCastle
         public UIAtlas()
             : base(EngendroGame.Instance.Content, "UI", ContentManagerExtension.EncodePath(ContentFolder.Atlases, "UI"), false)
         {
-            BronzeKeyIcon = this[nameof(BronzeKeyIcon)];
             CheckMark = this[nameof(CheckMark)];
             CloseWindowButton = this[nameof(CloseWindowButton)];
-            CoinIcon = this[nameof(CoinIcon)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
             DialogOptionBullet = this[nameof(DialogOptionBullet)];
             DiscardItemIcon = this[nameof(DiscardItemIcon)];
             FearIcon = this[nameof(FearIcon)];
-            GoldenKeyIcon = this[nameof(GoldenKeyIcon)];
             DroolCost = CreateReadOnlyCollection("DroolCost", 1, 3);
             DroolIcon = this[nameof(DroolIcon)];
             DroolMeter = CreateReadOnlyCollection(nameof(DroolMeter), 0, 5);
@@ -61,14 +58,8 @@ namespace ScaryCastle
             UIButtonContainerPattern = this[nameof(UIButtonContainerPattern)];
         }
 
-        // BronzeKeyIcon
-        public AtlasImage BronzeKeyIcon { get; }
-
         // CheckMark
         public AtlasImage CheckMark { get; }
-
-        // CoinIcon
-        public AtlasImage CoinIcon { get; }
 
         // ContextMenuOptionSelector
         public AtlasImage ContextMenuOptionSelector { get; }
@@ -102,9 +93,6 @@ namespace ScaryCastle
 
         // FearIcon
         public AtlasImage FearIcon { get; }
-
-        // GoldenKeyIcon
-        public AtlasImage GoldenKeyIcon { get; }
 
         // HeartIcon
         public AtlasImage HeartIcon { get; }

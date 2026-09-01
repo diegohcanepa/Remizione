@@ -771,9 +771,9 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">PocketItems-assets/BronzeKeyIcon.png</key>
-            <key type="filename">PocketItems-assets/CoinIcon.png</key>
-            <key type="filename">PocketItems-assets/GoldenKeyIcon.png</key>
+            <key type="filename">PocketItems-assets/BronzeKey.png</key>
+            <key type="filename">PocketItems-assets/GoldenKey.png</key>
+            <key type="filename">PocketItems-assets/TrapdoorKey.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -782,13 +782,15 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>3,3,6,5</rect>
+                <rect>2,3,3,5</rect>
                 <key>scale9Paddings</key>
-                <rect>3,3,6,5</rect>
+                <rect>2,3,3,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">PocketItems-assets/TrapdoorKeyIcon.png</key>
+            <key type="filename">PocketItems-assets/Coin.png</key>
+            <key type="filename">UIIcons-assets/Sack.png</key>
+            <key type="filename">UIIcons-assets/SackIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -797,9 +799,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>2,3,3,5</rect>
+                <rect>2,2,4,4</rect>
                 <key>scale9Paddings</key>
-                <rect>2,3,3,5</rect>
+                <rect>2,2,4,4</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1120,22 +1122,6 @@
                 <rect>2,3,4,6</rect>
                 <key>scale9Paddings</key>
                 <rect>2,3,4,6</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UIIcons-assets/Sack.png</key>
-            <key type="filename">UIIcons-assets/SackIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,4,4</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,4,4</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

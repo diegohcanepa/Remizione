@@ -174,6 +174,20 @@ namespace ScaryCastle
             }
         }
 
+        // GetHardTypesCount
+        private int GetHardTypesCount()
+        {
+            float roll = Random.NextSingle();
+            
+            if (roll < 0.20f)
+                return 1;
+            
+            if (roll < 0.70f)
+                return 2;
+            
+            return 3;
+        }
+
         // LockDoorsAccordingly
         private void LockDoorsAccordingly()
         {
@@ -256,34 +270,35 @@ namespace ScaryCastle
         // SpawnActors
         private void SpawnActors()
         {
-            if (WalkArea == null || Session.CurrentRun == null)
+            if (WalkArea == null || Session.CurrentRun is not Run run)
                 return;
 
-            // 1. Tirada de Presencia (El pacing de aventura)
-            // ¿Esta sala debería tener combate o ser de pura exploración?
+            // 1. Pacing: ¿Esta sala debería tener combate?
             float combatChance = RoomNode.TopographicDifficulty switch
             {
-                Difficulty.Easy => 0.35f,   // 65% de las veces la sala Easy queda vacía de enemigos
-                Difficulty.Normal => 0.60f, // 40% vacía
-                Difficulty.Hard => 0.85f,   // 15% vacía
+                Difficulty.Easy => 0.5f,
+                Difficulty.Normal => 0.7f,
+                Difficulty.Hard => 0.85f,
                 _ => 0.50f
             };
 
             if (Random.NextSingle() > combatChance)
                 return;
 
-            var candidates = ProceduralUtils.GetCandidateDefinitions(Session.CurrentRun, RoomNode, GameData.Actors);
+            var candidates = ProceduralUtils.GetCandidateDefinitions(run, RoomNode, GameData.Actors);
             if (candidates.Count == 0)
                 return;
 
-            // 2. Filtrar a los que tienen permiso estricto de existir acá
+            // 2. Filtrar candidatos compatibles por dificultad de la sala
             var validCandidates = new List<ActorDefinition>();
-            foreach (var c in candidates)
+            for (int i = 0; i < candidates.Count; i++)
             {
+                var c = candidates[i];
+
                 if (!RoomNode.Definition.AllowEnemies && c.Faction == Faction.Evil)
                     continue;
 
-                if (!c.PassesMaxPerRoomConstraint(actorsSpawnCounter.GetCount(c.Name)))
+                if (!ProceduralUtils.IsValidActorForRoom(RoomNode.TopographicDifficulty, c.Difficulty))
                     continue;
 
                 validCandidates.Add(c);
@@ -292,101 +307,82 @@ namespace ScaryCastle
             if (validCandidates.Count == 0)
                 return;
 
-            // 3. Obtener el presupuesto escalado por el progreso de la run
-            int remainingBudget = ProceduralUtils.CalculateEnemyBudget(RoomNode, Session.CurrentRun.Progress, Random);
-
-            // 4. Armar la tabla de probabilidades relativas
-            var table = new ChanceTable();
-            foreach (var c in validCandidates)
+            // 3. Definir la cantidad de slots (tipos distintos)
+            int targetTypesCount = RoomNode.TopographicDifficulty switch
             {
-                float finalWeight = ProceduralUtils.AdjustActorWeight(RoomNode.TopographicDifficulty, c.Difficulty, c.SpawnWeight);
+                Difficulty.Easy => Random.NextSingle() < 0.90f ? 1 : 2,
+                Difficulty.Normal => Random.NextSingle() < 0.70f ? 1 : 2,
+                Difficulty.Hard => GetHardTypesCount(),
+                _ => 1
+            };
 
-                if (finalWeight > 0f)
+            targetTypesCount = Math.Min(targetTypesCount, validCandidates.Count);
+
+            var chosenTypes = new List<ActorDefinition>();
+
+            // 4. Garantizar la amenaza principal
+            var primaryCandidates = new List<ActorDefinition>();
+            for (int i = 0; i < validCandidates.Count; i++)
+            {
+                if (validCandidates[i].Difficulty == RoomNode.TopographicDifficulty)
                 {
-                    table.Add(c.Name, finalWeight);
+                    primaryCandidates.Add(validCandidates[i]);
                 }
             }
 
-            if (table.Count == 0)
-                return;
-
-            var pendingSpawns = new List<ActorDefinition>();
-            int safetyLimit = (validCandidates.Count * 2) + 10;
-
-            // 5. Bucle de consumo de presupuesto con Puntos de Amenaza (Threat Cost)
-            while (table.Count > 0 && remainingBudget > 0 && safetyLimit-- > 0)
+            if (primaryCandidates.GetRandomItem(Random) is { } primary)
             {
-                if (table.GetValue() is not ChanceTableItem item)
-                    break;
+                chosenTypes.Add(primary);
+                validCandidates.Remove(primary);
+            }
 
-                if (GameData.Actors.Find(item.Name) is not ActorDefinition chosen)
-                    continue;
+            // 5. Completar los slots secundarios
+            int remainingSlots = targetTypesCount - chosenTypes.Count;
+            if (remainingSlots > 0 && validCandidates.Count > 0)
+            {
+                // Asumiendo que Shuffle es tu extensión existente
+                validCandidates.Shuffle(Random);
 
-                // Definimos cuánto cuesta este enemigo en el ecosistema de aventura
-                int entityCost = chosen.Difficulty switch
+                int limit = Math.Min(remainingSlots, validCandidates.Count);
+                for (int i = 0; i < limit; i++)
                 {
-                    Difficulty.Easy => 1,
-                    Difficulty.Normal => 3, // Cuesta el triple que una masilla
-                    Difficulty.Hard => 6,   // Ocupa gran parte de una sala avanzada
-                    _ => 2
-                };
-
-                // Si es impagable, lo sacamos de la ruleta para que el resto del presupuesto lo usen los masillas
-                if (remainingBudget < entityCost)
-                {
-                    table.Remove(item.Name);
-                    continue;
+                    chosenTypes.Add(validCandidates[i]);
                 }
+            }
 
+            // 6. Armar los packs aplicando MaxPerRoom de forma estricta
+            var pendingSpawns = new List<ActorDefinition>();
+            for (int i = 0; i < chosenTypes.Count; i++)
+            {
+                var chosen = chosenTypes[i];
                 int packSize = chosen.RollPackSize(Random);
 
-                // Calculamos cuántos de este pack podemos pagar realmente
-                int maxAffordable = remainingBudget / entityCost;
-                int targetSpawnCount = Math.Min(packSize, maxAffordable);
-                int successfulGroupSpawns = 0;
-
-                for (int p = 0; p < targetSpawnCount; p++)
+                for (int p = 0; p < packSize; p++)
                 {
-                    int pendingCount = 0;
-                    for (int i = 0; i < pendingSpawns.Count; i++)
+                    // Contar cuántos de este tipo ya metimos a mano
+                    int currentPending = 0;
+                    for (int k = 0; k < pendingSpawns.Count; k++)
                     {
-                        if (pendingSpawns[i].Name == chosen.Name)
-                            pendingCount++;
+                        if (pendingSpawns[k].Name == chosen.Name)
+                        {
+                            currentPending++;
+                        }
                     }
 
-                    int currentInRoom = actorsSpawnCounter.GetCount(chosen.Name) + pendingCount;
+                    int totalInRoom = actorsSpawnCounter.GetCount(chosen.Name) + currentPending;
 
-                    if (!chosen.PassesMaxPerRoomConstraint(currentInRoom))
+                    // Si llegamos al tope de diseño para esta sala, cortamos la generación de este pack
+                    if (!chosen.PassesMaxPerRoomConstraint(totalInRoom))
                         break;
 
                     pendingSpawns.Add(chosen);
-                    successfulGroupSpawns++;
-                    remainingBudget -= entityCost; // Consumimos el costo real
-                }
-
-                if (successfulGroupSpawns == 0)
-                {
-                    table.Remove(item.Name);
-                }
-                else
-                {
-                    int totalPending = 0;
-                    for (int i = 0; i < pendingSpawns.Count; i++)
-                    {
-                        if (pendingSpawns[i].Name == chosen.Name) totalPending++;
-                    }
-
-                    if (!chosen.PassesMaxPerRoomConstraint(actorsSpawnCounter.GetCount(chosen.Name) + totalPending))
-                    {
-                        table.Remove(item.Name);
-                    }
                 }
             }
 
             if (pendingSpawns.Count == 0)
                 return;
 
-            // 6. Inyección física segura
+            // 7. Inyección física segura
             var safePoly = new Polygon(WalkArea.Polygon.Vertices, -45);
             var points = ProceduralUtils.GetSpawnPoints(safePoly, pendingSpawns.Count, 45, Random);
 
@@ -394,7 +390,7 @@ namespace ScaryCastle
 
             for (int i = 0; i < spawnsToExecute; i++)
             {
-                SpawnThing<Actor>(Session.CurrentRun, pendingSpawns[i].Name, points[i], actorsSpawnCounter);
+                SpawnThing<Actor>(run, pendingSpawns[i].Name, points[i], actorsSpawnCounter);
             }
         }
 
