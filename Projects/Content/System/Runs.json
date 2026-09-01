@@ -13,7 +13,7 @@
         },
         {
           "allowedPuzzles": [
-            "BronzeKey"
+            "GateLever"
           ],
           "roomCount": 10,
           "theme": "Castle"

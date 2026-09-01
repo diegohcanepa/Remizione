@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:1b20cc312008fcfa8045646dfb719fb3:1de56badb4b161a4f45afb3a1b82635b:124b3bd0ff56be329062dd178e80040a$ -->
+<!-- $TexturePacker:SmartUpdate:0564b8ed7bb16daaf6290fe5c4b3359b:2b7476f958c6a802adaceb9252a320f0:124b3bd0ff56be329062dd178e80040a$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -26,6 +26,8 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="BronzeKey03.png" x="169" y="47" w="7" h="4"/>
     <sprite n="BronzeKey04.png" x="169" y="53" w="7" h="4"/>
     <sprite n="CastleGrate.png" x="78" y="155" w="13" h="9"/>
+    <sprite n="CastleTrapDoor01.png" x="76" y="458" w="21" h="32"/>
+    <sprite n="CastleTrapDoor02.png" x="72" y="394" w="21" h="32"/>
     <sprite n="CastleWindow01.png" x="40" y="90" w="19" h="24"/>
     <sprite n="CastleWindow02.png" x="61" y="90" w="19" h="24"/>
     <sprite n="CastleWindow03.png" x="38" y="432" w="19" h="24"/>
@@ -138,8 +140,6 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="SpearTrap06.png" x="80" y="46" w="38" h="42"/>
     <sprite n="Torch01.png" x="148" y="27" w="19" h="22"/>
     <sprite n="Torch02.png" x="148" y="51" w="19" h="22"/>
-    <sprite n="TrapDoor_Castle_Closed.png" x="76" y="458" w="21" h="32"/>
-    <sprite n="TrapDoor_Castle_Open.png" x="72" y="394" w="21" h="32"/>
     <sprite n="Trunk01.png" x="133" y="155" w="13" h="18"/>
     <sprite n="Trunk02.png" x="118" y="215" w="13" h="18"/>
     <sprite n="TrunkLootBag.png" x="136" y="115" w="13" h="18"/>

@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using System;
 using System.Collections.ObjectModel;
 
 namespace ScaryCastle
@@ -40,6 +41,7 @@ namespace ScaryCastle
             MiniMapCoin = this[nameof(MiniMapCoin)];
             MiniMapCoinAndLoot = this[nameof(MiniMapCoinAndLoot)];
             MiniMapLoot = this[nameof(MiniMapLoot)];
+            MiniMapNodes = CreateReadOnlyCollection<MapNodeState>("MiniMapNode");
             MouseLeftButtonIcon = this[nameof(MouseLeftButtonIcon)];
             MouseRightButtonIcon = this[nameof(MouseRightButtonIcon)];
             PickupShadow = this[nameof(PickupShadow)];
@@ -145,6 +147,9 @@ namespace ScaryCastle
 
         // MiniMapLoot
         public AtlasImage MiniMapLoot { get; }
+
+        // MiniMapRooms
+        public ReadOnlyCollection<AtlasImage> MiniMapNodes { get; }
 
         // MouseLeftButtonIcon
         public AtlasImage MouseLeftButtonIcon { get; }

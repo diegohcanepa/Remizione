@@ -30,6 +30,22 @@
 #begin Atlases/Actors.xml
 /copy:Atlases/Actors.xml
 
+#begin Atlases/Castle_End.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/processorParam:Version=3.8.5.0
+/build:Atlases/Castle_End.png
+
+#begin Atlases/Castle_End.xml
+/copy:Atlases/Castle_End.xml
+
 #begin Atlases/Castle_Start.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1459,6 +1475,13 @@
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/TowerDoorClose.wav;Audio/FX/TowerDoorClose
+
+#begin Audio/FX/TrapDoorOpen.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/TrapDoorOpen.wav;Audio/FX/TrapDoorOpen
 
 #begin Audio/FX/TrunkLocked.wav
 /importer:WavImporter

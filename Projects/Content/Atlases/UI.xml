@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:ec2039d2c38b6036c02b6787315c791c:2f3700d48eb64b6b4d3387600aeca310:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:dd018cc4aa755f8588960efaf58455f0:d637bd2cf97b0403d3ae4bedf7f6498d:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -110,11 +110,11 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="MiniMapContainerBorder.png" x="431" y="211" w="29" h="21"/>
     <sprite n="MiniMapHeart.png" x="29" y="254" w="5" h="5"/>
     <sprite n="MiniMapLoot.png" x="2" y="343" w="5" h="6"/>
-    <sprite n="MiniMapRoom0.png" x="2" y="314" w="7" h="7"/>
-    <sprite n="MiniMapRoom1.png" x="2" y="305" w="7" h="7"/>
-    <sprite n="MiniMapRoom2.png" x="11" y="314" w="7" h="7"/>
-    <sprite n="MiniMapRoom3.png" x="11" y="305" w="7" h="7"/>
-    <sprite n="MiniMapRoom4.png" x="12" y="334" w="7" h="7"/>
+    <sprite n="MiniMapNodeCurrent.png" x="2" y="314" w="7" h="7"/>
+    <sprite n="MiniMapNodeEnd.png" x="2" y="305" w="7" h="7"/>
+    <sprite n="MiniMapNodeNotVisited.png" x="11" y="314" w="7" h="7"/>
+    <sprite n="MiniMapNodeStart.png" x="11" y="305" w="7" h="7"/>
+    <sprite n="MiniMapNodeVisited.png" x="12" y="334" w="7" h="7"/>
     <sprite n="MissingItem.png" x="462" y="235" w="22" h="22"/>
     <sprite n="MonitorFrame.png" x="268" y="74" w="240" h="135"/>
     <sprite n="MouseCursorArrowIcon.png" x="20" y="314" w="7" h="7"/>

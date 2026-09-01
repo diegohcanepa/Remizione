@@ -476,11 +476,15 @@ namespace ScaryCastle
                         continue;
                     }
 
-                    // El FillChance del propio Placeholder en la sala (ej. 100% o el % que tenga el slot)
-                    if (!ph.FillChance.Roll(Random))
-                        continue;
+                    // 1. CONDICIÓN DE SLOT (Placeholder)
+                    // Si la estrategia NO es ContentChanceOnly, el placeholder debe pasar su tirada de FillChance.
+                    if (ph.SpawnRule != PlaceholderSpawnRule.ContentChanceOnly)
+                    {
+                        if (!ph.FillChance.Roll(Random))
+                            continue;
+                    }
 
-                    // 1. Filtrar candidatos compatibles con este placeholder específico
+                    // 2. FILTRADO Y EVALUACIÓN DE CANDIDATOS
                     var phTable = new ChanceTable();
 
                     foreach (var def in candidates)
@@ -500,8 +504,15 @@ namespace ScaryCastle
                         if (!def.PassesMaxPerRunConstraint(run.Spawns.GetCount(def.Name)))
                             continue;
 
-                        // Ajustamos el peso por la dificultad topográfica
                         float finalWeight = ProceduralUtils.AdjustPropWeight(RoomNode.TopographicDifficulty, def.Difficulty, def.SpawnWeight);
+
+                        // 3. CONDICIÓN DE CONTENIDO (Prop)
+                        // Si la estrategia NO es PlaceholderChanceOnly, el prop debe pasar su tirada individual de rareza.
+                        if (ph.SpawnRule != PlaceholderSpawnRule.PlaceholderChanceOnly)
+                        {
+                            if (Random.NextSingle() > MathHelper.Clamp(finalWeight, 0f, 1f))
+                                continue;
+                        }
 
                         if (finalWeight > 0f)
                         {
@@ -512,10 +523,7 @@ namespace ScaryCastle
                     if (phTable.Count == 0)
                         continue;
 
-                    // 2. Selección en la ruleta del Placeholder
-                    // Al usarse una ChanceTable exclusiva para las opciones del placeholder,
-                    // si la Antorcha tiene peso 1.0f (y es la única o la de mayor peso), 
-                    // la pared SIEMPRE se va a poblar.
+                    // 4. INSTANCIACIÓN FINAL
                     if (phTable.GetValue() is ChanceTableItem item &&
                         GameData.Props.Find(item.Name) is PropDefinition chosen)
                     {

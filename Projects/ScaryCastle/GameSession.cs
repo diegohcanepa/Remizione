@@ -154,7 +154,7 @@ namespace ScaryCastle
             AotTypeRegistry.Register(typeof(SpearTrap));
             AotTypeRegistry.Register(typeof(StinkyRat));
             AotTypeRegistry.Register(typeof(Torch));
-            AotTypeRegistry.Register(typeof(TrapDoor));
+            AotTypeRegistry.Register(typeof(CastleTrapDoor));
             AotTypeRegistry.Register(typeof(Trunk));
             AotTypeRegistry.Register(typeof(WreckingBall));
 

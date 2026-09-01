@@ -17,6 +17,7 @@ namespace ScaryCastle
             AllowTags = ReadOnlyEnumSet<Tag>.FromJsonOrEmpty(element, "allowTags");
             FillChance = element.GetFloat("fillChance", 1);
             FlipImage = element.GetBool("flipImage", false);
+            SpawnRule = element.GetEnum("spawnRule", PlaceholderSpawnRule.Default);
 
             if (element.GetEnum<PlacementType>("placement") is { } placement)
                 Placement = placement;
@@ -41,5 +42,8 @@ namespace ScaryCastle
 
         // Position
         public Vector2 Position { get; }
+
+        // SpawnRule
+        public PlaceholderSpawnRule SpawnRule { get; }
     }
 }

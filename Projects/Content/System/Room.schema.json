@@ -138,6 +138,9 @@
                     "type": "number",
                     "minimum": 0,
                     "maximum": 1
+                  },
+                  "spawnRule": {
+                    "$ref": "enums.schema.json#/$defs/PlaceholderSpawnRule"                    
                   }
                 },
                 "required": [
@@ -168,8 +171,7 @@
             "walkArea"
           ]
         }
-      ],
-      "unevaluatedProperties": false
+      ]
     }
   }
 }

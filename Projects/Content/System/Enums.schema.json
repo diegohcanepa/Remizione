@@ -211,6 +211,14 @@
         "OnImpact"
       ]
     },
+    "PlaceholderSpawnRule": {
+      "type": "string",
+      "enum": [
+        "Default",
+        "PlaceholderChanceOnly",
+        "ContentOnly"
+      ]
+    },  
     "PlacementType": {
       "type": "string",
       "enum": [

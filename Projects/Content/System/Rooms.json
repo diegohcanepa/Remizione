@@ -1,6 +1,42 @@
 {
   "$schema": "./Room.schema.json",
   "data": [
+        {
+      "name": "Castle_End",
+      "difficulty": "Hard",
+      "roomCategory": "End",
+      "doorUp": "126,41",
+      "doorLeft": "21,80",
+      "doorRight": "220,80",
+      "doorDown": "152,145",
+      "placeholders": [
+        {
+          "position": "47,19",
+          "placement": "WallFrontHang",
+          "allowTags": "Window"
+        },
+        {
+          "position": "194,19",
+          "placement": "WallFrontHang",
+          "allowTags": "Window"
+        },
+        {
+          "position": "69,18",
+          "placement": "WallFrontHang",
+          "allowTags": "Torch"
+        },
+        {
+          "position": "170,18",
+          "placement": "WallFrontHang",
+          "allowTags": "Torch"
+        },
+        {
+          "position": "138,72",
+          "placement": "Floor"
+        }
+      ],
+      "walkArea": "203,48;232,109;8,109;38,47"
+    },
     {
       "name": "Castle_Start",
       "allowEnemies": false,

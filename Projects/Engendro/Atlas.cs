@@ -113,9 +113,17 @@ namespace Engendro
         #region Protected members
 
         // CreateReadOnlyCollection
-        protected static ReadOnlyCollection<T> CreateReadOnlyCollection<T>(params T[] items)
+        protected ReadOnlyCollection<AtlasImage> CreateReadOnlyCollection<T>(string prefix)
+            where T : struct, Enum
         {
-            return new(items);
+            var list = new List<AtlasImage>();
+
+            foreach (var value in Enum.GetNames<T>())
+            {
+                list.Add(GetImage($"{prefix}{value}"));
+            }
+
+            return new ReadOnlyCollection<AtlasImage>(list);
         }
 
         // CreateReadOnlyCollection

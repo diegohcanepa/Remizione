@@ -13,7 +13,6 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private enum RoomImage { Current, Start, Visited, NotVisited, End };
         private readonly Sprite container;
         private readonly Sprite containerBorder;
         private readonly Vector2 containerCenter;
@@ -65,10 +64,10 @@ namespace ScaryCastle
             );
 
             // Room images
-            roomImages = new Sprite[4];
+            roomImages = new Sprite[Atlases.UI.MiniMapNodes.Count];
             for (var i = 0; i < roomImages.Length; i++)
             {
-                roomImages[i] = new(Atlases.UI.GetImage($"MiniMapRoom{i}"))
+                roomImages[i] = new(Atlases.UI.MiniMapNodes[i])
                 {
                     PivotOrigin = RectanglePoint.Center,
                 };
@@ -89,31 +88,31 @@ namespace ScaryCastle
             // Current
             if (roomNode == CurrentRoom)
             {
-                image = roomImages[(int)RoomImage.Current];
+                image = roomImages[(int)MapNodeState.Current];
             }
 
             // End
             else if (roomNode.Category == RoomCategory.End)
             {
-                image = roomImages[(int)RoomImage.End];
+                image = roomImages[(int)MapNodeState.End];
             }
 
             // Start
             else if (roomNode.Category == RoomCategory.Start)
             {
-                image = roomImages[(int)RoomImage.Start];
+                image = roomImages[(int)MapNodeState.Start];
             }
 
             // Visited
             else if (roomNode.Visited)
             {
-                image = roomImages[(int)RoomImage.Visited];
+                image = roomImages[(int)MapNodeState.Visited];
             }
 
             // Not visited
             else
             {
-                image = roomImages[(int)RoomImage.NotVisited];
+                image = roomImages[(int)MapNodeState.NotVisited];
             }
 
             image.Opacity = roomNode == CurrentRoom ? opacityTween.CurrentValue : 1;

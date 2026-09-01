@@ -68,7 +68,7 @@ namespace ScaryCastle
         // GetVisualAssetName
         private static string GetVisualAssetName(RoomNode current, RoomNode neighbor, DoorDirection doorDirection)
         {
-            var category = neighbor.Category == RoomCategory.Start ? RoomCategory.Standard : neighbor.Category;
+            var category = neighbor.Category is RoomCategory.Start or RoomCategory.End ? RoomCategory.Standard : neighbor.Category;
 
             if (current.LockedDoors.TryGetValue(doorDirection, out LockType lockType) && lockType == LockType.GateLever)
                 return $"{current.Definition.Theme}_Gate";

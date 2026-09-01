@@ -188,6 +188,23 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">CastleTrapDoor-assets/CastleTrapDoor01.png</key>
+            <key type="filename">CastleTrapDoor-assets/CastleTrapDoor02.png</key>
+            <key type="filename">VendingMachine-assets/VendingMachine.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,8,11,16</rect>
+                <key>scale9Paddings</key>
+                <rect>5,8,11,16</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">CastleWindow-assets/CastleWindow01.png</key>
             <key type="filename">CastleWindow-assets/CastleWindow02.png</key>
             <key type="filename">CastleWindow-assets/CastleWindow03.png</key>
@@ -772,23 +789,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">TrapDoor-assets/TrapDoor_Castle_Closed.png</key>
-            <key type="filename">TrapDoor-assets/TrapDoor_Castle_Open.png</key>
-            <key type="filename">VendingMachine-assets/VendingMachine.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>5,8,11,16</rect>
-                <key>scale9Paddings</key>
-                <rect>5,8,11,16</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Trunk-assets/TrunkPiece1.png</key>
             <key type="filename">Trunk-assets/TrunkPiece3.png</key>
             <key type="filename">Trunk-assets/TrunkPiece4.png</key>
@@ -995,9 +995,9 @@
                     <filename>DoorLeft-assets</filename>
                     <filename>DoorRight-assets</filename>
                     <filename>DoorUp-assets</filename>
-                    <filename>TrapDoor-assets</filename>
                     <filename>CastleWindow-assets</filename>
                     <filename>CastleGrate-assets</filename>
+                    <filename>CastleTrapDoor-assets</filename>
                 </array>
             </struct>
         </map>

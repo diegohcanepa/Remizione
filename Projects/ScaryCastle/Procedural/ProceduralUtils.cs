@@ -90,17 +90,6 @@ namespace ScaryCastle.Procedural
                 if (definition.SpawnScope == SpawnScope.StandardOnly && roomNode.Definition.IsRestricted)
                     continue;
 
-                if (definition is ActorDefinition actorDefinition)
-                {
-                    // Si es un Boss real, SOLO puede aparecer en la habitación etiquetada como Boss
-                    if (actorDefinition.Rank == ActorRank.Boss && roomNode.Category != RoomCategory.End)
-                        continue;
-
-                    // Y viceversa: en la sala del Boss no queremos que spawneen murciélagos comunes como plato principal
-                    if (roomNode.Category == RoomCategory.End && actorDefinition.Rank != ActorRank.Boss)
-                        continue;
-                }
-
                 if (definition.RoomTheme.HasValue && definition.RoomTheme != roomNode.Definition.Theme)
                     continue;
 
