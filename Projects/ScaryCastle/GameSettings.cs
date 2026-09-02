@@ -42,7 +42,7 @@
         }
 
         // StaminaRechargeMoveThreshold
-        public const int StaminaRechargeMoveThreshold = 50;
+        public const int StaminaRechargeMoveThreshold = 100;
 
         // SteamAppID
         public const int SteamAppID = 480;

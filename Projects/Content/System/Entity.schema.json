@@ -21,7 +21,11 @@
           "minimum": 0
         },
         "pools": {
-          "type": "string"
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "enums.schema.json#/$defs/Tag"
+          }
         },
         "preferredLootCategory": {
           "$ref": "enums.schema.json#/$defs/ItemCategory"
@@ -34,10 +38,16 @@
           "minimum": 0
         },
         "tags": {
-          "type": "string"
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "enums.schema.json#/$defs/Tag"
+          }
         }
       },
-      "required": ["difficulty"]
+      "required": [
+        "difficulty"
+      ]
     }
   ]
 }

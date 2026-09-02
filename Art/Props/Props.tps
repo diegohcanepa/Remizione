@@ -395,6 +395,10 @@
             <key type="filename">Props-assets/BronzeKey02.png</key>
             <key type="filename">Props-assets/BronzeKey03.png</key>
             <key type="filename">Props-assets/BronzeKey04.png</key>
+            <key type="filename">Props-assets/TrapdoorKey01.png</key>
+            <key type="filename">Props-assets/TrapdoorKey02.png</key>
+            <key type="filename">Props-assets/TrapdoorKey03.png</key>
+            <key type="filename">Props-assets/TrapdoorKey04.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -753,6 +757,36 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">RideCarNE-assets/RideCarNE.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,4,11,8</rect>
+                <key>scale9Paddings</key>
+                <rect>6,4,11,8</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">RideCarSW-assets/RideCarSW.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,5,11,9</rect>
+                <key>scale9Paddings</key>
+                <rect>6,5,11,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">SpearTrap-assets/SpearTrap01.png</key>
             <key type="filename">SpearTrap-assets/SpearTrap02.png</key>
             <key type="filename">SpearTrap-assets/SpearTrap03.png</key>
@@ -998,6 +1032,8 @@
                     <filename>CastleWindow-assets</filename>
                     <filename>CastleGrate-assets</filename>
                     <filename>CastleTrapdoor-assets</filename>
+                    <filename>RideCarSW-assets</filename>
+                    <filename>RideCarNE-assets</filename>
                 </array>
             </struct>
         </map>

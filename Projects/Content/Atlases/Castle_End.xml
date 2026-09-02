@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:d4569e4202a28ef228d62b019fa01a9a:9a151c481d0983c34e8bd46caf168784:e195d1a7db1795c4456b12a11e19edab$ -->
+<!-- $TexturePacker:SmartUpdate:eb04ba9ead2edf577a83ea69097568e0:83f4d0dfb8a9cd788de30887c471cbea:e195d1a7db1795c4456b12a11e19edab$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -20,6 +20,6 @@ verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="Castle_End.png" width="512" height="512">
-    <sprite n="Foreground.png" x="2" y="2" w="240" h="163"/>
+    <sprite n="Foreground.png" x="2" y="2" w="240" h="135"/>
     <sprite n="View1.png" x="244" y="2" w="240" h="135"/>
 </TextureAtlas>

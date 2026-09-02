@@ -13,26 +13,27 @@
         {
           "position": "47,19",
           "placement": "WallFrontHang",
-          "allowTags": "Window"
+          "allowTags": ["Window"]
         },
         {
           "position": "194,19",
           "placement": "WallFrontHang",
-          "allowTags": "Window"
+          "allowTags": ["Window"]
         },
         {
           "position": "69,18",
           "placement": "WallFrontHang",
-          "allowTags": "Torch"
+          "allowTags": ["Torch"]
         },
         {
           "position": "170,18",
           "placement": "WallFrontHang",
-          "allowTags": "Torch"
+          "allowTags": ["Torch"]
         },
         {
           "position": "138,72",
-          "placement": "Floor"
+          "placement": "Floor",
+          "allowTags": ["Trapdoor"]
         }
       ],
       "walkArea": "203,48;232,109;8,109;38,47"
@@ -50,32 +51,32 @@
         {
           "position": "47,19",
           "placement": "WallFrontHang",
-          "allowTags": "Window"
+          "allowTags": ["Window"]
         },
         {
           "position": "194,19",
           "placement": "WallFrontHang",
-          "allowTags": "Window"
+          "allowTags": ["Window"]
         },
         {
           "position": "69,18",
           "placement": "WallFrontHang",
-          "allowTags": "Torch"
+          "allowTags": ["Torch"]
         },
         {
           "position": "170,18",
           "placement": "WallFrontHang",
-          "allowTags": "Torch"
+          "allowTags": ["Torch"]
         },
         {
           "position": "63,62",
           "placement": "Floor",
-          "allowTags": "Grate"
+          "allowTags": ["Grate"]
         },        
         {
           "position": "147,67",
           "placement": "Floor",
-          "allowTags": "Grate"
+          "allowTags": ["Grate"]
         }
       ],
       "walkArea": "207,55;218,77;198,103;231,103;237,109;8,109;37,48;46,48;47,58;63,62;86,46;155,46;159,61;185,61;188,55"
@@ -97,53 +98,53 @@
         {
           "position": "69,18",
           "placement": "WallFrontHang",
-          "allowTags": "Torch"
+          "allowTags": ["Torch"]
         },
         {
           "position": "170,18",
           "placement": "WallFrontHang",
-          "allowTags": "Torch"
+          "allowTags": ["Torch"]
         },        
         {
           "position": "46,44",
           "placement": "Floor",
           "fillChance": 0.5,
-          "allowTags": "Pottery,Trunk"
+          "allowTags": ["Pottery","Trunk"]
         },
         {
           "position": "193,44",
           "placement": "Floor",
           "fillChance": 0.5,
-          "allowTags": "Pottery,Trunk"
+          "allowTags": ["Pottery","Trunk"]
         },
         {
           "position": "68,46",
           "placement": "WallFrontBase",
           "fillChance": 0.5,
-          "allowTags": "Pottery,Trunk,GateLever"
+          "allowTags": ["Pottery","Trunk","GateLever"]
         },
         {
           "position": "170,46",
           "placement": "WallFrontBase",
           "fillChance": 0.5,
-          "allowTags": "Pottery,Trunk,GateLever"
+          "allowTags": ["Pottery","Trunk","GateLever"]
         },
         {
           "position": "54,85",
           "placement": "Floor",
           "fillChance": 0.2,
-          "allowTags": "Trap"
+          "allowTags": ["Trap"]
         },
         {
           "position": "135,61",
           "placement": "Floor",
           "fillChance": 0.2,
-          "allowTags": "Trap"
+          "allowTags": ["Trap"]
         },
         {
           "position": "81,73",
           "placement": "Ceiling",
-          "allowTags": "Trap"
+          "allowTags": ["Trap"]
         }        
       ],
       "walkArea": "199,43;232,109;10,109;42,44;54,44;59,47;78,47;84,44;156,44;162,47;179,47;184,43",
@@ -164,30 +165,30 @@
         {
         "position": "60,64",
           "placement": "WallFrontHang",
-          "allowTags": "Torch"
+          "allowTags": ["Torch"]
         },
         {
           "position": "150,18",
           "placement": "WallFrontHang",
-          "allowTags": "Torch"
+          "allowTags": ["Torch"]
         },        
         {
           "position": "67,91",
           "placement": "Floor",
           "fillChance": 0.5,
-          "allowTags": "Pottery,Trunk"
+          "allowTags": ["Pottery","Trunk"]
         },
         {
           "position": "115,59",
           "placement": "Floor",
           "fillChance": 0.5,
-          "allowTags": "Pottery,Trunk"
+          "allowTags": ["Pottery","Trunk"]
         },
         {
           "position": "187,59",
           "placement": "WallFrontBase",
           "fillChance": 0.5,
-          "allowTags": "Pottery,Trunk,GateLever"
+          "allowTags": ["Pottery","Trunk","GateLever"]
         }
       ],
       "walkArea": "232,152;12,153;42,91;96,91;114,59;187,60",
@@ -203,14 +204,14 @@
       "roomCategory": "Standard",
       "doorLeft": "21,80",
       "doorRight": "220,80",
-      "allowTags": "Poison",
+      "allowTags": ["Poison"],
       "runModifiers": "Toxic",
       "placeholders": [
         {
           "position": "74,72",
           "placement": "Floor",
           "fillChance": 0.5,
-          "allowTags": "Trap"
+          "allowTags": ["Trap"]
         },
         {
           "position": "126,81",
@@ -221,7 +222,7 @@
           "position": "172,72",
           "placement": "Floor",
           "fillChance": 0.5,
-          "allowTags": "Trap"
+          "allowTags": ["Trap"]
         }
       ],
       "walkArea": "210,62;224,91;178,91;171,93;144,93;132,89;103,94;62,93;19,91;34,62;95,60",

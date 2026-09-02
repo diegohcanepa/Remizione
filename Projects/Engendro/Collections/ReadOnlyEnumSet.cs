@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text.Json;
 
 namespace Engendro.Collections
@@ -46,26 +47,28 @@ namespace Engendro.Collections
             return list.Count == 0 ? Empty : new ReadOnlyEnumSet<T>(list);
         }
 
-        // FromJson
-        public static ReadOnlyEnumSet<T> FromJson(JsonElement element, string propertyName)
-        {
-            if (!element.TryGetProperty(propertyName, out JsonElement tagsElement))
-                throw new KeyNotFoundException($"Required JSON property '{propertyName}' was not found.");
-
-            if (tagsElement.ValueKind != JsonValueKind.String || tagsElement.GetString() is not string tags)
-                throw new JsonException($"Property '{propertyName}' in JSON element is not a valid string.");
-
-            return FromString(tags);
-        }
-
         // FromJsonOrEmpty
         public static ReadOnlyEnumSet<T> FromJsonOrEmpty(JsonElement element, string propertyName)
         {
-            if (element.TryGetProperty(propertyName, out JsonElement tagsElement) &&
-                tagsElement.ValueKind == JsonValueKind.String &&
-                tagsElement.GetString() is string tags)
+            if (element.TryGetProperty(propertyName, out JsonElement arrayElement) &&
+                    arrayElement.ValueKind == JsonValueKind.Array)
             {
-                return FromString(tags);
+                var set = new HashSet<T>();
+
+                foreach (JsonElement itemElement in arrayElement.EnumerateArray())
+                {
+                    if (itemElement.ValueKind == JsonValueKind.String &&
+                        itemElement.GetString() is string enumValue)
+                    {
+                        if (!CodeContract.IsValidName(enumValue))
+                            throw new InvalidOperationException($"'{enumValue}' is not a valid enum value.");
+
+                        var parsedEnum = Enum.Parse<T>(enumValue, false);
+                        set.Add(parsedEnum);
+                    }
+                }
+
+                return new ReadOnlyEnumSet<T>(set.ToArray());
             }
 
             return Empty;

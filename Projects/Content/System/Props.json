@@ -5,7 +5,7 @@
       "name": "CastleGrate",
       "difficulty": "Easy",
       "maxPerRoom": 1,
-      "tags": "Grate",
+      "tags": ["Grate"],
       "spawnWeight": 0.1,
       "placements": ["Floor"]
     },    
@@ -14,13 +14,14 @@
       "targeRoomCategory": "End",
       "difficulty": "Hard",
       "placements": ["Floor"],
-      "roomTheme": "Castle"
+      "roomTheme": "Castle",
+      "tags": ["Trapdoor"]
     },        
     {
       "name": "CastleWindow",
       "difficulty": "Easy",
       "maxPerRoom": -1,
-      "tags": "Window",
+      "tags": ["Window"],
       "placements": [
         "WallFrontHang"      
       ]
@@ -28,7 +29,7 @@
     {
       "name": "DevilCarvedFace",
       "difficulty": "Easy",
-      "tags": "WallDecoration",
+      "tags": ["WallDecoration"],
       "placements": [
         "WallFrontHang"      
       ]
@@ -44,7 +45,7 @@
       "difficulty": "Easy",
       "dropCoinChanceBonus": 0.5,
       "dropMode": "CoinsOnly",
-      "tags": "Pottery",
+      "tags": ["Pottery"],
       "effects": [
         {
           "context": "Contact",
@@ -62,7 +63,7 @@
       "difficulty": "Normal",
       "dropCoinChanceBonus": 0.25,
       "dropSackChanceBonus": 0.25,
-      "tags": "Pottery",
+      "tags": ["Pottery"],
       "effects": [
         {
           "context": "Contact",
@@ -94,9 +95,17 @@
       "placements": []
     },
     {
+      "name": "RideCarSW",
+      "difficulty": "Easy",
+      "maxPerRoom": -1,
+      "placements": [
+        "Floor"      
+      ]
+    },    
+    {
       "name": "SpearTrap",
       "difficulty": "Normal",
-      "tags": "Trap",
+      "tags": ["Trap"],
       "effects": [
         {
           "context": "Contact",
@@ -110,14 +119,14 @@
     {
       "name": "Torch",
       "difficulty": "Easy",
-      "tags": "Torch",
+      "tags": ["Torch"],
       "placements": [
         "WallFrontHang"
       ]
     },    {
       "name": "Trunk",
       "difficulty": "Easy",
-      "tags": "Trunk",
+      "tags": ["Trunk"],
       "effects": [
         {
           "context": "Contact",
@@ -134,7 +143,7 @@
     },
     {
       "name": "GoldenTrunk",
-      "tags": "Trunk",
+      "tags": ["Trunk"],
       "difficulty": "Normal",
       "effects": [
         {
@@ -153,7 +162,7 @@
     {
       "name": "Vent",
       "difficulty": "Easy",
-      "tags": "WallDecoration",
+      "tags": ["WallDecoration"],
       "placements": [
         "WallFrontHang"      
       ]
@@ -161,7 +170,7 @@
     {
       "name": "WreckingBall",
       "difficulty": "Normal",
-      "tags": "Trap",
+      "tags": ["Trap"],
       "effects": [
         {
           "context": "Contact",

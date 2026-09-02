@@ -28,11 +28,11 @@ namespace ScaryCastle
             if (QualityBoost < 0)
                 QualityBoost = 0;
 
-            // Tags
-            Tags = ReadOnlyEnumSet<Tag>.FromJsonOrEmpty(element, "tags");
-
             // Pools
             Pools = ReadOnlyEnumSet<Tag>.FromJsonOrEmpty(element, "pools");
+
+            // Tags
+            Tags = ReadOnlyEnumSet<Tag>.FromJsonOrEmpty(element, "tags");
         }
 
         #endregion

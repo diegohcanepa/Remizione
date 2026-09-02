@@ -219,7 +219,7 @@
         "PlaceholderChanceOnly",
         "ContentOnly"
       ]
-    },  
+    },
     "PlacementType": {
       "type": "string",
       "enum": [
@@ -287,11 +287,28 @@
         "StandardOnly",
         "RestrictedOnly"
       ]
-    },    
+    },
     "StatusType": {
       "type": "string",
       "enum": [
         "Poison"
+      ]
+    },
+    "Tag": {
+      "type": "string",
+      "enum": [
+        "Ceiling",
+        "Floor",
+        "GateLever",
+        "Grate",
+        "Poison",
+        "Pottery",
+        "Torch",
+        "Trap",
+        "Trapdoor",
+        "Trunk",
+        "WallDecoration",
+        "Window"
       ]
     }
   }

@@ -46,16 +46,32 @@
           "type": "object",
           "properties": {
             "allowPools": {
-              "type": "string"
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "enums.schema.json#/$defs/Tag"
+              }
             },
             "allowTags": {
-              "type": "string"
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "enums.schema.json#/$defs/Tag"
+              }
             },
             "denyPools": {
-              "type": "string"
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "enums.schema.json#/$defs/Tag"
+              }
             },
             "denyTags": {
-              "type": "string"
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "enums.schema.json#/$defs/Tag"
+              }
             },
             "doorDown": {
               "type": "string"
@@ -85,7 +101,7 @@
             },
             "featuredActor": {
               "$ref": "#/$defs/FeaturedActor"
-            },            
+            },
             "interactiveActorPosition": {
               "type": "string"
             },
@@ -129,10 +145,14 @@
                     "type": "string"
                   },
                   "allowTags": {
-                    "type": "string"
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                      "$ref": "enums.schema.json#/$defs/Tag"
+                    }
                   },
                   "placement": {
-                    "$ref": "enums.schema.json#/$defs/PlacementType"                    
+                    "$ref": "enums.schema.json#/$defs/PlacementType"
                   },
                   "fillChance": {
                     "type": "number",
@@ -140,7 +160,7 @@
                     "maximum": 1
                   },
                   "spawnRule": {
-                    "$ref": "enums.schema.json#/$defs/PlaceholderSpawnRule"                    
+                    "$ref": "enums.schema.json#/$defs/PlaceholderSpawnRule"
                   }
                 },
                 "required": [
