@@ -10,10 +10,10 @@ namespace Remizione
     public sealed class PlayerInputHandler<T> : InputHandler where T : Actor
     {
         // Constructor
-        public PlayerInputHandler(T actor, PlayerIndex playerIndex)
+        public PlayerInputHandler(T owner, PlayerIndex playerIndex)
             : base(playerIndex)
         {
-            this.Actor = actor;
+            this.Owner = owner;
         }
 
         #region Private members
@@ -26,7 +26,7 @@ namespace Remizione
                 return HandleInputResult.Handled;
 
             // Right button
-            if (Actor.Session.CurrentRun != null)
+            if (Owner.Session.CurrentRun != null)
             {
                 if (TestMouseRightButtonClick())
                     return HandleInputResult.Handled;
@@ -38,21 +38,21 @@ namespace Remizione
         // ResolveInteraction
         private void ResolveInteraction()
         {
-            if (!Actor.IsPlayer)
+            if (!Owner.IsPlayer)
                 return;
 
-            var context = Actor.Session.InteractionContext;
+            var context = Owner.Session.InteractionContext;
 
             MouseCursor.PerformClick();
 
-            var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Actor.Session.Camera);
+            var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(Owner.Session.Camera);
 
             // 1. Walk to
             if (context.Target == null)
             {
-                Actor.Session.InteractionData.Clear();
-                Actor.EnforceTurn = true;
-                Actor.MoveTo(destination, 50);
+                Owner.Session.InteractionData.Clear();
+                Owner.EnforceTurn = true;
+                Owner.MoveTo(destination, 50);
 
                 return;
             }
@@ -60,7 +60,7 @@ namespace Remizione
             // 2. Outcome interaction: Approach and interact with target
             if (context.HeldItem == null || context.Target.IsGoToVerb)
             {
-                Actor.ResolveInteraction(context.Target, null);
+                Owner.ResolveInteraction(context.Target, null);
                 return;
             }
 
@@ -69,13 +69,13 @@ namespace Remizione
             {
                 if (context.Target is not Prop prop || !prop.IsLiftable)
                 {
-                    Actor.Session.RunHUD?.Message.Show(MessageKind.LiftNotAllowed);
+                    Owner.Session.RunHUD?.Message.Show(MessageKind.LiftNotAllowed);
                     MouseCursor.Shake();
                     return;
                 }
             }
 
-            if (Actor.ResolveInteraction(context.Target, context.HeldItem))
+            if (Owner.ResolveInteraction(context.Target, context.HeldItem))
                 return;
 
             MouseCursor.Shake();
@@ -99,26 +99,26 @@ namespace Remizione
                 return false;
 
             // Drop throwable
-            if (Actor.ActiveThrowable != null)
+            if (Owner.ActiveThrowable != null)
             {
                 MouseCursor.PerformClick();
-                Actor.DropActiveThrowable();
+                Owner.DropActiveThrowable();
                 return true;
             }
 
-            Actor.StopMoving();
+            Owner.StopMoving();
 
             // Drop held item
-            if (Actor.Session.InteractionContext.HeldItem != null)
+            if (Owner.Session.InteractionContext.HeldItem != null)
             {
                 MouseCursor.PerformClick(false);
-                Actor.Session.InteractionContext.HeldItem = null;
-                Actor.Session.InteractionData.Clear();
+                Owner.Session.InteractionContext.HeldItem = null;
+                Owner.Session.InteractionData.Clear();
             }
             else
             {
                 MouseCursor.PerformClick();
-                Actor.Session.ShowInventory();
+                Owner.Session.ShowInventory();
             }
 
             return true;
@@ -126,13 +126,13 @@ namespace Remizione
 
         #endregion
 
-        // Actor
-        public T Actor { get; }
-
         // HandleInput
         public override HandleInputResult HandleInput()
         {
             return HandleMouseInput();
         }
+
+        // Owner
+        public T Owner { get; }
     }
 }
