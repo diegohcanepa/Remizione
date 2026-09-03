@@ -1,7 +1,7 @@
 ﻿using Engendro;
 using System.Collections.ObjectModel;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// EnvironmentAtlas

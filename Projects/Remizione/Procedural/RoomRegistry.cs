@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// RoomRegistry

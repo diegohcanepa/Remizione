@@ -1,6 +1,6 @@
 ﻿using Engendro.Audio;
 
-namespace ScaryCastle.Menus
+namespace Remizione.Menus
 {
     /// <summary>
     /// VolumeOption
@@ -8,7 +8,7 @@ namespace ScaryCastle.Menus
     public sealed class VolumeOption : Option<float>
     {
         // Constructor
-        internal VolumeOption(ScaryCastleGame game, VolumeCategory category)
+        internal VolumeOption(RemizioneGame game, VolumeCategory category)
             : base(game, $"@Menu.Options.{category}")
         {
             this.VolumeCategory = category;

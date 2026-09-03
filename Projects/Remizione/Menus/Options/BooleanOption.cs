@@ -1,4 +1,4 @@
-﻿namespace ScaryCastle.Menus
+﻿namespace Remizione.Menus
 {
     /// <summary>
     /// BooleanOption
@@ -6,7 +6,7 @@
     public class BooleanOption : Option<bool>
     {
         // Constructor
-        public BooleanOption(ScaryCastleGame game, string displayName, bool value)
+        public BooleanOption(RemizioneGame game, string displayName, bool value)
             : base(game, displayName)
         {
             AddValue("@Misc.No", false);

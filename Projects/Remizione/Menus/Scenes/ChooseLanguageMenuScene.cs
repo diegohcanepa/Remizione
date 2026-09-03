@@ -1,7 +1,7 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
 
-namespace ScaryCastle.Menus
+namespace Remizione.Menus
 {
     /// <summary>
     /// ChooseLanguageMenuScene
@@ -13,7 +13,7 @@ namespace ScaryCastle.Menus
         #region Constructor
 
         // Constructor
-        public ChooseLanguageMenuScene(ScaryCastleGame game)
+        public ChooseLanguageMenuScene(RemizioneGame game)
             : base(game, "")
         {
             menu = new OptionMenu(game, 6);

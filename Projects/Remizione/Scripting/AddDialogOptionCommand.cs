@@ -1,6 +1,6 @@
 ﻿using Adberration.Scripting;
 
-namespace ScaryCastle.Scripting
+namespace Remizione.Scripting
 {
     // AddDialogOptionCommand
     // Syntax: {Id:Integer} {"Text"} [#condition:FlagCondition] [#lid:Integer] [#requires-read:Id[,Id...]] [#requires-read:Id[,Id...]]

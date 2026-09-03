@@ -1,6 +1,6 @@
 ﻿using Adberration.Scripting;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// ScriptExtensions

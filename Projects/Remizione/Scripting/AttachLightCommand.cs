@@ -1,7 +1,7 @@
 ﻿using Adberration.Scripting;
 using Engendro;
 
-namespace ScaryCastle.Scripting
+namespace Remizione.Scripting
 {
     // AttachLightCommand
     // Arguments: {Thing} at {Vector2} [#color:Color] [#kind:LightKind] [#pivot:RectanglePoint] [#scale:Vector2]

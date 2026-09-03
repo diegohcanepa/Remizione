@@ -5,7 +5,7 @@ using Engendro.PathFinding;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// HoleArea

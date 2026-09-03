@@ -1,6 +1,6 @@
 ﻿using Adberration.Scripting;
 
-namespace ScaryCastle.Scripting
+namespace Remizione.Scripting
 {
     // TerminateDialogBlockCommand
     internal sealed class TerminateDialogBlockCommand : NonAwaitableCommand

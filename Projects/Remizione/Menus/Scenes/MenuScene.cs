@@ -3,7 +3,7 @@ using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ScaryCastle.Menus
+namespace Remizione.Menus
 {
     /// <summary>
     /// MenuScene
@@ -16,7 +16,7 @@ namespace ScaryCastle.Menus
         #region Constructor
 
         // Constructor
-        protected MenuScene(ScaryCastleGame game, AtlasImage? backgroundImage)
+        protected MenuScene(RemizioneGame game, AtlasImage? backgroundImage)
         {
             this.Game = game;
             this.ExclusiveDraw = true;
@@ -96,7 +96,7 @@ namespace ScaryCastle.Menus
         */
 
         // Game
-        public new ScaryCastleGame Game { get; }
+        public new RemizioneGame Game { get; }
 
         // GoToScene
         public void GoToScene(Scene scene)

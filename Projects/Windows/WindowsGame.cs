@@ -8,12 +8,12 @@ using System;
 using System.IO;
 using System.Threading;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// WindowsGame
     /// </summary>
-    public sealed partial class WindowsGame : ScaryCastleGame
+    public sealed partial class WindowsGame : RemizioneGame
     {
         // Constructor
         public WindowsGame(PlatformBridge platformBridge)

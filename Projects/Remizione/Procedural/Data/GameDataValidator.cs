@@ -1,8 +1,8 @@
 ﻿using Adberration.Scripting;
-using ScaryCastle.Scripting;
+using Remizione.Scripting;
 using System;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// GameDataValidator

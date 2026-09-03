@@ -1,7 +1,7 @@
 ﻿using Adberration;
 using Adberration.Scripting;
 
-namespace ScaryCastle.Scripting
+namespace Remizione.Scripting
 {
     // AwaitNPCTurnCommand
     // Syntax: {Source:Actor}

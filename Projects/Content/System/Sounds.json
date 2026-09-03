@@ -1,16 +1,11 @@
 {
   "$schema": "./Sounds.schema.json",
   "Ambience": [
-    { "name": "Ambience1" },
-    { "name": "Day" },
-    { "name": "Night" }
+    { "name": "Purgatory" }
   ],
   "Music": [
-    { "name": "Castle", "soundCount": 3, "tags": "Castle", "popMode": "Random" },
-    { "name": "GameOver" },
-    { "name": "K63" },
-    { "name": "Owland" },
-    { "name": "Sister" }
+    { "name": "Anger1" },
+    { "name": "Main" }
   ],
   "FX": [
     { "name": "Alarm", "volume": 0.5 },
@@ -55,7 +50,7 @@
     { "name": "FenceOpen" },
     { "name": "Firecracker", "soundCount": 2 },
     { "name": "FleshImpact", "soundCount": 2 },
-    { "name": "FootstepA", "soundCount": 2, "volume": 0.4 },
+    { "name": "FootstepGrass", "soundCount": 2, "volume": 0.4, "maxInstances": 10 },
     { "name": "FootstepWater", "soundCount": 6, "volume": 0.9 },
     { "name": "FuseHissing" },
     { "name": "GateOpen" },
@@ -111,7 +106,6 @@
     { "name": "StatusEffectDamage" },
     { "name": "StatusPoison" },
     { "name": "TestSkillFail" },
-    { "name": "Text", "volume": 0.8 },
     { "name": "TowerDoorClose" },
     { "name": "Thunder", "soundCount": 4 },
     { "name": "TrapdoorOpen" },

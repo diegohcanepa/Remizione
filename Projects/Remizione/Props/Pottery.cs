@@ -1,7 +1,7 @@
 ﻿using Adberration.Scripting;
 using Engendro.Audio;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// Pottery

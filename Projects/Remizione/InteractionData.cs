@@ -1,7 +1,7 @@
 ﻿using Adberration.Scripting;
 using Microsoft.Xna.Framework;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// InteractionData

@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
-namespace ScaryCastle.Menus
+namespace Remizione.Menus
 {
     /// <summary>
     /// TitleMenuScene
@@ -33,7 +33,7 @@ namespace ScaryCastle.Menus
         #region Constructor
 
         // Constructor
-        internal TitleMenuScene(ScaryCastleGame game)
+        internal TitleMenuScene(RemizioneGame game)
             : base(game, null)
         {
             this.ExclusiveDraw = true;

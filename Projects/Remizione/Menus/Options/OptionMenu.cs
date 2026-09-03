@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
-namespace ScaryCastle.Menus
+namespace Remizione.Menus
 {
     /// <summary>
     /// OptionMenu
@@ -23,7 +23,7 @@ namespace ScaryCastle.Menus
         #region Constructor
 
         // Constructor
-        public OptionMenu(ScaryCastleGame game, int verticalSpacing)
+        public OptionMenu(RemizioneGame game, int verticalSpacing)
         {
             this.VerticalSpacing = verticalSpacing;
 

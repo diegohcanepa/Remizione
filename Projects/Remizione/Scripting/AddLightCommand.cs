@@ -2,7 +2,7 @@
 using Engendro;
 using Microsoft.Xna.Framework;
 
-namespace ScaryCastle.Scripting
+namespace Remizione.Scripting
 {
     // AddLightCommand
     // Arguments: {Name} at {Vector2} [#color:Color] [#kind:LightKind] [#off] [#passes:Integer] [#pivot:RectanglePoint] [#scale:Vector2]

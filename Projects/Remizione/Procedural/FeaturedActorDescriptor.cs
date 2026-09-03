@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using System.Text;
 using System.Text.Json;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// FeaturedActorDescriptor

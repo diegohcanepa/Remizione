@@ -1,6 +1,6 @@
 ﻿using Engendro;
 
-namespace ScaryCastle.Menus
+namespace Remizione.Menus
 {
     /// <summary>
     /// GamePadOption
@@ -10,7 +10,7 @@ namespace ScaryCastle.Menus
         private readonly ControlsCoreScene scene;
 
         // Constructor
-        public GamePadOption(ScaryCastleGame game)
+        public GamePadOption(RemizioneGame game)
             : base(game, "@Menu.Options.Gamepad")
         {
             var runningPlatform = EngendroGame.RunningPlatform;

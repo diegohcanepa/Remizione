@@ -1,7 +1,7 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// VideoScene
@@ -9,7 +9,7 @@ namespace ScaryCastle
     public sealed class VideoScene : Scene
     {
         // Constructor
-        public VideoScene(ScaryCastleGame game)
+        public VideoScene(RemizioneGame game)
         {
         }
 

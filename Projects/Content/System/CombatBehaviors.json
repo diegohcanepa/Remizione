@@ -2,7 +2,7 @@
   "$schema": "./CombatBehavior.schema.json",
   "data": [
     {
-      "name": "Edmund",
+      "name": "Sinner",
       "archetype": "Stalker",
       "intents": [
         {
@@ -17,140 +17,6 @@
               "amount": "1",
               "comicText": "Kapow",
               "sound": "ImpactA"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "EnviousEye",
-      "archetype": "Harasser",
-      "intents": [
-        {
-          "name": "Bite",
-          "soundTrigger": "RatAttack",
-          "actionKind": "Proximity",
-          "effects": [
-            {
-              "context": "Attack",
-              "effectType": "Damage",
-              "amount": "1",
-              "comicText": "AghRed"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "FlyingSkull",
-      "archetype": "KamikazeFlyer",
-      "intents": [
-        {
-          "name": "Contact",
-          "soundTrigger": "RatAttack",
-          "actionKind": "Proximity",
-          "effects": [
-            {
-              "context": "Contact",
-              "effectType": "Damage",
-              "amount": "1",
-              "comicText": "AghRed"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "LootDropper",
-      "archetype": "Lurker",
-      "intents": []
-    },
-    {
-      "name": "Penitent",
-      "archetype": "Volatile",
-      "intents": [
-        {
-          "name": "Contact",
-          "actionKind": "Proximity",
-          "effects": [
-            {
-              "context": "Contact",
-              "effectType": "Damage",
-              "amount": "1",
-              "comicText": "AghRed"
-            },
-            {
-              "context": "Contact",
-              "effectType": "Death",
-              "target": "Self"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Rat",
-      "archetype": "Lurker",
-      "intents": [
-        {
-          "name": "Bite",
-          "soundTrigger": "RatAttack",
-          "actionKind": "Proximity",
-          "missChance": 0.1,
-          "effects": [
-            {
-              "context": "Attack",
-              "effectType": "Damage",
-              "amount": "1",
-              "comicText": "AghRed"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Skeleton",
-      "archetype": "Stalker",
-      "turnInterval": 3,
-      "intents": [
-        {
-          "name": "Headbutt",
-          "category": "Basic",
-          "actionKind": "Proximity",
-          "soundStart": "WhooshA",
-          "effects": [
-            {
-              "context": "Attack",
-              "effectType": "Damage",
-              "amount": "1",
-              "sound": "ImpactA",
-              "comicText": "AghRed"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "StinkyRat",
-      "archetype": "Lurker",
-      "intents": [
-        {
-          "name": "Bite",
-          "soundTrigger": "RatAttack",
-          "actionKind": "Proximity",
-          "missChance": 0.1,
-          "effects": [
-            {
-              "context": "Attack",
-              "effectType": "Damage",
-              "amount": "1"
-            },
-            {
-              "context": "Attack",
-              "effectType": "Status",
-              "statusType": "Poison",
-              "amount": "3",
-              "comicText": "AghGreen"
             }
           ]
         }

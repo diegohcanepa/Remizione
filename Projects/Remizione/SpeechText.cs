@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// SpeechText
@@ -20,76 +20,33 @@ namespace ScaryCastle
         private const string exclamationMedium = "!!";
         private const string exclamationHigh = "!!!";
         private const int maxWidth = 90;
-        private static readonly Vector2 textPadding = new(3, 2);
 
         #endregion
 
         #region Private fields
 
         private static readonly List<SpeechText> activeTexts = [];
-        private readonly Sprite arrowImage;
-        private readonly FloatTween arrowTween = new();
         private int autoHideCooldown;
-        private RectangleF bubbleArea;
-        private readonly Sprite bubbleImage;
-        private readonly Sprite bubbleImage2;
         private int inputCooldown;
-        private readonly Sprite pipe;
-        private readonly float pipeHeight;
-        private readonly FloatTween pipeTween = new();
         private readonly Vector2Tween shakeTween = new();
         private readonly TextSprite text;
-        private readonly TextSprite title;
 
         private bool isPositionedBelow;
-        private float targetBubbleWidth;
 
         #endregion
 
         #region Constructor
 
-        // Constructor
         public SpeechText(Actor actor)
         {
             this.Actor = actor;
 
-            // Arrow
-            this.arrowImage = new Sprite(Atlases.UI.SpeechTextArrow)
-            {
-                Scale = ScaleInfo.UIElement.Medium
-            };
-
-            // Bubble 1
-            this.bubbleImage = new Sprite(Atlases.UI.Pixel);
-
-            // Bubble 2
-            this.bubbleImage2 = new Sprite(Atlases.UI.Pixel);
-
-            // Pipe
-            pipe = new Sprite(Atlases.UI.SpeechTextPipe)
-            {
-                Color = ColorPalette.SpeechText.Fill,
-                PivotOrigin = RectanglePoint.Bottom
-            };
-            pipeHeight = pipe.BoundingBox.Height;
-
             // Text
-            this.text = new TextSprite(Fonts.Common)
+            this.text = new TextSprite(Fonts.CommonOutline)
             {
                 Color = ColorPalette.SpeechText.Text,
                 MaximumWidth = maxWidth,
                 PivotOrigin = RectanglePoint.LeftTop,
-                ShadowColor = Color.Black * .3f,
-                ShadowOffset = new(0, .3f)
-            };
-
-            // Title
-            this.title = new TextSprite(Fonts.Common)
-            {
-                Color = ColorPalette.SpeechText.Title,
-                MaximumWidth = maxWidth,
-                PivotOrigin = RectanglePoint.LeftTop,
-                Scale = ScaleInfo.Text.Medium
             };
         }
 
@@ -97,136 +54,36 @@ namespace ScaryCastle
 
         #region Private members
 
-        // DrawBubble
-        private void DrawBubble(GameTime gameTime)
-        {
-            Game.SpriteBatch.Begin(Actor.Session.Camera);
-
-            // Draw bubble shadow
-            bubbleImage.Color = ColorPalette.SpeechText.Shadow;
-            bubbleImage2.Color = ColorPalette.SpeechText.Shadow;
-            bubbleImage.Position += Vector2.One;
-            bubbleImage2.Position += Vector2.One;
-            bubbleImage2.Draw(gameTime);
-            bubbleImage.Draw(gameTime);
-            bubbleImage.Position -= Vector2.One;
-            bubbleImage2.Position -= Vector2.One;
-
-            // Draw bubble
-            bubbleImage.Color = ColorPalette.SpeechText.Fill;
-            bubbleImage2.Color = ColorPalette.SpeechText.Fill;
-            bubbleImage2.Draw(gameTime);
-            bubbleImage.Draw(gameTime);
-
-            if (text.TypingState == RunningState.Running)
-            {
-                pipe.ScaleY += pipeTween.CurrentValue;
-                pipe.Y += Math.Abs(pipeHeight - pipe.BoundingBox.Height);
-            }
-
-            // Shadow
-            if (!pipe.IsFlippedVertically)
-            {
-                pipe.Color = ColorPalette.SpeechText.Shadow;
-                pipe.Position += Vector2.One;
-                pipe.Draw(gameTime);
-                pipe.Position -= Vector2.One;
-                pipe.Color = ColorPalette.SpeechText.Fill;
-            }
-
-            pipe.Draw(gameTime);
-
-            if (text.TypingState == RunningState.Running)
-            {
-                pipe.ScaleY -= pipeTween.CurrentValue;
-                pipe.Y -= Math.Abs(pipeHeight - pipe.BoundingBox.Height);
-            }
-
-            //arrowImage.Draw(gameTime);
-
-            Game.SpriteBatch.End();
-        }
-
-        // GetBubbleArea
-        private RectangleF GetBubbleArea(ref Vector2 origin)
-        {
-            float w = targetBubbleWidth;
-            float currentHeight = text.MeasureDisplayText().Y;
-            float h = title.BoundingBox.Height + currentHeight + 2;
-
-            if (!isPositionedBelow)
-            {
-                bubbleArea = new RectangleF(origin.X - (w / 2), origin.Y - h - pipeHeight + 1, w, h);
-            }
-            else
-            {
-                float bottomOriginY = Actor.BoundingBox.Bottom + pipeHeight + 2;
-                bubbleArea = new RectangleF(origin.X - (w / 2), bottomOriginY, w, h);
-            }
-
-            bubbleArea.Inflate(textPadding);
-            return bubbleArea;
-        }
-
         // Layout
         private void Layout()
         {
             var vp = Actor.Session.Camera.VisibleBox;
             vp.Inflate(-10, -10);
 
-            // Origin
             var origin = Actor.GetOverheadPosition();
             origin.Y -= 1;
 
-            pipe.Effects = isPositionedBelow ? SpriteEffects.FlipVertically : SpriteEffects.None;
-            pipe.PivotOrigin = RectanglePoint.Bottom;
+            float totalHeight = text.MeasureDisplayText().Y;
+            float totalWidth = this.text.BoundingBox.Width;
 
-            bubbleArea = GetBubbleArea(ref origin);
-
-            // Test overlapping (left side)
-            if (bubbleArea.Left < vp.Left)
-                bubbleArea.X = vp.Left;
-            // Test overlapping (right side)
-            else if (bubbleArea.Right > vp.Right)
-                bubbleArea.X = vp.Right - bubbleArea.Width;
-
-            bubbleImage.Position = bubbleArea.GetPoint(RectanglePoint.LeftTop, 1, 1);
-            bubbleImage.Scale = new Vector2(bubbleArea.Width - 2, bubbleArea.Height - 2);
-
-            var bbox = bubbleImage.BoundingBox;
-
-            bubbleImage2.Position = bbox.GetPoint(RectanglePoint.LeftTop, -1, 1);
-            bubbleImage2.Scale = new Vector2(bbox.Width + 2, bbox.Height - 2);
+            // Determinar posición Y (arriba o abajo del actor dependiendo de la cámara)
+            float expectedY = origin.Y - totalHeight - 2;
+            isPositionedBelow = expectedY < vp.Top;
 
             if (isPositionedBelow)
-                pipe.Position = new Vector2(origin.X, Actor.BoundingBox.Bottom + pipeHeight + 2);
-            else
-                pipe.Position = origin;
-
-            var pipeBox = pipe.BoundingBox;
-            bbox = bubbleImage2.BoundingBox;
-
-            // Limit pipe (horz)
-            if (pipeBox.Left < bbox.Left + 1)
-                pipe.X = bbox.Left + (pipeBox.Width / 2) + 1;
-            else if (pipeBox.Right > bbox.Right)
-                pipe.X = bbox.Right - (pipeBox.Width / 2) - 2;
-
-            // Limit pipe (vert)
-            if (isPositionedBelow)
             {
-                bubbleImage.Y = pipeBox.Bottom;
-                bbox = bubbleImage.BoundingBox;
-                bubbleImage2.Position = bbox.GetPoint(RectanglePoint.LeftTop, -1, 1);
-                bubbleImage2.Scale = new Vector2(bbox.Width + 2, bbox.Height - 2);
-            }
-            else
-            {
-                pipe.Y = bubbleArea.Bottom + pipeBox.Height - 1.2f;
+                expectedY = Actor.BoundingBox.Bottom + 4; // Margen debajo de los pies
             }
 
-            title.Position = bubbleImage.BoundingBox.GetPoint(RectanglePoint.LeftTop, 2, 2);
-            text.Position = title.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -.5f);
+            // Determinar posición X (centrado, pero respetando los bordes de la cámara)
+            float expectedX = origin.X - (totalWidth / 2f);
+
+            if (expectedX < vp.Left)
+                expectedX = vp.Left;
+            else if (expectedX + totalWidth > vp.Right)
+                expectedX = vp.Right - totalWidth;
+
+            text.Position = new Vector2(expectedX, expectedY);
         }
 
         // Shake
@@ -259,10 +116,6 @@ namespace ScaryCastle
                 if (text.TypingState == RunningState.Stopped)
                 {
                     Actor.StopTalking();
-
-                    if (pipeTween.IsRunning)
-                        pipeTween.Start(pipeTween.Style, pipe.Scale.Y, 1, pipeTween.Duration);
-
                     State = SpeechTextState.Idle;
                 }
                 else if (AwaitInput && (InputBindings.SpeechText.IsPressed(0) || InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed()) && inputCooldown <= 0)
@@ -272,9 +125,7 @@ namespace ScaryCastle
 
                     State = SpeechTextState.Idle;
                     text.StopTyping();
-
                     Actor.StopTalking();
-
                     Layout();
                 }
             }
@@ -303,11 +154,7 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            DrawBubble(gameTime);
-
             Game.SpriteBatch.Begin(Actor.Session.Camera, SamplerState.LinearClamp);
-
-            title.Draw(gameTime);
 
             if (shakeTween.IsRunning)
                 text.Position += shakeTween.CurrentValue;
@@ -327,27 +174,19 @@ namespace ScaryCastle
                 inputCooldown -= gameTime.ElapsedGameTime.Milliseconds;
 
             UpdateState(gameTime);
-            arrowTween.Update(gameTime);
-            pipeTween.Update(gameTime);
             shakeTween.Update(gameTime);
             text.Update(gameTime);
-            title.Update(gameTime);
 
             if (State == SpeechTextState.Typing)
                 Layout();
-
-            arrowImage.Position = bubbleImage.BoundingBox.GetPoint(RectanglePoint.RightBottom, -2.5f, -2.5f - arrowTween.CurrentValue);
         }
 
         #endregion
 
-        // Actor
         public Actor Actor { get; }
 
-        // AwaitInput
         public bool AwaitInput { get; private set; }
 
-        // DrawSpeechTexts
         public static void DrawSpeechTexts(GameTime gameTime)
         {
             for (int i = 0; i < VisibleBubbles.Count; i++)
@@ -356,7 +195,6 @@ namespace ScaryCastle
             }
         }
 
-        // Hide
         public void Hide()
         {
             activeTexts.Remove(this);
@@ -366,18 +204,14 @@ namespace ScaryCastle
 
             AwaitInput = false;
             text.Clear();
-            title.Clear();
             text.StopTyping();
             shakeTween.Stop();
-            arrowTween.Stop();
             State = SpeechTextState.Hidden;
         }
 
-        // ModalInstance
         public static SpeechText? ModalInstance { get; private set; }
 
-        // Show
-        public void Show(string title, string text, bool awaitInput)
+        public void Show(string text, bool awaitInput)
         {
             if (string.IsNullOrWhiteSpace(text))
                 return;
@@ -397,20 +231,7 @@ namespace ScaryCastle
                 activeTexts.Add(this);
 
             this.text.Text = text;
-            this.title.Text = title;
             this.text.Scale = ScaleInfo.Text.Large;
-
-            targetBubbleWidth = Math.Max(this.text.BoundingBox.Width, this.title.BoundingBox.Width);
-            float finalHeight = this.title.BoundingBox.Height + this.text.BoundingBox.Height + 2;
-
-            var vp = Actor.Session.Camera.VisibleBox;
-            vp.Inflate(-10, -10);
-
-            var origin = Actor.GetOverheadPosition();
-            origin.Y -= 1;
-
-            float expectedMaxTop = origin.Y - finalHeight - pipeHeight + 1 - textPadding.Y;
-            isPositionedBelow = expectedMaxTop < vp.Top;
 
             if (awaitInput)
                 autoHideCooldown = 0;
@@ -422,8 +243,7 @@ namespace ScaryCastle
             {
                 if (SpeechTextSettings.TypingSound)
                 {
-                    var speechSound = Actor.SpeechSound ?? Sound.Find(SoundNames.Text);
-                    this.text.StartTyping(speechSound?.PopInstance());
+                    this.text.StartTyping(Actor.SpeechSound?.PopInstance());
                 }
                 else
                 {
@@ -431,27 +251,19 @@ namespace ScaryCastle
                 }
 
                 State = SpeechTextState.Typing;
-                pipeTween.Start(TweenStyle.Linear, 0, .25f, 100, -1);
             }
 
             Layout();
-
             Shake(text);
-
-            arrowTween.Start(TweenStyle.QuinticIn, 0, .3f, 150, -1);
-
             Actor.StartTalking();
-
             inputCooldown = 100;
         }
 
-        // State
         public SpeechTextState State { get; private set; }
 
-        // Text
         public string? Text => text.Text;
 
-        // VisibleTexts
+        // Se mantiene el nombre de la colección por si la llamas desde fuera
         public static ReadOnlyCollection<SpeechText> VisibleBubbles { get; } = new ReadOnlyCollection<SpeechText>(activeTexts);
     }
 }

@@ -1,13 +1,15 @@
-﻿global using ScaryCastle;
+﻿global using Remizione;
 
 #if WINDOWS
 
 // Restrict the app to a single instance
-WindowsGame.Mutex = new System.Threading.Mutex(true, "ScaryCastleWindows", out var createdNew);
+/*
+WindowsGame.Mutex = new System.Threading.Mutex(true, "RemizioneLauncher", out var createdNew);
 if (!createdNew)
 {
     return;
 }
+*/
 
 #endif
 

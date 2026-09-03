@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ScaryCastle.Menus
+namespace Remizione.Menus
 {
     /// <summary>
     /// StandardMenuScene
@@ -18,7 +18,7 @@ namespace ScaryCastle.Menus
         #region Constructor
 
         // Constructor
-        protected StandardMenuScene(ScaryCastleGame game, string title)
+        protected StandardMenuScene(RemizioneGame game, string title)
             : base(game, Atlases.Menu.ContainerScreen)
         {
             ControlGroup = new() { Spacing = 5 };

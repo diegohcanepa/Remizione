@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
-namespace ScaryCastle.Menus
+namespace Remizione.Menus
 {
     /// <summary>
     /// MessageBoxScene
@@ -24,19 +24,19 @@ namespace ScaryCastle.Menus
         #region Constructor
 
         // Constructor
-        public MessageBoxScene(ScaryCastleGame game, string text)
+        public MessageBoxScene(RemizioneGame game, string text)
             : this(game, text, MessageBoxOptions.Accept, null, MessageBoxOptions.Accept)
         {
         }
 
         // Constructor
-        public MessageBoxScene(ScaryCastleGame game, MessageBoxOptions options, Action<MessageBoxOptions>? onSelect, MessageBoxOptions defaultOption)
+        public MessageBoxScene(RemizioneGame game, MessageBoxOptions options, Action<MessageBoxOptions>? onSelect, MessageBoxOptions defaultOption)
             : this(game, string.Empty, options, onSelect, defaultOption)
         {
         }
 
         // Constructor
-        public MessageBoxScene(ScaryCastleGame game, string text, MessageBoxOptions options, Action<MessageBoxOptions>? onSelect, MessageBoxOptions defaultOption)
+        public MessageBoxScene(RemizioneGame game, string text, MessageBoxOptions options, Action<MessageBoxOptions>? onSelect, MessageBoxOptions defaultOption)
         {
             this.Options = options;
             this.PausePreviousScenes = true;

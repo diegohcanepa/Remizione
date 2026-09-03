@@ -1,6 +1,6 @@
 ﻿using Engendro;
 
-namespace ScaryCastle.Menus
+namespace Remizione.Menus
 {
     /// <summary>
     /// LanguageOptionValue
@@ -21,7 +21,7 @@ namespace ScaryCastle.Menus
     public sealed class LanguageOption : Option<LanguageMenuOptionValue>
     {
         // Constructor
-        internal LanguageOption(ScaryCastleGame game)
+        internal LanguageOption(RemizioneGame game)
             : base(game, "@Menu.Options.Language", game.CurrentSession == null)
         {
             IconImage = Atlases.Menu.LanguageIcon;

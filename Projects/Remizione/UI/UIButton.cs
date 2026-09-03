@@ -4,7 +4,7 @@ using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// UIButton
@@ -197,8 +197,8 @@ namespace ScaryCastle
 
             if (IsMouseOver)
             {
-                ScaryCastleGame.Effects.ColorSaturation.SetColor(.7f, .7f, .7f, 1);
-                shader = ScaryCastleGame.Effects.ColorSaturation.Effect;
+                RemizioneGame.Effects.ColorSaturation.SetColor(.7f, .7f, .7f, 1);
+                shader = RemizioneGame.Effects.ColorSaturation.Effect;
             }
 
             Game.SpriteBatch.Begin(Camera, SamplerState.PointClamp, shader);

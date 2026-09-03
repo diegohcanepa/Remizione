@@ -1,6 +1,6 @@
 ﻿using Adberration.Scripting;
 
-namespace ScaryCastle.Scripting
+namespace Remizione.Scripting
 {
     // AddTriggerAreaCommand
     // Arguments: {Name:String} routine {Routine} polygon {Polygon} [#condition:FlagCondition] [#no-await] [#no-stop] [#once] [#on-exit:Routine]

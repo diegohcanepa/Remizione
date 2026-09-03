@@ -1,7 +1,7 @@
 ﻿using Engendro;
 using Engendro.Input;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// InteractionContext

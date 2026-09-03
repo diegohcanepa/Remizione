@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// TagScope

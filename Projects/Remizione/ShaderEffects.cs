@@ -1,6 +1,6 @@
-﻿using ScaryCastle.Effects;
+﻿using Remizione.Effects;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// ShaderEffects

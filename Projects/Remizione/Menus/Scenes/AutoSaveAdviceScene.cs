@@ -3,7 +3,7 @@ using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ScaryCastle.Menus
+namespace Remizione.Menus
 {
     /// <summary>
     /// AutoSaveAdviceScene
@@ -11,7 +11,7 @@ namespace ScaryCastle.Menus
     public sealed partial class AutoSaveAdviceScene : Scene
     {
         private int duration = 6000;
-        private readonly ScaryCastleGame game;
+        private readonly RemizioneGame game;
         private readonly Sprite icon;
         private readonly int slotNumber;
         private readonly TextSprite text;
@@ -20,7 +20,7 @@ namespace ScaryCastle.Menus
         #region Constructor
 
         // Constructor
-        public AutoSaveAdviceScene(ScaryCastleGame game, int slotNumber)
+        public AutoSaveAdviceScene(RemizioneGame game, int slotNumber)
         {
             this.game = game;
             this.PausePreviousScenes = true;

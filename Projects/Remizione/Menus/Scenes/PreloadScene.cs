@@ -2,19 +2,19 @@
 using Microsoft.Xna.Framework;
 using System.Threading.Tasks;
 
-namespace ScaryCastle.Menus
+namespace Remizione.Menus
 {
     /// <summary>
     /// PreloadScene
     /// </summary>
     public partial class PreloadScene : SplashScene
     {
-        private readonly ScaryCastleGame game;
+        private readonly RemizioneGame game;
         private Task? loadTask;
         private int minDuration;
 
         // Constructor
-        public PreloadScene(ScaryCastleGame game)
+        public PreloadScene(RemizioneGame game)
             : base(game)
         {
             this.game = game;

@@ -1,6 +1,6 @@
 ﻿using Adberration.Scripting;
 
-namespace ScaryCastle.Scripting
+namespace Remizione.Scripting
 {
     // AddHoleCommand
     // Arguments: {Name} to {WalkAreaName} polygon {Polygon} #condition:FlagCondition

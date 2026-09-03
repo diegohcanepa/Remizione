@@ -1,4 +1,4 @@
-﻿namespace ScaryCastle
+﻿namespace Remizione
 {
     /// <summary>
     /// GameSettings
@@ -21,7 +21,7 @@
         public const int DefaultTransitionDuration = 500;
 
         // GameFolder
-        public const string GameFolder = "Scary Castle";
+        public const string GameFolder = "Remizione";
 
         // HeavyMoveThreshold
         public const int HeavyMoveThreshold = 150;
@@ -48,7 +48,7 @@
         public const int SteamAppID = 480;
 
         // Title
-        public const string Title = "Scary Castle";
+        public const string Title = "Remizione";
 
         // UserSettingsFileName
         public const string UserSettingsFileName = "UserSettings.cfg";

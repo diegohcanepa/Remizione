@@ -1,4 +1,4 @@
-﻿namespace ScaryCastle.Menus
+﻿namespace Remizione.Menus
 {
     /// <summary>
     /// AudioOption
@@ -6,7 +6,7 @@
     public sealed class AudioOption : ButtonOption<string>
     {
         // Constructor
-        public AudioOption(ScaryCastleGame game)
+        public AudioOption(RemizioneGame game)
             : base(game, "@Menu.Options.Audio")
         {
         }

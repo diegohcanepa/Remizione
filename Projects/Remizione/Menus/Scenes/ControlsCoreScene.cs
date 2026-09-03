@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
-namespace ScaryCastle.Menus
+namespace Remizione.Menus
 {
     /// <summary>
     /// ControlsCoreScene
@@ -17,7 +17,7 @@ namespace ScaryCastle.Menus
         #region Constructor
 
         // Constructor
-        protected ControlsCoreScene(ScaryCastleGame game, AtlasImage image, float imageScale, float verticalOffset, bool isKeyboard)
+        protected ControlsCoreScene(RemizioneGame game, AtlasImage image, float imageScale, float verticalOffset, bool isKeyboard)
             : base(game, "@Menu.Titles.Controls")
         {
             var labelNames = Enum.GetNames<LabelName>();

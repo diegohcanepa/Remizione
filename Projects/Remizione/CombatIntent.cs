@@ -3,7 +3,7 @@ using Engendro.Audio;
 using System;
 using System.Text.Json;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// CombatIntent

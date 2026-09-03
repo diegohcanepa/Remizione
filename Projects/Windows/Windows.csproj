@@ -14,6 +14,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <PackageId>$(AssemblyName)</PackageId>
     <AssemblyName>RemizioneLauncher</AssemblyName>
+    <AssemblyTitle>Remizione</AssemblyTitle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <WarningLevel>8</WarningLevel>

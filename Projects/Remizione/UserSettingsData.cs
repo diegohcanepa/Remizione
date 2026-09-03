@@ -6,7 +6,7 @@ using System.Globalization;
 using System.IO;
 using System.Xml;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// UserSettingsData
@@ -24,7 +24,7 @@ namespace ScaryCastle
         public float AmbientVolume { get; set; }
 
         // Apply
-        public static void Apply(ScaryCastleGame game, UserSettingsData data)
+        public static void Apply(RemizioneGame game, UserSettingsData data)
         {
             GamePadDevice.AllowVibration = data.AllowVibration;
 
@@ -99,7 +99,7 @@ namespace ScaryCastle
         }
 
         // Load
-        public static UserSettingsData Load(ScaryCastleGame game)
+        public static UserSettingsData Load(RemizioneGame game)
         {
             if (game.PlatformBridge.FileSystem.ReadFile(GameSettings.UserSettingsFileName) is Stream input)
             {
@@ -154,7 +154,7 @@ namespace ScaryCastle
         }
 
         // LoadAndApply
-        public static UserSettingsData LoadAndApply(ScaryCastleGame game)
+        public static UserSettingsData LoadAndApply(RemizioneGame game)
         {
             var data = Load(game);
             Apply(game, data);
@@ -177,7 +177,7 @@ namespace ScaryCastle
         public float MusicVolume { get; set; }
 
         // SaveCurrentSystemSettings
-        public static void SaveCurrentSystemSettings(ScaryCastleGame game)
+        public static void SaveCurrentSystemSettings(RemizioneGame game)
         {
             var userSettings = FromSystem();
 

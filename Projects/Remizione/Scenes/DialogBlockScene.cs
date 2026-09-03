@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// DialogBlockScene 

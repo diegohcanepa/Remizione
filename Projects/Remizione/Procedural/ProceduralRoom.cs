@@ -1,12 +1,12 @@
 ﻿using Adberration;
 using Engendro;
 using Microsoft.Xna.Framework;
-using ScaryCastle.Procedural;
+using Remizione.Procedural;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// ProceduralRoom

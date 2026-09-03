@@ -1,4 +1,4 @@
-﻿namespace ScaryCastle.Menus
+﻿namespace Remizione.Menus
 {
     /// <summary>
     /// KeyboardOption
@@ -6,7 +6,7 @@
     public sealed class KeyboardOption : ButtonOption<string>
     {
         // Constructor
-        public KeyboardOption(ScaryCastleGame game)
+        public KeyboardOption(RemizioneGame game)
             : base(game, "@Menu.Options.Keyboard")
         {
         }

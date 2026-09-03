@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// RunDefinition

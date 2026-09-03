@@ -1,6 +1,6 @@
 ﻿using Engendro;
 
-namespace ScaryCastle.Menus
+namespace Remizione.Menus
 {
     /// <summary>
     /// NintendoSwitchControlsScene
@@ -8,7 +8,7 @@ namespace ScaryCastle.Menus
     public sealed partial class NintendoSwitchControlsScene : ControlsCoreScene
     {
         // Constructor
-        public NintendoSwitchControlsScene(ScaryCastleGame game)
+        public NintendoSwitchControlsScene(RemizioneGame game)
             : base(game, Atlases.Menu.ControlsNintendoSwitch, .35f, -22, false)
         {
             SetLabel(LabelName.Inventory, 312, 74, RectanglePoint.Left);

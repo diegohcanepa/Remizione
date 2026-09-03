@@ -30,102 +30,6 @@
 #begin Atlases/Actors.xml
 /copy:Atlases/Actors.xml
 
-#begin Atlases/Castle_End.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.0
-/build:Atlases/Castle_End.png
-
-#begin Atlases/Castle_End.xml
-/copy:Atlases/Castle_End.xml
-
-#begin Atlases/Castle_Start.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.0
-/build:Atlases/Castle_Start.png
-
-#begin Atlases/Castle_Start.xml
-/copy:Atlases/Castle_Start.xml
-
-#begin Atlases/Castle_Std_Common_01.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.0
-/build:Atlases/Castle_Std_Common_01.png
-
-#begin Atlases/Castle_Std_Common_01.xml
-/copy:Atlases/Castle_Std_Common_01.xml
-
-#begin Atlases/Castle_Std_Common_02.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.0
-/build:Atlases/Castle_Std_Common_02.png
-
-#begin Atlases/Castle_Std_Common_02.xml
-/copy:Atlases/Castle_Std_Common_02.xml
-
-#begin Atlases/Castle_Std_Pit_01.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.0
-/build:Atlases/Castle_Std_Pit_01.png
-
-#begin Atlases/Castle_Std_Pit_01.xml
-/copy:Atlases/Castle_Std_Pit_01.xml
-
-#begin Atlases/Castle_Wide_Common_01.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.0
-/build:Atlases/Castle_Wide_Common_01.png
-
-#begin Atlases/Castle_Wide_Common_01.xml
-/copy:Atlases/Castle_Wide_Common_01.xml
-
 #begin Atlases/Environment.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -141,38 +45,6 @@
 
 #begin Atlases/Environment.xml
 /copy:Atlases/Environment.xml
-
-#begin Atlases/Hub.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.0
-/build:Atlases/Hub.png
-
-#begin Atlases/Hub.xml
-/copy:Atlases/Hub.xml
-
-#begin Atlases/IntroTunnel.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.0
-/build:Atlases/IntroTunnel.png
-
-#begin Atlases/IntroTunnel.xml
-/copy:Atlases/IntroTunnel.xml
 
 #begin Atlases/Menu.png
 /importer:TextureImporter
@@ -190,22 +62,6 @@
 #begin Atlases/Menu.xml
 /copy:Atlases/Menu.xml
 
-#begin Atlases/Monitor.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.0
-/build:Atlases/Monitor.png
-
-#begin Atlases/Monitor.xml
-/copy:Atlases/Monitor.xml
-
 #begin Atlases/Props.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -222,7 +78,7 @@
 #begin Atlases/Props.xml
 /copy:Atlases/Props.xml
 
-#begin Atlases/ThemePark.png
+#begin Atlases/Threshold.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -233,42 +89,10 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /processorParam:Version=3.8.5.0
-/build:Atlases/ThemePark.png
+/build:Atlases/Threshold.png
 
-#begin Atlases/ThemePark.xml
-/copy:Atlases/ThemePark.xml
-
-#begin Atlases/ThemeParkEntrance.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.0
-/build:Atlases/ThemeParkEntrance.png
-
-#begin Atlases/ThemeParkEntrance.xml
-/copy:Atlases/ThemeParkEntrance.xml
-
-#begin Atlases/ToiletRoom.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/processorParam:Version=3.8.5.0
-/build:Atlases/ToiletRoom.png
-
-#begin Atlases/ToiletRoom.xml
-/copy:Atlases/ToiletRoom.xml
+#begin Atlases/Threshold.xml
+/copy:Atlases/Threshold.xml
 
 #begin Atlases/UI.png
 /importer:TextureImporter
@@ -286,26 +110,12 @@
 #begin Atlases/UI.xml
 /copy:Atlases/UI.xml
 
-#begin Audio/Ambience/Ambience1.wav
+#begin Audio/Ambience/Purgatory.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
-/build:Audio/Ambience/Ambience1.wav
-
-#begin Audio/Ambience/Day.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/Ambience/Day.wav;Audio/Ambience/Day
-
-#begin Audio/Ambience/Night.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/Ambience/Night.wav;Audio/Ambience/Night
+/build:Audio/Ambience/Purgatory.wav;Audio/Ambience/Purgatory
 
 #begin Audio/FX/Alarm.wav
 /importer:WavImporter
@@ -790,19 +600,19 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/FleshImpact2.wav;Audio/FX/FleshImpact2
 
-#begin Audio/FX/FootstepA1.wav
+#begin Audio/FX/FootstepGrass1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
-/build:Audio/FX/FootstepA1.wav;Audio/FX/FootstepA1
+/build:Audio/FX/FootstepGrass1.wav;Audio/FX/FootstepGrass1
 
-#begin Audio/FX/FootstepA2.wav
+#begin Audio/FX/FootstepGrass2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
-/build:Audio/FX/FootstepA2.wav;Audio/FX/FootstepA2
+/build:Audio/FX/FootstepGrass2.wav;Audio/FX/FootstepGrass2
 
 #begin Audio/FX/FootstepWater1.wav
 /importer:WavImporter
@@ -1434,13 +1244,6 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/TestSkillFail.wav;Audio/FX/TestSkillFail
 
-#begin Audio/FX/Text.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/FX/Text.wav;Audio/FX/Text
-
 #begin Audio/FX/Thunder1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -1602,54 +1405,19 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/ZapLoop.wav;Audio/FX/ZapLoop
 
-#begin Audio/Music/Castle1.wav
+#begin Audio/Music/Anger1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
-/build:Audio/Music/Castle1.wav;Audio/Music/Castle1
+/build:Audio/Music/Anger1.wav;Audio/Music/Anger1
 
-#begin Audio/Music/Castle2.wav
+#begin Audio/Music/Main.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
-/build:Audio/Music/Castle2.wav;Audio/Music/Castle2
-
-#begin Audio/Music/Castle3.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/Music/Castle3.wav;Audio/Music/Castle3
-
-#begin Audio/Music/GameOver.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/Music/GameOver.wav;Audio/Music/GameOver
-
-#begin Audio/Music/K63.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/Music/K63.wav;Audio/Music/K63
-
-#begin Audio/Music/Owland.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/Music/Owland.wav;Audio/Music/Owland
-
-#begin Audio/Music/Sister.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/Music/Sister.wav;Audio/Music/Sister
+/build:Audio/Music/Main.wav;Audio/Music/Main
 
 #begin Fonts/Common.bmp
 /importer:LocalizedFontTextureImporter
@@ -1670,16 +1438,6 @@
 /processorParam:TextureFormat=Color
 /processorParam:Version=1.0.0.0
 /build:Fonts/CommonOutline.bmp
-
-#begin Fonts/Monitor.bmp
-/importer:LocalizedFontTextureImporter
-/processor:LocalizedFontTextureProcessor
-/processorParam:DefaultCharacter=?
-/processorParam:FirstCharacter=
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Color
-/processorParam:Version=1.0.0.0
-/build:Fonts/Monitor.bmp
 
 #begin Shaders/Blur.fx
 /importer:EffectImporter

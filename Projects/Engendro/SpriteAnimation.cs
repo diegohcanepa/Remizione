@@ -138,9 +138,6 @@ namespace Engendro
             return [.. frameList];
         }
 
-        // Headless
-        public bool Headless { get; set; }
-
         // Name
         public string Name { get; }
 

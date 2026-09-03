@@ -1,7 +1,7 @@
 ﻿using Adberration.Scripting;
-using ScaryCastle.Menus;
+using Remizione.Menus;
 
-namespace ScaryCastle.Scripting
+namespace Remizione.Scripting
 {
     // ExitSessionCommand
     internal sealed class ExitSessionCommand : NonAwaitableCommand
@@ -15,7 +15,7 @@ namespace ScaryCastle.Scripting
         // OnExecute
         protected override void OnExecute()
         {
-            if (Session.Game is ScaryCastleGame game)
+            if (Session.Game is RemizioneGame game)
             {
                 game.DisposeSession(new TitleMenuScene(game));
             }

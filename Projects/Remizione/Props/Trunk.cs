@@ -3,7 +3,7 @@ using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// Trunk

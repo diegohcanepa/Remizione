@@ -1,6 +1,6 @@
 ﻿using Engendro;
 
-namespace ScaryCastle.Menus
+namespace Remizione.Menus
 {
     /// <summary>
     /// PlayStation5ControlsScene
@@ -8,7 +8,7 @@ namespace ScaryCastle.Menus
     public sealed partial class PlayStation5ControlsScene : ControlsCoreScene
     {
         // Constructor
-        public PlayStation5ControlsScene(ScaryCastleGame game)
+        public PlayStation5ControlsScene(RemizioneGame game)
             : base(game, Atlases.Menu.ControlsPlayStation5, .35f, -22, false)
         {
             SetLabel(LabelName.Inventory, 350, 108.5f, RectanglePoint.Left);

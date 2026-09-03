@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// BodyMoveState
@@ -26,10 +26,14 @@ namespace ScaryCastle
         // GetAnimationName
         protected override string GetAnimationName()
         {
-            if (Owner.ActiveThrowable == null)
-                return base.GetAnimationName();
-            else
+            if (Owner.ActiveThrowable != null)
                 return AnimationNames.MoveCarry;
+
+            else if (Owner.FastMove)
+                return AnimationNames.MoveFast;
+
+            else
+                return base.GetAnimationName();
         }
 
         // Update

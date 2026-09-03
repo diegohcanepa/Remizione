@@ -2,17 +2,17 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ScaryCastle.Menus
+namespace Remizione.Menus
 {
     public sealed partial class ControllerAdviceScene : MenuScene
     {
         private readonly Sprite image;
-        private readonly ScaryCastleGame game;
+        private readonly RemizioneGame game;
         private readonly TextSprite message;
         private int nextSceneCooldown;
 
         // Constructor
-        public ControllerAdviceScene(ScaryCastleGame game)
+        public ControllerAdviceScene(RemizioneGame game)
             : base(game, null)
         {
             this.game = game;

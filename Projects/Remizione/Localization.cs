@@ -3,7 +3,7 @@ using Engendro.Input;
 using System;
 using System.Globalization;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// Localization

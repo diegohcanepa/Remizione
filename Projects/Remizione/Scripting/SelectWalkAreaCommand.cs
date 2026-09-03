@@ -1,6 +1,6 @@
 ﻿using Adberration.Scripting;
 
-namespace ScaryCastle.Scripting
+namespace Remizione.Scripting
 {
     // SelectWalkAreaCommand
     // Arguments: {Room} {Name:String}

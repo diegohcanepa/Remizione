@@ -1,4 +1,4 @@
-﻿namespace ScaryCastle
+﻿namespace Remizione
 {
     /// <summary>
     /// SoundNames
@@ -17,7 +17,7 @@
         internal const string EdmundScream = nameof(EdmundScream);
         internal const string StatusEffectDamage = nameof(StatusEffectDamage);
         internal const string Error = nameof(Error);
-        internal const string FootstepA = nameof(FootstepA);
+        internal const string FootstepGrass = nameof(FootstepGrass);
         internal const string FootstepWater = nameof(FootstepWater);
         internal const string Gesture1 = nameof(Gesture1);
         internal const string GutsLarge = nameof(GutsLarge);
@@ -43,7 +43,6 @@
         internal const string StaminaLoss = nameof(StaminaLoss);
         internal const string StatusPoison = nameof(StatusPoison);
         internal const string TestSkillFail = nameof(TestSkillFail);
-        internal const string Text = nameof(Text);
         internal const string TrunkLocked = nameof(TrunkLocked);
         internal const string TrunkOpen = nameof(TrunkOpen);
         internal const string UIHover = nameof(UIHover);

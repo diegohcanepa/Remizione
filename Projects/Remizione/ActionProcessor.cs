@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// ActionProcessor

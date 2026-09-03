@@ -1,4 +1,4 @@
-﻿namespace ScaryCastle
+﻿namespace Remizione
 {
     /// <summary>
     /// AnimationNames
@@ -16,6 +16,7 @@
         internal const string Idle = nameof(Idle);
         internal const string Move = nameof(Move);
         internal const string MoveCarry = nameof(MoveCarry);
+        internal const string MoveFast = nameof(MoveFast);
         internal const string Open = nameof(Open);
         internal const string PickUp = nameof(PickUp);
         internal const string Stand = nameof(Stand);

@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// GameRoom
@@ -65,24 +65,10 @@ namespace ScaryCastle
             if (Game.SpriteBatch == null || lightMap == null)
                 return;
 
-            Game.SpriteBatch.Begin(transformMatrix: Game.Camera.GetTransformationMatrix(), samplerState: SamplerState.LinearClamp, blendState: BlendState.AlphaBlend, effect: ScaryCastleGame.Effects.Lighting.Effect);
-            ScaryCastleGame.Effects.Lighting.LightMask.SetValue(lightMap);
-            ScaryCastleGame.Effects.Lighting.Effect.CurrentTechnique.Passes[0].Apply();
+            Game.SpriteBatch.Begin(transformMatrix: Game.Camera.GetTransformationMatrix(), samplerState: SamplerState.LinearClamp, blendState: BlendState.AlphaBlend, effect: RemizioneGame.Effects.Lighting.Effect);
+            RemizioneGame.Effects.Lighting.LightMask.SetValue(lightMap);
+            RemizioneGame.Effects.Lighting.Effect.CurrentTechnique.Passes[0].Apply();
             Game.SpriteBatch.Draw(target, Screen.Area, Color.White);
-            Game.SpriteBatch.End();
-        }
-
-        // DrawComicTexts
-        private void DrawComicTexts(GameTime gameTime)
-        {
-            if (Session.ComicTextPool.InUse.Count == 0)
-                return;
-
-            Game.SpriteBatch.Begin(Session.Camera, SamplerState.PointClamp, BlendState.AlphaBlend, null);
-            for (int i = 0; i < Session.ComicTextPool.InUse.Count; i++)
-            {
-                Session.ComicTextPool.InUse[i].Draw(gameTime);
-            }
             Game.SpriteBatch.End();
         }
 
@@ -289,7 +275,7 @@ namespace ScaryCastle
         // OnActivate
         protected override void OnActivate()
         {
-            ScaryCastleGame.Effects.CRT.MonitorStyle = MonitorStyle;
+            RemizioneGame.Effects.CRT.MonitorStyle = MonitorStyle;
 
             // Follow player
             if (Session.Player != null && Session.Player.IsInCurrentRoom && FollowPlayer)
@@ -362,18 +348,11 @@ namespace ScaryCastle
             // Draw meters
             DrawMeters(gameTime);
 
-            Game.SpriteBatch.Begin(Session.Camera, SamplerState.PointClamp);
-            Session.Environment.DevilHand.Draw(gameTime);
-            Game.SpriteBatch.End();
-
             // Foreround (layer)
             DrawThings(gameTime, RenderLayer.ForegroundNoLight);
 
             // Draw texts (hit numbers, etc)
             DrawFlyOffs(gameTime);
-
-            // Impact words
-            DrawComicTexts(gameTime);
 
 #if DEBUG
             DrawDebugBoxes();
@@ -411,13 +390,6 @@ namespace ScaryCastle
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
-
-            Session.Environment.DevilHand.Update(gameTime);
-
-            for (int i = 0; i < Session.ComicTextPool.InUse.Count; i++)
-            {
-                Session.ComicTextPool.InUse[i].Update(gameTime);
-            }
 
             TestTriggerAreas();
 

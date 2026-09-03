@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// UIContextMenu
@@ -82,7 +82,7 @@ namespace ScaryCastle
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp, ScaryCastleGame.Effects.ColorReduction.Effect);
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp, RemizioneGame.Effects.ColorReduction.Effect);
 
             if (ShowSelector && optionList.Count > 0 && SelectInputBinding == null)
                 optionSelector.Draw(gameTime);

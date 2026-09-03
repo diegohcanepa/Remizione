@@ -1,7 +1,7 @@
 ﻿using Engendro;
 using System;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// LootGenerator

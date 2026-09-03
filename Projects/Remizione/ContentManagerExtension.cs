@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// ContentManagerExtension

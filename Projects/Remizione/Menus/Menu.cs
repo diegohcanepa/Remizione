@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace ScaryCastle.Menus
+namespace Remizione.Menus
 {
     /// <summary>
     /// Menu
@@ -24,7 +24,7 @@ namespace ScaryCastle.Menus
         #region Constructor
 
         // Constructor
-        public Menu(ScaryCastleGame game)
+        public Menu(RemizioneGame game)
         {
             this.Game = game;
             this.Items = new ReadOnlyCollection<MenuItem>(items);
@@ -190,7 +190,7 @@ namespace ScaryCastle.Menus
         }
 
         // Game
-        public new ScaryCastleGame Game { get; }
+        public new RemizioneGame Game { get; }
 
         // HandleInput
         public HandleInputResult HandleInput()

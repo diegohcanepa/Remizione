@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Engendro;
+using System.Collections.Generic;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// TraitCollection

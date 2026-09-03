@@ -3,7 +3,7 @@ using Engendro;
 using Engendro.Audio;
 using System.Collections.ObjectModel;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// Item

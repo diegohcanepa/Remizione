@@ -1,7 +1,7 @@
 ﻿using Engendro;
 using System.Text.Json;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// RunModifierDefinition

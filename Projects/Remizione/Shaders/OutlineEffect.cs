@@ -1,7 +1,7 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ScaryCastle.Effects
+namespace Remizione.Effects
 {
     /// <summary>
     /// OutlineEffect

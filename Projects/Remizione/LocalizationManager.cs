@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.IO;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// LocalizationManager
@@ -41,7 +41,7 @@ namespace ScaryCastle
         }
 
         // Initialize
-        internal static void Initialize(ScaryCastleGame game)
+        internal static void Initialize(RemizioneGame game)
         {
             TextRepository.Loaded += OnTextRepositoryLoaded;
 

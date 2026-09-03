@@ -1,4 +1,4 @@
-﻿namespace ScaryCastle
+﻿namespace Remizione
 {
     /// <summary>
     /// CombatDecision

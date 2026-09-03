@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using System.Text.Json;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// LightDescriptor

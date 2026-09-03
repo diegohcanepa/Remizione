@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary> 
     /// GameThing 
@@ -17,7 +17,6 @@ namespace ScaryCastle
     {
         #region Private fields
 
-        private ComicText? comicText;
         private bool dieCalled;
         private FloatTween? floatingTween;
         private readonly Polygon holePoly = new();
@@ -661,10 +660,6 @@ namespace ScaryCastle
         public static bool ShowHotspots { get; set; }
 #endif
 
-        // DeathWord
-        [ScriptProperty]
-        public ComicTextKind DeathWord { get; set; }
-
         // DeathSound
         [ScriptProperty]
         public Sound? DeathSound { get; set; }
@@ -1175,20 +1170,6 @@ namespace ScaryCastle
             set => shadowSpot.Size = value;
         }
 
-        // ShowComicText
-        public void ShowComicText(ComicTextKind kind)
-        {
-            if (comicText != null)
-            {
-                if (comicText.Kind == kind && comicText.IsActive && !comicText.IsVanishing)
-                    return;
-            }
-
-            var pos = RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, 3);
-            comicText = Session.ComicTextPool.Get();
-            comicText.Show(kind, pos);
-        }
-
         // ShowFlyOff
         public FlyOff? ShowFlyOff(AtlasImage image)
         {
@@ -1214,7 +1195,7 @@ namespace ScaryCastle
         }
 
         // TakeDamage
-        public int TakeDamage(GameThing attacker, DamageType damageType, int amount, ComicTextKind comicTextKind, Vector2 knockbackForce)
+        public int TakeDamage(GameThing attacker, DamageType damageType, int amount, Vector2 knockbackForce)
         {
             // Si la cantidad es 0 o negativa, no hay interacción de daño.
             if (!CanTakeDamage())
@@ -1265,13 +1246,6 @@ namespace ScaryCastle
                     OnTakeDamage(attacker, amount, damageType);
 
                     Session.ObjectPools.FlyOffs.Get()?.ShowAmount(this, ColorPalette.HPMeter.Diff, -amount);
-
-                    // ComicText si hubo daño real
-                    if (comicTextKind != ComicTextKind.None)
-                    {
-                        if (!IsDead || DeathWord == ComicTextKind.None)
-                            ShowComicText(comicTextKind);
-                    }
                 }
             }
             else

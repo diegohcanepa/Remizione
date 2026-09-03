@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace ScaryCastle.Menus
+namespace Remizione.Menus
 {
     /// <summary>
     /// Option
@@ -26,13 +26,13 @@ namespace ScaryCastle.Menus
         #region Constructor
 
         // Constructor
-        protected Option(ScaryCastleGame game, string label)
+        protected Option(RemizioneGame game, string label)
             : this(game, label, true)
         {
         }
 
         // Constructor
-        protected Option(ScaryCastleGame game, string label, bool isEnabled)
+        protected Option(RemizioneGame game, string label, bool isEnabled)
         {
             this.Game = game;
 
@@ -218,7 +218,7 @@ namespace ScaryCastle.Menus
         public virtual string Description => string.Empty;
 
         // Game
-        public new ScaryCastleGame Game { get; }
+        public new RemizioneGame Game { get; }
 
         // HasValues
         public bool HasValues => values.Count > 0;

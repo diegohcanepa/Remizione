@@ -1,6 +1,6 @@
 ﻿using Engendro;
 
-namespace ScaryCastle.Menus
+namespace Remizione.Menus
 {
     /// <summary>
     /// WindowsControlsScene
@@ -8,7 +8,7 @@ namespace ScaryCastle.Menus
     public sealed partial class WindowsControlsScene : ControlsCoreScene
     {
         // Constructor
-        public WindowsControlsScene(ScaryCastleGame game)
+        public WindowsControlsScene(RemizioneGame game)
             : base(game, Atlases.Menu.ControlsWindows, .35f, 0, false)
         {
             SetLabel(LabelName.Inventory, 356, 102, RectanglePoint.Left);

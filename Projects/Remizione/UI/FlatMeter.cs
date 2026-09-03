@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Globalization;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// FlatMeter

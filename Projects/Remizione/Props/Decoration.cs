@@ -1,6 +1,6 @@
 ﻿using Engendro;
 
-namespace ScaryCastle.Props
+namespace Remizione.Props
 {
     /// <summary>
     /// Decoration

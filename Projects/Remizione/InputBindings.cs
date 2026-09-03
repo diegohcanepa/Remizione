@@ -2,7 +2,7 @@
 using Engendro.Input;
 using Microsoft.Xna.Framework.Input;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// InputBindings

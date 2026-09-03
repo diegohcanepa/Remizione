@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ScaryCastle.Menus
+namespace Remizione.Menus
 {
     /// <summary>
     /// OptionsMenuScene
@@ -16,7 +16,7 @@ namespace ScaryCastle.Menus
         #region Constructor
 
         // Constructor
-        public OptionsMenuScene(ScaryCastleGame game)
+        public OptionsMenuScene(RemizioneGame game)
             : base(game, "@Menu.Titles.Options")
         {
             this.mouseInfo = new(Fonts.Common) { Scale = ScaleInfo.Text.Medium, Color = Color.White, PivotOrigin = RectanglePoint.LeftTop };

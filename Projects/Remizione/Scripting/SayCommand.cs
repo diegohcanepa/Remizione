@@ -1,6 +1,6 @@
 ﻿using Adberration.Scripting;
 
-namespace ScaryCastle.Scripting
+namespace Remizione.Scripting
 {
     // SayCommand
     // Arguments: {Actor} {"Text"} [#condition:Flag[...,Flag]] [#literal] [#no-await] [#lid:Integer]

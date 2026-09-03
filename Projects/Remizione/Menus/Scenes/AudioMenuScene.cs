@@ -2,7 +2,7 @@
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
 
-namespace ScaryCastle.Menus
+namespace Remizione.Menus
 {
     /// <summary>
     /// AudioMenuScene
@@ -16,7 +16,7 @@ namespace ScaryCastle.Menus
         #region Constructor
 
         // Constructor
-        public AudioMenuScene(ScaryCastleGame game)
+        public AudioMenuScene(RemizioneGame game)
             : base(game, "@Menu.Titles.Audio")
         {
             menu = new OptionMenu(game, 6);

@@ -1,4 +1,4 @@
-﻿namespace ScaryCastle
+﻿namespace Remizione
 {
     /// <summary>
     /// Environment
@@ -8,18 +8,6 @@
         // Constructor
         public Environment()
         {
-            this.DevilHand = new(DeityHandKind.Devil);
-            this.GodHand = new(DeityHandKind.God);
         }
-
-        #region Internal members
-
-        // DevilHand
-        internal DeityHand DevilHand { get; }
-
-        // GodHand
-        internal DeityHand GodHand { get; }
-
-        #endregion
     }
 }

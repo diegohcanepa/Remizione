@@ -1,21 +1,17 @@
-﻿namespace ScaryCastle
+﻿namespace Remizione
 {
     // ActorAnimationSettings
     public sealed class ActorAnimationSettings
     {
-        // DetachedHead
-        public bool DetachedHead { get; set; } = true;
-
         // MoveBounce
         public bool MoveBounce { get; set; } = true;
 
         // MoveSway
-        public bool MoveSway { get; set; } = true;
+        public bool MoveSway { get; set; }
 
         // SupressAll
         public void SupressAll()
         {
-            DetachedHead = false;
             MoveBounce = false;
             MoveSway = false;
         }

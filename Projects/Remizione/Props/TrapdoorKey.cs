@@ -1,6 +1,6 @@
 ﻿using Engendro;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// TrapdoorKey

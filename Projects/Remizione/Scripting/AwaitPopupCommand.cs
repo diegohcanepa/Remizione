@@ -1,6 +1,6 @@
 ﻿using Adberration.Scripting;
 
-namespace ScaryCastle.Scripting
+namespace Remizione.Scripting
 {
     // AwaitPopupCommand
     // Syntax: {"Title"} {"Text"}

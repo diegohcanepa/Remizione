@@ -1,7 +1,7 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
 
-namespace ScaryCastle.UI
+namespace Remizione.UI
 {
     /// <summary>
     /// MonitorFrame
@@ -13,7 +13,7 @@ namespace ScaryCastle.UI
         // Draw
         public static void Draw(GameTime gameTime)
         {
-            if (ScaryCastleGame.Effects.CRT.MonitorStyle)
+            if (RemizioneGame.Effects.CRT.MonitorStyle)
             {
                 image ??= new(Atlases.UI.GetImage("MonitorFrame"));
                 image.Game.SpriteBatch.Begin(image.Game.Camera);

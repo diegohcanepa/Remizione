@@ -3,8 +3,8 @@ using Adberration.Scripting;
 using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
-using ScaryCastle.Props;
-using ScaryCastle.Scripting;
+using Remizione.Props;
+using Remizione.Scripting;
 using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Xml;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// GameSession
@@ -24,6 +24,7 @@ namespace ScaryCastle
 
         private readonly ScriptConsole? console;
         private readonly FloatTween chromaticAberrationTween = new();
+        private readonly EchoScene echoScene = new();
         private InventoryScene? inventoryScene;
         private Vector2? playerPosition;
         private FrozenDictionary<string, GameThing>? proceduralCatalog;
@@ -45,8 +46,8 @@ namespace ScaryCastle
         #region Constructor
 
         // Constructor
-        public GameSession(ScaryCastleGame game, int slotNumber)
-            : base(game, new ScaryCastlePersistenceModel(), Path.Combine("Content", ContentFolder.System.ToString(), "ScriptLibrary.esl"), slotNumber)
+        public GameSession(RemizioneGame game, int slotNumber)
+            : base(game, new RemizionePersistenceModel(), Path.Combine("Content", ContentFolder.System.ToString(), "ScriptLibrary.esl"), slotNumber)
         {
             this.Game = game;
             this.Environment = new Environment();
@@ -54,7 +55,6 @@ namespace ScaryCastle
             this.InteractionData = new(this);
 
             ObjectPools = new ObjectPools(this);
-            ComicTextPool = new ObjectPool<ComicText>(() => new ComicText(), 100);
 
             BackgroundColor = ColorPalette.BackgroundColor;
             Camera.SmoothSpeed = GameSettings.CameraSmoothSpeed;
@@ -127,36 +127,23 @@ namespace ScaryCastle
         private static void RegisterAotTypes()
         {
             AotTypeRegistry.Register(typeof(Actor));
-            AotTypeRegistry.Register(typeof(BloodyEye));
-            AotTypeRegistry.Register(typeof(Pill));
             AotTypeRegistry.Register(typeof(BronzeKey));
-            AotTypeRegistry.Register(typeof(CastleTrapdoor));
             AotTypeRegistry.Register(typeof(CloseUpRoom));
             AotTypeRegistry.Register(typeof(Coin));
             AotTypeRegistry.Register(typeof(CreditsRoom));
             AotTypeRegistry.Register(typeof(Decoration));
             AotTypeRegistry.Register(typeof(Door));
-            AotTypeRegistry.Register(typeof(EnviousEye));
-            AotTypeRegistry.Register(typeof(Firecracker));
-            AotTypeRegistry.Register(typeof(FlyingSkull));
             AotTypeRegistry.Register(typeof(GameRoom));
-            AotTypeRegistry.Register(typeof(GateLever));
             AotTypeRegistry.Register(typeof(GoldenKey));
             AotTypeRegistry.Register(typeof(Drool));
-            AotTypeRegistry.Register(typeof(HellGoat));
-            AotTypeRegistry.Register(typeof(Monitor));
-            AotTypeRegistry.Register(typeof(NumberSix));
-            AotTypeRegistry.Register(typeof(Penitent));
             AotTypeRegistry.Register(typeof(Pottery));
             AotTypeRegistry.Register(typeof(Prop));
             AotTypeRegistry.Register(typeof(Rat));
             AotTypeRegistry.Register(typeof(Sack));
-            AotTypeRegistry.Register(typeof(Skeleton));
             AotTypeRegistry.Register(typeof(SpearTrap));
             AotTypeRegistry.Register(typeof(Torch));
             AotTypeRegistry.Register(typeof(TrapdoorKey));
             AotTypeRegistry.Register(typeof(Trunk));
-            AotTypeRegistry.Register(typeof(WreckingBall));
 
             AotTypeRegistry.Register("add-dialog-option", typeof(AddDialogOptionCommand));
             AotTypeRegistry.Register("add-hole", typeof(AddHoleCommand), CodingContext.EntityDeclaration);
@@ -168,14 +155,13 @@ namespace ScaryCastle
             AotTypeRegistry.Register("attach-light", typeof(AttachLightCommand), CodingContext.EntityDeclaration);
             AotTypeRegistry.Register("await-approach", typeof(AwaitApproachCommand));
             AotTypeRegistry.Register("await-credits", typeof(AwaitCreditsCommand));
-            AotTypeRegistry.Register("await-devil-hand", typeof(AwaitDevilHandCommand));
             AotTypeRegistry.Register("await-dialog-block", typeof(AwaitDialogBlockCommand));
             AotTypeRegistry.Register("await-input", typeof(AwaitInputCommand));
-            AotTypeRegistry.Register("await-monitor-text", typeof(AwaitMonitorTextCommand));
             AotTypeRegistry.Register("await-npc-turn", typeof(AwaitNPCTurnCommand));
             AotTypeRegistry.Register("await-popup", typeof(AwaitPopupCommand));
             AotTypeRegistry.Register("consume-item", typeof(ConsumeItemCommand));
             AotTypeRegistry.Register("create-dialog-block", typeof(CreateDialogBlockCommand));
+            AotTypeRegistry.Register("echo", typeof(EchoCommand));
             AotTypeRegistry.Register("ensure-session-scene", typeof(EnsureSessionSceneCommand));
             AotTypeRegistry.Register("exit-session", typeof(ExitSessionCommand));
             AotTypeRegistry.Register("if-can-pickup-loot", typeof(IfCanPickUpLootStatement));
@@ -251,7 +237,7 @@ namespace ScaryCastle
             console?.Draw(gameTime);
 
             Game.RenderTargets.Swap();
-            Game.SpriteBatch.Begin(effect: ScaryCastleGame.Effects.CRT.Effect);
+            Game.SpriteBatch.Begin(effect: RemizioneGame.Effects.CRT.Effect);
             Game.SpriteBatch.Draw(Game.RenderTargets.PreviousTarget, Vector2.Zero, Color.White);
             Game.SpriteBatch.End();
 
@@ -278,7 +264,6 @@ namespace ScaryCastle
         protected override void OnExitRoom(Room currentRoom, Room nextRoom)
         {
             RunHUD?.Reset();
-            ComicTextPool.ReturnAll();
             ObjectPools.FlyOffs.ReturnAll();
 
             for (var i = currentRoom.Children.Count - 1; i >= 0; i--)
@@ -400,7 +385,7 @@ namespace ScaryCastle
             if (chromaticAberrationTween.IsRunning)
             {
                 chromaticAberrationTween.Update(gameTime);
-                ScaryCastleGame.Effects.CRT.ChromaticAberration = chromaticAberrationTween.CurrentValue;
+                RemizioneGame.Effects.CRT.ChromaticAberration = chromaticAberrationTween.CurrentValue;
             }
 
             savingIcon.Update(gameTime);
@@ -532,9 +517,6 @@ namespace ScaryCastle
             AdvanceToNextFloor();
         }
 
-        // ComicTextPool
-        public ObjectPool<ComicText> ComicTextPool { get; }
-
         // CompleteRun
         [ScriptMethod]
         public void CompleteRun()
@@ -590,7 +572,7 @@ namespace ScaryCastle
         }
 
         // Game
-        public new ScaryCastleGame Game { get; }
+        public new RemizioneGame Game { get; }
 
         // GetProceduralThing
         public GameThing GetProceduralThing(string name)
@@ -677,8 +659,8 @@ namespace ScaryCastle
         // PerformChromaticAberration
         public void PerformChromaticAberration()
         {
-            ScaryCastleGame.Effects.CRT.Reset();
-            chromaticAberrationTween.Start(TweenStyle.Linear, ScaryCastleGame.Effects.CRT.ChromaticAberration, ScaryCastleGame.Effects.CRT.ChromaticAberration + 0.009f, 2500, 2);
+            RemizioneGame.Effects.CRT.Reset();
+            chromaticAberrationTween.Start(TweenStyle.Linear, RemizioneGame.Effects.CRT.ChromaticAberration, RemizioneGame.Effects.CRT.ChromaticAberration + 0.009f, 2500, 2);
         }
 
         // Player
@@ -793,6 +775,13 @@ namespace ScaryCastle
             DialogOptionId = -1;
             var scene = new DialogBlockScene(this, dialogBlock);
             Game.SceneManager.Push(scene);
+        }
+
+        // ShowEcho
+        public void ShowEcho(string text)
+        {
+            echoScene.Text = text;
+            Game.SceneManager.Push(echoScene);
         }
 
         // ShowInventory

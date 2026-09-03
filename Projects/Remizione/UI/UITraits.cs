@@ -3,7 +3,7 @@ using Engendro;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// UITraits

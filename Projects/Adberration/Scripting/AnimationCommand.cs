@@ -8,13 +8,12 @@ namespace Adberration.Scripting
     {
         // Constructor
         internal AnimationCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 1, HeadlessArg, PrefixArg, ZeroPaddingArg)
+            : base(script, source, body, 1, PrefixArg, ZeroPaddingArg)
         {
             var entity = AssertEntityNotNull<Entity>(Script.EntityName);
             var animationName = RemoveQuotes(0);
 
             ActiveAnimation = entity.AddAnimation(animationName);
-            ActiveAnimation.Headless = HasArg(HeadlessArg);
             ActiveAnimationFramePrefix = Parser.ParseNameArgument(this, PrefixArg);
 
             ZeroPaddingLength = Parser.ParseInt32Argument(this, ZeroPaddingArg, 2);

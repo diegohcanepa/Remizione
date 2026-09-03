@@ -2,7 +2,7 @@
 using System;
 using System.Collections.ObjectModel;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// UIAtlas abg3340/midska/taoka24
@@ -24,6 +24,7 @@ namespace ScaryCastle
             DroolCost = CreateReadOnlyCollection("DroolCost", 1, 3);
             DroolIcon = this[nameof(DroolIcon)];
             DroolMeter = CreateReadOnlyCollection(nameof(DroolMeter), 0, 5);
+            EchoBackground = this[nameof(EchoBackground)];
             HeartIcon = this[nameof(HeartIcon)];
             InventoryItemAmounts = CreateReadOnlyCollection("InventoryItemAmount", 1, 5);
             InventoryItemSlot = this[nameof(InventoryItemSlot)];
@@ -90,6 +91,9 @@ namespace ScaryCastle
 
         // DroolMeter
         public ReadOnlyCollection<AtlasImage> DroolMeter { get; }
+
+        // EchoBackground
+        public AtlasImage EchoBackground { get; }
 
         // FearIcon
         public AtlasImage FearIcon { get; }

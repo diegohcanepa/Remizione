@@ -1,6 +1,6 @@
 ﻿using Engendro;
 
-namespace ScaryCastle.Effects
+namespace Remizione.Effects
 {
     /// <summary>
     /// CRTEffect

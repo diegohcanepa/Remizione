@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// ColorPalette
@@ -84,8 +84,7 @@ namespace ScaryCastle
         {
             internal static Color Fill { get; } = new(196, 195, 191);
             internal static Color Shadow { get; } = Color.Black * .2f;
-            internal static Color Text { get; } = Color.Black * .6f;
-            internal static Color Title { get; } = new Color(27, 31, 33) * .5f;
+            internal static Color Text { get; } = MouseCursor.Tooltip;
         }
 
         // Text

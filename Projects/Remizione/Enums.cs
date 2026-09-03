@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ScaryCastle
+namespace Remizione
 {
     // ActionKind
     public enum ActionKind { Script, Proximity, InPlace, Projectile, Self }
@@ -32,17 +32,11 @@ namespace ScaryCastle
     // CombatIntentCategory
     public enum CombatIntentCategory { Basic, Special }
 
-    // ComicTextKind
-    public enum ComicTextKind { None, AghGreen, AghPurple, AghRed, BoomPurple, BoomRed, BangBlue, BangRed, CrackBlue, CrackYellow, CuackPurple, CuackYellow, Kapow, KapowStrong, OuchBlue, OuchGreen, PlopRed, PlopYellow, SlapBlue, SlapRed, Zap }
-
     // ContentFolder
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Video, Voices, System, Text }
 
     // DamageType
     public enum DamageType { None, Physical, Acid, Explosive, Fire, Ice, Lightning, Poison }
-
-    // DeityHandKind
-    public enum DeityHandKind { Devil, God }
 
     // Difficulty
     public enum Difficulty { Easy, Normal, Hard }
@@ -57,7 +51,7 @@ namespace ScaryCastle
     public enum EffectContext { Collect, Contact, Attack, RemainsContact, RunModifier, Update, Use, ProjectileHit, Status, ApplyStatus }
 
     // EffectType
-    public enum EffectType { None, BronzeKey, Coin, CoinLoss, ComicText, Damage, Death, EnergyGain, EnergyLoss, EnergyRestore, HPGain, HPLoss, HPRestore, StaminaGain, StaminaLoss, StaminaRestore, MaxEnergyGain, MaxEnergyLoss, MaxHPGain, MaxHPLoss, MaxStaminaGain, MaxStaminaLoss, GoldenKey, Status, TrapdoorKey }
+    public enum EffectType { None, BronzeKey, Coin, CoinLoss, Damage, Death, EnergyGain, EnergyLoss, EnergyRestore, HPGain, HPLoss, HPRestore, StaminaGain, StaminaLoss, StaminaRestore, MaxEnergyGain, MaxEnergyLoss, MaxHPGain, MaxHPLoss, MaxStaminaGain, MaxStaminaLoss, GoldenKey, Status, TrapdoorKey }
 
     // EffectTarget
     public enum EffectTarget { Target, Self }

@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using System;
 
-namespace ScaryCastle.Menus
+namespace Remizione.Menus
 {
     /// <summary>
     /// ButtonOption
@@ -14,7 +14,7 @@ namespace ScaryCastle.Menus
         #region Constructor
 
         // Constructor
-        protected ButtonOption(ScaryCastleGame game, string label)
+        protected ButtonOption(RemizioneGame game, string label)
         {
             this.Game = game;
 
@@ -64,7 +64,7 @@ namespace ScaryCastle.Menus
         public string Description => string.Empty;
 
         // Game
-        public new ScaryCastleGame Game { get; }
+        public new RemizioneGame Game { get; }
 
         // IsEnabled
         public bool IsEnabled => true;

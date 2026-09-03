@@ -1,12 +1,11 @@
 ﻿using Engendro;
-using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ScaryCastle.Effects;
+using Remizione.Effects;
 using System;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// MouseCursor
@@ -207,8 +206,6 @@ namespace ScaryCastle
                 scaleTween.Start(TweenStyle.QuadraticIn, cursorSprite.Scale * .9f, cursorSprite.Scale, 150);
                 cursorSprite.Tweens.ScaleTween = scaleTween;
             }
-
-            Sound.Play(SoundNames.Interact);
         }
 
         // Reset
@@ -280,7 +277,7 @@ namespace ScaryCastle
                 cursorSprite.Opacity = 1;
             }
 
-            effect = CustomImage != null && HightlightColor.HasValue ? ScaryCastleGame.Effects.Outline : null;
+            effect = CustomImage != null && HightlightColor.HasValue ? RemizioneGame.Effects.Outline : null;
 
             if (effect != null && HightlightColor.HasValue && cursorSprite.RenderImage?.Atlas != null)
             {

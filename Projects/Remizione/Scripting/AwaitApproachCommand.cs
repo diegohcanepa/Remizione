@@ -1,7 +1,7 @@
 ﻿using Adberration.Scripting;
 using Microsoft.Xna.Framework;
 
-namespace ScaryCastle.Scripting
+namespace Remizione.Scripting
 {
     // AwaitApproachCommand
     // Syntax: {Source:Actor} {Target:GameThing} [#behavior:ApproachBehavior]

@@ -4,7 +4,7 @@ using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// Utils

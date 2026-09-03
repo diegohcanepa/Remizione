@@ -3,7 +3,7 @@ using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// Projectile

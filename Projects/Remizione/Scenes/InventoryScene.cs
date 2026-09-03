@@ -2,9 +2,9 @@
 using Engendro;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-using ScaryCastle.Scripting;
+using Remizione.Scripting;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// InventoryScene

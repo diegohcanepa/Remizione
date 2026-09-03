@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// EffectDescriptor
@@ -27,7 +27,6 @@ namespace ScaryCastle
         {
             this.Amount = element.GetObject("amount", v => new DiceExpression(v));
             this.Chance = element.GetFloat("chance", 1);
-            this.ComicText = element.GetEnum("comicText", ComicTextKind.None);
             this.Context = element.GetEnum("context", EffectContext.Contact);
             this.DamageType = element.GetEnum("damageType", DamageType.Physical);
             this.EffectType = element.GetEnum("effectType", EffectType.None);
@@ -81,12 +80,6 @@ namespace ScaryCastle
                         source.Session.CurrentRun?.PocketItems.BronzeKeys += amount;
                         break;
 
-                    // ComicText
-                    case EffectType.ComicText:
-                        if (effect.ComicText != ComicTextKind.None)
-                            realTarget?.ShowComicText(effect.ComicText);
-                        break;
-
                     // Coin
                     case EffectType.Coin:
                         source.Session.CurrentRun?.PocketItems.Coins += amount;
@@ -99,12 +92,12 @@ namespace ScaryCastle
 
                     // Damage
                     case EffectType.Damage:
-                        realTarget?.TakeDamage(source, effect.DamageType, amount, effect.ComicText, effect.GetKnockbackForce());
+                        realTarget?.TakeDamage(source, effect.DamageType, amount, effect.GetKnockbackForce());
                         break;
 
                     // Death
                     case EffectType.Death:
-                        realTarget?.TakeDamage(source, effect.DamageType, int.MaxValue, effect.ComicText, effect.GetKnockbackForce());
+                        realTarget?.TakeDamage(source, effect.DamageType, int.MaxValue, effect.GetKnockbackForce());
                         break;
 
                     // EnergyGain
@@ -135,7 +128,7 @@ namespace ScaryCastle
                     // HPGain
                     case EffectType.HPGain:
                         realTarget?.HP += amount;
-                        targetActor?.StatusManager.Discard(ScaryCastle.StatusType.Poison);
+                        targetActor?.StatusManager.Discard(Remizione.StatusType.Poison);
                         break;
 
                     // HPLoss
@@ -289,9 +282,6 @@ namespace ScaryCastle
 
         // Chance
         public Ratio Chance { get; }
-
-        // ComicText
-        public ComicTextKind ComicText { get; }
 
         // Context
         public EffectContext Context { get; }

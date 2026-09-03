@@ -1,6 +1,6 @@
 ﻿using Adberration.Scripting;
 
-namespace ScaryCastle.Scripting
+namespace Remizione.Scripting
 {
     // CreateDialogBlockCommand
     // Syntax: [#routine:Routine] [#prevent-quit]

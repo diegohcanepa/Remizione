@@ -2,7 +2,7 @@
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// PlayerInputHandler
@@ -52,7 +52,8 @@ namespace ScaryCastle
             {
                 Actor.Session.InteractionData.Clear();
                 Actor.EnforceTurn = true;
-                Actor.MoveTo(destination);
+                Actor.MoveTo(destination, 50);
+
                 return;
             }
 

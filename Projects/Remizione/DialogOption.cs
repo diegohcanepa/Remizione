@@ -1,7 +1,7 @@
 ﻿using Adberration.Scripting;
 using System.Collections.ObjectModel;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// DialogOption

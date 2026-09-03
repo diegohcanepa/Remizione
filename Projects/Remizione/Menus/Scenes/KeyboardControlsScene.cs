@@ -1,6 +1,6 @@
 ﻿using Engendro;
 
-namespace ScaryCastle.Menus
+namespace Remizione.Menus
 {
     /// <summary>
     /// KeyboardControlsScene
@@ -8,7 +8,7 @@ namespace ScaryCastle.Menus
     public sealed partial class KeyboardControlsScene : ControlsCoreScene
     {
         // Constructor
-        public KeyboardControlsScene(ScaryCastleGame game)
+        public KeyboardControlsScene(RemizioneGame game)
             : base(game, Atlases.Menu.ControlsKeyboard, .4f, -12, true)
         {
             SetLabel(LabelName.Movement, 140, 109, RectanglePoint.Right);

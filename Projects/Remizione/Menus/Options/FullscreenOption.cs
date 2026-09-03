@@ -1,4 +1,4 @@
-﻿namespace ScaryCastle.Menus
+﻿namespace Remizione.Menus
 {
     /// <summary>
     /// FullscreenOption
@@ -6,7 +6,7 @@
     internal sealed class FullscreenOption : BooleanOption
     {
         // Constructor
-        public FullscreenOption(ScaryCastleGame game)
+        public FullscreenOption(RemizioneGame game)
             : base(game, "@Menu.Options.Fullscreen", game.IsFullScreen)
         {
         }

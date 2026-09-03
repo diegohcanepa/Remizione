@@ -3,7 +3,7 @@ using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// PopupScene

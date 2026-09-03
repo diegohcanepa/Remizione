@@ -173,8 +173,94 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">Baal-assets/Stand01.png</key>
-            <key type="filename">Baal-assets/Stand02.png</key>
+            <key type="filename">Sinner-assets/Consume01.png</key>
+            <key type="filename">Sinner-assets/Consume02.png</key>
+            <key type="filename">Sinner-assets/Consume03.png</key>
+            <key type="filename">Sinner-assets/Consume04.png</key>
+            <key type="filename">Sinner-assets/Consume05.png</key>
+            <key type="filename">Sinner-assets/Consume06.png</key>
+            <key type="filename">Sinner-assets/Death01.png</key>
+            <key type="filename">Sinner-assets/Death02.png</key>
+            <key type="filename">Sinner-assets/Death03.png</key>
+            <key type="filename">Sinner-assets/Death04.png</key>
+            <key type="filename">Sinner-assets/Death05.png</key>
+            <key type="filename">Sinner-assets/Death06.png</key>
+            <key type="filename">Sinner-assets/Death07.png</key>
+            <key type="filename">Sinner-assets/Death08.png</key>
+            <key type="filename">Sinner-assets/Death09.png</key>
+            <key type="filename">Sinner-assets/Death10.png</key>
+            <key type="filename">Sinner-assets/Death11.png</key>
+            <key type="filename">Sinner-assets/Fatigue01.png</key>
+            <key type="filename">Sinner-assets/Fatigue02.png</key>
+            <key type="filename">Sinner-assets/Fatigue03.png</key>
+            <key type="filename">Sinner-assets/Fatigue04.png</key>
+            <key type="filename">Sinner-assets/Fatigue05.png</key>
+            <key type="filename">Sinner-assets/Fatigue06.png</key>
+            <key type="filename">Sinner-assets/Fatigue07.png</key>
+            <key type="filename">Sinner-assets/Fatigue08.png</key>
+            <key type="filename">Sinner-assets/Fatigue09.png</key>
+            <key type="filename">Sinner-assets/Fatigue10.png</key>
+            <key type="filename">Sinner-assets/Fatigue11.png</key>
+            <key type="filename">Sinner-assets/Fatigue12.png</key>
+            <key type="filename">Sinner-assets/Fatigue13.png</key>
+            <key type="filename">Sinner-assets/Fatigue14.png</key>
+            <key type="filename">Sinner-assets/Hurt01.png</key>
+            <key type="filename">Sinner-assets/Hurt02.png</key>
+            <key type="filename">Sinner-assets/Hurt03.png</key>
+            <key type="filename">Sinner-assets/Hurt04.png</key>
+            <key type="filename">Sinner-assets/Move01.png</key>
+            <key type="filename">Sinner-assets/Move02.png</key>
+            <key type="filename">Sinner-assets/Move03.png</key>
+            <key type="filename">Sinner-assets/Move04.png</key>
+            <key type="filename">Sinner-assets/Move05.png</key>
+            <key type="filename">Sinner-assets/Move06.png</key>
+            <key type="filename">Sinner-assets/Move07.png</key>
+            <key type="filename">Sinner-assets/Move08.png</key>
+            <key type="filename">Sinner-assets/MoveFast01.png</key>
+            <key type="filename">Sinner-assets/MoveFast02.png</key>
+            <key type="filename">Sinner-assets/MoveFast03.png</key>
+            <key type="filename">Sinner-assets/MoveFast04.png</key>
+            <key type="filename">Sinner-assets/MoveFast05.png</key>
+            <key type="filename">Sinner-assets/MoveFast06.png</key>
+            <key type="filename">Sinner-assets/MoveFast07.png</key>
+            <key type="filename">Sinner-assets/MoveFast08.png</key>
+            <key type="filename">Sinner-assets/PickUp01.png</key>
+            <key type="filename">Sinner-assets/PickUp02.png</key>
+            <key type="filename">Sinner-assets/PickUp03.png</key>
+            <key type="filename">Sinner-assets/PickUp04.png</key>
+            <key type="filename">Sinner-assets/PickUp05.png</key>
+            <key type="filename">Sinner-assets/PickUp06.png</key>
+            <key type="filename">Sinner-assets/PickUp07.png</key>
+            <key type="filename">Sinner-assets/PickUp08.png</key>
+            <key type="filename">Sinner-assets/Pray01.png</key>
+            <key type="filename">Sinner-assets/Pray02.png</key>
+            <key type="filename">Sinner-assets/Pray03.png</key>
+            <key type="filename">Sinner-assets/Pray04.png</key>
+            <key type="filename">Sinner-assets/Pray05.png</key>
+            <key type="filename">Sinner-assets/Pray06.png</key>
+            <key type="filename">Sinner-assets/Pray07.png</key>
+            <key type="filename">Sinner-assets/Pray08.png</key>
+            <key type="filename">Sinner-assets/Pray09.png</key>
+            <key type="filename">Sinner-assets/Pray10.png</key>
+            <key type="filename">Sinner-assets/Pray11.png</key>
+            <key type="filename">Sinner-assets/Pray12.png</key>
+            <key type="filename">Sinner-assets/Pray13.png</key>
+            <key type="filename">Sinner-assets/Pray14.png</key>
+            <key type="filename">Sinner-assets/Stand01.png</key>
+            <key type="filename">Sinner-assets/Talk01.png</key>
+            <key type="filename">Sinner-assets/UnarmedAttack01.png</key>
+            <key type="filename">Sinner-assets/UnarmedAttack02.png</key>
+            <key type="filename">Sinner-assets/UnarmedAttack03.png</key>
+            <key type="filename">Sinner-assets/UnarmedAttack04.png</key>
+            <key type="filename">Sinner-assets/UnarmedAttack05.png</key>
+            <key type="filename">Sinner-assets/UnarmedAttack06.png</key>
+            <key type="filename">Sinner-assets/UnarmedAttack07.png</key>
+            <key type="filename">Sinner-assets/UnarmedAttack08.png</key>
+            <key type="filename">Sinner-assets/UseCross01.png</key>
+            <key type="filename">Sinner-assets/UseCross02.png</key>
+            <key type="filename">Sinner-assets/UseCross03.png</key>
+            <key type="filename">Sinner-assets/UseCross04.png</key>
+            <key type="filename">Sinner-assets/UseCross05.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -183,672 +269,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>5,5,10,10</rect>
+                <rect>7,5,14,11</rect>
                 <key>scale9Paddings</key>
-                <rect>5,5,10,10</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Berta-assets/Back01.png</key>
-            <key type="filename">Berta-assets/BackRaiseArm01.png</key>
-            <key type="filename">Berta-assets/BackRaiseArm02.png</key>
-            <key type="filename">Berta-assets/BackRaiseArm03.png</key>
-            <key type="filename">Berta-assets/ContactDamage01.png</key>
-            <key type="filename">Berta-assets/ContactDamage02.png</key>
-            <key type="filename">Berta-assets/Hurt01.png</key>
-            <key type="filename">Berta-assets/Hurt02.png</key>
-            <key type="filename">Berta-assets/InsertCoin01.png</key>
-            <key type="filename">Berta-assets/InsertCoin02.png</key>
-            <key type="filename">Berta-assets/InsertCoin03.png</key>
-            <key type="filename">Berta-assets/InsertCoin04.png</key>
-            <key type="filename">Berta-assets/InsertCoin05.png</key>
-            <key type="filename">Berta-assets/InsertCoin06.png</key>
-            <key type="filename">Berta-assets/InsertCoin07.png</key>
-            <key type="filename">Berta-assets/InsertCoin08.png</key>
-            <key type="filename">Berta-assets/LookBehind01.png</key>
-            <key type="filename">Berta-assets/Move01.png</key>
-            <key type="filename">Berta-assets/PickUp01.png</key>
-            <key type="filename">Berta-assets/RaiseArm01.png</key>
-            <key type="filename">Berta-assets/RaiseArm02.png</key>
-            <key type="filename">Berta-assets/RaiseArm03.png</key>
-            <key type="filename">Berta-assets/Stand01.png</key>
-            <key type="filename">Berta-assets/StandHead01.png</key>
-            <key type="filename">Berta-assets/StandHead02.png</key>
-            <key type="filename">Berta-assets/TakeSack01.png</key>
-            <key type="filename">Berta-assets/TakeSack02.png</key>
-            <key type="filename">Berta-assets/TalkHead01.png</key>
-            <key type="filename">Berta-assets/TalkHead02.png</key>
-            <key type="filename">Berta-assets/ThrowItem01.png</key>
-            <key type="filename">Berta-assets/ThrowItem02.png</key>
-            <key type="filename">Edmund-assets/Back01.png</key>
-            <key type="filename">Edmund-assets/BackRaiseArm01.png</key>
-            <key type="filename">Edmund-assets/BackRaiseArm02.png</key>
-            <key type="filename">Edmund-assets/BackRaiseArm03.png</key>
-            <key type="filename">Edmund-assets/Bend01.png</key>
-            <key type="filename">Edmund-assets/Bend02.png</key>
-            <key type="filename">Edmund-assets/Bend03.png</key>
-            <key type="filename">Edmund-assets/Consume01.png</key>
-            <key type="filename">Edmund-assets/Consume02.png</key>
-            <key type="filename">Edmund-assets/Consume03.png</key>
-            <key type="filename">Edmund-assets/Consume04.png</key>
-            <key type="filename">Edmund-assets/ConsumeDroolBottle01.png</key>
-            <key type="filename">Edmund-assets/ConsumeDroolBottle02.png</key>
-            <key type="filename">Edmund-assets/ConsumeDroolBottle03.png</key>
-            <key type="filename">Edmund-assets/ConsumeDroolBottle04.png</key>
-            <key type="filename">Edmund-assets/DrinkDrool01.png</key>
-            <key type="filename">Edmund-assets/DrinkDrool02.png</key>
-            <key type="filename">Edmund-assets/DrinkDrool03.png</key>
-            <key type="filename">Edmund-assets/DrinkDrool04.png</key>
-            <key type="filename">Edmund-assets/DrinkDrool05.png</key>
-            <key type="filename">Edmund-assets/DrinkDrool06.png</key>
-            <key type="filename">Edmund-assets/EatPill01.png</key>
-            <key type="filename">Edmund-assets/EatPill02.png</key>
-            <key type="filename">Edmund-assets/EatPill03.png</key>
-            <key type="filename">Edmund-assets/EatPill04.png</key>
-            <key type="filename">Edmund-assets/Fatigue01.png</key>
-            <key type="filename">Edmund-assets/Fatigue02.png</key>
-            <key type="filename">Edmund-assets/Fatigue03.png</key>
-            <key type="filename">Edmund-assets/Fear01.png</key>
-            <key type="filename">Edmund-assets/Fear02.png</key>
-            <key type="filename">Edmund-assets/Fear03.png</key>
-            <key type="filename">Edmund-assets/Fear04.png</key>
-            <key type="filename">Edmund-assets/Headbutt01.png</key>
-            <key type="filename">Edmund-assets/Headbutt02.png</key>
-            <key type="filename">Edmund-assets/Headbutt03.png</key>
-            <key type="filename">Edmund-assets/Headbutt04.png</key>
-            <key type="filename">Edmund-assets/Headbutt05.png</key>
-            <key type="filename">Edmund-assets/Headbutt06.png</key>
-            <key type="filename">Edmund-assets/Hurt01.png</key>
-            <key type="filename">Edmund-assets/Hurt02.png</key>
-            <key type="filename">Edmund-assets/InsertCoin01.png</key>
-            <key type="filename">Edmund-assets/InsertCoin02.png</key>
-            <key type="filename">Edmund-assets/InsertCoin03.png</key>
-            <key type="filename">Edmund-assets/InsertCoin04.png</key>
-            <key type="filename">Edmund-assets/InsertCoin05.png</key>
-            <key type="filename">Edmund-assets/InsertCoin06.png</key>
-            <key type="filename">Edmund-assets/InsertCoin07.png</key>
-            <key type="filename">Edmund-assets/InsertCoin08.png</key>
-            <key type="filename">Edmund-assets/LookBehind01.png</key>
-            <key type="filename">Edmund-assets/LookUp01.png</key>
-            <key type="filename">Edmund-assets/Move01.png</key>
-            <key type="filename">Edmund-assets/Move02.png</key>
-            <key type="filename">Edmund-assets/Move03.png</key>
-            <key type="filename">Edmund-assets/Move04.png</key>
-            <key type="filename">Edmund-assets/MoveAngry01.png</key>
-            <key type="filename">Edmund-assets/MoveAngry02.png</key>
-            <key type="filename">Edmund-assets/MoveAngry03.png</key>
-            <key type="filename">Edmund-assets/MoveAngry04.png</key>
-            <key type="filename">Edmund-assets/MoveCarry01.png</key>
-            <key type="filename">Edmund-assets/MoveCarry02.png</key>
-            <key type="filename">Edmund-assets/MoveCarry03.png</key>
-            <key type="filename">Edmund-assets/MoveCarry04.png</key>
-            <key type="filename">Edmund-assets/PickUp01.png</key>
-            <key type="filename">Edmund-assets/PickUp02.png</key>
-            <key type="filename">Edmund-assets/PickUp03.png</key>
-            <key type="filename">Edmund-assets/RaiseArm01.png</key>
-            <key type="filename">Edmund-assets/RaiseArm02.png</key>
-            <key type="filename">Edmund-assets/RaiseArm03.png</key>
-            <key type="filename">Edmund-assets/RaiseUpArm01.png</key>
-            <key type="filename">Edmund-assets/RaiseUpArm02.png</key>
-            <key type="filename">Edmund-assets/RaiseUpArm03.png</key>
-            <key type="filename">Edmund-assets/Stand01.png</key>
-            <key type="filename">Edmund-assets/Stand02.png</key>
-            <key type="filename">Edmund-assets/Stand03.png</key>
-            <key type="filename">Edmund-assets/Stand04.png</key>
-            <key type="filename">Edmund-assets/StandCarry01.png</key>
-            <key type="filename">Edmund-assets/StandHead01.png</key>
-            <key type="filename">Edmund-assets/StandHead02.png</key>
-            <key type="filename">Edmund-assets/TakeSack01.png</key>
-            <key type="filename">Edmund-assets/TakeSack02.png</key>
-            <key type="filename">Edmund-assets/TalkHead01.png</key>
-            <key type="filename">Edmund-assets/TalkHead02.png</key>
-            <key type="filename">Edmund-assets/ThrowObject01.png</key>
-            <key type="filename">Edmund-assets/ThrowObject02.png</key>
-            <key type="filename">Edmund-assets/TouchHead01.png</key>
-            <key type="filename">Edmund-assets/TouchHead02.png</key>
-            <key type="filename">Edmund-assets/UseCross01.png</key>
-            <key type="filename">Edmund-assets/UseCross02.png</key>
-            <key type="filename">Edmund-assets/UseCross03.png</key>
-            <key type="filename">Edmund-assets/UsePistol01.png</key>
-            <key type="filename">Edmund-assets/UsePistol02.png</key>
-            <key type="filename">Edmund-assets/UsePistol03.png</key>
-            <key type="filename">Edmund-assets/UsePistol04.png</key>
-            <key type="filename">Edmund-assets/WalkForward01.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>7,6,14,13</rect>
-                <key>scale9Paddings</key>
-                <rect>7,6,14,13</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Berta-assets/Move02.png</key>
-            <key type="filename">Berta-assets/Move03.png</key>
-            <key type="filename">Berta-assets/Move04.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,4,5,9</rect>
-                <key>scale9Paddings</key>
-                <rect>3,4,5,9</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">BloodyEye-assets/Move01.png</key>
-            <key type="filename">BloodyEye-assets/Move02.png</key>
-            <key type="filename">BloodyEye-assets/Move03.png</key>
-            <key type="filename">BloodyEye-assets/Stand01.png</key>
-            <key type="filename">BloodyEye-assets/Stand02.png</key>
-            <key type="filename">BloodyEye-assets/Stand03.png</key>
-            <key type="filename">BloodyEye-assets/Stand04.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>9,4,18,7</rect>
-                <key>scale9Paddings</key>
-                <rect>9,4,18,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Designer-assets/Move01.png</key>
-            <key type="filename">Designer-assets/Move02.png</key>
-            <key type="filename">Designer-assets/Move03.png</key>
-            <key type="filename">Designer-assets/Move04.png</key>
-            <key type="filename">Designer-assets/Stand01.png</key>
-            <key type="filename">Designer-assets/StandHead01.png</key>
-            <key type="filename">Designer-assets/StandHead02.png</key>
-            <key type="filename">Designer-assets/TalkHead01.png</key>
-            <key type="filename">Father-assets/Back01.png</key>
-            <key type="filename">Father-assets/Move04.png</key>
-            <key type="filename">Father-assets/RaiseArm01.png</key>
-            <key type="filename">Father-assets/RaiseArm02.png</key>
-            <key type="filename">Father-assets/Read01.png</key>
-            <key type="filename">Father-assets/Read02.png</key>
-            <key type="filename">Father-assets/Read03.png</key>
-            <key type="filename">Father-assets/UseCross01.png</key>
-            <key type="filename">Father-assets/UseCross02.png</key>
-            <key type="filename">Father-assets/UseCross03.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>6,5,11,10</rect>
-                <key>scale9Paddings</key>
-                <rect>6,5,11,10</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Designer-assets/TalkHead02.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,3,5,5</rect>
-                <key>scale9Paddings</key>
-                <rect>2,3,5,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Edmund-assets/WalkForward02.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,4,4,8</rect>
-                <key>scale9Paddings</key>
-                <rect>2,4,4,8</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">EnviousEye-assets/Bite01.png</key>
-            <key type="filename">EnviousEye-assets/Bite02.png</key>
-            <key type="filename">EnviousEye-assets/Bite03.png</key>
-            <key type="filename">EnviousEye-assets/Move01.png</key>
-            <key type="filename">EnviousEye-assets/Move02.png</key>
-            <key type="filename">EnviousEye-assets/Move03.png</key>
-            <key type="filename">EnviousEye-assets/Move04.png</key>
-            <key type="filename">EnviousEye-assets/Stand01.png</key>
-            <key type="filename">EnviousEye-assets/Stand02.png</key>
-            <key type="filename">EnviousEye-assets/Stand03.png</key>
-            <key type="filename">EnviousEye-assets/Stand04.png</key>
-            <key type="filename">EnviousEye-assets/Stand05.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>6,3,13,5</rect>
-                <key>scale9Paddings</key>
-                <rect>6,3,13,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Father-assets/Move01.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,4,5,9</rect>
-                <key>scale9Paddings</key>
-                <rect>2,4,5,9</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Father-assets/Move02.png</key>
-            <key type="filename">Father-assets/Move03.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,4,4,9</rect>
-                <key>scale9Paddings</key>
-                <rect>2,4,4,9</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Father-assets/Stand01.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,3,5</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,3,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Father-assets/StandHead01.png</key>
-            <key type="filename">Father-assets/StandHead02.png</key>
-            <key type="filename">Father-assets/TalkHead01.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,4,4</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,4,4</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Father-assets/TalkHead02.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,4,5</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,4,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">FlyingSkull-assets/Gut0.png</key>
-            <key type="filename">FlyingSkull-assets/Gut2.png</key>
-            <key type="filename">FlyingSkull-assets/Gut4.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,1,1,1</rect>
-                <key>scale9Paddings</key>
-                <rect>1,1,1,1</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">FlyingSkull-assets/Gut1.png</key>
-            <key type="filename">FlyingSkull-assets/Gut3.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,0,1,1</rect>
-                <key>scale9Paddings</key>
-                <rect>1,0,1,1</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">FlyingSkull-assets/Stand01.png</key>
-            <key type="filename">FlyingSkull-assets/Stand02.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>4,2,8,4</rect>
-                <key>scale9Paddings</key>
-                <rect>4,2,8,4</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Grandma-assets/Stand01.png</key>
-            <key type="filename">Grandma-assets/StandHead01.png</key>
-            <key type="filename">Grandma-assets/StandHead02.png</key>
-            <key type="filename">Grandma-assets/TalkHead01.png</key>
-            <key type="filename">Grandma-assets/TalkHead02.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>5,5,11,10</rect>
-                <key>scale9Paddings</key>
-                <rect>5,5,11,10</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">HellGoat-assets/Headbutt01.png</key>
-            <key type="filename">HellGoat-assets/Headbutt02.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>9,6,17,11</rect>
-                <key>scale9Paddings</key>
-                <rect>9,6,17,11</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">HellGoat-assets/Move01.png</key>
-            <key type="filename">HellGoat-assets/Move02.png</key>
-            <key type="filename">HellGoat-assets/Move03.png</key>
-            <key type="filename">HellGoat-assets/Move04.png</key>
-            <key type="filename">HellGoat-assets/Stand01.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>6,6,11,11</rect>
-                <key>scale9Paddings</key>
-                <rect>6,6,11,11</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">HellGoat-assets/StandHead01.png</key>
-            <key type="filename">HellGoat-assets/StandHead02.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,3,7,6</rect>
-                <key>scale9Paddings</key>
-                <rect>3,3,7,6</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">LootDropper-assets/Move01.png</key>
-            <key type="filename">LootDropper-assets/Move02.png</key>
-            <key type="filename">LootDropper-assets/Move03.png</key>
-            <key type="filename">LootDropper-assets/Move04.png</key>
-            <key type="filename">LootDropper-assets/Stand01.png</key>
-            <key type="filename">LootDropper-assets/StandHead01.png</key>
-            <key type="filename">LootDropper-assets/StandHead02.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>5,4,9,7</rect>
-                <key>scale9Paddings</key>
-                <rect>5,4,9,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Mandinga-assets/Move01.png</key>
-            <key type="filename">Mandinga-assets/Move02.png</key>
-            <key type="filename">Mandinga-assets/Move03.png</key>
-            <key type="filename">Mandinga-assets/Move04.png</key>
-            <key type="filename">Mandinga-assets/Stand01.png</key>
-            <key type="filename">Mandinga-assets/StandHead01.png</key>
-            <key type="filename">Mandinga-assets/StandHead02.png</key>
-            <key type="filename">Mandinga-assets/TalkHead01.png</key>
-            <key type="filename">Mandinga-assets/TalkHead02.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>9,8,18,15</rect>
-                <key>scale9Paddings</key>
-                <rect>9,8,18,15</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Penitent-assets/Move01.png</key>
-            <key type="filename">Penitent-assets/Move02.png</key>
-            <key type="filename">Penitent-assets/Move03.png</key>
-            <key type="filename">Penitent-assets/Move04.png</key>
-            <key type="filename">Penitent-assets/Stand01.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>5,4,10,9</rect>
-                <key>scale9Paddings</key>
-                <rect>5,4,10,9</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Rat-assets/Bite01.png</key>
-            <key type="filename">Rat-assets/Bite02.png</key>
-            <key type="filename">Rat-assets/Bite03.png</key>
-            <key type="filename">StinkyRat-assets/Bite01.png</key>
-            <key type="filename">StinkyRat-assets/Bite02.png</key>
-            <key type="filename">StinkyRat-assets/Bite03.png</key>
-            <key type="filename">StinkyRat-assets/Move01.png</key>
-            <key type="filename">StinkyRat-assets/Move02.png</key>
-            <key type="filename">StinkyRat-assets/Move03.png</key>
-            <key type="filename">StinkyRat-assets/Move04.png</key>
-            <key type="filename">StinkyRat-assets/Move05.png</key>
-            <key type="filename">StinkyRat-assets/Stand01.png</key>
-            <key type="filename">StinkyRat-assets/Stand02.png</key>
-            <key type="filename">StinkyRat-assets/Stand03.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>7,3,14,6</rect>
-                <key>scale9Paddings</key>
-                <rect>7,3,14,6</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Rat-assets/Move01.png</key>
-            <key type="filename">Rat-assets/Move02.png</key>
-            <key type="filename">Rat-assets/Move03.png</key>
-            <key type="filename">Rat-assets/Move04.png</key>
-            <key type="filename">Rat-assets/Move05.png</key>
-            <key type="filename">Rat-assets/Stand01.png</key>
-            <key type="filename">Rat-assets/Stand02.png</key>
-            <key type="filename">Rat-assets/Stand03.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>7,4,14,7</rect>
-                <key>scale9Paddings</key>
-                <rect>7,4,14,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Reaper-assets/Move01.png</key>
-            <key type="filename">Reaper-assets/Move02.png</key>
-            <key type="filename">Reaper-assets/Move03.png</key>
-            <key type="filename">Reaper-assets/Move04.png</key>
-            <key type="filename">Reaper-assets/Stand01.png</key>
-            <key type="filename">Reaper-assets/Talk01.png</key>
-            <key type="filename">Reaper-assets/Talk02.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>6,4,11,9</rect>
-                <key>scale9Paddings</key>
-                <rect>6,4,11,9</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Sister-assets/Bend01.png</key>
-            <key type="filename">Sister-assets/Bend02.png</key>
-            <key type="filename">Sister-assets/Bend03.png</key>
-            <key type="filename">Sister-assets/GiveSack01.png</key>
-            <key type="filename">Sister-assets/GiveSack02.png</key>
-            <key type="filename">Sister-assets/Move01.png</key>
-            <key type="filename">Sister-assets/Move02.png</key>
-            <key type="filename">Sister-assets/Move03.png</key>
-            <key type="filename">Sister-assets/Move04.png</key>
-            <key type="filename">Sister-assets/RaiseArm01.png</key>
-            <key type="filename">Sister-assets/RaiseArm02.png</key>
-            <key type="filename">Sister-assets/RaiseArm03.png</key>
-            <key type="filename">Sister-assets/Read01.png</key>
-            <key type="filename">Sister-assets/Read02.png</key>
-            <key type="filename">Sister-assets/Stand01.png</key>
-            <key type="filename">Sister-assets/StandHead01.png</key>
-            <key type="filename">Sister-assets/StandHead02.png</key>
-            <key type="filename">Sister-assets/TalkHead01.png</key>
-            <key type="filename">Sister-assets/TalkHead02.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>10,7,19,13</rect>
-                <key>scale9Paddings</key>
-                <rect>10,7,19,13</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Skeleton-assets/Headbutt01.png</key>
-            <key type="filename">Skeleton-assets/Headbutt02.png</key>
-            <key type="filename">Skeleton-assets/Headbutt03.png</key>
-            <key type="filename">Skeleton-assets/Headbutt04.png</key>
-            <key type="filename">Skeleton-assets/Headbutt05.png</key>
-            <key type="filename">Skeleton-assets/Headbutt06.png</key>
-            <key type="filename">Skeleton-assets/Move01.png</key>
-            <key type="filename">Skeleton-assets/Move02.png</key>
-            <key type="filename">Skeleton-assets/Move03.png</key>
-            <key type="filename">Skeleton-assets/Move04.png</key>
-            <key type="filename">Skeleton-assets/MoveCarry01.png</key>
-            <key type="filename">Skeleton-assets/MoveCarry02.png</key>
-            <key type="filename">Skeleton-assets/MoveCarry03.png</key>
-            <key type="filename">Skeleton-assets/MoveCarry04.png</key>
-            <key type="filename">Skeleton-assets/Stand01.png</key>
-            <key type="filename">Skeleton-assets/StandCarry01.png</key>
-            <key type="filename">Skeleton-assets/StandHead01.png</key>
-            <key type="filename">Skeleton-assets/StandHead02.png</key>
-            <key type="filename">Skeleton-assets/TalkHead01.png</key>
-            <key type="filename">Skeleton-assets/TalkHead02.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>6,6,12,11</rect>
-                <key>scale9Paddings</key>
-                <rect>6,6,12,11</rect>
+                <rect>7,5,14,11</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -859,24 +282,7 @@
             <struct type="SpriteSheet">
                 <key>files</key>
                 <array>
-                    <filename>Edmund-assets</filename>
-                    <filename>Grandma-assets</filename>
-                    <filename>Reaper-assets</filename>
-                    <filename>Sister-assets</filename>
-                    <filename>Baal-assets</filename>
-                    <filename>Berta-assets</filename>
-                    <filename>BloodyEye-assets</filename>
-                    <filename>HellGoat-assets</filename>
-                    <filename>Designer-assets</filename>
-                    <filename>Mandinga-assets</filename>
-                    <filename>EnviousEye-assets</filename>
-                    <filename>Father-assets</filename>
-                    <filename>Skeleton-assets</filename>
-                    <filename>Rat-assets</filename>
-                    <filename>StinkyRat-assets</filename>
-                    <filename>LootDropper-assets</filename>
-                    <filename>FlyingSkull-assets</filename>
-                    <filename>Penitent-assets</filename>
+                    <filename>Sinner-assets</filename>
                 </array>
             </struct>
         </map>

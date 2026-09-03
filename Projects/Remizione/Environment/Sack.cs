@@ -1,7 +1,7 @@
 ﻿using Adberration;
 using Engendro;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// Sack

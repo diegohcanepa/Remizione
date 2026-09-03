@@ -1,7 +1,7 @@
 ﻿using Adberration.Scripting;
 using Engendro.Input;
 
-namespace ScaryCastle.Scripting
+namespace Remizione.Scripting
 {
     // AwaitInputCommand
     [ForceAwait]

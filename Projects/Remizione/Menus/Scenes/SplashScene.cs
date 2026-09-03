@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ScaryCastle.Menus
+namespace Remizione.Menus
 {
     /// <summary>
     /// SplashScene
@@ -20,19 +20,19 @@ namespace ScaryCastle.Menus
         #region Constructors
 
         // Constructor
-        public SplashScene(ScaryCastleGame game)
+        public SplashScene(RemizioneGame game)
             : this(game, null, Vector2.Zero, 0, 0)
         {
         }
 
         // Constructor
-        public SplashScene(ScaryCastleGame game, AtlasImage? image, Vector2 imagePosition, float imageScale)
+        public SplashScene(RemizioneGame game, AtlasImage? image, Vector2 imagePosition, float imageScale)
             : this(game, image, imagePosition, imageScale, defaultDuration)
         {
         }
 
         // Constructor
-        public SplashScene(ScaryCastleGame game, AtlasImage? image, Vector2 imagePosition, float imageScale, int duration)
+        public SplashScene(RemizioneGame game, AtlasImage? image, Vector2 imagePosition, float imageScale, int duration)
         {
             this.ExclusiveDraw = true;
 

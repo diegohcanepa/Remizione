@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// Actor
@@ -19,8 +19,6 @@ namespace ScaryCastle
         private Sprite? activeThrowableSprite;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
-        private readonly AnimatedSprite headSprite;
-        private readonly FloatTween headTween = new();
         private Vector2? lastKnownLiftPosition;
         private readonly FloatTween moveBalancingTween = new();
         private readonly FloatTween moveVerticalTween = new();
@@ -42,7 +40,6 @@ namespace ScaryCastle
             this.Definition = GameData.Actors.Find(DeclaredName);
             this.Atlas = Atlases.Actors;
             this.ApproachBehavior = ApproachBehavior.FaceToFace;
-            this.DeathWord = ComicTextKind.PlopRed;
             this.DisplayNameKey = $"Actor.{DeclaredName}";
             this.IgnoreWalkArea = false;
             this.Verb = Verb.Talk;
@@ -50,26 +47,7 @@ namespace ScaryCastle
             this.CombatBehavior = GameData.CombatBehaviors.Find(DeclaredName);
             this.StatusManager = new(this);
             this.RevealLoot = true;
-
-            headSprite = new AnimatedSprite()
-            {
-                Atlas = Atlas,
-                ImagePath = ImagePath,
-                PivotOrigin = PivotOrigin,
-            };
-
-            var anim = headSprite.AddAnimation("Stand");
-            anim.AddFrame("StandHead01", 1500);
-            anim.AddFrame("StandHead02", 100);
-
-            anim = headSprite.AddAnimation("Talk");
-            anim.AddFrame("TalkHead01", 100);
-            anim.AddFrame("TalkHead02", 100);
-
-            ResetHeadTween();
-            headTween.RandomizeTime();
-
-            this.BodyMachine = new BodyStateMachine(this, new BodyStandState());
+            this.BodyMachine = new StateMachine<Actor>(this, new BodyStandState());
             this.BodyMachine.AddState(new BodyMoveState());
 
             ShadowSpotSize = 6;
@@ -115,13 +93,6 @@ namespace ScaryCastle
         {
             base.MoveTo(pendingPathNodes[0]);
             pendingPathNodes.RemoveAt(0);
-        }
-
-        // ResetHeadTween
-        private void ResetHeadTween()
-        {
-            headTween.Start(TweenStyle.CubicInOut, 0, .25f, 400, -1);
-            headTween.RandomizeTime();
         }
 
         // ResetRemainingTurns
@@ -216,18 +187,6 @@ namespace ScaryCastle
             Unparent();
         }
 
-        // SyncHeadAnimation
-        private void SyncHeadAnimation()
-        {
-            if (!headSprite.Player.IsPlaying)
-            {
-                headSprite.Player.Stop();
-                ResetHeadTween();
-                if (headSprite.Animations.Find(AnimationNames.Stand) != null)
-                    headSprite.Player.Play(AnimationNames.Stand);
-            }
-        }
-
         // UpdateDirection
         private void UpdateDirection()
         {
@@ -263,7 +222,7 @@ namespace ScaryCastle
                 }
             }
 
-            PlaySound(SoundNames.FootstepA);
+            PlaySound(SoundNames.FootstepGrass);
             footstepLastUsedFrame = Sprite.Player.Frame;
         }
 
@@ -298,7 +257,7 @@ namespace ScaryCastle
         #region Protected members
 
         // BodyMachine
-        protected BodyStateMachine BodyMachine { get; }
+        protected StateMachine<Actor> BodyMachine { get; }
 
         // CalculateSpeed
         protected override float CalculateSpeed()
@@ -421,19 +380,6 @@ namespace ScaryCastle
             {
                 activeThrowableSprite.Position = RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, 3);
                 activeThrowableSprite.Draw(gameTime);
-            }
-
-            if (AnimationSettings.DetachedHead)
-            {
-                if (AnimationPlayer.Animation?.Headless == true && headSprite.Player.IsPlaying)
-                {
-                    headSprite.Color = Color;
-                    headSprite.Opacity = Opacity;
-                    headSprite.OpacityFactor = OpacityFactor;
-                    headSprite.MatchTransform(Sprite);
-                    headSprite.Y += headTween.CurrentValue - Altitude;
-                    headSprite.Draw(gameTime);
-                }
             }
 
             if (tintTween.IsRunning)
@@ -573,11 +519,6 @@ namespace ScaryCastle
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
-
-            headTween.Update(gameTime);
-
-            if (AnimationSettings.DetachedHead)
-                headSprite.Update(gameTime);
 
             speechText?.Update(gameTime);
             moveVerticalTween.Update(gameTime);
@@ -1124,7 +1065,7 @@ namespace ScaryCastle
         }
 
         // MoveTo
-        public override MoveToResult MoveTo(Vector2 destination)
+        public MoveToResult MoveTo(Vector2 destination, float slowThreshold = 0)
         {
             // No path needed
             if (WalkArea == null || IgnoreWalkArea)
@@ -1151,6 +1092,8 @@ namespace ScaryCastle
                 FastMove = false;
                 return MoveToResult.LessThan1px;
             }
+
+            FastMove = Vector2.Distance(Position, path[^1]) > slowThreshold;
 
             pendingPathNodes.Clear();
             pendingPathNodes.AddRange(path);
@@ -1290,7 +1233,7 @@ namespace ScaryCastle
         public void Say(string text, bool awaitInput)
         {
             speechText ??= new SpeechText(this);
-            speechText.Show(DisplayName, text, awaitInput);
+            speechText.Show(text, awaitInput);
         }
 
         // ShowStatusReaction
@@ -1354,10 +1297,7 @@ namespace ScaryCastle
         // StartTalking
         public void StartTalking()
         {
-            if (AnimationSettings.DetachedHead)
-                headSprite.Player.Play(ActorStateNames.Talk, true);
-            else
-                Animate(AnimationNames.Talk, true, AnimationDirection.Forward, false);
+            Animate(AnimationNames.Talk, true, AnimationDirection.Forward, false);
         }
 
         // StatusManager
@@ -1366,10 +1306,7 @@ namespace ScaryCastle
         // StopTalking
         public void StopTalking()
         {
-            if (AnimationSettings.DetachedHead)
-                headSprite.Player.Play(AnimationNames.Stand, true);
-            else
-                Stand();
+            Stand();
         }
 
         // ThrowActiveTrowable
@@ -1416,19 +1353,6 @@ namespace ScaryCastle
             }
 
             RemainingTurns -= 1;
-        }
-
-        /// <summary>
-        /// BodyStateMachine
-        /// </summary>
-        public sealed class BodyStateMachine(Actor owner, BodyState initialState)
-            : StateMachine<Actor>(owner, initialState)
-        {
-            // OnStateChanged
-            protected override void OnStateChanged()
-            {
-                Owner.SyncHeadAnimation();
-            }
         }
     }
 }

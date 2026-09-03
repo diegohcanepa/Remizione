@@ -1,6 +1,6 @@
 ﻿using Engendro.Input;
 
-namespace ScaryCastle.Menus
+namespace Remizione.Menus
 {
     /// <summary>
     /// VibrationOption
@@ -8,7 +8,7 @@ namespace ScaryCastle.Menus
     internal sealed class VibrationOption : BooleanOption
     {
         // Constructor
-        public VibrationOption(ScaryCastleGame game)
+        public VibrationOption(RemizioneGame game)
             : base(game, "@Menu.Options.Vibration", GamePadDevice.AllowVibration)
         {
         }

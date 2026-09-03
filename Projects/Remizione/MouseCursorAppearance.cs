@@ -1,7 +1,7 @@
 ﻿using Engendro;
-using ScaryCastle.Scripting;
+using Remizione.Scripting;
 
-namespace ScaryCastle
+namespace Remizione
 {
     /// <summary>
     /// MouseCursorAppearance

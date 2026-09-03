@@ -1,6 +1,6 @@
 ﻿using Adberration.Scripting;
 
-namespace ScaryCastle.Scripting
+namespace Remizione.Scripting
 {
     // PlaceItemCommand
     // Arguments: {ItemName}
@@ -26,8 +26,9 @@ namespace ScaryCastle.Scripting
             {
                 if (session.CurrentRun?.PlayerInventory.Find(Body.Clauses[0]) is Item item)
                 {
-                    var instance = new Firecracker(session, item, player.Position);
-                    session.Room.Children.Add(instance);
+                    // TODO: Check
+                    //var instance = new Firecracker(session, item, player.Position);
+                    //session.Room.Children.Add(instance);
                 }
             }
         }

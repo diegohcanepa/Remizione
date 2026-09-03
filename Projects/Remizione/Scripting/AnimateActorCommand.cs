@@ -1,7 +1,7 @@
 ﻿using Adberration.Scripting;
 using Engendro;
 
-namespace ScaryCastle.Scripting
+namespace Remizione.Scripting
 {
     // AnimateActorCommand
     // Arguments: {Actor} {AnimationName} [#looped] [#preserve] [#reverse]
