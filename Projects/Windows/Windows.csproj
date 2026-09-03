@@ -13,7 +13,7 @@
     <Nullable>enable</Nullable>
     <PlatformTarget>x64</PlatformTarget>
     <PackageId>$(AssemblyName)</PackageId>
-    <AssemblyName>ScaryCastleLauncher</AssemblyName>
+    <AssemblyName>RemizioneLauncher</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <WarningLevel>8</WarningLevel>
@@ -35,7 +35,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Adberration\Adberration.csproj" />
     <ProjectReference Include="..\Engendro\Engendro.csproj" />
-    <ProjectReference Include="..\ScaryCastle\ScaryCastle.csproj" />
+    <ProjectReference Include="..\Remizione\Remizione.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="steam_api64.dll">

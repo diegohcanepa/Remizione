@@ -124,6 +124,12 @@
           "allowTags": ["Pottery","Trunk","GateLever"]
         },
         {
+          "position": "116,98",
+          "placement": "Floor",
+          "fillChance": 0.5,
+          "allowTags": ["Obstacle"]
+        },        
+        {
           "position": "170,46",
           "placement": "WallFrontBase",
           "fillChance": 0.5,

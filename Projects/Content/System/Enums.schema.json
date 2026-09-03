@@ -301,6 +301,7 @@
         "Floor",
         "GateLever",
         "Grate",
+        "Obstacle",
         "Poison",
         "Pottery",
         "Torch",

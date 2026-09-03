@@ -19,9 +19,10 @@ namespace ScaryCastle
             this.AttachedLight = new("Light")
             {
                 Ambient = true,
-                Color = new(240, 192, 150),
+                Color = new(70, 62, 50),
                 PivotOrigin = RectanglePoint.Center,
                 LightKind = LightKind.Default,
+                Passes = 3,
                 Position = new(9),
                 Scale = new(12, 18)
             };

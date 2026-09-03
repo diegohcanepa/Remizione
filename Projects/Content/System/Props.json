@@ -95,13 +95,23 @@
       "placements": []
     },
     {
-      "name": "RideCarSW",
+      "name": "RideCarNE",
       "difficulty": "Easy",
       "maxPerRoom": -1,
+      "tags": ["Obstacle"],
       "placements": [
         "Floor"      
       ]
-    },    
+    },
+    {
+      "name": "RideCarSW",
+      "difficulty": "Easy",
+      "maxPerRoom": -1,
+      "tags": ["Obstacle"],
+      "placements": [
+        "Floor"      
+      ]
+    },        
     {
       "name": "SpearTrap",
       "difficulty": "Normal",
