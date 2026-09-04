@@ -50,7 +50,7 @@
     { "name": "FenceOpen" },
     { "name": "Firecracker", "soundCount": 2 },
     { "name": "FleshImpact", "soundCount": 2 },
-    { "name": "FootstepGrass", "soundCount": 2, "volume": 0.4, "maxInstances": 10 },
+    { "name": "FootstepGrass", "soundCount": 2, "volume": 0.4, "maxInstances": 10, "pitchVariance": 0.5 },
     { "name": "FootstepWater", "soundCount": 6, "volume": 0.9 },
     { "name": "FuseHissing" },
     { "name": "GateOpen" },

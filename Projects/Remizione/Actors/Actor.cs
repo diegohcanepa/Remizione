@@ -456,7 +456,7 @@ namespace Remizione
             BodyMachine.ChangeState<BodyMoveState>();
 
             if (AnimationSettings.MoveBounce)
-                moveVerticalTween.Start(TweenStyle.QuadraticInOut, 0, .8f, 100, -1);
+                moveVerticalTween.Start(TweenStyle.QuadraticInOut, 0, .8f, 200, -1);
 
             if (AnimationSettings.MoveSway)
                 moveBalancingTween.Start(TweenStyle.QuadraticInOut, 0, .04f, FastMove ? 100 : 200, -1);
@@ -1207,7 +1207,7 @@ namespace Remizione
                     }
                 }
 
-                var moveToResult = destination == Vector2.Zero ? MoveToResult.NoPath : MoveTo(destination);
+                var moveToResult = destination == Vector2.Zero ? MoveToResult.NoPath : MoveTo(destination, GameSettings.WalkThreshold);
                 if (destination != Vector2.Zero && moveToResult == MoveToResult.NoPath)
                 {
                     FaceTo(target);

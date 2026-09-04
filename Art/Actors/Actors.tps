@@ -247,6 +247,12 @@
             <key type="filename">Sinner-assets/Pray13.png</key>
             <key type="filename">Sinner-assets/Pray14.png</key>
             <key type="filename">Sinner-assets/Stand01.png</key>
+            <key type="filename">Sinner-assets/StandUp01.png</key>
+            <key type="filename">Sinner-assets/StandUp02.png</key>
+            <key type="filename">Sinner-assets/StandUp03.png</key>
+            <key type="filename">Sinner-assets/StandUp04.png</key>
+            <key type="filename">Sinner-assets/StandUp05.png</key>
+            <key type="filename">Sinner-assets/StandUp06.png</key>
             <key type="filename">Sinner-assets/Talk01.png</key>
             <key type="filename">Sinner-assets/UnarmedAttack01.png</key>
             <key type="filename">Sinner-assets/UnarmedAttack02.png</key>

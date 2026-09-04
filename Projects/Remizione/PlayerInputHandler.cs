@@ -52,7 +52,7 @@ namespace Remizione
             {
                 Owner.Session.InteractionData.Clear();
                 Owner.EnforceTurn = true;
-                Owner.MoveTo(destination, 50);
+                Owner.MoveTo(destination, GameSettings.WalkThreshold);
 
                 return;
             }

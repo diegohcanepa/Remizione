@@ -36,7 +36,7 @@ namespace Remizione.Scripting
         // IsAwaiting
         public override bool IsAwaiting()
         {
-            return Game.SceneManager.CurrentScene is EchoScene;
+            return Game.SceneManager.CurrentScene is EchoScene scene && !scene.CanClose;
         }
     }
 }

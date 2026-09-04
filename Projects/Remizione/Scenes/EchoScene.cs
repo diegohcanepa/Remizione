@@ -2,6 +2,7 @@
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Remizione.Scripting;
 
 namespace Remizione
 {
@@ -10,25 +11,28 @@ namespace Remizione
     /// </summary>
     public sealed class EchoScene : Scene
     {
-        private readonly FloatTween opacityTween = new();
+        private bool fade;
         private readonly Sprite background = new(Atlases.UI.EchoBackground) { PivotOrigin = RectanglePoint.LeftBottom, Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom) };
+        private readonly FloatTween opacityTween = new();
+        private readonly GameSession session;
         private readonly TextSprite textSprite;
 
         #region Constructor
 
         // Constructor
-        public EchoScene()
+        public EchoScene(GameSession session)
             : base()
         {
+            this.session = session;
             this.PausePreviousScenes = false;
 
-            this.textSprite = new(Fonts.CommonOutline)
+            this.textSprite = new(Fonts.Common)
             {
                 Color = ColorPalette.Text.TerraLight,
                 MaximumWidth = (int)(Screen.NativeWidth * .7f),
                 PauseOnPunctuationMarks = false,
-                PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.Area.GetPoint(RectanglePoint.Bottom, 0, -15),
+                PivotOrigin = RectanglePoint.Top,
+                Position = background.BoundingBox.GetPoint(RectanglePoint.Top, 0, 20),
                 Scale = ScaleInfo.Text.VeryLarge
             };
         }
@@ -47,9 +51,16 @@ namespace Remizione
                 InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
             {
                 if (textSprite.IsTyping)
+                {
                     textSprite.StopTyping();
+                }
                 else
-                    Game.SceneManager.Pop();
+                {
+                    CanClose = true;
+
+                    if (session.AwaitingScript?.NextStatement is not EchoCommand)
+                        Game.SceneManager.Pop();
+                }
                 return true;
             }
 
@@ -65,6 +76,9 @@ namespace Remizione
         {
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
             background.Draw(gameTime);
+            Game.SpriteBatch.End();
+
+            Game.SpriteBatch.Begin(Game.Camera);
             textSprite.Draw(gameTime);
             Game.SpriteBatch.End();
         }
@@ -82,37 +96,35 @@ namespace Remizione
         protected override void OnLoadContent()
         {
             MouseCursor.Icon = MouseCursorIcon.Talk;
-
-            if (!textSprite.IsEmpty)
-            {
-                opacityTween.Start(TweenStyle.CubicIn, 0, 1, 500);
-                textSprite.Tweens.OpacityTween = opacityTween;
-                textSprite.StartTyping();
-            }
+            fade = true;
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             textSprite.Update(gameTime);
+            background.Opacity = textSprite.Opacity;
         }
 
         #endregion
 
+        // CanClose
+        public bool CanClose { get; private set; }
+
         // Show
         public void Show(string text)
         {
+            CanClose = false;
             textSprite.Text = text;
-            opacityTween.Start(TweenStyle.CubicIn, 0, 1, 500);
-            textSprite.Tweens.OpacityTween = opacityTween;
             textSprite.StartTyping();
-        }
 
-        // Text
-        public string? Text
-        {
-            get => textSprite.Text;
-            set => textSprite.Text = value;
+            if (fade)
+            {
+                background.Opacity = 0;
+                opacityTween.Start(TweenStyle.CubicIn, 0, 1, 500);
+                textSprite.Tweens.OpacityTween = opacityTween;
+                fade = false;
+            }
         }
     }
 }

@@ -190,6 +190,14 @@ namespace Remizione
 
             Game.GraphicsDevice.Clear(AmbientLights ? LightMapColor : Color.Black);
 
+            if (AllowGlobalLight)
+            {
+                Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
+                Session.Environment.GlobalLight.Draw(gameTime);
+                Game.SpriteBatch.End();
+            }
+
+
             Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
 
             // Owned lights
@@ -399,6 +407,9 @@ namespace Remizione
                 lights[i].Update(gameTime);
             }
 
+            if (AllowGlobalLight)
+                Session.Environment.GlobalLight.Update(gameTime);
+
             if (!AmbientLights && Session.Player != null)
                 playerLight.Update(gameTime);
 
@@ -462,6 +473,10 @@ namespace Remizione
         [ScriptProperty]
         public bool AllowFireflyParticles { get; set; }
 
+        // AllowGlobalLight
+        [ScriptProperty]
+        public bool AllowGlobalLight { get; set; } = true;
+
         // AllowPauseMenu
         [ScriptProperty]
         public bool AllowPauseMenu { get; set; } = true;
@@ -510,7 +525,7 @@ namespace Remizione
 
         // LightMapColor
         [ScriptProperty]
-        public Color LightMapColor { get; set; } = new Color(20, 20, 25);
+        public Color LightMapColor { get; set; } = new Color(10, 10, 25);
 
         // Lights
         public NamedReadOnlyCollection<Light> Lights { get; }

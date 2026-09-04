@@ -24,7 +24,7 @@ namespace Remizione
 
         private readonly ScriptConsole? console;
         private readonly FloatTween chromaticAberrationTween = new();
-        private readonly EchoScene echoScene = new();
+        private readonly EchoScene echoScene;
         private InventoryScene? inventoryScene;
         private Vector2? playerPosition;
         private FrozenDictionary<string, GameThing>? proceduralCatalog;
@@ -53,6 +53,7 @@ namespace Remizione
             this.Environment = new Environment();
             this.InteractionContext = new(this);
             this.InteractionData = new(this);
+            this.echoScene = new EchoScene(this);
 
             ObjectPools = new ObjectPools(this);
 
@@ -780,8 +781,10 @@ namespace Remizione
         // ShowEcho
         public void ShowEcho(string text)
         {
-            echoScene.Text = text;
-            Game.SceneManager.Push(echoScene);
+            if (Game.SceneManager.CurrentScene is not EchoScene)
+                Game.SceneManager.Push(echoScene);
+
+            echoScene.Show(text);
         }
 
         // ShowInventory
