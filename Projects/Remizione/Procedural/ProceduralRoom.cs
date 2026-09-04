@@ -636,7 +636,7 @@ namespace Remizione
                 }
             }
 
-            Session.RunHUD?.MiniMap.CurrentRoom = RoomNode;
+            Session.HUD?.MiniMap.CurrentRoom = RoomNode;
         }
 
         // OnChildAdded

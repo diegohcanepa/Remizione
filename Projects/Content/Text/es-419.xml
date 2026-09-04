@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Strings>
-  <String Key="Actor.You">Vos</String>
+  <String Key="Actor.Penitent">Penitente</String>
   <String Key="DamageType.Physical">Físico</String>
   <String Key="EffectTemplate.Damage">{amount} daño</String>
   <String Key="EffectTemplate.EnergyRestore">Recarga de baba</String>

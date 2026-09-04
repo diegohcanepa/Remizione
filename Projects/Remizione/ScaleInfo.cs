@@ -27,7 +27,7 @@ namespace Remizione
         internal static Vector2 CreditTitle { get; } = new Vector2(.16f);
 
         // HeldItem
-        internal static Vector2 InventoryHeldItem { get; } = UIElement.Medium * 1.2f;
+        internal static Vector2 InventoryHeldItem { get; } = UIElement.Large * 1.1f;
 
         // InteractionMenu
         internal static class InteractionMenu

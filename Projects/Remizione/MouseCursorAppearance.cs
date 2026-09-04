@@ -146,8 +146,6 @@ namespace Remizione
         // SyncText
         private static void SyncText(GameThing? target)
         {
-            const string surpriseLabel = "[?]";
-
             if (target == null)
             {
                 MouseCursor.Tooltip = null;
@@ -156,28 +154,7 @@ namespace Remizione
             }
 
             MouseCursor.Tooltip = target.DisplayName;
-
             MouseCursor.SubTextColor = ColorPalette.MouseCursor.SubText;
-
-            if (target.RevealLoot)
-            {
-                if (target.ItemReward != null)
-                {
-                    MouseCursor.SubText = target.ItemReward.DisplayName;
-                    return;
-                }
-                else if (target.CoinReward > 0)
-                {
-                    MouseCursor.SubText = GameData.Items.Get(ItemNames.Coin).DisplayName;
-                    return;
-                }
-                else if (target.Definition?.DropTrigger == LootDropTrigger.OnImpact)
-                {
-                    MouseCursor.SubText = surpriseLabel;
-                    return;
-                }
-            }
-
             MouseCursor.SubText = null;
         }
 

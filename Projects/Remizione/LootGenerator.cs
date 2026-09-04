@@ -8,12 +8,12 @@ namespace Remizione
     /// </summary>
     public sealed class LootGenerator
     {
-        private readonly Run run;
+        private readonly GameSession session;
 
         // Constructor
-        public LootGenerator(Run run)
+        public LootGenerator(GameSession session)
         {
-            this.run = run;
+            this.session = session;
         }
 
         #region Private members
@@ -38,8 +38,11 @@ namespace Remizione
                 return false;
 
             // Avoid dropping duplicates for non-stackable items
+            // TODO: Check
+            /*
             if (!itemDef.IsStackable && run.PlayerInventory.Find(itemDef.Name) != null)
                 return false;
+            */
 
             return true;
         }
@@ -57,49 +60,19 @@ namespace Remizione
             };
 
             // Up to 10% of more chances depending on the current floor
-            chance += run.Progress * 0.1f;
+            if (session.CurrentRun is Run run)
+                chance += run.Progress * 0.1f;
 
             // Player's luck
-            chance += run.Traits.GetTotalTraitValue(TraitType.Luck);
+            //chance += run.Traits.GetTotalTraitValue(TraitType.Luck);
 
             // Extra chances
             chance += def.DropSackChanceBonus;
 
-            // There is alwqays a 5% chance og getting nothing
-            return run.VolatileRng.NextDouble() <= float.Clamp(chance, 0, .95f);
-        }
+            // There is alwqays a 5% chance of getting nothing
+            var rng = session.CurrentRun?.VolatileRng ?? session.MasterRunRng;
 
-        // RollCoinAmount
-        private int RollCoinAmount(ThingDefinition thingDef)
-        {
-            // Probabilidad base por dificultad
-            float chance = thingDef.Difficulty switch
-            {
-                Difficulty.Easy => 0.1f,
-                Difficulty.Normal => 0.3f,
-                Difficulty.Hard => 0.5f,
-                _ => 0.1f
-            };
-
-            // Modificadores de Suerte y Bonus
-            chance += run.Traits.GetTotalTraitValue(TraitType.Luck);
-            chance += thingDef.DropCoinChanceBonus;
-
-            // Cap de seguridad (max 95%)
-            float finalChance = float.Clamp(chance, 0, .95f);
-
-            // Tirada de dados
-            if (run.VolatileRng.NextDouble() > finalChance)
-                return 0;
-
-            // Cantidad entregada si la tirada tuvo éxito
-            return thingDef.Difficulty switch
-            {
-                Difficulty.Easy => 1,
-                Difficulty.Normal => 1,
-                Difficulty.Hard => run.VolatileRng.Next(1, 3),
-                _ => 1
-            };
+            return rng.NextDouble() <= float.Clamp(chance, 0, .95f);
         }
 
         // SelectLootItem
@@ -113,7 +86,7 @@ namespace Remizione
 
             // Si estás en el Piso 1, maxQ se mantiene bajo (0-2) evitando épicos/legendarios desbalanceados.
             // En los pisos finales, el techo se eleva a 4-5.
-            float progress = run.Progress;
+            float progress = session.CurrentRun is Run run ? run.Progress : 0;
             int floorBonus = (int)(progress * 2f);
             int maxQ = Math.Clamp(((int)roomDef.Difficulty * 2) + 1 + qualityBoost + floorBonus, 0, 5);
 
@@ -146,24 +119,11 @@ namespace Remizione
                 table.Add(itemDef.Name, weight, 1, itemDef);
             }
 
-            return table.GetValue(run.VolatileRng)?.Context as ItemDefinition;
+            var rng = session.CurrentRun?.VolatileRng ?? session.MasterRunRng;
+            return table.GetValue(rng)?.Context as ItemDefinition;
         }
 
         #endregion
-
-        // RollForCoin
-        public int RollForCoin(GameThing thing)
-        {
-            if (thing.Definition == null)
-                return 0;
-
-            // 1. Filtro rápido de DropMode
-            if (thing.Definition.DropMode is LootDropMode.None or LootDropMode.SackOnly or LootDropMode.Custom)
-                return 0;
-
-            // 2. Procesa la tirada y cantidad de monedas en el método dedicado
-            return RollCoinAmount(thing.Definition);
-        }
 
         // RollForLoot
         public ItemDefinition? RollForLoot(GameThing thing)
@@ -179,7 +139,7 @@ namespace Remizione
                 return null;
 
             // 1. Check drop mode
-            if (thing.Definition.DropMode is LootDropMode.None or LootDropMode.CoinsOnly)
+            if (thing.Definition.DropMode is LootDropMode.None)
                 return null;
 
             // 2. Check for custom drop

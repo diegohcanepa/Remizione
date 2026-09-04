@@ -23,7 +23,7 @@ namespace Remizione.Scripting
 
             if (AssertEntity<Prop>(0) is Prop prop)
             {
-                if (session.CurrentRun?.PlayerInventory.Find(Body.Clauses[2]) is Item item)
+                if (session.PlayerInventory.Find(Body.Clauses[2]) is Item item)
                 {
                     return prop.TestSkillChance(session.Player, item);
                 }

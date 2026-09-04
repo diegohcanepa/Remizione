@@ -2,6 +2,7 @@
 using Adberration.Scripting;
 using Engendro;
 using Engendro.Audio;
+using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Remizione.Props;
 using Remizione.Scripting;
@@ -23,9 +24,8 @@ namespace Remizione
         #region Private fields
 
         private readonly ScriptConsole? console;
-        private readonly FloatTween chromaticAberrationTween = new();
         private readonly EchoScene echoScene;
-        private InventoryScene? inventoryScene;
+        private InventoryScene inventoryScene;
         private Vector2? playerPosition;
         private FrozenDictionary<string, GameThing>? proceduralCatalog;
         private readonly RoomEditor? roomEditor;
@@ -54,6 +54,10 @@ namespace Remizione
             this.InteractionContext = new(this);
             this.InteractionData = new(this);
             this.echoScene = new EchoScene(this);
+            this.PlayerInventory = new ItemContainer(this);
+            this.inventoryScene = new(PlayerInventory);
+            this.HUD = new(this);
+            this.LootGenerator = new(this);
 
             ObjectPools = new ObjectPools(this);
 
@@ -76,11 +80,11 @@ namespace Remizione
                     TextErrorColor = ColorPalette.Text.Terra
                 };
 
+                console.CommandList.Add("add-item Apple");
                 console.CommandList.Add("put PotteryA into $Room #at:120,75");
                 console.CommandList.Add("put StinkyRat into $Room");
                 console.CommandList.Add("put GoldenTrunk into $Room #at:77,77");
-                console.CommandList.Add("add-item Lockpick");
-
+                
                 roomEditor = new RoomEditor(this);
             }
 
@@ -106,17 +110,12 @@ namespace Remizione
 
             if (RunIndex == 0)
             {
-                CurrentRun.PlayerInventory.Add(ItemNames.Apple);
-                CurrentRun.PlayerInventory.Add(ItemNames.DroolBottle);
-                CurrentRun.PlayerInventory.Add(ItemNames.ServantCross);
+                PlayerInventory.Add(ItemNames.Apple);
+                PlayerInventory.Add(ItemNames.DroolBottle);
+                PlayerInventory.Add(ItemNames.ServantCross);
                 CurrentRun.Traits.Add(TraitType.Luck);
                 CurrentRun.Traits.Add(TraitType.Lockpicking);
             }
-
-            CurrentRun.PlayerInventory.Capacity = GameSettings.PlayerDefaults.InventoryCapacity;
-            Player.MaxHP = GameSettings.PlayerDefaults.MaxHP;
-            Player.MaxEnergy = GameSettings.PlayerDefaults.MaxEnergy;
-            Player.MaxStamina = GameSettings.PlayerDefaults.MaxStamina;
 
             if (RunIndex == 0)
                 Player.Energy = 0;
@@ -243,7 +242,7 @@ namespace Remizione
             Game.SpriteBatch.End();
 
             if (Player != null && !Player.IsDead)
-                RunHUD?.Draw(gameTime);
+                HUD?.Draw(gameTime);
 
             SpeechText.DrawSpeechTexts(gameTime);
 
@@ -256,15 +255,13 @@ namespace Remizione
             Game.SceneManager.PopUntil(this);
             InteractionContext.Reset();
             MouseCursor.Reset();
-            if (room is not ProceduralRoom)
-                chromaticAberrationTween.Stop();
             SyncProceduralMusic();
         }
 
         // OnExitRoom
         protected override void OnExitRoom(Room currentRoom, Room nextRoom)
         {
-            RunHUD?.Reset();
+            HUD?.Reset();
             ObjectPools.FlyOffs.ReturnAll();
 
             for (var i = currentRoom.Children.Count - 1; i >= 0; i--)
@@ -280,7 +277,7 @@ namespace Remizione
             if (roomEditor?.HandleInput() == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
-            else if (RunHUD?.HandleInput() == HandleInputResult.Handled)
+            else if (HUD?.HandleInput() == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
             else
@@ -383,12 +380,6 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
 
-            if (chromaticAberrationTween.IsRunning)
-            {
-                chromaticAberrationTween.Update(gameTime);
-                RemizioneGame.Effects.CRT.ChromaticAberration = chromaticAberrationTween.CurrentValue;
-            }
-
             savingIcon.Update(gameTime);
 
             if (console != null)
@@ -403,8 +394,6 @@ namespace Remizione
             {
                 CurrentRun.Update(gameTime);
 
-                RunHUD?.Update(gameTime);
-
                 if (!IsAwaiting)
                 {
                     if (Player?.IsDead == true)
@@ -415,16 +404,17 @@ namespace Remizione
                 }
             }
 
+            HUD.Update(gameTime);
+
             if (IsCurrentScene)
             {
                 if (Room == null || !Room.ControlMouseCursor)
                     InteractionContext.Refresh();
             }
 
-            /*
             if (Player != null && Player.ActiveThrowable == null)
             {
-                if (!IsAwaiting && IsCurrentScene && RunInProgress)
+                if (!IsAwaiting && IsCurrentScene)
                 {
                     if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
                     {
@@ -433,7 +423,6 @@ namespace Remizione
                     }
                 }
             }
-            */
         }
 
         // OnWrite
@@ -511,8 +500,7 @@ namespace Remizione
             // 2. Create run
             CurrentRun = new Run(this, runSeed, runDefinition);
 
-            RunHUD = new(CurrentRun);
-            inventoryScene = new(CurrentRun.PlayerInventory);
+            //inventoryScene = new(CurrentRun.PlayerInventory);
 
             PreparePlayerForRun();
             AdvanceToNextFloor();
@@ -545,7 +533,6 @@ namespace Remizione
                 return;
 
             CurrentRun = null;
-            inventoryScene = null;
             CleanUpRuntimeEntities();
 
             InteractionContext.Reset();
@@ -612,6 +599,9 @@ namespace Remizione
             }
         }
 
+        // HUD
+        public HUD HUD { get; }
+
         // InteractionContext
         public InteractionContext InteractionContext { get; }
 
@@ -639,8 +629,11 @@ namespace Remizione
         [ScriptProperty]
         public bool LightingSystem { get; set; } = true;
 
+        // LootGenerator
+        public LootGenerator LootGenerator { get; }
+
         // MasterRunRng (RNG supremo de la partida entera. Solo se usa para generar pisos.)
-        public Random MasterRunRng { get; private set; } = new();
+        public Random MasterRunRng { get; } = new();
 
         // NextRoom
         [ScriptProperty]
@@ -657,13 +650,6 @@ namespace Remizione
         [ScriptProperty]
         public override GameThing? OutcomeTarget => base.OutcomeTarget as GameThing;
 
-        // PerformChromaticAberration
-        public void PerformChromaticAberration()
-        {
-            RemizioneGame.Effects.CRT.Reset();
-            chromaticAberrationTween.Start(TweenStyle.Linear, RemizioneGame.Effects.CRT.ChromaticAberration, RemizioneGame.Effects.CRT.ChromaticAberration + 0.009f, 2500, 2);
-        }
-
         // Player
         [ScriptProperty]
         public Actor? Player
@@ -675,13 +661,16 @@ namespace Remizione
                 {
                     field?.StopMoving();
                     field = value;
-                    RunHUD?.Reset();
+                    HUD?.Reset();
                     InteractionData.Clear();
                     if (value != null)
                         Camera.Follow(value);
                 }
             }
         }
+
+        // PlayerInventory
+        public ItemContainer PlayerInventory { get; }
 
         // PreviousRoom
         [ScriptProperty]
@@ -745,9 +734,6 @@ namespace Remizione
         [ScriptProperty]
         public new GameRoom? Room => (GameRoom?)base.Room;
 
-        // RunHUD
-        public RunHUD? RunHUD { get; private set; }
-
         // RunIndex
         [ScriptProperty]
         public int RunIndex { get; set; }
@@ -792,7 +778,7 @@ namespace Remizione
         {
             if (inventoryScene != null)
             {
-                RunHUD?.Log.Hide();
+                HUD?.Log.Hide();
                 Game.SceneManager.Push(inventoryScene);
             }
         }

@@ -12,12 +12,10 @@ namespace Remizione
 
         private readonly TextSprite amountText;
         private readonly Sprite icon;
-        private readonly Sprite iconShadow;
         private readonly ItemContainer inventory;
         private int lastKnownCount = -1;
         private readonly FloatTween rotationTween = new();
         private readonly Vector2Tween scaleTween = new();
-        private readonly Sprite slot;
 
         #endregion
 
@@ -31,34 +29,18 @@ namespace Remizione
             // Amount
             this.amountText = new TextSprite(Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Highlight,
+                Color = ColorPalette.Text.TerraDark,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -10, 0),
-                Scale = ScaleInfo.Text.ExtraLarge,
+                Scale = ScaleInfo.Text.Large,
                 Text = "00"
-            };
-
-            // Slot
-            this.slot = new(Atlases.UI.InventoryMeterSlot)
-            {
-                PivotOrigin = RectanglePoint.Bottom,
-                Position = amountText.BoundingBox.GetPoint(RectanglePoint.Top, 0, 0)
             };
 
             // Icon
             this.icon = new(Atlases.UI.Sack)
             {
                 PivotOrigin = RectanglePoint.Center,
-                Position = slot.BoundingBox.Center
-            };
-
-            // IconShadow
-            this.iconShadow = new(icon.RenderImage)
-            {
-                Color = Color.Black,
-                Opacity = ColorPalette.ShadowOpacity,
-                PivotOrigin = RectanglePoint.Center,
-                Position = icon.BoundingBox.GetPoint(RectanglePoint.Center, -1.5f, 1)
+                Position = amountText.BoundingBox.GetPoint(RectanglePoint.Top, 0, -5)
             };
         }
 
@@ -70,8 +52,6 @@ namespace Remizione
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera);
-            slot.Draw(gameTime);
-            iconShadow.Draw(gameTime);
             icon.Draw(gameTime);
             amountText.Draw(gameTime);
             Game.SpriteBatch.End();
@@ -86,7 +66,7 @@ namespace Remizione
             {
                 lastKnownCount = inventory.Count;
                 amountText.Text = $"{inventory.Count}/{inventory.Capacity}";
-                amountText.Color = inventory.IsFull ? ColorPalette.Text.Terra : ColorPalette.Text.Highlight;
+                amountText.Color = inventory.IsFull ? ColorPalette.Text.Red : ColorPalette.Text.Terra;
             }
         }
 

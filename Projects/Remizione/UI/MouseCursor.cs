@@ -94,7 +94,7 @@ namespace Remizione
             if (tooltipSprite.IsEmpty)
                 return;
 
-            var offset = CustomImage == null ? new Vector2(1, 7) : new Vector2(-2, 1);
+            var offset = CustomImage == null ? new Vector2(-1, 1) : new Vector2(-2, 1);
 
             tooltipSprite.PivotOrigin = RectanglePoint.Left;
             tooltipSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.Right, -offset.X, offset.Y);
@@ -117,19 +117,13 @@ namespace Remizione
                     subTextSprite.Position = tooltipSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -1);
                 }
             }
-
-            if (tooltipSprite.BoundingBox.Bottom >= Screen.NativeHeight)
-            {
-                tooltipSprite.Y -= 10;
-                subTextSprite.Y -= 10;
-            }
         }
 
         // InvalidateCursorImage
         private static void InvalidateCursorImage()
         {
             cursorSprite.RenderImage = CustomImage ?? cursorImages[(int)Icon];
-            cursorSprite.Scale = CustomImage != null ? ScaleInfo.UIElement.Medium : defaultScale;
+            cursorSprite.Scale = defaultScale;
             cursorSprite.PivotOrigin = (Icon is MouseCursorIcon.Hand) && CustomImage == null ? RectanglePoint.Top : RectanglePoint.Center;
         }
 
@@ -283,7 +277,7 @@ namespace Remizione
             {
                 effect.Color.SetValue(HightlightColor.Value);
                 effect.TextureSize.SetValue(new Vector2(cursorSprite.RenderImage.Atlas.Texture.Width, cursorSprite.RenderImage.Atlas.Texture.Height));
-                effect.Thickness.SetValue(1);
+                effect.Thickness.SetValue(.5f);
             }
         }
     }

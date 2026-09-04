@@ -87,6 +87,13 @@ namespace Remizione
             internal static Color Text { get; } = MouseCursor.Tooltip;
         }
 
+        // StatMeter
+        internal static class StatMeter
+        {
+            internal static Color CurrentValue { get; } = Text.Terra;
+            internal static Color MaximumValue { get; } = Text.TerraDark;
+        }
+
         // Text
         internal static class Text
         {

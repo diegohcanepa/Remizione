@@ -221,6 +221,7 @@ namespace Remizione
 
             if (Session.Player != null)
             {
+                /*
                 if (!AmbientLights)
                 {
                     // TODO: Check old stat
@@ -229,6 +230,7 @@ namespace Remizione
                     playerLight.Position = Session.Player.GetAnchoredPosition(15, 15);
                     playerLight.Draw(gameTime);
                 }
+                */
             }
 
             if (BrightnessModifier > 0)

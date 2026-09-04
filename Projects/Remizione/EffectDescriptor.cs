@@ -75,21 +75,6 @@ namespace Remizione
                     case EffectType.None:
                         break;
 
-                    // BronzeKey
-                    case EffectType.BronzeKey:
-                        source.Session.CurrentRun?.PocketItems.BronzeKeys += amount;
-                        break;
-
-                    // Coin
-                    case EffectType.Coin:
-                        source.Session.CurrentRun?.PocketItems.Coins += amount;
-                        break;
-
-                    // CoinLoss
-                    case EffectType.CoinLoss:
-                        source.Session.CurrentRun?.PocketItems.Coins -= amount;
-                        break;
-
                     // Damage
                     case EffectType.Damage:
                         realTarget?.TakeDamage(source, effect.DamageType, amount, effect.GetKnockbackForce());
@@ -118,11 +103,6 @@ namespace Remizione
                     // EnergyRestore
                     case EffectType.EnergyRestore:
                         targetActor?.Recharge();
-                        break;
-
-                    // GoldenKey
-                    case EffectType.GoldenKey:
-                        source.Session.CurrentRun?.PocketItems.GoldenKeys += amount;
                         break;
 
                     // HPGain
@@ -157,44 +137,13 @@ namespace Remizione
                         if (realTarget != null)
                         {
                             realTarget.MaxHP += amount;
-                            realTarget.Session.RunHUD?.Message.Show(MessageKind.ExtraHeart);
+                            realTarget.Session.HUD?.Message.Show(MessageKind.ExtraHeart);
                         }
                         break;
 
                     // MaxHPLoss
                     case EffectType.MaxHPLoss:
                         realTarget?.MaxHP -= amount;
-                        break;
-
-                    // MaxStaminaGain
-                    case EffectType.MaxStaminaGain:
-                        targetActor?.MaxStamina += amount;
-                        break;
-
-                    // MaxStaminaLoss
-                    case EffectType.MaxStaminaLoss:
-                        if (targetActor?.MaxStamina > 3)
-                            targetActor.MaxStamina -= amount;
-                        break;
-
-                    // StaminaGain
-                    case EffectType.StaminaGain:
-                        targetActor?.Stamina += amount;
-                        break;
-
-                    // StaminaLoss
-                    case EffectType.StaminaLoss:
-                        if (targetActor != null)
-                        {
-                            targetActor.Stamina -= amount;
-                            if (targetActor.IsPlayer)
-                                targetActor.ShowFlyOff(Atlases.UI.StaminaIcon);
-                        }
-                        break;
-
-                    // StaminaRestore
-                    case EffectType.StaminaRestore:
-                        targetActor?.Rest();
                         break;
 
                     // Status
@@ -204,11 +153,6 @@ namespace Remizione
                             var status = targetActor.StatusManager.Apply(statusType, amount);
                             targetActor.ShowStatusReaction(status, true);
                         }
-                        break;
-
-                    // TrapdoorKey
-                    case EffectType.TrapdoorKey:
-                        source.Session.CurrentRun?.PocketItems.TrapdoorKeys += amount;
                         break;
                 }
             }

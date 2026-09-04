@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Strings>
-  <String Key="Actor.You">You</String>
+  <String Key="Actor.Penitent">Penitent</String>
   <String Key="DamageType.Physical">Physical</String>
-  <String Key="EffectTemplate.Damage"></String>
-  <String Key="EffectTemplate.EnergyRestore"></String>
+  <String Key="EffectTemplate.Damage" />
+  <String Key="EffectTemplate.EnergyRestore" />
   <String Key="EffectTemplate.HPGain">+{amount} Health</String>
   <String Key="EffectTemplate.HPLoss">-{amount} Health</String>
   <String Key="FloatingMessage.Failed">Failed!</String>
@@ -146,7 +146,7 @@
   <String Key="MessageKind.PathCleared">The way is open.</String>
   <String Key="Misc.All">All</String>
   <String Key="Misc.And">and</String>
-  <String Key="Misc.Chance"></String>
+  <String Key="Misc.Chance" />
   <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=—áéíóúÁÉÍÓÚ</String>
   <String Key="Misc.CopyrightDeveloper">© 2024 Indiesruption</String>
   <String Key="Misc.Credits">Remizione

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Engendro;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,7 +9,7 @@ namespace Remizione
     /// <summary>
     /// ItemContainer
     /// </summary>
-    public sealed class ItemContainer : Collection<Item>
+    public sealed class ItemContainer : VersionedCollection<Item>
     {
         #region Constructor
 
@@ -21,52 +22,13 @@ namespace Remizione
 
         #endregion
 
-        #region Private members
-
-        // InvalidateAmbientLightColor
-        private void InvalidateAmbientLightColor()
-        {
-            AmbientLightColor = null;
-
-            Item? selectedItem = null;
-            for (var i = 0; i < Items.Count; i++)
-            {
-                if (Items[i].Definition.LightModifier > 0)
-                {
-                    if (selectedItem == null || selectedItem.Definition.LightModifier < Items[i].Definition.LightModifier)
-                        selectedItem = Items[i];
-                }
-            }
-
-            if (selectedItem != null && selectedItem.Definition.LightColor != null)
-                AmbientLightColor = selectedItem.Definition.LightColor;
-        }
-
-        #endregion
-
         #region Protected members
-
-        // ClearItems
-        protected override void ClearItems()
-        {
-            base.ClearItems();
-            InvalidateContentVersion();
-        }
-
-        // InsertItem
-        protected override void InsertItem(int index, Item item)
-        {
-            base.InsertItem(index, item);
-            InvalidateContentVersion();
-        }
 
         // RemoveItem
         protected override void RemoveItem(int index)
         {
             //Session.PlayerStats.RemoveAllModifiers(this[index]);
             base.RemoveItem(index);
-            InvalidateAmbientLightColor();
-            InvalidateContentVersion();
         }
 
         #endregion
@@ -132,13 +94,10 @@ namespace Remizione
                 if (value != field)
                 {
                     field = int.Clamp(value, MinimumCapacity, MaximumCapacity);
-                    InvalidateContentVersion();
+                    Version++;
                 }
             }
-        } = GameSettings.PlayerDefaults.InventoryCapacity;
-
-        // ContentVersion
-        public int ContentVersion { get; private set; }
+        } = GameSettings.DefaultInventoryCapacity;
 
         // Find
         public Item? Find(string name)
@@ -180,12 +139,6 @@ namespace Remizione
             return item != null || !IsFull;
         }
 
-        // InvalidateContentVersion
-        public void InvalidateContentVersion()
-        {
-            unchecked { ContentVersion++; }
-        }
-
         // IsEmpty
         public bool IsEmpty => Count == 0;
 
@@ -193,7 +146,7 @@ namespace Remizione
         public bool IsFull => Count == Capacity;
 
         // MaximumCapacity
-        public const int MaximumCapacity = 8;
+        public const int MaximumCapacity = 30;
 
         // MinimumCapacity
         public const int MinimumCapacity = 3;

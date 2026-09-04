@@ -36,6 +36,7 @@ namespace Remizione
         // OnClosureStatusChanged
         protected override void OnClosureStatusChanged(bool actionInProgress)
         {
+            /*
             if (IsOpen)
             {
                 if (Session.CurrentRun?.LootGenerator.RollForLoot(this) is ItemDefinition loot)
@@ -47,6 +48,7 @@ namespace Remizione
                 if (actionInProgress)
                     Bounce();
             }
+            */
         }
 
         // OnDraw

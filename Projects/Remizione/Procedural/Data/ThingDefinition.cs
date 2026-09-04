@@ -27,7 +27,7 @@ namespace Remizione
             DropSackChanceBonus = MathF.Max(0, element.GetFloat("dropSackChanceBonus", 0));
 
             // DropMode
-            DropMode = element.GetEnum("dropMode", LootDropMode.Standard);
+            DropMode = element.GetEnum("dropMode", LootDropMode.Sack);
 
             // DropTrigger
             DropTrigger = element.GetEnum("dropTrigger", LootDropTrigger.OnDeath);

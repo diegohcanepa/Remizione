@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration;
+using Engendro;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 
@@ -7,14 +8,13 @@ namespace Remizione
     /// <summary>
     /// HUD
     /// </summary>
-    public sealed class RunHUD : GameObject, IInputHandler
+    public sealed class HUD : SessionGameObject<GameSession>, IInputHandler
     {
         #region Private fields
 
-        private readonly UIDroolMeter droolMeter;
-        private readonly UIPassiveItems passiveItems;
-        private readonly UIRunModifiers runModifiers;
-        private readonly Run run;
+        private readonly UIStatMeter energyMeter;
+        private readonly UIStatMeter hpMeter;
+        //private readonly UIRunModifiers runModifiers;
         private readonly UITraits traits;
 
         #endregion
@@ -22,19 +22,16 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public RunHUD(Run run)
+        public HUD(GameSession session)
+            : base(session)
         {
-            this.run = run;
-            this.droolMeter = new(run.Session);
-            this.StaminaMeter = new(run.Session);
-            this.HPMeter = new(run.Session);
-            this.InventoryMeter = new(run.PlayerInventory);
-            this.passiveItems = new(run.Session);
-            this.traits = new(run.Session);
-            this.PocketItems = new(run.PocketItems);
+            this.hpMeter = new(session, StatName.HP, new(5, 3));
+            this.energyMeter = new(session, StatName.Energy, new(5, 11));
+            this.InventoryMeter = new(session.PlayerInventory);
+            this.traits = new(session);
             this.MiniMap = new();
-            this.runModifiers = new(run);
-            this.Statuses = new(run.Session);
+            //this.runModifiers = new(run);
+            this.Statuses = new(session);
             this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 14));
         }
 
@@ -46,23 +43,16 @@ namespace Remizione
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera);
-            HPMeter.Draw(gameTime);
-            runModifiers.Draw(gameTime);
+            //runModifiers.Draw(gameTime);
             Statuses.Draw(gameTime);
-            passiveItems.Draw(gameTime);
             traits.Draw(gameTime);
             Game.SpriteBatch.End();
 
-            droolMeter.Draw(gameTime);
+            hpMeter.Draw(gameTime);
+            energyMeter.Draw(gameTime);
 
-            if (!run.Session.IsConsoleVisible)
-                StaminaMeter.Draw(gameTime);
-
-            if (run.Session.IsCurrentScene)
-            {
+            if (Session.IsCurrentScene)
                 InventoryMeter.Draw(gameTime);
-                PocketItems.Draw(gameTime);
-            }
 
             MiniMap.Draw(gameTime);
 
@@ -76,16 +66,13 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             traits.Update(gameTime);
-            runModifiers.Update(gameTime);
+            //runModifiers.Update(gameTime);
             Statuses.Update(gameTime);
-            passiveItems.Update(gameTime);
-            PocketItems.Update(gameTime);
             InventoryMeter.Update(gameTime);
-            HPMeter.Update(gameTime);
+            hpMeter.Update(gameTime);
             Log.Update(gameTime);
             Message.Update(gameTime);
-            droolMeter.Update(gameTime);
-            StaminaMeter.Update(gameTime);
+            energyMeter.Update(gameTime);
             MiniMap.Update(gameTime);
         }
 
@@ -94,17 +81,14 @@ namespace Remizione
         // HandleInput
         public HandleInputResult HandleInput()
         {
-            if (run.Session.IsAwaiting)
+            if (Session.IsAwaiting)
                 return HandleInputResult.Unhandled;
 
-            if (run.Session.IsConsoleVisible)
+            if (Session.IsConsoleVisible)
                 return HandleInputResult.Unhandled;
 
             return HandleInputResult.Unhandled;
         }
-
-        // HPMeter
-        public UIHPMeter HPMeter { get; }
 
         // InventoryMeter
         public UIInventoryMeter InventoryMeter { get; }
@@ -118,19 +102,15 @@ namespace Remizione
         // MiniMap
         public UIMiniMap MiniMap { get; }
 
-        // PocketItems
-        public UIPocketItems PocketItems { get; }
-
         // Reset
         public void Reset()
         {
-            Statuses.Actor = run.Session.Player;
+            hpMeter.Actor = Session.Player;
+            energyMeter.Actor = Session.Player;
+            Statuses.Actor = Session.Player;
             Message.Hide();
             Log.Hide();
         }
-
-        // StaminaMeter
-        public UIStaminaMeter StaminaMeter { get; }
 
         // Statuses
         public UIStatuses Statuses { get; }

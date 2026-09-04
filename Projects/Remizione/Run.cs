@@ -16,13 +16,9 @@ namespace Remizione
             this.Seed = seed;
             this.Definition = definition;
 
-            this.LootGenerator = new(this);
-
             this.MasterRunRng = new(seed);
             this.VolatileRng = new(seed);
 
-            this.PlayerInventory = new ItemContainer(session);
-            this.PocketItems = new PocketItemManager(session);
             this.Modifiers = new RunModifierManager(session);
         }
 
@@ -35,20 +31,11 @@ namespace Remizione
         // FloorIndex
         public int FloorIndex { get; private set; } = -1;
 
-        // LootGenerator
-        public LootGenerator LootGenerator { get; }
-
         // MasterRunRng
         public Random MasterRunRng { get; }
 
         // Modifiers
         public RunModifierManager Modifiers { get; }
-
-        // PlayerInventory
-        public ItemContainer PlayerInventory { get; }
-
-        // PocketItems
-        public PocketItemManager PocketItems { get; }
 
         // Progress
         public float Progress => (FloorIndex + 1f) / Definition.Floors.Count;

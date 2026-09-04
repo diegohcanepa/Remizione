@@ -18,22 +18,6 @@
 			]
 		},
 		{
-			"name": "BittenApple",
-			"category": "Food",
-			"actionKind": "Self",
-			"isStackable": true,
-			"effects": [
-				{
-					"context": "Use",
-					"effectType": "HPGain",
-					"amount": "2",
-					"target": "Self",
-					"sound": "AppleBite",
-					"chance": 0.5
-				}
-			]
-		},
-		{
 			"name": "Lift",
 			"behavior": "PlayerAction",
 			"actionKind": "Proximity",

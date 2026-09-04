@@ -55,7 +55,7 @@ namespace Remizione
                     field = int.Clamp(value, 0, Definition.IsStackable || Definition.IsDepletable ? GameSettings.MaxItemAmount : 1);
                     if (field == 0)
                         Inventory.Remove(this);
-                    Inventory.InvalidateContentVersion();
+                    Inventory.Version++;
                 }
             }
         }

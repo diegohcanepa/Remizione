@@ -80,9 +80,6 @@
       "type": "string",
       "enum": [
         "None",
-        "BronzeKey",
-        "Coin",
-        "CoinLoss",
         "Damage",
         "Death",
         "EnergyGain",
@@ -91,18 +88,11 @@
         "HPGain",
         "HPLoss",
         "HPRestore",
-        "StaminaGain",
-        "StaminaLoss",
-        "StaminaRestore",
         "MaxEnergyGain",
         "MaxEnergyLoss",
         "MaxHPGain",
         "MaxHPLoss",
-        "MaxStaminaGain",
-        "MaxStaminaLoss",
-        "GoldenKey",
-        "Status",
-        "TrapdoorKey"
+        "Status"
       ]
     },
     "FacingDirection": {
@@ -130,7 +120,6 @@
       "type": "string",
       "enum": [
         "Sack",
-        "Pocket",
         "PlayerAction",
         "InstantEffect"
       ]
@@ -161,9 +150,7 @@
     "LootDropMode": {
       "type": "string",
       "enum": [
-        "Standard",
-        "CoinsOnly",
-        "SackOnly",
+        "Sack",
         "Custom",
         "None"
       ]

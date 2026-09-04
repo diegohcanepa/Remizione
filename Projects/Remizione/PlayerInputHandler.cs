@@ -26,11 +26,8 @@ namespace Remizione
                 return HandleInputResult.Handled;
 
             // Right button
-            if (Owner.Session.CurrentRun != null)
-            {
-                if (TestMouseRightButtonClick())
-                    return HandleInputResult.Handled;
-            }
+            if (TestMouseRightButtonClick())
+                return HandleInputResult.Handled;
 
             return HandleInputResult.Unhandled;
         }
@@ -69,7 +66,7 @@ namespace Remizione
             {
                 if (context.Target is not Prop prop || !prop.IsLiftable)
                 {
-                    Owner.Session.RunHUD?.Message.Show(MessageKind.LiftNotAllowed);
+                    Owner.Session.HUD?.Message.Show(MessageKind.LiftNotAllowed);
                     MouseCursor.Shake();
                     return;
                 }

@@ -20,7 +20,6 @@ namespace Remizione
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
             DialogOptionBullet = this[nameof(DialogOptionBullet)];
             DiscardItemIcon = this[nameof(DiscardItemIcon)];
-            FearIcon = this[nameof(FearIcon)];
             DroolCost = CreateReadOnlyCollection("DroolCost", 1, 3);
             DroolIcon = this[nameof(DroolIcon)];
             DroolMeter = CreateReadOnlyCollection(nameof(DroolMeter), 0, 5);
@@ -94,9 +93,6 @@ namespace Remizione
 
         // EchoBackground
         public AtlasImage EchoBackground { get; }
-
-        // FearIcon
-        public AtlasImage FearIcon { get; }
 
         // HeartIcon
         public AtlasImage HeartIcon { get; }

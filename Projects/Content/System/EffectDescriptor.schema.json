@@ -19,9 +19,6 @@
       "minimum": 0,
       "description": "Probabilidad de que el efecto se aplique."
     },    
-    "comicText": {
-      "$ref": "enums.schema.json#/$defs/ComicTextKind"
-    },
     "context": {
       "$ref": "enums.schema.json#/$defs/EffectContext"
     },

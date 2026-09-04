@@ -17,6 +17,9 @@
         // DarknessMissChancePenalty
         public const float DarknessMissChancePenalty = .2f;
 
+        // DefaultInventoryCapacity
+        public const int DefaultInventoryCapacity = 8;
+
         // DefaultTransitionDuration
         public const int DefaultTransitionDuration = 500;
 
@@ -31,15 +34,6 @@
 
         // MaxItemAmount
         public const int MaxItemAmount = 5;
-
-        // PlayerDefaults
-        internal static class PlayerDefaults
-        {
-            public const int InventoryCapacity = 5;
-            public const int MaxEnergy = 4;
-            public const int MaxHP = 4;
-            public const int MaxStamina = 5;
-        }
 
         // StaminaRechargeMoveThreshold
         public const int StaminaRechargeMoveThreshold = 100;

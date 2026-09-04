@@ -24,7 +24,7 @@ namespace Remizione.Scripting
 
             if (session.Room != null)
             {
-                if (session.CurrentRun?.PlayerInventory.Find(Body.Clauses[0]) is Item item)
+                if (session.PlayerInventory.Find(Body.Clauses[0]) is Item item)
                 {
                     // TODO: Check
                     //var instance = new Firecracker(session, item, player.Position);

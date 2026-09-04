@@ -153,9 +153,11 @@ namespace Remizione
         #endregion
 
         // CanBeUnlockedWithPocketItem
+        /*
         [ScriptProperty]
         public bool CanBeUnlockedWithPocketItem => (LockType == LockType.BronzeKey && Session.CurrentRun?.PocketItems.BronzeKeys > 0) ||
                        (LockType == LockType.GoldenKey && Session.GoldenKeys > 0);
+        */
 
         // Connect
         [ScriptMethod(CodingContext.Execution)]
@@ -227,21 +229,5 @@ namespace Remizione
 
         // TargetRoomPosition
         public Vector2 TargetRoomPosition { get; set; }
-
-        // UnlockWithPocketItem
-        [ScriptMethod(CodingContext.Execution)]
-        public void UnlockWithPocketItem()
-        {
-            if (LockType == LockType.BronzeKey && Session.CurrentRun?.PocketItems.BronzeKeys > 0)
-            {
-                Session.CurrentRun.PocketItems.BronzeKeys--;
-                LockType = LockType.None;
-            }
-            else if (LockType == LockType.GoldenKey && Session.GoldenKeys > 0)
-            {
-                Session.GoldenKeys--;
-                LockType = LockType.None;
-            }
-        }
     }
 }

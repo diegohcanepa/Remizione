@@ -46,7 +46,6 @@ namespace Remizione
             this.Faction = Definition == null ? Faction.Good : Definition.Faction;
             this.CombatBehavior = GameData.CombatBehaviors.Find(DeclaredName);
             this.StatusManager = new(this);
-            this.RevealLoot = true;
             this.BodyMachine = new StateMachine<Actor>(this, new BodyStandState());
             this.BodyMachine.AddState(new BodyMoveState());
 

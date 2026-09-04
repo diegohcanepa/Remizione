@@ -51,7 +51,7 @@ namespace Remizione
     public enum EffectContext { Collect, Contact, Attack, RemainsContact, RunModifier, Update, Use, ProjectileHit, Status, ApplyStatus }
 
     // EffectType
-    public enum EffectType { None, BronzeKey, Coin, CoinLoss, Damage, Death, EnergyGain, EnergyLoss, EnergyRestore, HPGain, HPLoss, HPRestore, StaminaGain, StaminaLoss, StaminaRestore, MaxEnergyGain, MaxEnergyLoss, MaxHPGain, MaxHPLoss, MaxStaminaGain, MaxStaminaLoss, GoldenKey, Status, TrapdoorKey }
+    public enum EffectType { None, Damage, Death, EnergyGain, EnergyLoss, EnergyRestore, HPGain, HPLoss, HPRestore, MaxEnergyGain, MaxEnergyLoss, MaxHPGain, MaxHPLoss, Status }
 
     // EffectTarget
     public enum EffectTarget { Target, Self }
@@ -77,7 +77,7 @@ namespace Remizione
     public enum InPlaceEffectType { None, Lightning }
 
     // ItemBehavior
-    public enum ItemBehavior { Sack, Pocket, PlayerAction, InstantEffect }
+    public enum ItemBehavior { Sack, PlayerAction, InstantEffect }
 
     // ItemCategory
     public enum ItemCategory { Access, Explosive, Food, Luck, Medicine, Misc, Money, Pills, Sacred }
@@ -97,11 +97,9 @@ namespace Remizione
     // LootDropMode
     public enum LootDropMode
     {
-        Standard,    // Flujo normal (Saco -> Monedas)
-        CoinsOnly,   // Solo monedas
-        SackOnly,    // Solo sacos
-        Custom,      // Tira un ítem específico definido a mano
-        None         // Nada de nada
+        Sack,    // Solo sacos
+        Custom,  // Tira un ítem específico definido a mano
+        None     // Nada de nada
     }
 
     // LootDropTrigger
@@ -185,9 +183,6 @@ namespace Remizione
     // PlayerNumber
     public enum PlayerNumber { None = -1, One = 0, Two = 1, Three = 2, Four = 3 }
 
-    // PocketItemType
-    public enum PocketItemType { BronzeKey, Coin, GoldenKey, TrapdoorKey }
-
     // PositioningMode
     public enum PositioningMode
     {
@@ -233,6 +228,9 @@ namespace Remizione
 
     // SpeechTextState
     public enum SpeechTextState { Hidden, Typing, Idle }
+
+    // StatName
+    public enum StatName { HP, Energy }
 
     // StatusType
     public enum StatusType { Poison }

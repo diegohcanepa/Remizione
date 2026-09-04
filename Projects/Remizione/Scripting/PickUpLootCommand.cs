@@ -29,12 +29,12 @@ namespace Remizione.Scripting
 
             if (lootContainer.Loot.Behavior == ItemBehavior.Sack)
             {
-                if (session.CurrentRun?.PlayerInventory.Add(lootContainer.Loot) is Item item)
+                if (session.PlayerInventory.Add(lootContainer.Loot) is Item item)
                 {
-                    session.RunHUD?.InventoryMeter.Animate();
+                    session.HUD?.InventoryMeter.Animate();
 
                     if (item.Definition.Image != null)
-                        session.RunHUD?.Log.Show(item.Definition.DisplayName, item.Definition.Image);
+                        session.HUD?.Log.Show(item.Definition.DisplayName, item.Definition.Image);
                 }
             }
             else if (lootContainer.Loot.Behavior != ItemBehavior.PlayerAction && session.Player != null)

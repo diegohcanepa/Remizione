@@ -223,12 +223,7 @@ namespace Remizione
         // AssignLoot
         protected void AssignLoot()
         {
-            if (Session.CurrentRun == null)
-                return;
-
-            ItemReward = Session.CurrentRun.LootGenerator.RollForLoot(this);
-            if (ItemReward == null)
-                CoinReward = Session.CurrentRun.LootGenerator.RollForCoin(this);
+            ItemReward = Session.LootGenerator.RollForLoot(this);
         }
 
         // CanCheckCollisions
@@ -249,7 +244,7 @@ namespace Remizione
             if (ItemReward != null)
             {
                 Prop? loot;
-                if (ItemReward.Behavior is ItemBehavior.Pocket or ItemBehavior.InstantEffect)
+                if (ItemReward.Behavior is ItemBehavior.InstantEffect)
                 {
                     loot = room.CreateThingClone<Prop>(ItemReward.Name);
                 }
@@ -1113,9 +1108,6 @@ namespace Remizione
         // ResistanceTableName
         [ScriptProperty]
         public string ResistanceTableName { get; set; }
-
-        // RevealLoot
-        public virtual bool RevealLoot { get; init; }
 
         // Room
         public new GameRoom? Room => Parent as GameRoom;

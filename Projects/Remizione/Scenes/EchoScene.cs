@@ -28,7 +28,7 @@ namespace Remizione
 
             this.textSprite = new(Fonts.Common)
             {
-                Color = ColorPalette.Text.TerraLight,
+                Color = ColorPalette.Text.Terra,
                 MaximumWidth = (int)(Screen.NativeWidth * .7f),
                 PauseOnPunctuationMarks = false,
                 PivotOrigin = RectanglePoint.Top,
