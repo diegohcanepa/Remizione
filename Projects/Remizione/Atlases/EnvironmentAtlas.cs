@@ -14,6 +14,7 @@ namespace Remizione
         {
             Bones = CreateReadOnlyCollection("Bone", 1, 5);
             DefaultLight = this[nameof(DefaultLight)];
+            DestinationMark = this[nameof(DestinationMark)];
             DustParticles = CreateReadOnlyCollection("DustParticle", 1, 1);
             FireflyParticles = CreateReadOnlyCollection("FireflyParticle", 1, 2);
             Guts = CreateReadOnlyCollection("Gut", 1, 12);
@@ -28,6 +29,9 @@ namespace Remizione
 
         // DefaultLight
         public AtlasImage DefaultLight { get; }
+
+        // DestinationMark
+        public AtlasImage DestinationMark { get; }
 
         // DustParticles
         public ReadOnlyCollection<AtlasImage> DustParticles { get; }

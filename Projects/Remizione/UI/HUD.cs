@@ -83,9 +83,13 @@ namespace Remizione
             energyMeter.Update(gameTime);
             MiniMap.Update(gameTime);
             graceScore.Update(gameTime);
+            DestinationMark.Update(gameTime);
         }
 
         #endregion
+
+        // DestinationMark
+        public DestinationMark DestinationMark { get; } = new();
 
         // HandleInput
         public HandleInputResult HandleInput()

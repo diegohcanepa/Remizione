@@ -25,6 +25,9 @@ namespace Remizione
         // CreditLine
         internal static Color CreditLine { get; } = new(230, 230, 212);
 
+        // DestinationMark
+        internal static Color DestinationMark { get; } = new(143, 77, 87);
+
         // HighlightedText
         internal static Color HighlightedText { get; } = new(215, 215, 170);
 

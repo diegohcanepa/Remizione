@@ -466,6 +466,9 @@ namespace Remizione
         {
             base.OnStopMoving();
 
+            if (IsPlayer)
+                Session.HUD.DestinationMark.Position = null;
+
             FastMove = false;
             moveVerticalTween.Stop();
             moveBalancingTween.Stop();
@@ -1099,6 +1102,9 @@ namespace Remizione
             MoveToNextPathNode();
 
             IsFollowingPath = true;
+
+            if (IsPlayer)
+                Session.HUD.DestinationMark.Position = path[^1];
 
             return MoveToResult.Success;
         }
