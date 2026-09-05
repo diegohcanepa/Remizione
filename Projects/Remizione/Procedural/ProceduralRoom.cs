@@ -178,13 +178,13 @@ namespace Remizione
         private int GetHardTypesCount()
         {
             float roll = Random.NextSingle();
-            
+
             if (roll < 0.20f)
                 return 1;
-            
+
             if (roll < 0.70f)
                 return 2;
-            
+
             return 3;
         }
 

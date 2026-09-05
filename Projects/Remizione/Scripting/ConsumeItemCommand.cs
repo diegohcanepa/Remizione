@@ -22,7 +22,7 @@ namespace Remizione.Scripting
             if (Session is not GameSession session || session.Player == null)
                 return;
 
-            if (session.PlayerInventory.Find(definition.Name) is Item item)
+            if (session.PlayerData.Inventory.Find(definition.Name) is Item item)
                 item.Consume(session.Player);
         }
     }

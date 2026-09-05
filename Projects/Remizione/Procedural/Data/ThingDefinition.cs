@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using Engendro.Collections;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -34,6 +33,9 @@ namespace Remizione
 
             // Faction
             Faction = element.GetEnum("faction", Faction.Evil);
+
+            // GraceReward
+            GraceReward = element.GetInt32("graceReward", 0);
 
             // MaxPerRoom
             MaxPerRoom = element.GetInt32("maxPerRoom", -1);
@@ -86,6 +88,9 @@ namespace Remizione
 
         // Faction
         public Faction Faction { get; init; }
+
+        // GraceReward
+        public int GraceReward { get; }
 
         // MaxPerRoom
         public int MaxPerRoom { get; }

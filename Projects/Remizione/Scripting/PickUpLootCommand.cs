@@ -29,7 +29,7 @@ namespace Remizione.Scripting
 
             if (lootContainer.Loot.Behavior == ItemBehavior.Sack)
             {
-                if (session.PlayerInventory.Add(lootContainer.Loot) is Item item)
+                if (session.PlayerData.Inventory.Add(lootContainer.Loot) is Item item)
                 {
                     session.HUD?.InventoryMeter.Animate();
 

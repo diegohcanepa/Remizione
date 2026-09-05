@@ -20,9 +20,6 @@ namespace Remizione
             // ActionKind
             ActionKind = element.GetEnum("actionKind", ActionKind.Script);
 
-            // AllowDiscard
-            AllowDiscard = element.GetBool("allowDiscard", true);
-
             // AnimationName
             AnimationName = element.GetString("animationName");
             if (string.IsNullOrWhiteSpace(AnimationName))
@@ -53,6 +50,9 @@ namespace Remizione
 
             // IsDepletable
             IsDepletable = element.GetBool("isDepletable", true);
+
+            // IsKeyItem
+            IsKeyItem = element.GetBool("isKeyItem", false);
 
             // IsStackable
             IsStackable = element.GetBool("isStackable", false);
@@ -136,9 +136,6 @@ namespace Remizione
         // ActionKind
         public ActionKind ActionKind { get; }
 
-        // AllowDiscard
-        public bool AllowDiscard { get; }
-
         // AnimationName
         public string AnimationName { get; }
 
@@ -177,6 +174,9 @@ namespace Remizione
 
         // IsDepletable
         public bool IsDepletable { get; }
+
+        // IsKeyItem
+        public bool IsKeyItem { get; }
 
         // IsPassive
         public bool IsPassive { get; }

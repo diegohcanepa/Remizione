@@ -27,9 +27,6 @@
             "actionKind": {
               "$ref": "enums.schema.json#/$defs/ActionKind"
             },
-            "allowDiscard": {
-              "type": "boolean"
-            },            
             "animationName": {
               "type": "string"
             },
@@ -52,6 +49,9 @@
             "isDepletable": {
               "type": "boolean"
             },
+            "isKeyItem": {
+              "type": "boolean"
+            },            
             "isStackable": {
               "type": "boolean"
             },

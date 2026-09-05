@@ -200,6 +200,7 @@ Bla bla bla</String>
   <String Key="Platform.Windows.Messages.ControllerDisconnectedShort">CONTROL DESCONECTADO</String>
   <String Key="Platform.Windows.Messages.PressAnyButton">Pulse cualquier botón para continuar.</String>
   <String Key="Platform.Windows.Messages.PressAnyKeyOrButton">Pulse cualquier tecla o botón para continuar.</String>
+  <String Key="PlayerStat.Grace">Gracia</String>
   <String Key="Playtime.Hour">hora</String>
   <String Key="Playtime.Hours">horas</String>
   <String Key="Playtime.LessThanAMinute">Menos de un minuto</String>

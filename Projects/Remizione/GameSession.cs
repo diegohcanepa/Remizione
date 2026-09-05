@@ -25,7 +25,7 @@ namespace Remizione
 
         private readonly ScriptConsole? console;
         private readonly EchoScene echoScene;
-        private InventoryScene inventoryScene;
+        private readonly InventoryScene inventoryScene;
         private Vector2? playerPosition;
         private FrozenDictionary<string, GameThing>? proceduralCatalog;
         private readonly RoomEditor? roomEditor;
@@ -54,8 +54,8 @@ namespace Remizione
             this.InteractionContext = new(this);
             this.InteractionData = new(this);
             this.echoScene = new EchoScene(this);
-            this.PlayerInventory = new ItemContainer(this);
-            this.inventoryScene = new(PlayerInventory);
+            this.PlayerData = new(this);
+            this.inventoryScene = new(PlayerData.Inventory);
             this.HUD = new(this);
             this.LootGenerator = new(this);
 
@@ -81,10 +81,7 @@ namespace Remizione
                 };
 
                 console.CommandList.Add("add-item Apple");
-                console.CommandList.Add("put PotteryA into $Room #at:120,75");
-                console.CommandList.Add("put StinkyRat into $Room");
-                console.CommandList.Add("put GoldenTrunk into $Room #at:77,77");
-                
+
                 roomEditor = new RoomEditor(this);
             }
 
@@ -107,15 +104,6 @@ namespace Remizione
         {
             if (Player == null || CurrentRun == null)
                 throw new InvalidOperationException("No player and/or run is available.");
-
-            if (RunIndex == 0)
-            {
-                PlayerInventory.Add(ItemNames.Apple);
-                PlayerInventory.Add(ItemNames.DroolBottle);
-                PlayerInventory.Add(ItemNames.ServantCross);
-                CurrentRun.Traits.Add(TraitType.Luck);
-                CurrentRun.Traits.Add(TraitType.Lockpicking);
-            }
 
             if (RunIndex == 0)
                 Player.Energy = 0;
@@ -236,10 +224,12 @@ namespace Remizione
 
             console?.Draw(gameTime);
 
+            /*
             Game.RenderTargets.Swap();
             Game.SpriteBatch.Begin(effect: RemizioneGame.Effects.CRT.Effect);
             Game.SpriteBatch.Draw(Game.RenderTargets.PreviousTarget, Vector2.Zero, Color.White);
             Game.SpriteBatch.End();
+            */
 
             if (Player != null && !Player.IsDead)
                 HUD?.Draw(gameTime);
@@ -303,6 +293,18 @@ namespace Remizione
         {
             if (sessionNode == null || sessionNode.Attributes == null)
                 throw new InvalidOperationException("Session node attributes not found.");
+
+            // DisplayHPMeter
+            if (sessionNode.Attributes[nameof(DisplayHPMeter)]?.Value is string displayHPMeterValue)
+                DisplayHPMeter = XmlConvert.ToBoolean(displayHPMeterValue);
+
+            // DisplayEnergyMeter
+            if (sessionNode.Attributes[nameof(DisplayEnergyMeter)]?.Value is string displayEnergyMeterValue)
+                DisplayEnergyMeter = XmlConvert.ToBoolean(displayEnergyMeterValue);
+
+            // InventoryEnabled
+            if (sessionNode.Attributes[nameof(InventoryEnabled)]?.Value is string inventoryEnabledValue)
+                InventoryEnabled = XmlConvert.ToBoolean(inventoryEnabledValue);
 
             // Player
             if (sessionNode.Attributes[nameof(Player)]?.Value is string player)
@@ -428,6 +430,15 @@ namespace Remizione
         // OnWrite
         protected override void OnWrite(XmlWriter output)
         {
+            // DisplayEnergyMeter
+            output.WriteAttributeString(nameof(DisplayEnergyMeter), XmlConvert.ToString(DisplayEnergyMeter));
+
+            // DisplayHPMeter
+            output.WriteAttributeString(nameof(DisplayHPMeter), XmlConvert.ToString(DisplayHPMeter));
+
+            // InventoryEnabled
+            output.WriteAttributeString(nameof(InventoryEnabled), XmlConvert.ToString(InventoryEnabled));
+
             // Player
             if (Player != null)
                 output.WriteAttributeString(nameof(Player), Player.Name);
@@ -525,6 +536,14 @@ namespace Remizione
         [ScriptProperty]
         public int DialogOptionId { get; set; }
 
+        // DisplayEnergyMeter
+        [ScriptProperty]
+        public bool DisplayEnergyMeter { get; set; } = true;
+
+        // DisplayHPMeter
+        [ScriptProperty]
+        public bool DisplayHPMeter { get; set; } = true;
+
         // EndRun
         [ScriptMethod]
         public void EndRun()
@@ -608,6 +627,10 @@ namespace Remizione
         // InteractionData
         public InteractionData InteractionData { get; }
 
+        // InventoryEnabled
+        [ScriptProperty]
+        public bool InventoryEnabled { get; set; } = true;
+
         // IsConsoleVisible
         public bool IsConsoleVisible => console?.IsActive ?? false;
 
@@ -669,8 +692,8 @@ namespace Remizione
             }
         }
 
-        // PlayerInventory
-        public ItemContainer PlayerInventory { get; }
+        // PlayerData
+        public PlayerData PlayerData { get; }
 
         // PreviousRoom
         [ScriptProperty]

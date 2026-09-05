@@ -1304,17 +1304,5 @@ namespace Remizione
                 }
             }
         } = string.Empty;
-
-        // XPReward
-        [ScriptProperty]
-        public int XPReward
-        {
-            get;
-            set
-            {
-                if (value != field)
-                    field = Math.Max(0, value);
-            }
-        }
     }
 }

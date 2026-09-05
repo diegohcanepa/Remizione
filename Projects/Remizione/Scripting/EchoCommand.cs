@@ -31,7 +31,10 @@ namespace Remizione.Scripting
         #endregion
 
         // GetTextEmitterName
-        protected override string GetTextEmitterName() => "(Echo)";
+        protected override string GetTextEmitterName()
+        {
+            return "(Echo)";
+        }
 
         // IsAwaiting
         public override bool IsAwaiting()

@@ -14,10 +14,10 @@ namespace Remizione
             this.GlobalLight = new("GlobalLight")
             {
                 //Color = ColorPalette.GlobalLight.Default,
-                LightKind = LightKind.Global,               
+                LightKind = LightKind.Global,
                 PivotOrigin = RectanglePoint.Center,
                 Position = Screen.Center,
-                Scale = new(18,10)
+                Scale = new(18, 10)
             };
 
             GlobalLight.TurnOn();

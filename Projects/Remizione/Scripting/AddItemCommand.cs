@@ -26,7 +26,7 @@ namespace Remizione.Scripting
             if (Session is not GameSession session)
                 return;
 
-            session.PlayerInventory.Add(definition.Name);
+            session.PlayerData.Inventory.Add(definition.Name);
         }
     }
 }

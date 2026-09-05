@@ -21,7 +21,7 @@ namespace Remizione.Scripting
             {
                 if (session.OutcomeTarget is ILootContainer lootContainer && lootContainer.Loot != null)
                 {
-                    if (!session.PlayerInventory.HasSpace(lootContainer.Loot))
+                    if (!session.PlayerData.Inventory.HasSpace(lootContainer.Loot))
                     {
                         session.HUD?.Message.Show(MessageKind.InventoryFull);
                         return false;

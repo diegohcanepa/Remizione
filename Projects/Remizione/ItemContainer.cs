@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Remizione
 {
@@ -18,17 +17,6 @@ namespace Remizione
             : base()
         {
             this.Session = session;
-        }
-
-        #endregion
-
-        #region Protected members
-
-        // RemoveItem
-        protected override void RemoveItem(int index)
-        {
-            //Session.PlayerStats.RemoveAllModifiers(this[index]);
-            base.RemoveItem(index);
         }
 
         #endregion
@@ -58,21 +46,6 @@ namespace Remizione
 
                 item = new Item(this, definition);
                 Add(item);
-
-                /*
-                if (Session.RunInProgress)
-                {
-                    if (item.Definition.LuckModifier != 0)
-                    {
-                        Session.PlayerStats.Luck.AddModifier(new(item.Definition.LuckModifier, item));
-                    }
-                    else if (item.Definition.LightModifier != 0)
-                    {
-                        Session.PlayerStats.AmbientLight.AddModifier(new(item.Definition.LightModifier, item));
-                        InvalidateAmbientLightColor();
-                    }
-                }
-                */
             }
             else
             {

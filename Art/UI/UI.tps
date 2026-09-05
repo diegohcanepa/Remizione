@@ -635,7 +635,6 @@
             <key type="filename">MouseCursors-assets/MouseCursorUpIcon.png</key>
             <key type="filename">StatIcons-assets/StatEnergyIcon.png</key>
             <key type="filename">StatIcons-assets/StatHPIcon.png</key>
-            <key type="filename">StatIcons-assets/StatStaminaIcon.png</key>
             <key type="filename">UI-assets/ProhibitionIcon.png</key>
             <key type="filename">UIIcons-assets/HeartIcon.png</key>
             <key type="filename">UIIcons-assets/MagnifierIcon.png</key>

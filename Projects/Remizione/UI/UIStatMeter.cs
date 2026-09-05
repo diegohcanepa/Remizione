@@ -12,7 +12,7 @@ namespace Remizione
     public class UIStatMeter : SessionGameObject<GameSession>
     {
         private readonly ColorTween colorTween = new();
-        private readonly Sprite icon = new() { Scale = ScaleInfo.UIElement.Large };
+        private readonly Sprite icon = new() { Scale = ScaleInfo.UIElement.Small };
         private int lastKnownMaxValue;
         private int lastKnownValue;
         private readonly TextSprite maxValueText;
@@ -44,7 +44,7 @@ namespace Remizione
                 Scale = ScaleInfo.Text.Small
             };
 
-            this.valueText.Position = icon.BoundingBox.GetPoint(RectanglePoint.Right, 1, 0);
+            this.valueText.Position = icon.BoundingBox.GetPoint(RectanglePoint.Right, 1, .5f);
         }
 
         #region Private members

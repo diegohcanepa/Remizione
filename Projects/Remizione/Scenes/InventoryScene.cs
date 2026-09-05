@@ -58,7 +58,7 @@ namespace Remizione
             {
                 Color = ColorPalette.Text.MouseCursor,
                 PivotOrigin = RectanglePoint.Bottom,
-                Y = icons[0].Y - slotSize / 2,
+                Y = icons[0].Y - (slotSize / 2),
                 Scale = ScaleInfo.Text.VeryLarge
             };
 
@@ -136,7 +136,7 @@ namespace Remizione
 
             for (int i = 0; i < ItemContainer.Count; i++)
             {
-                var x = startingX + (i * (slotSize + spacing)) + slotSize / 2;
+                var x = startingX + (i * (slotSize + spacing)) + (slotSize / 2);
                 icons[i].RenderImage = null;
                 amounts[i].Text = null;
 

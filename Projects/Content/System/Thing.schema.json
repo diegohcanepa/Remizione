@@ -29,6 +29,9 @@
         "faction": {
           "$ref": "enums.schema.json#/$defs/Faction"
         },
+        "graceReward": {
+          "type": "integer"
+        },
         "maxPerRoom": {
           "type": "integer",
           "default": -1
