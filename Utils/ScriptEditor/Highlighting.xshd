@@ -83,6 +83,7 @@
 			<Word>=></Word>
 			<Word>apply-item-effects</Word>
 			<Word>await-animation</Word>
+			<Word>await-animation-trigger</Word>
 			<Word>await-answer</Word>
 			<Word>await-approach</Word>
 			<Word>await-boss-intro</Word>

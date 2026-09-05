@@ -340,9 +340,12 @@ namespace Remizione
             DrawShadows(gameTime);
 
             // Move destination mark
-            Game.SpriteBatch.Begin(Session.Camera);
-            Session.HUD.DestinationMark.Draw(gameTime);
-            Game.SpriteBatch.End();
+            if (Session.InteractionData.Target == null)
+            {
+                Game.SpriteBatch.Begin(Session.Camera);
+                Session.HUD.DestinationMark.Draw(gameTime);
+                Game.SpriteBatch.End();
+            }
 
             // Default (layer)
             DrawThings(gameTime, RenderLayer.Default);

@@ -964,13 +964,6 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/Penitent5.wav;Audio/FX/Penitent5
 
-#begin Audio/FX/PickupBag.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/FX/PickupBag.wav;Audio/FX/PickupBag
-
 #begin Audio/FX/PickupCoin.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -998,6 +991,13 @@
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/PickupKey.wav;Audio/FX/PickupKey
+
+#begin Audio/FX/PickupSack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/PickupSack.wav;Audio/FX/PickupSack
 
 #begin Audio/FX/Pistol1.wav
 /importer:WavImporter

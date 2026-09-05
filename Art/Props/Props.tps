@@ -327,6 +327,7 @@
             <key type="filename">PotteryB-assets/PotteryBRemains4.png</key>
             <key type="filename">PotteryE-assets/PotteryEPiece1.png</key>
             <key type="filename">PotteryE-assets/PotteryEPiece3.png</key>
+            <key type="filename">Props-assets/EmptySack.png</key>
             <key type="filename">Props-assets/Sack.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>

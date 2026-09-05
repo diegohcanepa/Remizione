@@ -37,10 +37,9 @@ namespace Remizione.Scripting
                         session.HUD?.Log.Show(item.Definition.DisplayName, item.Definition.Image);
                 }
             }
-            else if (lootContainer.Loot.Behavior != ItemBehavior.PlayerAction && session.Player != null)
-            {
+
+            if (lootContainer.Loot.Behavior != ItemBehavior.PlayerAction && session.Player != null)
                 EffectDescriptor.Apply(lootContainer.Loot.EffectDescriptors, session.Player, null, EffectContext.Collect);
-            }
 
             lootContainer.Loot = null;
         }

@@ -14,8 +14,6 @@ namespace Remizione
         private Item? item;
         private Script? script;
         private readonly GameSession session;
-        private GameThing? target;
-        private Vector2 targetPosition;
         private Prop? throwable;
 
         #endregion
@@ -35,33 +33,33 @@ namespace Remizione
             combatIntent = null;
             item = null;
             script = null;
-            target = null;
-            targetPosition = Vector2.Zero;
+            Target = null;
+            TargetPosition = Vector2.Zero;
             throwable = null;
         }
 
         // Execute
         public bool Execute()
         {
-            if (session.Player == null || target == null)
+            if (session.Player == null || Target == null)
                 return false;
 
             var result = false;
 
             if (combatIntent != null)
             {
-                session.Player.ExecuteAction(combatIntent, target);
+                session.Player.ExecuteAction(combatIntent, Target);
                 result = true;
             }
-            else if (throwable != null && target.Verb == Verb.Attack)
+            else if (throwable != null && Target.Verb == Verb.Attack)
             {
                 session.Player.StopMoving();
-                session.Player.ThrowActiveTrowable(target);
+                session.Player.ThrowActiveTrowable(Target);
                 result = true;
             }
-            else if (target.Verb == Verb.Lift && session.InteractionContext.HeldItem == null)
+            else if (Target.Verb == Verb.Lift && session.InteractionContext.HeldItem == null)
             {
-                if (target is Prop prop && prop.IsLiftable)
+                if (Target is Prop prop && prop.IsLiftable)
                 {
                     session.Player.Lift(prop);
                     result = true;
@@ -71,18 +69,18 @@ namespace Remizione
             {
                 session.Player.StopMoving();
 
-                if (target != null)
+                if (Target != null)
                 {
-                    if (Vector2.Distance(target.Position, targetPosition) > 1)
+                    if (Vector2.Distance(Target.Position, TargetPosition) > 1)
                     {
                         session.HUD?.Message.Show(MessageKind.OutOfReach);
                     }
                     else
                     {
-                        session.Player.FaceTo(target);
+                        session.Player.FaceTo(Target);
                         if (script != null)
                         {
-                            session.BeginOutcome(script, target);
+                            session.BeginOutcome(script, Target);
                             result = true;
                         }
                     }
@@ -90,7 +88,7 @@ namespace Remizione
             }
             else if (item != null)
             {
-                session.Player.ExecuteAction(item, target);
+                session.Player.ExecuteAction(item, Target);
                 result = true;
             }
 
@@ -131,40 +129,40 @@ namespace Remizione
                 }
             }
 
-            this.target = context.Target;
-            this.targetPosition = context.Target.Position;
+            this.Target = context.Target;
+            this.TargetPosition = context.Target.Position;
 
             if (context.HeldItem == null)
             {
-                if (context.Session.Player?.ActiveThrowable is Prop activeThrowable && !target.IsGoToVerb)
+                if (context.Session.Player?.ActiveThrowable is Prop activeThrowable && !Target.IsGoToVerb)
                 {
                     this.throwable = activeThrowable;
                 }
-                else if (target.Verb == Verb.Attack)
+                else if (Target.Verb == Verb.Attack)
                 {
                     // TODO: update here if player can use different intents.
                     this.combatIntent = context.Session.Player?.CombatBehavior?.Intents[0];
                 }
-                else if (target.Verb == Verb.Lift)
+                else if (Target.Verb == Verb.Lift)
                 {
-                    this.throwable = target as Prop;
+                    this.throwable = Target as Prop;
                 }
                 else
                 {
-                    this.script = target.OutcomeScript;
+                    this.script = Target.OutcomeScript;
                 }
             }
             else
             {
-                if (target.IsGoToVerb)
+                if (Target.IsGoToVerb)
                 {
-                    this.script = target.OutcomeScript;
+                    this.script = Target.OutcomeScript;
                 }
                 else
                 {
                     if (context.HeldItem.Definition.ActionKind == ActionKind.Script)
                     {
-                        if (target.Session.ScriptLibrary.FindOutcomeOverload(target.DeclaredName, context.HeldItem.Name) is Script script)
+                        if (Target.Session.ScriptLibrary.FindOutcomeOverload(Target.DeclaredName, context.HeldItem.Name) is Script script)
                         {
                             this.script = script;
                             this.item = context.HeldItem;
@@ -178,5 +176,11 @@ namespace Remizione
                 }
             }
         }
+
+        // Target
+        public GameThing? Target { get; private set; }
+
+        // TargetPosition
+        public Vector2 TargetPosition { get; private set; }
     }
 }

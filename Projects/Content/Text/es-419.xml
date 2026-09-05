@@ -210,6 +210,7 @@ Bla bla bla</String>
   <String Key="Prop.Cross">Cruz</String>
   <String Key="Prop.CrucifiedMan">Hombre crucificado</String>
   <String Key="Prop.Door">Puerta</String>
+  <String Key="Prop.EmptySack">Saco vacío</String>
   <String Key="Prop.Lever">Palanca</String>
   <String Key="Prop.Pottery">Vasija</String>
   <String Key="Prop.Sack">Bolsa</String>

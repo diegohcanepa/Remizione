@@ -14,12 +14,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\..\Projects\Engendro\CodeContract.cs" Link="CodeContract.cs" />
+    <Compile Include="..\..\Projects\Engendro\Collections\NamedCollection.cs" Link="NamedCollection.cs" />
+    <Compile Include="..\..\Projects\Engendro\Collections\NamedReadOnlyCollection.cs" Link="NamedReadOnlyCollection.cs" />
     <Compile Include="..\..\Projects\Engendro\Extensions\FloatExtensions.cs" Link="FloatExtensions.cs" />
     <Compile Include="..\..\Projects\Engendro\Extensions\IntExtensions.cs" Link="IntExtensions.cs" />
     <Compile Include="..\..\Projects\Engendro\INamedObject.cs" Link="INamedObject.cs" />
-    <Compile Include="..\..\Projects\Engendro\NamedObjectCollection.cs" Link="NamedObjectCollection.cs" />
-    <Compile Include="..\..\Projects\Engendro\NamedObjectCollectionHelper.cs" Link="NamedObjectCollectionHelper.cs" />
-    <Compile Include="..\..\Projects\Engendro\NamedObjectReadOnlyCollection.cs" Link="NamedObjectReadOnlyCollection.cs" />
     <Compile Include="..\..\Projects\Engendro\XOREncryptor.cs" Link="XOREncryptor.cs" />
   </ItemGroup>
   <ItemGroup>

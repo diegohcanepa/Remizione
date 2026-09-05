@@ -31,7 +31,7 @@ namespace Remizione
             {
                 Color = ColorPalette.Text.TerraDark,
                 PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -10, 0),
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 7, 0),
                 Scale = ScaleInfo.Text.Large,
                 Text = "00"
             };

@@ -18,6 +18,7 @@ namespace Remizione
             DisplayNameKey = "Prop.Sack";
             Hotspot = new Polygon("0,0;7,0;7,7;0,7");
             RenderLayer = RenderLayer.Default;
+            ShadowSpotSize = 5;
         }
 
         #region Protected members

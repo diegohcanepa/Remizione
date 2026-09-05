@@ -316,6 +316,7 @@ namespace Adberration
             AotTypeRegistry.Register("animate-opacity", typeof(AnimateOpacityCommand));
             AotTypeRegistry.Register("animation", typeof(AnimationCommand), CodingContext.EntityDeclaration);
             AotTypeRegistry.Register("await-animation", typeof(AwaitAnimationCommand));
+            AotTypeRegistry.Register("await-animation-trigger", typeof(AwaitAnimationTriggerCommand));
             AotTypeRegistry.Register("await-camera", typeof(AwaitCameraCommand));
             AotTypeRegistry.Register("await", typeof(AwaitCommand));
             AotTypeRegistry.Register("await-enter-room", typeof(AwaitEnterRoomCommand));

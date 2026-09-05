@@ -26,8 +26,8 @@ namespace Remizione
             this.titleText = new(Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.TerraDark,
-                PivotOrigin = RectanglePoint.LeftTop,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 3, -14),
+                PivotOrigin = RectanglePoint.RightTop,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -3, -14),
                 Scale = ScaleInfo.Text.Large,
                 Text = Localization.GetValue(PlayerStat.Grace)
             };
@@ -36,8 +36,9 @@ namespace Remizione
             this.valueText = new(Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Terra,
+                PivotOrigin = RectanglePoint.RightTop,
                 Scale = ScaleInfo.Text.ExtraLarge,
-                Position = titleText.BoundingBox.GetPoint(RectanglePoint.LeftBottom)
+                Position = titleText.BoundingBox.GetPoint(RectanglePoint.RightBottom)
             };
 
             isInitializing = true;
