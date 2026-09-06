@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace Remizione
@@ -20,7 +21,7 @@ namespace Remizione
             this.Atlas = Atlases.Environment;
             this.DefaultImageName = defaultImageName;
             this.PivotOrigin = RectanglePoint.Center;
-            this.Opacity = .6f;
+            this.Opacity = .4f;
             this.effects = effects;
 
             if (amount > 0 && pieces.Count > 0)
@@ -29,7 +30,7 @@ namespace Remizione
                 {
                     var piece = Session.ObjectPools.RemainsPieces.Get();
                     piece.Image = pieces.GetRandomItem();
-                    piece.Opacity = .75f;
+                    piece.Opacity = Random.Shared.Next(.2f, .7f);
                     piece.Scale = scale;
                     piece.Shadow = shadow;
                     this.pieces.Add(piece);

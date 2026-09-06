@@ -34,9 +34,9 @@ namespace Remizione
         // HPMeter
         internal static class HPMeter
         {
-            internal static Color Back { get; } = Text.TerraDarker;
-            internal static Color Diff { get; } = Text.TerraDark;
-            internal static Color Fore { get; } = Text.Terra;
+            internal static Color Back { get; } = Text.Terra;
+            internal static Color Diff { get; } = Text.Orange;
+            internal static Color Fore { get; } = Text.Red;
         }
 
         // MenuItemTextActive

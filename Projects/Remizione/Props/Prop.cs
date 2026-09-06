@@ -274,8 +274,10 @@ namespace Remizione
 
             actor.ShowFlyOff(text, success ? ColorPalette.Text.Green : ColorPalette.Text.Terra);
 
+            /*
             if (!success)
                 Sound.Play(SoundNames.TestSkillFail);
+            */
 
             return success;
         }

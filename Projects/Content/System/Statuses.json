@@ -10,8 +10,6 @@
           "context": "ApplyStatus",
           "effectType": "Damage",
           "amount": "1",
-          "comicText": "AghGreen",
-          "sound": "StatusEffectDamage",
           "knockback": "None"
         }
       ]

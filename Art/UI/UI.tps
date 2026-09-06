@@ -716,40 +716,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">PocketItems-assets/BronzeKey.png</key>
-            <key type="filename">PocketItems-assets/GoldenKey.png</key>
-            <key type="filename">PocketItems-assets/TrapdoorKey.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,3,3,5</rect>
-                <key>scale9Paddings</key>
-                <rect>2,3,3,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">PocketItems-assets/Coin.png</key>
-            <key type="filename">UIIcons-assets/Sack.png</key>
-            <key type="filename">UIIcons-assets/SackIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,4,4</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,4,4</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">UI-assets/CloseWindowButton.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -1070,6 +1036,22 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">UIIcons-assets/Sack.png</key>
+            <key type="filename">UIIcons-assets/SackIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,4,4</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,4,4</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">UIIcons-assets/StaminaCost3.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -1135,7 +1117,6 @@
                     <filename>MiniMap-assets</filename>
                     <filename>DialogBox-assets</filename>
                     <filename>Meter-assets</filename>
-                    <filename>PocketItems-assets</filename>
                     <filename>Modifiers-assets</filename>
                     <filename>DroolMeter-assets</filename>
                     <filename>StatIcons-assets</filename>

@@ -31,7 +31,7 @@ namespace Remizione
             if (!eventDone && Target?.IsLiftable == true && Owner.AnimationPlayer.Frame?.IsTrigger == true)
             {
                 eventDone = true;
-                Owner.PlaySound(SoundNames.Gesture1);
+                //Owner.PlaySound(SoundNames.Gesture1);
                 Owner.ActiveThrowable = Target;
                 return;
             }

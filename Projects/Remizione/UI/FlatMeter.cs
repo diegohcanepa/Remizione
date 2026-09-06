@@ -22,6 +22,8 @@ namespace Remizione
 
         #endregion
 
+        #region Constructor
+
         // Constructor
         public FlatMeter(Color backColor, Color foreColor, Color diffColor, Vector2 size, float borderSize)
         {
@@ -66,6 +68,8 @@ namespace Remizione
                 Scale = ScaleInfo.Text.Medium
             };
         }
+
+        #endregion
 
         #region Private members
 
@@ -138,10 +142,7 @@ namespace Remizione
         // CreateHPMeter
         public static FlatMeter CreateHPMeter()
         {
-            return new(ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore, ColorPalette.HPMeter.Diff, new(10, 2.5f), .5f)
-            {
-                ShowAmount = true
-            };
+            return new(ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore, ColorPalette.HPMeter.Diff, new(10, 2.5f), .5f);
         }
 
         // DiffColor

@@ -1,6 +1,7 @@
 ﻿using Adberration;
 using Engendro;
 using Microsoft.Xna.Framework;
+using System.Globalization;
 
 namespace Remizione
 {
@@ -11,9 +12,11 @@ namespace Remizione
     {
         private const int duration = 2000;
 
+        private readonly ColorTween colorTween = new();
         private int deltaScore;
         private bool isInitializing = true;
         private int lastKnownValue;
+        private readonly Color titleColor = ColorPalette.Text.TerraDark;
         private readonly TextSprite titleText;
         private readonly FloatTween tween = new();
         private readonly TextSprite valueText;
@@ -25,14 +28,14 @@ namespace Remizione
             // Title text
             this.titleText = new(Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.TerraDark,
+                Color = titleColor,
                 PivotOrigin = RectanglePoint.RightTop,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -3, -14),
                 Scale = ScaleInfo.Text.Large,
                 Text = Localization.GetValue(PlayerStat.Grace)
             };
 
-            // Score text
+            // Value text
             this.valueText = new(Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Terra,
@@ -73,18 +76,21 @@ namespace Remizione
             if (Session.PlayerData.Grace != lastKnownValue || isInitializing)
             {
                 if (!isInitializing)
+                {
+                    colorTween.Start(TweenStyle.CubicInOut, titleColor, ColorPalette.Text.Yellow * .7f, 1000, 2);
+                    titleText.Tweens.ColorTween = colorTween;
                     tween.Start(TweenStyle.Linear, lastKnownValue, Session.PlayerData.Grace, duration);
+                }
 
                 lastKnownValue = Session.PlayerData.Grace;
-                valueText.Text = lastKnownValue.ToString();
+                valueText.Text = lastKnownValue.ToString(CultureInfo.InvariantCulture);
                 isInitializing = false;
             }
+
+            titleText.Update(gameTime);
         }
 
         #endregion
-
-        // BoundingBox
-        public RectangleF BoundingBox => RectangleF.Intersects(valueText.BoundingBox, titleText.BoundingBox);
 
         // Color
         public Color Color

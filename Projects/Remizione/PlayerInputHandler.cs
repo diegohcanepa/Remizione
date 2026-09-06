@@ -49,7 +49,10 @@ namespace Remizione
             {
                 Owner.Session.InteractionData.Clear();
                 Owner.EnforceTurn = true;
-                Owner.MoveTo(destination, GameSettings.WalkThreshold);
+
+                var walkThreshold = Owner.HasHostilesNearby() ? 0 : GameSettings.WalkThreshold;
+
+                Owner.MoveTo(destination, walkThreshold);
 
                 return;
             }

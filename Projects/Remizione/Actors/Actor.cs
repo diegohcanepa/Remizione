@@ -820,12 +820,12 @@ namespace Remizione
             return HandleInputResult.Unhandled;
         }
 
+        // HasSpeechText
+        public bool HasSpeechText => speechText != null && speechText.State != SpeechTextState.Hidden;
+
         // HasThrowable
         [ScriptProperty]
         public bool HasThrowable => ActiveThrowable != null;
-
-        // HasSpeechText
-        public bool HasSpeechText => speechText != null && speechText.State != SpeechTextState.Hidden;
 
         // HurtVoice
         [ScriptProperty]
@@ -850,10 +850,6 @@ namespace Remizione
 
         // IsPerformingAction
         public bool IsPerformingAction => BodyMachine.CurrentState is BodyExecuteActionState;
-
-        // IsPlayer
-        [ScriptProperty]
-        public bool IsPlayer => Session.Player == this;
 
         // IsStanding
         public bool IsStanding => BodyMachine.CurrentState is BodyStandState;

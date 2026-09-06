@@ -125,6 +125,19 @@ namespace Remizione
         // IsVisible
         public bool IsVisible => xTween.IsRunning || yTween.IsRunning || opacityTween.IsRunning;
 
+        // ShowAmount
+        public void ShowAmount(GameThing source, Color color, int amount)
+        {
+            if (amount == 0)
+                return;
+
+            var origin = source.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, -4);
+            var deltaX = Random.Shared.Next(3, 6);
+            var horzDirection = source.Direction == FacingDirection.Left ? deltaX : -deltaX;
+
+            ShowTextCore(origin, amount.ToString(CultureInfo.InvariantCulture), color, ScaleInfo.Text.Medium.X);
+        }
+
         // ShowIcon
         public void ShowIcon(Vector2 origin, AtlasImage image, float scale = 1)
         {
@@ -143,19 +156,6 @@ namespace Remizione
         public void ShowText(Vector2 origin, string value, Color color, float scale)
         {
             ShowTextCore(origin, value, color, scale);
-        }
-
-        // ShowAmount
-        public void ShowAmount(GameThing source, Color color, int amount)
-        {
-            if (amount == 0)
-                return;
-
-            var origin = source.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, -4);
-            var deltaX = Random.Shared.Next(3, 6);
-            var horzDirection = source.Direction == FacingDirection.Left ? deltaX : -deltaX;
-
-            ShowTextCore(origin, amount.ToString(CultureInfo.InvariantCulture), color, ScaleInfo.Text.Medium.X);
         }
     }
 }

@@ -3,7 +3,8 @@
   "data": [
     {
       "name": "EnviousEye",
-      "difficulty": "Normal"
+      "difficulty": "Normal",
+      "graceReward": 5
     },
     {
       "name": "Rat",

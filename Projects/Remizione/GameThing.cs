@@ -409,6 +409,7 @@ namespace Remizione
         {
             base.OnUnload();
             OpacityFactor = 1;
+            SpawnPoint = Vector2.Zero;
         }
 
         // OnUpdate
@@ -619,7 +620,16 @@ namespace Remizione
 
             OnDeath();
 
-            DropLoot();
+            if (!IsPlayer)
+            {
+                if (Definition != null)
+                {
+                    Sound.Play(SoundNames.GraceGain);
+                    Session.PlayerData.Grace += Definition.GraceReward;
+                }
+
+                DropLoot();
+            }
         }
 
 #if DEBUG
@@ -883,6 +893,24 @@ namespace Remizione
             return 1;
         }
 
+        // HasHostilesNearby
+        public bool HasHostilesNearby()
+        {
+            if (Room == null)
+                return false;
+
+            for (var i = 0; i < Room.Children.Count; i++)
+            {
+                if (Room.Children[i] is not GameThing thing || !thing.IsInCullingBox || thing == this)
+                    continue;
+
+                if (thing.IsHostile && thing.DistanceTo(this) < 50)
+                    return true;
+            }
+
+            return false;
+        }
+
         // HitTest
         public bool HitTest(Vector2 value)
         {
@@ -1030,6 +1058,9 @@ namespace Remizione
             }
         }
 
+        // IsKnockbackInProgress
+        public bool IsKnockbackInProgress => knockbackVelocity != Vector2.Zero;
+
         // IsMouseOver
         public bool IsMouseOver()
         {
@@ -1042,8 +1073,9 @@ namespace Remizione
                 return RuntimeHotspot.Contains(InputManager.DefaultPlayer.Mouse.WorldPosition(Session.Camera));
         }
 
-        // IsKnockbackInProgress
-        public bool IsKnockbackInProgress => knockbackVelocity != Vector2.Zero;
+        // IsPlayer
+        [ScriptProperty]
+        public bool IsPlayer => Session.Player == this;
 
         // ItemReward
         public ItemDefinition? ItemReward { get; set; }
@@ -1186,6 +1218,9 @@ namespace Remizione
             return null;
         }
 
+        // SpawnPoint
+        public Vector2 SpawnPoint { get; set; }
+
         // TakeDamage
         public int TakeDamage(GameThing attacker, DamageType damageType, int amount, Vector2 knockbackForce)
         {
@@ -1237,7 +1272,8 @@ namespace Remizione
 
                     OnTakeDamage(attacker, amount, damageType);
 
-                    Session.ObjectPools.FlyOffs.Get()?.ShowAmount(this, ColorPalette.HPMeter.Diff, -amount);
+                    var color = IsPlayer ? ColorPalette.Text.Red : ColorPalette.Text.Orange;
+                    Session.ObjectPools.FlyOffs.Get()?.ShowAmount(this, color, -amount);
                 }
             }
             else
