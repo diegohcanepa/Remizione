@@ -29,6 +29,7 @@ namespace Remizione
         private Vector2 knockbackVelocity;
         private const float KnockbackFriction = 0.90f; // Ajustá este valor (0.8 - 0.95)
         private PathNode[]? pathNodes;
+        private int? pendingDamageAmount;
         private int renderLayerDepth;
         private readonly ShadowSpot shadowSpot;
         private bool shouldClampToWalkablePosition;
@@ -446,7 +447,16 @@ namespace Remizione
                     if (IsDead)
                         Die();
                     else
+                    {
+                        if (pendingDamageAmount.HasValue)
+                        {
+                            var color = IsPlayer ? ColorPalette.Text.Red : ColorPalette.Text.Orange;
+                            Session.ObjectPools.FlyOffs.Get()?.ShowAmount(this, color, pendingDamageAmount.Value);
+                            pendingDamageAmount = null;
+                        }
+
                         OnKnockbackCompleted();
+                    }
                 }
             }
             else if (IsDead && !dieCalled)
@@ -626,6 +636,8 @@ namespace Remizione
                 {
                     Sound.Play(SoundNames.GraceGain);
                     Session.PlayerData.Grace += Definition.GraceReward;
+                    var text = $"+{Definition.GraceReward} {Localization.GetValue(PlayerStat.Grace)}";
+                    Session.ObjectPools.FlyOffs.Get()?.ShowText(GetOverheadPosition(), text, ColorPalette.Text.Terra, ScaleInfo.Text.Small.X);
                 }
 
                 DropLoot();
@@ -1272,8 +1284,8 @@ namespace Remizione
 
                     OnTakeDamage(attacker, amount, damageType);
 
-                    var color = IsPlayer ? ColorPalette.Text.Red : ColorPalette.Text.Orange;
-                    Session.ObjectPools.FlyOffs.Get()?.ShowAmount(this, color, -amount);
+                    if (!IsDead)
+                        pendingDamageAmount = -amount;
                 }
             }
             else

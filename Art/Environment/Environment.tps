@@ -270,6 +270,46 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">BloodSplashHigh-assets/BloodSplashHigh01.png</key>
+            <key type="filename">BloodSplashHigh-assets/BloodSplashHigh02.png</key>
+            <key type="filename">BloodSplashHigh-assets/BloodSplashHigh03.png</key>
+            <key type="filename">BloodSplashHigh-assets/BloodSplashHigh04.png</key>
+            <key type="filename">BloodSplashHigh-assets/BloodSplashHigh05.png</key>
+            <key type="filename">BloodSplashHigh-assets/BloodSplashHigh06.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,5,7,9</rect>
+                <key>scale9Paddings</key>
+                <rect>3,5,7,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">BloodSplashLow-assets/BloodSplashLow01.png</key>
+            <key type="filename">BloodSplashLow-assets/BloodSplashLow02.png</key>
+            <key type="filename">BloodSplashLow-assets/BloodSplashLow03.png</key>
+            <key type="filename">BloodSplashLow-assets/BloodSplashLow04.png</key>
+            <key type="filename">BloodSplashLow-assets/BloodSplashLow05.png</key>
+            <key type="filename">BloodSplashLow-assets/BloodSplashLow06.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,2,7,3</rect>
+                <key>scale9Paddings</key>
+                <rect>4,2,7,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Environment-assets/DefaultLight.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -681,6 +721,8 @@
                     <filename>ThrownProps-assets</filename>
                     <filename>Projectiles-assets</filename>
                     <filename>Remains-assets</filename>
+                    <filename>BloodSplashHigh-assets</filename>
+                    <filename>BloodSplashLow-assets</filename>
                 </array>
             </struct>
         </map>

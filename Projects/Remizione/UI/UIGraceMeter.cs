@@ -77,7 +77,7 @@ namespace Remizione
             {
                 if (!isInitializing)
                 {
-                    colorTween.Start(TweenStyle.CubicInOut, titleColor, ColorPalette.Text.Yellow * .7f, 1000, 2);
+                    colorTween.Start(TweenStyle.CubicInOut, titleColor, ColorPalette.MouseCursor.Tooltip * .7f, 1000, 2);
                     titleText.Tweens.ColorTween = colorTween;
                     tween.Start(TweenStyle.Linear, lastKnownValue, Session.PlayerData.Grace, duration);
                 }

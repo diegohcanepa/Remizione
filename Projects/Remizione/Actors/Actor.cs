@@ -17,6 +17,7 @@ namespace Remizione
         #region Private fields
 
         private Sprite? activeThrowableSprite;
+        private BloodSplash? bloodSplash;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
         private Vector2? lastKnownLiftPosition;
@@ -57,6 +58,12 @@ namespace Remizione
         #endregion
 
         #region Private members
+
+        // GetBloodSplashPosition
+        private Vector2 GetBloodSplashPosition()
+        {
+            return BloodSplashOrigin == Vector2.Zero ? Vector2.Zero : this.GetAnchoredPosition(BloodSplashOrigin);
+        }
 
         // HandlePendingInteraction
         private void HandlePendingInteraction()
@@ -375,6 +382,8 @@ namespace Remizione
 
             base.OnDraw(gameTime);
 
+            bloodSplash?.Draw(gameTime);
+
             if (activeThrowableSprite?.RenderImage != null)
             {
                 activeThrowableSprite.Position = RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, 3);
@@ -439,6 +448,18 @@ namespace Remizione
                 StopMoving();
                 IsFollowingPath = false;
                 HandlePendingInteraction();
+            }
+        }
+
+        // OnKnockbackCompleted
+        protected override void OnKnockbackCompleted()
+        {
+            base.OnKnockbackCompleted();
+
+            if (BloodSplashOrigin != Vector2.Zero)
+            {
+                bloodSplash ??= new(this);
+                bloodSplash.Show(GetBloodSplashPosition());
             }
         }
 
@@ -525,6 +546,7 @@ namespace Remizione
             speechText?.Update(gameTime);
             moveVerticalTween.Update(gameTime);
             moveBalancingTween.Update(gameTime);
+            bloodSplash?.Update(gameTime);
             UpdateDirection();
             UpdateFootstep();
             footstepEffect?.Update(gameTime);
@@ -627,6 +649,10 @@ namespace Remizione
 
             return null;
         }
+
+        // BloodSplashOrigin
+        [ScriptProperty]
+        public Vector2 BloodSplashOrigin { get; set; }
 
         // BodySize
         public BodySize BodySize { get; set; } = BodySize.Medium;

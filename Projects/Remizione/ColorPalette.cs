@@ -10,6 +10,13 @@ namespace Remizione
         // BackgroundColor
         internal static Color BackgroundColor { get; } = new(0, 2, 5);
 
+        // BloodColor
+        internal static class BloodColor
+        {
+            internal static Color Guts { get; } = new(102, 24, 37);
+            internal static Color ToxicGuts { get; } = new(70, 110, 70);
+        }
+
         // ContextMenu
         internal static class ContextMenu
         {
@@ -117,6 +124,7 @@ namespace Remizione
             internal static Color Red { get; } = new(173, 47, 69);
             internal static Color RedLight { get; } = new(230, 69, 57);
             internal static Color Sentence { get; } = new(172, 167, 144);
+            internal static Color SkyBlue { get; } = new(79, 164, 184);
             internal static Color SteelBlue { get; } = new(76, 104, 133);
             internal static Color TerraDarker { get; } = new(61, 41, 54);
             internal static Color TerraDarkest { get; } = new(41, 29, 43);

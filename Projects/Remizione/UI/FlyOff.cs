@@ -88,7 +88,7 @@ namespace Remizione
             text.Color = color;
             text.Scale = new(scale);
             text.Text = value;
-            Launch(origin, text, Math.Max(1000, value.Length * 100));
+            Launch(origin, text, Math.Max(1000, value.Length * 180));
         }
 
         #endregion
@@ -132,8 +132,10 @@ namespace Remizione
                 return;
 
             var origin = source.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, -4);
-            var deltaX = Random.Shared.Next(3, 6);
-            var horzDirection = source.Direction == FacingDirection.Left ? deltaX : -deltaX;
+            if (source.IsKnockbackInProgress)
+            {
+
+            }
 
             ShowTextCore(origin, amount.ToString(CultureInfo.InvariantCulture), color, ScaleInfo.Text.Medium.X);
         }
