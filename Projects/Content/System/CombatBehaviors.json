@@ -1,25 +1,62 @@
   {
-  "$schema": "./CombatBehavior.schema.json",
-  "data": [
-    {
-      "name": "Sinner",
-      "archetype": "Stalker",
-      "intents": [
-        {
-          "name": "Headbutt",
-          "soundStart": "WhooshA",
-          "actionKind": "Proximity",
-          "staminaCost": 1,
-          "effects": [
-            {
-              "context": "Attack",
-              "effectType": "Damage",
-              "amount": "1",
-              "sound": "ImpactA"
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}
+    "$schema": "./CombatBehavior.schema.json",
+    "data": [
+      {
+        "name": "EnviousEye",
+        "archetype": "Harasser",
+        "intents": [
+          {
+            "name": "Bite",
+            "soundTrigger": "RatAttack",
+            "actionKind": "Proximity",
+            "effects": [
+              {
+                "context": "Attack",
+                "effectType": "Damage",
+                "amount": "1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Penitent",
+        "archetype": "Stalker",
+        "intents": [
+          {
+            "name": "Punch",
+            "soundStart": "WhooshSmallA",
+            "actionKind": "Proximity",
+            "staminaCost": 1,
+            "effects": [
+              {
+                "context": "Attack",
+                "effectType": "Damage",
+                "amount": "1",
+                "sound": "BareFist"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Rat",
+        "archetype": "Lurker",
+        "intents": [
+          {
+            "name": "Bite",
+            "soundTrigger": "RatAttack",
+            "actionKind": "Proximity",
+            "missChance": 0.1,
+            "effects": [
+              {
+                "context": "Attack",
+                "effectType": "Damage",
+                "amount": "1"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }

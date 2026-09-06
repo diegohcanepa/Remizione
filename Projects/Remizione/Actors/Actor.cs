@@ -604,12 +604,7 @@ namespace Remizione
             }
 
             // Stamina penalty
-            if (action.StaminaCost > 0)
-            {
-                Stamina -= action.StaminaCost;
-                if (IsPlayer)
-                    ShowFlyOff(Atlases.UI.StaminaIcon);
-            }
+            Stamina -= action.StaminaCost;
         }
 
         // BeginTurn
@@ -878,9 +873,6 @@ namespace Remizione
 
             Stamina--;
 
-            if (IsPlayer)
-                ShowFlyOff(Atlases.UI.StaminaIcon);
-
             var state = BodyMachine.FindOrCreateState<BodyLiftState>();
             state.Target = prop;
             lastKnownLiftPosition = prop.Position;
@@ -1095,7 +1087,8 @@ namespace Remizione
                 return MoveToResult.LessThan1px;
             }
 
-            FastMove = Vector2.Distance(Position, path[^1]) > slowThreshold;
+            if (IsPlayer)
+                FastMove = Vector2.Distance(Position, path[^1]) > slowThreshold;
 
             pendingPathNodes.Clear();
             pendingPathNodes.AddRange(path);
@@ -1212,7 +1205,8 @@ namespace Remizione
                     }
                 }
 
-                var moveToResult = destination == Vector2.Zero ? MoveToResult.NoPath : MoveTo(destination, GameSettings.WalkThreshold);
+                var walkThreshold = Session.InteractionData.IsAttack ? 0 : GameSettings.WalkThreshold;
+                var moveToResult = destination == Vector2.Zero ? MoveToResult.NoPath : MoveTo(destination, walkThreshold);
                 if (destination != Vector2.Zero && moveToResult == MoveToResult.NoPath)
                 {
                     FaceTo(target);

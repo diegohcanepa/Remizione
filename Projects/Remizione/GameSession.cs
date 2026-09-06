@@ -121,6 +121,7 @@ namespace Remizione
             AotTypeRegistry.Register(typeof(CreditsRoom));
             AotTypeRegistry.Register(typeof(Decoration));
             AotTypeRegistry.Register(typeof(Door));
+            AotTypeRegistry.Register(typeof(EnviousEye));
             AotTypeRegistry.Register(typeof(GameRoom));
             AotTypeRegistry.Register(typeof(GoldenKey));
             AotTypeRegistry.Register(typeof(Drool));
@@ -700,7 +701,7 @@ namespace Remizione
         // ProcessTurn
         public void ProcessTurn(int turnPenalty = 0)
         {
-            if (Room is not ProceduralRoom room)
+            if (Room is not GameRoom room)
                 return;
 
             if (Player?.IsDead == true)

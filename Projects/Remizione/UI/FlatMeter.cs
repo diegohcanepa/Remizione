@@ -61,7 +61,7 @@ namespace Remizione
             // AmountText
             this.amountText = new(Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.MouseCursor,
+                Color = ColorPalette.Text.Terra,
                 PivotOrigin = RectanglePoint.Bottom,
                 Scale = ScaleInfo.Text.Medium
             };
@@ -84,7 +84,7 @@ namespace Remizione
             diff.X -= xOffset;
 
             amountText.Text = Value.ToString(CultureInfo.InvariantCulture);
-            amountText.Position = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, 1);
+            amountText.Position = container.BoundingBox.GetPoint(RectanglePoint.Top);
         }
 
         // Convierte un valor lógico (0..MaximumValue) a ancho proporcional (0..fixedWidth)

@@ -131,6 +131,27 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/AppleBite.wav
 
+#begin Audio/FX/BareFist1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/BareFist1.wav;Audio/FX/BareFist1
+
+#begin Audio/FX/BareFist2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/BareFist2.wav;Audio/FX/BareFist2
+
+#begin Audio/FX/BareFist3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/BareFist3.wav;Audio/FX/BareFist3
+
 #begin Audio/FX/Bible1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -887,6 +908,62 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/LootSack.wav;Audio/FX/LootSack
 
+#begin Audio/FX/MaleHurtA1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/MaleHurtA1.wav;Audio/FX/MaleHurtA1
+
+#begin Audio/FX/MaleHurtA2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/MaleHurtA2.wav;Audio/FX/MaleHurtA2
+
+#begin Audio/FX/MaleHurtA3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/MaleHurtA3.wav;Audio/FX/MaleHurtA3
+
+#begin Audio/FX/MaleHurtA4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/MaleHurtA4.wav;Audio/FX/MaleHurtA4
+
+#begin Audio/FX/MaleHurtA5.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/MaleHurtA5.wav;Audio/FX/MaleHurtA5
+
+#begin Audio/FX/MaleHurtA6.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/MaleHurtA6.wav;Audio/FX/MaleHurtA6
+
+#begin Audio/FX/MaleHurtA7.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/MaleHurtA7.wav;Audio/FX/MaleHurtA7
+
+#begin Audio/FX/MaleHurtA8.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/MaleHurtA8.wav;Audio/FX/MaleHurtA8
+
 #begin Audio/FX/Miracle1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -1181,34 +1258,6 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/SmallChunks2.wav;Audio/FX/SmallChunks2
 
-#begin Audio/FX/SmallWhooshA1.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/FX/SmallWhooshA1.wav
-
-#begin Audio/FX/SmallWhooshA2.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/FX/SmallWhooshA2.wav
-
-#begin Audio/FX/SmallWhooshA3.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/FX/SmallWhooshA3.wav
-
-#begin Audio/FX/SmallWhooshA4.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/FX/SmallWhooshA4.wav
-
 #begin Audio/FX/SpearTrap.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -1376,6 +1425,34 @@
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/WhooshA.wav;Audio/FX/WhooshA
+
+#begin Audio/FX/WhooshSmallA1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/WhooshSmallA1.wav;Audio/FX/WhooshSmallA1
+
+#begin Audio/FX/WhooshSmallA2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/WhooshSmallA2.wav;Audio/FX/WhooshSmallA2
+
+#begin Audio/FX/WhooshSmallA3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/WhooshSmallA3.wav;Audio/FX/WhooshSmallA3
+
+#begin Audio/FX/WhooshSmallA4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/WhooshSmallA4.wav;Audio/FX/WhooshSmallA4
 
 #begin Audio/FX/WoodDebris1.wav
 /importer:WavImporter

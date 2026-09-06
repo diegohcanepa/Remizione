@@ -173,6 +173,32 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">EnviousEye-assets/Bite01.png</key>
+            <key type="filename">EnviousEye-assets/Bite02.png</key>
+            <key type="filename">EnviousEye-assets/Bite03.png</key>
+            <key type="filename">EnviousEye-assets/Move01.png</key>
+            <key type="filename">EnviousEye-assets/Move02.png</key>
+            <key type="filename">EnviousEye-assets/Move03.png</key>
+            <key type="filename">EnviousEye-assets/Move04.png</key>
+            <key type="filename">EnviousEye-assets/Stand01.png</key>
+            <key type="filename">EnviousEye-assets/Stand02.png</key>
+            <key type="filename">EnviousEye-assets/Stand03.png</key>
+            <key type="filename">EnviousEye-assets/Stand04.png</key>
+            <key type="filename">EnviousEye-assets/Stand05.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,3,13,5</rect>
+                <key>scale9Paddings</key>
+                <rect>6,3,13,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Penitent-assets/Consume01.png</key>
             <key type="filename">Penitent-assets/Consume02.png</key>
             <key type="filename">Penitent-assets/Consume03.png</key>
@@ -246,6 +272,14 @@
             <key type="filename">Penitent-assets/Pray12.png</key>
             <key type="filename">Penitent-assets/Pray13.png</key>
             <key type="filename">Penitent-assets/Pray14.png</key>
+            <key type="filename">Penitent-assets/Punch01.png</key>
+            <key type="filename">Penitent-assets/Punch02.png</key>
+            <key type="filename">Penitent-assets/Punch03.png</key>
+            <key type="filename">Penitent-assets/Punch04.png</key>
+            <key type="filename">Penitent-assets/Punch05.png</key>
+            <key type="filename">Penitent-assets/Punch06.png</key>
+            <key type="filename">Penitent-assets/Punch07.png</key>
+            <key type="filename">Penitent-assets/Punch08.png</key>
             <key type="filename">Penitent-assets/Stand01.png</key>
             <key type="filename">Penitent-assets/StandUp01.png</key>
             <key type="filename">Penitent-assets/StandUp02.png</key>
@@ -254,14 +288,6 @@
             <key type="filename">Penitent-assets/StandUp05.png</key>
             <key type="filename">Penitent-assets/StandUp06.png</key>
             <key type="filename">Penitent-assets/Talk01.png</key>
-            <key type="filename">Penitent-assets/UnarmedAttack01.png</key>
-            <key type="filename">Penitent-assets/UnarmedAttack02.png</key>
-            <key type="filename">Penitent-assets/UnarmedAttack03.png</key>
-            <key type="filename">Penitent-assets/UnarmedAttack04.png</key>
-            <key type="filename">Penitent-assets/UnarmedAttack05.png</key>
-            <key type="filename">Penitent-assets/UnarmedAttack06.png</key>
-            <key type="filename">Penitent-assets/UnarmedAttack07.png</key>
-            <key type="filename">Penitent-assets/UnarmedAttack08.png</key>
             <key type="filename">Penitent-assets/UseCross01.png</key>
             <key type="filename">Penitent-assets/UseCross02.png</key>
             <key type="filename">Penitent-assets/UseCross03.png</key>
@@ -281,6 +307,31 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Rat-assets/Bite01.png</key>
+            <key type="filename">Rat-assets/Bite02.png</key>
+            <key type="filename">Rat-assets/Bite03.png</key>
+            <key type="filename">Rat-assets/Move01.png</key>
+            <key type="filename">Rat-assets/Move02.png</key>
+            <key type="filename">Rat-assets/Move03.png</key>
+            <key type="filename">Rat-assets/Move04.png</key>
+            <key type="filename">Rat-assets/Move05.png</key>
+            <key type="filename">Rat-assets/Stand01.png</key>
+            <key type="filename">Rat-assets/Stand02.png</key>
+            <key type="filename">Rat-assets/Stand03.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,4,14,7</rect>
+                <key>scale9Paddings</key>
+                <rect>7,4,14,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileLists</key>
         <map type="SpriteSheetMap">
@@ -289,6 +340,8 @@
                 <key>files</key>
                 <array>
                     <filename>Penitent-assets</filename>
+                    <filename>EnviousEye-assets</filename>
+                    <filename>Rat-assets</filename>
                 </array>
             </struct>
         </map>
