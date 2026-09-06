@@ -15,6 +15,8 @@ namespace Remizione
 
         private readonly Vector2Tween bounceScaleTween = new();
         private List<AtlasImage>? remainsPieces;
+        private bool isRevealBoxDirty;
+        private readonly FloatTween revealTween = new();
         private readonly FloatTween xTween = new();
 
         #endregion
@@ -46,6 +48,53 @@ namespace Remizione
         private void InvalidateShadowImage()
         {
             Shadow.RenderImage = Atlas?.FindImage(GetDefaultImageName() + "Shadow");
+        }
+
+        // RevealBox
+        private RectangleF RevealBox
+        {
+            get
+            {
+                if (isRevealBoxDirty)
+                {
+                    field = RevealArea.IsEmpty ? RectangleF.Empty : this.GetAbsoluteBounds(RevealArea);
+                    isRevealBoxDirty = false;
+                }
+
+                return field;
+            }
+        }
+
+        // UpdateOpacityFactor
+        private void UpdateOpacityFactor(GameTime gameTime)
+        {
+            const int tweenDuration = 200;
+            const float revealOpacity = .5f;
+
+            if (Session.Player != null && RevealBox.Contains(Session.Player.Position))
+            {
+                if (Sprite.OpacityFactor == revealOpacity)
+                    return;
+
+                if (!revealTween.IsRunning || revealTween.EndValue == 1)
+                    revealTween.Start(TweenStyle.Linear, Sprite.OpacityFactor, .5f, tweenDuration);
+            }
+            else
+            {
+                if (Sprite.OpacityFactor == 1)
+                    return;
+
+                if (!revealTween.IsRunning || revealTween.EndValue == revealOpacity)
+                    revealTween.Start(TweenStyle.Linear, Sprite.OpacityFactor, 1, tweenDuration);
+            }
+
+            if (revealTween.IsRunning)
+            {
+                revealTween.Update(gameTime);
+                Sprite.OpacityFactor = revealTween.CurrentValue;
+            }
+            else
+                Sprite.OpacityFactor = 1;
         }
 
         #endregion
@@ -129,6 +178,8 @@ namespace Remizione
 
             if (MatchShadowTransform)
                 Shadow?.MatchTransform(Sprite);
+
+            isRevealBoxDirty = true;
         }
 
         // OnUpdate
@@ -149,6 +200,9 @@ namespace Remizione
                 xTween.Update(gameTime);
                 X = xTween.CurrentValue;
             }
+
+            if (!RevealArea.IsEmpty)
+                UpdateOpacityFactor(gameTime);
         }
 
         // Shadow
@@ -184,6 +238,10 @@ namespace Remizione
         // IsLiftable
         [ScriptProperty]
         public bool IsLiftable { get; set; }
+
+        // RevealArea
+        [ScriptProperty]
+        public Rectangle RevealArea { get; set; }
 
         // SkillChancePenalty
         [ScriptProperty]

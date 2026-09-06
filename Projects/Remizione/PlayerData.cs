@@ -12,7 +12,7 @@
         }
 
         // Grace
-        public int Grace { get; set; } = 20;
+        public int Grace { get; set; }
 
         // Inventory
         public ItemContainer Inventory { get; }

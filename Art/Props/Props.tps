@@ -189,6 +189,22 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">LargeRockA-assets/LargeRockA.png</key>
+            <key type="filename">LargeRockA-assets/LargeRockAShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>14,11,27,21</rect>
+                <key>scale9Paddings</key>
+                <rect>14,11,27,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">PotteryA-assets/PotteryA.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -517,6 +533,7 @@
                     <filename>WaterPuddleC-assets</filename>
                     <filename>Props-assets</filename>
                     <filename>CrossLargeA-assets</filename>
+                    <filename>LargeRockA-assets</filename>
                 </array>
             </struct>
         </map>

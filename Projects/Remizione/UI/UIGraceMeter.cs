@@ -38,7 +38,7 @@ namespace Remizione
                 Color = ColorPalette.Text.Terra,
                 PivotOrigin = RectanglePoint.RightTop,
                 Scale = ScaleInfo.Text.ExtraLarge,
-                Position = titleText.BoundingBox.GetPoint(RectanglePoint.RightBottom)
+                Position = titleText.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -1)
             };
 
             isInitializing = true;
@@ -49,7 +49,7 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (lastKnownValue == 0 && HideZero)
+            if (lastKnownValue == 0)
                 return;
 
             valueText.Draw(gameTime);
@@ -92,8 +92,5 @@ namespace Remizione
             get => valueText.Color;
             set => valueText.Color = value;
         }
-
-        // HideZero
-        public bool HideZero { get; set; }
     }
 }

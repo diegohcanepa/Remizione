@@ -222,17 +222,15 @@ namespace Remizione
             }
             */
 
-            console?.Draw(gameTime);
-
-            /*
             Game.RenderTargets.Swap();
             Game.SpriteBatch.Begin(effect: RemizioneGame.Effects.CRT.Effect);
             Game.SpriteBatch.Draw(Game.RenderTargets.PreviousTarget, Vector2.Zero, Color.White);
             Game.SpriteBatch.End();
-            */
 
             if (Player != null && !Player.IsDead)
                 HUD?.Draw(gameTime);
+
+            console?.Draw(gameTime);
 
             SpeechText.DrawSpeechTexts(gameTime);
 
@@ -629,7 +627,7 @@ namespace Remizione
 
         // InventoryEnabled
         [ScriptProperty]
-        public bool InventoryEnabled { get; set; } = true;
+        public bool InventoryEnabled { get; set; }
 
         // IsConsoleVisible
         public bool IsConsoleVisible => console?.IsActive ?? false;

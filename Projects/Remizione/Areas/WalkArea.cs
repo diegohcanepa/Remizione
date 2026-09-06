@@ -168,8 +168,10 @@ namespace Remizione
         }
 
         // Prepare
-        public void Prepare(GameThing requester, Vector2 destination)
+        public Vector2 Prepare(GameThing requester, Vector2 destination)
         {
+            var result = destination;
+
             RectangleF clipBox;
 
             // Define clip box for optimized path finding
@@ -192,6 +194,15 @@ namespace Remizione
             CollectHoles(holeAreas, ref clipBox);
             CollectThingHoles(requester, holeAreas, ref clipBox);
 
+            for (var i = 0; i < holeAreas.Count; i++)
+            {
+                if (holeAreas[i].Contains(destination))
+                {
+                    result = holeAreas[i].ClampOutside(destination);
+                    break;
+                }
+            }
+
             // Add walk area nodes
             linkedNodes.AddRange(walkAreaNodes);
 
@@ -202,6 +213,8 @@ namespace Remizione
             }
 
             LinkNodes();
+
+            return result;
         }
 
         #endregion
@@ -269,7 +282,7 @@ namespace Remizione
             if (!Contains(destination))
                 destination = ClampInside(destination, out _);
 
-            Prepare(requester, destination);
+            destination = Prepare(requester, destination);
 
             var result = FindPathCore(requester, destination);
 
