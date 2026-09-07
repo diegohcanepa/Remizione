@@ -7,7 +7,6 @@ namespace Remizione
     /// </summary>
     public sealed class BodyFatigueState : BodyAnimatedState
     {
-        private const int cooldown = 500;
         private int timer;
 
         // Constructor
@@ -20,8 +19,7 @@ namespace Remizione
         public override void Enter()
         {
             base.Enter();
-            timer = cooldown;
-            Owner.Stamina++;
+            timer = 2000;
         }
 
         // Update
@@ -29,13 +27,7 @@ namespace Remizione
         {
             timer -= gameTime.ElapsedGameTime.Milliseconds;
             if (timer <= 0)
-            {
-                Owner.Stamina++;
-                if (Owner.Stamina >= Owner.MaxStamina)
-                    Machine.ChangeState<BodyStandState>();
-                else
-                    timer = cooldown;
-            }
+               Machine.ChangeState<BodyStandState>();
         }
     }
 }

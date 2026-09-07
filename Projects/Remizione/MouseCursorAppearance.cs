@@ -125,7 +125,7 @@ namespace Remizione
 
                 // Pickup
                 case Verb.PickUp:
-                    MouseCursor.Icon = MouseCursorIcon.PickUp;
+                    MouseCursor.Icon = MouseCursorIcon.Sack;
                     break;
 
                 // Talk

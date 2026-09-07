@@ -29,9 +29,8 @@ namespace Remizione
             // GraceReward
             GraceReward = element.GetInt32("graceReward", 0);
 
-            var tempPool = new ChanceTable();
-            
             // LootPool
+            var tempPool = new ChanceTable();
             if (element.TryGetProperty("lootPool", out JsonElement poolArray))
             {
                 foreach (var itemJson in poolArray.EnumerateArray())

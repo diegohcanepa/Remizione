@@ -43,7 +43,7 @@
             "deselectOnUse": {
               "type": "boolean"
             },
-            "energyCost": {
+            "hpCost": {
               "type": "integer"
             },
             "isDepletable": {
@@ -85,9 +85,6 @@
               "description": "Referencia al comportamiento y descriptor del proyectil que este ítem dispara o genera."
             },
             "skillChance": {
-              "type": "integer"
-            },
-            "staminaCost": {
               "type": "integer"
             },
             "soundStart": {

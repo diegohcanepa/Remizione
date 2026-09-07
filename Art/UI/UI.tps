@@ -205,27 +205,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">DroolMeter-assets/DroolMeter0.png</key>
-            <key type="filename">DroolMeter-assets/DroolMeter1.png</key>
-            <key type="filename">DroolMeter-assets/DroolMeter2.png</key>
-            <key type="filename">DroolMeter-assets/DroolMeter3.png</key>
-            <key type="filename">DroolMeter-assets/DroolMeter4.png</key>
-            <key type="filename">DroolMeter-assets/DroolMeter5.png</key>
-            <key type="filename">UIIcons-assets/StaminaCost2.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,1,3,2</rect>
-                <key>scale9Paddings</key>
-                <rect>2,1,3,2</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Inventory-assets/DiscardItemIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -463,64 +442,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Meter-assets/GreenMeter0.png</key>
-            <key type="filename">Meter-assets/GreenMeter1.png</key>
-            <key type="filename">Meter-assets/GreenMeter2.png</key>
-            <key type="filename">Meter-assets/GreenMeter3.png</key>
-            <key type="filename">Meter-assets/GreenMeter4.png</key>
-            <key type="filename">Meter-assets/GreenMeter5.png</key>
-            <key type="filename">Meter-assets/PurpleMeter0.png</key>
-            <key type="filename">Meter-assets/PurpleMeter1.png</key>
-            <key type="filename">Meter-assets/PurpleMeter2.png</key>
-            <key type="filename">Meter-assets/PurpleMeter3.png</key>
-            <key type="filename">Meter-assets/PurpleMeter4.png</key>
-            <key type="filename">Meter-assets/PurpleMeter5.png</key>
-            <key type="filename">Meter-assets/WhiteMeter0.png</key>
-            <key type="filename">Meter-assets/WhiteMeter1.png</key>
-            <key type="filename">Meter-assets/WhiteMeter2.png</key>
-            <key type="filename">Meter-assets/WhiteMeter3.png</key>
-            <key type="filename">Meter-assets/WhiteMeter4.png</key>
-            <key type="filename">Meter-assets/WhiteMeter5.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,2,2,3</rect>
-                <key>scale9Paddings</key>
-                <rect>1,2,2,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Meter-assets/OrangeMeter0.png</key>
-            <key type="filename">Meter-assets/OrangeMeter1.png</key>
-            <key type="filename">Meter-assets/OrangeMeter2.png</key>
-            <key type="filename">Meter-assets/OrangeMeter3.png</key>
-            <key type="filename">Meter-assets/OrangeMeter4.png</key>
-            <key type="filename">Meter-assets/OrangeMeter5.png</key>
-            <key type="filename">Meter-assets/SkyBlueMeter0.png</key>
-            <key type="filename">Meter-assets/SkyBlueMeter1.png</key>
-            <key type="filename">Meter-assets/SkyBlueMeter2.png</key>
-            <key type="filename">Meter-assets/SkyBlueMeter3.png</key>
-            <key type="filename">Meter-assets/SkyBlueMeter4.png</key>
-            <key type="filename">Meter-assets/SkyBlueMeter5.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,1,2,3</rect>
-                <key>scale9Paddings</key>
-                <rect>1,1,2,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">MiniMap-assets/MiniMapCoin.png</key>
             <key type="filename">MiniMap-assets/MiniMapCoinAndLoot.png</key>
             <key type="filename">MiniMap-assets/MiniMapNodeCurrent.png</key>
@@ -633,8 +554,6 @@
             <key type="filename">MouseCursors-assets/MouseCursorLeftIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorRightIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorUpIcon.png</key>
-            <key type="filename">StatIcons-assets/StatEnergyIcon.png</key>
-            <key type="filename">StatIcons-assets/StatHPIcon.png</key>
             <key type="filename">UI-assets/ProhibitionIcon.png</key>
             <key type="filename">UIIcons-assets/HeartIcon.png</key>
             <key type="filename">UIIcons-assets/MagnifierIcon.png</key>
@@ -671,7 +590,9 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">MouseCursors-assets/MouseCursorPickUpIcon.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorSackIcon.png</key>
+            <key type="filename">UIIcons-assets/Sack.png</key>
+            <key type="filename">UIIcons-assets/SackIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -680,9 +601,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>2,2,4,3</rect>
+                <rect>2,2,4,4</rect>
                 <key>scale9Paddings</key>
-                <rect>2,2,4,3</rect>
+                <rect>2,2,4,4</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1036,8 +957,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UIIcons-assets/Sack.png</key>
-            <key type="filename">UIIcons-assets/SackIcon.png</key>
+            <key type="filename">UIIcons-assets/StaminaCost2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -1046,9 +966,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>2,2,4,4</rect>
+                <rect>2,1,3,2</rect>
                 <key>scale9Paddings</key>
-                <rect>2,2,4,4</rect>
+                <rect>2,1,3,2</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1116,10 +1036,7 @@
                     <filename>MonitorFrame-assets</filename>
                     <filename>MiniMap-assets</filename>
                     <filename>DialogBox-assets</filename>
-                    <filename>Meter-assets</filename>
                     <filename>Modifiers-assets</filename>
-                    <filename>DroolMeter-assets</filename>
-                    <filename>StatIcons-assets</filename>
                 </array>
             </struct>
         </map>

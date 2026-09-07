@@ -17,7 +17,6 @@ namespace Remizione
         private readonly Sprite containerBorder;
         private readonly Vector2 containerCenter;
         private readonly HashSet<RoomNode> drawnRooms = [];
-        private readonly Sprite marker = new() { PivotOrigin = RectanglePoint.Center, Scale = new(.5f) };
         private readonly FloatTween opacityTween = new();
         private readonly RasterizerState rasterizerState;
         private readonly Rectangle screenScissorRect;
@@ -122,28 +121,6 @@ namespace Remizione
                 return;
 
             image.Draw(gameTime);
-
-            if (roomNode != CurrentRoom && roomNode.Visited)
-            {
-                if (roomNode.LootCount > 0 && roomNode.CoinCount == 0)
-                {
-                    marker.RenderImage = Atlases.UI.MiniMapLoot;
-                    marker.Position = image.BoundingBox.GetPoint(RectanglePoint.Center, -.25f, 0);
-                    marker.Draw(gameTime);
-                }
-                else if (roomNode.CoinCount > 0 && roomNode.LootCount == 0)
-                {
-                    marker.RenderImage = Atlases.UI.MiniMapCoin;
-                    marker.Position = image.BoundingBox.GetPoint(RectanglePoint.Center);
-                    marker.Draw(gameTime);
-                }
-                else if (roomNode.CoinCount > 0 && roomNode.LootCount > 0)
-                {
-                    marker.RenderImage = Atlases.UI.MiniMapCoinAndLoot;
-                    marker.Position = image.BoundingBox.GetPoint(RectanglePoint.Center);
-                    marker.Draw(gameTime);
-                }
-            }
 
             drawnRooms.Add(roomNode);
 

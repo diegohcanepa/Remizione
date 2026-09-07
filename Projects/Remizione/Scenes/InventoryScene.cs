@@ -137,9 +137,9 @@ namespace Remizione
 
                     amounts[i].Position = icons[i].BoundingBox.GetPoint(RectanglePoint.RightBottom, -3, 2);
 
-                    if (ItemContainer[i].Definition.EnergyCost.IsBetween(1, 3))
+                    if (ItemContainer[i].Definition.HPCost.IsBetween(1, 3))
                     {
-                        amounts[i].Text = "x" + ItemContainer[i].Definition.EnergyCost.ToString(CultureInfo.InvariantCulture);
+                        amounts[i].Text = "x" + ItemContainer[i].Definition.HPCost.ToString(CultureInfo.InvariantCulture);
                     }
                     else if (ItemContainer[i].Definition.IsStackable || ItemContainer[i].Definition.IsDepletable)
                     {

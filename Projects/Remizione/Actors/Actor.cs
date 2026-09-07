@@ -24,7 +24,6 @@ namespace Remizione
         private readonly FloatTween moveBalancingTween = new();
         private readonly FloatTween moveVerticalTween = new();
         private readonly List<Vector2> pendingPathNodes = [];
-        private float pixelsTrudged;
         private List<AtlasImage>? remainsPieces;
         private readonly FloatTween shakeTween = FloatTween.Create(TweenStyle.Linear, 0, .5f, 40, -1);
         private SpeechText? speechText;
@@ -463,11 +462,6 @@ namespace Remizione
             }
         }
 
-        // OnStaminaChanged
-        protected virtual void OnStaminaChanged(int previousValue)
-        {
-        }
-
         // OnStartMoving
         protected override void OnStartMoving()
         {
@@ -497,14 +491,7 @@ namespace Remizione
             if (EnforceTurn)
             {
                 EnforceTurn = false;
-
-                if (ActiveThrowable == null)
-                {
-                    if (PixelsMoved > GameSettings.StaminaRechargeMoveThreshold)
-                        Stamina++;
-                }
-
-                Session.ProcessTurn(PixelsMoved > GameSettings.StaminaRechargeMoveThreshold ? 1 : 0);
+                Session.ProcessTurn();
             }
         }
 
@@ -614,16 +601,15 @@ namespace Remizione
         // ApplyAction
         public void ApplyAction(IAction action)
         {
-            // Energy penalty
-            if (action.EnergyCost > 0)
+            // HP penalty
+            if (action.HPCost > 0)
             {
-                Energy -= action.EnergyCost;
+                HP -= action.HPCost;
+                /*
                 if (IsPlayer)
                     ShowFlyOff(Atlases.UI.DroolIcon);
+                */
             }
-
-            // Stamina penalty
-            Stamina -= action.StaminaCost;
         }
 
         // BeginTurn
@@ -802,7 +788,7 @@ namespace Remizione
         // Fatigue
         public bool Fatigue()
         {
-            if (MaxStamina > 0 && Sprite.Animations.Contains(ActorStateNames.Fatigue))
+            if (Sprite.Animations.Contains(ActorStateNames.Fatigue))
             {
                 StopMoving();
                 DiscardActiveThrowable();
@@ -890,8 +876,6 @@ namespace Remizione
 
             FaceTo(prop);
 
-            Stamina--;
-
             var state = BodyMachine.FindOrCreateState<BodyLiftState>();
             state.Target = prop;
             lastKnownLiftPosition = prop.Position;
@@ -921,31 +905,6 @@ namespace Remizione
                     else if (Energy > field)
                     {
                         Energy = field;
-                    }
-                }
-            }
-        }
-
-        // MaxStamina
-        [ScriptProperty]
-        public int MaxStamina
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    var prevValue = field;
-
-                    field = value;
-
-                    if (Stamina == 0 && prevValue == 0)
-                    {
-                        Stamina = value;
-                    }
-                    else if (Stamina > field)
-                    {
-                        Stamina = field;
                     }
                 }
             }
@@ -1125,28 +1084,7 @@ namespace Remizione
         public Vector2? MoveToDestination => pendingPathNodes.Count == 0 ? null : pendingPathNodes[^1];
 
         // PixelsMoved
-        public float PixelsMoved
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    if (ActiveThrowable != null && MaxStamina > 0)
-                    {
-                        var delta = Math.Abs(value - field);
-                        pixelsTrudged += delta;
-                        if (pixelsTrudged > GameSettings.HeavyMoveThreshold)
-                        {
-                            pixelsTrudged = 0;
-                            Stamina--;
-                        }
-                    }
-
-                    field = value;
-                }
-            }
-        }
+        public float PixelsMoved { get; set; }
 
         // PlayerNumber
         [ScriptProperty]
@@ -1240,13 +1178,6 @@ namespace Remizione
             return true;
         }
 
-        // Rest
-        [ScriptMethod]
-        public virtual void Rest()
-        {
-            Stamina = MaxStamina;
-        }
-
         // Say
         public void Say(string text, bool awaitInput)
         {
@@ -1278,26 +1209,6 @@ namespace Remizione
         // SpeechSound
         [ScriptProperty(CodingContext.EntityDeclaration)]
         public Sound? SpeechSound { get; set; }
-
-        // Stamina
-        [ScriptProperty]
-        public int Stamina
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    var previousValue = field;
-                    field = Math.Clamp(value, 0, MaxStamina);
-
-                    OnStaminaChanged(previousValue);
-
-                    if (field > 0 && previousValue > field)
-                        pixelsTrudged = 0;
-                }
-            }
-        }
 
         // Stand
         [ScriptMethod()]

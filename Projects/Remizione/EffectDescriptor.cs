@@ -93,11 +93,7 @@ namespace Remizione
                     // EnergyLoss
                     case EffectType.EnergyLoss:
                         if (targetActor != null)
-                        {
                             targetActor.Energy -= amount;
-                            if (targetActor.IsPlayer)
-                                targetActor.ShowFlyOff(Atlases.UI.DroolIcon);
-                        }
                         break;
 
                     // EnergyRestore
@@ -135,10 +131,7 @@ namespace Remizione
                     // MaxHPGain
                     case EffectType.MaxHPGain:
                         if (realTarget != null)
-                        {
                             realTarget.MaxHP += amount;
-                            realTarget.Session.HUD?.Message.Show(MessageKind.ExtraHeart);
-                        }
                         break;
 
                     // MaxHPLoss

@@ -85,22 +85,6 @@ namespace Remizione
                 Sound.Play(SoundNames.Error);
             }
 
-            else if (message == MessageKind.ExtraEnergy)
-            {
-                icon.RenderImage = Atlases.UI.DroolIcon;
-            }
-
-            else if (message == MessageKind.ExtraHeart)
-            {
-                icon.RenderImage = Atlases.UI.HeartIcon;
-            }
-
-            else if (message == MessageKind.NotEnoughDrool)
-            {
-                icon.RenderImage = Atlases.UI.DroolIcon;
-                Sound.Play(SoundNames.Error);
-            }
-
             else if (message == MessageKind.InventoryFull)
             {
                 icon.RenderImage = Atlases.UI.Sack;

@@ -76,8 +76,8 @@ namespace Remizione
         // Definition
         public ItemDefinition Definition { get; }
 
-        // EnergyCost
-        public int EnergyCost => Definition.EnergyCost;
+        // HPCost
+        public int HPCost => Definition.HPCost;
 
         // Index
         public int Index => Inventory.IndexOf(this);
@@ -99,9 +99,6 @@ namespace Remizione
 
         // Script
         public Script? Script { get; }
-
-        // StaminaCost
-        public int StaminaCost => Definition.StaminaCost;
 
         // ToString
         public override string ToString()

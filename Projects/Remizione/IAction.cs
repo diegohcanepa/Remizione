@@ -24,8 +24,8 @@ namespace Remizione
         // EffectDescriptors
         ReadOnlyCollection<EffectDescriptor> EffectDescriptors { get; }
 
-        // EnergyCost
-        int EnergyCost { get; }
+        // HPCost
+        int HPCost { get; }
 
         // InPlaceEffectType
         InPlaceEffectType InPlaceEffectType { get; }
@@ -41,8 +41,5 @@ namespace Remizione
 
         // SoundTrigger
         Sound? SoundTrigger { get; }
-
-        // StaminaCost
-        int StaminaCost { get; }
     }
 }

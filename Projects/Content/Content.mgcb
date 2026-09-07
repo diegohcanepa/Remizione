@@ -208,13 +208,6 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/CollectCoin.wav;Audio/FX/CollectCoin
 
-#begin Audio/FX/DoodleDoo.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/FX/DoodleDoo.wav;Audio/FX/DoodleDoo
-
 #begin Audio/FX/DoorGateClose.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -263,13 +256,6 @@
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/Drink.wav;Audio/FX/Drink
-
-#begin Audio/FX/DrinkDrool.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/FX/DrinkDrool.wav;Audio/FX/DrinkDrool
 
 #begin Audio/FX/DrinkFromBottle.wav
 /importer:WavImporter

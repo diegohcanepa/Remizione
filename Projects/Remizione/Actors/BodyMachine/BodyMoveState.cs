@@ -49,14 +49,8 @@ namespace Remizione
                 lastPosition = currentPosition;
             }
 
-            if (Owner.Stamina == 0 && Owner.MaxStamina > 0)
-            {
-                Owner.Fatigue();
-            }
-            else if (!Owner.IsMoving)
-            {
+            if (!Owner.IsMoving)
                 Machine.ChangeState<BodyStandState>();
-            }
         }
     }
 }

@@ -19,9 +19,6 @@ namespace Remizione
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
             DialogOptionBullet = this[nameof(DialogOptionBullet)];
             DiscardItemIcon = this[nameof(DiscardItemIcon)];
-            DroolCost = CreateReadOnlyCollection("DroolCost", 1, 3);
-            DroolIcon = this[nameof(DroolIcon)];
-            DroolMeter = CreateReadOnlyCollection(nameof(DroolMeter), 0, 5);
             EchoBackground = this[nameof(EchoBackground)];
             HeartIcon = this[nameof(HeartIcon)];
             InventoryItemAmounts = CreateReadOnlyCollection("InventoryItemAmount", 1, 5);
@@ -29,14 +26,6 @@ namespace Remizione
             InventoryMeterSlot = this[nameof(InventoryMeterSlot)];
             MagnifierIcon = this[nameof(MagnifierIcon)];
             MessageContainer = this[nameof(MessageContainer)];
-            MeterGreen = CreateReadOnlyCollection("GreenMeter", 0, 5);
-            MeterOrange = CreateReadOnlyCollection("OrangeMeter", 0, 5);
-            MeterPurple = CreateReadOnlyCollection("PurpleMeter", 0, 5);
-            MeterSkyBlue = CreateReadOnlyCollection("SkyBlueMeter", 0, 5);
-            MeterWhite = CreateReadOnlyCollection("WhiteMeter", 0, 5);
-            MiniMapCoin = this[nameof(MiniMapCoin)];
-            MiniMapCoinAndLoot = this[nameof(MiniMapCoinAndLoot)];
-            MiniMapLoot = this[nameof(MiniMapLoot)];
             MiniMapNodes = CreateReadOnlyCollection<MapNodeState>("MiniMapNode");
             MouseLeftButtonIcon = this[nameof(MouseLeftButtonIcon)];
             MouseRightButtonIcon = this[nameof(MouseRightButtonIcon)];
@@ -46,13 +35,10 @@ namespace Remizione
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
             QuickInventoryBackground = this[nameof(QuickInventoryBackground)];
             RedHearts = CreateReadOnlyCollection(nameof(RedHearts), 1, 3);
-            CountdownSkullIcon = this[nameof(CountdownSkullIcon)];
             Sack = this[nameof(Sack)];
             SavingIcon = this[nameof(SavingIcon)];
             SpeechTextArrow = this[nameof(SpeechTextArrow)];
             SpeechTextPipe = this[nameof(SpeechTextPipe)];
-            StaminaCosts = CreateReadOnlyCollection("StaminaCost", 1, 3);
-            StaminaIcon = this[nameof(StaminaIcon)];
             UIButtonContainerEdge = this[nameof(UIButtonContainerEdge)];
             UIButtonContainerPattern = this[nameof(UIButtonContainerPattern)];
         }
@@ -62,9 +48,6 @@ namespace Remizione
 
         // ContextMenuOptionSelector
         public AtlasImage ContextMenuOptionSelector { get; }
-
-        // CountdownSkullIcon
-        public AtlasImage CountdownSkullIcon { get; }
 
         // CloseWindowButton
         public AtlasImage CloseWindowButton { get; }
@@ -80,15 +63,6 @@ namespace Remizione
 
         // DiscardItemIcon
         public AtlasImage DiscardItemIcon { get; }
-
-        // DroolCost
-        public ReadOnlyCollection<AtlasImage> DroolCost { get; }
-
-        // DroolIcon
-        public AtlasImage DroolIcon { get; }
-
-        // DroolMeter
-        public ReadOnlyCollection<AtlasImage> DroolMeter { get; }
 
         // EchoBackground
         public AtlasImage EchoBackground { get; }
@@ -110,30 +84,6 @@ namespace Remizione
 
         // MessageContainer
         public AtlasImage MessageContainer { get; }
-
-        // MeterGreen
-        public ReadOnlyCollection<AtlasImage> MeterGreen { get; }
-
-        // MeterOrange
-        public ReadOnlyCollection<AtlasImage> MeterOrange { get; }
-
-        // MeterPurple
-        public ReadOnlyCollection<AtlasImage> MeterPurple { get; }
-
-        // MeterSkyBlue
-        public ReadOnlyCollection<AtlasImage> MeterSkyBlue { get; }
-
-        // MeterWhite
-        public ReadOnlyCollection<AtlasImage> MeterWhite { get; }
-
-        // MiniMapCoin
-        public AtlasImage MiniMapCoin { get; }
-
-        // MiniMapCoinAndLoot
-        public AtlasImage MiniMapCoinAndLoot { get; }
-
-        // MiniMapLoot
-        public AtlasImage MiniMapLoot { get; }
 
         // MiniMapRooms
         public ReadOnlyCollection<AtlasImage> MiniMapNodes { get; }
@@ -173,12 +123,6 @@ namespace Remizione
 
         // SpeechTextPipe
         public AtlasImage SpeechTextPipe { get; }
-
-        // StaminaCosts
-        public ReadOnlyCollection<AtlasImage> StaminaCosts { get; }
-
-        // StaminaIcon
-        public AtlasImage StaminaIcon { get; }
 
         // UIButtonContainerEdge
         public AtlasImage UIButtonContainerEdge { get; }

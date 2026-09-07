@@ -27,8 +27,8 @@ namespace Remizione
             // Category
             this.Category = element.GetEnum("category", CombatIntentCategory.Basic);
 
-            // EnergyCost
-            EnergyCost = Math.Max(0, element.GetInt32("energyCost", 0));
+            // HPCost
+            HPCost = Math.Max(0, element.GetInt32("hpCost", 0));
 
             // InPlaceEffectType
             InPlaceEffectType = element.GetEnum("inPlaceEffectType", InPlaceEffectType.None);
@@ -50,9 +50,6 @@ namespace Remizione
 
             // SoundTrigger
             this.SoundTrigger = element.GetObject("soundTrigger", Sound.Get);
-
-            // StaminaCost
-            StaminaCost = Math.Max(0, element.GetInt32("staminaCost", 0));
 
             // ActionKind
             ActionKind = element.GetEnum("actionKind", ActionKind.Proximity);
@@ -86,8 +83,8 @@ namespace Remizione
         // InPlaceEffectType
         public InPlaceEffectType InPlaceEffectType { get; }
 
-        // EnergyCost
-        public int EnergyCost { get; }
+        // HPCost
+        public int HPCost { get; }
 
         // MaxRange
         public int MaxRange { get; }
@@ -106,8 +103,5 @@ namespace Remizione
 
         // SoundTrigger
         public Sound? SoundTrigger { get; }
-
-        // StaminaCost
-        public int StaminaCost { get; }
     }
 }

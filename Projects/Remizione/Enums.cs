@@ -111,13 +111,13 @@ namespace Remizione
     }
 
     // MessageKind
-    public enum MessageKind { CannotPlaceItem, GateOpened, HandsFull, InventoryFull, ItemDiscarded, LiftNotAllowed, NotEnoughCoins, NotEnoughDrool, OutOfReach, OutOfLine, PathCleared, ExtraEnergy, ExtraHeart }
+    public enum MessageKind { CannotPlaceItem, GateOpened, HandsFull, InventoryFull, ItemDiscarded, LiftNotAllowed, NotEnoughCoins, OutOfReach, OutOfLine, PathCleared }
 
     // MeterColor
     public enum MeterColor { Green, Orange, Purple, SkyBlue, White }
 
     // MouseCursorIcon
-    public enum MouseCursorIcon { Cross, Arrow, Attack, Down, Eye, Hand, Left, Lift, Magnifier, Right, PickUp, Skull, Talk, Up, Wait }
+    public enum MouseCursorIcon { Cross, Arrow, Attack, Down, Eye, Hand, Left, Lift, Magnifier, Right, Sack, Skull, Talk, Up, Wait }
 
     // NameValidationRule
     public enum NameValidationRule
@@ -216,9 +216,6 @@ namespace Remizione
 
     // SpeechTextState
     public enum SpeechTextState { Hidden, Typing, Idle }
-
-    // StatName
-    public enum StatName { HP, Energy }
 
     // StatusType
     public enum StatusType { Poison }

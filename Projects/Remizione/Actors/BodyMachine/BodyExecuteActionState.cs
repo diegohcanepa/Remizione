@@ -139,14 +139,6 @@ namespace Remizione
             {
                 eventDone = true;
 
-                if (Action.EnergyCost > 0 && Owner.Energy < Action.EnergyCost)
-                {
-                    Sound.Play(SoundNames.Error);
-                    var text = Localization.GetValue(MessageKind.NotEnoughDrool);
-                    Owner.ShowFlyOff(text, ColorPalette.Text.TerraLight);
-                    return;
-                }
-
                 if (Action.SoundTrigger != null)
                     Owner.PlaySound(Action.SoundTrigger);
 

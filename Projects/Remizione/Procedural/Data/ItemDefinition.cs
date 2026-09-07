@@ -39,8 +39,8 @@ namespace Remizione
             // DeselectOnUse
             DeselectOnUse = element.GetBool("deselectOnUse", false);
 
-            // EnergyCost
-            EnergyCost = Math.Max(0, element.GetInt32("energyCost", 0));
+            // HPCost
+            HPCost = Math.Max(0, element.GetInt32("hpCost", 0));
 
             // InitialAmount
             InitialAmount = int.Clamp(element.GetInt32("initialAmount", 1), 1, GameSettings.MaxItemAmount);
@@ -89,9 +89,6 @@ namespace Remizione
 
             // SoundTrigger
             this.SoundTrigger = element.GetObject("soundTrigger", Sound.Get);
-
-            // StaminaCost
-            StaminaCost = Math.Max(0, element.GetInt32("staminaCost", 0));
 
             this.Image = Atlases.UI.FindImage(Name);
 
@@ -160,8 +157,8 @@ namespace Remizione
         // EffectDescription
         public string EffectDescription { get; private set; } = string.Empty;
 
-        // EnergyCost
-        public int EnergyCost { get; }
+        // HPCost
+        public int HPCost { get; }
 
         // Image
         public AtlasImage? Image { get; }
@@ -216,8 +213,5 @@ namespace Remizione
 
         // SoundTrigger
         public Sound? SoundTrigger { get; }
-
-        // StaminaCost
-        public int StaminaCost { get; }
     }
 }

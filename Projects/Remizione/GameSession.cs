@@ -124,7 +124,6 @@ namespace Remizione
             AotTypeRegistry.Register(typeof(EnviousEye));
             AotTypeRegistry.Register(typeof(GameRoom));
             AotTypeRegistry.Register(typeof(GoldenKey));
-            AotTypeRegistry.Register(typeof(Drool));
             AotTypeRegistry.Register(typeof(LootOrb));
             AotTypeRegistry.Register(typeof(Pottery));
             AotTypeRegistry.Register(typeof(Prop));
@@ -297,10 +296,6 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(DisplayHPMeter)]?.Value is string displayHPMeterValue)
                 DisplayHPMeter = XmlConvert.ToBoolean(displayHPMeterValue);
 
-            // DisplayEnergyMeter
-            if (sessionNode.Attributes[nameof(DisplayEnergyMeter)]?.Value is string displayEnergyMeterValue)
-                DisplayEnergyMeter = XmlConvert.ToBoolean(displayEnergyMeterValue);
-
             // InventoryEnabled
             if (sessionNode.Attributes[nameof(InventoryEnabled)]?.Value is string inventoryEnabledValue)
                 InventoryEnabled = XmlConvert.ToBoolean(inventoryEnabledValue);
@@ -429,9 +424,6 @@ namespace Remizione
         // OnWrite
         protected override void OnWrite(XmlWriter output)
         {
-            // DisplayEnergyMeter
-            output.WriteAttributeString(nameof(DisplayEnergyMeter), XmlConvert.ToString(DisplayEnergyMeter));
-
             // DisplayHPMeter
             output.WriteAttributeString(nameof(DisplayHPMeter), XmlConvert.ToString(DisplayHPMeter));
 
@@ -531,10 +523,6 @@ namespace Remizione
         // DialogOptionId
         [ScriptProperty]
         public int DialogOptionId { get; set; }
-
-        // DisplayEnergyMeter
-        [ScriptProperty]
-        public bool DisplayEnergyMeter { get; set; } = true;
 
         // DisplayHPMeter
         [ScriptProperty]
