@@ -4,8 +4,14 @@
     {
       "name": "EnviousEye",
       "difficulty": "Normal",
-      "dropLootChanceBonus": 1,
-      "graceReward": 5
+      "baseDropChance": 1,
+      "graceReward": 5,
+      "lootPool": [
+        {
+          "item": "Apple",
+          "weight": 10
+        }
+      ]
     },
     {
       "name": "Rat",

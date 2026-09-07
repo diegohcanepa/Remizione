@@ -27,12 +27,6 @@
             "$ref": "enums.schema.json#/$defs/Tag"
           }
         },
-        "preferredLootCategory": {
-          "$ref": "enums.schema.json#/$defs/ItemCategory"
-        },
-        "preferredLootRealm": {
-          "$ref": "enums.schema.json#/$defs/Realm"
-        },
         "tags": {
           "type": "array",
           "uniqueItems": true,

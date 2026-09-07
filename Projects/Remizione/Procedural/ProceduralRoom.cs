@@ -1,5 +1,6 @@
 ﻿using Adberration;
 using Engendro;
+using Engendro.Collections;
 using Microsoft.Xna.Framework;
 using Remizione.Procedural;
 using System;
@@ -517,7 +518,7 @@ namespace Remizione
                         continue;
 
                     // 4. INSTANCIACIÓN FINAL
-                    if (phTable.GetValue() is ChanceTableItem item &&
+                    if (phTable.GetItem() is ChanceTableItem item &&
                         GameData.Props.Find(item.Name) is PropDefinition chosen)
                     {
                         SpawnThing<Prop>(run, chosen.Name, ph.Position, propsSpawnCounter);

@@ -1,4 +1,4 @@
-﻿namespace Engendro
+﻿namespace Engendro.Collections
 {
     /// <summary>
     /// ChanceTableItem
@@ -6,16 +6,15 @@
     public sealed class ChanceTableItem
     {
         // Constructor
-        public ChanceTableItem(string name, int amount, float weight, object? context = null)
+        public ChanceTableItem(string name, float weight, object? context = null)
         {
+            CodeContract.NotEmpty(name, nameof(name));
+            CodeContract.GreaterThanZero(weight, nameof(weight));
+
             this.Name = name;
-            this.Amount = amount;
             this.Weight = weight;
             this.Context = context;
         }
-
-        // Amount
-        public int Amount { get; }
 
         // Context
         public object? Context { get; }

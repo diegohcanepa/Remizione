@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Collections;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,17 +20,36 @@ namespace Remizione
         protected ThingDefinition(JsonElement element, SpawnScope defaultSpawnScope)
             : base(element)
         {
-            // DropLootChanceBonus
-            DropLootChanceBonus = MathF.Max(0, element.GetFloat("dropLootChanceBonus", 0));
-
-            // DropMode
-            DropMode = element.GetEnum("dropMode", LootDropMode.Orb);
+            // BaseDropChance
+            BaseDropChance = MathF.Max(0, element.GetFloat("baseDropChance", .5f));
 
             // Faction
             Faction = element.GetEnum("faction", Faction.Evil);
 
             // GraceReward
             GraceReward = element.GetInt32("graceReward", 0);
+
+            var tempPool = new ChanceTable();
+            
+            // LootPool
+            if (element.TryGetProperty("lootPool", out JsonElement poolArray))
+            {
+                foreach (var itemJson in poolArray.EnumerateArray())
+                {
+                    string item = itemJson.GetString("item", string.Empty);
+                    if (GameData.Items.Find(item) is not ItemDefinition itemDefinition)
+                    {
+                        RaiseValidationError(this, $"The item '{item}' does not exist.", nameof(LootPool));
+                    }
+                    else
+                    {
+                        int weight = itemJson.GetInt32("weight", 0);
+                        tempPool.Add(item, weight, itemDefinition);
+                    }
+                }
+            }
+
+            LootPool = tempPool.AsReadOnly();
 
             // MaxPerRoom
             MaxPerRoom = element.GetInt32("maxPerRoom", -1);
@@ -65,11 +85,8 @@ namespace Remizione
                 RaiseValidationError(this, $"'{Name}' has no script declaration.");
         }
 
-        // DropMode
-        public LootDropMode DropMode { get; }
-
-        // DropLootChanceBonus
-        public Ratio DropLootChanceBonus { get; }
+        // BaseDropChance
+        public Ratio BaseDropChance { get; }
 
         // Effects
         public ReadOnlyCollection<EffectDescriptor> Effects { get; }
@@ -79,6 +96,9 @@ namespace Remizione
 
         // GraceReward
         public int GraceReward { get; }
+
+        // LootPool
+        public ReadOnlyChanceTable LootPool { get; }
 
         // MaxPerRoom
         public int MaxPerRoom { get; }

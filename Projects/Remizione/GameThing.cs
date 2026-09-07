@@ -230,10 +230,10 @@ namespace Remizione
         // DropLoot
         protected void DropLoot()
         {
-            if (Session.Room is not GameRoom room)
+            if (Session.Room is not GameRoom room || Definition == null)
                 return;
 
-            ItemReward = Session.LootGenerator.RollForLoot(this);
+            ItemReward = Session.LootGenerator.RollForLoot(Definition);
 
             if (ItemReward != null)
             {
@@ -563,10 +563,6 @@ namespace Remizione
         // CollisionHeight
         [ScriptProperty]
         public int CollisionHeight { get; set; }
-
-        // CustomDropName
-        [ScriptProperty]
-        public string CustomDropName { get; set; } = string.Empty;
 
         // Definition
         public virtual ThingDefinition? Definition { get; }

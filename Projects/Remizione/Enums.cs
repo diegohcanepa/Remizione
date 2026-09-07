@@ -94,14 +94,6 @@ namespace Remizione
     // LockType
     public enum LockType { None, BronzeKey, GoldenKey, GateLever, TrapDoorKey }
 
-    // LootDropMode
-    public enum LootDropMode
-    {
-        Orb,     // Solo orbs
-        Custom,  // Tira un ítem específico definido a mano
-        None     // Nada de nada
-    }
-
     // MapNodeState
     public enum MapNodeState { Current, Start, Visited, NotVisited, End };
 

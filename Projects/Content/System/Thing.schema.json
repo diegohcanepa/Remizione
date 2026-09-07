@@ -8,20 +8,37 @@
     {
       "type": "object",
       "properties": {
-        "dropLootChanceBonus": {
+        "baseDropChance": {
           "type": "number",
-          "default": 0,
+          "default": 0.5,
           "minimum": 0.0,
           "maximum": 1.0
-        },
-        "dropMode": {
-          "$ref": "enums.schema.json#/$defs/LootDropMode"
         },
         "faction": {
           "$ref": "enums.schema.json#/$defs/Faction"
         },
         "graceReward": {
           "type": "integer"
+        },
+        "lootPool": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "item",
+              "weight"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "item": {
+                "type": "string"
+              },
+              "weight": {
+                "type": "number",
+                "minimum": 1
+              }
+            }
+          }
         },
         "maxPerRoom": {
           "type": "integer",

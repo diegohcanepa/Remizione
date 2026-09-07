@@ -22,8 +22,6 @@ namespace Remizione
             Difficulty = element.GetEnum("difficulty", Difficulty.Easy);
             MaxPerRun = element.GetInt32("maxPerRun", -1);
             MinFloor = element.GetInt32("minFloor", 0);
-            PreferredLootCategory = element.GetEnum<ItemCategory>("preferredLootCategory");
-            PreferredLootRealm = element.GetEnum<Realm>("preferredLootRealm");
 
             // Pools
             Pools = ReadOnlyEnumSet<Tag>.FromJsonOrEmpty(element, "pools");
@@ -91,12 +89,6 @@ namespace Remizione
 
         // Pools
         public ReadOnlyEnumSet<Tag> Pools { get; }
-
-        // PreferredLootCategory
-        public ItemCategory? PreferredLootCategory { get; }
-
-        // PreferredLootRealm
-        public Realm? PreferredLootRealm { get; }
 
         // Tags
         public ReadOnlyEnumSet<Tag> Tags { get; }

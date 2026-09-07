@@ -147,14 +147,6 @@
         "High"
       ]
     },
-    "LootDropMode": {
-      "type": "string",
-      "enum": [
-        "Orb",
-        "Custom",
-        "None"
-      ]
-    },
     "LockType": {
       "type": "string",
       "enum": [
