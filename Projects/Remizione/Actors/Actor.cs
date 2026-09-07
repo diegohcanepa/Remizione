@@ -527,9 +527,6 @@ namespace Remizione
             }
             else if (!IsDead)
             {
-                if (Definition?.DropTrigger == LootDropTrigger.OnImpact)
-                    DropLoot();
-
                 IsHostile = true;
             }
 

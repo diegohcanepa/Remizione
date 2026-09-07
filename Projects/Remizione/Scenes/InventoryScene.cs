@@ -1,8 +1,7 @@
-﻿using Adberration.Scripting;
-using Engendro;
+﻿using Engendro;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-using Remizione.Scripting;
+using System.Globalization;
 
 namespace Remizione
 {
@@ -108,16 +107,7 @@ namespace Remizione
             {
                 if (GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item item)
                 {
-                    if (ItemContainer.Session.ScriptLibrary.FindItemRoutine(item.Name, Verb.Examine) is Script script)
-                    {
-                        ItemContainer.Session.AwaitScript(script);
-                        Game.SceneManager.Pop();
-                    }
-                    else
-                    {
-                        MouseCursor.PerformClick();
-                        Game.SceneManager.Pop();
-                    }
+                    // Discard??
                 }
             }
 
@@ -149,13 +139,13 @@ namespace Remizione
 
                     if (ItemContainer[i].Definition.EnergyCost.IsBetween(1, 3))
                     {
-                        amounts[i].Text = "x" + ItemContainer[i].Definition.EnergyCost.ToString();
+                        amounts[i].Text = "x" + ItemContainer[i].Definition.EnergyCost.ToString(CultureInfo.InvariantCulture);
                     }
                     else if (ItemContainer[i].Definition.IsStackable || ItemContainer[i].Definition.IsDepletable)
                     {
                         if (ItemContainer[i].Amount.IsBetween(1, 5))
                         {
-                            amounts[i].Text = "x" + ItemContainer[i].Amount.ToString();
+                            amounts[i].Text = "x" + ItemContainer[i].Amount.ToString(CultureInfo.InvariantCulture);
                         }
                     }
                 }

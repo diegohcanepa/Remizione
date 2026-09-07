@@ -119,7 +119,7 @@
     "ItemBehavior": {
       "type": "string",
       "enum": [
-        "Sack",
+        "Loot",
         "PlayerAction",
         "InstantEffect"
       ]
@@ -150,7 +150,7 @@
     "LootDropMode": {
       "type": "string",
       "enum": [
-        "Sack",
+        "Orb",
         "Custom",
         "None"
       ]
@@ -163,13 +163,6 @@
         "GoldenKey",
         "GateLever",
         "TrapDoorKey"
-      ]
-    },
-    "LootDropTrigger": {
-      "type": "string",
-      "enum": [
-        "OnDeath",
-        "OnImpact"
       ]
     },
     "PlaceholderSpawnRule": {

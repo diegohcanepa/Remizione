@@ -102,6 +102,7 @@ namespace Remizione
                 LightKind.Fire or
                 LightKind.Fireplace or
                 LightKind.Lantern => FloatTween.Create(TweenStyle.Linear, 1, .98f, 80, -1),
+                LightKind.LootOrb => FloatTween.Create(TweenStyle.Linear, .5f, .55f, 70, -1),
                 _ => null,
             };
         }

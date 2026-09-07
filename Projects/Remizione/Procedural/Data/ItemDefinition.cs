@@ -31,7 +31,7 @@ namespace Remizione
                 AreaOfEffect = 0;
 
             // Behavior
-            Behavior = element.GetEnum("behavior", ItemBehavior.Sack);
+            Behavior = element.GetEnum("behavior", ItemBehavior.Loot);
 
             // Category
             Category = element.GetEnum("category", ItemCategory.Misc);
@@ -105,7 +105,7 @@ namespace Remizione
 
             IsPassive = LightModifier != 0 || LuckModifier != 0;
 
-            if (Behavior != ItemBehavior.Sack)
+            if (Behavior != ItemBehavior.Loot)
             {
                 IsDepletable = false;
                 IsStackable = false;

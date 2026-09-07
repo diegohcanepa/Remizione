@@ -221,12 +221,6 @@ namespace Remizione
 
         #region Protected members
 
-        // AssignLoot
-        protected void AssignLoot()
-        {
-            ItemReward = Session.LootGenerator.RollForLoot(this);
-        }
-
         // CanCheckCollisions
         protected virtual bool CanCheckCollisions()
         {
@@ -236,11 +230,10 @@ namespace Remizione
         // DropLoot
         protected void DropLoot()
         {
-            if (Session.Room is not ProceduralRoom room)
+            if (Session.Room is not GameRoom room)
                 return;
 
-            if (Definition?.DropTrigger == LootDropTrigger.OnImpact)
-                AssignLoot();
+            ItemReward = Session.LootGenerator.RollForLoot(this);
 
             if (ItemReward != null)
             {
@@ -251,7 +244,7 @@ namespace Remizione
                 }
                 else
                 {
-                    loot = room.CreateThingClone<Prop>(nameof(Sack));
+                    loot = room.CreateThingClone<Prop>(nameof(LootOrb));
                 }
 
                 if (loot != null)
@@ -261,26 +254,8 @@ namespace Remizione
                     room.Children.Add(loot);
                 }
             }
-            else if (CoinReward > 0)
-            {
-                for (int i = 0; i < CoinReward; i++)
-                {
-                    if (room.CreateThingClone<Coin>("Coin") is Coin coin)
-                    {
-                        coin.Position = Position;
-
-                        // Offset aleatorio para que no caigan apiladas exactamente en el mismo píxel
-                        coin.Position += new Vector2(
-                            Random.Shared.Next(-6, 7),
-                            Random.Shared.Next(-6, 7)
-                        );
-                        room.Children.Add(coin);
-                    }
-                }
-            }
 
             ItemReward = null;
-            CoinReward = 0;
         }
 
         // GetDisplayName
@@ -380,9 +355,6 @@ namespace Remizione
             isCollisionDirty = true;
             InvalidateCollisionPolygons();
             InvalidateWalkArea();
-
-            if (MaxHP > 0 && Definition?.DropTrigger == LootDropTrigger.OnDeath)
-                AssignLoot();
         }
 
         // OnTakeDamage
@@ -445,7 +417,9 @@ namespace Remizione
                 if (knockbackVelocity == Vector2.Zero)
                 {
                     if (IsDead)
+                    {
                         Die();
+                    }
                     else
                     {
                         if (pendingDamageAmount.HasValue)
@@ -530,20 +504,6 @@ namespace Remizione
         public virtual bool CanTakeDamage()
         {
             return !IsDead;
-        }
-
-        // CoinReward
-        public int CoinReward
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    SyncHPMeter();
-                }
-            }
         }
 
         // Collider
@@ -637,7 +597,7 @@ namespace Remizione
                     Sound.Play(SoundNames.GraceGain);
                     Session.PlayerData.Grace += Definition.GraceReward;
                     var text = $"+{Definition.GraceReward} {Localization.GetValue(PlayerStat.Grace)}";
-                    Session.ObjectPools.FlyOffs.Get()?.ShowText(GetOverheadPosition(), text, ColorPalette.Text.Terra, ScaleInfo.Text.Small.X);
+                    Session.ObjectPools.FlyOffs.Get()?.ShowText(GetOverheadPosition(), text, ColorPalette.Text.Terra, ScaleInfo.Text.Medium.X);
                 }
 
                 DropLoot();

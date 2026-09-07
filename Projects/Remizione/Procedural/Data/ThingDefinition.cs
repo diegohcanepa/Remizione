@@ -19,17 +19,11 @@ namespace Remizione
         protected ThingDefinition(JsonElement element, SpawnScope defaultSpawnScope)
             : base(element)
         {
-            // DropCoinChanceBonus
-            DropCoinChanceBonus = MathF.Max(0, element.GetFloat("dropCoinChanceBonus", 0));
-
-            // DropSackChanceBonus
-            DropSackChanceBonus = MathF.Max(0, element.GetFloat("dropSackChanceBonus", 0));
+            // DropLootChanceBonus
+            DropLootChanceBonus = MathF.Max(0, element.GetFloat("dropLootChanceBonus", 0));
 
             // DropMode
-            DropMode = element.GetEnum("dropMode", LootDropMode.Sack);
-
-            // DropTrigger
-            DropTrigger = element.GetEnum("dropTrigger", LootDropTrigger.OnDeath);
+            DropMode = element.GetEnum("dropMode", LootDropMode.Orb);
 
             // Faction
             Faction = element.GetEnum("faction", Faction.Evil);
@@ -74,14 +68,8 @@ namespace Remizione
         // DropMode
         public LootDropMode DropMode { get; }
 
-        // DropTrigger
-        public LootDropTrigger DropTrigger { get; }
-
-        // DropCoinChanceBonus
-        public Ratio DropCoinChanceBonus { get; }
-
-        // DropSackChanceBonus
-        public Ratio DropSackChanceBonus { get; }
+        // DropLootChanceBonus
+        public Ratio DropLootChanceBonus { get; }
 
         // Effects
         public ReadOnlyCollection<EffectDescriptor> Effects { get; }

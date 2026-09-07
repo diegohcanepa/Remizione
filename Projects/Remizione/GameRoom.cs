@@ -515,6 +515,16 @@ namespace Remizione
         // ControlMouseCursor
         public virtual bool ControlMouseCursor => false;
 
+        // CreateThingClone
+        public virtual T CreateThingClone<T>(string declaredName)
+            where T : GameThing
+        {
+            if (Session.CreateThingClone(declaredName, string.Empty) is not T result)
+                throw new InvalidOperationException($"Failed to create runtime clone from'{declaredName}'.");
+
+            return result;
+        }
+
         // DustParticleKind
         [ScriptProperty]
         public DustParticleKind DustParticleKind { get; set; } = DustParticleKind.Ash;

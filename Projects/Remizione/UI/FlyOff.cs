@@ -120,6 +120,7 @@ namespace Remizione
                 Session.ObjectPools.FlyOffs.Return(this);
         }
 
+
         #endregion
 
         // IsVisible
@@ -132,11 +133,6 @@ namespace Remizione
                 return;
 
             var origin = source.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, -4);
-            if (source.IsKnockbackInProgress)
-            {
-
-            }
-
             ShowTextCore(origin, amount.ToString(CultureInfo.InvariantCulture), color, ScaleInfo.Text.Medium.X);
         }
 

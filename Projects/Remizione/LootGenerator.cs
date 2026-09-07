@@ -50,56 +50,64 @@ namespace Remizione
         // CheckDropSuccess
         private bool CheckDropSuccess(ThingDefinition def)
         {
-            // Calculate base chances based on thing difficulty
+            // Probabilidad base
             float chance = def.Difficulty switch
             {
-                Difficulty.Easy => 0.05f,
-                Difficulty.Normal => 0.12f,
-                Difficulty.Hard => 0.25f,
-                _ => 0.02f
+                Difficulty.Easy => 0.20f,   // Subimos de 0.05 a 0.20
+                Difficulty.Normal => 0.40f, // Subimos de 0.12 a 0.40
+                Difficulty.Hard => 0.70f,   // Subimos de 0.25 a 0.70
+                _ => 0.10f
             };
 
-            // Up to 10% of more chances depending on the current floor
-            if (session.CurrentRun is Run run)
-                chance += run.Progress * 0.1f;
+            // Bonos EXCLUSIVOS de la Catacumba
+            if (session.CurrentRun != null)
+                chance += session.CurrentRun.Progress * 0.15f;
 
-            // Player's luck
-            //chance += run.Traits.GetTotalTraitValue(TraitType.Luck);
+            // Bonus propio del contenedor/enemigo (Aplica siempre)
+            chance += def.DropLootChanceBonus;
 
-            // Extra chances
-            chance += def.DropSackChanceBonus;
-
-            // There is alwqays a 5% chance of getting nothing
             var rng = session.CurrentRun?.VolatileRng ?? session.MasterRunRng;
 
-            return rng.NextDouble() <= float.Clamp(chance, 0, .95f);
+            return rng.NextDouble() <= Math.Clamp(chance, 0f, 0.95f);
         }
 
         // SelectLootItem
-        private ItemDefinition? SelectLootItem(RoomNode node, ThingDefinition entityDef)
+        private ItemDefinition? SelectLootItem(ThingDefinition entityDef, RoomNode? node)
         {
-            var roomDef = node.Definition;
+            // 1. Contexto de la Sala/Habitación
+            var roomDef = node?.Definition;
             int qualityBoost = entityDef.QualityBoost;
 
-            if (node.Category == RoomCategory.Treasure)
+            if (node?.Category == RoomCategory.Treasure)
                 qualityBoost += 2;
 
-            // Si estás en el Piso 1, maxQ se mantiene bajo (0-2) evitando épicos/legendarios desbalanceados.
-            // En los pisos finales, el techo se eleva a 4-5.
-            float progress = session.CurrentRun is Run run ? run.Progress : 0;
-            int floorBonus = (int)(progress * 2f);
-            int maxQ = Math.Clamp(((int)roomDef.Difficulty * 2) + 1 + qualityBoost + floorBonus, 0, 5);
+            // 2. Manejo de Progreso (Catacumba vs. Superficie)
+            bool isInRun = session.CurrentRun != null;
+            float progress = session.CurrentRun is Run run ? run.Progress : 0f;
+
+            // Si estás en las Catacumbas, el progreso incrementa la calidad posible.
+            // En la Superficie, la calidad base depende únicamente de la dificultad de la sala o de la entidad.
+            int roomDifficulty = roomDef != null ? (int)roomDef.Difficulty : (int)entityDef.Difficulty;
+            int floorBonus = isInRun ? (int)(progress * 2f) : 0;
+
+            int maxQ = Math.Clamp((roomDifficulty * 2) + 1 + qualityBoost + floorBonus, 0, 5);
 
             var table = new ChanceTable();
 
-            // Reducción del "Empty Drop" en pisos profundos
-            float emptyWeight = qualityBoost > 0 ? 0 : 10f * (1.0f - (progress * 0.6f));
+            // Si ya pasamos CheckDropSuccess, en la Superficie el 'emptyWeight' 
+            // debería ser muy bajo (ej. 1.0f) o directamente 0 si la entidad tenía un QualityBoost.
+            float emptyWeight = qualityBoost > 0
+                ? 0f
+                : (isInRun ? 10f * (1.0f - (progress * 0.6f)) : 1.0f); // Bajado a 1.0f en la Superficie
+
             if (emptyWeight > 0)
                 table.Add(ChanceTable.Nothing, emptyWeight, 1, null);
 
-            Realm? lootRealm = entityDef.PreferredLootRealm ?? roomDef.PreferredLootRealm;
-            ItemCategory? lootCategory = entityDef.PreferredLootCategory ?? roomDef.PreferredLootCategory;
+            // 4. Dominios y Categorías preferidas
+            Realm? lootRealm = entityDef.PreferredLootRealm ?? roomDef?.PreferredLootRealm;
+            ItemCategory? lootCategory = entityDef.PreferredLootCategory ?? roomDef?.PreferredLootCategory;
 
+            // 5. Filtrado y Ponderación de Ítems
             for (int i = 0; i < GameData.Items.Count; i++)
             {
                 var itemDef = GameData.Items[i];
@@ -109,16 +117,20 @@ namespace Remizione
 
                 float weight = itemDef.SpawnWeight;
 
-                // Escala de peso para ítems valiosos según progreso y bonus de sala
-                if (itemDef.Quality >= 3)
-                    weight *= 1f + (progress * 1.5f);
+                // Bonificadores de peso para ítems valiosos (calidad >= 3)
+                if (isInRun)
+                {
+                    if (itemDef.Quality >= 3)
+                        weight *= 1f + (progress * 1.5f);
 
-                if (qualityBoost > 0 && itemDef.Quality >= 3)
-                    weight *= 1.5f + qualityBoost;
+                    if (qualityBoost > 0 && itemDef.Quality >= 3)
+                        weight *= 1.5f + qualityBoost;
+                }
 
                 table.Add(itemDef.Name, weight, 1, itemDef);
             }
 
+            // 6. Selección de RNG según contexto
             var rng = session.CurrentRun?.VolatileRng ?? session.MasterRunRng;
             return table.GetValue(rng)?.Context as ItemDefinition;
         }
@@ -128,13 +140,11 @@ namespace Remizione
         // RollForLoot
         public ItemDefinition? RollForLoot(GameThing thing)
         {
-            ProceduralRoom? room = thing.Room as ProceduralRoom;
-            if (room == null)
-                room = thing.Session.Room as ProceduralRoom;
-
-            if (room == null)
+            // No room
+            if (session.Room is not GameRoom room)
                 return null;
 
+            // No definition
             if (thing.Definition == null)
                 return null;
 
@@ -151,7 +161,7 @@ namespace Remizione
                 return null;
 
             // 4. Return loot
-            return SelectLootItem(room.RoomNode, thing.Definition);
+            return SelectLootItem(thing.Definition, (room as ProceduralRoom)?.RoomNode);
         }
     }
 }

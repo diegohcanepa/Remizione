@@ -98,9 +98,6 @@ namespace Remizione
                 if (actor.IsDead || actor.IsPlayer || actor.Faction != Faction.Evil)
                     continue;
 
-                if (actor.Definition?.DropTrigger == LootDropTrigger.OnImpact)
-                    continue;
-
                 actors.Add(actor);
             }
             actors.Shuffle(this.Random);
@@ -712,7 +709,7 @@ namespace Remizione
         #endregion
 
         // CreateThingClone
-        public T CreateThingClone<T>(string declaredName) where T : GameThing
+        public sealed override T CreateThingClone<T>(string declaredName)
         {
             if (Session.CreateThingClone(declaredName, $"{declaredName}*{RoomNode.Index}_{Name}_{instanceCount}") is not T result)
                 throw new InvalidOperationException($"Failed to create runtime clone from'{declaredName}'.");

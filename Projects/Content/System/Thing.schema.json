@@ -8,13 +8,7 @@
     {
       "type": "object",
       "properties": {
-        "dropCoinChanceBonus": {
-          "type": "number",
-          "default": 0,
-          "minimum": 0.0,
-          "maximum": 1.0
-        },
-        "dropSackChanceBonus": {
+        "dropLootChanceBonus": {
           "type": "number",
           "default": 0,
           "minimum": 0.0,
@@ -22,9 +16,6 @@
         },
         "dropMode": {
           "$ref": "enums.schema.json#/$defs/LootDropMode"
-        },
-        "dropTrigger": {
-          "$ref": "enums.schema.json#/$defs/LootDropTrigger"
         },
         "faction": {
           "$ref": "enums.schema.json#/$defs/Faction"

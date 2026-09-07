@@ -1,6 +1,5 @@
 ﻿using Adberration.Scripting;
 using Engendro;
-using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
@@ -94,7 +93,9 @@ namespace Remizione
                 Sprite.OpacityFactor = revealTween.CurrentValue;
             }
             else
+            {
                 Sprite.OpacityFactor = 1;
+            }
         }
 
         #endregion
@@ -167,7 +168,7 @@ namespace Remizione
         // OnTakeDamage
         protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType)
         {
-            if (!IsDead && Definition?.DropTrigger == LootDropTrigger.OnImpact)
+            if (!IsDead)
                 DropLoot();
         }
 

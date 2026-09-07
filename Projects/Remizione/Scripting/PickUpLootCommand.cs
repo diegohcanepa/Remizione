@@ -27,7 +27,7 @@ namespace Remizione.Scripting
 
             lootContainer.Loot.PickupSound?.Play();
 
-            if (lootContainer.Loot.Behavior == ItemBehavior.Sack)
+            if (lootContainer.Loot.Behavior == ItemBehavior.Loot)
             {
                 if (session.PlayerData.Inventory.Add(lootContainer.Loot) is Item item)
                 {

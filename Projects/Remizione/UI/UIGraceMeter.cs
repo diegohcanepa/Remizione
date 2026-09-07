@@ -69,7 +69,7 @@ namespace Remizione
                 if (newDeltaScore != deltaScore)
                 {
                     deltaScore = newDeltaScore;
-                    valueText.Text = deltaScore.ToString();
+                    valueText.Text = deltaScore.ToString(CultureInfo.InvariantCulture);
                 }
             }
 

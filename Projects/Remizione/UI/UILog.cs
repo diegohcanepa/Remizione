@@ -11,7 +11,6 @@ namespace Remizione
     {
         private readonly FloatTween fadeTween = new() { StartDelay = 2600 };
         private readonly Sprite icon;
-        private readonly Sprite iconShadow;
         private readonly TextSprite textSprite;
 
         // Constructor
@@ -24,19 +23,10 @@ namespace Remizione
                 Scale = ScaleInfo.UIElement.Medium
             };
 
-            // Icon shadow
-            iconShadow = new()
-            {
-                Color = Color.Black,
-                Opacity = ColorPalette.ShadowOpacity,
-                PivotOrigin = RectanglePoint.Center,
-                Scale = ScaleInfo.UIElement.Medium,
-            };
-
             // Text sprite
             this.textSprite = new(Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Default,
+                Color = ColorPalette.Text.Terra,
                 PivotOrigin = RectanglePoint.Bottom,
                 Scale = ScaleInfo.Text.Huge
             };
@@ -55,7 +45,6 @@ namespace Remizione
             Game.SpriteBatch.End();
 
             Game.SpriteBatch.Begin(Game.Camera);
-            iconShadow.Draw(gameTime);
             icon.Draw(gameTime);
             Game.SpriteBatch.End();
         }
@@ -69,7 +58,6 @@ namespace Remizione
 
             textSprite.Opacity = fadeTween.IsRunning ? fadeTween.CurrentValue : 1;
             icon.Opacity = textSprite.Opacity;
-            iconShadow.Opacity = textSprite.Opacity * ColorPalette.ShadowOpacity;
         }
 
         #endregion
@@ -89,11 +77,6 @@ namespace Remizione
 
             icon.RenderImage = image;
             icon.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.Top);
-
-            iconShadow.Position = icon.BoundingBox.Center;
-            iconShadow.RenderImage = image;
-            iconShadow.X -= 1.5f;
-            iconShadow.Y += .5f;
 
             fadeTween.Start(TweenStyle.CubicIn, 1, 0, 1000);
         }

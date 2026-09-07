@@ -202,7 +202,7 @@ namespace Adberration.Scripting
             if (string.IsNullOrWhiteSpace(instanceName))
                 instanceName = CreateCloneName(declaredName);
 
-            var result = CreateThingClone(declaredName, instanceName) ?? throw new InvalidOperationException("Unable to clone entity.");
+            var result = CreateThingClone(declaredName, instanceName) ?? throw new InvalidOperationException($"Failed to create runtime clone from'{declaredName}'.");
 
             if (persistent)
                 result.Persistent = persistent;

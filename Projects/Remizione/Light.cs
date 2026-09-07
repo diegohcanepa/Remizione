@@ -66,6 +66,13 @@ namespace Remizione
                     unlitTweenDuration = 1000;
                     break;
 
+                //  LootOrb
+                case LightKind.LootOrb:
+                    lightSprite.Tweens.OpacityTween = Utils.CreateLightOpacityTween(LightKind);
+                    litTweenDuration = 1000;
+                    unlitTweenDuration = 1000;
+                    break;
+
                 // MuzzleFlash
                 case LightKind.MuzzleFlash:
                     lightSprite.Tweens.Reset();

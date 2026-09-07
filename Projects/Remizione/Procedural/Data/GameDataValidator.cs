@@ -59,22 +59,6 @@ namespace Remizione
                 if (itemName != null && GameData.Items.Find(itemName) == null)
                     throw new InvalidOperationException($"The item definition supplied in [{script.Name}] does not exist.");
             }
-
-            // Check descriptions for all sack items
-            foreach (var item in GameData.Items)
-            {
-                if (item.Behavior != ItemBehavior.Sack)
-                    continue;
-
-                if (scriptLibrary.FindItemRoutine(item.Name, Verb.Examine) is not Script examineRoutine)
-                {
-                    throw new InvalidOperationException($"Missing examine routine for {item.Name} sack item.");
-                }
-                else if (!examineRoutine.Interruptible)
-                {
-                    AssertInterruptibleClause(examineRoutine);
-                }
-            }
         }
     }
 }

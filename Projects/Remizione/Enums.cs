@@ -77,7 +77,7 @@ namespace Remizione
     public enum InPlaceEffectType { None, Lightning }
 
     // ItemBehavior
-    public enum ItemBehavior { Sack, PlayerAction, InstantEffect }
+    public enum ItemBehavior { Loot, PlayerAction, InstantEffect }
 
     // ItemCategory
     public enum ItemCategory { Access, Explosive, Food, Luck, Medicine, Misc, Money, Pills, Sacred }
@@ -86,7 +86,7 @@ namespace Remizione
     public enum KnockbackIntensity { None, Low, Medium, High }
 
     // LightKind
-    public enum LightKind { Default, Lantern, Fire, Fireplace, Global, MuzzleFlash, Outdoor, Player }
+    public enum LightKind { Default, Lantern, Fire, Fireplace, Global, MuzzleFlash, Outdoor, Player, LootOrb }
 
     // LightState
     public enum LightState { Off, On, TurningOn, TurningOff }
@@ -97,16 +97,9 @@ namespace Remizione
     // LootDropMode
     public enum LootDropMode
     {
-        Sack,    // Solo sacos
+        Orb,     // Solo orbs
         Custom,  // Tira un ítem específico definido a mano
         None     // Nada de nada
-    }
-
-    // LootDropTrigger
-    public enum LootDropTrigger
-    {
-        OnDeath,
-        OnImpact
     }
 
     // MapNodeState

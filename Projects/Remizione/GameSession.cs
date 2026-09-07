@@ -125,10 +125,10 @@ namespace Remizione
             AotTypeRegistry.Register(typeof(GameRoom));
             AotTypeRegistry.Register(typeof(GoldenKey));
             AotTypeRegistry.Register(typeof(Drool));
+            AotTypeRegistry.Register(typeof(LootOrb));
             AotTypeRegistry.Register(typeof(Pottery));
             AotTypeRegistry.Register(typeof(Prop));
             AotTypeRegistry.Register(typeof(Rat));
-            AotTypeRegistry.Register(typeof(Sack));
             AotTypeRegistry.Register(typeof(SpearTrap));
             AotTypeRegistry.Register(typeof(Torch));
             AotTypeRegistry.Register(typeof(TrapdoorKey));
@@ -484,9 +484,6 @@ namespace Remizione
 
                     Camera.Follow(Player, true);
                     EnterRoom(startRoom);
-
-                    if (ScriptLibrary.FindRunRoutine(CurrentRun, RunStage.Start) is Script script)
-                        AwaitScript(script);
                 }
             }
             else
