@@ -18,11 +18,12 @@
         internal const string GutsMedium = nameof(GutsMedium);
         internal const string GutsSmall = nameof(GutsSmall);
         internal const string GraceGain = nameof(GraceGain);
+        internal const string ItemAdded = nameof(ItemAdded);
         internal const string Lightning = nameof(Lightning);
         internal const string LockOpen = nameof(LockOpen);
         internal const string LootSack = nameof(LootSack);
         internal const string Penitent = nameof(Penitent);
-        internal const string PickupBag = nameof(PickupBag);
+        internal const string PickupSack = nameof(PickupSack);
         internal const string PickupGeneric = nameof(PickupGeneric);
         internal const string PickupKey = nameof(PickupKey);
         internal const string PotteryBreak = nameof(PotteryBreak);

@@ -301,6 +301,7 @@ namespace Engendro
         // Game
         public EngendroGame Game { get; }
 
+        // GetViewMatrix
         public Matrix GetViewMatrix(Vector2 parallaxFactor)
         {
             // CASO BASE: Si es Zero, usamos la identidad del adaptador (Fijo total)

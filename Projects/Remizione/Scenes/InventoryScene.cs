@@ -57,7 +57,7 @@ namespace Remizione
             {
                 Color = ColorPalette.Text.MouseCursor,
                 PivotOrigin = RectanglePoint.Bottom,
-                Y = icons[0].Y - (slotSize / 2),
+                Y = icons[0].Y - slotSize,
                 Scale = ScaleInfo.Text.VeryLarge
             };
 
@@ -68,8 +68,8 @@ namespace Remizione
                 MaximumWidth = 200,
                 Multiline = false,
                 PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -20),
-                Scale = ScaleInfo.Text.Large,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -22),
+                Scale = ScaleInfo.Text.Medium,
             };
         }
 
@@ -202,7 +202,7 @@ namespace Remizione
 
             if (lastSelectedItem != null)
             {
-                //itemLabel.Draw(gameTime);
+                itemLabel.Draw(gameTime);
                 itemDescription.Draw(gameTime);
             }
 
@@ -265,8 +265,6 @@ namespace Remizione
             {
                 if (item != lastSelectedItem)
                 {
-                    MouseCursor.Icon = MouseCursorIcon.Hand;
-
                     if (lastSelectedItem?.Index >= 0)
                     {
                         icons[lastSelectedItem.Index].Scale = ScaleInfo.UIElement.Large;
@@ -287,8 +285,6 @@ namespace Remizione
             }
             else if (lastSelectedItem != null)
             {
-                MouseCursor.Icon = MouseCursorIcon.Cross;
-
                 if (lastSelectedItem.Index >= 0)
                     icons[lastSelectedItem.Index].Scale = ScaleInfo.UIElement.Large;
 

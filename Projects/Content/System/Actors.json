@@ -4,6 +4,7 @@
     {
       "name": "EnviousEye",
       "difficulty": "Normal",
+      "dropLootChanceBonus": 1,
       "graceReward": 5
     },
     {

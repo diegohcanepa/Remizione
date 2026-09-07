@@ -4,7 +4,7 @@ using System;
 namespace Remizione
 {
     /// <summary>
-    /// LootGenerator
+    /// LootGenerator - Algoritmo de drop directo y exclusivo estilo Souls/Elden Ring.
     /// </summary>
     public sealed class LootGenerator
     {
@@ -16,152 +16,113 @@ namespace Remizione
             this.session = session;
         }
 
-        #region Private members
-
-        // CanSpawn
-        private bool CanSpawn(ItemDefinition itemDef, int maxQ, Realm? realm, ItemCategory? category)
-        {
-            // Coin or player action
-            if (itemDef.Name == nameof(Coin) || itemDef.Behavior == ItemBehavior.PlayerAction)
-                return false;
-
-            // Can spawn or match quality?
-            if (itemDef.SpawnWeight <= 0 || itemDef.Quality > maxQ)
-                return false;
-
-            // Match realm
-            if (realm.HasValue && itemDef.Realm != realm)
-                return false;
-
-            // Match category
-            if (category.HasValue && itemDef.Category != category.Value)
-                return false;
-
-            // Avoid dropping duplicates for non-stackable items
-            // TODO: Check
-            /*
-            if (!itemDef.IsStackable && run.PlayerInventory.Find(itemDef.Name) != null)
-                return false;
-            */
-
-            return true;
-        }
+        #region Private methods
 
         // CheckDropSuccess
-        private bool CheckDropSuccess(ThingDefinition def)
+        private static bool CheckDropSuccess(ThingDefinition def, Random rng)
         {
-            // Probabilidad base
-            float chance = def.Difficulty switch
-            {
-                Difficulty.Easy => 0.20f,   // Subimos de 0.05 a 0.20
-                Difficulty.Normal => 0.40f, // Subimos de 0.12 a 0.40
-                Difficulty.Hard => 0.70f,   // Subimos de 0.25 a 0.70
-                _ => 0.10f
-            };
+            // Probabilidad base asignada o por dificultad de la entidad
+            float baseChance = def.DropLootChanceBonus > 0
+                ? def.DropLootChanceBonus
+                : GetBaseChanceByDifficulty(def.Difficulty);
 
-            // Bonos EXCLUSIVOS de la Catacumba
-            if (session.CurrentRun != null)
-                chance += session.CurrentRun.Progress * 0.15f;
+            // Stat de Suerte del Jugador (Discovery Multiplier estilo Souls)
+            // Ejemplo: Luck = 0 -> Multiplicador 1.0 (Sin cambios)
+            // Ejemplo: Luck = 50 -> Multiplicador 1.5 (+50% de probabilidad)
+            float playerLuck = 0;// session.PlayerTraits?.GetTotalTraitValue(TraitType.Luck) ?? 0f;
+            float finalChance = baseChance * (1f + (playerLuck / 100f));
 
-            // Bonus propio del contenedor/enemigo (Aplica siempre)
-            chance += def.DropLootChanceBonus;
-
-            var rng = session.CurrentRun?.VolatileRng ?? session.MasterRunRng;
-
-            return rng.NextDouble() <= Math.Clamp(chance, 0f, 0.95f);
+            // Si el dado supera la probabilidad final, el enemigo no suelta nada
+            return rng.NextDouble() <= Math.Clamp(finalChance, 0f, 1.0f);
         }
 
-        // SelectLootItem
-        private ItemDefinition? SelectLootItem(ThingDefinition entityDef, RoomNode? node)
+        // GetBaseChanceByDifficulty
+        private static float GetBaseChanceByDifficulty(Difficulty difficulty)
         {
-            // 1. Contexto de la Sala/Habitación
-            var roomDef = node?.Definition;
-            int qualityBoost = entityDef.QualityBoost;
+            return difficulty switch
+            {
+                Difficulty.Easy => 0.15f,
+                Difficulty.Normal => 0.30f,
+                Difficulty.Hard => 0.60f,
+                _ => 0.10f
+            };
+        }
 
-            if (node?.Category == RoomCategory.Treasure)
-                qualityBoost += 2;
-
-            // 2. Manejo de Progreso (Catacumba vs. Superficie)
-            bool isInRun = session.CurrentRun != null;
-            float progress = session.CurrentRun is Run run ? run.Progress : 0f;
-
-            // Si estás en las Catacumbas, el progreso incrementa la calidad posible.
-            // En la Superficie, la calidad base depende únicamente de la dificultad de la sala o de la entidad.
-            int roomDifficulty = roomDef != null ? (int)roomDef.Difficulty : (int)entityDef.Difficulty;
-            int floorBonus = isInRun ? (int)(progress * 2f) : 0;
-
-            int maxQ = Math.Clamp((roomDifficulty * 2) + 1 + qualityBoost + floorBonus, 0, 5);
-
+        /// <summary>
+        /// PASO 2: Filtra los ítems válidos para la entidad y realiza la ruleta por SpawnWeight.
+        /// </summary>
+        private ItemDefinition? SelectItemFromPool(ThingDefinition entityDef, Random rng)
+        {
             var table = new ChanceTable();
 
-            // Si ya pasamos CheckDropSuccess, en la Superficie el 'emptyWeight' 
-            // debería ser muy bajo (ej. 1.0f) o directamente 0 si la entidad tenía un QualityBoost.
-            float emptyWeight = qualityBoost > 0
-                ? 0f
-                : (isInRun ? 10f * (1.0f - (progress * 0.6f)) : 1.0f); // Bajado a 1.0f en la Superficie
-
-            if (emptyWeight > 0)
-                table.Add(ChanceTable.Nothing, emptyWeight, 1, null);
-
-            // 4. Dominios y Categorías preferidas
-            Realm? lootRealm = entityDef.PreferredLootRealm ?? roomDef?.PreferredLootRealm;
-            ItemCategory? lootCategory = entityDef.PreferredLootCategory ?? roomDef?.PreferredLootCategory;
-
-            // 5. Filtrado y Ponderación de Ítems
             for (int i = 0; i < GameData.Items.Count; i++)
             {
                 var itemDef = GameData.Items[i];
 
-                if (!CanSpawn(itemDef, maxQ, lootRealm, lootCategory))
+                if (!CanSpawnInPool(itemDef, entityDef))
                     continue;
 
-                float weight = itemDef.SpawnWeight;
-
-                // Bonificadores de peso para ítems valiosos (calidad >= 3)
-                if (isInRun)
-                {
-                    if (itemDef.Quality >= 3)
-                        weight *= 1f + (progress * 1.5f);
-
-                    if (qualityBoost > 0 && itemDef.Quality >= 3)
-                        weight *= 1.5f + qualityBoost;
-                }
-
-                table.Add(itemDef.Name, weight, 1, itemDef);
+                // Agrega el ítem a la ruleta ponderada usando su SpawnWeight directo
+                table.Add(itemDef.Name, itemDef.SpawnWeight, 1, itemDef);
             }
 
-            // 6. Selección de RNG según contexto
-            var rng = session.CurrentRun?.VolatileRng ?? session.MasterRunRng;
+            // Nota: No se agrega 'ChanceTable.Nothing'. 
+            // Si el flujo llegó aquí, se garantiza la selección de 1 ítem.
             return table.GetValue(rng)?.Context as ItemDefinition;
+        }
+
+        /// <summary>
+        /// Valida si un ítem puede formar parte del pool de recompensa de la entidad.
+        /// </summary>
+        private bool CanSpawnInPool(ItemDefinition itemDef, ThingDefinition entityDef)
+        {
+            // La Gracia (Monedas) y las acciones del jugador no pasan por esta tabla de ítems
+            if (itemDef.Name == nameof(Coin) || itemDef.Behavior == ItemBehavior.PlayerAction)
+                return false;
+
+            // Ítems sin peso configurado no spawnean
+            if (itemDef.SpawnWeight <= 0)
+                return false;
+
+            // Filtrar por Dominio preferido del enemigo (si está definido)
+            if (entityDef.PreferredLootRealm.HasValue && itemDef.Realm != entityDef.PreferredLootRealm)
+                return false;
+
+            // Filtrar por Categoría preferida del enemigo (si está definida)
+            if (entityDef.PreferredLootCategory.HasValue && itemDef.Category != entityDef.PreferredLootCategory.Value)
+                return false;
+
+            // Evitar duplicados para ítems no apilables que el jugador ya posee en el inventario
+            if (!itemDef.IsStackable && session.PlayerData.Inventory.Find(itemDef.Name) == null)
+                return false;
+
+            return true;
         }
 
         #endregion
 
-        // RollForLoot
+        /// <summary>
+        /// Determina el ítem dropeado por una entidad al morir.
+        /// Retorna 1 ítem si la tirada es exitosa, o null si la entidad no suelta nada.
+        /// </summary>
         public ItemDefinition? RollForLoot(GameThing thing)
         {
-            // No room
-            if (session.Room is not GameRoom room)
+            var def = thing.Definition;
+            if (def == null || def.DropMode == LootDropMode.None)
                 return null;
 
-            // No definition
-            if (thing.Definition == null)
-                return null;
-
-            // 1. Check drop mode
-            if (thing.Definition.DropMode is LootDropMode.None)
-                return null;
-
-            // 2. Check for custom drop
-            if (thing.Definition.DropMode == LootDropMode.Custom && !string.IsNullOrEmpty(thing.CustomDropName))
+            // 1. Drops fijos o personalizados (Jefes, Llaves o Key Items específicos)
+            if (def.DropMode == LootDropMode.Custom && !string.IsNullOrEmpty(thing.CustomDropName))
                 return GameData.Items.Find(thing.CustomDropName);
 
-            // 3. Will drop?
-            if (!CheckDropSuccess(thing.Definition))
+            var rng = session.CurrentRun?.VolatileRng ?? session.MasterRunRng;
+
+            // 2. PASO 1: Tirada de probabilidad de drop con Stat de Suerte (Elden Ring Item Discovery)
+            if (!CheckDropSuccess(def, rng))
                 return null;
 
-            // 4. Return loot
-            return SelectLootItem(thing.Definition, (room as ProceduralRoom)?.RoomNode);
+            // 3. PASO 2: Selección ponderada por SpawnWeight (Garantiza entregar 1 ítem del pool)
+            return SelectItemFromPool(def, rng);
         }
     }
 }

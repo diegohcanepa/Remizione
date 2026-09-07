@@ -796,10 +796,7 @@ namespace Remizione
         public void ShowInventory()
         {
             if (inventoryScene != null)
-            {
-                HUD?.Log.Hide();
                 Game.SceneManager.Push(inventoryScene);
-            }
         }
     }
 }

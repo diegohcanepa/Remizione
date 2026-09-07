@@ -24,9 +24,6 @@ namespace Remizione
             MinFloor = element.GetInt32("minFloor", 0);
             PreferredLootCategory = element.GetEnum<ItemCategory>("preferredLootCategory");
             PreferredLootRealm = element.GetEnum<Realm>("preferredLootRealm");
-            QualityBoost = element.GetInt32("qualityBoost", 0);
-            if (QualityBoost < 0)
-                QualityBoost = 0;
 
             // Pools
             Pools = ReadOnlyEnumSet<Tag>.FromJsonOrEmpty(element, "pools");
@@ -100,9 +97,6 @@ namespace Remizione
 
         // PreferredLootRealm
         public Realm? PreferredLootRealm { get; }
-
-        // QualityBoost
-        public int QualityBoost { get; }
 
         // Tags
         public ReadOnlyEnumSet<Tag> Tags { get; }

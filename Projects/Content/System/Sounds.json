@@ -48,6 +48,7 @@
     { "name": "ImpactA" },
     { "name": "ImpactB" },
     { "name": "Interact", "soundCount": 4, "volume": 0.5 },
+    { "name": "ItemAdded" },
     { "name": "ItemDiscard" },
     { "name": "Keyboard" },
     { "name": "Lever" },

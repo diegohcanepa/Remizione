@@ -33,10 +33,6 @@
         "preferredLootRealm": {
           "$ref": "enums.schema.json#/$defs/Realm"
         },
-        "qualityBoost": {
-          "type": "integer",
-          "minimum": 0
-        },
         "tags": {
           "type": "array",
           "uniqueItems": true,

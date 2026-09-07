@@ -65,9 +65,6 @@ namespace Remizione
             MiniMap.Draw(gameTime);
 
             Message.Draw(gameTime);
-
-            if (!Message.IsVisible)
-                Log.Draw(gameTime);
         }
 
         // OnUpdate
@@ -78,7 +75,6 @@ namespace Remizione
             Statuses.Update(gameTime);
             InventoryMeter.Update(gameTime);
             hpMeter.Update(gameTime);
-            Log.Update(gameTime);
             Message.Update(gameTime);
             energyMeter.Update(gameTime);
             MiniMap.Update(gameTime);
@@ -106,9 +102,6 @@ namespace Remizione
         // InventoryMeter
         public UIInventoryMeter InventoryMeter { get; }
 
-        // Log
-        public UILog Log { get; } = new();
-
         // Message
         public UIMessage Message { get; }
 
@@ -122,7 +115,6 @@ namespace Remizione
             energyMeter.Actor = Session.Player;
             Statuses.Actor = Session.Player;
             Message.Hide();
-            Log.Hide();
         }
 
         // Statuses

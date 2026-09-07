@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 
 namespace Remizione
@@ -11,6 +12,7 @@ namespace Remizione
         #region Private fields
 
         private readonly TextSprite amountText;
+        private readonly Sprite flyingIcon = new() { PivotOrigin = RectanglePoint.Center };
         private readonly Sprite icon;
         private readonly ItemContainer inventory;
         private int lastKnownCount = -1;
@@ -52,6 +54,7 @@ namespace Remizione
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera);
+            flyingIcon.Draw(gameTime);
             icon.Draw(gameTime);
             amountText.Draw(gameTime);
             Game.SpriteBatch.End();
@@ -60,6 +63,7 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            flyingIcon.Update(gameTime);
             icon.Update(gameTime);
 
             if (lastKnownCount != inventory.Count)
@@ -80,6 +84,21 @@ namespace Remizione
 
             icon.Tweens.RotationTween = rotationTween;
             icon.Tweens.ScaleTween = scaleTween;
+
+            Sound.Play(SoundNames.ItemAdded);
+        }
+
+        // AnimateAddItem
+        public void AnimateAddItem(Item item, Vector2 hudPos)
+        {
+            if (item.Definition.Image is not AtlasImage image)
+                return;
+
+            flyingIcon.RenderImage = image;
+            flyingIcon.Position = hudPos;
+            flyingIcon.Scale = ScaleInfo.UIElement.Tiny;
+            flyingIcon.Tweens.PositionTween = Vector2Tween.Create(TweenStyle.CubicInOut, flyingIcon.Position, icon.BoundingBox.Center, 1400);
+            flyingIcon.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, flyingIcon.Scale, ScaleInfo.UIElement.Large, 600, 2, Animate);
         }
     }
 }

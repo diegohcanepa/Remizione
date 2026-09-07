@@ -1,4 +1,5 @@
 ﻿using Adberration.Scripting;
+using Microsoft.Xna.Framework;
 
 namespace Remizione.Scripting
 {
@@ -31,10 +32,8 @@ namespace Remizione.Scripting
             {
                 if (session.PlayerData.Inventory.Add(lootContainer.Loot) is Item item)
                 {
-                    session.HUD?.InventoryMeter.Animate();
-
-                    if (item.Definition.Image != null)
-                        session.HUD?.Log.Show(item.Definition.DisplayName, item.Definition.Image);
+                    var startPos = (session.OutcomeTarget.Position - Session.Camera.Position) * Session.Camera.Zoom + (new Vector2(240, 135) * 0.5f);
+                    session.HUD.InventoryMeter.AnimateAddItem(item, startPos);
                 }
             }
 
