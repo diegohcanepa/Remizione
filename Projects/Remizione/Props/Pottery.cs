@@ -16,13 +16,11 @@ namespace Remizione
         {
             Atlas = Atlases.Props;
             ApproachBehavior = ApproachBehavior.ClosestSide;
-            Verb = Verb.Lift;
+            Verb = Verb.Attack;
             IsHittable = true;
             DeathSound = Sound.Find(SoundNames.PotteryBreak);
             DepthOffset = -2;
             DisplayNameKey = "Prop.Pottery";
-            //HurtSound = Sound.Find(SoundNames.ImpactA);
-            IsLiftable = true;
         }
 
         #region Protected members

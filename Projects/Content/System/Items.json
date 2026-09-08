@@ -2,6 +2,22 @@
 	"$schema": "./Item.schema.json",
 	"data": [
 		{
+			"name": "BarrenFig",
+			"animationName": "Consume",
+			"category": "Food",
+			"actionKind": "Self",
+			"isStackable": true,
+			"effects": [
+				{
+					"context": "Use",
+					"effectType": "HPGain",
+					"amount": "8",
+					"target": "Self",
+					"sound": "ConsumeBite"
+				}
+			]
+		},
+		{
 			"name": "Loquat",
 			"animationName": "Consume",
 			"category": "Food",
@@ -11,9 +27,9 @@
 				{
 					"context": "Use",
 					"effectType": "HPGain",
-					"amount": "2",
+					"amount": "4",
 					"target": "Self",
-					"sound": "AppleBite"
+					"sound": "ConsumeBite"
 				}
 			]
 		},

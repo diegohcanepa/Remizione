@@ -23,6 +23,8 @@ namespace Remizione
     {
         #region Private fields
 
+        private const string AngerMusicTag = "Anger";
+        private int combatMoodTimer = -1;
         private readonly ScriptConsole? console;
         private readonly EchoScene echoScene;
         private readonly InventoryScene inventoryScene;
@@ -168,6 +170,7 @@ namespace Remizione
         // SyncProceduralMusic
         private void SyncProceduralMusic()
         {
+            /*
             if (Room is ProceduralRoom proceduralRoom)
             {
                 var tag = proceduralRoom.RoomNode.Definition.MusicTag;
@@ -177,6 +180,7 @@ namespace Remizione
 
                 AudioManager.Music.PlayTag(tag);
             }
+            */
         }
 
         #endregion
@@ -222,10 +226,12 @@ namespace Remizione
             }
             */
 
+            /*
             Game.RenderTargets.Swap();
             Game.SpriteBatch.Begin(effect: RemizioneGame.Effects.CRT.Effect);
             Game.SpriteBatch.Draw(Game.RenderTargets.PreviousTarget, Vector2.Zero, Color.White);
             Game.SpriteBatch.End();
+            */
 
             if (Player != null && !Player.IsDead)
                 HUD?.Draw(gameTime);
@@ -376,6 +382,22 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
 
+            if (combatMoodTimer >= 0)
+            {
+                combatMoodTimer -= gameTime.ElapsedGameTime.Milliseconds;
+                if (combatMoodTimer < 0)
+                {
+                    if (Room != null)
+                    {
+                        var tag = Room.MusicTag;
+                        if (string.IsNullOrWhiteSpace(tag))
+                            tag = "Idle";
+
+                        AudioManager.Music.PlayTag(tag, 10000);
+                    }
+                }
+            }
+
             savingIcon.Update(gameTime);
 
             if (console != null)
@@ -485,6 +507,15 @@ namespace Remizione
             {
                 CompleteRun();
             }
+        }
+
+        // BeginCombatMood
+        public void BeginCombatMood()
+        {
+            if (AudioManager.Music.CurrentTag != AngerMusicTag)
+                AudioManager.Music.PlayTag(AngerMusicTag);
+
+            combatMoodTimer = 10000;
         }
 
         // BeginRun

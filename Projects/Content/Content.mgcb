@@ -117,13 +117,6 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/Ambience/Purgatory.wav;Audio/Ambience/Purgatory
 
-#begin Audio/FX/AppleBite.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/FX/AppleBite.wav
-
 #begin Audio/FX/BareFist1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -194,19 +187,19 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/Break.wav;Audio/FX/Break
 
-#begin Audio/FX/CoinLoss.wav
+#begin Audio/FX/ConsumeBite.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
-/build:Audio/FX/CoinLoss.wav;Audio/FX/CoinLoss
+/build:Audio/FX/ConsumeBite.wav;Audio/FX/ConsumeBite
 
-#begin Audio/FX/CollectCoin.wav
+#begin Audio/FX/ConsumeDrink.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
-/build:Audio/FX/CollectCoin.wav;Audio/FX/CollectCoin
+/build:Audio/FX/ConsumeDrink.wav;Audio/FX/ConsumeDrink
 
 #begin Audio/FX/DoorGateClose.wav
 /importer:WavImporter
@@ -249,55 +242,6 @@
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/DoorGenericOpen2.wav;Audio/FX/DoorGenericOpen2
-
-#begin Audio/FX/Drink.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/FX/Drink.wav;Audio/FX/Drink
-
-#begin Audio/FX/DrinkFromBottle.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/FX/DrinkFromBottle.wav;Audio/FX/DrinkFromBottle
-
-#begin Audio/FX/EatPill.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/FX/EatPill.wav;Audio/FX/EatPill
-
-#begin Audio/FX/ElectricZapStrong.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/FX/ElectricZapStrong.wav;Audio/FX/ElectricZapStrong
-
-#begin Audio/FX/EnergyBolt1.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/FX/EnergyBolt1.wav;Audio/FX/EnergyBolt1
-
-#begin Audio/FX/EnergyBolt2.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/FX/EnergyBolt2.wav;Audio/FX/EnergyBolt2
-
-#begin Audio/FX/EnergyBolt3.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/FX/EnergyBolt3.wav;Audio/FX/EnergyBolt3
 
 #begin Audio/FX/EnviousEyeAttack.wav
 /importer:WavImporter
@@ -459,13 +403,6 @@
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/GutsSmall3.wav;Audio/FX/GutsSmall3
-
-#begin Audio/FX/Heartbeat.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/FX/Heartbeat.wav;Audio/FX/Heartbeat
 
 #begin Audio/FX/ImpactA.wav
 /importer:WavImporter
@@ -676,13 +613,6 @@
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/PickupGeneric.wav;Audio/FX/PickupGeneric
-
-#begin Audio/FX/PickupHeart.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/FX/PickupHeart.wav;Audio/FX/PickupHeart
 
 #begin Audio/FX/PickupKey.wav
 /importer:WavImporter

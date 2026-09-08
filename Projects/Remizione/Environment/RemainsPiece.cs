@@ -137,11 +137,15 @@ namespace Remizione
                     isFirstBounce = false;
                     startPos = targetPos;
 
-                    // 6. Fricción aleatoria para que no todas se deslicen igual al final
-                    float friction = 0.15f + ((float)Random.Shared.NextDouble() * 0.25f);
+                    // Mayor fricción (pierde entre el 80% y 90% de su velocidad)
+                    float friction = 0.08f + ((float)Random.Shared.NextDouble() * 0.10f);
                     speed *= friction;
 
-                    CalculateNextArc(4, 9);
+                    // Disminuir drásticamente la velocidad de giro tras el impacto
+                    rotationSpeed *= 0.3f;
+
+                    // Rebote secundario apenas perceptible (1 a 3 px)
+                    CalculateNextArc(1, 3);
                 }
                 else
                 {
@@ -199,7 +203,7 @@ namespace Remizione
             // 4. Delay de salida más generoso para romper el "bloque" inicial
             launchDelay = (float)Random.Shared.NextDouble() * 0.2f;
 
-            CalculateNextArc(12, 22);
+            CalculateNextArc(3, 7);
         }
 
         // Opacity

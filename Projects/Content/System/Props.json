@@ -1,5 +1,20 @@
 {
   "$schema": "./Prop.schema.json",
   "data": [
+        {
+      "name": "PotteryA",
+      "difficulty": "Easy",
+      "baseDropChance": 0.5,
+      "tags": ["Pottery"],
+      "lootPool": [
+        {
+          "item": "BarrenFig",
+          "weight": 10
+        }
+      ],
+      "placements": [
+        "Floor"
+      ]
+    }
   ]
 }

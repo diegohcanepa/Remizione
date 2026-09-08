@@ -588,7 +588,7 @@ namespace Remizione
 
             if (!IsPlayer)
             {
-                if (Definition != null)
+                if (Definition?.GraceReward > 0)
                 {
                     Sound.Play(SoundNames.GraceGain);
                     Session.PlayerData.Grace += Definition.GraceReward;

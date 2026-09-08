@@ -297,6 +297,10 @@ namespace Adberration
         [ScriptProperty]
         public bool IsPreviousRoom => Session.PreviousRoom == this;
 
+        // MusicTag
+        [ScriptProperty]
+        public string MusicTag { get; set; } = string.Empty;
+
         // ScrollLock
         [ScriptProperty]
         public ScrollLock ScrollLock { get; set; }

@@ -4,8 +4,8 @@
   <String Key="Actor.Penitent">Penitent</String>
   <String Key="Actor.Rat">Rat</String>
   <String Key="DamageType.Physical">Physical</String>
-  <String Key="EffectTemplate.Damage" />
-  <String Key="EffectTemplate.EnergyRestore" />
+  <String Key="EffectTemplate.Damage"></String>
+  <String Key="EffectTemplate.EnergyRestore"></String>
   <String Key="EffectTemplate.HPGain">+{amount} Willpower</String>
   <String Key="EffectTemplate.HPLoss">-{amount} Willpower</String>
   <String Key="FloatingMessage.Failed">Failed!</String>
@@ -149,7 +149,7 @@
   <String Key="MessageKind.PathCleared">The way is open.</String>
   <String Key="Misc.All">All</String>
   <String Key="Misc.And">and</String>
-  <String Key="Misc.Chance" />
+  <String Key="Misc.Chance"></String>
   <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=—áéíóúÁÉÍÓÚ</String>
   <String Key="Misc.CopyrightDeveloper">© 2024 Indiesruption</String>
   <String Key="Misc.Credits">Remizione
@@ -204,6 +204,7 @@ Bla bla bla</String>
   <String Key="Platform.Windows.Messages.PressAnyButton">Press any button to continue.</String>
   <String Key="Platform.Windows.Messages.PressAnyKeyOrButton">Press any key or button to continue.</String>
   <String Key="PlayerStat.Grace">Grace</String>
+  <String Key="PlayerStat.Willpower">Willpower</String>
   <String Key="Playtime.Hour">hour</String>
   <String Key="Playtime.Hours">hours</String>
   <String Key="Playtime.LessThanAMinute">Less than a minute</String>

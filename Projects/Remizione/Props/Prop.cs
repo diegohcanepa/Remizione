@@ -253,7 +253,7 @@ namespace Remizione
         {
             if (remainsPieces?.Count > 0)
             {
-                var remains = new Remains(Session, string.Empty, Vector2.One, remainsPieces, remainsPieces.Count, true)
+                var remains = new Remains(Session, string.Empty, new(.7f), remainsPieces, remainsPieces.Count * 2, true)
                 {
                     Position = Position
                 };

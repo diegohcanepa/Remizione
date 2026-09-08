@@ -59,13 +59,13 @@ namespace Remizione
 
             if (distance.Y != 0)
             {
-                yTween.Start(TweenStyle.CubicOut, origin.Y, origin.Y + distance.Y, duration);
+                yTween.Start(TweenStyle.Linear, origin.Y, origin.Y + distance.Y, duration);
                 sprite.Tweens.YTween = yTween;
             }
 
             if (distance.X != 0)
             {
-                xTween.Start(TweenStyle.CubicOut, origin.X, origin.X + distance.X, duration);
+                xTween.Start(TweenStyle.Linear, origin.X, origin.X + distance.X, duration);
                 sprite.Tweens.XTween = xTween;
             }
 
@@ -73,7 +73,7 @@ namespace Remizione
             opacityTween.Start(TweenStyle.QuadraticIn, 1, 0, fadeDuration);
 
             sprite.Tweens.OpacityTween = opacityTween;
-            //sprite.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.Linear, Vector2.Zero, sprite.Scale, 200);
+            sprite.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.Linear, Vector2.Zero, sprite.Scale, 200);
 
             if (shake)
             {

@@ -123,7 +123,7 @@ namespace Remizione
         // DrawFlyOffs
         private void DrawFlyOffs(GameTime gameTime)
         {
-            Game.SpriteBatch.Begin(Session.Camera, SamplerState.PointClamp);
+            Game.SpriteBatch.Begin(Session.Camera);
             for (var i = Session.ObjectPools.FlyOffs.InUse.Count - 1; i >= 0; i--)
             {
                 Session.ObjectPools.FlyOffs.InUse[i].Draw(gameTime);
@@ -545,7 +545,7 @@ namespace Remizione
 
         // LightMapColor
         [ScriptProperty]
-        public Color LightMapColor { get; set; } = new Color(10, 10, 25);
+        public Color LightMapColor { get; set; } = new Color(30, 30, 45);
 
         // Lights
         public NamedReadOnlyCollection<Light> Lights { get; }

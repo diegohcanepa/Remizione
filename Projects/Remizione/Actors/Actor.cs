@@ -498,6 +498,9 @@ namespace Remizione
         // OnTakeDamage
         protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType)
         {
+            if (attacker is Actor && IsPlayer)
+                Session.BeginCombatMood();
+
             DiscardActiveThrowable();
 
             if (!IsDead)
