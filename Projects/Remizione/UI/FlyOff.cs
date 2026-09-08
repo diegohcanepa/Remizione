@@ -73,7 +73,7 @@ namespace Remizione
             opacityTween.Start(TweenStyle.QuadraticIn, 1, 0, fadeDuration);
 
             sprite.Tweens.OpacityTween = opacityTween;
-            sprite.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.Linear, Vector2.Zero, sprite.Scale, 200);
+            //sprite.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.Linear, Vector2.Zero, sprite.Scale, 200);
 
             if (shake)
             {

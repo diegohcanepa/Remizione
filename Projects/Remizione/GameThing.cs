@@ -593,7 +593,7 @@ namespace Remizione
                     Sound.Play(SoundNames.GraceGain);
                     Session.PlayerData.Grace += Definition.GraceReward;
                     var text = $"+{Definition.GraceReward} {Localization.GetValue(PlayerStat.Grace)}";
-                    Session.ObjectPools.FlyOffs.Get()?.ShowText(GetOverheadPosition(), text, ColorPalette.Text.Terra, ScaleInfo.Text.Medium.X);
+                    Session.ObjectPools.FlyOffs.Get()?.ShowText(GetOverheadPosition(), text, ColorPalette.Text.Grace, ScaleInfo.Text.Medium.X);
                 }
 
                 DropLoot();

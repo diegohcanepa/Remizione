@@ -112,6 +112,7 @@ namespace Remizione
             internal static Color Disabled { get; } = new(80, 76, 76);
             internal static Color Fill { get; } = new(15, 42, 63);
             internal static Color Gold { get; } = new(240, 181, 65);
+            internal static Color Grace { get; } = Terra;
             internal static Color Green { get; } = new(59, 125, 79);
             internal static Color GreenLight { get; } = new(99, 171, 63);
             internal static Color Highlight { get; } = new(172, 167, 144);
