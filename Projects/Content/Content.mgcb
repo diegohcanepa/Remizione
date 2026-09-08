@@ -257,19 +257,12 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/EnviousEyeMove.wav;Audio/FX/EnviousEyeMove
 
-#begin Audio/FX/Error1.wav
+#begin Audio/FX/Error.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
-/build:Audio/FX/Error1.wav;Audio/FX/Error1
-
-#begin Audio/FX/Error2.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/FX/Error2.wav;Audio/FX/Error2
+/build:Audio/FX/Error.wav;Audio/FX/Error
 
 #begin Audio/FX/FenceOpen.wav
 /importer:WavImporter

@@ -117,6 +117,7 @@ namespace Remizione
         private static void RegisterAotTypes()
         {
             AotTypeRegistry.Register(typeof(Actor));
+            AotTypeRegistry.Register(typeof(Bonfire));
             AotTypeRegistry.Register(typeof(BronzeKey));
             AotTypeRegistry.Register(typeof(CloseUpRoom));
             AotTypeRegistry.Register(typeof(Coin));

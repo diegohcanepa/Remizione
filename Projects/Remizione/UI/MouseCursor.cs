@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -231,6 +232,7 @@ namespace Remizione
         public static void Shake()
         {
             shakeTween.Start(TweenStyle.CubicInOut, 0, 1, 50, 4);
+            Sound.Play(SoundNames.Error);
         }
 
         // SubText

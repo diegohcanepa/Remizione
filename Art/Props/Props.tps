@@ -173,6 +173,29 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">Bonfire-assets/Bonfire01.png</key>
+            <key type="filename">Bonfire-assets/Bonfire02.png</key>
+            <key type="filename">Bonfire-assets/Bonfire03.png</key>
+            <key type="filename">Bonfire-assets/Bonfire04.png</key>
+            <key type="filename">Bonfire-assets/Bonfire05.png</key>
+            <key type="filename">Bonfire-assets/Bonfire06.png</key>
+            <key type="filename">Bonfire-assets/Bonfire07.png</key>
+            <key type="filename">Bonfire-assets/Bonfire08.png</key>
+            <key type="filename">Bonfire-assets/Bonfire09.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,6,13,13</rect>
+                <key>scale9Paddings</key>
+                <rect>7,6,13,13</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">CrossLargeA-assets/CrossLargeA.png</key>
             <key type="filename">CrossLargeA-assets/CrossLargeAShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -534,6 +557,7 @@
                     <filename>Props-assets</filename>
                     <filename>CrossLargeA-assets</filename>
                     <filename>LargeRockA-assets</filename>
+                    <filename>Bonfire-assets</filename>
                 </array>
             </struct>
         </map>

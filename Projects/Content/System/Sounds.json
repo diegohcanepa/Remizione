@@ -24,7 +24,7 @@
     { "name": "DoorGenericOpen", "soundCount": 2 },
     { "name": "EnviousEyeAttack" },
     { "name": "EnviousEyeMove", "volume": 0.2 },
-    { "name": "Error", "soundCount": 2 },
+    { "name": "Error", "pitchVariance": 0.5 },
     { "name": "FenceOpen" },
     { "name": "FleshImpact", "soundCount": 2 },
     { "name": "FootstepGrass", "soundCount": 2, "volume": 0.7, "maxInstances": 10, "pitchVariance": 0.5 },

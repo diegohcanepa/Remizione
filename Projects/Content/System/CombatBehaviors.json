@@ -25,9 +25,7 @@
         "intents": [
           {
             "name": "Punch",
-            "soundStart": "WhooshSmallA",
             "actionKind": "Proximity",
-            "staminaCost": 1,
             "effects": [
               {
                 "context": "Attack",

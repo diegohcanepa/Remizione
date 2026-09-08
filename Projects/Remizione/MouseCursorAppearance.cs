@@ -128,6 +128,11 @@ namespace Remizione
                     MouseCursor.Icon = MouseCursorIcon.Sack;
                     break;
 
+                // Rest
+                case Verb.Rest:
+                    MouseCursor.Icon = MouseCursorIcon.Rest;
+                    break;
+
                 // Talk
                 case Verb.Talk:
                     MouseCursor.Icon = MouseCursorIcon.Talk;

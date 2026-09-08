@@ -301,7 +301,7 @@
             </struct>
             <key type="filename">Items-assets/AppleOn.png</key>
             <key type="filename">Items-assets/BarrenFig.png</key>
-            <key type="filename">Items-assets/InventorySlot.png</key>
+            <key type="filename">Items-assets/FakeItem.png</key>
             <key type="filename">Items-assets/Loquat.png</key>
             <key type="filename">XboxControls-assets/XboxA.png</key>
             <key type="filename">XboxControls-assets/XboxB.png</key>
@@ -554,6 +554,21 @@
                 <rect>2,3,5,6</rect>
                 <key>scale9Paddings</key>
                 <rect>2,3,5,6</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">MouseCursors-assets/MouseCursorRestIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,3,5,6</rect>
+                <key>scale9Paddings</key>
+                <rect>3,3,5,6</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

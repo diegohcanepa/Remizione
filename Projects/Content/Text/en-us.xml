@@ -4,8 +4,8 @@
   <String Key="Actor.Penitent">Penitent</String>
   <String Key="Actor.Rat">Rat</String>
   <String Key="DamageType.Physical">Physical</String>
-  <String Key="EffectTemplate.Damage"></String>
-  <String Key="EffectTemplate.EnergyRestore"></String>
+  <String Key="EffectTemplate.Damage" />
+  <String Key="EffectTemplate.EnergyRestore" />
   <String Key="EffectTemplate.HPGain">+{amount} Willpower</String>
   <String Key="EffectTemplate.HPLoss">-{amount} Willpower</String>
   <String Key="FloatingMessage.Failed">Failed!</String>
@@ -149,7 +149,7 @@
   <String Key="MessageKind.PathCleared">The way is open.</String>
   <String Key="Misc.All">All</String>
   <String Key="Misc.And">and</String>
-  <String Key="Misc.Chance"></String>
+  <String Key="Misc.Chance" />
   <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=—áéíóúÁÉÍÓÚ</String>
   <String Key="Misc.CopyrightDeveloper">© 2024 Indiesruption</String>
   <String Key="Misc.Credits">Remizione
@@ -210,6 +210,8 @@ Bla bla bla</String>
   <String Key="Playtime.LessThanAMinute">Less than a minute</String>
   <String Key="Playtime.Minute">minute</String>
   <String Key="Playtime.Minutes">minutes</String>
+  <String Key="Prop.BonfireLit">Rest</String>
+  <String Key="Prop.BonfireUnlit" />
   <String Key="Prop.Coin">Coin</String>
   <String Key="Prop.Cross">Cross</String>
   <String Key="Prop.CrucifiedMan">Crucified man</String>

@@ -15,10 +15,15 @@ namespace Remizione
         {
             PersistentType persistentType;
 
+            // Actor
             persistentType = MapType(typeof(Actor));
             persistentType.Map(nameof(Actor.Effects));
             persistentType.Map(nameof(Actor.HP));
             persistentType.Map(nameof(Actor.Position));
+
+            // Bonfire
+            persistentType = MapType(typeof(Bonfire));
+            persistentType.Map(nameof(Bonfire.IsLit));
         }
     }
 }

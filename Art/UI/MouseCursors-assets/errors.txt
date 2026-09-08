@@ -1,0 +1,4 @@
+[9/8/2026, 1:59:08 PM] layer "MouseCursorRestIcon.png copy": Expected end of input but "c" found.
+[9/8/2026, 1:59:06 PM] layer "MouseCursorRestIcon.png copy 2": Expected end of input but "c" found.
+[9/8/2026, 2:01:21 PM] layer "MouseCursorRestIcon.png copy": Expected end of input but "c" found.
+[9/8/2026, 2:09:18 PM] layer "MouseCursorRestIcon.png copy": Expected end of input but "c" found.
