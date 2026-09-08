@@ -2,7 +2,7 @@
 	"$schema": "./Item.schema.json",
 	"data": [
 		{
-			"name": "Apple",
+			"name": "Loquat",
 			"animationName": "Consume",
 			"category": "Food",
 			"actionKind": "Self",

@@ -614,6 +614,13 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/Miracle2.wav;Audio/FX/Miracle2
 
+#begin Audio/FX/MoveToSack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/MoveToSack.wav;Audio/FX/MoveToSack
+
 #begin Audio/FX/Penitent1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

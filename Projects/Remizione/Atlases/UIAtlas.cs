@@ -24,12 +24,10 @@ namespace Remizione
             InventoryItemAmounts = CreateReadOnlyCollection("InventoryItemAmount", 1, 5);
             InventoryItemSlot = this[nameof(InventoryItemSlot)];
             InventoryMeterSlot = this[nameof(InventoryMeterSlot)];
-            MagnifierIcon = this[nameof(MagnifierIcon)];
             MessageContainer = this[nameof(MessageContainer)];
             MiniMapNodes = CreateReadOnlyCollection<MapNodeState>("MiniMapNode");
             MouseLeftButtonIcon = this[nameof(MouseLeftButtonIcon)];
             MouseRightButtonIcon = this[nameof(MouseRightButtonIcon)];
-            PickupShadow = this[nameof(PickupShadow)];
             Pixel = this[nameof(Pixel)];
             PopupContainer = this[nameof(PopupContainer)];
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
@@ -79,9 +77,6 @@ namespace Remizione
         // InventoryMeterSlot
         public AtlasImage InventoryMeterSlot { get; }
 
-        // MagnifierIcon
-        public AtlasImage MagnifierIcon { get; }
-
         // MessageContainer
         public AtlasImage MessageContainer { get; }
 
@@ -93,9 +88,6 @@ namespace Remizione
 
         // MouseRightButtonIcon
         public AtlasImage MouseRightButtonIcon { get; }
-
-        // PickupShadow
-        public AtlasImage PickupShadow { get; }
 
         // Pixel
         public AtlasImage Pixel { get; }

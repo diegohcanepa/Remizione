@@ -94,6 +94,8 @@ namespace Remizione
             if (item.Definition.Image is not AtlasImage image)
                 return;
 
+            Sound.Play(SoundNames.MoveToSack);
+
             flyingIcon.RenderImage = image;
             flyingIcon.Position = hudPos;
             flyingIcon.Scale = ScaleInfo.UIElement.Tiny;

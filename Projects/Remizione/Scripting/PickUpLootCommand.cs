@@ -32,7 +32,7 @@ namespace Remizione.Scripting
             {
                 if (session.PlayerData.Inventory.Add(lootContainer.Loot) is Item item)
                 {
-                    var startPos = (session.OutcomeTarget.Position - Session.Camera.Position) * Session.Camera.Zoom + (new Vector2(240, 135) * 0.5f);
+                    var startPos = ((session.OutcomeTarget.Position - Session.Camera.Position) * Session.Camera.Zoom) + (new Vector2(240, 135) * 0.5f);
                     session.HUD.InventoryMeter.AnimateAddItem(item, startPos);
                 }
             }

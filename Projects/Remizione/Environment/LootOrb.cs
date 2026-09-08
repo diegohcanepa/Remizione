@@ -35,7 +35,7 @@ namespace Remizione
         protected override void OnLoad()
         {
             base.OnLoad();
-            Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicIn, 0, .6f, 200);
+            Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicOut, 0, .75f, 1000);
         }
 
         // OnLootChanged

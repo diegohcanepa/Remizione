@@ -43,7 +43,7 @@ namespace Remizione
         {
             internal static Color Back { get; } = Text.Terra;
             internal static Color Diff { get; } = Text.Orange;
-            internal static Color Fore { get; } = new(129, 36, 36);
+            internal static Color Fore { get; } = new(164, 60, 60);
         }
 
         // MenuItemTextActive

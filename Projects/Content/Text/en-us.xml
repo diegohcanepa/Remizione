@@ -4,10 +4,10 @@
   <String Key="Actor.Penitent">Penitent</String>
   <String Key="Actor.Rat">Rat</String>
   <String Key="DamageType.Physical">Physical</String>
-  <String Key="EffectTemplate.Damage"></String>
-  <String Key="EffectTemplate.EnergyRestore"></String>
-  <String Key="EffectTemplate.HPGain">+{amount} Health</String>
-  <String Key="EffectTemplate.HPLoss">-{amount} Health</String>
+  <String Key="EffectTemplate.Damage" />
+  <String Key="EffectTemplate.EnergyRestore" />
+  <String Key="EffectTemplate.HPGain">+{amount} Willpower</String>
+  <String Key="EffectTemplate.HPLoss">-{amount} Willpower</String>
   <String Key="FloatingMessage.Failed">Failed!</String>
   <String Key="FloatingMessage.Success">Success!</String>
   <String Key="HitType.Critical">Critical!</String>
@@ -26,13 +26,14 @@
   <String Key="InputBinding.Select">Select</String>
   <String Key="InputBinding.UseFriendlyItem">Use</String>
   <String Key="InputBinding.UseItem">Use</String>
-  <String Key="Item.Apple.Name">Apple</String>
+  <String Key="Item.BarrenFig.Name">Barren fig</String>
   <String Key="Item.BittenApple.Name">Bitten apple</String>
   <String Key="Item.BronzeKey.Name">Bronze key</String>
   <String Key="Item.Coin.Name">Coin</String>
   <String Key="Item.GoldenKey.Name">Golden key</String>
   <String Key="Item.Lift.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Lift.Name">Lift</String>
+  <String Key="Item.Loquat.Name">Loquat</String>
   <String Key="Item.ServantCross.Name">Servant's Cross</String>
   <String Key="Item.TrapdoorKey.Name">Trapdoor key</String>
   <String Key="Item.Verse.Name">Verse</String>
@@ -148,7 +149,7 @@
   <String Key="MessageKind.PathCleared">The way is open.</String>
   <String Key="Misc.All">All</String>
   <String Key="Misc.And">and</String>
-  <String Key="Misc.Chance"></String>
+  <String Key="Misc.Chance" />
   <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=—áéíóúÁÉÍÓÚ</String>
   <String Key="Misc.CopyrightDeveloper">© 2024 Indiesruption</String>
   <String Key="Misc.Credits">Remizione

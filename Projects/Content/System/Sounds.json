@@ -54,6 +54,7 @@
     { "name": "LockOpen" },
     { "name": "MaleHurtA", "soundCount": 8 },
     { "name": "Miracle", "soundCount": 2 },    
+    { "name": "MoveToSack" },
     { "name": "Penitent", "soundCount": 5, "volume": 0.1 },
     { "name": "PenitentDeath" },
     { "name": "PickupCoin" },

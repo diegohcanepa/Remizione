@@ -27,7 +27,7 @@ namespace Remizione
         {
             timer -= gameTime.ElapsedGameTime.Milliseconds;
             if (timer <= 0)
-               Machine.ChangeState<BodyStandState>();
+                Machine.ChangeState<BodyStandState>();
         }
     }
 }

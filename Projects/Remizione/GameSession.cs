@@ -408,14 +408,17 @@ namespace Remizione
                     InteractionContext.Refresh();
             }
 
-            if (Player != null && Player.ActiveThrowable == null)
+            if (PlayerData.Inventory.Count > 0)
             {
-                if (!IsAwaiting && IsCurrentScene)
+                if (Player != null && Player.ActiveThrowable == null)
                 {
-                    if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
+                    if (!IsAwaiting && IsCurrentScene)
                     {
-                        ShowInventory();
-                        return;
+                        if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
+                        {
+                            ShowInventory();
+                            return;
+                        }
                     }
                 }
             }
