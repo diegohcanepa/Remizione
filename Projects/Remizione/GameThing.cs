@@ -329,7 +329,7 @@ namespace Remizione
 
         // OnItemRewardChanged
         protected virtual void OnItemRewardChanged()
-        { 
+        {
         }
 
         // OnKnockbackCompleted

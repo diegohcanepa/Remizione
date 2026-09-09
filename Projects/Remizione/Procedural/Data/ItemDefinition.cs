@@ -116,7 +116,28 @@ namespace Remizione
 
             this.DisplayName = TextRepository.GetValue($"Item.{Name}.Name");
             this.Description = TextRepository.GetValue($"Item.{Name}.Description");
-            this.EffectDescription = EffectDescriptor.GetDescription(EffectDescriptors);
+
+            var effect = TextRepository.GetValue($"Item.{Name}.Effect");
+            var effectDescriptors = EffectDescriptor.GetDescription(EffectDescriptors);
+            var hasEffect = !string.IsNullOrWhiteSpace(effect);
+            var hasEffectDescriptors = !string.IsNullOrWhiteSpace(effectDescriptors);
+
+            if (hasEffect && hasEffectDescriptors)
+            {
+                this.EffectDescription = $"{effect} | {effectDescriptors}";
+            }
+            else if (hasEffect)
+            {
+                this.EffectDescription = effect;
+            }
+            else if (hasEffectDescriptors)
+            {
+                this.EffectDescription = effectDescriptors;
+            }
+            else
+            {
+                this.EffectDescription = string.Empty;
+            }
         }
 
         #endregion

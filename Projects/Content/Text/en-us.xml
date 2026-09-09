@@ -35,6 +35,7 @@
   <String Key="Item.Lift.Name">Lift</String>
   <String Key="Item.Loquat.Name">Loquat</String>
   <String Key="Item.ServantCross.Name">Servant's Cross</String>
+  <String Key="Item.Tinder.Effect">Light bonfires</String>
   <String Key="Item.Tinder.Name">Tinder</String>
   <String Key="Item.TrapdoorKey.Name">Trapdoor key</String>
   <String Key="Item.Verse.Name">Verse</String>
