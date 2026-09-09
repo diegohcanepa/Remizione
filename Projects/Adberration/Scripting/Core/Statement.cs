@@ -82,6 +82,7 @@ namespace Adberration.Scripting
         protected static readonly string TweenArg = "#tween";
         protected static readonly string UnparentArg = "#unparent";
         protected static readonly string VibrateArg = "#vibrate";
+        protected static readonly string VoiceArg = "#voice";
         protected static readonly string VolumeArg = "#volume";
         protected static readonly string WarningArg = "#warning";
         protected static readonly string WordArg = "#word";

@@ -98,24 +98,6 @@ namespace Engendro.Audio
 
         #region Private members
 
-        // EncodeAssetName
-        private static string EncodeAssetName(SoundCategory category, string name)
-        {
-            if (!string.IsNullOrWhiteSpace(category.ContentPath))
-            {
-                List<string> paths =
-                [
-                   category.ContentPath
-                ];
-
-                paths.Add(name);
-
-                name = Path.Combine([.. paths]);
-            }
-
-            return name;
-        }
-
         // IsInstancePaused
         private bool IsInstancePaused(int index)
         {
@@ -233,6 +215,24 @@ namespace Engendro.Audio
             UnloadCore();
 
             IsDisposed = true;
+        }
+
+        // EncodeAssetName
+        public static string EncodeAssetName(SoundCategory category, string name)
+        {
+            if (!string.IsNullOrWhiteSpace(category.ContentPath))
+            {
+                List<string> paths =
+                [
+                   category.ContentPath
+                ];
+
+                paths.Add(name);
+
+                name = Path.Combine([.. paths]);
+            }
+
+            return name;
         }
 
         // FadeIn

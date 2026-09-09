@@ -134,6 +134,7 @@ namespace Remizione
             internal static Color TerraLight { get; } = new(189, 106, 98);
             internal static Color TerraLighter { get; } = new(255, 174, 112);
             internal static Color Yellow { get; } = new(255, 238, 131);
+            internal static Color YellowDark { get; } = new(240, 181, 65);
         }
 
         // TextWhite

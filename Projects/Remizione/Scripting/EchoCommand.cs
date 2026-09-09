@@ -1,4 +1,5 @@
 ﻿using Adberration.Scripting;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Remizione.Scripting
 {
@@ -9,9 +10,10 @@ namespace Remizione.Scripting
     {
         // Constructor
         public EchoCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 1, LiteralArg, LocalizationIdArg)
+            : base(script, source, body, 1, LiteralArg, LocalizationIdArg, VoiceArg)
         {
             Parser.ParseQuotedString(this, 0);
+            Parser.ParseNameArgument(this, VoiceArg);
         }
 
         #region Protected members
@@ -22,7 +24,10 @@ namespace Remizione.Scripting
             string text = GetDisplayText();
 
             if (Session is GameSession session)
+            {
                 session.ShowEcho(text);
+                //session.HUD.Narrator.Play(text, Parser.ParseNameArgument(this, VoiceArg));
+            }
         }
 
         // TextClauseIndex
@@ -39,6 +44,7 @@ namespace Remizione.Scripting
         // IsAwaiting
         public override bool IsAwaiting()
         {
+            //return false;
             return Game.SceneManager.CurrentScene is EchoScene scene && !scene.CanClose;
         }
     }

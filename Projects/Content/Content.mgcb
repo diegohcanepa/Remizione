@@ -881,18 +881,16 @@
 /build:Audio/Music/Main.wav;Audio/Music/Main
 
 #begin Audio/Voice/BonfireExamine.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/Voice/BonfireExamine.wav
+/copy:Audio/Voice/BonfireExamine.wav
 
 #begin Audio/Voice/EmptySack.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/Voice/EmptySack.wav;Audio/Voice/EmptySack
+/copy:Audio/Voice/EmptySack.wav;Audio/Voice/EmptySack
+
+#begin Audio/Voice/Intro.wav
+/copy:Audio/Voice/Intro.wav;Audio/Voice/Intro
+
+#begin Audio/Voice/NoSack.wav
+/copy:Audio/Voice/NoSack.wav;Audio/Voice/NoSack
 
 #begin Fonts/Common.bmp
 /importer:LocalizedFontTextureImporter

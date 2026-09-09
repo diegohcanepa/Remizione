@@ -71,7 +71,7 @@ namespace Remizione
 
                 if (Target != null)
                 {
-                    if (Target.Verb == Verb.PickUp) && !session.InventoryEnabled)
+                    if (Target.Verb == Verb.PickUp && !session.InventoryEnabled)
                     {
                         session.AwaitRoutine(RoutineNames.NoSack);
                     }

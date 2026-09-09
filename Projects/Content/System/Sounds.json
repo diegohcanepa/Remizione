@@ -75,9 +75,5 @@
     { "name": "WhooshSmallA", "soundCount": 4 },
     { "name": "WreckingBallChain" },
     { "name": "WreckingBallImpact" }
-  ],
-  "Voice": [
-    { "name": "BonfireExamine", "volume": 0.5 },
-    { "name": "EmptySack", "volume": 0.5 }
   ]
 }
