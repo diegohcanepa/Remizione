@@ -38,6 +38,12 @@
 			"behavior": "PlayerAction",
 			"actionKind": "Proximity",
 			"category": "Misc"
-		}
+		},
+		{
+			"name": "Tinder",
+			"category": "Misc",
+			"actionKind": "Script",
+			"isStackable": true
+		}		
 	]
 }

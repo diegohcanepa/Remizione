@@ -180,6 +180,13 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/Bones.wav;Audio/FX/Bones
 
+#begin Audio/FX/Bonfire.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/Bonfire.wav;Audio/FX/Bonfire
+
 #begin Audio/FX/Break.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -872,6 +879,20 @@
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
 /build:Audio/Music/Main.wav;Audio/Music/Main
+
+#begin Audio/Voice/BonfireExamine.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/Voice/BonfireExamine.wav
+
+#begin Audio/Voice/EmptySack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/Voice/EmptySack.wav;Audio/Voice/EmptySack
 
 #begin Fonts/Common.bmp
 /importer:LocalizedFontTextureImporter

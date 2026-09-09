@@ -126,12 +126,9 @@ namespace Remizione
             cursorSprite.RenderImage = CustomImage ?? cursorImages[(int)Icon];
             cursorSprite.Scale = defaultScale;
 
-            if (CustomImage == null)
+            if (Icon == MouseCursorIcon.Hand && CustomImage == null)
             {
-                if (Icon == MouseCursorIcon.Hand)
-                {
-                    cursorSprite.PivotOrigin = RectanglePoint.Top;
-                }
+                cursorSprite.PivotOrigin = RectanglePoint.Top;
             }
             else
             {

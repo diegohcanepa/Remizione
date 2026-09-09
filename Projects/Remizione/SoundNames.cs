@@ -6,6 +6,7 @@
     internal static class SoundNames
     {
         internal const string Bones = nameof(Bones);
+        internal const string Bonfire = nameof(Bonfire);
         internal const string Break = nameof(Break);
         internal const string DoorGateClose = nameof(DoorGateClose);
         internal const string DoorGateOpen = nameof(DoorGateOpen);

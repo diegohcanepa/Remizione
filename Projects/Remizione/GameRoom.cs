@@ -196,8 +196,7 @@ namespace Remizione
                 Session.Environment.GlobalLight.Draw(gameTime);
                 Game.SpriteBatch.End();
             }
-
-
+                
             Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
 
             // Owned lights

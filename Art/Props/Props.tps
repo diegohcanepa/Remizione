@@ -175,13 +175,15 @@
         <map type="IndividualSpriteSettingsMap">
             <key type="filename">Bonfire-assets/Bonfire01.png</key>
             <key type="filename">Bonfire-assets/Bonfire02.png</key>
-            <key type="filename">Bonfire-assets/Bonfire03.png</key>
-            <key type="filename">Bonfire-assets/Bonfire04.png</key>
-            <key type="filename">Bonfire-assets/Bonfire05.png</key>
-            <key type="filename">Bonfire-assets/Bonfire06.png</key>
-            <key type="filename">Bonfire-assets/Bonfire07.png</key>
-            <key type="filename">Bonfire-assets/Bonfire08.png</key>
-            <key type="filename">Bonfire-assets/Bonfire09.png</key>
+            <key type="filename">Bonfire-assets/BonfireFlame01.png</key>
+            <key type="filename">Bonfire-assets/BonfireFlame02.png</key>
+            <key type="filename">Bonfire-assets/BonfireFlame03.png</key>
+            <key type="filename">Bonfire-assets/BonfireFlame04.png</key>
+            <key type="filename">Bonfire-assets/BonfireFlame05.png</key>
+            <key type="filename">Bonfire-assets/BonfireFlame06.png</key>
+            <key type="filename">Bonfire-assets/BonfireFlame07.png</key>
+            <key type="filename">Bonfire-assets/BonfireFlame08.png</key>
+            <key type="filename">Bonfire-assets/BonfirePatch.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -190,9 +192,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>7,6,13,13</rect>
+                <rect>7,5,13,9</rect>
                 <key>scale9Paddings</key>
-                <rect>7,6,13,13</rect>
+                <rect>7,5,13,9</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -494,6 +496,69 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">StoneSmallA-assets/StoneSmallA.png</key>
+            <key type="filename">StoneSmallA-assets/StoneSmallAShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,3,7,5</rect>
+                <key>scale9Paddings</key>
+                <rect>4,3,7,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">StoneSmallB-assets/StoneSmallB.png</key>
+            <key type="filename">StoneSmallB-assets/StoneSmallBShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,2,7,5</rect>
+                <key>scale9Paddings</key>
+                <rect>4,2,7,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">StoneSmallC-assets/StoneSmallC.png</key>
+            <key type="filename">StoneSmallC-assets/StoneSmallCShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,3,9,6</rect>
+                <key>scale9Paddings</key>
+                <rect>4,3,9,6</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Tinder-assets/Tinder.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,4,12,7</rect>
+                <key>scale9Paddings</key>
+                <rect>6,4,12,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">WaterPuddleA-assets/WaterPuddleA.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -558,6 +623,10 @@
                     <filename>CrossLargeA-assets</filename>
                     <filename>LargeRockA-assets</filename>
                     <filename>Bonfire-assets</filename>
+                    <filename>Tinder-assets</filename>
+                    <filename>StoneSmallA-assets</filename>
+                    <filename>StoneSmallB-assets</filename>
+                    <filename>StoneSmallC-assets</filename>
                 </array>
             </struct>
         </map>

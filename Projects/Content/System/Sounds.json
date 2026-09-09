@@ -13,6 +13,7 @@
     { "name": "BibleBreak" },
     { "name": "BodyFallMedium", "soundCount": 1 },
     { "name": "Bones" },
+    { "name": "Bonfire", "volume": 0.5 },
     { "name": "Break" },
     { "name": "BulletRicochet", "soundCount": 3 },
     { "name": "CardWhoosh", "soundCount": 6 },
@@ -74,5 +75,9 @@
     { "name": "WhooshSmallA", "soundCount": 4 },
     { "name": "WreckingBallChain" },
     { "name": "WreckingBallImpact" }
+  ],
+  "Voice": [
+    { "name": "BonfireExamine", "volume": 0.5 },
+    { "name": "EmptySack", "volume": 0.5 }
   ]
 }

@@ -33,7 +33,7 @@ namespace Remizione
     public enum CombatIntentCategory { Basic, Special }
 
     // ContentFolder
-    public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Video, Voices, System, Text }
+    public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Video, Voice, System, Text }
 
     // DamageType
     public enum DamageType { None, Physical, Acid, Explosive, Fire, Ice, Lightning, Poison }
@@ -80,7 +80,7 @@ namespace Remizione
     public enum ItemBehavior { Loot, PlayerAction, InstantEffect }
 
     // ItemCategory
-    public enum ItemCategory { Access, Explosive, Food, Luck, Medicine, Misc, Money, Pills, Sacred }
+    public enum ItemCategory { Access, Food, Luck, Medicine, Misc, Sacred }
 
     // KnockbackIntensity
     public enum KnockbackIntensity { None, Low, Medium, High }

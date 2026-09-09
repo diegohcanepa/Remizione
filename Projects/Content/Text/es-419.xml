@@ -35,6 +35,7 @@
   <String Key="Item.Lift.Name">Alzar</String>
   <String Key="Item.Loquat.Name">Níspero</String>
   <String Key="Item.ServantCross.Name">Cruz del Siervo</String>
+  <String Key="Item.Tinder.Name">Yesca</String>
   <String Key="Item.TrapdoorKey.Name">Llave de trampilla</String>
   <String Key="Item.Verse.Name">Versículo</String>
   <String Key="ItemCategory.KeyItem">Objetos importante</String>
@@ -211,7 +212,7 @@ Bla bla bla</String>
   <String Key="Playtime.Minute">minuto</String>
   <String Key="Playtime.Minutes">minutos</String>
   <String Key="Prop.BonfireLit">Descansar</String>
-  <String Key="Prop.BonfireUnlit">Troncos calcinados</String>
+  <String Key="Prop.BonfireUnlit">Hoguera de azufre</String>
   <String Key="Prop.Coin">Moneda</String>
   <String Key="Prop.Cross">Cruz</String>
   <String Key="Prop.CrucifiedMan">Hombre crucificado</String>
@@ -220,6 +221,7 @@ Bla bla bla</String>
   <String Key="Prop.Lever">Palanca</String>
   <String Key="Prop.Pottery">Vasija</String>
   <String Key="Prop.Sack">Bolsa</String>
+  <String Key="Prop.Tinder">Yesca</String>
   <String Key="Prop.Torch">Antorcha</String>
   <String Key="Prop.Tower">Torre</String>
   <String Key="Prop.TrapDoor">Trampilla</String>

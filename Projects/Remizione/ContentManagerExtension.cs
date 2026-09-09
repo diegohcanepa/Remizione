@@ -12,7 +12,7 @@ namespace Remizione
         // EncodeAudioPath
         internal static string EncodeAudioPath(ContentFolder folder)
         {
-            if (folder is ContentFolder.FX or ContentFolder.Ambience or ContentFolder.Music or ContentFolder.Voices)
+            if (folder is ContentFolder.FX or ContentFolder.Ambience or ContentFolder.Music or ContentFolder.Voice)
                 return Path.Combine("Audio", folder.ToString());
 
             throw new ArgumentException("Invalid folder.", nameof(folder));

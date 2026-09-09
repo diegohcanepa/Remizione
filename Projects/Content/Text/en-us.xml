@@ -35,6 +35,7 @@
   <String Key="Item.Lift.Name">Lift</String>
   <String Key="Item.Loquat.Name">Loquat</String>
   <String Key="Item.ServantCross.Name">Servant's Cross</String>
+  <String Key="Item.Tinder.Name">Tinder</String>
   <String Key="Item.TrapdoorKey.Name">Trapdoor key</String>
   <String Key="Item.Verse.Name">Verse</String>
   <String Key="ItemCategory.KeyItem">Key item</String>
@@ -211,7 +212,7 @@ Bla bla bla</String>
   <String Key="Playtime.Minute">minute</String>
   <String Key="Playtime.Minutes">minutes</String>
   <String Key="Prop.BonfireLit">Rest</String>
-  <String Key="Prop.BonfireUnlit" />
+  <String Key="Prop.BonfireUnlit">Sulfur Bonfire</String>
   <String Key="Prop.Coin">Coin</String>
   <String Key="Prop.Cross">Cross</String>
   <String Key="Prop.CrucifiedMan">Crucified man</String>
@@ -220,6 +221,7 @@ Bla bla bla</String>
   <String Key="Prop.Lever">Lever</String>
   <String Key="Prop.Pottery">Clay pot</String>
   <String Key="Prop.Sack">Sack</String>
+  <String Key="Prop.Tinder">Tinder</String>
   <String Key="Prop.Torch">Torch</String>
   <String Key="Prop.Tower">Tower</String>
   <String Key="Prop.TrapDoor">Trap door</String>

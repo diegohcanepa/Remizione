@@ -23,6 +23,12 @@
       "items": {
         "$ref": "#/$defs/AudioItem"
       }
+    },
+    "Voice": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/AudioItem"
+      }
     }
   },
   "required": [

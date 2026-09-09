@@ -21,7 +21,7 @@ namespace Remizione
             AudioManager.AmbienceCategory.ContentPath = ContentManagerExtension.EncodeAudioPath(ContentFolder.Ambience);
             AudioManager.MusicCategory.ContentPath = ContentManagerExtension.EncodeAudioPath(ContentFolder.Music);
             AudioManager.FXCategory.ContentPath = ContentManagerExtension.EncodeAudioPath(ContentFolder.FX);
-            AudioManager.VoiceCategory.ContentPath = ContentManagerExtension.EncodeAudioPath(ContentFolder.Voices);
+            AudioManager.VoiceCategory.ContentPath = ContentManagerExtension.EncodeAudioPath(ContentFolder.Voice);
 
             IsFixedTimeStep = false;
             Graphics.SynchronizeWithVerticalRetrace = true;
