@@ -237,22 +237,10 @@ namespace Remizione
 
             if (ItemReward != null)
             {
-                Prop? loot;
-                if (ItemReward.Behavior is ItemBehavior.InstantEffect)
-                {
-                    loot = room.CreateThingClone<Prop>(ItemReward.Name);
-                }
-                else
-                {
-                    loot = room.CreateThingClone<Prop>(nameof(LootOrb));
-                }
-
-                if (loot != null)
-                {
-                    (loot as ILootContainer)?.Loot = ItemReward;
-                    loot.Position = Position;
-                    room.Children.Add(loot);
-                }
+                var loot = room.CreateThingClone<Prop>(nameof(LootOrb));
+                loot.ItemReward = ItemReward;
+                loot.Position = Position;
+                room.Children.Add(loot);
             }
 
             ItemReward = null;
@@ -337,6 +325,11 @@ namespace Remizione
         // OnIgnoreAttachedLightChanged
         protected virtual void OnIgnoreAttachedLightChanged()
         {
+        }
+
+        // OnItemRewardChanged
+        protected virtual void OnItemRewardChanged()
+        { 
         }
 
         // OnKnockbackCompleted
@@ -1046,7 +1039,18 @@ namespace Remizione
         public bool IsPlayer => Session.Player == this;
 
         // ItemReward
-        public ItemDefinition? ItemReward { get; set; }
+        public ItemDefinition? ItemReward
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    OnItemRewardChanged();
+                }
+            }
+        }
 
         // LootDisplayName
         public string LootDisplayName { get; private set; } = string.Empty;

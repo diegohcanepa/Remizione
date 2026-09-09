@@ -155,12 +155,13 @@ namespace Remizione
             AotTypeRegistry.Register("echo", typeof(EchoCommand));
             AotTypeRegistry.Register("ensure-session-scene", typeof(EnsureSessionSceneCommand));
             AotTypeRegistry.Register("exit-session", typeof(ExitSessionCommand));
-            AotTypeRegistry.Register("if-can-pickup-loot", typeof(IfCanPickUpLootStatement));
+            AotTypeRegistry.Register("if-can-pickup", typeof(IfCanPickUpStatement));
             AotTypeRegistry.Register("if-test-skill", typeof(IfTestSkillStatement));
-            AotTypeRegistry.Register("pickup-loot", typeof(PickUpLootCommand));
+            AotTypeRegistry.Register("pickup", typeof(PickUpCommand));
             AotTypeRegistry.Register("place-item", typeof(PlaceItemCommand));
             AotTypeRegistry.Register("say", typeof(SayCommand));
             AotTypeRegistry.Register("select-walk-area", typeof(SelectWalkAreaCommand));
+            AotTypeRegistry.Register("set-item-reward", typeof(SetItemRewardCommand), CodingContext.Any);
             AotTypeRegistry.Register("set-light", typeof(SetLightCommand));
             AotTypeRegistry.Register("show-message", typeof(ShowMessageCommand));
             AotTypeRegistry.Register("terminate-dialog-block", typeof(TerminateDialogBlockCommand));

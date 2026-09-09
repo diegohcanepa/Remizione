@@ -116,14 +116,6 @@
         "Lightning"
       ]
     },
-    "ItemBehavior": {
-      "type": "string",
-      "enum": [
-        "Loot",
-        "PlayerAction",
-        "InstantEffect"
-      ]
-    },
     "ItemCategory": {
       "type": "string",
       "enum": [

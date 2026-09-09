@@ -30,9 +30,6 @@ namespace Remizione
             if (AreaOfEffect < 0)
                 AreaOfEffect = 0;
 
-            // Behavior
-            Behavior = element.GetEnum("behavior", ItemBehavior.Loot);
-
             // Category
             Category = element.GetEnum("category", ItemCategory.Misc);
 
@@ -102,12 +99,6 @@ namespace Remizione
 
             IsPassive = LightModifier != 0 || LuckModifier != 0;
 
-            if (Behavior != ItemBehavior.Loot)
-            {
-                IsDepletable = false;
-                IsStackable = false;
-            }
-
             if (ActionKind == ActionKind.Projectile && Projectile == null)
                 RaiseValidationError(this, "Items with Projectile usage mode must have a Projectile defined.", nameof(ActionKind));
 
@@ -138,9 +129,6 @@ namespace Remizione
 
         // AreaOfEffect
         public int AreaOfEffect { get; }
-
-        // Behavior
-        public ItemBehavior Behavior { get; }
 
         // Category
         public ItemCategory Category { get; }

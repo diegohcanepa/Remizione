@@ -31,9 +31,6 @@ namespace Remizione
         // Add
         public Item? Add(ItemDefinition definition)
         {
-            if (definition.Behavior is not ItemBehavior.Loot and not ItemBehavior.PlayerAction)
-                return null;
-
             if (!HasSpace(definition))
                 return null;
 

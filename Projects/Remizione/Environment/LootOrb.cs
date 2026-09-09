@@ -31,18 +31,18 @@ namespace Remizione
 
         #region Protected members
 
+        // OnItemRewardChanged
+        protected override void OnItemRewardChanged()
+        {
+            base.OnItemRewardChanged();
+            DisplayNameKey = ItemReward != null ? $"Item.{ItemReward.Name}.Name" : string.Empty;
+        }
+
         // OnLoad
         protected override void OnLoad()
         {
             base.OnLoad();
             Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicOut, 0, .75f, 1000);
-        }
-
-        // OnLootChanged
-        protected override void OnLootChanged()
-        {
-            base.OnLootChanged();
-            DisplayNameKey = Loot != null ? $"Item.{Loot.Name}.Name" : string.Empty;
         }
 
         #endregion

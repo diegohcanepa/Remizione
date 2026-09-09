@@ -8,7 +8,7 @@ namespace Remizione
     /// <summary>
     /// Trunk
     /// </summary>
-    public class Trunk : Openable, ILootContainer
+    public class Trunk : Openable
     {
         private readonly Sprite lootImage;
 

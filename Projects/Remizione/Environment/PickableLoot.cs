@@ -6,7 +6,7 @@ namespace Remizione
     /// <summary>
     /// PickableLoot
     /// </summary>
-    public abstract class PickableLoot : Prop, ILootContainer
+    public abstract class PickableLoot : Prop
     {
         // Constructor
         protected PickableLoot(GameSession session, string name)
@@ -16,7 +16,6 @@ namespace Remizione
             ApproachBehavior = ApproachBehavior.ClosestSide;
             DepthOffset = 20;
             IgnoreWalkArea = false;
-            Loot = GameData.Items.Find(DeclaredName);
             Verb = Verb.PickUp;
         }
 
@@ -50,25 +49,6 @@ namespace Remizione
             }
         }
 
-        // OnLootChanged
-        protected virtual void OnLootChanged()
-        {
-        }
-
         #endregion
-
-        // Loot
-        public ItemDefinition? Loot
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    OnLootChanged();
-                }
-            }
-        }
     }
 }

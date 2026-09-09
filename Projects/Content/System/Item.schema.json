@@ -37,9 +37,6 @@
               "type": "integer",
               "default": 0
             },
-            "behavior": {
-              "$ref": "enums.schema.json#/$defs/ItemBehavior"
-            },
             "deselectOnUse": {
               "type": "boolean"
             },

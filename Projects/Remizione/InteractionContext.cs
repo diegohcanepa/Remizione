@@ -53,7 +53,7 @@ namespace Remizione
                 // Exclude player when HeldItem is null
                 if (Session.Room.CulledThings[i] == Session.Player)
                 {
-                    if (HeldItem == null || HeldItem.Definition.Behavior == ItemBehavior.PlayerAction)
+                    if (HeldItem == null) // TODO:Check || HeldItem.Definition.Behavior == ItemBehavior.PlayerAction)
                         continue;
                 }
 

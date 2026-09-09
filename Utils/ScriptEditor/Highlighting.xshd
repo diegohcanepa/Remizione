@@ -153,7 +153,7 @@
 			<Word>else</Word>
 			<Word>enable-area-if</Word>
 			<Word>endif</Word>
-			<Word>if-can-pickup-loot</Word>
+			<Word>if-can-pickup</Word>
 			<Word>if-hotspot-area</Word>
 			<Word>if-counter</Word>
 			<Word>if-entity-type</Word>
@@ -234,7 +234,7 @@
 			<Word>hide-dialog-box</Word>
 			<Word>hide-message</Word>
 			<Word>kill-all-creatures</Word>
-			<Word>pickup-loot</Word>
+			<Word>pickup</Word>
 			<Word>push-dialog</Word>
 			<Word>push-scene</Word>
 			<Word>put</Word>

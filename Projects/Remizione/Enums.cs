@@ -76,9 +76,6 @@ namespace Remizione
     // InPlaceEffectType
     public enum InPlaceEffectType { None, Lightning }
 
-    // ItemBehavior
-    public enum ItemBehavior { Loot, PlayerAction, InstantEffect }
-
     // ItemCategory
     public enum ItemCategory { Access, Food, Luck, Medicine, Misc, Sacred }
 
