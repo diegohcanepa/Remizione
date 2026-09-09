@@ -4,12 +4,12 @@ using Microsoft.Xna.Framework;
 namespace Remizione
 {
     /// <summary>
-    /// PickableLoot
+    /// Pickable
     /// </summary>
-    public abstract class PickableLoot : Prop
+    public abstract class Pickable : Prop
     {
         // Constructor
-        protected PickableLoot(GameSession session, string name)
+        protected Pickable(GameSession session, string name)
             : base(session, name)
         {
             Atlas = Atlases.Props;
@@ -30,7 +30,7 @@ namespace Remizione
         // OnCollisioning
         protected override void OnCollisioning(GameThing thing, out bool handled)
         {
-            if (thing is not PickableLoot)
+            if (thing is not Pickable)
                 Tweens.Reset();
 
             handled = true;

@@ -71,7 +71,11 @@ namespace Remizione
 
                 if (Target != null)
                 {
-                    if (Vector2.Distance(Target.Position, TargetPosition) > 1)
+                    if (Target.Verb == Verb.PickUp) && !session.InventoryEnabled)
+                    {
+                        session.AwaitRoutine(RoutineNames.NoSack);
+                    }
+                    else if (Vector2.Distance(Target.Position, TargetPosition) > 1)
                     {
                         session.HUD?.Message.Show(MessageKind.OutOfReach);
                     }

@@ -5,7 +5,7 @@ namespace Remizione
     /// <summary>
     /// BronzeKey
     /// </summary>
-    public sealed class BronzeKey : PickableLoot
+    public sealed class BronzeKey : Pickable
     {
         // Constructor
         public BronzeKey(GameSession session, string name)

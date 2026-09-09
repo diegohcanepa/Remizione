@@ -642,7 +642,7 @@ namespace Remizione
         {
             base.OnChildAdded(child);
 
-            if (child is PickableLoot)
+            if (child is Pickable)
             {
                 if (child is Coin)
                     RoomNode.CoinCount++;
@@ -656,7 +656,7 @@ namespace Remizione
         {
             base.OnChildAdded(child);
 
-            if (child is PickableLoot)
+            if (child is Pickable)
             {
                 if (child is Coin)
                     RoomNode.CoinCount--;

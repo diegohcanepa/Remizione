@@ -228,6 +228,7 @@ Bla bla bla</String>
   <String Key="Prop.TrapDoor">Trampilla</String>
   <String Key="Prop.Trunk">Baúl</String>
   <String Key="Prop.Tunnel">Túnel</String>
+  <String Key="StateTip.HasTinder">Con yesca</String>
   <String Key="Verb.Examine">Examinar</String>
   <String Key="Verb.Grab">Agarrar</String>
 </Strings>

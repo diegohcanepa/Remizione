@@ -155,12 +155,13 @@ namespace Remizione
             {
                 MouseCursor.Tooltip = null;
                 MouseCursor.SubText = null;
-                return;
             }
-
-            MouseCursor.Tooltip = target.DisplayName;
-            MouseCursor.SubTextColor = ColorPalette.MouseCursor.SubText;
-            MouseCursor.SubText = null;
+            else
+            {
+                MouseCursor.Tooltip = target.DisplayName;
+                MouseCursor.SubTextColor = ColorPalette.MouseCursor.SubText;
+                MouseCursor.SubText = target.StateTip;
+            }
         }
 
         #endregion

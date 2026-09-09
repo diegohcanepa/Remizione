@@ -5,7 +5,7 @@ namespace Remizione
     /// <summary>
     /// LootOrb
     /// </summary>
-    public sealed class LootOrb : PickableLoot
+    public sealed class LootOrb : Pickable
     {
         // Constructor
         public LootOrb(GameSession session, string name)

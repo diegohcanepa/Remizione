@@ -1193,6 +1193,24 @@ namespace Remizione
         // SpawnPoint
         public Vector2 SpawnPoint { get; set; }
 
+        // StateTip
+        public string StateTip { get; private set; } = string.Empty;
+
+        // StateTipKey
+        [ScriptProperty]
+        public string StateTipKey
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    StateTip = TextRepository.GetValue($"StateTip.{field}");
+                }
+            }
+        } = string.Empty;
+
         // TakeDamage
         public int TakeDamage(GameThing attacker, DamageType damageType, int amount, Vector2 knockbackForce)
         {

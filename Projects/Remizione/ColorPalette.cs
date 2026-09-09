@@ -65,7 +65,7 @@ namespace Remizione
             internal static Vector4 Highlight { get; } = (Color.WhiteSmoke * .6f).ToVector4();
 
             // SubText
-            internal static Color SubText { get; } = Text.TerraLight;
+            internal static Color SubText { get; } = new Color(172, 160, 148);
 
             // Tooltip
             internal static Color Tooltip { get; } = new(247, 232, 213);

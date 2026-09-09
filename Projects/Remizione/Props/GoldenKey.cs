@@ -5,7 +5,7 @@ namespace Remizione
     /// <summary>
     /// GoldenKey
     /// </summary>
-    public sealed class GoldenKey : PickableLoot
+    public sealed class GoldenKey : Pickable
     {
         // Constructor
         public GoldenKey(GameSession session, string name)

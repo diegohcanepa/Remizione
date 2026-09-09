@@ -5,7 +5,7 @@ namespace Remizione
     /// <summary>
     /// Coin
     /// </summary>
-    public sealed class Coin : PickableLoot
+    public sealed class Coin : Pickable
     {
         // Constructor
         public Coin(GameSession session, string name)

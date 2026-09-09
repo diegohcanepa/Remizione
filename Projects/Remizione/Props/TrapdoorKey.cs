@@ -5,7 +5,7 @@ namespace Remizione
     /// <summary>
     /// TrapdoorKey
     /// </summary>
-    public sealed class TrapdoorKey : PickableLoot
+    public sealed class TrapdoorKey : Pickable
     {
         // Constructor
         public TrapdoorKey(GameSession session, string name)
