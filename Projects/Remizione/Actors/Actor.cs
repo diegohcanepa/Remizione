@@ -158,7 +158,7 @@ namespace Remizione
                 if (stains.GetRandomItem() is AtlasImage atlasImage)
                     imageName = atlasImage.Name;
 
-                remains = new Remains(Session, imageName, Vector2.One, guts, pieceCount, false, Definition?.EffectDescriptors);
+                remains = new Remains(Session, imageName, Vector2.One, guts, pieceCount, false, true, Definition?.EffectDescriptors);
 
                 _ = BodySize switch
                 {
@@ -172,7 +172,7 @@ namespace Remizione
             // Bones
             else if (RemainsKind == RemainsKind.Bones)
             {
-                remains = new Remains(Session, imageName, Vector2.One, Atlases.Environment.Bones, pieceCount, true);
+                remains = new Remains(Session, imageName, Vector2.One, Atlases.Environment.Bones, pieceCount, true, false);
                 remains.PlaySound(SoundNames.Bones);
             }
 
@@ -180,7 +180,7 @@ namespace Remizione
             else if (RemainsKind == RemainsKind.Custom)
             {
                 if (remainsPieces != null)
-                    remains = new Remains(Session, imageName, Vector2.One, remainsPieces, remainsPieces.Count, false);
+                    remains = new Remains(Session, imageName, Vector2.One, remainsPieces, remainsPieces.Count, false, false);
             }
 
             if (remains != null)

@@ -15,7 +15,7 @@ namespace Remizione
         private readonly List<RemainsPiece> pieces = [];
 
         // Constructor
-        public Remains(GameSession session, string defaultImageName, Vector2 scale, IList<AtlasImage> pieces, int amount, bool shadow, IList<EffectDescriptor>? effects = null)
+        public Remains(GameSession session, string defaultImageName, Vector2 scale, IList<AtlasImage> pieces, int amount, bool shadow, bool allowOpacity, IList<EffectDescriptor>? effects = null)
             : base(session, string.Empty)
         {
             this.Atlas = Atlases.Environment;
@@ -30,7 +30,8 @@ namespace Remizione
                 {
                     var piece = Session.ObjectPools.RemainsPieces.Get();
                     piece.Image = pieces.GetRandomItem();
-                    piece.Opacity = Random.Shared.Next(.2f, .7f);
+                    if (allowOpacity)
+                        piece.Opacity = Random.Shared.Next(.2f, .7f);
                     piece.Scale = scale;
                     piece.Shadow = shadow;
                     this.pieces.Add(piece);

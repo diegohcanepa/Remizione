@@ -6,8 +6,8 @@
   <String Key="DamageType.Physical">Physical</String>
   <String Key="EffectTemplate.Damage" />
   <String Key="EffectTemplate.EnergyRestore" />
-  <String Key="EffectTemplate.HPGain">+{amount} Willpower</String>
-  <String Key="EffectTemplate.HPLoss">-{amount} Willpower</String>
+  <String Key="EffectTemplate.HPGain">+{amount} Fleshiness</String>
+  <String Key="EffectTemplate.HPLoss">-{amount} Fleshiness</String>
   <String Key="FloatingMessage.Failed">Failed!</String>
   <String Key="FloatingMessage.Success">Success!</String>
   <String Key="HitType.Critical">Critical!</String>
@@ -34,6 +34,7 @@
   <String Key="Item.Lift.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Lift.Name">Lift</String>
   <String Key="Item.Loquat.Name">Loquat</String>
+  <String Key="Item.PrayerBonfire.Name">Bonfire prayer</String>
   <String Key="Item.ServantCross.Name">Servant's Cross</String>
   <String Key="Item.Tinder.Effect">Light bonfires</String>
   <String Key="Item.Tinder.Name">Tinder</String>

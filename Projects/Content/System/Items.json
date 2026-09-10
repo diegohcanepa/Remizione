@@ -39,9 +39,16 @@
 			"category": "Misc"
 		},
 		{
+			"name": "PrayerBonfire",
+			"category": "Sacred",
+			"actionKind": "Script",
+			"isStackable": true
+		},
+		{
 			"name": "Tinder",
 			"category": "Misc",
 			"actionKind": "Script",
+			"isDepletable": true,
 			"isStackable": true
 		}		
 	]

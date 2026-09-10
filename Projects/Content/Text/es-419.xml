@@ -6,8 +6,8 @@
   <String Key="DamageType.Physical">Físico</String>
   <String Key="EffectTemplate.Damage">{amount} daño</String>
   <String Key="EffectTemplate.EnergyRestore">Recarga de baba</String>
-  <String Key="EffectTemplate.HPGain">+{amount} Voluntad</String>
-  <String Key="EffectTemplate.HPLoss">-{amount} Voluntad</String>
+  <String Key="EffectTemplate.HPGain">+{amount} Carnadura</String>
+  <String Key="EffectTemplate.HPLoss">-{amount} Carnadura</String>
   <String Key="FloatingMessage.Failed">¡Fallaste!</String>
   <String Key="FloatingMessage.Success">¡Éxito!</String>
   <String Key="HitType.Critical">¡Crítico!</String>
@@ -34,6 +34,7 @@
   <String Key="Item.Lift.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Lift.Name">Alzar</String>
   <String Key="Item.Loquat.Name">Níspero</String>
+  <String Key="Item.PrayerBonfire.Name">Plegaria de la hoguera</String>
   <String Key="Item.ServantCross.Name">Cruz del Siervo</String>
   <String Key="Item.Tinder.Effect">Enciende hogueras</String>
   <String Key="Item.Tinder.Name">Yesca</String>

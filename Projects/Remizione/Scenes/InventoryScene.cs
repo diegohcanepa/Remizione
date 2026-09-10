@@ -12,7 +12,7 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly TextSprite[] amounts = new TextSprite[ItemContainer.MaximumCapacity];
+        private readonly Sprite[] amounts = new Sprite[ItemContainer.MaximumCapacity];
         private bool autoHide;
         private readonly Sprite background = new(Atlases.UI.QuickInventoryBackground) { PivotOrigin = RectanglePoint.LeftBottom, Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom) };
         private readonly Sprite[] icons = new Sprite[ItemContainer.MaximumCapacity];
@@ -39,23 +39,21 @@ namespace Remizione
                 {
                     PivotOrigin = RectanglePoint.Center,
                     RenderImage = Atlases.UI.FakeItem,
-                    Y = Screen.Area.Bottom - 15
+                    Y = Screen.Area.Bottom - 18
                 };
 
                 // Amount
-                amounts[i] = new(Fonts.Common)
+                amounts[i] = new Sprite()
                 {
-                    Color = ColorPalette.Text.MouseCursor,
-                    Opacity = .6f,
-                    PivotOrigin = RectanglePoint.LeftBottom,
-                    Scale = ScaleInfo.Text.Medium
+                    PivotOrigin = RectanglePoint.Top,
+                    Scale = ScaleInfo.UIElement.Small
                 };
             }
 
             this.ItemContainer = itemContainer;
 
             // Item label
-            itemLabel = new(Fonts.CommonOutline)
+            itemLabel = new(Fonts.Common)
             {
                 Color = ColorPalette.Text.MouseCursor,
                 PivotOrigin = RectanglePoint.Bottom,
@@ -64,14 +62,14 @@ namespace Remizione
             };
 
             // Item description
-            itemDescription = new(Fonts.CommonOutline)
+            itemDescription = new(Fonts.Common)
             {
-                Color = ColorPalette.Text.SteelBlue,
+                Color = ColorPalette.Text.Terra,
                 MaximumWidth = 200,
                 Multiline = false,
                 PivotOrigin = RectanglePoint.Bottom,
                 Y = icons[0].BoundingBox.Top,
-                Scale = ScaleInfo.Text.Medium,
+                Scale = ScaleInfo.Text.Large,
             };
         }
 
@@ -130,25 +128,19 @@ namespace Remizione
             {
                 var x = startingX + (i * (slotSize + spacing)) + (slotSize / 2);
                 icons[i].RenderImage = null;
-                amounts[i].Text = null;
+                amounts[i].RenderImage = null;
 
                 if (i < ItemContainer.Count)
                 {
                     icons[i].X = x;
                     icons[i].RenderImage = ItemContainer[i].Definition.Image;
 
-                    amounts[i].Position = icons[i].BoundingBox.GetPoint(RectanglePoint.RightBottom, -4, 2);
+                    amounts[i].Position = icons[i].BoundingBox.GetPoint(RectanglePoint.Bottom);
 
-                    if (ItemContainer[i].Definition.HPCost.IsBetween(1, 3))
-                    {
-                        amounts[i].Text = "x" + ItemContainer[i].Definition.HPCost.ToString(CultureInfo.InvariantCulture);
-                    }
-                    else if (ItemContainer[i].Definition.IsStackable || ItemContainer[i].Definition.IsDepletable)
+                    if (ItemContainer[i].Definition.IsStackable || ItemContainer[i].Definition.IsDepletable)
                     {
                         if (ItemContainer[i].Amount.IsBetween(1, 5))
-                        {
-                            amounts[i].Text = "x" + ItemContainer[i].Amount.ToString(CultureInfo.InvariantCulture);
-                        }
+                            amounts[i].RenderImage = Atlases.UI.InventoryItemAmounts[ItemContainer[i].Amount - 1];
                     }
                 }
             }

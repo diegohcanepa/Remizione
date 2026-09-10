@@ -15,7 +15,6 @@ namespace Remizione
         private Actor? actor;
         private readonly Sprite[] icons;
         private readonly ReadOnlyCollection<AtlasImage> heartImages;
-        private readonly TextSprite labelText;
         private int lastKnownValue = int.MinValue;
         private int lastKnownMaxValue = int.MinValue;
         private int totalIcons;
@@ -28,29 +27,19 @@ namespace Remizione
         public UIHPMeter(GameSession session)
             : base(session)
         {
-            // Label text
-            this.labelText = new(Fonts.CommonOutline)
-            {
-                Color = ColorPalette.Text.TerraDark,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 0, -2),
-                Text = Localization.GetValue(PlayerStat.Willpower),
-                Scale = ScaleInfo.Text.Medium
-            };
-
             // Directamente referenciamos las imágenes de los corazones rojos:
             // Frame 0 = Vacío, Frame 1 = Medio corazón, Frame 2 = Corazón lleno
             heartImages = Atlases.UI.RedHearts;
 
             icons = new Sprite[10];
-            var pos = labelText.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 3, 2);
+            var pos = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 3, 2);
 
             for (var i = 0; i < icons.Length; i++)
             {
                 icons[i] = new(heartImages[0])
                 {
                     PivotOrigin = RectanglePoint.Center,
-                    Position = pos,
-                    Scale = ScaleInfo.UIElement.Medium
+                    Position = pos
                 };
 
                 pos.X += icons[i].BoundingBox.Width + 0.5f;
@@ -111,8 +100,6 @@ namespace Remizione
         {
             if (actor == null)
                 return;
-
-            labelText.Draw(gameTime);
 
             for (var i = 0; i < totalIcons; i++)
             {
