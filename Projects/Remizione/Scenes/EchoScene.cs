@@ -71,6 +71,13 @@ namespace Remizione
 
         #region Protected members
 
+        // OnActivate
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            MouseCursor.Tooltip = null;
+        }
+
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {

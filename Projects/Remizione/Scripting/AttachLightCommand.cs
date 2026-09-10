@@ -29,10 +29,9 @@ namespace Remizione.Scripting
             var pivot = Parser.ParseEnumArgument(this, PivotArg, RectanglePoint.Center);
             var scale = Parser.ParseVector2Argument(this, ScaleArg);
 
-            thing.AttachedLight = new Light(string.Empty)
+            thing.AttachedLight = new Light(string.Empty, kind)
             {
                 Color = color,
-                LightKind = kind,
                 PivotOrigin = pivot,
                 Scale = scale
             };

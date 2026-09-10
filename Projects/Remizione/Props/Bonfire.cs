@@ -36,16 +36,14 @@ namespace Remizione
             var animation = flame.AddAnimation("Default");
             animation.AddFrameSequence($"BonfireFlame", 60, 1, 8);
 
-            this.AttachedLight = new("Light")
+            this.AttachedLight = new("Light", LightKind.SulfurBonfire)
             {
                 PivotOrigin = RectanglePoint.Center,
-                LightKind = LightKind.Default,
-                Color = new(163, 168, 70),
                 Position = new(9),
                 Scale = new(8, 5)
             };
 
-            AttachedLight.TurnOff(true);
+            AttachedLight.Unlit(true);
 
             AttachedLightPosition = new(15, 4);
         }
@@ -97,9 +95,11 @@ namespace Remizione
                     field = value;
                     if (field)
                     {
+                        flame.Tweens.OpacityTween = FloatTween.Create(TweenStyle.CubicIn, 00, flame.Opacity, 500);
+                        flame.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicIn, .2f, flame.Scale.X, 1000);
                         flame.Player.Play("Default", true);
                         PlaySound(SoundNames.Bonfire, true);
-                        AttachedLight?.TurnOn();
+                        AttachedLight?.Lit();
                     }
                 }
             }

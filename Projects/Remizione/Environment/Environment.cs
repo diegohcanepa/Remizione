@@ -11,16 +11,15 @@ namespace Remizione
         public Environment()
         {
             // Global light
-            this.GlobalLight = new("GlobalLight")
+            this.GlobalLight = new("GlobalLight", LightKind.Global)
             {
                 //Color = ColorPalette.GlobalLight.Default,
-                LightKind = LightKind.Global,
                 PivotOrigin = RectanglePoint.Center,
                 Position = Screen.Center,
                 Scale = new(18, 10)
             };
 
-            GlobalLight.TurnOn();
+            GlobalLight.Lit();
         }
 
         // GlobalLight

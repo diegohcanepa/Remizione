@@ -26,9 +26,8 @@ namespace Remizione
         private RenderTarget2D? lightMapTarget;
         private readonly List<Light> lights = [];
         private readonly List<ILightSource> lightSources = [];
-        private static readonly Light playerLight = new("PlayerLight")
+        private static readonly Light playerLight = new("PlayerLight", LightKind.Player)
         {
-            LightKind = LightKind.Player,
             PivotOrigin = RectanglePoint.Center,
             Position = Screen.Center,
         };
@@ -52,7 +51,7 @@ namespace Remizione
 
             dustEmitter ??= new DustEmitter(session, 6, 1000, 35);
             fireflyEmitter ??= new FireflyEmitter(session, 1, 500, 20);
-            playerLight.TurnOff(true);
+            playerLight.Unlit(true);
         }
 
         #endregion
@@ -440,10 +439,10 @@ namespace Remizione
         #endregion
 
         // AddLight
-        public Light AddLight(string name)
+        public Light AddLight(string name, LightKind lightKind)
         {
             CodeContract.NotDuplicate(Lights, name, nameof(name));
-            var result = new Light(name);
+            var result = new Light(name, lightKind);
             lights.Add(result);
             return result;
         }
@@ -582,9 +581,9 @@ namespace Remizione
             }
 
             if (hasAmbientLights)
-                playerLight.TurnOff();
+                playerLight.Unlit();
             else
-                playerLight.TurnOn();
+                playerLight.Lit();
 
             AmbientLights = hasAmbientLights;
 

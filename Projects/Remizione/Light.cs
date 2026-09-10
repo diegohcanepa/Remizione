@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Remizione
 {
@@ -10,93 +11,117 @@ namespace Remizione
     {
         #region Private fields
 
-        private int duration;
+        private float durationMs;
         private readonly Sprite lightSprite;
         private int litTweenDuration;
-        private readonly FloatTween opacityTween = new();
         private int unlitTweenDuration;
+        private readonly FloatTween fadeTween = new();
+        private float currentFade = 1;
 
         #endregion
 
         #region Constructor
 
         // Constructor
-        public Light(string name)
+        public Light(string name, LightKind lightKind)
         {
-            this.Name = name;
+            Name = name;
+            LightKind = lightKind;
 
-            this.lightSprite = new Sprite()
+            lightSprite = new()
             {
                 RenderImage = Atlases.Environment.DefaultLight,
                 PivotOrigin = RectanglePoint.Center
             };
+
+            Color = GetInitialColor(lightKind);
+
+            Setup();
         }
+
+        #endregion
+
+        #region Static members
+
+        // CreateColorTween
+        private static ColorTween? CreateColorTween(LightKind lightKind, Color color) => lightKind switch
+        {
+            LightKind.Fire => ColorTween.Create(TweenStyle.Linear, color, color * .9f, 90, -1),
+            LightKind.SulfurBonfire => ColorTween.Create(TweenStyle.Linear, color, color * .96f, 90, -1),
+            LightKind.Lantern => ColorTween.Create(TweenStyle.Linear, color * .98f, color * .96f, 90, -1),
+            _ => null,
+        };
+
+        // CreateFlickerTween
+        private static FloatTween? CreateFlickerTween(LightKind lightKind) => lightKind switch
+        {
+            LightKind.Fire or
+            LightKind.SulfurBonfire or
+            LightKind.Lantern => FloatTween.Create(TweenStyle.Linear, 1f, .98f, 80, -1),
+            LightKind.LootOrb => FloatTween.Create(TweenStyle.Linear, .5f, .55f, 70, -1),
+            _ => null,
+        };
+
+        // CreateScaleTween
+        private static Vector2Tween? CreateScaleTween(LightKind lightKind, Vector2 scale) => lightKind switch
+        {
+            LightKind.Fire => Vector2Tween.Create(TweenStyle.Linear, scale, scale * 1.05f, 1200, -1),
+            LightKind.SulfurBonfire => Vector2Tween.Create(TweenStyle.Linear, scale, scale * 1.01f, 1200, -1),
+            LightKind.Lantern => Vector2Tween.Create(TweenStyle.Linear, scale, scale * 1.1f, Random.Shared.Next(1100, 1400), -1),
+            _ => null,
+        };
+
+        // GetInitialColor
+        private static Color GetInitialColor(LightKind lightKind) => lightKind switch
+        {
+            LightKind.SulfurBonfire => new Color(134, 146, 31),
+            LightKind.Outdoor => ColorPalette.OutdoorLight,
+            _ => Color.White
+        };
 
         #endregion
 
         #region Private members
 
-        // Invalidate
-        private void Invalidate()
+        // Setup
+        private void Setup()
         {
             litTweenDuration = 0;
             unlitTweenDuration = 0;
+            Passes = 1;
+
+            lightSprite.Tweens.Reset();
             lightSprite.Color = Color;
             lightSprite.Scale = Scale;
 
             switch (LightKind)
             {
-                //  Fire
                 case LightKind.Fire:
                     Passes = 2;
-                    //lightSprite.Tweens.ColorTween = Utils.CreateLightColorTween(LightKind, Color);
-                    //lightSprite.Tweens.ScaleTween = Utils.CreateLightScaleTween(LightKind, Scale);
-                    lightSprite.Tweens.OpacityTween = Utils.CreateLightOpacityTween(LightKind);
+                    lightSprite.Tweens.OpacityTween = CreateFlickerTween(LightKind);
                     litTweenDuration = 2000;
                     unlitTweenDuration = 2000;
                     break;
 
-                //  Fireplace
-                case LightKind.Fireplace:
+                case LightKind.SulfurBonfire:
                     Passes = 2;
-                    lightSprite.Tweens.ColorTween = Utils.CreateLightColorTween(LightKind, Color);
-                    lightSprite.Tweens.ScaleTween = Utils.CreateLightScaleTween(LightKind, Scale);
-                    lightSprite.Tweens.OpacityTween = Utils.CreateLightOpacityTween(LightKind);
-                    litTweenDuration = 1000;
-                    unlitTweenDuration = 1000;
+                    lightSprite.Tweens.ColorTween = CreateColorTween(LightKind, Color);
+                    lightSprite.Tweens.ScaleTween = CreateScaleTween(LightKind, Scale);
+                    lightSprite.Tweens.OpacityTween = CreateFlickerTween(LightKind);
+                    litTweenDuration = 1500;
+                    unlitTweenDuration = 1500;
                     break;
 
-                //  LootOrb
                 case LightKind.LootOrb:
-                    lightSprite.Tweens.OpacityTween = Utils.CreateLightOpacityTween(LightKind);
+                    lightSprite.Tweens.OpacityTween = CreateFlickerTween(LightKind);
                     litTweenDuration = 1000;
                     unlitTweenDuration = 1000;
                     break;
 
-                // MuzzleFlash
                 case LightKind.MuzzleFlash:
-                    lightSprite.Tweens.Reset();
-                    lightSprite.Color = Color * .7f;
-                    break;
-
-                // Outdoor
                 case LightKind.Outdoor:
-                    lightSprite.Tweens.Reset();
-                    lightSprite.Color = ColorPalette.OutdoorLight;
-                    break;
-
-                // Player
                 case LightKind.Player:
-                    lightSprite.Tweens.Reset();
-                    lightSprite.Color = Color;
-                    litTweenDuration = 0;
-                    unlitTweenDuration = 0;
-                    break;
-
-                // Default
                 default:
-                    lightSprite.Tweens.Reset();
-                    lightSprite.Color = Color;
                     break;
             }
         }
@@ -111,35 +136,39 @@ namespace Remizione
             if (!IsEmitting)
                 return;
 
-            if (Passes > 1)
-            {
-                for (int i = 0; i < Passes; i++)
-                {
-                    lightSprite.Draw(gameTime);
-                }
-            }
-            else
+            // Guardamos la opacidad base del sprite (que puede estar haciendo flicker en loop)
+            float originalSpriteOpacity = lightSprite.Opacity;
+
+            // Aplicamos la opacidad combinada (Flicker * Fade de encendido)
+            lightSprite.Opacity = originalSpriteOpacity * currentFade;
+
+            for (int i = 0; i < Passes; i++)
             {
                 lightSprite.Draw(gameTime);
             }
+
+            // Restauramos la opacidad original para no romper la evolución del tween de flicker del sprite
+            lightSprite.Opacity = originalSpriteOpacity;
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (duration > 0)
+            if (durationMs > 0)
             {
-                duration -= gameTime.ElapsedGameTime.Milliseconds;
-                if (duration <= 0)
-                    TurnOff();
+                durationMs -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (durationMs <= 0)
+                    Unlit();
             }
 
+            // El sprite actualiza su escala, color y su flicker loopeado alegremente
             lightSprite.Update(gameTime);
 
-            if (opacityTween.IsRunning)
+            // La luz actualiza su nivel de encendido progresivo
+            if (fadeTween.IsRunning)
             {
-                opacityTween.Update(gameTime);
-                lightSprite.Opacity = opacityTween.CurrentValue;
+                fadeTween.Update(gameTime);
+                currentFade = fadeTween.CurrentValue;
             }
         }
 
@@ -160,26 +189,40 @@ namespace Remizione
                 if (value != field)
                 {
                     field = value;
-                    Invalidate();
+
+                    lightSprite.Color = value;
+
+                    if (lightSprite.Tweens.ColorTween != null)
+                        lightSprite.Tweens.ColorTween = CreateColorTween(LightKind, value);
                 }
             }
-        } = Color.White;
+        }
 
         // IsEmitting
-        public bool IsEmitting => lightSprite.Opacity > 0 || (opacityTween.IsRunning && opacityTween.EndValue > opacityTween.StartValue);
+        public bool IsEmitting => currentFade > 0;
 
         // LightKind
-        public LightKind LightKind
+        public LightKind LightKind { get; }
+
+        // Lit
+        public void Lit(bool immediate = false, int duration = 0)
         {
-            get;
-            set
+            durationMs = duration <= 0 ? -1 : duration;
+
+            if (immediate)
             {
-                if (value != field)
-                {
-                    field = value;
-                    Invalidate();
-                }
+                fadeTween.Stop();
+                currentFade = 1f;
+                return;
             }
+
+            if (currentFade == 1f || (fadeTween.IsRunning && fadeTween.EndValue == 1f))
+                return;
+
+            if (litTweenDuration == 0)
+                currentFade = 1f;
+            else
+                fadeTween.Start(TweenStyle.CubicIn, currentFade, 1f, litTweenDuration);
         }
 
         // Name
@@ -211,7 +254,11 @@ namespace Remizione
                 if (value != field)
                 {
                     field = value;
-                    Invalidate();
+
+                    lightSprite.Scale = value;
+
+                    if (lightSprite.Tweens.ScaleTween != null)
+                        lightSprite.Tweens.ScaleTween = CreateScaleTween(LightKind, value);
                 }
             }
         } = Vector2.One;
@@ -228,57 +275,23 @@ namespace Remizione
             return Name;
         }
 
-        // TurnOff
-        public void TurnOff()
-        {
-            TurnOff(false);
-        }
-
-        // TurnOff
-        public void TurnOff(bool immediate)
+        // Unlit
+        public void Unlit(bool immediate = false)
         {
             if (immediate)
-                opacityTween.Stop();
+            {
+                fadeTween.Stop();
+                currentFade = 0f;
+                return;
+            }
 
-            if (lightSprite.Opacity == 0 || (opacityTween.IsRunning && opacityTween.EndValue == 0))
+            if (currentFade == 0f || (fadeTween.IsRunning && fadeTween.EndValue == 0f))
                 return;
 
-            if (unlitTweenDuration == 0 || immediate)
-                lightSprite.Opacity = 0;
+            if (unlitTweenDuration == 0)
+                currentFade = 0f;
             else
-                opacityTween.Start(TweenStyle.CubicIn, lightSprite.Opacity, 0, unlitTweenDuration);
-        }
-
-        // TurnOn
-        public void TurnOn()
-        {
-            TurnOn(false);
-        }
-
-        // TurnOn
-        public void TurnOn(bool immediate)
-        {
-            TurnOn(immediate, 0);
-        }
-
-        // TurnOn
-        public void TurnOn(bool immediate, int duration)
-        {
-            if (duration <= 0)
-                this.duration = -1;
-            else
-                this.duration = duration;
-
-            if (immediate)
-                opacityTween.Stop();
-
-            if (lightSprite.Opacity == 1 || (opacityTween.IsRunning && opacityTween.EndValue == 1))
-                return;
-
-            if (litTweenDuration == 0 || immediate)
-                lightSprite.Opacity = 1;
-            else
-                opacityTween.Start(TweenStyle.CubicIn, lightSprite.Opacity, 1, litTweenDuration);
+                fadeTween.Start(TweenStyle.CubicIn, currentFade, 0f, unlitTweenDuration);
         }
 
         // X
@@ -289,7 +302,7 @@ namespace Remizione
         }
 
         // Y
-        public float PositionY
+        public float Y
         {
             get => lightSprite.Y;
             set => lightSprite.Y = value;

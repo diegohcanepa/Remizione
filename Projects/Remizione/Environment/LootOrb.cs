@@ -22,11 +22,10 @@ namespace Remizione
             Opacity = .6f;
             RenderLayer = RenderLayer.Default;
 
-            this.AttachedLight = new("Light")
+            this.AttachedLight = new("Light", LightKind.LootOrb)
             {
                 Color = this.Color,
                 PivotOrigin = RectanglePoint.Center,
-                LightKind = LightKind.LootOrb,
             };
 
             AttachedLightPosition = new(3, 4);

@@ -61,7 +61,7 @@ namespace Remizione
             var index = 0;
             foreach (var lightDescriptor in roomNode.Definition.Lights)
             {
-                var light = AddLight($"Light{index}__");
+                var light = AddLight($"Light{index}__", LightKind.Default);
                 light.Ambient = true;
                 light.Color = lightDescriptor.Color;
                 light.Position = lightDescriptor.Position;
@@ -201,7 +201,7 @@ namespace Remizione
         {
             foreach (var door in doors)
             {
-                var doorLight = AddLight(door.Name);
+                var doorLight = AddLight(door.Name, LightKind.Default);
                 //doorLight.Ambient = true;
                 doorLight.Color = new Color(240, 181, 65) * .7f;
                 doorLight.Position = door.BoundingBox.Center;

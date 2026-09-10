@@ -187,6 +187,13 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/Bonfire.wav;Audio/FX/Bonfire
 
+#begin Audio/FX/BonfireIgnition.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/BonfireIgnition.wav;Audio/FX/BonfireIgnition
+
 #begin Audio/FX/Break.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

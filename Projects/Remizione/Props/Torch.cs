@@ -16,12 +16,11 @@ namespace Remizione
             DisplayNameKey = "Prop.Torch";
             Verb = Verb.Examine;
 
-            this.AttachedLight = new("Light")
+            this.AttachedLight = new("Light", LightKind.Default)
             {
                 Ambient = true,
                 Color = new(70, 62, 50),
                 PivotOrigin = RectanglePoint.Center,
-                LightKind = LightKind.Default,
                 Passes = 3,
                 Position = new(9),
                 Scale = new(12, 18)

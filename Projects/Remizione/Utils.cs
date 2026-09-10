@@ -82,46 +82,6 @@ namespace Remizione
             return result;
         }
 
-        // CreateLightColorTween
-        internal static ColorTween? CreateLightColorTween(LightKind lightKind, Color color)
-        {
-            return lightKind switch
-            {
-                LightKind.Fire => ColorTween.Create(TweenStyle.Linear, color, color * .9f, 90, -1),
-                LightKind.Fireplace => ColorTween.Create(TweenStyle.Linear, color, color * .96f, 90, -1),
-                LightKind.Lantern => ColorTween.Create(TweenStyle.Linear, color * .98f, color * .96f, 90, -1),
-                _ => null,
-            };
-        }
-
-        // CreateLightOpacityTween
-        internal static FloatTween? CreateLightOpacityTween(LightKind lightKind)
-        {
-            return lightKind switch
-            {
-                LightKind.Fire or
-                LightKind.Fireplace or
-                LightKind.Lantern => FloatTween.Create(TweenStyle.Linear, 1, .98f, 80, -1),
-                LightKind.LootOrb => FloatTween.Create(TweenStyle.Linear, .5f, .55f, 70, -1),
-                _ => null,
-            };
-        }
-
-        // CreateLightScaleTween
-        internal static Vector2Tween? CreateLightScaleTween(LightKind lightKind, Vector2 scale)
-        {
-            return lightKind switch
-            {
-                LightKind.Fire => Vector2Tween.Create(TweenStyle.Linear, scale, scale * 1.05f, 1200, -1),
-
-                LightKind.Fireplace => Vector2Tween.Create(TweenStyle.Linear, scale, scale * 1.01f, 1200, -1),
-
-                LightKind.Lantern => Vector2Tween.Create(TweenStyle.Linear, scale, scale * 1.1f, Random.Shared.Next(1100, 1400), -1),
-
-                _ => null,
-            };
-        }
-
         // GetVersion
         internal static string GetVersion()
         {

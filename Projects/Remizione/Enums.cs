@@ -83,7 +83,7 @@ namespace Remizione
     public enum KnockbackIntensity { None, Low, Medium, High }
 
     // LightKind
-    public enum LightKind { Default, Lantern, Fire, Fireplace, Global, MuzzleFlash, Outdoor, Player, LootOrb }
+    public enum LightKind { Default, Lantern, Fire, SulfurBonfire, Global, MuzzleFlash, Outdoor, Player, LootOrb }
 
     // LightState
     public enum LightState { Off, On, TurningOn, TurningOff }

@@ -17,13 +17,11 @@ namespace Remizione.Scripting
             var name = Parser.ParseName(this, 0);
             AssertKeyword(1, "at");
 
-            var result = room.AddLight(name);
+            var lightKind = Parser.ParseEnumArgument(this, KindArg, LightKind.Default);
+            var result = room.AddLight(name, lightKind);
 
             // Color
             result.Color = Parser.ParseColorArgument(this, ColorArg, Color.White);
-
-            // LightKind
-            result.LightKind = Parser.ParseEnumArgument(this, KindArg, LightKind.Default);
 
             // Passes
             if (HasArg(PassesArg))
@@ -42,7 +40,7 @@ namespace Remizione.Scripting
 
             // Off
             if (HasArg(OffArg))
-                result.TurnOff(true);
+                result.Unlit(true);
         }
     }
 }
