@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Microsoft.Xna.Framework;
 
 namespace Remizione
 {
@@ -7,6 +8,8 @@ namespace Remizione
     /// </summary>
     public sealed class LootOrb : Pickable
     {
+        private readonly Vector2Tween scaleTween = new() { StartDelay = 700 };
+
         // Constructor
         public LootOrb(GameSession session, string name)
             : base(session, name)
@@ -42,7 +45,8 @@ namespace Remizione
         protected override void OnLoad()
         {
             base.OnLoad();
-            Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicOut, 0, .75f, 1000);
+            scaleTween.Start(TweenStyle.CubicOut, Vector2.Zero, new(.75f), 600);
+            Tweens.ScaleTween = scaleTween;
         }
 
         #endregion

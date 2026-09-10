@@ -85,10 +85,6 @@ namespace Remizione
 
         #endregion
 
-        // HasTinder
-        [ScriptProperty]
-        public bool HasTinder { get; set; }
-
         // IsLit
         [ScriptProperty]
         public bool IsLit

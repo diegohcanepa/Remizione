@@ -1148,7 +1148,8 @@ namespace Remizione
             }
             else
             {
-                var destination = target.GetApproachPosition(this, Session.InteractionData.IsAttack || ActiveThrowable != null ? ApproachBehavior.ClosestSide : null);
+                ApproachBehavior? behavior = Session.InteractionData.IsAttack || ActiveThrowable != null ? ApproachBehavior.ClosestSide : null;
+                var destination = target.GetApproachPosition(this, behavior);
 
                 if (destination != Vector2.Zero)
                 {

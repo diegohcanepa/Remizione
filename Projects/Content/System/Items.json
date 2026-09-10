@@ -45,7 +45,7 @@
 			"isStackable": true
 		},
 		{
-			"name": "Tinder",
+			"name": "SulfurStone",
 			"category": "Misc",
 			"actionKind": "Script",
 			"isDepletable": true,

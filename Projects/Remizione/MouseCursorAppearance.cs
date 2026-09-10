@@ -74,7 +74,10 @@ namespace Remizione
             {
                 if (context.Target != null)
                 {
-                    SyncIcon(context.Target.Verb);
+                    if (context.Target.Verb == Verb.PickUp && context.Target.ItemReward != null)
+                        MouseCursor.CustomImage = context.Target.ItemReward.Image;
+                    else
+                        SyncIcon(context.Target.Verb);
                 }
                 else
                 {

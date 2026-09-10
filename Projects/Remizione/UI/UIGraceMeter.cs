@@ -31,7 +31,7 @@ namespace Remizione
                 Color = titleColor,
                 PivotOrigin = RectanglePoint.RightTop,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -3, -12),
-                Scale = ScaleInfo.Text.Medium,
+                Scale = ScaleInfo.Text.Large,
                 Text = Localization.GetValue(PlayerStat.Grace)
             };
 

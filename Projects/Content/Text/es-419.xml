@@ -36,8 +36,8 @@
   <String Key="Item.Loquat.Name">Níspero</String>
   <String Key="Item.PrayerBonfire.Name">Plegaria de la hoguera</String>
   <String Key="Item.ServantCross.Name">Cruz del Siervo</String>
-  <String Key="Item.Tinder.Effect">Enciende hogueras</String>
-  <String Key="Item.Tinder.Name">Yesca</String>
+  <String Key="Item.SulfurStone.Effect">Enciende hogueras</String>
+  <String Key="Item.SulfurStone.Name">Piedra de azufre</String>
   <String Key="Item.TrapdoorKey.Name">Llave de trampilla</String>
   <String Key="Item.Verse.Name">Versículo</String>
   <String Key="ItemCategory.KeyItem">Objetos importante</String>

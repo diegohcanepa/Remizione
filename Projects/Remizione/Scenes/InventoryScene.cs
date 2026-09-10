@@ -20,7 +20,8 @@ namespace Remizione
         private readonly TextSprite itemDescription;
         private Item? lastSelectedItem;
         private int lastSeenContainerVersion = -1;
-        private const int slotSize = 14;
+        private readonly Sprite[] shadows = new Sprite[ItemContainer.MaximumCapacity];
+        private readonly Sprite[] slots = new Sprite[ItemContainer.MaximumCapacity];
 
         #endregion
 
@@ -32,21 +33,39 @@ namespace Remizione
         {
             this.PausePreviousScenes = false;
 
-            // Icons
             for (var i = 0; i < icons.Length; i++)
             {
+                // Slots
+                slots[i] = new()
+                {
+                    PivotOrigin = RectanglePoint.Center,
+                    RenderImage = Atlases.UI.InventoryItemSlot,
+                    Y = Screen.Area.Bottom - 20
+                };
+
+                // Icons
                 icons[i] = new()
                 {
                     PivotOrigin = RectanglePoint.Center,
-                    RenderImage = Atlases.UI.FakeItem,
-                    Y = Screen.Area.Bottom - 18
+                    Y = slots[i].BoundingBox.Center.Y - 1
+                };
+
+                // Shadows
+                shadows[i] = new()
+                {
+                    Color = Color.Black,
+                    Opacity = .3f,
+                    PivotOrigin = RectanglePoint.Center,
+                    Scale = ScaleInfo.UIElement.Large,
+                    Y = slots[i].BoundingBox.Center.Y + .5f
                 };
 
                 // Amount
                 amounts[i] = new Sprite()
                 {
                     PivotOrigin = RectanglePoint.Top,
-                    Scale = ScaleInfo.UIElement.Small
+                    Scale = ScaleInfo.UIElement.Small,
+                    Y = slots[i].BoundingBox.Bottom + 1
                 };
             }
 
@@ -57,7 +76,7 @@ namespace Remizione
             {
                 Color = ColorPalette.Text.MouseCursor,
                 PivotOrigin = RectanglePoint.Bottom,
-                Y = icons[0].BoundingBox.Top - 6,
+                Y = slots[0].BoundingBox.Top - 8,
                 Scale = ScaleInfo.Text.VeryLarge
             };
 
@@ -68,7 +87,7 @@ namespace Remizione
                 MaximumWidth = 200,
                 Multiline = false,
                 PivotOrigin = RectanglePoint.Bottom,
-                Y = icons[0].BoundingBox.Top,
+                Y = slots[0].BoundingBox.Top - 2,
                 Scale = ScaleInfo.Text.Large,
             };
         }
@@ -119,7 +138,8 @@ namespace Remizione
         {
             float screenWidth = Screen.NativeWidth;
             int slotCount = ItemContainer.Count;
-            float spacing = 0;
+            float spacing = 2;
+            var slotSize = slots[0].BoundingBox.Width;
 
             float rowWidth = (slotCount * slotSize) + ((slotCount - 1) * spacing);
             float startingX = (screenWidth - rowWidth) / 2;
@@ -127,15 +147,22 @@ namespace Remizione
             for (int i = 0; i < ItemContainer.Count; i++)
             {
                 var x = startingX + (i * (slotSize + spacing)) + (slotSize / 2);
+
+                slots[i].X = x;
+
                 icons[i].RenderImage = null;
                 amounts[i].RenderImage = null;
+                shadows[i].RenderImage = null;
 
                 if (i < ItemContainer.Count)
                 {
-                    icons[i].X = x;
+                    icons[i].X = slots[i].BoundingBox.Center.X;
                     icons[i].RenderImage = ItemContainer[i].Definition.Image;
 
-                    amounts[i].Position = icons[i].BoundingBox.GetPoint(RectanglePoint.Bottom);
+                    shadows[i].X = icons[i].X - .5f;
+                    shadows[i].RenderImage = ItemContainer[i].Definition.Image;
+
+                    amounts[i].X = icons[i].BoundingBox.Center.X;
 
                     if (ItemContainer[i].Definition.IsStackable || ItemContainer[i].Definition.IsDepletable)
                     {
@@ -156,6 +183,7 @@ namespace Remizione
             for (var i = 0; i < ItemContainer.Count; i++)
             {
                 icons[i].Scale = ScaleInfo.UIElement.Large;
+                shadows[i].Scale = ScaleInfo.UIElement.Large;
             }
         }
 
@@ -182,14 +210,15 @@ namespace Remizione
 
             for (var i = 0; i < ItemContainer.Count; i++)
             {
-                //slots[i].Draw(gameTime);
+                slots[i].Draw(gameTime);
 
                 if (ItemContainer.Session.InteractionContext.HeldItem?.Index == i)
                 {
                     if (!ItemContainer[i].Definition.IsStackable)
                         continue;
                 }
-
+                
+                shadows[i].Draw(gameTime);
                 icons[i].Draw(gameTime);
                 amounts[i].Draw(gameTime);
             }
@@ -262,6 +291,7 @@ namespace Remizione
                     if (lastSelectedItem?.Index >= 0)
                     {
                         icons[lastSelectedItem.Index].Scale = ScaleInfo.UIElement.Large;
+                        shadows[lastSelectedItem.Index].Scale = ScaleInfo.UIElement.Large;
                     }
                     else
                     {
@@ -273,7 +303,8 @@ namespace Remizione
                     itemLabel.Text = item.Definition.DisplayName;
                     MouseCursor.Tooltip = item.Definition.DisplayName;
                     itemDescription.Text = item.Definition.EffectDescription;
-                    icons[item.Index].Scale = ScaleInfo.InventoryHeldItem;
+                    icons[item.Index].Scale = ScaleInfo.UIElement.ExtraLarge;
+                    shadows[item.Index].Scale = ScaleInfo.UIElement.ExtraLarge;
                     itemLabel.Tag = item;
                     lastSelectedItem = item;
                 }
@@ -281,7 +312,10 @@ namespace Remizione
             else if (lastSelectedItem != null)
             {
                 if (lastSelectedItem.Index >= 0)
+                {
                     icons[lastSelectedItem.Index].Scale = ScaleInfo.UIElement.Large;
+                    shadows[lastSelectedItem.Index].Scale = ScaleInfo.UIElement.Large;
+                }
 
                 lastSelectedItem = null;
             }
@@ -311,7 +345,7 @@ namespace Remizione
         {
             for (int i = 0; i < ItemContainer.Count; i++)
             {
-                if (icons[i].BoundingBox.Contains(position))
+                if (slots[i].BoundingBox.Contains(position))
                     return i < ItemContainer.Count ? ItemContainer[i] : null;
             }
 

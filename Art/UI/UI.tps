@@ -304,7 +304,7 @@
             <key type="filename">Items-assets/FakeItem.png</key>
             <key type="filename">Items-assets/Loquat.png</key>
             <key type="filename">Items-assets/PrayerBonfire.png</key>
-            <key type="filename">Items-assets/Tinder.png</key>
+            <key type="filename">Items-assets/SulfurStone.png</key>
             <key type="filename">XboxControls-assets/XboxA.png</key>
             <key type="filename">XboxControls-assets/XboxB.png</key>
             <struct type="IndividualSpriteSettings">

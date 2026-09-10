@@ -233,7 +233,7 @@ namespace Remizione
             if (Session.Room is not GameRoom room || Definition == null)
                 return;
 
-            ItemReward = Session.LootGenerator.RollForLoot(Definition);
+            ItemReward ??= Session.LootGenerator.RollForLoot(Definition);
 
             if (ItemReward != null)
             {

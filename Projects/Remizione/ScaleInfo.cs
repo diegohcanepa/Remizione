@@ -95,6 +95,7 @@ namespace Remizione
             internal static Vector2 Small { get; } = new(.6f);
             internal static Vector2 Medium { get; } = new(.75f);
             internal static Vector2 Large { get; } = Vector2.One;
+            internal static Vector2 ExtraLarge { get; } = new(1.2f);
         }
 
         // UISentence

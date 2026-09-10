@@ -23,6 +23,7 @@ namespace Remizione
             FakeItem = this[nameof(FakeItem)];
             HeartIcon = this[nameof(HeartIcon)];
             InventoryItemAmounts = CreateReadOnlyCollection("InventoryItemAmount", 1, 5);
+            InventoryItemSlot = this[nameof(InventoryItemSlot)];
             InventoryMeterSlot = this[nameof(InventoryMeterSlot)];
             MessageContainer = this[nameof(MessageContainer)];
             MiniMapNodes = CreateReadOnlyCollection<MapNodeState>("MiniMapNode");
@@ -73,6 +74,9 @@ namespace Remizione
 
         // InventoryItemAmounts
         public ReadOnlyCollection<AtlasImage> InventoryItemAmounts { get; }
+
+        // InventoryItemSlot
+        public AtlasImage InventoryItemSlot { get; }
 
         // InventoryMeterSlot
         public AtlasImage InventoryMeterSlot { get; }
