@@ -808,12 +808,12 @@ namespace Remizione
         }
 
         // ShowEcho
-        public void ShowEcho(string text)
+        public void ShowEcho(string text, string? soundName)
         {
             if (Game.SceneManager.CurrentScene is not EchoScene)
                 Game.SceneManager.Push(echoScene);
 
-            echoScene.Show(text);
+            echoScene.Show(text, soundName);
         }
 
         // ShowInventory

@@ -1,8 +1,11 @@
-﻿using Engendro;
+﻿using Adberration;
+using Adberration.Scripting;
+using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Remizione.UI
@@ -10,12 +13,14 @@ namespace Remizione.UI
     /// <summary>
     /// Narrator
     /// </summary>
-    public sealed class Narrator : GameObject
+    public sealed class Narrator : SessionGameObject<GameSession>
     {
         private readonly ContentManager content;
-        private int textFadeTimer = -1;
+        private readonly Queue<(string Text, SoundEffect? SoundEffect, SoundEffectInstance? SoundInstance)> playQueue = new();
+        private Script? script;
         private SoundEffect? soundEffect;
         private SoundEffectInstance? soundEffectInstance;
+        private int textFadeTimer = -1;
         private readonly TextSprite textSprite;
         private FloatTween opacityTween = new();
 
@@ -23,7 +28,8 @@ namespace Remizione.UI
         #region Constructor
 
         // Constructor
-        public Narrator()
+        public Narrator(GameSession session)
+            : base(session)
         {
             content = new(Game.Services, Game.Content.RootDirectory);
 
@@ -39,75 +45,11 @@ namespace Remizione.UI
 
         #endregion
 
-        #region Protected members
+        #region Private members
 
-        // OnDraw
-        protected override void OnDraw(GameTime gameTime)
+        // DisposeActiveSound
+        private void DisposeActiveSound()
         {
-            textSprite.Draw(gameTime);
-        }
-
-        // OnUpdate
-        protected override void OnUpdate(GameTime gameTime)
-        {
-            textSprite.Update(gameTime);
-
-            if (soundEffectInstance != null && soundEffectInstance.State == SoundState.Stopped)
-            {
-                soundEffectInstance = null;
-                textFadeTimer = 2000;
-            }
-            else if (textFadeTimer >= 0)
-            {
-                textFadeTimer -= gameTime.ElapsedGameTime.Milliseconds;
-                if (textFadeTimer < 0)
-                {
-                    opacityTween.Start(TweenStyle.Linear, 1, 0, 400, () => IsPlaying = false);
-                    textSprite.Tweens.OpacityTween = opacityTween;
-                }
-            }
-        }
-
-        #endregion
-
-        // IsPlaying
-        public bool IsPlaying { get; private set; }
-
-        // Play
-        public void Play(string text, string? soundName)
-        {
-            Stop();
-
-            if (string.IsNullOrWhiteSpace(text))
-                return;
-
-            if (text == textSprite.Text)
-                return;
-
-            opacityTween.Start(TweenStyle.Linear, 0, 1, 400);
-            this.textSprite.Text = text;
-            this.textSprite.Tweens.OpacityTween = opacityTween;
-
-            if (!string.IsNullOrWhiteSpace(soundName))
-            {
-                var filePath = Sound.EncodeAssetName(AudioManager.VoiceCategory, soundName);
-                filePath = Path.Combine(Game.Content.RootDirectory, filePath);
-
-                using var stream = File.OpenRead(filePath);
-                this.soundEffect = SoundEffect.FromStream(stream);
-                this.soundEffectInstance = soundEffect.CreateInstance();
-                this.soundEffectInstance.Volume = AudioManager.VoiceCategory.Volume.Effective;
-                this.soundEffectInstance.Play();
-            }
-
-            IsPlaying = true;
-        }
-
-        // Stop
-        public void Stop()
-        {
-            textSprite.Clear();
-
             if (soundEffectInstance != null)
             {
                 if (soundEffectInstance.State == SoundState.Playing)
@@ -122,7 +64,116 @@ namespace Remizione.UI
                 soundEffect.Dispose();
                 soundEffect = null;
             }
+        }
 
+        // Next
+        private void Next()
+        {
+            DisposeActiveSound();
+
+            textFadeTimer = -1;
+
+            if (playQueue.Count == 0)
+            {
+                Stop();
+                return;
+            }
+
+            var item = playQueue.Dequeue();
+
+            opacityTween.Start(TweenStyle.Linear, 0, 1, 400);
+            this.textSprite.Text = item.Text;
+            this.textSprite.Tweens.OpacityTween = opacityTween;
+
+            item.SoundInstance?.Play();
+            soundEffect = item.SoundEffect;
+            soundEffectInstance = item.SoundInstance;
+        }
+
+        #endregion
+
+        #region Protected members
+
+        // OnDraw
+        protected override void OnDraw(GameTime gameTime)
+        {
+            textSprite.Draw(gameTime);
+        }
+
+        // OnUpdate
+        protected override void OnUpdate(GameTime gameTime)
+        {
+            if (Session.AwaitingScript != script)
+                script = null;
+
+            textSprite.Update(gameTime);
+
+            if (textFadeTimer >= 0)
+            {
+                textFadeTimer -= gameTime.ElapsedGameTime.Milliseconds;
+                if (textFadeTimer < 0)
+                {
+                    opacityTween.Start(TweenStyle.Linear, 1, 0, 250, Next);
+                    textSprite.Tweens.OpacityTween = opacityTween;
+                }
+            }
+            else if (soundEffectInstance != null && soundEffectInstance.State == SoundState.Stopped)
+            {
+                textFadeTimer = 500;
+            }
+        }
+
+        #endregion
+
+        // IsPlaying
+        public bool IsPlaying { get; private set; }
+
+        // Play
+        public void Play(string text, string? soundName)
+        {
+            if (Session.AwaitingScript != script)
+            {
+                Stop();
+                script = Session.AwaitingScript;
+            }
+
+            if (string.IsNullOrWhiteSpace(text))
+                return;
+
+            if (text == textSprite.Text)
+                return;
+
+            if (!string.IsNullOrWhiteSpace(soundName))
+            {
+                var filePath = Sound.EncodeAssetName(AudioManager.VoiceCategory, soundName);
+                content.Load<SoundEffect>(filePath);
+                var sfx = content.Load<SoundEffect>(filePath);
+                var sfxInstance = sfx.CreateInstance();
+                sfxInstance.Volume = AudioManager.VoiceCategory.Volume.Effective * .5f;
+                playQueue.Enqueue(new(text, sfx, sfxInstance));
+            }
+
+            if (soundEffectInstance == null)
+            {
+                Next();
+                IsPlaying = true;
+            }
+        }
+
+        // Stop
+        public void Stop()
+        {
+            textSprite.Clear();
+            
+            while (playQueue.Count > 0)
+            {
+                var item = playQueue.Dequeue();
+                item.SoundInstance?.Stop();
+                item.SoundInstance?.Dispose();
+                item.SoundEffect?.Dispose();
+            }
+
+            DisposeActiveSound();
             content.Unload();
         }
     }

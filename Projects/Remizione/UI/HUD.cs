@@ -30,6 +30,7 @@ namespace Remizione
             this.InventoryMeter = new(session.PlayerData.Inventory);
             this.traits = new(session);
             this.MiniMap = new();
+            this.Narrator = new(session);
             //this.runModifiers = new(run);
             this.Statuses = new(session);
             this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 14));
@@ -105,7 +106,7 @@ namespace Remizione
         public UIMiniMap MiniMap { get; }
 
         // Narrator
-        public Narrator Narrator { get; } = new();
+        public Narrator Narrator { get; }
 
         // Reset
         public void Reset()

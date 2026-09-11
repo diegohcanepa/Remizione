@@ -287,7 +287,7 @@ namespace Remizione
             {
                 effect.Color.SetValue(HightlightColor.Value);
                 effect.TextureSize.SetValue(new Vector2(cursorSprite.RenderImage.Atlas.Texture.Width, cursorSprite.RenderImage.Atlas.Texture.Height));
-                effect.Thickness.SetValue(.5f);
+                effect.Thickness.SetValue(.75f);
             }
         }
     }

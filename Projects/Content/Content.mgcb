@@ -887,17 +887,50 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/Music/Main.wav;Audio/Music/Main
 
-#begin Audio/Voice/BonfireExamine.wav
-/copy:Audio/Voice/BonfireExamine.wav
+#begin Audio/Voice/BonfireExamine1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/Voice/BonfireExamine1.wav;Audio/Voice/BonfireExamine1
+
+#begin Audio/Voice/BonfireExamine2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/Voice/BonfireExamine2.wav;Audio/Voice/BonfireExamine2
 
 #begin Audio/Voice/EmptySack.wav
-/copy:Audio/Voice/EmptySack.wav;Audio/Voice/EmptySack
+/importer:
+/processor:
+/build:Audio/Voice/EmptySack.wav;Audio/Voice/EmptySack
 
-#begin Audio/Voice/Intro.wav
-/copy:Audio/Voice/Intro.wav;Audio/Voice/Intro
+#begin Audio/Voice/Intro1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/Voice/Intro1.wav;Audio/Voice/Intro1
+
+#begin Audio/Voice/Intro2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/Voice/Intro2.wav;Audio/Voice/Intro2
+
+#begin Audio/Voice/Intro3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/Voice/Intro3.wav;Audio/Voice/Intro3
 
 #begin Audio/Voice/NoSack.wav
-/copy:Audio/Voice/NoSack.wav;Audio/Voice/NoSack
+/importer:
+/processor:
+/build:Audio/Voice/NoSack.wav;Audio/Voice/NoSack
 
 #begin Fonts/Common.bmp
 /importer:LocalizedFontTextureImporter

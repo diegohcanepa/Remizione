@@ -4,7 +4,7 @@ using System.Reflection.Metadata.Ecma335;
 namespace Remizione.Scripting
 {
     // EchoCommand
-    // Arguments: {"Text"} [#lid:Integer]
+    // Arguments: {"Text"} [#lid:Integer] [#literal]
     [ForceAwait]
     internal sealed class EchoCommand : LocalizableCommand
     {
@@ -21,11 +21,12 @@ namespace Remizione.Scripting
         // OnExecute
         protected override void OnExecute()
         {
-            string text = GetDisplayText();
+            var text = GetDisplayText();
+            var soundName = Parser.ParseNameArgument(this, VoiceArg);
 
             if (Session is GameSession session)
             {
-                session.ShowEcho(text);
+                session.ShowEcho(text, soundName);
                 //session.HUD.Narrator.Play(text, Parser.ParseNameArgument(this, VoiceArg));
             }
         }
