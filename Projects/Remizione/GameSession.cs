@@ -304,6 +304,10 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(DisplayHPMeter)]?.Value is string displayHPMeterValue)
                 DisplayHPMeter = XmlConvert.ToBoolean(displayHPMeterValue);
 
+            // Inventory
+            if (sessionNode.Attributes[nameof(PlayerData.Inventory)]?.Value is string inventoryValue)
+                PlayerData.Inventory.Deserialize(inventoryValue);
+
             // InventoryEnabled
             if (sessionNode.Attributes[nameof(InventoryEnabled)]?.Value is string inventoryEnabledValue)
                 InventoryEnabled = XmlConvert.ToBoolean(inventoryEnabledValue);
@@ -456,6 +460,9 @@ namespace Remizione
 
             // InventoryEnabled
             output.WriteAttributeString(nameof(InventoryEnabled), XmlConvert.ToString(InventoryEnabled));
+
+            // Inventory
+            output.WriteAttributeString(nameof(PlayerData.Inventory), PlayerData.Inventory.Serialize());
 
             // Player
             if (Player != null)
@@ -771,6 +778,12 @@ namespace Remizione
             }
 
             ActiveNPC = null;
+        }
+
+        // RespawnWorld
+        [ScriptMethod]
+        public void RespawnWorld()
+        {
         }
 
         // Room

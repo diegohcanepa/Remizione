@@ -23,7 +23,7 @@ namespace Remizione.Scripting
 
             if (target.ItemReward != null)
             {
-                if (!session.PlayerData.Inventory.HasSpace(target.ItemReward))
+                if (!session.PlayerData.Inventory.CanAddItem(target.ItemReward))
                 {
                     session.HUD?.Message.Show(MessageKind.InventoryFull);
                     return false;

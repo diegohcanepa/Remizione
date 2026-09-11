@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Xml;
 
 namespace Remizione
 {
@@ -21,32 +22,60 @@ namespace Remizione
 
         #endregion
 
-        // Add
-        public Item? Add(string name)
+        #region Serialization methods
+
+        // Deserialize
+        public string Deserialize(string content)
         {
-            var definition = GameData.Items.Find(name) ?? throw new InvalidOperationException("Item definition not found.");
-            return Add(definition);
+            Clear();
+
+            var values = content.Split(";");
+
+            foreach (var value in values)
+            {
+                var data = value.Split("|");
+                if (Add(data[0]) is Item item)
+                    item.Amount = XmlConvert.ToInt32(data[1]);
+            }
+
+            return string.Join(";", values);
+        }
+
+        // Serialize
+        public string Serialize()
+        {
+            var values = new List<string>();
+
+            foreach (var item in this)
+            {
+                values.Add($"{item.Name}|{XmlConvert.ToString(item.Amount)}");
+            }
+
+            return string.Join(";", values);
+        }
+
+        #endregion
+
+        // Add
+        public Item Add(string name)
+        {
+            return Add(GameData.Items.Get(name));
         }
 
         // Add
-        public Item? Add(ItemDefinition definition)
+        public Item Add(ItemDefinition definition)
         {
-            if (!HasSpace(definition))
-                return null;
+            if (!CanAddItem(definition))
+                throw new InvalidOperationException("Item container is full.");
 
-            var item = Find(definition.Name);
-
-            if (item == null)
+            if (Find(definition.Name) is Item item)
             {
-                if (IsFull)
-                    return null;
-
-                item = new Item(this, definition);
-                Add(item);
+                item.Amount += 1;
             }
             else
             {
-                item.Amount += 1;
+                item = new Item(this, definition);
+                Add(item);
             }
 
             return item;
@@ -54,6 +83,12 @@ namespace Remizione
 
         // AmbientLightColor
         public Color? AmbientLightColor { get; private set; }
+
+        // CanAddItem
+        public bool CanAddItem(ItemDefinition definition)
+        {
+            return Find(definition.Name) is Item item ? !item.IsFull : !IsFull;
+        }
 
         // Capacity
         public int Capacity
@@ -99,14 +134,6 @@ namespace Remizione
             }
 
             return [.. result];
-        }
-
-        // HasSpace
-        public bool HasSpace(ItemDefinition definition)
-        {
-            var item = Find(definition.Name);
-
-            return item != null || !IsFull;
         }
 
         // IsEmpty
