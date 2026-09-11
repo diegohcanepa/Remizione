@@ -661,6 +661,33 @@ namespace Remizione
         // IsConsoleVisible
         public bool IsConsoleVisible => console?.IsActive ?? false;
 
+        // IsGameplayActive
+        public bool IsGameplayActive
+        {
+            get
+            {
+                if (TransitionManager.CurrentTransition.IsRunning)
+                    return false;
+
+                if (TransitionManager.CurrentTransition.TransitionState == TransitionState.In)
+                    return false;
+
+                // Modal speech text active
+                if (SpeechText.ModalInstance != null)
+                    return false;
+
+                // Session is awaiting script
+                if (IsAwaiting)
+                    return false;
+
+                // Inventory is active
+                if (!IsCurrentScene)
+                    return false;
+
+                return true;
+            }
+        }
+
         // KillEnemies
         [ScriptMethod]
         public void KillEnemies()

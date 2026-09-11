@@ -1,7 +1,7 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-using System.Globalization;
 
 namespace Remizione
 {
@@ -112,6 +112,7 @@ namespace Remizione
                     {
                         ItemContainer.Session.InteractionContext.HeldItem = grabbedItem;
                         MouseCursor.PerformClick(false);
+                        Sound.Play(SoundNames.Interact);
                         Game.SceneManager.Pop();
                         return true;
                     }
@@ -217,7 +218,7 @@ namespace Remizione
                     if (!ItemContainer[i].Definition.IsStackable)
                         continue;
                 }
-                
+
                 shadows[i].Draw(gameTime);
                 icons[i].Draw(gameTime);
                 amounts[i].Draw(gameTime);

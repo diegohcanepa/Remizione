@@ -1,5 +1,4 @@
-﻿using Engendro;
-using Engendro.Input;
+﻿using Engendro.Input;
 
 namespace Remizione
 {
@@ -16,30 +15,6 @@ namespace Remizione
 
         #region Private members
 
-        // CanScanTarget
-        private bool CanScanTarget()
-        {
-            if (TransitionManager.CurrentTransition.IsRunning)
-                return false;
-
-            if (TransitionManager.CurrentTransition.TransitionState == TransitionState.In)
-                return false;
-
-            // Modal speech text active
-            if (SpeechText.ModalInstance != null)
-                return false;
-
-            // Session is awaiting script
-            if (Session.IsAwaiting)
-                return false;
-
-            // Inventory is active
-            if (!Session.IsCurrentScene)
-                return false;
-
-            return true;
-        }
-
         // ScanTarget
         private GameThing? ScanTarget()
         {
@@ -53,7 +28,7 @@ namespace Remizione
                 // Exclude player when HeldItem is null
                 if (Session.Room.CulledThings[i] == Session.Player)
                 {
-                    if (HeldItem == null) // TODO:Check || HeldItem.Definition.Behavior == ItemBehavior.PlayerAction)
+                    if (HeldItem == null)
                         continue;
                 }
 
@@ -75,14 +50,15 @@ namespace Remizione
         // Refresh
         public void Refresh()
         {
-            if (Session.Player == null || !Session.Player.IsInCurrentRoom)
+            if (Session.Player is not { IsInCurrentRoom: true })
             {
                 Reset();
                 MouseCursorAppearance.Refresh(this);
                 return;
             }
 
-            Target = CanScanTarget() ? ScanTarget() : null;
+            Target = Session.IsGameplayActive ? ScanTarget() : null;
+
             if (HeldItem?.Amount == 0)
                 HeldItem = null;
 
@@ -92,11 +68,8 @@ namespace Remizione
         // Reset
         public void Reset()
         {
-            if (Target != null && !Target.IsGoToVerb)
-            {
-                if (HeldItem?.Definition.DeselectOnUse == true)
-                    HeldItem = null;
-            }
+            if (Target is { IsGoToVerb: false } && HeldItem?.Definition.DeselectOnUse == true)
+                HeldItem = null;
 
             Target = null;
         }

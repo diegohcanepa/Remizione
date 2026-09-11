@@ -1,5 +1,4 @@
 ﻿using Adberration.Scripting;
-using System.Reflection.Metadata.Ecma335;
 
 namespace Remizione.Scripting
 {

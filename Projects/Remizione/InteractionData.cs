@@ -1,5 +1,6 @@
 ﻿using Adberration.Scripting;
 using Microsoft.Xna.Framework;
+using Remizione.InteractionCommands;
 
 namespace Remizione
 {
@@ -10,176 +11,97 @@ namespace Remizione
     {
         #region Private fields
 
-        private CombatIntent? combatIntent;
-        private Item? item;
-        private Script? script;
-        private readonly GameSession session;
-        private Prop? throwable;
+        private readonly CombatCommand combatCommand = new();
+        private readonly InteractionCommand[] commandChain;
+        private readonly ItemCommand itemCommand = new();
+        private readonly LiftCommand liftCommand = new();
+        private readonly ScriptCommand scriptCommand = new();
+        private readonly ThrowCommand throwCommand = new();
 
         #endregion
 
         // Constructor
         public InteractionData(GameSession session)
         {
-            this.session = session;
+            this.Session = session;
+            this.commandChain = [throwCommand, combatCommand, liftCommand, scriptCommand, itemCommand];
         }
 
         // CanExecute
-        public bool CanExecute => combatIntent != null || script != null || item != null || throwable != null;
+        public bool CanExecute => Target != null;
 
         // Clear
         public void Clear()
         {
-            combatIntent = null;
-            item = null;
-            script = null;
             Target = null;
             TargetPosition = Vector2.Zero;
-            throwable = null;
+            IsAttack = false;
         }
 
         // Execute
         public bool Execute()
         {
-            if (session.Player == null || Target == null)
+            if (Session.Player == null || Target == null)
                 return false;
 
-            var result = false;
+            var target = Target;
+            var executed = false;
 
-            if (combatIntent != null)
+            for (int i = 0; i < commandChain.Length; i++)
             {
-                session.Player.ExecuteAction(combatIntent, Target);
-                result = true;
-            }
-            else if (throwable != null && Target.Verb == Verb.Attack)
-            {
-                session.Player.StopMoving();
-                session.Player.ThrowActiveTrowable(Target);
-                result = true;
-            }
-            else if (Target.Verb == Verb.Lift && session.InteractionContext.HeldItem == null)
-            {
-                if (Target is Prop prop && prop.IsLiftable)
+                if (commandChain[i].Execute(this, target))
                 {
-                    session.Player.Lift(prop);
-                    result = true;
+                    executed = true;
+                    break;
                 }
-            }
-            else if (script != null)
-            {
-                session.Player.StopMoving();
-
-                if (Target != null)
-                {
-                    if (Target.Verb == Verb.PickUp && !session.InventoryEnabled)
-                    {
-                        session.AwaitRoutine(RoutineNames.NoSack);
-                    }
-                    else if (Vector2.Distance(Target.Position, TargetPosition) > 1)
-                    {
-                        session.HUD?.Message.Show(MessageKind.OutOfReach);
-                    }
-                    else
-                    {
-                        session.Player.FaceTo(Target);
-                        if (script != null)
-                        {
-                            session.BeginOutcome(script, Target);
-                            result = true;
-                        }
-                    }
-                }
-            }
-            else if (item != null)
-            {
-                session.Player.ExecuteAction(item, Target);
-                result = true;
             }
 
             Clear();
-
-            return result;
+            return executed;
         }
 
         // IsAttack
-        public bool IsAttack => combatIntent != null;
+        public bool IsAttack { get; private set; }
 
         // Prepare
         public void Prepare()
         {
             Clear();
 
-            var context = session.InteractionContext;
+            var context = Session.InteractionContext;
+            var target = context.Target;
+            var player = Session.Player;
+            var heldItem = context.HeldItem;
 
-            if (context.Target == null)
+            if (target == null) return;
+
+            // Filtros iniciales de validación
+            if (player?.ActiveThrowable != null && target.Verb != Verb.Attack && !target.IsGoToVerb)
                 return;
 
-            if (context.Session.Player?.ActiveThrowable != null)
+            if (heldItem != null && !target.IsGoToVerb)
             {
-                if (context.Target.Verb != Verb.Attack && !context.Target.IsGoToVerb)
-                    return;
-            }
-
-            if (context.HeldItem != null && !context.Target.IsGoToVerb)
-            {
-                if (context.Session.Player == context.Target)
+                if (player == target)
                 {
-                    if (context.HeldItem.Definition.ActionKind is ActionKind.Projectile or ActionKind.Proximity)
+                    if (heldItem.Definition.ActionKind is ActionKind.Projectile or ActionKind.Proximity)
                         return;
                 }
-                else if (context.HeldItem.Definition.ActionKind == ActionKind.Self)
+                else if (heldItem.Definition.ActionKind == ActionKind.Self)
                 {
                     return;
                 }
             }
 
-            this.Target = context.Target;
-            this.TargetPosition = context.Target.Position;
+            Target = target;
+            TargetPosition = target.Position;
 
-            if (context.HeldItem == null)
-            {
-                if (context.Session.Player?.ActiveThrowable is Prop activeThrowable && !Target.IsGoToVerb)
-                {
-                    this.throwable = activeThrowable;
-                }
-                else if (Target.Verb == Verb.Attack)
-                {
-                    // TODO: update here if player can use different intents.
-                    this.combatIntent = context.Session.Player?.CombatBehavior?.Intents[0];
-                }
-                else if (Target.Verb == Verb.Lift)
-                {
-                    this.throwable = Target as Prop;
-                }
-                else
-                {
-                    this.script = Target.OutcomeScript;
-                }
-            }
-            else
-            {
-                if (Target.IsGoToVerb)
-                {
-                    this.script = Target.OutcomeScript;
-                }
-                else
-                {
-                    if (context.HeldItem.Definition.ActionKind == ActionKind.Script)
-                    {
-                        if (Target.Session.ScriptLibrary.FindOutcomeOverload(Target.DeclaredName, context.HeldItem.Name) is Script script)
-                        {
-                            this.script = script;
-                            this.item = context.HeldItem;
-                        }
-                    }
-                    else
-                    {
-                        this.item = context.HeldItem;
-                        this.combatIntent = context.Session.Player?.CombatBehavior?.Intents.Find(context.HeldItem.Name);
-                    }
-                }
-            }
+            // IsAttack directo
+            IsAttack = (heldItem == null && target.Verb == Verb.Attack) ||
+                       (heldItem != null && !target.IsGoToVerb && player?.CombatBehavior?.Intents.Find(heldItem.Name) != null);
         }
+
+        // Session
+        public GameSession Session { get; }
 
         // Target
         public GameThing? Target { get; private set; }

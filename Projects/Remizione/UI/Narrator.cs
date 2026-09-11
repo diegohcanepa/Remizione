@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
-using System.IO;
 
 namespace Remizione.UI
 {
@@ -22,7 +21,7 @@ namespace Remizione.UI
         private SoundEffectInstance? soundEffectInstance;
         private int textFadeTimer = -1;
         private readonly TextSprite textSprite;
-        private FloatTween opacityTween = new();
+        private readonly FloatTween opacityTween = new();
 
 
         #region Constructor
@@ -164,7 +163,7 @@ namespace Remizione.UI
         public void Stop()
         {
             textSprite.Clear();
-            
+
             while (playQueue.Count > 0)
             {
                 var item = playQueue.Dequeue();

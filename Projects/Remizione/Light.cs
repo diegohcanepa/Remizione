@@ -44,40 +44,52 @@ namespace Remizione
         #region Static members
 
         // CreateColorTween
-        private static ColorTween? CreateColorTween(LightKind lightKind, Color color) => lightKind switch
+        private static ColorTween? CreateColorTween(LightKind lightKind, Color color)
         {
-            LightKind.Fire => ColorTween.Create(TweenStyle.Linear, color, color * .9f, 90, -1),
-            LightKind.Lantern => ColorTween.Create(TweenStyle.Linear, color * .98f, color * .96f, 90, -1),
-            LightKind.SulfurBonfire => ColorTween.Create(TweenStyle.Linear, color, color * .96f, 90, -1),
-            _ => null,
-        };
+            return lightKind switch
+            {
+                LightKind.Fire => ColorTween.Create(TweenStyle.Linear, color, color * .9f, 90, -1),
+                LightKind.Lantern => ColorTween.Create(TweenStyle.Linear, color * .98f, color * .96f, 90, -1),
+                LightKind.SulfurBonfire => ColorTween.Create(TweenStyle.Linear, color, color * .96f, 90, -1),
+                _ => null,
+            };
+        }
 
         // CreateFlickerTween
-        private static FloatTween? CreateFlickerTween(LightKind lightKind) => lightKind switch
+        private static FloatTween? CreateFlickerTween(LightKind lightKind)
         {
-            LightKind.Fire or
-            LightKind.SulfurBonfire or
-            LightKind.Lantern => FloatTween.Create(TweenStyle.Linear, 1f, .98f, 80, -1),
-            _ => null,
-        };
+            return lightKind switch
+            {
+                LightKind.Fire or
+                LightKind.SulfurBonfire or
+                LightKind.Lantern => FloatTween.Create(TweenStyle.Linear, 1f, .98f, 80, -1),
+                _ => null,
+            };
+        }
 
         // CreateScaleTween
-        private static Vector2Tween? CreateScaleTween(LightKind lightKind, Vector2 scale) => lightKind switch
+        private static Vector2Tween? CreateScaleTween(LightKind lightKind, Vector2 scale)
         {
-            LightKind.Fire => Vector2Tween.Create(TweenStyle.Linear, scale, scale * 1.05f, 1200, -1),
-            LightKind.SulfurBonfire => Vector2Tween.Create(TweenStyle.Linear, scale, scale * 1.01f, 1200, -1),
-            LightKind.Lantern => Vector2Tween.Create(TweenStyle.Linear, scale, scale * 1.1f, Random.Shared.Next(1100, 1400), -1),
-            _ => null,
-        };
+            return lightKind switch
+            {
+                LightKind.Fire => Vector2Tween.Create(TweenStyle.Linear, scale, scale * 1.05f, 1200, -1),
+                LightKind.SulfurBonfire => Vector2Tween.Create(TweenStyle.Linear, scale, scale * 1.01f, 1200, -1),
+                LightKind.Lantern => Vector2Tween.Create(TweenStyle.Linear, scale, scale * 1.1f, Random.Shared.Next(1100, 1400), -1),
+                _ => null,
+            };
+        }
 
         // GetInitialColor
-        private static Color GetInitialColor(LightKind lightKind) => lightKind switch
+        private static Color GetInitialColor(LightKind lightKind)
         {
-            LightKind.LootOrb => new(240, 181, 65),
-            LightKind.SulfurBonfire => new(134, 146, 31),
-            LightKind.Outdoor => ColorPalette.OutdoorLight,
-            _ => Color.White
-        };
+            return lightKind switch
+            {
+                LightKind.LootOrb => new(240, 181, 65),
+                LightKind.SulfurBonfire => new(134, 146, 31),
+                LightKind.Outdoor => ColorPalette.OutdoorLight,
+                _ => Color.White
+            };
+        }
 
         #endregion
 
