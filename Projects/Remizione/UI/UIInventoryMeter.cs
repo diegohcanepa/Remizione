@@ -98,7 +98,7 @@ namespace Remizione
 
             flyingIcon.RenderImage = image;
             flyingIcon.Position = hudPos;
-            flyingIcon.Scale = ScaleInfo.UIElement.Tiny;
+            flyingIcon.Scale = ScaleInfo.UIElement.Large;
             flyingIcon.Tweens.PositionTween = Vector2Tween.Create(TweenStyle.CubicInOut, flyingIcon.Position, icon.BoundingBox.Center, 1400);
             flyingIcon.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, flyingIcon.Scale, ScaleInfo.UIElement.Large, 600, 2, Animate);
         }

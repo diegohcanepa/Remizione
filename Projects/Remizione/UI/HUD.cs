@@ -2,7 +2,6 @@
 using Engendro;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-using Remizione.UI;
 
 namespace Remizione
 {
@@ -30,7 +29,6 @@ namespace Remizione
             this.InventoryMeter = new(session.PlayerData.Inventory);
             this.traits = new(session);
             this.MiniMap = new();
-            this.Narrator = new(session);
             //this.runModifiers = new(run);
             this.Statuses = new(session);
             this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 14));
@@ -47,7 +45,6 @@ namespace Remizione
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera);
-            Narrator.Draw(gameTime);
             if (Session.DisplayHPMeter)
                 hpMeter.Draw(gameTime);
             //runModifiers.Draw(gameTime);
@@ -67,7 +64,6 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            Narrator.Update(gameTime);
             traits.Update(gameTime);
             //runModifiers.Update(gameTime);
             Statuses.Update(gameTime);
@@ -104,9 +100,6 @@ namespace Remizione
 
         // MiniMap
         public UIMiniMap MiniMap { get; }
-
-        // Narrator
-        public Narrator Narrator { get; }
 
         // Reset
         public void Reset()

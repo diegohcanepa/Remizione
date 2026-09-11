@@ -153,6 +153,7 @@ namespace Remizione
                 soundEffect = content.Load<SoundEffect>(filePath);
                 soundEffectInstance = soundEffect.CreateInstance();
                 soundEffectInstance.Volume = AudioManager.VoiceCategory.Volume.Effective;
+                soundEffectInstance.Pitch = .1f;
                 soundEffectInstance.Play();
             }
 

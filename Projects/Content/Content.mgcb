@@ -901,10 +901,19 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/Voice/BonfireExamine2.wav;Audio/Voice/BonfireExamine2
 
-#begin Audio/Voice/EmptySack.wav
-/importer:
-/processor:
-/build:Audio/Voice/EmptySack.wav;Audio/Voice/EmptySack
+#begin Audio/Voice/EmptySack1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/Voice/EmptySack1.wav;Audio/Voice/EmptySack1
+
+#begin Audio/Voice/EmptySack2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/Voice/EmptySack2.wav;Audio/Voice/EmptySack2
 
 #begin Audio/Voice/Intro1.wav
 /importer:WavImporter

@@ -8,7 +8,7 @@ namespace Remizione
     /// </summary>
     public sealed class LootOrb : Pickable
     {
-        private readonly Vector2Tween scaleTween = new() { StartDelay = 700 };
+        private readonly FloatTween fadeTween = new();
 
         // Constructor
         public LootOrb(GameSession session, string name)
@@ -16,17 +16,16 @@ namespace Remizione
         {
             ApproachBehavior = ApproachBehavior.Over;
             Atlas = Atlases.Environment;
-            Color = new(240, 181, 65);
             DepthOffset = -2;
             Hotspot = new Polygon("0,0;7,0;7,7;0,7");
-            Opacity = .6f;
             RenderLayer = RenderLayer.Default;
 
             this.AttachedLight = new("Light", LightKind.LootOrb)
             {
-                Color = this.Color,
                 PivotOrigin = RectanglePoint.Center,
             };
+
+            this.Color = AttachedLight.Color;
 
             AttachedLightPosition = new(3, 4);
         }
@@ -44,8 +43,22 @@ namespace Remizione
         protected override void OnLoad()
         {
             base.OnLoad();
-            scaleTween.Start(TweenStyle.CubicOut, Vector2.Zero, new(.75f), 600);
-            Tweens.ScaleTween = scaleTween;
+
+            fadeTween.Start(TweenStyle.CubicIn, 0, 1, 1000);
+            Tweens.OpacityTween = FloatTween.Create(TweenStyle.Linear, .5f, .6f, 90, -1);
+            Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicIn, .1f, .75f, 400);
+        }
+
+        // OnUpdate
+        protected override void OnUpdate(GameTime gameTime)
+        {
+            base.OnUpdate(gameTime);
+
+            if (fadeTween.IsRunning)
+            {
+                fadeTween.Update(gameTime);
+                OpacityFactor = fadeTween.CurrentValue;
+            }
         }
 
         #endregion

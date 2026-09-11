@@ -47,8 +47,8 @@ namespace Remizione
         private static ColorTween? CreateColorTween(LightKind lightKind, Color color) => lightKind switch
         {
             LightKind.Fire => ColorTween.Create(TweenStyle.Linear, color, color * .9f, 90, -1),
-            LightKind.SulfurBonfire => ColorTween.Create(TweenStyle.Linear, color, color * .96f, 90, -1),
             LightKind.Lantern => ColorTween.Create(TweenStyle.Linear, color * .98f, color * .96f, 90, -1),
+            LightKind.SulfurBonfire => ColorTween.Create(TweenStyle.Linear, color, color * .96f, 90, -1),
             _ => null,
         };
 
@@ -58,7 +58,6 @@ namespace Remizione
             LightKind.Fire or
             LightKind.SulfurBonfire or
             LightKind.Lantern => FloatTween.Create(TweenStyle.Linear, 1f, .98f, 80, -1),
-            LightKind.LootOrb => FloatTween.Create(TweenStyle.Linear, .5f, .55f, 70, -1),
             _ => null,
         };
 
@@ -74,7 +73,8 @@ namespace Remizione
         // GetInitialColor
         private static Color GetInitialColor(LightKind lightKind) => lightKind switch
         {
-            LightKind.SulfurBonfire => new Color(134, 146, 31),
+            LightKind.LootOrb => new(240, 181, 65),
+            LightKind.SulfurBonfire => new(134, 146, 31),
             LightKind.Outdoor => ColorPalette.OutdoorLight,
             _ => Color.White
         };
