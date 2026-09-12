@@ -6,14 +6,14 @@ namespace Remizione
     /// <summary>
     /// MouseCursorAppearance
     /// </summary>
-    internal static class MouseCursorAppearance
+    internal sealed class MouseCursorAppearance(InteractionContext context)
     {
-        private static GameThing? lastKnownTarget;
+        private GameThing? lastKnownTarget;
 
         #region Private members
 
         // RefreshIcon
-        private static void RefreshIcon(InteractionContext context)
+        private void RefreshIcon()
         {
             if (context.HeldItem?.Definition.Image != MouseCursor.CustomImage)
                 MouseCursor.CustomImage = context.HeldItem?.Definition.Image;
@@ -170,9 +170,9 @@ namespace Remizione
         #endregion
 
         // Refresh
-        internal static void Refresh(InteractionContext context)
+        internal void Refresh()
         {
-            RefreshIcon(context);
+            RefreshIcon();
 
             if (context.Target != lastKnownTarget)
             {

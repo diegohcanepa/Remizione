@@ -75,8 +75,6 @@ namespace Remizione
                 return;
 
             Session.InteractionData.Execute();
-
-            Session.InteractionContext.Reset();
         }
 
         // Hurt

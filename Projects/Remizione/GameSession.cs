@@ -249,7 +249,6 @@ namespace Remizione
         protected override void OnEnterRoom(Room room)
         {
             Game.SceneManager.PopUntil(this);
-            InteractionContext.Reset();
             MouseCursor.Reset();
             SyncProceduralMusic();
         }
@@ -580,8 +579,6 @@ namespace Remizione
 
             CurrentRun = null;
             CleanUpRuntimeEntities();
-
-            InteractionContext.Reset();
             InteractionContext.HeldItem = null;
 
             if (Player != null)
