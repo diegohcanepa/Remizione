@@ -6,15 +6,9 @@
     public abstract class InteractionCommand
     {
         // CanExecute
-        protected abstract bool CanExecute(InteractionData data, GameThing target);
-
-        // OnExecute
-        protected abstract bool OnExecute(InteractionData data, GameThing target);
+        public abstract bool CanExecute(InteractionData data, Actor player, GameThing target);
 
         // Execute
-        public bool Execute(InteractionData data, GameThing target)
-        {
-            return CanExecute(data, target) && OnExecute(data, target);
-        }
+        public abstract void Execute(InteractionData data, Actor player, GameThing target);
     }
 }

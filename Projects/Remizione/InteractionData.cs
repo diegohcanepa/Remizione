@@ -1,5 +1,4 @@
-﻿using Adberration.Scripting;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Remizione.InteractionCommands;
 
 namespace Remizione
@@ -11,6 +10,7 @@ namespace Remizione
     {
         #region Private fields
 
+        private InteractionCommand? activeCommand;
         private readonly CombatCommand combatCommand = new();
         private readonly InteractionCommand[] commandChain;
         private readonly ItemCommand itemCommand = new();
@@ -28,40 +28,31 @@ namespace Remizione
         }
 
         // CanExecute
-        public bool CanExecute => Target != null;
+        public bool CanExecute => Session.Player != null && Target != null && activeCommand != null;
 
         // Clear
         public void Clear()
         {
             Target = null;
             TargetPosition = Vector2.Zero;
-            IsAttack = false;
+            activeCommand = null;
         }
 
         // Execute
-        public bool Execute()
+        public void Execute()
         {
-            if (Session.Player == null || Target == null)
-                return false;
+            var player = Session.Player;
 
-            var target = Target;
-            var executed = false;
+            if (!CanExecute || player == null || Target == null)
+                return;
 
-            for (int i = 0; i < commandChain.Length; i++)
-            {
-                if (commandChain[i].Execute(this, target))
-                {
-                    executed = true;
-                    break;
-                }
-            }
+            activeCommand!.Execute(this, player, Target);
 
             Clear();
-            return executed;
         }
 
         // IsAttack
-        public bool IsAttack { get; private set; }
+        public bool IsAttack => activeCommand == combatCommand;
 
         // Prepare
         public void Prepare()
@@ -69,14 +60,12 @@ namespace Remizione
             Clear();
 
             var context = Session.InteractionContext;
-            var target = context.Target;
-            var player = Session.Player;
             var heldItem = context.HeldItem;
 
-            if (target == null) return;
+            if (context.Target is not GameThing target || Session.Player is not Actor player)
+                return;
 
-            // Filtros iniciales de validación
-            if (player?.ActiveThrowable != null && target.Verb != Verb.Attack && !target.IsGoToVerb)
+            if (player.ActiveThrowable != null && target.Verb != Verb.Attack && !target.IsGoToVerb)
                 return;
 
             if (heldItem != null && !target.IsGoToVerb)
@@ -95,9 +84,14 @@ namespace Remizione
             Target = target;
             TargetPosition = target.Position;
 
-            // IsAttack directo
-            IsAttack = (heldItem == null && target.Verb == Verb.Attack) ||
-                       (heldItem != null && !target.IsGoToVerb && player?.CombatBehavior?.Intents.Find(heldItem.Name) != null);
+            for (int i = 0; i < commandChain.Length; i++)
+            {
+                if (commandChain[i].CanExecute(this, player, target))
+                {
+                    activeCommand = commandChain[i];
+                    break;
+                }
+            }
         }
 
         // Session

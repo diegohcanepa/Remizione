@@ -1,5 +1,4 @@
 ﻿using Adberration.Scripting;
-using Microsoft.Xna.Framework;
 
 namespace Remizione.InteractionCommands
 {
@@ -11,14 +10,14 @@ namespace Remizione.InteractionCommands
         private Script? resolvedScript;
 
         // CanExecute
-        protected override bool CanExecute(InteractionData data, GameThing target)
+        public override bool CanExecute(InteractionData data, Actor player, GameThing target)
         {
             var heldItem = data.Session.InteractionContext.HeldItem;
             resolvedScript = null;
 
             if (heldItem == null)
             {
-                if (target.Verb != Verb.Attack && target.Verb != Verb.Lift)
+                if (target.Verb is not Verb.Attack and not Verb.Lift)
                     resolvedScript = target.OutcomeScript;
             }
             else
@@ -36,34 +35,33 @@ namespace Remizione.InteractionCommands
             return resolvedScript != null;
         }
 
-        // OnExecute
-        protected override bool OnExecute(InteractionData data, GameThing target)
+        // Execute
+        public override void Execute(InteractionData data, Actor player, GameThing target)
         {
             if (resolvedScript == null)
-                return false;
+                return;
 
-            var player = data.Session.Player;
-            player?.StopMoving();
+            player.StopMoving();
 
             if (target.Verb == Verb.PickUp && !data.Session.InventoryEnabled)
             {
                 data.Session.AwaitRoutine(RoutineNames.NoSack);
-                return false;
+                return;
             }
 
+            /*
             if (Vector2.Distance(target.Position, data.TargetPosition) > 1)
             {
                 data.Session.HUD?.Message.Show(MessageKind.OutOfReach);
                 return false;
             }
+            */
 
-            player?.FaceTo(target);
+            player.FaceTo(target);
             data.Session.BeginOutcome(resolvedScript, target);
 
             if (data.Session.InteractionContext.HeldItem?.Definition.DeselectOnUse == true)
                 data.Session.InteractionContext.HeldItem = null;
-
-            return true;
         }
     }
 }

@@ -8,35 +8,31 @@
         private CombatIntent? resolvedIntent;
 
         // CanExecute
-        protected override bool CanExecute(InteractionData data, GameThing target)
+        public override bool CanExecute(InteractionData data, Actor player, GameThing target)
         {
             var heldItem = data.Session.InteractionContext.HeldItem;
-            var player = data.Session.Player;
 
             resolvedIntent = null;
 
             if (heldItem == null)
             {
                 if (target.Verb == Verb.Attack)
-                    resolvedIntent = player?.CombatBehavior?.Intents[0];
+                    resolvedIntent = player.CombatBehavior?.Intents[0];
             }
             else
             {
                 if (!target.IsGoToVerb && heldItem.Definition.ActionKind != ActionKind.Script)
-                    resolvedIntent = player?.CombatBehavior?.Intents.Find(heldItem.Name);
+                    resolvedIntent = player.CombatBehavior?.Intents.Find(heldItem.Name);
             }
 
             return resolvedIntent != null;
         }
 
-        // OnExecute
-        protected override bool OnExecute(InteractionData data, GameThing target)
+        // Execute
+        public override void Execute(InteractionData data, Actor player, GameThing target)
         {
-            if (resolvedIntent == null)
-                return false;
-
-            data.Session.Player?.ExecuteAction(resolvedIntent, target);
-            return true;
+            if (resolvedIntent != null)
+               player.ExecuteAction(resolvedIntent, target);
         }
     }
 }

@@ -70,11 +70,8 @@ namespace Remizione
                         soundEffectInstance = null;
                     }
 
-                    if (soundEffect != null)
-                    {
-                        soundEffect.Dispose();
-                        soundEffect = null;
-                    }
+                    soundEffect?.Dispose();
+                    soundEffect = null;
 
                     CanClose = true;
 

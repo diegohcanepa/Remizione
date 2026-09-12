@@ -6,20 +6,16 @@
     public sealed class ItemCommand : InteractionCommand
     {
         // CanExecute
-        protected override bool CanExecute(InteractionData data, GameThing target)
+        public override bool CanExecute(InteractionData data, Actor player, GameThing target)
         {
             return data.Session.InteractionContext.HeldItem != null;
         }
 
-        // OnExecute
-        protected override bool OnExecute(InteractionData data, GameThing target)
+        // Execute
+        public override void Execute(InteractionData data, Actor player, GameThing target)
         {
-            var heldItem = data.Session.InteractionContext.HeldItem;
-            if (heldItem == null)
-                return false;
-
-            data.Session.Player?.ExecuteAction(heldItem, target);
-            return true;
+            if (data.Session.InteractionContext.HeldItem is Item heldItem)
+                player.ExecuteAction(heldItem, target);
         }
     }
 }
