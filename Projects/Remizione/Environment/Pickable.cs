@@ -41,7 +41,7 @@ namespace Remizione
         {
             base.OnLoad();
 
-            if (Room is ProceduralRoom procRoom && procRoom.IsCurrentRoom && procRoom.WalkArea?.RandomWalkablePoint(procRoom.Random, Position, 3, 15) is Vector2 destination)
+            if (Room?.WalkArea?.RandomWalkablePoint(Session.Random, Position, 3, 15) is Vector2 destination)
             {
                 var distance = Vector2.Distance(Position, destination);
                 var tweenDuration = (int)float.Clamp(distance * 100, 300, 1000);

@@ -1,6 +1,4 @@
 ﻿using Engendro;
-using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json;
@@ -14,7 +12,6 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly List<LightDescriptor> lights = [];
         private readonly List<Placeholder> placeholders = [];
         private readonly List<string> walls = [];
 
@@ -28,68 +25,6 @@ namespace Remizione
         {
             // AllowEnemies
             this.AllowEnemies = element.GetBool("allowEnemies", true);
-
-            // DoorDown
-            this.DoorDown = element.GetVector2("doorDown");
-
-            // DoorLeft
-            this.DoorLeft = element.GetVector2("doorLeft");
-
-            // DoorRight
-            this.DoorRight = element.GetVector2("doorRight");
-
-            // DoorUp
-            this.DoorUp = element.GetVector2("doorUp");
-
-            // ExactMatch
-            this.ExactMatch = element.GetBool("exactMatch", false);
-
-            // ExitApproachPosition
-            if (element.GetString("exitApproachPosition") is string exitApproachPositionValue && !string.IsNullOrWhiteSpace(exitApproachPositionValue))
-                ExitApproachPosition = DataConvert.ToVector2(exitApproachPositionValue);
-
-            // ExitHotspot
-            this.ExitHotspot = element.GetString("exitHotspot", string.Empty);
-            if (!string.IsNullOrWhiteSpace(ExitHotspot))
-                Polygon.GetVertices(ExitHotspot);
-
-            // FeaturedActor
-            if (element.TryGetProperty("featuredActor", out JsonElement featuredActorElement) &&
-                featuredActorElement.ValueKind == JsonValueKind.Object)
-            {
-                this.FeaturedActor = new FeaturedActorDescriptor(featuredActorElement);
-            }
-
-            // LightMapColor
-            this.LightMapColor = element.GetColor("lightMapColor", new Color(20, 20, 20));
-
-            // LockType
-            this.LockType = element.GetEnum("lockType", LockType.None);
-
-            // MusicTag
-            this.MusicTag = element.GetString("musicTag");
-
-            // InteractiveActorPosition
-            if (element.GetString("interactiveActorPosition") is string interactiveActorPositionValue && !string.IsNullOrWhiteSpace(interactiveActorPositionValue))
-                this.InteractiveActorPosition = DataConvert.ToVector2(interactiveActorPositionValue);
-
-            // RoomCategory
-            if (element.GetEnum<RoomCategory>("roomCategory") is not RoomCategory roomCategory)
-                throw new InvalidOperationException("Missing roomCategory property.");
-            else
-                this.RoomCategory = roomCategory;
-
-            // Theme
-            this.Theme = element.GetEnum("theme", RoomTheme.Castle);
-
-            // Lights
-            if (element.TryGetProperty("lights", out JsonElement lightsElement))
-            {
-                foreach (var lightElement in lightsElement.EnumerateArray())
-                {
-                    lights.Add(new(lightElement));
-                }
-            }
 
             // Placeholders
             if (element.TryGetProperty("placeholders", out JsonElement placeholdersElement))
@@ -137,28 +72,8 @@ namespace Remizione
                 }
             }
 
-            Validate();
-
-            Lights = lights.AsReadOnly();
             Placeholders = new(placeholders);
             Walls = walls.AsReadOnly();
-        }
-
-        #endregion
-
-        #region Private members
-
-        // Validate
-        private void Validate()
-        {
-            if (DoorLeft == null && DoorDown == null && DoorRight == null && DoorUp == null)
-                RaiseValidationError(this, $"Must have at least one door.");
-
-            if (FeaturedActor != null)
-            {
-                if (GameData.Actors.Find(FeaturedActor.Name) is not ActorDefinition actorDefinition)
-                    RaiseValidationError(this, $"Actor '{FeaturedActor.Name}' has no definition.", nameof(FeaturedActor));
-            }
         }
 
         #endregion
@@ -166,74 +81,14 @@ namespace Remizione
         // AllowEnemies
         public bool AllowEnemies { get; }
 
-        // DoorDown
-        public Vector2? DoorDown { get; }
-
-        // DoorLeft
-        public Vector2? DoorLeft { get; }
-
-        // DoorRight
-        public Vector2? DoorRight { get; }
-
-        // DoorUp
-        public Vector2? DoorUp { get; }
-
-        // ExactMatch
-        public bool ExactMatch { get; }
-
-        // ExitApproachPosition
-        public Vector2 ExitApproachPosition { get; }
-
-        // ExitHotspot
-        public string ExitHotspot { get; }
-
-        // FeaturedActor
-        public FeaturedActorDescriptor? FeaturedActor { get; }
-
-        // HasDownDoor
-        public bool HasDownDoor => DoorDown != null;
-
-        // HasLeftDoor
-        public bool HasLeftDoor => DoorLeft != null;
-
-        // HasRightDoor
-        public bool HasRightDoor => DoorRight != null;
-
-        // HasUpDoor
-        public bool HasUpDoor => DoorUp != null;
-
-        // InteractiveActorPosition
-        public Vector2? InteractiveActorPosition { get; }
-
-        // IsRestricted
-        public bool IsRestricted => RoomCategory is not RoomCategory.Standard and not RoomCategory.Start and not RoomCategory.End;
-
-        // LightMapColor
-        public Color LightMapColor { get; }
-
-        // Lights
-        public ReadOnlyCollection<LightDescriptor> Lights { get; }
-
-        // LockType
-        public LockType LockType { get; }
-
-        // MusicTag
-        public string MusicTag { get; }
-
         // Placeholders
         public ReadOnlyPlaceholderCollection Placeholders { get; }
-
-        // RoomCategory
-        public RoomCategory RoomCategory { get; }
 
         // RunModifiers
         public ReadOnlyCollection<string> RunModifiers { get; }
 
         // Scope
         public TagScope Scope { get; }
-
-        // Theme
-        public RoomTheme Theme { get; }
 
         // WalkArea
         public string WalkArea { get; }

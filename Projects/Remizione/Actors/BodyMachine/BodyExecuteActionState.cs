@@ -69,11 +69,13 @@ namespace Remizione
             {
                 var missChance = action.MissChance;
 
+                /*
                 if (Owner.Session.CurrentRun?.Modifiers.IsActive(RunModifierNames.Darkness) == true)
                 {
                     if (Owner.PixelsMoved > GameRoom.PlayerLightBounds.Width / 2)
                         missChance += GameSettings.DarknessMissChancePenalty;
                 }
+                */
 
                 if (!missChance.Roll())
                     EffectDescriptor.Apply(action.EffectDescriptors, Owner, Target, EffectContext.Attack);

@@ -283,8 +283,6 @@ namespace Remizione
         // OnActivate
         protected override void OnActivate()
         {
-            RemizioneGame.Effects.CRT.MonitorStyle = MonitorStyle;
-
             // Follow player
             if (Session.Player != null && Session.Player.IsInCurrentRoom && FollowPlayer)
                 Session.Camera.Follow(Session.Player, true);
@@ -547,9 +545,6 @@ namespace Remizione
 
         // Lights
         public NamedReadOnlyCollection<Light> Lights { get; }
-
-        // MonitorStyle
-        public bool MonitorStyle { get; init; }
 
         // PlayerLightBounds
         public static RectangleF PlayerLightBounds => playerLight.BoundingBox;

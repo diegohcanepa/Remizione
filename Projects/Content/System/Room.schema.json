@@ -73,68 +73,9 @@
                 "$ref": "enums.schema.json#/$defs/Tag"
               }
             },
-            "doorDown": {
-              "type": "string"
-            },
-            "doorLeft": {
-              "type": "string"
-            },
-            "doorRight": {
-              "type": "string"
-            },
-            "doorUp": {
-              "type": "string"
-            },
-            "exactMatch": {
-              "type": "boolean",
-              "default": false
-            },
-            "lockType": {
-              "$ref": "enums.schema.json#/$defs/LockType"
-            },
-            "roomCategory": {
-              "$ref": "enums.schema.json#/$defs/RoomCategory"
-            },
             "allowEnemies": {
               "type": "boolean",
               "default": true
-            },
-            "featuredActor": {
-              "$ref": "#/$defs/FeaturedActor"
-            },
-            "interactiveActorPosition": {
-              "type": "string"
-            },
-            "leverPosition": {
-              "type": "string"
-            },
-            "lightMapColor": {
-              "type": "string"
-            },
-            "lights": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "color": {
-                    "type": "string"
-                  },
-                  "position": {
-                    "type": "string"
-                  },
-                  "scale": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "position",
-                  "scale"
-                ],
-                "additionalProperties": false
-              }
-            },
-            "musicTag": {
-              "type": "string"
             },
             "placeholders": {
               "type": "array",
@@ -173,9 +114,6 @@
             "runModifiers": {
               "type": "string"
             },
-            "theme": {
-              "$ref": "enums.schema.json#/$defs/RoomTheme"
-            },
             "walkArea": {
               "type": "string"
             },
@@ -187,7 +125,6 @@
             }
           },
           "required": [
-            "roomCategory",
             "walkArea"
           ]
         }

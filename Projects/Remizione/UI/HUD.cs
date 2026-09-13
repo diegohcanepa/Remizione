@@ -15,7 +15,6 @@ namespace Remizione
         private readonly UIGraceMeter graceScore;
         private readonly UIHPMeter hpMeter;
         //private readonly UIRunModifiers runModifiers;
-        private readonly UITraits traits;
 
         #endregion
 
@@ -27,8 +26,6 @@ namespace Remizione
         {
             this.hpMeter = new(session);
             this.InventoryMeter = new(session.PlayerData.Inventory);
-            this.traits = new(session);
-            this.MiniMap = new();
             //this.runModifiers = new(run);
             this.Statuses = new(session);
             this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 14));
@@ -49,14 +46,11 @@ namespace Remizione
                 hpMeter.Draw(gameTime);
             //runModifiers.Draw(gameTime);
             Statuses.Draw(gameTime);
-            traits.Draw(gameTime);
             graceScore.Draw(gameTime);
             Game.SpriteBatch.End();
 
             if (Session.IsCurrentScene && Session.InventoryEnabled)
                 InventoryMeter.Draw(gameTime);
-
-            MiniMap.Draw(gameTime);
 
             Message.Draw(gameTime);
         }
@@ -64,13 +58,11 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            traits.Update(gameTime);
             //runModifiers.Update(gameTime);
             Statuses.Update(gameTime);
             InventoryMeter.Update(gameTime);
             hpMeter.Update(gameTime);
             Message.Update(gameTime);
-            MiniMap.Update(gameTime);
             graceScore.Update(gameTime);
             DestinationMark.Update(gameTime);
         }
@@ -97,9 +89,6 @@ namespace Remizione
 
         // Message
         public UIMessage Message { get; }
-
-        // MiniMap
-        public UIMiniMap MiniMap { get; }
 
         // Reset
         public void Reset()

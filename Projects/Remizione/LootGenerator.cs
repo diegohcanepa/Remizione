@@ -38,7 +38,7 @@ namespace Remizione
         // RollForLoot
         public ItemDefinition? RollForLoot(ThingDefinition def)
         {
-            var rng = session.CurrentRun?.VolatileRng ?? session.MasterRunRng;
+            var rng = session.Random;
 
             // 1. PASO 1: Suelta algo?
             if (!CheckDropSuccess(def, rng))

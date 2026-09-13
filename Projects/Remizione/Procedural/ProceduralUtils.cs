@@ -24,7 +24,7 @@ namespace Remizione.Procedural
         }
 
         // GetCandidateDefinitions
-        internal static List<TDefinition> GetCandidateDefinitions<TDefinition>(Run run, RoomNode roomNode, IList<TDefinition> definitions)
+        internal static List<TDefinition> GetCandidateDefinitions<TDefinition>(ProceduralRoom room, IList<TDefinition> definitions)
             where TDefinition : ThingDefinition
         {
             var outList = new List<TDefinition>();
@@ -34,30 +34,13 @@ namespace Remizione.Procedural
                 if (definition.SpawnWeight == 0)
                     continue;
 
-                if (definition.MinFloor > run.FloorIndex)
+                if (room.Session.GetProceduralThing(definition.Name) == null)
                     continue;
 
-                // Si exige sala específica y no coincide, afuera.
-                if (definition.TargetRoomCategory.HasValue && definition.TargetRoomCategory != roomNode.Category)
+                if (!definition.PassesMaxPerRunConstraint(room.Session.Spawns.GetCount(definition.Name)))
                     continue;
 
-                // 2. Si es de ámbito StandardOnly y estamos en una sala restringida, afuera.
-                if (definition.SpawnScope == SpawnScope.StandardOnly && roomNode.Definition.IsRestricted)
-                    continue;
-
-                if (definition.RoomTheme.HasValue && definition.RoomTheme != roomNode.Definition.Theme)
-                    continue;
-
-                if (run.Session.GetProceduralThing(definition.Name) == null)
-                    continue;
-
-                if (!definition.PassesRunConstraints(run.Session.RunIndex))
-                    continue;
-
-                if (!definition.PassesMaxPerRunConstraint(run.Spawns))
-                    continue;
-
-                if (!TagScope.Test(roomNode.Definition.Scope, roomNode.Definition.Pools, definition.Tags))
+                if (!TagScope.Test(room.Definition.Scope, room.Definition.Pools, definition.Tags))
                     continue;
 
                 outList.Add(definition);

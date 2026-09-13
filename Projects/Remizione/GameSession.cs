@@ -101,18 +101,6 @@ namespace Remizione
 
         #region Private members
 
-        // PreparePlayerForRun
-        private void PreparePlayerForRun()
-        {
-            if (Player == null || CurrentRun == null)
-                throw new InvalidOperationException("No player and/or run is available.");
-
-            if (RunIndex == 0)
-                Player.Energy = 0;
-            else
-                Player.Recharge();
-        }
-
         // RegisterAotTypes
         private static void RegisterAotTypes()
         {
@@ -123,7 +111,6 @@ namespace Remizione
             AotTypeRegistry.Register(typeof(Coin));
             AotTypeRegistry.Register(typeof(CreditsRoom));
             AotTypeRegistry.Register(typeof(Decoration));
-            AotTypeRegistry.Register(typeof(Door));
             AotTypeRegistry.Register(typeof(EnviousEye));
             AotTypeRegistry.Register(typeof(GameRoom));
             AotTypeRegistry.Register(typeof(GoldenKey));
@@ -216,14 +203,11 @@ namespace Remizione
         {
             base.OnDraw(gameTime);
 
-            if (CurrentRun != null)
+            if (savingIcon.Tweens.IsTweening)
             {
-                if (savingIcon.Tweens.IsTweening)
-                {
-                    Game.SpriteBatch.Begin(Game.Camera);
-                    savingIcon.Draw(gameTime);
-                    Game.SpriteBatch.End();
-                }
+                Game.SpriteBatch.Begin(Game.Camera);
+                savingIcon.Draw(gameTime);
+                Game.SpriteBatch.End();
             }
 
             /*
@@ -424,17 +408,12 @@ namespace Remizione
                 console?.Update(gameTime);
             }
 
-            if (CurrentRun != null)
+            if (!IsAwaiting)
             {
-                CurrentRun.Update(gameTime);
-
-                if (!IsAwaiting)
+                if (Player?.IsDead == true)
                 {
-                    if (Player?.IsDead == true)
-                    {
-                        Player?.StopMoving();
-                        AwaitRoutine(RoutineNames.DeathByHealth);
-                    }
+                    Player?.StopMoving();
+                    AwaitRoutine(RoutineNames.DeathByHealth);
                 }
             }
 
@@ -504,34 +483,6 @@ namespace Remizione
         [ScriptProperty]
         public Actor? ActiveNPC { get; private set; }
 
-        // AdvanceToNextFloor
-        [ScriptMethod]
-        public void AdvanceToNextFloor()
-        {
-            if (CurrentRun == null)
-                return;
-
-            if (CurrentRun.FloorDescriptor != null)
-                CleanUpRuntimeEntities();
-
-            if (CurrentRun.TryGenerateNextFloor(out ProceduralRoom? startRoom) && startRoom != null)
-            {
-                if (Player != null)
-                {
-                    startRoom.Children.Add(Player);
-                    if (startRoom.WalkArea != null)
-                        Player.Position = startRoom.WalkArea.Polygon.BoundingRectangleF.Center;
-
-                    Camera.Follow(Player, true);
-                    EnterRoom(startRoom);
-                }
-            }
-            else
-            {
-                CompleteRun();
-            }
-        }
-
         // BeginCombatMood
         public void BeginCombatMood()
         {
@@ -540,38 +491,6 @@ namespace Remizione
 
             combatMoodTimer = 10000;
         }
-
-        // BeginRun
-        [ScriptMethod]
-        public void BeginRun()
-        {
-            if (CurrentRun != null)
-                throw new InvalidOperationException("A run is already in progress.");
-
-            var runSeed = Seed == 0 ? System.Environment.TickCount : Seed;
-
-            // 1. Get descriptor
-            var runDefinition = GameData.Runs[RunIndex];
-
-            // 2. Create run
-            CurrentRun = new Run(this, runSeed, runDefinition);
-
-            //inventoryScene = new(CurrentRun.PlayerInventory);
-
-            PreparePlayerForRun();
-            AdvanceToNextFloor();
-        }
-
-        // CompleteRun
-        [ScriptMethod]
-        public void CompleteRun()
-        {
-            RunIndex++;
-            EndRun();
-        }
-
-        // CurrentRun
-        public Run? CurrentRun { get; private set; }
 
         // DangerousTarget
         [ScriptProperty]
@@ -584,26 +503,6 @@ namespace Remizione
         // DisplayHPMeter
         [ScriptProperty]
         public bool DisplayHPMeter { get; set; } = true;
-
-        // EndRun
-        [ScriptMethod]
-        public void EndRun()
-        {
-            if (CurrentRun == null)
-                return;
-
-            CurrentRun = null;
-            CleanUpRuntimeEntities();
-            InteractionContext.HeldItem = null;
-
-            if (Player != null)
-            {
-                Player.StatusManager.Clear();
-                Player.Reheal();
-            }
-
-            Save();
-        }
 
         // Environment
         public Environment Environment { get; }
@@ -644,7 +543,7 @@ namespace Remizione
         {
             get
             {
-                if (Room is ProceduralRoom)
+                if (Room != null)
                 {
                     for (var i = 0; i < Room.Children.Count; i++)
                     {
@@ -731,10 +630,6 @@ namespace Remizione
         // ObjectPools
         public ObjectPools ObjectPools { get; }
 
-        // OutcomeDoor
-        [ScriptProperty]
-        public Door? OutcomeDoor => OutcomeTarget as Door;
-
         // OutcomeTarget
         [ScriptProperty]
         public override GameThing? OutcomeTarget => base.OutcomeTarget as GameThing;
@@ -819,6 +714,9 @@ namespace Remizione
             ActiveNPC = null;
         }
 
+        // Random
+        public Random Random { get; private set; } = new(0);
+
         // RespawnWorld
         [ScriptMethod]
         public void RespawnWorld()
@@ -835,7 +733,18 @@ namespace Remizione
 
         // Seed
         [ScriptProperty]
-        public int Seed { get; set; }
+        public int Seed
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    Random = new(field);
+                }
+            }
+        }
 
         // ShakeCamera
         public void ShakeCamera(ImpactType impactType)
@@ -874,5 +783,8 @@ namespace Remizione
             if (inventoryScene != null)
                 Game.SceneManager.Push(inventoryScene);
         }
+
+        // Spawns
+        public CounterBank Spawns { get; } = new();
     }
 }

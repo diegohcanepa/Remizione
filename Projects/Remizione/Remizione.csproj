@@ -21,4 +21,7 @@
     <ProjectReference Include="..\Adberration\Adberration.csproj" />
     <ProjectReference Include="..\Engendro\Engendro.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Procedural\Rooms\" />
+  </ItemGroup>
 </Project>

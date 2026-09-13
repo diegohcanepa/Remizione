@@ -41,9 +41,6 @@ namespace Remizione
     // Difficulty
     public enum Difficulty { Easy, Normal, Hard }
 
-    // DoorDirection
-    public enum DoorDirection { Up, Right, Down, Left }
-
     // DustParticleKind
     public enum DustParticleKind { None, Dust, Ash }
 
@@ -147,7 +144,7 @@ namespace Remizione
     }
 
     // PlaceholderState
-    public enum PlaceholderState { Pending, GateLever, Used }
+    public enum PlaceholderState { Pending, Used }
 
     // PlacementType
     public enum PlacementType

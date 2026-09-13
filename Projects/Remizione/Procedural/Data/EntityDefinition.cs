@@ -21,7 +21,6 @@ namespace Remizione
         {
             Difficulty = element.GetEnum("difficulty", Difficulty.Easy);
             MaxPerRun = element.GetInt32("maxPerRun", -1);
-            MinFloor = element.GetInt32("minFloor", 0);
 
             // Pools
             Pools = ReadOnlyEnumSet<Tag>.FromJsonOrEmpty(element, "pools");
@@ -52,21 +51,6 @@ namespace Remizione
         // MaxPerRun
         public int MaxPerRun { get; }
 
-        // MinFloor
-        public int MinFloor { get; }
-
-        // PassesMaxPerRunConstraint
-        public bool PassesMaxPerRunConstraint(params CounterBank[] counters)
-        {
-            var count = 0;
-            for (var i = 0; i < counters.Length; i++)
-            {
-                count += counters[i].GetCount(Name);
-            }
-
-            return PassesMaxPerRunConstraint(count);
-        }
-
         // PassesMaxPerRunConstraint
         public bool PassesMaxPerRunConstraint(int count)
         {
@@ -79,12 +63,6 @@ namespace Remizione
                 return false;
 
             return count < MaxPerRun;
-        }
-
-        // PassesRunConstraints
-        public bool PassesRunConstraints(int floorCount)
-        {
-            return floorCount >= MinFloor;
         }
 
         // Pools
