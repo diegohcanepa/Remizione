@@ -15,6 +15,7 @@
     { "name": "Bones" },
     { "name": "Bonfire", "volume": 0.5 },
     { "name": "BonfireIgnition" },
+    { "name": "BonfireMenu" },
     { "name": "Break" },
     { "name": "BulletRicochet", "soundCount": 3 },
     { "name": "CardWhoosh", "soundCount": 6 },

@@ -204,6 +204,13 @@ namespace Remizione
             }
         }
 
+        // OnAwait
+        protected override void OnAwait()
+        {
+            if (inventoryScene.IsCurrentScene)
+                Game.SceneManager.Pop();
+        }
+
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
@@ -302,6 +309,10 @@ namespace Remizione
             // DisplayHPMeter
             if (sessionNode.Attributes[nameof(DisplayHPMeter)]?.Value is string displayHPMeterValue)
                 DisplayHPMeter = XmlConvert.ToBoolean(displayHPMeterValue);
+
+            // Grace
+            if (sessionNode.Attributes[nameof(PlayerData.Grace)]?.Value is string graceValue)
+                PlayerData.Grace = XmlConvert.ToInt32(graceValue);
 
             // Inventory
             if (sessionNode.Attributes[nameof(PlayerData.Inventory)]?.Value is string inventoryValue)
@@ -443,6 +454,7 @@ namespace Remizione
                     {
                         if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
                         {
+                            InteractionContext.HeldItem = null;
                             ShowInventory();
                             return;
                         }
@@ -456,6 +468,9 @@ namespace Remizione
         {
             // DisplayHPMeter
             output.WriteAttributeString(nameof(DisplayHPMeter), XmlConvert.ToString(DisplayHPMeter));
+
+            // Grace
+            output.WriteAttributeString(nameof(PlayerData.Grace), XmlConvert.ToString(PlayerData.Grace));
 
             // InventoryEnabled
             output.WriteAttributeString(nameof(InventoryEnabled), XmlConvert.ToString(InventoryEnabled));

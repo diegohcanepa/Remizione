@@ -8,7 +8,7 @@ namespace Adberration.Scripting
     {
         // Constructor
         internal FocusXYCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 1, DurationArg, TweenArg)
+            : base(script, source, body, 1, DurationArg, RelativeArg, TweenArg)
         {
             Parser.ParseVector2(this, 0);
             Parser.ParseInt32Argument(this, DurationArg);
@@ -20,17 +20,21 @@ namespace Adberration.Scripting
         // OnExecute
         protected override void OnExecute()
         {
-            var position = Parser.ParseVector2(this, 0, Session.Camera.Position);
+            var destination = Parser.ParseVector2(this, 0, Session.Camera.Position);
+
+            if (HasArg(RelativeArg))
+                destination = Session.Camera.Position + destination;
+
             var duration = Parser.ParseInt32Argument(this, DurationArg);
             var tweenStyle = Parser.ParseEnumArgument(this, TweenArg, TweenStyle.QuadraticInOut);
 
             if (duration > 0)
             {
-                Session.Camera.MoveTo(tweenStyle, position, duration);
+                Session.Camera.MoveTo(tweenStyle, destination, duration);
             }
             else
             {
-                Session.Camera.Position = position;
+                Session.Camera.Position = destination;
             }
         }
 

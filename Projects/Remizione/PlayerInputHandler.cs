@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 
@@ -112,6 +113,7 @@ namespace Remizione
             if (Owner.Session.InteractionContext.HeldItem != null)
             {
                 MouseCursor.PerformClick(false);
+                Sound.Play(SoundNames.Interact);
                 Owner.Session.InteractionContext.HeldItem = null;
                 Owner.Session.InteractionData.Clear();
             }

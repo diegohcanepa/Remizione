@@ -115,6 +115,11 @@ namespace Remizione
                     unlitTweenDuration = 2000;
                     break;
 
+                case LightKind.Global:
+                    litTweenDuration = 3000;
+                    unlitTweenDuration = 3000;
+                    break;
+
                 case LightKind.SulfurBonfire:
                     Passes = 2;
                     lightSprite.Tweens.ColorTween = CreateColorTween(LightKind, Color);
@@ -152,7 +157,7 @@ namespace Remizione
             float originalSpriteOpacity = lightSprite.Opacity;
 
             // Aplicamos la opacidad combinada (Flicker * Fade de encendido)
-            lightSprite.Opacity = originalSpriteOpacity * currentFade;
+            lightSprite.Opacity = originalSpriteOpacity * currentFade * (IgnoreGlobalOpacity ? 1 : GlobalOpacity);
 
             for (int i = 0; i < Passes; i++)
             {
@@ -209,6 +214,12 @@ namespace Remizione
                 }
             }
         }
+
+        // GlobalOpacity
+        public static Ratio GlobalOpacity { get; set; } = 1;
+
+        // IgnoreGlobalOpacity
+        public bool IgnoreGlobalOpacity { get; set; }
 
         // IsEmitting
         public bool IsEmitting => currentFade > 0;

@@ -28,13 +28,11 @@ namespace Remizione
                 return;
             }
 
-            /*
             if (context.Session.Player != null && !context.Session.Player.CanHandleInput)
             {
                 MouseCursor.Icon = MouseCursorIcon.Wait;
                 return;
             }
-            */
 
             // Session is awaiting script
             if (context.Session.IsAwaiting)
@@ -131,9 +129,9 @@ namespace Remizione
                     MouseCursor.Icon = MouseCursorIcon.Sack;
                     break;
 
-                // Rest
-                case Verb.Rest:
-                    MouseCursor.Icon = MouseCursorIcon.Rest;
+                // Bonfire
+                case Verb.Bonfire:
+                    MouseCursor.Icon = MouseCursorIcon.Flame;
                     break;
 
                 // Talk

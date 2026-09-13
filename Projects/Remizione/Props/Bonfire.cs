@@ -1,6 +1,7 @@
 ﻿using Adberration.Scripting;
 using Engendro;
 using Microsoft.Xna.Framework;
+using System.Linq;
 
 namespace Remizione
 {
@@ -10,6 +11,7 @@ namespace Remizione
     public class Bonfire : Prop
     {
         private readonly AnimatedSprite flame;
+        private readonly FloatTween globalOpacityTween = new();
         private readonly Sprite patch;
 
         // Constructor
@@ -38,9 +40,10 @@ namespace Remizione
 
             this.AttachedLight = new("Light", LightKind.SulfurBonfire)
             {
+                IgnoreGlobalOpacity = true,
                 PivotOrigin = RectanglePoint.Center,
                 Position = new(9),
-                Scale = new(8, 5)
+                Scale = new(9, 6)
             };
 
             AttachedLight.Unlit(true);
@@ -77,8 +80,15 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
+            
             if (IsLit)
                 flame.Update(gameTime);
+
+            if (globalOpacityTween.IsRunning)
+            {
+                globalOpacityTween.Update(gameTime);
+                Light.GlobalOpacity = globalOpacityTween.CurrentValue;
+            }
         }
 
         #endregion
@@ -103,6 +113,22 @@ namespace Remizione
                     }
                 }
             }
+        }
+
+        // Activate
+        [ScriptMethod]
+        public void Activate()
+        {
+            Session.Environment.GlobalLight.Unlit();
+            globalOpacityTween.Start(TweenStyle.CubicIn, 1, 0, 2000);
+        }
+
+        // Deactivate
+        [ScriptMethod]
+        public void Deactivate()
+        {
+            Session.Environment.GlobalLight.Lit();
+            globalOpacityTween.Start(TweenStyle.CubicIn, 0, 1, 2000);
         }
     }
 }

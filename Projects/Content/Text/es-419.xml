@@ -213,8 +213,7 @@ Bla bla bla</String>
   <String Key="Playtime.LessThanAMinute">Menos de un minuto</String>
   <String Key="Playtime.Minute">minuto</String>
   <String Key="Playtime.Minutes">minutos</String>
-  <String Key="Prop.BonfireLit">Descansar</String>
-  <String Key="Prop.BonfireUnlit">Hoguera de azufre</String>
+  <String Key="Prop.Bonfire">Hoguera de azufre</String>
   <String Key="Prop.Coin">Moneda</String>
   <String Key="Prop.Cross">Cruz</String>
   <String Key="Prop.CrucifiedMan">Hombre crucificado</String>
@@ -229,7 +228,6 @@ Bla bla bla</String>
   <String Key="Prop.TrapDoor">Trampilla</String>
   <String Key="Prop.Trunk">Baúl</String>
   <String Key="Prop.Tunnel">Túnel</String>
-  <String Key="StateTip.HasTinder">Con yesca</String>
   <String Key="Verb.Examine">Examinar</String>
   <String Key="Verb.Grab">Agarrar</String>
 </Strings>

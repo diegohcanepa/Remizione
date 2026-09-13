@@ -68,7 +68,7 @@ namespace Remizione
             internal static Color SubText { get; } = new Color(172, 160, 148);
 
             // Tooltip
-            internal static Color Tooltip { get; } = new(247, 232, 213);
+            internal static Color Tooltip { get; } = new Color(247, 232, 213) * .7f;
         }
 
         // OutdoorLight

@@ -141,7 +141,7 @@ namespace Remizione
         {
             CanClose = false;
             textSprite.Text = text;
-            textSprite.StartTyping();
+            //textSprite.StartTyping();
 
             if (!string.IsNullOrWhiteSpace(soundName))
             {

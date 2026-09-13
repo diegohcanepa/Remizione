@@ -72,16 +72,16 @@ namespace Remizione
             this.ItemContainer = itemContainer;
 
             // Item label
-            itemLabel = new(Fonts.Common)
+            itemLabel = new(Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.MouseCursor,
+                Color = ColorPalette.MouseCursor.Tooltip,
                 PivotOrigin = RectanglePoint.Bottom,
                 Y = slots[0].BoundingBox.Top - 8,
                 Scale = ScaleInfo.Text.VeryLarge
             };
 
             // Item description
-            itemDescription = new(Fonts.Common)
+            itemDescription = new(Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Terra,
                 MaximumWidth = 200,
@@ -197,6 +197,14 @@ namespace Remizione
         {
             base.OnActivate();
             Reset();
+        }
+
+        // OnDeactivate
+        protected override void OnDeactivate()
+        {
+            base.OnDeactivate();
+            itemLabel.Clear();
+            itemDescription.Clear();
         }
 
         // OnDraw

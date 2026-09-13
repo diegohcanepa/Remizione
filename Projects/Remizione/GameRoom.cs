@@ -543,7 +543,7 @@ namespace Remizione
 
         // LightMapColor
         [ScriptProperty]
-        public Color LightMapColor { get; set; } = new Color(30, 30, 45);
+        public Color LightMapColor { get; set; } = Color.Black;
 
         // Lights
         public NamedReadOnlyCollection<Light> Lights { get; }
