@@ -14,6 +14,9 @@
           "minimum": 0.0,
           "maximum": 1.0
         },
+        "difficulty": {
+          "$ref": "enums.schema.json#/$defs/Difficulty"
+        },
         "faction": {
           "$ref": "enums.schema.json#/$defs/Faction"
         },
@@ -44,14 +47,9 @@
           "type": "integer",
           "default": -1
         },
-        "roomTheme": {
-          "$ref": "enums.schema.json#/$defs/RoomTheme"
-        },
-        "spawnScope": {
-          "$ref": "enums.schema.json#/$defs/SpawnScope"
-        },
-        "targeRoomCategory": {
-          "$ref": "enums.schema.json#/$defs/RoomCategory"
+        "requiresPlaceholder": {
+          "type": "boolean",
+          "default": false
         },
         "xp": {
           "type": "integer",

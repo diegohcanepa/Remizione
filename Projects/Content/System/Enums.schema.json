@@ -12,14 +12,6 @@
         "Self"
       ]
     },
-    "ActorRank": {
-      "type": "string",
-      "enum": [
-        "Common",
-        "MiniBoss",
-        "Boss"
-      ]
-    },
     "CombatArchetypeName": {
       "type": "string",
       "enum": [
@@ -146,25 +138,19 @@
         "TrapDoorKey"
       ]
     },
+    "PlaceholderContentType": {
+      "type": "string",
+      "enum": [
+        "Prop",
+        "Actor"
+      ]
+    },
     "PlaceholderSpawnRule": {
       "type": "string",
       "enum": [
         "Default",
         "PlaceholderChanceOnly",
         "ContentOnly"
-      ]
-    },
-    "PlacementType": {
-      "type": "string",
-      "enum": [
-        "Floor",
-        "WallFrontBase",
-        "WallFrontHang",
-        "WallLeftBase",
-        "WallLeftHang",
-        "WallRightBase",
-        "WallRightHang",
-        "Ceiling"
       ]
     },
     "ProjectileTrajectoryType": {
@@ -181,45 +167,11 @@
         "GateLever"
       ]
     },
-    "Realm": {
-      "type": "string",
-      "enum": [
-        "Earthly",
-        "Infernal",
-        "Celestial"
-      ]
-    },
-    "RoomCategory": {
-      "type": "string",
-      "enum": [
-        "Start",
-        "End",
-        "Treasure",
-        "Store",
-        "Special",
-        "Secret",
-        "Standard"
-      ]
-    },
-    "RoomTheme": {
-      "type": "string",
-      "enum": [
-        "Castle"
-      ]
-    },
     "RunModifierScope": {
       "type": "string",
       "enum": [
         "Room",
         "Run"
-      ]
-    },
-    "SpawnScope": {
-      "type": "string",
-      "enum": [
-        "Anywhere",
-        "StandardOnly",
-        "RestrictedOnly"
       ]
     },
     "StatusType": {

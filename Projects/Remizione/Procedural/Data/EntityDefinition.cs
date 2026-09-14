@@ -19,9 +19,6 @@ namespace Remizione
         protected EntityDefinition(JsonElement element)
             : base(element)
         {
-            Difficulty = element.GetEnum("difficulty", Difficulty.Easy);
-            MaxPerRun = element.GetInt32("maxPerRun", -1);
-
             // Pools
             Pools = ReadOnlyEnumSet<Tag>.FromJsonOrEmpty(element, "pools");
 
@@ -44,26 +41,6 @@ namespace Remizione
         }
 
         #endregion
-
-        // Difficulty
-        public Difficulty Difficulty { get; }
-
-        // MaxPerRun
-        public int MaxPerRun { get; }
-
-        // PassesMaxPerRunConstraint
-        public bool PassesMaxPerRunConstraint(int count)
-        {
-            // Ilimitado
-            if (MaxPerRun < 0)
-                return true;
-
-            // Prohibido
-            if (MaxPerRun == 0)
-                return false;
-
-            return count < MaxPerRun;
-        }
 
         // Pools
         public ReadOnlyEnumSet<Tag> Pools { get; }

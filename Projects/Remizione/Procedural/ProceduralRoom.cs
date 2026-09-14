@@ -2,7 +2,6 @@
 using Engendro;
 using Engendro.Collections;
 using Microsoft.Xna.Framework;
-using Remizione.Procedural;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +18,7 @@ namespace Remizione
         private readonly CounterBank actorsSpawnCounter = new();
         private readonly List<Placeholder> placeholders = [];
         private readonly CounterBank propsSpawnCounter = new();
+        private readonly List<Vector2> occupiedPositions = [];
 
         #endregion
 
@@ -33,253 +33,266 @@ namespace Remizione
             this.LightingSystem = true;
             this.UnloadMode = UnloadMode.Manual;
             this.DustParticleKind = DustParticleKind.Ash;
-            this.LightingSystem = true;
-
-            // Add placeholders
-            foreach (var placeholder in Definition.Placeholders)
-            {
-                placeholders.Add(placeholder);
-            }
-
-            // Add walls
-            foreach (var wall in Definition.Walls)
-            {
-                AddWall(wall);
-            }
+            this.placeholders.AddRange(Definition.Placeholders);
         }
 
         #endregion
 
         #region Private members
 
+        // GetCandidateDefinitions
+        private List<TDefinition> GetCandidateDefinitions<TDefinition>(IList<TDefinition> definitions)
+            where TDefinition : ThingDefinition
+        {
+            var outList = new List<TDefinition>();
+
+            foreach (var definition in definitions)
+            {
+                if (definition.SpawnWeight == 0)
+                    continue;
+
+                if (!Session.IsUnlocked(definition))
+                    continue;
+
+                if (Session.GetProceduralThing(definition.Name) == null)
+                    continue;
+
+                if (!TagScope.Test(Definition.Scope, Definition.Pools, definition.Tags))
+                    continue;
+
+                outList.Add(definition);
+            }
+
+            return outList;
+        }
+
+        // GetSpawnPoints
+        private List<Vector2> GetSpawnPoints(Polygon polygon, int count, int cellSize, Random rng)
+        {
+            var cells = new List<Vector2>();
+            var area = polygon.BoundingRectangle;
+
+            for (int y = area.Top; y < area.Bottom; y += cellSize)
+            {
+                for (int x = area.Left; x < area.Right; x += cellSize)
+                {
+                    float cx = x + (cellSize * 0.5f);
+                    float cy = y + (cellSize * 0.5f);
+
+                    float offsetRange = cellSize * 0.25f;
+                    cx += (float)((rng.NextDouble() * offsetRange * 2) - offsetRange);
+                    cy += (float)((rng.NextDouble() * offsetRange * 2) - offsetRange);
+
+                    var candidate = new Vector2(cx, cy);
+
+                    if (polygon.Contains(candidate))
+                    {
+                        cells.Add(candidate);
+                    }
+                }
+            }
+
+            for (int i = cells.Count - 1; i > 0; i--)
+            {
+                int j = rng.Next(i + 1);
+                (cells[i], cells[j]) = (cells[j], cells[i]);
+            }
+
+            if (cells.Count > count)
+                cells.RemoveRange(count, cells.Count - count);
+
+            return cells;
+        }
+
+        // PopulatePlaceholders
+        private int PopulatePlaceholders<TDefinition>(
+            List<Placeholder> targetPlaceholders,
+            IList<TDefinition> candidateDefs,
+            CounterBank counterBank)
+            where TDefinition : ThingDefinition
+        {
+            if (targetPlaceholders.Count == 0 || candidateDefs.Count == 0)
+                return 0;
+
+            int spawnedCount = 0;
+            var shuffled = new List<Placeholder>(targetPlaceholders);
+            shuffled.Shuffle(Session.Random);
+
+            for (int i = 0; i < shuffled.Count; i++)
+            {
+                var ph = shuffled[i];
+
+                // 1. CONDICIÓN DE SLOT
+                if (ph.SpawnRule != PlaceholderSpawnRule.ContentChanceOnly)
+                {
+                    if (!ph.FillChance.Roll(Session.Random))
+                        continue;
+                }
+
+                // 2. FILTRADO Y EVALUACIÓN
+                var phTable = new ChanceTable();
+
+                for (int j = 0; j < candidateDefs.Count; j++)
+                {
+                    var def = candidateDefs[j];
+
+                    if (!def.RequiresPlaceholder)
+                        continue;
+
+                    if (ph.AllowTags.Count > 0 && !ph.AllowTags.Intersects(def.Tags))
+                        continue;
+
+                    if (!def.PassesMaxPerRoomConstraint(counterBank.GetCount(def.Name)))
+                        continue;
+
+                    if (ph.SpawnRule != PlaceholderSpawnRule.PlaceholderChanceOnly)
+                    {
+                        if (Session.Random.NextSingle() > MathHelper.Clamp(def.SpawnWeight, 0f, 1f))
+                            continue;
+                    }
+
+                    if (def.SpawnWeight > 0f)
+                        phTable.Add(def.Name, (int)def.SpawnWeight, def);
+                }
+
+                if (phTable.Count == 0)
+                    continue;
+
+                // 3. INSTANCIACIÓN FINAL
+                if (phTable.GetItem(Session.Random)?.Context is TDefinition chosen)
+                {
+                    SpawnThing<GameThing>(chosen.Name, ph.Position, counterBank);
+                    spawnedCount++;
+                }
+            }
+
+            return spawnedCount;
+        }
+
         // SpawnActors
         private void SpawnActors()
         {
-            if (WalkArea == null)
-                return;
-
-            var candidates = ProceduralUtils.GetCandidateDefinitions(this, GameData.Actors);
-            if (candidates.Count == 0)
-                return;
-
-            // 2. Filtrar candidatos compatibles por dificultad de la sala
-            var validCandidates = new List<ActorDefinition>();
-            for (int i = 0; i < candidates.Count; i++)
-            {
-                var c = candidates[i];
-
-                if (!Definition.AllowEnemies && c.Faction == Faction.Evil)
-                    continue;
-
-                if (!ProceduralUtils.IsValidActorForRoom(Definition.Difficulty, c.Difficulty))
-                    continue;
-
-                validCandidates.Add(c);
-            }
-
-            if (validCandidates.Count == 0)
-                return;
-
-            /*
-            targetTypesCount = Math.Min(targetTypesCount, validCandidates.Count);
-
-            var chosenTypes = new List<ActorDefinition>();
-
-            // 4. Garantizar la amenaza principal
-            var primaryCandidates = new List<ActorDefinition>();
-            for (int i = 0; i < validCandidates.Count; i++)
-            {
-                if (validCandidates[i].Difficulty == RoomNode.TopographicDifficulty)
-                {
-                    primaryCandidates.Add(validCandidates[i]);
-                }
-            }
-
-            if (primaryCandidates.GetRandomItem(Random) is { } primary)
-            {
-                chosenTypes.Add(primary);
-                validCandidates.Remove(primary);
-            }
-
-            // 5. Completar los slots secundarios
-            int remainingSlots = targetTypesCount - chosenTypes.Count;
-            if (remainingSlots > 0 && validCandidates.Count > 0)
-            {
-                // Asumiendo que Shuffle es tu extensión existente
-                validCandidates.Shuffle(Random);
-
-                int limit = Math.Min(remainingSlots, validCandidates.Count);
-                for (int i = 0; i < limit; i++)
-                {
-                    chosenTypes.Add(validCandidates[i]);
-                }
-            }
-
-            // 6. Armar los packs aplicando MaxPerRoom de forma estricta
-            var pendingSpawns = new List<ActorDefinition>();
-            for (int i = 0; i < chosenTypes.Count; i++)
-            {
-                var chosen = chosenTypes[i];
-                int packSize = chosen.RollPackSize(Random);
-
-                for (int p = 0; p < packSize; p++)
-                {
-                    // Contar cuántos de este tipo ya metimos a mano
-                    int currentPending = 0;
-                    for (int k = 0; k < pendingSpawns.Count; k++)
-                    {
-                        if (pendingSpawns[k].Name == chosen.Name)
-                        {
-                            currentPending++;
-                        }
-                    }
-
-                    int totalInRoom = actorsSpawnCounter.GetCount(chosen.Name) + currentPending;
-
-                    // Si llegamos al tope de diseño para esta sala, cortamos la generación de este pack
-                    if (!chosen.PassesMaxPerRoomConstraint(totalInRoom))
-                        break;
-
-                    pendingSpawns.Add(chosen);
-                }
-            }
-
-            if (pendingSpawns.Count == 0)
-                return;
-
-            // 7. Inyección física segura
-            var safePoly = new Polygon(WalkArea.Polygon.Vertices, -45);
-            var points = ProceduralUtils.GetSpawnPoints(safePoly, pendingSpawns.Count, 45, Random);
-
-            int spawnsToExecute = Math.Min(pendingSpawns.Count, points.Count);
-
-            for (int i = 0; i < spawnsToExecute; i++)
-            {
-                SpawnThing<Actor>(run, pendingSpawns[i].Name, points[i], actorsSpawnCounter);
-            }
-            */
-        }
-
-        // SpawnProps
-        private void SpawnProps()
-        {
-            var candidates = ProceduralUtils.GetCandidateDefinitions(this, GameData.Props);
-            if (candidates.Count == 0)
+            var candidateDefs = GetCandidateDefinitions(GameData.Actors);
+            if (candidateDefs.Count == 0)
                 return;
 
             #region Placeholders
 
-            if (placeholders.Count > 0)
+            var actorPlaceholders = new List<Placeholder>();
+            for (int i = 0; i < placeholders.Count; i++)
             {
-                var shuffledPlaceholders = new List<Placeholder>(placeholders);
-                shuffledPlaceholders.Shuffle(Session.Random);
-
-                foreach (var ph in shuffledPlaceholders)
-                {
-                    // 1. CONDICIÓN DE SLOT (Placeholder)
-                    // Si la estrategia NO es ContentChanceOnly, el placeholder debe pasar su tirada de FillChance.
-                    if (ph.SpawnRule != PlaceholderSpawnRule.ContentChanceOnly)
-                    {
-                        if (!ph.FillChance.Roll(Session.Random))
-                            continue;
-                    }
-
-                    // 2. FILTRADO Y EVALUACIÓN DE CANDIDATOS
-                    var phTable = new ChanceTable();
-
-                    foreach (var def in candidates)
-                    {
-                        if (!def.RequiresPlaceholder)
-                            continue;
-
-                        if (!def.Placements.Contains(ph.Placement))
-                            continue;
-
-                        if (ph.AllowTags.Count > 0 && !ph.AllowTags.Intersects(def.Tags))
-                            continue;
-
-                        if (!def.PassesMaxPerRoomConstraint(propsSpawnCounter.GetCount(def.Name)))
-                            continue;
-
-                        if (!def.PassesMaxPerRunConstraint(Session.Spawns.GetCount(def.Name)))
-                            continue;
-
-                        float finalWeight = ProceduralUtils.AdjustPropWeight(Definition.Difficulty, def.Difficulty, def.SpawnWeight);
-
-                        // 3. CONDICIÓN DE CONTENIDO (Prop)
-                        // Si la estrategia NO es PlaceholderChanceOnly, el prop debe pasar su tirada individual de rareza.
-                        if (ph.SpawnRule != PlaceholderSpawnRule.PlaceholderChanceOnly)
-                        {
-                            if (Session.Random.NextSingle() > MathHelper.Clamp(finalWeight, 0f, 1f))
-                                continue;
-                        }
-
-                        if (finalWeight > 0f)
-                        {
-                            phTable.Add(def.Name, finalWeight);
-                        }
-                    }
-
-                    if (phTable.Count == 0)
-                        continue;
-
-                    // 4. INSTANCIACIÓN FINAL
-                    if (phTable.GetItem() is ChanceTableItem item &&
-                        GameData.Props.Find(item.Name) is PropDefinition chosen)
-                    {
-                        SpawnThing<Prop>(chosen.Name, ph.Position, propsSpawnCounter);
-                    }
-                }
+                if (placeholders[i].ContentType == PlaceholderContentType.Actor)
+                    actorPlaceholders.Add(placeholders[i]);
             }
+
+            // Llamada directa al helper parametrizado
+            var spawnedCount = PopulatePlaceholders(actorPlaceholders, candidateDefs, actorsSpawnCounter);
 
             #endregion
 
-            #region Props Libres en WalkArea
+            #region WalkArea
 
             if (WalkArea == null)
                 return;
 
-            // 1. Filtrar candidatos que NO requieran placeholder y cumplan las restricciones de conteo
-            var freeCandidates = new List<PropDefinition>();
-            foreach (var def in candidates)
+            int targetTotal = Session.Random.Next(Definition.MinEnemies, Definition.MaxEnemies + 1);
+            int remainingToSpawn = targetTotal - spawnedCount;
+
+            if (remainingToSpawn <= 0)
+                return;
+
+            var freeCandidates = new List<ActorDefinition>();
+            for (int i = 0; i < candidateDefs.Count; i++)
             {
-                if (def.RequiresPlaceholder)
-                    continue;
-
-                if (!def.PassesMaxPerRoomConstraint(propsSpawnCounter.GetCount(def.Name)))
-                    continue;
-
-                if (!def.PassesMaxPerRunConstraint(Session.Spawns.GetCount(def.Name)))
-                    continue;
-
-                freeCandidates.Add(def);
+                var def = candidateDefs[i];
+                if (!def.RequiresPlaceholder && def.PassesMaxPerRoomConstraint(actorsSpawnCounter.GetCount(def.Name)))
+                {
+                    freeCandidates.Add(def);
+                }
             }
 
             if (freeCandidates.Count == 0)
                 return;
 
-            var occupiedPositions = new List<Vector2>();
-            int maxAttemptsInRoom = Session.Random.Next(1, 3); // 1 a 2 intentos de apariciones libres por sala
+            var safePoly = new Polygon(WalkArea.Polygon.Vertices, -45);
+            var points = GetSpawnPoints(safePoly, remainingToSpawn, 45, Session.Random);
 
-            // 2. Bucle de apariciones por Tirada Absoluta
+            for (int i = 0; i < points.Count; i++)
+            {
+                if (freeCandidates.Count == 0)
+                    break;
+
+                if (occupiedPositions.Contains(points[i]))
+                    continue;
+
+                var chosen = freeCandidates.GetRandomItem(Session.Random);
+                if (chosen == null)
+                    continue;
+
+                SpawnThing<Actor>(chosen.Name, points[i], actorsSpawnCounter);
+                occupiedPositions.Add(points[i]);
+
+                if (!chosen.PassesMaxPerRoomConstraint(actorsSpawnCounter.GetCount(chosen.Name)))
+                {
+                    freeCandidates.Remove(chosen);
+                }
+            }
+
+            #endregion
+        }
+
+        // SpawnProps
+        private void SpawnProps()
+        {
+            var candidates = GetCandidateDefinitions(GameData.Props);
+            if (candidates.Count == 0)
+                return;
+
+            #region Placeholders
+
+            var propPlaceholders = new List<Placeholder>();
+            for (int i = 0; i < placeholders.Count; i++)
+            {
+                if (placeholders[i].ContentType == PlaceholderContentType.Prop)
+                    propPlaceholders.Add(placeholders[i]);
+            }
+
+            // Llamada directa al helper parametrizado
+            PopulatePlaceholders(propPlaceholders, candidates, propsSpawnCounter);
+
+            #endregion
+
+            #region WalkArea
+
+            if (WalkArea == null)
+                return;
+
+            var freeCandidates = new List<PropDefinition>();
+            for (int i = 0; i < candidates.Count; i++)
+            {
+                var def = candidates[i];
+                if (!def.RequiresPlaceholder && def.PassesMaxPerRoomConstraint(propsSpawnCounter.GetCount(def.Name)))
+                {
+                    freeCandidates.Add(def);
+                }
+            }
+
+            if (freeCandidates.Count == 0)
+                return;
+
+            int maxAttemptsInRoom = Session.Random.Next(1, 3);
+
             while (maxAttemptsInRoom > 0 && freeCandidates.Count > 0)
             {
                 maxAttemptsInRoom--;
 
-                // Elegimos un candidato al azar del pool de elegibles
                 var chosen = freeCandidates.GetRandomItem(Session.Random);
-
                 if (chosen == null)
                     continue;
 
-                // Calculamos su probabilidad ajustada por la dificultad topográfica de la sala (0.0f a 1.0f)
-                float finalChance = ProceduralUtils.AdjustPropWeight(Definition.Difficulty, chosen.Difficulty, chosen.SpawnWeight);
-
-                // Tirada Absoluta: Si el dado no supera la probabilidad, este intento queda VACÍO de forma natural
-                if (Session.Random.NextSingle() > MathHelper.Clamp(finalChance, 0f, 1f))
+                if (Session.Random.NextSingle() > MathHelper.Clamp(chosen.SpawnWeight, 0f, 1f))
                     continue;
 
-                // Si pasó la tirada de rareza, pedimos la posición al WalkArea
                 Vector2 spawnPosition = WalkArea.RandomWalkablePoint(Session.Random);
 
                 if (spawnPosition == Vector2.Zero || occupiedPositions.Contains(spawnPosition))
@@ -287,15 +300,8 @@ namespace Remizione
 
                 occupiedPositions.Add(spawnPosition);
 
-                // Instanciación directa
-                var instance = CreateThingClone<Prop>(chosen.Name);
-                instance.Position = spawnPosition;
-                Children.Add(instance);
+                SpawnThing<Prop>(chosen.Name, spawnPosition, propsSpawnCounter);
 
-                Session.Spawns.Increment(chosen.Name);
-                propsSpawnCounter.Increment(chosen.Name);
-
-                // Si el prop alcanzó su límite por sala, lo removemos del pool de candidatos
                 if (!chosen.PassesMaxPerRoomConstraint(propsSpawnCounter.GetCount(chosen.Name)))
                     freeCandidates.Remove(chosen);
             }
@@ -310,7 +316,6 @@ namespace Remizione
             var instance = CreateThingClone<T>(name);
             instance.Position = position;
             Children.Add(instance);
-            Session.Spawns.Increment(name);
             counterBank.Increment(name);
 
             if (instance is ISpawnNotification spawnNotification)
@@ -348,6 +353,9 @@ namespace Remizione
 
         // Definition
         public RoomDefinition Definition { get; }
+
+        // Difficulty
+        public Difficulty Difficulty { get; }
 
         // IsProcedural
         public override bool IsProcedural => true;

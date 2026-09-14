@@ -2,6 +2,7 @@
 using Engendro.Collections;
 using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
@@ -68,7 +69,6 @@ namespace Remizione
             if (IsLoaded)
                 throw new InvalidOperationException("Data already loaded.");
 
-            Runs = Load("Runs.json", e => new RunDefinition(e));
             RunModifiers = Load("RunModifiers.json", e => new RunModifierDefinition(e));
             CombatBehaviors = Load("CombatBehaviors.json", e => new CombatBehavior(e));
             Statuses = Load("Statuses.json", e => new StatusDefinition(e));
@@ -92,9 +92,6 @@ namespace Remizione
 
         // RunModifiers
         public static FrozenNamedCollection<RunModifierDefinition> RunModifiers { get; private set; } = null!;
-
-        // Runs
-        public static FrozenNamedCollection<RunDefinition> Runs { get; private set; } = null!;
 
         // Statuses
         public static FrozenNamedCollection<StatusDefinition> Statuses { get; private set; } = null!;

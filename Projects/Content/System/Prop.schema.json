@@ -18,21 +18,6 @@
       "allOf": [
         {
           "$ref": "./Thing.schema.json"
-        },
-        {
-          "type": "object",
-          "properties": {
-            "placements": {
-              "type": "array",
-              "items": {
-                "$ref": "enums.schema.json#/$defs/PlacementType"
-              }
-            },
-            "requiresPlaceholder": {
-              "type": "boolean",
-              "default": false
-            }
-          }
         }
       ],
       "unevaluatedProperties": false

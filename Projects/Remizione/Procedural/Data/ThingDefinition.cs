@@ -17,14 +17,17 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        protected ThingDefinition(JsonElement element, SpawnScope defaultSpawnScope)
+        protected ThingDefinition(JsonElement element, bool defaultRequiresPlaceholder, Faction defaultFaction)
             : base(element)
         {
             // BaseDropChance
             BaseDropChance = MathF.Max(0, element.GetFloat("baseDropChance", .5f));
 
+            // Difficulty
+            Difficulty = element.GetEnum("difficulty", Difficulty.Easy);
+
             // Faction
-            Faction = element.GetEnum("faction", Faction.Evil);
+            Faction = element.GetEnum("faction", defaultFaction);
 
             // GraceReward
             GraceReward = element.GetInt32("graceReward", 0);
@@ -53,15 +56,6 @@ namespace Remizione
             // MaxPerRoom
             MaxPerRoom = element.GetInt32("maxPerRoom", -1);
 
-            // RoomTheme
-            RoomTheme = element.GetEnum<RoomTheme>("roomTheme");
-
-            // SpawnScope
-            SpawnScope = element.GetEnum("spawnScope", defaultSpawnScope);
-
-            // TargetRoomCategory
-            TargetRoomCategory = element.GetEnum<RoomCategory>("targetRoomCategory");
-
             // Effects
             if (element.TryGetProperty("effects", out JsonElement effectsArray))
             {
@@ -73,6 +67,9 @@ namespace Remizione
             }
 
             Effects = effects.AsReadOnly();
+
+            // RequiresPlaceholder
+            RequiresPlaceholder = element.GetBool("requiresPlaceholder", defaultRequiresPlaceholder);
         }
 
         #endregion
@@ -87,11 +84,14 @@ namespace Remizione
         // BaseDropChance
         public Ratio BaseDropChance { get; }
 
+        // Difficulty
+        public Difficulty Difficulty { get; }
+
         // Effects
         public ReadOnlyCollection<EffectDescriptor> Effects { get; }
 
         // Faction
-        public Faction Faction { get; init; }
+        public Faction Faction { get; }
 
         // GraceReward
         public int GraceReward { get; }
@@ -108,13 +108,7 @@ namespace Remizione
             return MaxPerRoom == -1 || instanceCount < MaxPerRoom;
         }
 
-        // RoomTheme
-        public RoomTheme? RoomTheme { get; }
-
-        // SpawnScope
-        public SpawnScope SpawnScope { get; }
-
-        // TargetRoomCategory
-        public RoomCategory? TargetRoomCategory { get; }
+        // RequiresPlaceholder
+        public bool RequiresPlaceholder { get; }
     }
 }

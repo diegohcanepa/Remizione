@@ -16,28 +16,7 @@
     "data"
   ],
   "$defs": {
-    "FeaturedActor": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "position": {
-          "type": "string"
-        },
-        "facingDirection": {
-          "$ref": "enums.schema.json#/$defs/FacingDirection"
-        }
-      },
-      "required": [
-        "name",
-        "position",
-        "facingDirection"
-      ],
-      "additionalProperties": false
-    },
     "Room": {
-      "description": "Definición completa de un Room.",
       "allOf": [
         {
           "$ref": "./Entity.schema.json"
@@ -73,9 +52,15 @@
                 "$ref": "enums.schema.json#/$defs/Tag"
               }
             },
-            "allowEnemies": {
-              "type": "boolean",
-              "default": true
+            "minEnemies": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
+            },
+            "maxEnemies": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
             },
             "placeholders": {
               "type": "array",
@@ -92,8 +77,8 @@
                       "$ref": "enums.schema.json#/$defs/Tag"
                     }
                   },
-                  "placement": {
-                    "$ref": "enums.schema.json#/$defs/PlacementType"
+                  "contentType": {
+                    "$ref": "enums.schema.json#/$defs/PlaceholderContentType"
                   },
                   "fillChance": {
                     "type": "number",
@@ -105,28 +90,15 @@
                   }
                 },
                 "required": [
-                  "position",
-                  "placement"
+                  "position"
                 ],
                 "additionalProperties": false
               }
             },
             "runModifiers": {
               "type": "string"
-            },
-            "walkArea": {
-              "type": "string"
-            },
-            "walls": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
             }
-          },
-          "required": [
-            "walkArea"
-          ]
+          }
         }
       ]
     }

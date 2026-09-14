@@ -32,6 +32,7 @@ namespace Remizione
         private FrozenDictionary<string, GameThing>? proceduralCatalog;
         private readonly RoomEditor? roomEditor;
         private readonly Sprite savingIcon;
+        private readonly HashSet<string> unlockedDefinitions = [];
 
         #endregion
 
@@ -116,6 +117,7 @@ namespace Remizione
             AotTypeRegistry.Register(typeof(GoldenKey));
             AotTypeRegistry.Register(typeof(LootOrb));
             AotTypeRegistry.Register(typeof(Pottery));
+            AotTypeRegistry.Register(typeof(ProceduralRoom));
             AotTypeRegistry.Register(typeof(Prop));
             AotTypeRegistry.Register(typeof(Rat));
             AotTypeRegistry.Register(typeof(SpearTrap));
@@ -317,6 +319,16 @@ namespace Remizione
             // RunCount
             if (sessionNode.Attributes[nameof(RunIndex)]?.Value is string runCountValue)
                 RunIndex = XmlConvert.ToInt32(runCountValue);
+
+            // UnlockedDefinitions
+            if (sessionNode.Attributes["UnlockedDefinitions"]?.Value is string UnlockedDefinitionsValue)
+            {
+                foreach (var name in UnlockedDefinitionsValue.Split(","))
+                {
+                    if (Definition.IsDefined(name))
+                        unlockedDefinitions.Add(name);
+                }
+            }
         }
 
         // OnResume
@@ -467,6 +479,9 @@ namespace Remizione
 
             // RunCount
             output.WriteAttributeString(nameof(RunIndex), XmlConvert.ToString(RunIndex));
+
+            // UnlockedDefinitions
+            output.WriteAttributeString("UnlockedDefinitions", string.Join(",", unlockedDefinitions));
         }
 
         // OnOutcomeCompleted
@@ -598,6 +613,9 @@ namespace Remizione
                 return true;
             }
         }
+
+        // IsUnlocked
+        public bool IsUnlocked(Definition definition) => unlockedDefinitions.Contains(definition.Name);
 
         // KillEnemies
         [ScriptMethod]
@@ -784,7 +802,10 @@ namespace Remizione
                 Game.SceneManager.Push(inventoryScene);
         }
 
-        // Spawns
-        public CounterBank Spawns { get; } = new();
+        // Unlock
+        public void Unlock(Definition defintion)
+        {
+            unlockedDefinitions.Add(defintion.Name);
+        }
     }
 }

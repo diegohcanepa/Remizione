@@ -1,5 +1,8 @@
 {
   "$schema": "./Room.schema.json",
   "data": [
+    {
+      "name": "Threshold"
+    }
   ]
 }

@@ -8,13 +8,6 @@
     {
       "type": "object",
       "properties": {
-        "difficulty": {
-          "$ref": "enums.schema.json#/$defs/Difficulty"
-        },
-        "maxPerRun": {
-          "type": "integer",
-          "default": -1
-        },
         "pools": {
           "type": "array",
           "uniqueItems": true,
@@ -29,10 +22,7 @@
             "$ref": "enums.schema.json#/$defs/Tag"
           }
         }
-      },
-      "required": [
-        "difficulty"
-      ]
+      }
     }
   ]
 }

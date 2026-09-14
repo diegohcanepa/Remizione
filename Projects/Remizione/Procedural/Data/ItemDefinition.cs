@@ -72,12 +72,6 @@ namespace Remizione
             if (element.TryGetProperty("projectile", out JsonElement projectileElement) && projectileElement.ValueKind == JsonValueKind.Object)
                 Projectile = new ProjectileDescriptor(projectileElement);
 
-            // Quality
-            Quality = element.GetInt32("quality", 0);
-
-            // Realm
-            Realm = element.GetEnum("realm", Realm.Earthly);
-
             // SkillChance
             SkillChance = element.GetInt32("skillChance", 0);
 
@@ -88,14 +82,6 @@ namespace Remizione
             this.SoundTrigger = element.GetObject("soundTrigger", Sound.Get);
 
             this.Image = Atlases.UI.FindImage(Name);
-
-            this.Price = Quality switch
-            {
-                0 or 1 => 5,  // Items básicos o consumibles
-                2 or 3 => 10, // Herramientas y gadgets de nivel medio
-                4 or 5 => 15, // Items poderosos o de alta calidad
-                _ => 5
-            };
 
             IsPassive = LightModifier != 0 || LuckModifier != 0;
 
@@ -207,12 +193,6 @@ namespace Remizione
 
         // Projectile
         public ProjectileDescriptor? Projectile { get; }
-
-        // Quality
-        public int Quality { get; }
-
-        // Realm
-        public Realm Realm { get; }
 
         // SkillChance
         public int SkillChance { get; }

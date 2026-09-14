@@ -14,14 +14,16 @@
     <WarningLevel>8</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Procedural\Rooms\**" />
+    <EmbeddedResource Remove="Procedural\Rooms\**" />
+    <None Remove="Procedural\Rooms\**" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.5.1" />
     <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.5.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Adberration\Adberration.csproj" />
     <ProjectReference Include="..\Engendro\Engendro.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Procedural\Rooms\" />
   </ItemGroup>
 </Project>

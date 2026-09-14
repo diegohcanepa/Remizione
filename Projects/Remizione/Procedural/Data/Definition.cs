@@ -12,7 +12,7 @@ namespace Remizione
     public abstract class Definition : INamedObject
     {
         private readonly List<EffectDescriptor> effectDescriptors = [];
-        private static readonly HashSet<string> usedNames = [];
+        private static readonly HashSet<string> usedNames = new(StringComparer.Ordinal);
 
         #region Constructor
 
@@ -25,10 +25,6 @@ namespace Remizione
 
             if (nameValidationRule == NameValidationRule.Strict)
             {
-                // Name cannot be a realm 
-                if (Enum.IsDefined(typeof(Realm), Name))
-                    RaiseValidationError(this, $"The name '{Name}' cannot be used because it is an item realm.");
-
                 // Name cannot be a category
                 if (Enum.IsDefined(typeof(ItemCategory), Name))
                     RaiseValidationError(this, $"The name '{Name}' cannot be used because it is an item category.");
@@ -77,6 +73,9 @@ namespace Remizione
 
         // EffectDescriptors
         public ReadOnlyCollection<EffectDescriptor> EffectDescriptors { get; }
+
+        // IsDefined
+        public static bool IsDefined(string name) => usedNames.Contains(name);
 
         // Name
         public string Name { get; }

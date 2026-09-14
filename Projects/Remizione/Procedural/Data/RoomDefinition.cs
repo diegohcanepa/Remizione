@@ -13,7 +13,6 @@ namespace Remizione
         #region Private fields
 
         private readonly List<Placeholder> placeholders = [];
-        private readonly List<string> walls = [];
 
         #endregion
 
@@ -23,8 +22,14 @@ namespace Remizione
         public RoomDefinition(JsonElement element)
             : base(element)
         {
-            // AllowEnemies
-            this.AllowEnemies = element.GetBool("allowEnemies", true);
+            // MinEnemies
+            this.MinEnemies = element.GetInt32("minEnemies", 0);
+
+            // MaxEnemies
+            this.MaxEnemies = element.GetInt32("maxEnemies", 0);
+
+            if (MinEnemies > MaxEnemies)
+                RaiseValidationError(this, $"Minimum enemies exceeds maximum enemies.");
 
             // Placeholders
             if (element.TryGetProperty("placeholders", out JsonElement placeholdersElement))
@@ -53,33 +58,16 @@ namespace Remizione
             // Scope
             this.Scope = TagScope.FromJson(element);
 
-            // WalkArea
-            WalkArea = string.Empty;
-            if (element.TryGetProperty("walkArea", out JsonElement walkAreaElement))
-            {
-                WalkArea = walkAreaElement.GetString() ?? string.Empty;
-                Polygon.GetVertices(WalkArea);
-            }
-
-            // Walls
-            if (element.TryGetProperty("walls", out JsonElement wallsElement))
-            {
-                foreach (var item in wallsElement.EnumerateArray())
-                {
-                    var value = item.GetString() ?? string.Empty;
-                    Polygon.GetVertices(value);
-                    walls.Add(value);
-                }
-            }
-
             Placeholders = new(placeholders);
-            Walls = walls.AsReadOnly();
         }
 
         #endregion
 
-        // AllowEnemies
-        public bool AllowEnemies { get; }
+        // MaxEnemies
+        public int MaxEnemies { get; }
+
+        // MinEnemies
+        public int MinEnemies { get; }
 
         // Placeholders
         public ReadOnlyPlaceholderCollection Placeholders { get; }
@@ -89,11 +77,5 @@ namespace Remizione
 
         // Scope
         public TagScope Scope { get; }
-
-        // WalkArea
-        public string WalkArea { get; }
-
-        // Walls
-        public ReadOnlyCollection<string> Walls { get; }
     }
 }

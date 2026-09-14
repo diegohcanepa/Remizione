@@ -5,9 +5,6 @@ namespace Remizione
     // ActionKind
     public enum ActionKind { Script, Proximity, InPlace, Projectile, Self }
 
-    // ActorRank
-    public enum ActorRank { Common, MiniBoss, Boss }
-
     // ApproachBehavior
     public enum ApproachBehavior
     {
@@ -121,6 +118,9 @@ namespace Remizione
         Strict           // Único estricto (no puede colisionar con categorías, realms ni ids)
     }
 
+    // PlaceholderContentType
+    public enum PlaceholderContentType { Prop, Actor }
+
     // PlaceholderSpawnRule
     public enum PlaceholderSpawnRule
     {
@@ -143,27 +143,11 @@ namespace Remizione
         ContentChanceOnly = 2
     }
 
-    // PlaceholderState
-    public enum PlaceholderState { Pending, Used }
-
-    // PlacementType
-    public enum PlacementType
-    {
-        Floor,          // Suelo libre (lejos de paredes)
-        WallFrontBase,  // Apoyado contra la pared de arriba (Vending Machine)
-        WallFrontHang,  // Colgado en la pared de arriba (Cuadros, Antorchas)
-        WallLeftBase,   // Apoyado contra la pared izquierda
-        WallLeftHang,   // Colgado en la pared izquierda
-        WallRightBase,  // Apoyado contra la pared derecha
-        WallRightHang,  // Colgado en la pared derecha
-        Ceiling         // Techo (lámparas, telarañas)
-    }
-
     // PlayerNumber
     public enum PlayerNumber { None = -1, One = 0, Two = 1, Three = 2, Four = 3 }
 
     // PlayerStat
-    public enum PlayerStat { Grace, Willpower }
+    public enum PlayerStat { Grace }
 
     // PositioningMode
     public enum PositioningMode
@@ -179,34 +163,14 @@ namespace Remizione
     // PuzzleKind
     public enum PuzzleKind { BronzeKey, GateLever }
 
-    // Realm
-    public enum Realm { Earthly, Infernal, Celestial }
-
     // RemainsKind
     public enum RemainsKind { None, Custom, Bones, Guts, ToxicGuts }
 
     // RenderLayer
     public enum RenderLayer { BehindBackground, Background, OverBackground, Default, Foreground, ForegroundNoLight }
 
-    // RoomTheme
-    public enum RoomTheme { Castle }
-
-    // RoomCategory
-    public enum RoomCategory { Start, End, Treasure, Store, Special, Secret, Standard }
-
     // RunModifierScope
     public enum RunModifierScope { Room, Run }
-
-    // RunStage
-    public enum RunStage { Start, End }
-
-    // SpawnScope
-    public enum SpawnScope
-    {
-        Anywhere,       // Props universales, antorchas, sangre (entran en End, Store, Standard, etc.)
-        StandardOnly,   // Enemigos comunes, trampas estándar (NO entran en End, Store, Treasure)
-        RestrictedOnly  // Requiere coincidencia exacta con RequiredRoomCategory (Bosses, NPCs, Pedestales)
-    }
 
     // SpeechTextState
     public enum SpeechTextState { Hidden, Typing, Idle }

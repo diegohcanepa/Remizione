@@ -11,19 +11,13 @@ namespace Remizione
     {
         // Constructor
         public ActorDefinition(JsonElement element)
-            : base(element, SpawnScope.StandardOnly)
+            : base(element, false, Faction.Evil)
         {
-            // Faction
-            Faction = element.GetEnum("faction", Faction.Evil);
-
             // MinPackSize
             MinPackSize = element.GetInt32("minPackSize", 1);
 
             // MaxPackSize
             MaxPackSize = element.GetInt32("maxPackSize", 1);
-
-            // Rank
-            Rank = element.GetEnum("rank", ActorRank.Common);
 
             // Name cannot be a category
             if (MinPackSize > MaxPackSize)
@@ -35,9 +29,6 @@ namespace Remizione
 
         // MaxPackSize
         public int MaxPackSize { get; }
-
-        // Rank
-        public ActorRank Rank { get; }
 
         // RollPackSize
         public int RollPackSize(Random rng)
