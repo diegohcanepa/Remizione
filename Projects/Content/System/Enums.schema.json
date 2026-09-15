@@ -145,14 +145,6 @@
         "Actor"
       ]
     },
-    "PlaceholderSpawnRule": {
-      "type": "string",
-      "enum": [
-        "Default",
-        "PlaceholderChanceOnly",
-        "ContentOnly"
-      ]
-    },
     "ProjectileTrajectoryType": {
       "type": "string",
       "enum": [

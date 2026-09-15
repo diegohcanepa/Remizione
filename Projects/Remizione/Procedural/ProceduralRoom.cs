@@ -15,10 +15,8 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly CounterBank actorsSpawnCounter = new();
-        private readonly List<Placeholder> placeholders = [];
-        private readonly CounterBank propsSpawnCounter = new();
         private readonly List<Vector2> occupiedPositions = [];
+        private readonly CounterBank spawnCounter = new();
 
         #endregion
 
@@ -33,7 +31,6 @@ namespace Remizione
             this.LightingSystem = true;
             this.UnloadMode = UnloadMode.Manual;
             this.DustParticleKind = DustParticleKind.Ash;
-            this.placeholders.AddRange(Definition.Placeholders);
         }
 
         #endregion
@@ -66,8 +63,25 @@ namespace Remizione
             return outList;
         }
 
+        // GetWalkAreaCandidates
+        private List<T> GetWalkAreaCandidates<T>(List<T> list) where T : ThingDefinition
+        {
+            var result = new List<T>();
+            
+            for (int i = 0; i < list.Count; i++)
+            {
+                var def = list[i];
+                if (!def.RequiresPlaceholder && def.PassesMaxPerRoomConstraint(spawnCounter.GetCount(def.Name)))
+                {
+                    result.Add(def);
+                }
+            }
+
+            return result;
+        }
+
         // GetSpawnPoints
-        private List<Vector2> GetSpawnPoints(Polygon polygon, int count, int cellSize, Random rng)
+        private static List<Vector2> GetSpawnPoints(Polygon polygon, int count, int cellSize, Random rng)
         {
             var cells = new List<Vector2>();
             var area = polygon.BoundingRectangle;
@@ -80,8 +94,8 @@ namespace Remizione
                     float cy = y + (cellSize * 0.5f);
 
                     float offsetRange = cellSize * 0.25f;
-                    cx += (float)((rng.NextDouble() * offsetRange * 2) - offsetRange);
-                    cy += (float)((rng.NextDouble() * offsetRange * 2) - offsetRange);
+                    cx += (rng.NextSingle() * offsetRange * 2) - offsetRange;
+                    cy += (rng.NextSingle() * offsetRange * 2) - offsetRange;
 
                     var candidate = new Vector2(cx, cy);
 
@@ -104,37 +118,45 @@ namespace Remizione
             return cells;
         }
 
+        // IsPositionOccupied
+        private bool IsPositionOccupied(Vector2 position, float minDistance = 20)
+        {
+            float minDistanceSq = minDistance * minDistance;
+
+            for (int i = 0; i < occupiedPositions.Count; i++)
+            {
+                if (Vector2.DistanceSquared(position, occupiedPositions[i]) < minDistanceSq)
+                    return true;
+            }
+
+            return false;
+        }
+
         // PopulatePlaceholders
-        private int PopulatePlaceholders<TDefinition>(
-            List<Placeholder> targetPlaceholders,
-            IList<TDefinition> candidateDefs,
-            CounterBank counterBank)
+        private int PopulatePlaceholders<TDefinition>(List<Placeholder> placeholders, IList<TDefinition> candidates)
             where TDefinition : ThingDefinition
         {
-            if (targetPlaceholders.Count == 0 || candidateDefs.Count == 0)
+            if (placeholders.Count == 0 || candidates.Count == 0)
                 return 0;
 
             int spawnedCount = 0;
-            var shuffled = new List<Placeholder>(targetPlaceholders);
+            var shuffled = new List<Placeholder>(placeholders);
             shuffled.Shuffle(Session.Random);
 
             for (int i = 0; i < shuffled.Count; i++)
             {
                 var ph = shuffled[i];
 
-                // 1. CONDICIÓN DE SLOT
-                if (ph.SpawnRule != PlaceholderSpawnRule.ContentChanceOnly)
-                {
-                    if (!ph.FillChance.Roll(Session.Random))
-                        continue;
-                }
+                // 1. PRESENCIA: El Placeholder decide si vive o muere este slot
+                if (!ph.FillChance.Roll(Session.Random))
+                    continue;
 
-                // 2. FILTRADO Y EVALUACIÓN
+                // 2. SELECCIÓN: Se arma la tabla de candidatos válidos
                 var phTable = new ChanceTable();
 
-                for (int j = 0; j < candidateDefs.Count; j++)
+                for (int j = 0; j < candidates.Count; j++)
                 {
-                    var def = candidateDefs[j];
+                    var def = candidates[j];
 
                     if (!def.RequiresPlaceholder)
                         continue;
@@ -142,26 +164,21 @@ namespace Remizione
                     if (ph.AllowTags.Count > 0 && !ph.AllowTags.Intersects(def.Tags))
                         continue;
 
-                    if (!def.PassesMaxPerRoomConstraint(counterBank.GetCount(def.Name)))
+                    if (!def.PassesMaxPerRoomConstraint(spawnCounter.GetCount(def.Name)))
                         continue;
 
-                    if (ph.SpawnRule != PlaceholderSpawnRule.PlaceholderChanceOnly)
-                    {
-                        if (Session.Random.NextSingle() > MathHelper.Clamp(def.SpawnWeight, 0f, 1f))
-                            continue;
-                    }
-
+                    // El SpawnWeight entra directo como peso relativo para competir
                     if (def.SpawnWeight > 0f)
-                        phTable.Add(def.Name, (int)def.SpawnWeight, def);
+                        phTable.Add(def.Name, (int)(def.SpawnWeight * 100f), def);
                 }
 
                 if (phTable.Count == 0)
                     continue;
 
-                // 3. INSTANCIACIÓN FINAL
+                // 3. INSTANCIACIÓN: Sale el ganador de la competencia de pesos
                 if (phTable.GetItem(Session.Random)?.Context is TDefinition chosen)
                 {
-                    SpawnThing<GameThing>(chosen.Name, ph.Position, counterBank);
+                    SpawnThing<GameThing>(chosen.Name, ph.Position);
                     spawnedCount++;
                 }
             }
@@ -172,26 +189,15 @@ namespace Remizione
         // SpawnActors
         private void SpawnActors()
         {
-            var candidateDefs = GetCandidateDefinitions(GameData.Actors);
-            if (candidateDefs.Count == 0)
+            var candidates = GetCandidateDefinitions(GameData.Actors);
+            if (candidates.Count == 0)
                 return;
 
-            #region Placeholders
+            // 1. Placeholders
+            var actorPlaceholders = Definition.GetPlaceholders(PlaceholderContentType.Actor);
+            var spawnedCount = PopulatePlaceholders(actorPlaceholders, candidates);
 
-            var actorPlaceholders = new List<Placeholder>();
-            for (int i = 0; i < placeholders.Count; i++)
-            {
-                if (placeholders[i].ContentType == PlaceholderContentType.Actor)
-                    actorPlaceholders.Add(placeholders[i]);
-            }
-
-            // Llamada directa al helper parametrizado
-            var spawnedCount = PopulatePlaceholders(actorPlaceholders, candidateDefs, actorsSpawnCounter);
-
-            #endregion
-
-            #region WalkArea
-
+            // 2. WalkArea
             if (WalkArea == null)
                 return;
 
@@ -201,44 +207,43 @@ namespace Remizione
             if (remainingToSpawn <= 0)
                 return;
 
-            var freeCandidates = new List<ActorDefinition>();
-            for (int i = 0; i < candidateDefs.Count; i++)
-            {
-                var def = candidateDefs[i];
-                if (!def.RequiresPlaceholder && def.PassesMaxPerRoomConstraint(actorsSpawnCounter.GetCount(def.Name)))
-                {
-                    freeCandidates.Add(def);
-                }
-            }
-
-            if (freeCandidates.Count == 0)
+            var walkAreaCandidates = GetWalkAreaCandidates(candidates);
+            if (walkAreaCandidates.Count == 0)
                 return;
 
+            // Pedimos más puntos a la grilla para tener margen si IsPositionOccupied o el SpawnWeight descartan posiciones
             var safePoly = new Polygon(WalkArea.Polygon.Vertices, -45);
-            var points = GetSpawnPoints(safePoly, remainingToSpawn, 45, Session.Random);
+            int requestedPoints = remainingToSpawn * 4;
+            var points = GetSpawnPoints(safePoly, requestedPoints, 45, Session.Random);
 
-            for (int i = 0; i < points.Count; i++)
+            int pointIndex = 0;
+
+            while (remainingToSpawn > 0 && pointIndex < points.Count && walkAreaCandidates.Count > 0)
             {
-                if (freeCandidates.Count == 0)
-                    break;
+                Vector2 candidatePoint = points[pointIndex];
+                pointIndex++;
 
-                if (occupiedPositions.Contains(points[i]))
+                // Descarta si cae cerca de un Placeholder, Prop o Actor ya instanciado
+                if (IsPositionOccupied(candidatePoint))
                     continue;
 
-                var chosen = freeCandidates.GetRandomItem(Session.Random);
+                var chosen = walkAreaCandidates.GetRandomItem(Session.Random);
                 if (chosen == null)
                     continue;
 
-                SpawnThing<Actor>(chosen.Name, points[i], actorsSpawnCounter);
-                occupiedPositions.Add(points[i]);
+                // Tirada de peso para selección
+                if (Session.Random.NextSingle() > float.Clamp(chosen.SpawnWeight, 0f, 1f))
+                    continue;
 
-                if (!chosen.PassesMaxPerRoomConstraint(actorsSpawnCounter.GetCount(chosen.Name)))
+                // Instanciación exitosa: se descuenta de la meta de enemigos restantes
+                SpawnThing<Actor>(chosen.Name, candidatePoint);
+                remainingToSpawn--;
+
+                if (!chosen.PassesMaxPerRoomConstraint(spawnCounter.GetCount(chosen.Name)))
                 {
-                    freeCandidates.Remove(chosen);
+                    walkAreaCandidates.Remove(chosen);
                 }
             }
-
-            #endregion
         }
 
         // SpawnProps
@@ -248,75 +253,57 @@ namespace Remizione
             if (candidates.Count == 0)
                 return;
 
-            #region Placeholders
+            // 1. Placeholders: Se procesan siempre
+            var propPlaceholders = Definition.GetPlaceholders(PlaceholderContentType.Prop);
+            PopulatePlaceholders(propPlaceholders, candidates);
 
-            var propPlaceholders = new List<Placeholder>();
-            for (int i = 0; i < placeholders.Count; i++)
-            {
-                if (placeholders[i].ContentType == PlaceholderContentType.Prop)
-                    propPlaceholders.Add(placeholders[i]);
-            }
-
-            // Llamada directa al helper parametrizado
-            PopulatePlaceholders(propPlaceholders, candidates, propsSpawnCounter);
-
-            #endregion
-
-            #region WalkArea
-
-            if (WalkArea == null)
+            // 2. WalkArea: Solo si la sala admite props en piso libre
+            if (WalkArea == null || Definition.MaxProps <= 0)
                 return;
 
-            var freeCandidates = new List<PropDefinition>();
-            for (int i = 0; i < candidates.Count; i++)
-            {
-                var def = candidates[i];
-                if (!def.RequiresPlaceholder && def.PassesMaxPerRoomConstraint(propsSpawnCounter.GetCount(def.Name)))
-                {
-                    freeCandidates.Add(def);
-                }
-            }
-
-            if (freeCandidates.Count == 0)
+            var walkAreaCandidates = GetWalkAreaCandidates(candidates);
+            if (walkAreaCandidates.Count == 0)
                 return;
 
-            int maxAttemptsInRoom = Session.Random.Next(1, 3);
+            // Determina la cuota objetivo a colocar en esta corrida
+            int targetCount = Session.Random.Next(Definition.MinProps, Definition.MaxProps + 1);
+            int safetyAttempts = targetCount * 5; // Margen para reintentar si cae en zona ocupada
 
-            while (maxAttemptsInRoom > 0 && freeCandidates.Count > 0)
+            while (targetCount > 0 && safetyAttempts > 0 && walkAreaCandidates.Count > 0)
             {
-                maxAttemptsInRoom--;
+                safetyAttempts--;
 
-                var chosen = freeCandidates.GetRandomItem(Session.Random);
+                var chosen = walkAreaCandidates.GetRandomItem(Session.Random);
                 if (chosen == null)
                     continue;
 
-                if (Session.Random.NextSingle() > MathHelper.Clamp(chosen.SpawnWeight, 0f, 1f))
+                // Tirada de peso para selección de candidato
+                if (Session.Random.NextSingle() > float.Clamp(chosen.SpawnWeight, 0f, 1f))
                     continue;
 
                 Vector2 spawnPosition = WalkArea.RandomWalkablePoint(Session.Random);
-
-                if (spawnPosition == Vector2.Zero || occupiedPositions.Contains(spawnPosition))
+                if (spawnPosition == Vector2.Zero || IsPositionOccupied(spawnPosition))
                     continue;
 
-                occupiedPositions.Add(spawnPosition);
+                // Instanciación exitosa: se descuenta de la meta objetivo
+                SpawnThing<Prop>(chosen.Name, spawnPosition);
+                targetCount--;
 
-                SpawnThing<Prop>(chosen.Name, spawnPosition, propsSpawnCounter);
-
-                if (!chosen.PassesMaxPerRoomConstraint(propsSpawnCounter.GetCount(chosen.Name)))
-                    freeCandidates.Remove(chosen);
+                if (!chosen.PassesMaxPerRoomConstraint(spawnCounter.GetCount(chosen.Name)))
+                    walkAreaCandidates.Remove(chosen);
             }
-
-            #endregion
         }
 
         // SpawnThing
-        private T SpawnThing<T>(string name, Vector2 position, CounterBank counterBank)
+        private T SpawnThing<T>(string name, Vector2 position)
             where T : GameThing
         {
-            var instance = CreateThingClone<T>(name);
+            var instance = Session.CreateThingClone<T>(name);
             instance.Position = position;
             Children.Add(instance);
-            counterBank.Increment(name);
+
+            spawnCounter.Increment(name);
+            occupiedPositions.Add(position);
 
             if (instance is ISpawnNotification spawnNotification)
                 spawnNotification.OnSpawned(this);
@@ -332,32 +319,21 @@ namespace Remizione
         protected override void OnLoad()
         {
             base.OnLoad();
-
-            CustomWidth = (int)BoundingBox.Width;
-            CustomHeight = (int)BoundingBox.Height;
-
-            SpawnProps();
-            SpawnActors();
+            Populate();
         }
 
         #endregion
 
-        // CreateThingClone
-        public sealed override T CreateThingClone<T>(string declaredName)
-        {
-            if (Session.CreateThingClone(declaredName, string.Empty) is not T result)
-                throw new InvalidOperationException($"Failed to create runtime clone from'{declaredName}'.");
-
-            return result;
-        }
-
         // Definition
         public RoomDefinition Definition { get; }
 
-        // Difficulty
-        public Difficulty Difficulty { get; }
-
-        // IsProcedural
-        public override bool IsProcedural => true;
+        // Populate
+        public void Populate()
+        {
+            spawnCounter.Clear();
+            occupiedPositions.Clear();
+            SpawnProps();
+            SpawnActors();
+        }
     }
 }

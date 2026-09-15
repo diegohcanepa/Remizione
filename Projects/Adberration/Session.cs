@@ -966,9 +966,18 @@ namespace Adberration
         }
 
         // CreateThingClone
-        public Thing CreateThingClone(string declaredName, string instanceName)
+        public Thing CreateThingClone(string declaredName, string? instanceName = null)
         {
-            return ScriptEnvironment.CreateThingClone(declaredName, instanceName, false);
+            return ScriptEnvironment.CreateThingClone(declaredName, instanceName ?? string.Empty, false);
+        }
+
+        // CreateThingClone
+        public T CreateThingClone<T>(string declaredName, string? instanceName = null) where T : Thing
+        {
+            if (CreateThingClone(declaredName, instanceName) is not T result)
+                throw new InvalidOperationException($"Failed to create runtime clone from'{declaredName}'.");
+
+            return result;
         }
 
         // CurrentMusicName

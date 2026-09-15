@@ -237,7 +237,7 @@ namespace Remizione
 
             if (ItemReward != null)
             {
-                var loot = room.CreateThingClone<Prop>(nameof(LootOrb));
+                var loot = Session.CreateThingClone<Prop>(nameof(LootOrb));
                 loot.ItemReward = ItemReward;
                 loot.Position = Position;
                 room.Children.Add(loot);

@@ -17,7 +17,6 @@ namespace Remizione
             AllowTags = ReadOnlyEnumSet<Tag>.FromJsonOrEmpty(element, "allowTags");
             ContentType = element.GetEnum("contentType", PlaceholderContentType.Prop);
             FillChance = element.GetFloat("fillChance", 1);
-            SpawnRule = element.GetEnum("spawnRule", PlaceholderSpawnRule.Default);
 
             if (element.GetString("position") is string positionValue && !string.IsNullOrWhiteSpace(positionValue))
                 Position = DataConvert.ToVector2(positionValue);
@@ -34,8 +33,5 @@ namespace Remizione
 
         // Position
         public Vector2 Position { get; }
-
-        // SpawnRule
-        public PlaceholderSpawnRule SpawnRule { get; }
     }
 }

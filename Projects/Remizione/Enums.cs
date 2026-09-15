@@ -121,28 +121,6 @@ namespace Remizione
     // PlaceholderContentType
     public enum PlaceholderContentType { Prop, Actor }
 
-    // PlaceholderSpawnRule
-    public enum PlaceholderSpawnRule
-    {
-        /// <summary>
-        /// Evaluá tanto el FillChance del placeholder como el ratio individual del prop.
-        /// Si el prop falla su tirada, el slot queda vacío orgánicamente.
-        /// </summary>
-        Default = 0,
-
-        /// <summary>
-        /// Solo evalúa el FillChance del placeholder. Si aprueba, FORZA la aparición de un prop
-        /// eligiendo uno del pool por ChanceTable (ignora el ratio individual del prop).
-        /// </summary>
-        PlaceholderChanceOnly = 1,
-
-        /// <summary>
-        /// El placeholder ignora su FillChance (slot siempre activo) y la aparición 
-        /// depende 100% del ratio individual del prop.
-        /// </summary>
-        ContentChanceOnly = 2
-    }
-
     // PlayerNumber
     public enum PlayerNumber { None = -1, One = 0, Two = 1, Three = 2, Four = 3 }
 

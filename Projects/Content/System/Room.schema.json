@@ -57,7 +57,17 @@
               "default": 0,
               "minimum": 0
             },
+            "minProps": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
+            },
             "maxEnemies": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
+            },
+            "maxProps": {
               "type": "integer",
               "default": 0,
               "minimum": 0
@@ -84,9 +94,6 @@
                     "type": "number",
                     "minimum": 0,
                     "maximum": 1
-                  },
-                  "spawnRule": {
-                    "$ref": "enums.schema.json#/$defs/PlaceholderSpawnRule"
                   }
                 },
                 "required": [

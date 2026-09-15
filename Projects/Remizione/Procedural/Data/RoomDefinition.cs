@@ -31,6 +31,15 @@ namespace Remizione
             if (MinEnemies > MaxEnemies)
                 RaiseValidationError(this, $"Minimum enemies exceeds maximum enemies.");
 
+            // MinProps
+            this.MinProps = element.GetInt32("minProps", 0);
+
+            // MaxProps
+            this.MaxProps = element.GetInt32("maxProps", 0);
+
+            if (MinEnemies > MaxEnemies)
+                RaiseValidationError(this, $"Minimum enemies exceeds maximum enemies.");
+
             // Placeholders
             if (element.TryGetProperty("placeholders", out JsonElement placeholdersElement))
             {
@@ -63,11 +72,31 @@ namespace Remizione
 
         #endregion
 
+        // GetPlaceholders
+        public List<Placeholder> GetPlaceholders(PlaceholderContentType contentType)
+        {
+            var result = new List<Placeholder>();
+            
+            for (int i = 0; i < placeholders.Count; i++)
+            {
+                if (placeholders[i].ContentType == PlaceholderContentType.Prop)
+                    result.Add(placeholders[i]);
+            }
+
+            return result;
+        }
+
         // MaxEnemies
         public int MaxEnemies { get; }
 
+        // MaxProps
+        public int MaxProps { get; }
+
         // MinEnemies
         public int MinEnemies { get; }
+
+        // MinProps
+        public int MinProps { get; }
 
         // Placeholders
         public ReadOnlyPlaceholderCollection Placeholders { get; }
