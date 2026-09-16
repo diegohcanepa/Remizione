@@ -1,4 +1,5 @@
 ﻿using Adberration;
+using Adberration.Scripting;
 using Engendro;
 using Engendro.Collections;
 using Microsoft.Xna.Framework;
@@ -16,6 +17,7 @@ namespace Remizione
         #region Private fields
 
         private readonly List<Vector2> occupiedPositions = [];
+        private readonly List<(Vector2 Center, float Radius)> safeZones = [];
         private readonly CounterBank spawnCounter = new();
 
         #endregion
@@ -121,8 +123,16 @@ namespace Remizione
         // IsPositionOccupied
         private bool IsPositionOccupied(Vector2 position, float minDistance = 20)
         {
-            float minDistanceSq = minDistance * minDistance;
+            // 1. Validar si cae dentro de alguna Zona Segura (Ej: área de la fogata)
+            for (int i = 0; i < safeZones.Count; i++)
+            {
+                var zone = safeZones[i];
+                if (Vector2.DistanceSquared(position, zone.Center) < (zone.Radius * zone.Radius))
+                    return true;
+            }
 
+            // 2. Validar ocupación normal de otros Actores/Props
+            float minDistanceSq = minDistance * minDistance;
             for (int i = 0; i < occupiedPositions.Count; i++)
             {
                 if (Vector2.DistanceSquared(position, occupiedPositions[i]) < minDistanceSq)
@@ -324,12 +334,25 @@ namespace Remizione
 
         #endregion
 
+        // AddSafeZone
+        public void AddSafeZone(Vector2 center, float radius)
+        {
+            safeZones.Add((center, radius));
+        }
+
         // Definition
         public RoomDefinition Definition { get; }
 
         // Populate
         public void Populate()
         {
+            safeZones.Clear();
+
+            foreach (var safeZone in Children.OfType<ISafeZone>())
+            {
+                AddSafeZone(safeZone.Center, safeZone.Radius);
+            }
+
             spawnCounter.Clear();
             occupiedPositions.Clear();
             SpawnProps();

@@ -3,9 +3,9 @@
   "data": [
     {
       "name": "EnviousEye",
-      "difficulty": "Normal",
       "baseDropChance": 1,
       "graceReward": 5,
+      "isUnlockedByDefault": true,
       "lootPool": [
         {
           "item": "Loquat",
@@ -14,8 +14,7 @@
       ]
     },
     {
-      "name": "Rat",
-      "difficulty": "Easy"
+      "name": "Rat"
     }
   ]
 }

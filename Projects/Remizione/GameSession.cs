@@ -11,6 +11,7 @@ using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Security.Cryptography;
 using System.Xml;
 
 namespace Remizione
@@ -59,6 +60,7 @@ namespace Remizione
             this.inventoryScene = new(PlayerData.Inventory);
             this.HUD = new(this);
             this.LootGenerator = new(this);
+            this.RenewSeed();
 
             ObjectPools = new ObjectPools(this);
 
@@ -719,10 +721,22 @@ namespace Remizione
         // Random
         public Random Random { get; private set; } = new(0);
 
+        // RenewSeed
+        public void RenewSeed()
+        {
+            Seed = RandomNumberGenerator.GetInt32(int.MaxValue);
+        }
+
         // RespawnWorld
         [ScriptMethod]
         public void RespawnWorld()
         {
+            CleanUpRuntimeEntities();
+
+            RenewSeed();
+
+            if (Room is ProceduralRoom room)
+                room.Populate();
         }
 
         // Room
@@ -734,7 +748,6 @@ namespace Remizione
         public int RunIndex { get; set; }
 
         // Seed
-        [ScriptProperty]
         public int Seed
         {
             get;

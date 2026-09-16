@@ -351,7 +351,7 @@ namespace Adberration
             AotTypeRegistry.Register("if", typeof(IfCoreStatement));
             AotTypeRegistry.Register("restart", typeof(RestartStatement));
             AotTypeRegistry.Register("return", typeof(ReturnStatement));
-            AotTypeRegistry.Register(ScriptSyntax.CloneKeyword, typeof(CloneCommand), CodingContext.Instantiation);
+            AotTypeRegistry.Register(ScriptSyntax.CloneKeyword, typeof(CloneCommand), CodingContext.Cloning);
             AotTypeRegistry.Register("counter", typeof(CounterCommand), CodingContext.Declaration);
             AotTypeRegistry.Register("decrement-counter", typeof(DecrementCounterCommand));
             AotTypeRegistry.Register("export-localizable-texts", typeof(ExportLocalizableTextsCommand));

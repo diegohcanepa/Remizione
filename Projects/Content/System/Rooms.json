@@ -3,10 +3,11 @@
   "data": [
     {
       "name": "Threshold",
+      "minEnemies": 3,
+      "maxEnemies": 5,
       "placeholders": [
         {
-          "position": "255,130",
-          "allowTags": ["Bonfire"]
+          "position": "255,130"
         }
       ]
     }

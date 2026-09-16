@@ -1,7 +1,7 @@
 ﻿namespace Adberration.Scripting
 {
     // CodingContext
-    public enum CodingContext { Any, Declaration, EntityDeclaration, Execution, Instantiation, Initialization }
+    public enum CodingContext { Any, Declaration, EntityDeclaration, Execution, Cloning, Initialization }
 
     // ComparisonOperator
     public enum ComparisonOperator { Equality, Inequality, LessThan, LessThanOrEqual, GreaterThan, GreaterThanOrEqual }

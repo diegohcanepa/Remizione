@@ -2,12 +2,6 @@
   "$schema": "./Prop.schema.json",
   "data": [
     {
-      "name": "Bonfire",
-      "baseDropChance": 1,
-      "isUnlockedByDefault": true,
-      "tags": ["Bonfire"]
-    },
-    {
       "name": "PotteryA",
       "baseDropChance": 0.5,
       "tags": [

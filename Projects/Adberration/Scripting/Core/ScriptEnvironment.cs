@@ -98,7 +98,7 @@ namespace Adberration.Scripting
                 CodingContext.Declaration => scriptType == ScriptType.Declaration,
 
                 // Instantiation
-                CodingContext.Instantiation => scriptType is ScriptType.Cloning or ScriptType.Room or ScriptType.Thing,
+                CodingContext.Cloning => scriptType is ScriptType.Cloning or ScriptType.Room or ScriptType.Thing,
 
                 // Initialization
                 CodingContext.Initialization => scriptType == ScriptType.Initialization,

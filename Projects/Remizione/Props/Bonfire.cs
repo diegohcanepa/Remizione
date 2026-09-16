@@ -7,7 +7,7 @@ namespace Remizione
     /// <summary>
     /// Bonfire
     /// </summary>
-    public class Bonfire : Prop
+    public class Bonfire : Prop, ISafeZone
     {
         private readonly AnimatedSprite flame;
         private readonly FloatTween globalOpacityTween = new();
@@ -92,6 +92,22 @@ namespace Remizione
 
         #endregion
 
+        // Activate
+        [ScriptMethod]
+        public void Activate()
+        {
+            Session.Environment.GlobalLight.Unlit();
+            globalOpacityTween.Start(TweenStyle.CubicIn, 1, 0, 2000, Session.CleanUpRuntimeEntities);
+        }
+
+        // Deactivate
+        [ScriptMethod]
+        public void Deactivate()
+        {
+            Session.Environment.GlobalLight.Lit();
+            globalOpacityTween.Start(TweenStyle.CubicIn, 0, 1, 2000);
+        }
+
         // IsLit
         [ScriptProperty]
         public bool IsLit
@@ -114,20 +130,14 @@ namespace Remizione
             }
         }
 
-        // Activate
-        [ScriptMethod]
-        public void Activate()
-        {
-            Session.Environment.GlobalLight.Unlit();
-            globalOpacityTween.Start(TweenStyle.CubicIn, 1, 0, 2000);
-        }
+        #region ISafeZone interface
 
-        // Deactivate
-        [ScriptMethod]
-        public void Deactivate()
-        {
-            Session.Environment.GlobalLight.Lit();
-            globalOpacityTween.Start(TweenStyle.CubicIn, 0, 1, 2000);
-        }
+        // Center
+        Vector2 ISafeZone.Center => BoundingBox.Center;
+
+        // Radius
+        float ISafeZone.Radius => 30;
+
+        #endregion
     }
 }
