@@ -67,7 +67,7 @@ namespace Remizione
         private List<T> GetWalkAreaCandidates<T>(List<T> list) where T : ThingDefinition
         {
             var result = new List<T>();
-            
+
             for (int i = 0; i < list.Count; i++)
             {
                 var def = list[i];

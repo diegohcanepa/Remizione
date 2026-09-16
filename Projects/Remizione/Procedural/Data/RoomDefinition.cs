@@ -76,7 +76,7 @@ namespace Remizione
         public List<Placeholder> GetPlaceholders(PlaceholderContentType contentType)
         {
             var result = new List<Placeholder>();
-            
+
             for (int i = 0; i < placeholders.Count; i++)
             {
                 if (placeholders[i].ContentType == PlaceholderContentType.Prop)

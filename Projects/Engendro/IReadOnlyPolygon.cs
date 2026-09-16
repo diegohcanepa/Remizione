@@ -18,13 +18,13 @@ namespace Engendro
         bool ContainsVertex(RectangleF rect);
         bool ContainsVertex(IReadOnlyPolygon polygon);
         bool ContainsVertex(IList<Vector2> vertices);
-        bool GetClosestIntersection(Vector2 start, Vector2 end, out Vector2 intersectionPoint);
+        bool GetClosestIntersection(Vector2 from, Vector2 to, out Vector2 intersectionPoint);
         Vector2 GetClosestPointOnEdge(Vector2 point);
         Vector2[] GetVertices();
         Vector2[] GetVertices(Vector2 offset);
         void GetVertices(Span<Vector2> destination, Vector2 offset);
         bool InLineOfSight(Vector2 origin, Vector2 destination);
-        bool Intersects(Vector2 start, Vector2 end);
+        bool Intersects(Vector2 from, Vector2 to);
         bool IsVertexConcave(int vertex);
         PolygonOrientation Orientation { get; }
         Vector2 RandomPoint(Random rng);

@@ -45,6 +45,8 @@ namespace Remizione.InteractionCommands
 
             if (target.Verb == Verb.PickUp && !data.Session.InventoryEnabled)
             {
+                MouseCursor.CustomImage = null;
+                player.Session.InteractionContext.HeldItem = null;
                 data.Session.AwaitRoutine(RoutineNames.NoSack);
                 return;
             }

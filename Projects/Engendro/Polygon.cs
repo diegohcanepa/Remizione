@@ -334,9 +334,9 @@ namespace Engendro
         }
 
         // GetClosestIntersection (Raycast to closest point from start)
-        public bool GetClosestIntersection(Vector2 start, Vector2 end, out Vector2 intersectionPoint)
+        public bool GetClosestIntersection(Vector2 from, Vector2 to, out Vector2 intersectionPoint)
         {
-            intersectionPoint = end;
+            intersectionPoint = to;
             var hasImpact = false;
             var closestT = float.MaxValue;
 
@@ -345,7 +345,7 @@ namespace Engendro
                 var v1 = vertices[i];
                 var v2 = vertices[(i + 1) % vertices.Count];
 
-                if (Geometry.GetLineSegmentIntersection(start, end, v1, v2, out Vector2 impactPoint, out float t))
+                if (Geometry.GetLineSegmentIntersection(from, to, v1, v2, out Vector2 impactPoint, out float t))
                 {
                     // Nos quedamos con la intersección que tenga el 't' más chico 
                     // (la más cercana al punto de origen 'start')
@@ -476,7 +476,7 @@ namespace Engendro
         }
 
         // Intersects
-        public bool Intersects(Vector2 start, Vector2 end)
+        public bool Intersects(Vector2 from, Vector2 to)
         {
             const float epsilon = .5f;
 
@@ -485,10 +485,10 @@ namespace Engendro
                 var v1 = vertices[i];
                 var v2 = vertices[(i + 1) % vertices.Count];
 
-                if (Geometry.LineSegmentsCross(start, end, v1, v2))
+                if (Geometry.LineSegmentsCross(from, to, v1, v2))
                 {
-                    if (Geometry.DistanceToSegment(start, v1, v2) > epsilon &&
-                        Geometry.DistanceToSegment(end, v1, v2) > epsilon)
+                    if (Geometry.DistanceToSegment(from, v1, v2) > epsilon &&
+                        Geometry.DistanceToSegment(to, v1, v2) > epsilon)
                     {
                         return true;
                     }

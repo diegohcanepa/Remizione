@@ -513,7 +513,7 @@ namespace Remizione
 
         // DustParticleKind
         [ScriptProperty]
-        public DustParticleKind DustParticleKind { get; set; } = DustParticleKind.Ash;
+        public DustParticleKind DustParticleKind { get; set; }
 
         // FollowPlayer
         public bool FollowPlayer { get; set; } = true;

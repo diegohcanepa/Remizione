@@ -14,14 +14,18 @@ namespace Remizione
     /// </summary>
     public sealed class EchoScene : Scene
     {
+        #region Private fields
+
+        private bool allowSkip;
         private readonly ContentManager content;
-        private bool fade;
         private readonly Sprite background = new(Atlases.UI.EchoBackground) { PivotOrigin = RectanglePoint.LeftBottom, Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom) };
         private readonly FloatTween opacityTween = new();
         private readonly GameSession session;
         private SoundEffect? soundEffect;
         private SoundEffectInstance? soundEffectInstance;
         private readonly TextSprite textSprite;
+
+        #endregion
 
         #region Constructor
 
@@ -40,13 +44,27 @@ namespace Remizione
                 PauseOnPunctuationMarks = false,
                 PivotOrigin = RectanglePoint.Top,
                 Position = background.BoundingBox.GetPoint(RectanglePoint.Top, 0, 20),
-                Scale = ScaleInfo.Text.VeryLarge
+                Scale = ScaleInfo.Text.ExtraLarge
             };
         }
 
         #endregion
 
         #region Private members
+
+        // DisposeSound
+        private void DisposeSound()
+        {
+            if (soundEffectInstance != null)
+            {
+                soundEffectInstance.Stop();
+                soundEffectInstance.Dispose();
+                soundEffectInstance = null;
+            }
+
+            soundEffect?.Dispose();
+            soundEffect = null;
+        }
 
         // HandleMouseInput
         private bool HandleMouseInput()
@@ -63,16 +81,7 @@ namespace Remizione
                 }
                 else
                 {
-                    if (soundEffectInstance != null)
-                    {
-                        soundEffectInstance.Stop();
-                        soundEffectInstance.Dispose();
-                        soundEffectInstance = null;
-                    }
-
-                    soundEffect?.Dispose();
-                    soundEffect = null;
-
+                    DisposeSound();
                     CanClose = true;
 
                     if (session.AwaitingScript?.NextStatement is not EchoCommand)
@@ -85,16 +94,27 @@ namespace Remizione
             return false;
         }
 
+        // LoadVoiceSoundEffect
+        private SoundEffect? LoadVoiceSoundEffect(string soundName, string languageTag)
+        {
+            if (string.IsNullOrWhiteSpace(soundName) || string.IsNullOrWhiteSpace(languageTag))
+                return null;
+
+            var filePath = Sound.EncodeAssetName(AudioManager.VoiceCategory, languageTag, soundName);
+
+            try
+            {
+                return content.Load<SoundEffect>(filePath);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         #endregion
 
         #region Protected members
-
-        // OnActivate
-        protected override void OnActivate()
-        {
-            base.OnActivate();
-            MouseCursor.Tooltip = null;
-        }
 
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
@@ -111,17 +131,10 @@ namespace Remizione
         // OnHandleInput
         protected override HandleInputResult OnHandleInput()
         {
-            if (HandleMouseInput())
+            if (allowSkip && HandleMouseInput())
                 return HandleInputResult.Handled;
 
             return base.OnHandleInput();
-        }
-
-        // OnLoadContent
-        protected override void OnLoadContent()
-        {
-            MouseCursor.Icon = MouseCursorIcon.Talk;
-            fade = true;
         }
 
         // OnUpdate
@@ -129,6 +142,13 @@ namespace Remizione
         {
             textSprite.Update(gameTime);
             background.Opacity = textSprite.Opacity;
+
+            if (!CanClose && !allowSkip && soundEffectInstance?.State == SoundState.Stopped)
+            {
+                DisposeSound();
+                opacityTween.Start(TweenStyle.CubicIn, 1, 0, 500, () => CanClose = true);
+                textSprite.Tweens.OpacityTween = opacityTween;
+            }
         }
 
         #endregion
@@ -139,28 +159,45 @@ namespace Remizione
         // Show
         public void Show(string text, string? soundName)
         {
+            this.textSprite.Text = text;
+            this.textSprite.Color = !string.IsNullOrWhiteSpace(soundName) ? ColorPalette.Text.Yellow * .8f : ColorPalette.Text.TerraLight * .8f;
+
+            DisposeSound();
+
+            MouseCursor.Tooltip = null;
+
             CanClose = false;
-            textSprite.Text = text;
+
             //textSprite.StartTyping();
+
+            SoundEffect? soundEffect = null;
+            if (!string.IsNullOrWhiteSpace(soundName))
+            {
+                if (TextRepository.LanguagePackage?.LanguageTag is string languageTag)
+                    soundEffect = LoadVoiceSoundEffect(soundName, languageTag);
+
+                soundEffect ??= LoadVoiceSoundEffect(soundName, "en-US");
+            }
 
             if (!string.IsNullOrWhiteSpace(soundName))
             {
-                var filePath = Sound.EncodeAssetName(AudioManager.VoiceCategory, soundName);
-                content.Load<SoundEffect>(filePath);
-                soundEffect = content.Load<SoundEffect>(filePath);
-                soundEffectInstance = soundEffect.CreateInstance();
-                soundEffectInstance.Volume = AudioManager.VoiceCategory.Volume.Effective;
-                soundEffectInstance.Pitch = .1f;
-                soundEffectInstance.Play();
+                if (soundEffect != null)
+                {
+                    soundEffectInstance = soundEffect.CreateInstance();
+                    soundEffectInstance.Volume = AudioManager.VoiceCategory.Volume.Effective;
+                    soundEffectInstance.Pitch = .1f;
+                    soundEffectInstance.Play();
+                }
             }
 
-            if (fade)
-            {
-                background.Opacity = 0;
-                opacityTween.Start(TweenStyle.CubicIn, 0, 1, 500);
-                textSprite.Tweens.OpacityTween = opacityTween;
-                fade = false;
-            }
+            background.Opacity = 0;
+            opacityTween.Start(TweenStyle.CubicIn, 0, 1, 500);
+            textSprite.Tweens.OpacityTween = opacityTween;
+
+            MouseCursor.CustomImage = null;
+            MouseCursor.Icon = this.allowSkip ? MouseCursorIcon.Talk : MouseCursorIcon.Wait;
+
+            this.allowSkip = soundEffect == null;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using System.Xml;
+﻿using System.Xml;
 
 namespace TextRepositoryEditor
 {
@@ -13,7 +12,7 @@ namespace TextRepositoryEditor
         #region Private members
 
         // PublishCulture
-        private static void PublishCulture(ProjectNode projectNode, CultureInfo culture)
+        private static void PublishCulture(ProjectNode projectNode, LanguagePackageNode languagePackage)
         {
             var textNodes = from text in projectNode.GetChildNodesRecursively().OfType<TextNode>()
                             orderby text.GetPath()
@@ -25,7 +24,7 @@ namespace TextRepositoryEditor
             {
                 w.WriteStartDocument();
                 w.WriteStartElement("Strings");
-                //w.WriteAttributeString("Language", culture.Name);
+                //w.WriteAttributeString("Language", languagePackage.Culture.Name);
                 //w.WriteAttributeString("PublishVersion", XmlConvert.ToString(projectNode.PublishVersion));
 
                 foreach (TextNode textNode in textNodes)
@@ -37,7 +36,7 @@ namespace TextRepositoryEditor
                     nodeName = nodeName.Replace("<", string.Empty);
                     nodeName = nodeName.Replace(">", string.Empty);
 
-                    var value = textNode.IsLiteral ? textNode.LiteralText : textNode.GetText(culture);
+                    var value = textNode.IsLiteral ? textNode.LiteralText : textNode.GetText(languagePackage.Culture);
                     //if (string.IsNullOrWhiteSpace(value))
                     //  continue;
 
@@ -63,7 +62,7 @@ namespace TextRepositoryEditor
             }
 
             stm.Position = 0;
-            var fileName = Path.Combine(projectNode.OutputFolder, culture.Name.ToLower());
+            var fileName = Path.Combine(projectNode.OutputFolder, languagePackage.Culture.Name.ToLower());
             fileName = Path.ChangeExtension(fileName, "xml");
             using (var fs = new FileStream(fileName, FileMode.Create))
             {
@@ -110,7 +109,7 @@ namespace TextRepositoryEditor
 
             foreach (var languagePackage in projectNode.GetLanguagePackageNodes())
             {
-                PublishCulture(projectNode, languagePackage.Culture);
+                PublishCulture(projectNode, languagePackage);
             }
 
             return true;

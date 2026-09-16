@@ -23,8 +23,6 @@ namespace Remizione
     {
         #region Private fields
 
-        private const string AngerMusicTag = "Anger";
-        private int combatMoodTimer = -1;
         private readonly ScriptConsole? console;
         private readonly EchoScene echoScene;
         private readonly InventoryScene inventoryScene;
@@ -196,6 +194,8 @@ namespace Remizione
         // OnAwait
         protected override void OnAwait()
         {
+            MouseCursor.Icon = MouseCursorIcon.Wait;
+
             if (inventoryScene.IsCurrentScene)
                 Game.SceneManager.Pop();
         }
@@ -361,6 +361,12 @@ namespace Remizione
         // OnStarted
         protected override void OnStarted()
         {
+            foreach (var definition in Definition.All)
+            {
+                if (definition.IsUnlockedByDefault)
+                    Unlock(definition);
+            }
+
             Dictionary<string, GameThing> dict = [];
 
             // Collect all things that has a data-driven definition
@@ -393,22 +399,6 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
-
-            if (combatMoodTimer >= 0)
-            {
-                combatMoodTimer -= gameTime.ElapsedGameTime.Milliseconds;
-                if (combatMoodTimer < 0)
-                {
-                    if (Room != null)
-                    {
-                        var tag = Room.MusicTag;
-                        if (string.IsNullOrWhiteSpace(tag))
-                            tag = "Idle";
-
-                        AudioManager.Music.PlayTag(tag, 10000);
-                    }
-                }
-            }
 
             savingIcon.Update(gameTime);
 
@@ -497,15 +487,6 @@ namespace Remizione
         // ActiveNPC
         [ScriptProperty]
         public Actor? ActiveNPC { get; private set; }
-
-        // BeginCombatMood
-        public void BeginCombatMood()
-        {
-            if (AudioManager.Music.CurrentTag != AngerMusicTag)
-                AudioManager.Music.PlayTag(AngerMusicTag);
-
-            combatMoodTimer = 10000;
-        }
 
         // DangerousTarget
         [ScriptProperty]
@@ -615,7 +596,10 @@ namespace Remizione
         }
 
         // IsUnlocked
-        public bool IsUnlocked(Definition definition) => unlockedDefinitions.Contains(definition.Name);
+        public bool IsUnlocked(Definition definition)
+        {
+            return unlockedDefinitions.Contains(definition.Name);
+        }
 
         // KillEnemies
         [ScriptMethod]

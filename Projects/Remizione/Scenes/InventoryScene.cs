@@ -83,7 +83,7 @@ namespace Remizione
             // Item description
             itemDescription = new(Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Terra,
+                Color = ColorPalette.Text.TerraDark,
                 MaximumWidth = 200,
                 Multiline = false,
                 PivotOrigin = RectanglePoint.Bottom,

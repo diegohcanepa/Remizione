@@ -71,9 +71,7 @@
         {
             items[itemA.HeapIndex] = itemB;
             items[itemB.HeapIndex] = itemA;
-            var itemAIndex = itemA.HeapIndex;
-            itemA.HeapIndex = itemB.HeapIndex;
-            itemB.HeapIndex = itemAIndex;
+            (itemB.HeapIndex, itemA.HeapIndex) = (itemA.HeapIndex, itemB.HeapIndex);
         }
 
         #endregion

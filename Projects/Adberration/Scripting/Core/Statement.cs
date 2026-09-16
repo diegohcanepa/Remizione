@@ -45,6 +45,7 @@ namespace Adberration.Scripting
         protected static readonly string LocalizationIdArg = "#lid";
         protected static readonly string LoopedArg = "#looped";
         protected static readonly string NoAwaitArg = "#no-await";
+        protected static readonly string NoInputArg = "#no-input";
         protected static readonly string OffArg = "#off";
         protected static readonly string OnceArg = "#once";
         protected static readonly string OnExitArg = "#on-exit";

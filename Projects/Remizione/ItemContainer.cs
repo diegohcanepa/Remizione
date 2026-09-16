@@ -29,6 +29,9 @@ namespace Remizione
         {
             Clear();
 
+            if (string.IsNullOrWhiteSpace(content))
+                return string.Empty;
+
             var values = content.Split(";");
 
             foreach (var value in values)

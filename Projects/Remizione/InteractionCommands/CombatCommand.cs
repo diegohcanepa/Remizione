@@ -32,7 +32,7 @@
         public override void Execute(InteractionData data, Actor player, GameThing target)
         {
             if (resolvedIntent != null)
-               player.ExecuteAction(resolvedIntent, target);
+                player.ExecuteAction(resolvedIntent, target);
         }
     }
 }

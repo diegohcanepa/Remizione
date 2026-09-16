@@ -58,11 +58,8 @@ namespace Remizione.UI
                 soundEffectInstance = null;
             }
 
-            if (soundEffect != null)
-            {
-                soundEffect.Dispose();
-                soundEffect = null;
-            }
+            soundEffect?.Dispose();
+            soundEffect = null;
         }
 
         // Next

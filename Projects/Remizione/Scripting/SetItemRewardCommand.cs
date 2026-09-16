@@ -17,9 +17,6 @@ namespace Remizione.Scripting
         // OnExecute
         protected override void OnExecute()
         {
-            if (Session is not GameSession session)
-                return;
-
             if (AssertEntity<GameThing>(0) is not { } target)
                 return;
 

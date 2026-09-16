@@ -23,9 +23,6 @@ namespace Remizione
             // BaseDropChance
             BaseDropChance = MathF.Max(0, element.GetFloat("baseDropChance", .5f));
 
-            // Difficulty
-            Difficulty = element.GetEnum("difficulty", Difficulty.Easy);
-
             // Faction
             Faction = element.GetEnum("faction", defaultFaction);
 
@@ -83,9 +80,6 @@ namespace Remizione
 
         // BaseDropChance
         public Ratio BaseDropChance { get; }
-
-        // Difficulty
-        public Difficulty Difficulty { get; }
 
         // Effects
         public ReadOnlyCollection<EffectDescriptor> Effects { get; }

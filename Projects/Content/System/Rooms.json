@@ -2,7 +2,13 @@
   "$schema": "./Room.schema.json",
   "data": [
     {
-      "name": "Threshold"
+      "name": "Threshold",
+      "placeholders": [
+        {
+          "position": "255,130",
+          "allowTags": ["Bonfire"]
+        }
+      ]
     }
   ]
 }

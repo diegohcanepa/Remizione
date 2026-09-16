@@ -220,11 +220,18 @@ namespace Engendro.Audio
         // EncodeAssetName
         public static string EncodeAssetName(SoundCategory category, string name)
         {
+            return EncodeAssetName(category, string.Empty, name);
+        }
+
+        // EncodeAssetName
+        public static string EncodeAssetName(SoundCategory category, string subfolder, string name)
+        {
             if (!string.IsNullOrWhiteSpace(category.ContentPath))
             {
                 List<string> paths =
                 [
-                   category.ContentPath
+                   category.ContentPath,
+                   subfolder
                 ];
 
                 paths.Add(name);

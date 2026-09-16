@@ -1,7 +1,7 @@
 ﻿namespace TextRepositoryEditor
 {
     // AttributeName
-    public enum AttributeName { None, Project, LanguagePackageFolder, LanguagePackage, OutputFolder, Folder, IsExpanded, Text, LocalizableText, SourceCode, EncryptionKey, LCID, Comments, Context, AllowValidation, IsLiteral, LiteralText, Emitter, ValidationScope, PublishVersion, AllowEmpty, ImportResult, LastImportedFile, LastImported }
+    public enum AttributeName { None, Project, LanguagePackageFolder, LanguagePackage, OutputFolder, Folder, IsExpanded, Text, LocalizableText, SourceCode, EncryptionKey, LCID, Comments, Context, AllowValidation, IsLiteral, LiteralText, Emitter, ValidationScope, PublishVersion, AllowEmpty, ImportResult, LastImportedFile, LastImported, VoiceSupport }
 
     // EditingAction
     public enum EditingAction { None, Copy, Cut }

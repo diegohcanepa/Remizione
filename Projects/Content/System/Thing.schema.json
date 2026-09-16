@@ -14,9 +14,6 @@
           "minimum": 0.0,
           "maximum": 1.0
         },
-        "difficulty": {
-          "$ref": "enums.schema.json#/$defs/Difficulty"
-        },
         "faction": {
           "$ref": "enums.schema.json#/$defs/Faction"
         },

@@ -1,7 +1,6 @@
 ﻿using Adberration.Scripting;
 using Engendro;
 using Microsoft.Xna.Framework;
-using System.Linq;
 
 namespace Remizione
 {
@@ -80,7 +79,7 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
-            
+
             if (IsLit)
                 flame.Update(gameTime);
 

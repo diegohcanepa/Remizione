@@ -1,7 +1,4 @@
-﻿using Engendro;
-using Microsoft.Xna.Framework;
-
-namespace Remizione
+﻿namespace Remizione
 {
     /// <summary>
     /// Pickable
@@ -18,37 +15,5 @@ namespace Remizione
             IgnoreWalkArea = false;
             Verb = Verb.PickUp;
         }
-
-        #region Protected members
-
-        // CanCheckCollisions
-        protected override bool CanCheckCollisions()
-        {
-            return Tweens.IsTweeningPosition && base.CanCheckCollisions();
-        }
-
-        // OnCollisioning
-        protected override void OnCollisioning(GameThing thing, out bool handled)
-        {
-            if (thing is not Pickable)
-                Tweens.Reset();
-
-            handled = true;
-        }
-
-        // OnLoad
-        protected override void OnLoad()
-        {
-            base.OnLoad();
-
-            if (Room?.WalkArea?.RandomWalkablePoint(Session.Random, Position, 3, 15) is Vector2 destination)
-            {
-                var distance = Vector2.Distance(Position, destination);
-                var tweenDuration = (int)float.Clamp(distance * 100, 300, 1000);
-                Tweens.PositionTween = Vector2Tween.Create(TweenStyle.CubicOut, Position, destination, tweenDuration);
-            }
-        }
-
-        #endregion
     }
 }

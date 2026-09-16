@@ -11,6 +11,7 @@ namespace Remizione
     /// </summary>
     public abstract class Definition : INamedObject
     {
+        private static readonly List<Definition> all = [];
         private readonly List<EffectDescriptor> effectDescriptors = [];
         private static readonly HashSet<string> usedNames = new(StringComparer.Ordinal);
 
@@ -38,6 +39,9 @@ namespace Remizione
                     usedNames.Add(Name);
             }
 
+            // IsUnlockedByDefault
+            this.IsUnlockedByDefault = element.GetBool("isUnlockedByDefault", false);
+
             // SpawnWeight
             SpawnWeight = element.GetFloat("spawnWeight", 1);
 
@@ -51,6 +55,8 @@ namespace Remizione
             }
 
             EffectDescriptors = effectDescriptors.AsReadOnly();
+
+            all.Add(this);
         }
 
         #endregion
@@ -71,11 +77,20 @@ namespace Remizione
 
         #endregion
 
+        // All
+        public static ReadOnlyCollection<Definition> All { get; } = all.AsReadOnly();
+
         // EffectDescriptors
         public ReadOnlyCollection<EffectDescriptor> EffectDescriptors { get; }
 
         // IsDefined
-        public static bool IsDefined(string name) => usedNames.Contains(name);
+        public static bool IsDefined(string name)
+        {
+            return usedNames.Contains(name);
+        }
+
+        // IsUnlockedByDefault
+        public bool IsUnlockedByDefault { get; }
 
         // Name
         public string Name { get; }

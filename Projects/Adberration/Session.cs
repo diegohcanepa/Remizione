@@ -886,7 +886,10 @@ namespace Adberration
                 }
 
                 if (!ScriptProcessor.IsExecutingScript(script))
+                {
+                    OnAwait();
                     ScriptProcessor.StartScript(script);
+                }
             }
 
             if (IsAwaiting)

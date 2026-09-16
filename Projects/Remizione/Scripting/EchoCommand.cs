@@ -3,7 +3,7 @@
 namespace Remizione.Scripting
 {
     // EchoCommand
-    // Arguments: {"Text"} [#lid:Integer] [#literal]
+    // Arguments: {"Text"} [#lid:Integer] [#literal] [#narrator]
     [ForceAwait]
     internal sealed class EchoCommand : LocalizableCommand
     {

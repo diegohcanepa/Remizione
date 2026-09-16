@@ -8,6 +8,9 @@
       "type": "array",
       "items": { "$ref": "./EffectDescriptor.schema.json" }
     },
+    "isUnlockedByDefault": {
+      "type": "boolean"
+    },   
     "spawnWeight": {
       "type": "number",
       "default": 1.0,

@@ -175,6 +175,7 @@
     "Tag": {
       "type": "string",
       "enum": [
+        "Bonfire",
         "Ceiling",
         "Floor",
         "GateLever",

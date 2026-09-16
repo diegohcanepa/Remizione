@@ -92,8 +92,7 @@ namespace Remizione
 
                     // EnergyLoss
                     case EffectType.EnergyLoss:
-                        if (targetActor != null)
-                            targetActor.Energy -= amount;
+                        targetActor?.Energy -= amount;
                         break;
 
                     // EnergyRestore
@@ -130,8 +129,7 @@ namespace Remizione
 
                     // MaxHPGain
                     case EffectType.MaxHPGain:
-                        if (realTarget != null)
-                            realTarget.MaxHP += amount;
+                        realTarget?.MaxHP += amount;
                         break;
 
                     // MaxHPLoss
