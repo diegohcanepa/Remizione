@@ -690,6 +690,10 @@ namespace Remizione
                 OnDrawShadow(gameTime);
         }
 
+        // Ethereal
+        [ScriptProperty]
+        public bool Ethereal { get; set; }
+
         // FaceTo
         public void FaceTo(GameThing target)
         {
@@ -1216,6 +1220,9 @@ namespace Remizione
         {
             // Si la cantidad es 0 o negativa, no hay interacción de daño.
             if (!CanTakeDamage())
+                return 0;
+
+            if (attacker.Ethereal)
                 return 0;
 
             // ---------------------------------------------------------

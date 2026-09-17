@@ -1,4 +1,5 @@
-﻿using Adberration.Scripting;
+﻿using Adberration;
+using Adberration.Scripting;
 using Engendro;
 using Microsoft.Xna.Framework;
 
@@ -12,6 +13,8 @@ namespace Remizione
         private readonly AnimatedSprite flame;
         private readonly FloatTween globalOpacityTween = new();
         private readonly Sprite patch;
+
+        #region Constructor
 
         // Constructor
         public Bonfire(GameSession session, string name)
@@ -49,6 +52,21 @@ namespace Remizione
 
             AttachedLightPosition = new(15, 4);
         }
+
+        #endregion
+
+        #region ISafeZone interface
+
+        // Center
+        Vector2 ISafeZone.Center => BoundingBox.Center;
+
+        // IsEnabled
+        bool ISafeZone.IsEnabled => IsLit;
+
+        // Radius
+        float ISafeZone.Radius => 30;
+
+        #endregion
 
         #region Protected members
 
@@ -118,26 +136,21 @@ namespace Remizione
                 if (value != field)
                 {
                     field = value;
+                    
                     if (field)
                     {
-                        flame.Tweens.OpacityTween = FloatTween.Create(TweenStyle.CubicIn, 00, flame.Opacity, 500);
-                        flame.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicIn, .2f, flame.Scale.X, 1000);
                         flame.Player.Play("Default", true);
                         PlaySound(SoundNames.Bonfire, true);
-                        AttachedLight?.Lit();
+                        AttachedLight?.Lit(Session.State == GameSessionState.Loading);
+
+                        if (Session.State != GameSessionState.Loading)
+                        {
+                            flame.Tweens.OpacityTween = FloatTween.Create(TweenStyle.CubicIn, 0, flame.Opacity, 500);
+                            flame.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicIn, .2f, flame.Scale.X, 1000);
+                        }
                     }
                 }
             }
         }
-
-        #region ISafeZone interface
-
-        // Center
-        Vector2 ISafeZone.Center => BoundingBox.Center;
-
-        // Radius
-        float ISafeZone.Radius => 30;
-
-        #endregion
     }
 }

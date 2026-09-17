@@ -4,22 +4,23 @@ using Microsoft.Xna.Framework;
 namespace Remizione
 {
     /// <summary>
-    /// LootOrb
+    /// Fleshiness
     /// </summary>
-    public sealed class LootOrb : Pickable
+    public sealed class Fleshiness : Prop
     {
         private readonly FloatTween fadeTween = new();
 
         // Constructor
-        public LootOrb(GameSession session, string name)
+        public Fleshiness(GameSession session, string name)
             : base(session, name)
         {
             Atlas = Atlases.Environment;
             DepthOffset = -2;
+            DisplayNameKey = "Prop.Fleshiness";
             Hotspot = new Polygon("0,0;7,0;7,7;0,7");
             RenderLayer = RenderLayer.Default;
 
-            this.AttachedLight = new("Light", LightKind.LootOrb)
+            this.AttachedLight = new("Light", LightKind.Fleshiness)
             {
                 PivotOrigin = RectanglePoint.Center,
             };
@@ -30,13 +31,6 @@ namespace Remizione
         }
 
         #region Protected members
-
-        // OnItemRewardChanged
-        protected override void OnItemRewardChanged()
-        {
-            base.OnItemRewardChanged();
-            DisplayNameKey = ItemReward != null ? $"Item.{ItemReward.Name}.Name" : string.Empty;
-        }
 
         // OnLoad
         protected override void OnLoad()

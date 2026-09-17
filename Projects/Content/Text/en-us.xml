@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Strings Language="en-US" PublishVersion="1347" VoiceSupport="true">
+<Strings>
   <String Key="Actor.EnviousEye">Eye</String>
+  <String Key="Actor.Hopeless">Hopeless</String>
   <String Key="Actor.Penitent">Penitent</String>
   <String Key="Actor.Rat">Rat</String>
   <String Key="DamageType.Physical">Physical</String>
@@ -219,6 +220,7 @@ Bla bla bla</String>
   <String Key="Prop.CrucifiedMan">Crucified man</String>
   <String Key="Prop.Door">Door</String>
   <String Key="Prop.EmptySack">Empty sack</String>
+  <String Key="Prop.Fleshiness">Fleshiness</String>
   <String Key="Prop.Lever">Lever</String>
   <String Key="Prop.Pottery">Clay pot</String>
   <String Key="Prop.Sack">Sack</String>

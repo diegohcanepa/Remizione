@@ -1,5 +1,4 @@
 ﻿using Adberration;
-using Adberration.Scripting;
 using Engendro;
 using Engendro.Collections;
 using Microsoft.Xna.Framework;
@@ -33,6 +32,7 @@ namespace Remizione
             this.LightingSystem = true;
             this.UnloadMode = UnloadMode.Manual;
             this.DustParticleKind = DustParticleKind.Ash;
+            this.Zoom = 1.1f;
         }
 
         #endregion
@@ -334,12 +334,6 @@ namespace Remizione
 
         #endregion
 
-        // AddSafeZone
-        public void AddSafeZone(Vector2 center, float radius)
-        {
-            safeZones.Add((center, radius));
-        }
-
         // Definition
         public RoomDefinition Definition { get; }
 
@@ -347,10 +341,9 @@ namespace Remizione
         public void Populate()
         {
             safeZones.Clear();
-
             foreach (var safeZone in Children.OfType<ISafeZone>())
             {
-                AddSafeZone(safeZone.Center, safeZone.Radius);
+                safeZones.Add((safeZone.Center, safeZone.Radius));
             }
 
             spawnCounter.Clear();

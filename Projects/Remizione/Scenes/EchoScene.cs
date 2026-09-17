@@ -23,6 +23,7 @@ namespace Remizione
         private readonly GameSession session;
         private SoundEffect? soundEffect;
         private SoundEffectInstance? soundEffectInstance;
+        private readonly TextSprite subjectSprite;
         private readonly TextSprite textSprite;
 
         #endregion
@@ -41,10 +42,16 @@ namespace Remizione
             {
                 Color = ColorPalette.Text.Terra,
                 MaximumWidth = (int)(Screen.NativeWidth * .7f),
-                PauseOnPunctuationMarks = false,
                 PivotOrigin = RectanglePoint.Top,
                 Position = background.BoundingBox.GetPoint(RectanglePoint.Top, 0, 20),
                 Scale = ScaleInfo.Text.ExtraLarge
+            };
+
+            this.subjectSprite = new(Fonts.Common)
+            {
+                Color = ColorPalette.Text.MouseCursor,
+                PivotOrigin = RectanglePoint.LeftBottom,
+                Scale = ScaleInfo.Text.VeryLarge
             };
         }
 
@@ -124,6 +131,7 @@ namespace Remizione
             Game.SpriteBatch.End();
 
             Game.SpriteBatch.Begin(Game.Camera);
+            subjectSprite.Draw(gameTime);
             textSprite.Draw(gameTime);
             Game.SpriteBatch.End();
         }
@@ -146,7 +154,7 @@ namespace Remizione
             if (!CanClose && !allowSkip && soundEffectInstance?.State == SoundState.Stopped)
             {
                 DisposeSound();
-                opacityTween.Start(TweenStyle.CubicIn, 1, 0, 500, () => CanClose = true);
+                opacityTween.Start(TweenStyle.CubicIn, 1, 0, 500, () => Game.SceneManager.Pop());
                 textSprite.Tweens.OpacityTween = opacityTween;
             }
         }
@@ -159,8 +167,23 @@ namespace Remizione
         // Show
         public void Show(string text, string? soundName)
         {
-            this.textSprite.Text = text;
-            this.textSprite.Color = !string.IsNullOrWhiteSpace(soundName) ? ColorPalette.Text.Yellow * .8f : ColorPalette.Text.TerraLight * .8f;
+            var index = text.IndexOf("|");
+            if (index > 0)
+                this.subjectSprite.Text = text.Substring(0, index);
+            else
+                this.subjectSprite.Clear();
+
+            this.textSprite.Text = index == -1 ? text : text.Substring(index + 1);
+
+            if (!string.IsNullOrWhiteSpace(soundName))
+                this.textSprite.Color = ColorPalette.Text.Yellow * .8f;
+            else if (index >= 0)
+                this.textSprite.Color = ColorPalette.Text.Orange * .8f;
+            else
+                this.textSprite.Color = ColorPalette.Text.TerraLight * .8f;
+
+            if (subjectSprite.Length > 0)
+                subjectSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.LeftTop);
 
             DisposeSound();
 

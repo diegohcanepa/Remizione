@@ -113,6 +113,7 @@ namespace Remizione
             AotTypeRegistry.Register(typeof(CreditsRoom));
             AotTypeRegistry.Register(typeof(Decoration));
             AotTypeRegistry.Register(typeof(EnviousEye));
+            AotTypeRegistry.Register(typeof(Fleshiness));
             AotTypeRegistry.Register(typeof(GameRoom));
             AotTypeRegistry.Register(typeof(GoldenKey));
             AotTypeRegistry.Register(typeof(LootOrb));
@@ -521,6 +522,14 @@ namespace Remizione
         public GameThing GetProceduralThing(string name)
         {
             return proceduralCatalog == null ? throw new InvalidOperationException() : proceduralCatalog[name];
+        }
+
+        // GlobalLightScale
+        [ScriptProperty]
+        public Vector2 GlobalLightScale
+        {
+            get => Environment.GlobalLight.Scale;
+            set => Environment.GlobalLight.Scale = value;
         }
 
         // GoldenKeys

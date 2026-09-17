@@ -30,6 +30,7 @@
     { "name": "Error", "pitchVariance": 0.5 },
     { "name": "FenceOpen" },
     { "name": "FleshImpact", "soundCount": 2 },
+    { "name": "Fleshiness" },
     { "name": "FootstepGrass", "soundCount": 2, "volume": 0.7, "maxInstances": 10, "pitchVariance": 0.5 },
     { "name": "FootstepWater", "soundCount": 6, "volume": 0.9 },
     { "name": "GateOpen" },

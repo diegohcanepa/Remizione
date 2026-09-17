@@ -146,7 +146,7 @@ namespace Remizione
         public bool IsFull => Count == Capacity;
 
         // MaximumCapacity
-        public const int MaximumCapacity = 30;
+        public const int MaximumCapacity = 12;
 
         // MinimumCapacity
         public const int MinimumCapacity = 3;

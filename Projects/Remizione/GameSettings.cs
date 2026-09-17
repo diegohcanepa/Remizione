@@ -18,7 +18,7 @@
         public const float DarknessMissChancePenalty = .2f;
 
         // DefaultInventoryCapacity
-        public const int DefaultInventoryCapacity = 8;
+        public const int DefaultInventoryCapacity = 5;
 
         // DefaultTransitionDuration
         public const int DefaultTransitionDuration = 500;

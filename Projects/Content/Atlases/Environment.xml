@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:3daf9537a064819760784a56b3ef1034:7ba3c3727a33d32e708a80b060b22b16:90dd61259f597836213851943cf8b193$ -->
+<!-- $TexturePacker:SmartUpdate:635f748b7d947424b98968dd41f65728:36edc64b003a2768eb74320b1856469d:90dd61259f597836213851943cf8b193$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -54,6 +54,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="DustParticle1.png" x="30" y="487" w="3" h="3"/>
     <sprite n="FireflyParticle1.png" x="30" y="492" w="3" h="3"/>
     <sprite n="FireflyParticle2.png" x="40" y="359" w="5" h="5"/>
+    <sprite n="Fleshiness.png" x="37" y="366" w="7" h="10"/>
     <sprite n="GlobalLight.png" x="270" y="2" w="237" h="129"/>
     <sprite n="GoldenTrunk.png" x="17" y="380" w="13" h="11"/>
     <sprite n="Gut1.png" x="17" y="450" w="6" h="4"/>

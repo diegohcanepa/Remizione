@@ -306,6 +306,13 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/FleshImpact2.wav;Audio/FX/FleshImpact2
 
+#begin Audio/FX/Fleshiness.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/Fleshiness.wav;Audio/FX/Fleshiness
+
 #begin Audio/FX/FootstepGrass1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -915,6 +922,20 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/Voice/en-US/Intro3.wav;Audio/Voice/en-US/Intro3
 
+#begin Audio/Voice/es-419/Fleshiness1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/Voice/es-419/Fleshiness1.wav;Audio/Voice/es-419/Fleshiness1
+
+#begin Audio/Voice/es-419/Fleshiness2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/Voice/es-419/Fleshiness2.wav;Audio/Voice/es-419/Fleshiness2
+
 #begin Audio/Voice/es-419/Intro1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -935,6 +956,20 @@
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
 /build:Audio/Voice/es-419/Intro3.wav;Audio/Voice/es-419/Intro3
+
+#begin Audio/Voice/es-419/Threshold_Intro1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/Voice/es-419/Threshold_Intro1.wav;Audio/Voice/es-419/Threshold_Intro1
+
+#begin Audio/Voice/es-419/Threshold_Intro2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/Voice/es-419/Threshold_Intro2.wav;Audio/Voice/es-419/Threshold_Intro2
 
 #begin Fonts/Common.bmp
 /importer:LocalizedFontTextureImporter

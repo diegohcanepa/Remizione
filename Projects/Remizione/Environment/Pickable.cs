@@ -10,7 +10,6 @@
             : base(session, name)
         {
             Atlas = Atlases.Props;
-            ApproachBehavior = ApproachBehavior.ClosestSide;
             DepthOffset = 20;
             IgnoreWalkArea = false;
             Verb = Verb.PickUp;

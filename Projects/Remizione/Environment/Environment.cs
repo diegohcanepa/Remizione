@@ -13,7 +13,7 @@ namespace Remizione
             // Global light
             this.GlobalLight = new("GlobalLight", LightKind.Global)
             {
-                //Color = ColorPalette.GlobalLight.Default,
+                Passes = 2,
                 PivotOrigin = RectanglePoint.Center,
                 Position = Screen.Center,
                 Scale = new(18, 10)
