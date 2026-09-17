@@ -84,7 +84,7 @@ namespace Remizione
         {
             return lightKind switch
             {
-                LightKind.Fleshiness => new(215, 29, 44),
+                LightKind.Fleshiness => new Color(255, 200, 200),
                 LightKind.LootOrb => new(240, 181, 65),
                 LightKind.SulfurBonfire => new(134, 146, 31),
                 LightKind.Outdoor => ColorPalette.OutdoorLight,
@@ -111,7 +111,7 @@ namespace Remizione
             {
                 case LightKind.Fleshiness:
                     lightSprite.Tweens.OpacityTween = CreateFlickerTween(LightKind);
-                    litTweenDuration = 1000;
+                    litTweenDuration = 2000;
                     unlitTweenDuration = 1000;
                     break;
 

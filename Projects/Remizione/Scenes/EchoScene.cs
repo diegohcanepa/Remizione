@@ -167,7 +167,7 @@ namespace Remizione
         // Show
         public void Show(string text, string? soundName)
         {
-            var index = text.IndexOf("|");
+            var index = text.IndexOf("|", System.StringComparison.Ordinal);
             if (index > 0)
                 this.subjectSprite.Text = text.Substring(0, index);
             else

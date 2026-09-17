@@ -425,6 +425,13 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/GutsSmall3.wav;Audio/FX/GutsSmall3
 
+#begin Audio/FX/HopelessVanish.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/HopelessVanish.wav;Audio/FX/HopelessVanish
+
 #begin Audio/FX/ImpactA.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -438,6 +445,20 @@
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/ImpactB.wav;Audio/FX/ImpactB
+
+#begin Audio/FX/InertShadowMove1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/InertShadowMove1.wav;Audio/FX/InertShadowMove1
+
+#begin Audio/FX/InertShadowMove2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/InertShadowMove2.wav;Audio/FX/InertShadowMove2
 
 #begin Audio/FX/Interact1.wav
 /importer:WavImporter

@@ -14,11 +14,11 @@ namespace Remizione
         public Rat(GameSession session, string name)
             : base(session, name)
         {
-            AnimationSettings.SupressAll();
             BodySize = BodySize.Small;
             FastMoveFactor = 3;
             scaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, Vector2.Zero, new(0, .05f), 200, -1);
             Scale = new(.5f);
+            SuppressMoveBounceEffect = true;
         }
 
         #region Protected members

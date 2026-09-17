@@ -199,6 +199,52 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Hopeless-assets/Stand01.png</key>
+            <key type="filename">Hopeless-assets/Vanish01.png</key>
+            <key type="filename">Hopeless-assets/Vanish02.png</key>
+            <key type="filename">Hopeless-assets/Vanish03.png</key>
+            <key type="filename">Hopeless-assets/Vanish04.png</key>
+            <key type="filename">Hopeless-assets/Vanish05.png</key>
+            <key type="filename">Hopeless-assets/Vanish06.png</key>
+            <key type="filename">Hopeless-assets/Vanish07.png</key>
+            <key type="filename">Hopeless-assets/Vanish08.png</key>
+            <key type="filename">Hopeless-assets/Vanish09.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,4,12,7</rect>
+                <key>scale9Paddings</key>
+                <rect>6,4,12,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">InertShadow-assets/Move01.png</key>
+            <key type="filename">InertShadow-assets/Move02.png</key>
+            <key type="filename">InertShadow-assets/Move03.png</key>
+            <key type="filename">InertShadow-assets/Move04.png</key>
+            <key type="filename">InertShadow-assets/Stand01.png</key>
+            <key type="filename">InertShadow-assets/Stand02.png</key>
+            <key type="filename">InertShadow-assets/Stand03.png</key>
+            <key type="filename">InertShadow-assets/Stand04.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,5,9,10</rect>
+                <key>scale9Paddings</key>
+                <rect>5,5,9,10</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Penitent-assets/Consume01.png</key>
             <key type="filename">Penitent-assets/Consume02.png</key>
             <key type="filename">Penitent-assets/Consume03.png</key>
@@ -336,6 +382,8 @@
                     <filename>Penitent-assets</filename>
                     <filename>EnviousEye-assets</filename>
                     <filename>Rat-assets</filename>
+                    <filename>InertShadow-assets</filename>
+                    <filename>Hopeless-assets</filename>
                 </array>
             </struct>
         </map>

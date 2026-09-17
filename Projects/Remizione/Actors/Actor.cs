@@ -21,13 +21,14 @@ namespace Remizione
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
         private Vector2? lastKnownLiftPosition;
-        private readonly FloatTween moveBalancingTween = new();
         private readonly FloatTween moveVerticalTween = new();
         private readonly List<Vector2> pendingPathNodes = [];
         private List<AtlasImage>? remainsPieces;
         private readonly FloatTween shakeTween = FloatTween.Create(TweenStyle.Linear, 0, .5f, 40, -1);
         private SpeechText? speechText;
         private readonly ColorTween tintTween = new();
+        private float moveAccelerationMultiplier = .75f;
+        private const float InitialSpeedMultiplier = 0.15f;
 
         #endregion
 
@@ -273,6 +274,9 @@ namespace Remizione
             if (ActiveThrowable != null)
                 result *= .7f;
 
+            // Se aplica la curva de aceleración al resultado final
+            result *= moveAccelerationMultiplier;
+
             return result;
         }
 
@@ -367,9 +371,6 @@ namespace Remizione
             if (moveVerticalTween.IsRunning)
                 Y -= moveVerticalTween.CurrentValue;
 
-            if (moveBalancingTween.IsRunning)
-                Rotation += moveBalancingTween.CurrentValue;
-
             var shake = !Session.IsAwaiting && RemainingTurns == 0 && IsHostile;
             if (shake)
                 X += shakeTween.CurrentValue;
@@ -395,9 +396,6 @@ namespace Remizione
 
             if (shake)
                 X -= shakeTween.CurrentValue;
-
-            if (moveBalancingTween.IsRunning)
-                Rotation -= moveBalancingTween.CurrentValue;
 
             footstepEffect?.Draw(gameTime);
         }
@@ -465,13 +463,16 @@ namespace Remizione
         {
             lastKnownLiftPosition = null;
 
+            if (StartMovingSound != null)
+                PlaySound(StartMovingSound);
+
             BodyMachine.ChangeState<BodyMoveState>();
 
-            if (AnimationSettings.MoveBounce)
-                moveVerticalTween.Start(TweenStyle.QuadraticInOut, 0, .8f, 200, -1);
+            // Reiniciamos el multiplicador de velocidad para aplicar la aceleración
+            moveAccelerationMultiplier = InitialSpeedMultiplier;
 
-            if (AnimationSettings.MoveSway)
-                moveBalancingTween.Start(TweenStyle.QuadraticInOut, 0, .04f, FastMove ? 100 : 200, -1);
+            if (!SuppressMoveBounceEffect)
+                moveVerticalTween.Start(TweenStyle.QuadraticInOut, 0, .8f, 200, -1);
         }
 
         // OnStopMoving
@@ -484,7 +485,6 @@ namespace Remizione
 
             FastMove = false;
             moveVerticalTween.Stop();
-            moveBalancingTween.Stop();
 
             if (EnforceTurn)
             {
@@ -527,7 +527,6 @@ namespace Remizione
 
             speechText?.Update(gameTime);
             moveVerticalTween.Update(gameTime);
-            moveBalancingTween.Update(gameTime);
             bloodSplash?.Update(gameTime);
             UpdateDirection();
             UpdateFootstep();
@@ -535,6 +534,14 @@ namespace Remizione
             BodyMachine.Update(gameTime);
             shakeTween.Update(gameTime);
             tintTween.Update(gameTime);
+
+            // Lógica de aceleración
+            if (IsMoving && moveAccelerationMultiplier < 1f)
+            {
+                float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                // Interpolación lineal. Usamos MathF por performance al trabajar con floats.
+                moveAccelerationMultiplier = float.Min(1f, moveAccelerationMultiplier + (dt / MoveAccelerationTime));
+            }
 
             if (!Session.IsAwaiting && !IsMoving)
             {
@@ -592,9 +599,6 @@ namespace Remizione
 
             return result;
         }
-
-        // AnimationSettings
-        public ActorAnimationSettings AnimationSettings { get; } = new();
 
         // ApplyAction
         public void ApplyAction(IAction action)
@@ -908,6 +912,10 @@ namespace Remizione
             }
         }
 
+        // MoveAccelerationTime
+        [ScriptProperty]
+        public float MoveAccelerationTime { get; set; }
+
         // MoveLurk
         public virtual void MoveLurk(GameThing target)
         {
@@ -1035,7 +1043,7 @@ namespace Remizione
         }
 
         // MoveTo
-        public MoveToResult MoveTo(Vector2 destination, float slowThreshold = 0)
+        public MoveToResult MoveTo(Vector2 destination, float slowMoveThreshold = 0)
         {
             // No path needed
             if (WalkArea == null || IgnoreWalkArea)
@@ -1064,7 +1072,7 @@ namespace Remizione
             }
 
             if (IsPlayer)
-                FastMove = Vector2.Distance(Position, path[^1]) > slowThreshold;
+                FastMove = FastMoveFactor > 1 && Vector2.Distance(Position, path[^1]) > slowMoveThreshold;
 
             pendingPathNodes.Clear();
             pendingPathNodes.AddRange(path);
@@ -1101,6 +1109,38 @@ namespace Remizione
                 }
             }
         } = PlayerNumber.None;
+
+        // ProcessTurn
+        public void ProcessTurn()
+        {
+            if (CombatBehavior == null || IsPlayer || !IsHostile || RemainingTurns == 0)
+                return;
+
+            if (!IsAlert)
+            {
+                if (Session.Player != null)
+                {
+                    if (!IsFacingTarget(Session.Player))
+                        return;
+
+                    //if (Room?.WalkArea?.InLineOfSight(Session.Player.Position, Position, this) == true)
+                    IsAlert = true;
+                }
+
+                return;
+            }
+
+            if (Session.Player != null && RemainingTurns > 0)
+            {
+                if (DistanceToTarget(Session.Player) <= CombatBehavior.Archetype.MeleeRange)
+                {
+                    RemainingTurns = 0;
+                    return;
+                }
+            }
+
+            RemainingTurns -= 1;
+        }
 
         // Recharge
         [ScriptMethod]
@@ -1222,6 +1262,10 @@ namespace Remizione
             BodyMachine.ChangeState<BodyStandState>(enforce);
         }
 
+        // StartMovingSound
+        [ScriptProperty]
+        public Sound? StartMovingSound { get; set; }
+
         // StartTalking
         public void StartTalking()
         {
@@ -1237,6 +1281,10 @@ namespace Remizione
             Stand();
         }
 
+        // SuppressMoveBounceEffect
+        [ScriptProperty]
+        public bool SuppressMoveBounceEffect { get; set; }
+
         // ThrowActiveTrowable
         public void ThrowActiveTrowable(GameThing target)
         {
@@ -1249,38 +1297,6 @@ namespace Remizione
             state.Prop = ActiveThrowable;
             ActiveThrowable = null;
             BodyMachine.ChangeState(state.GetType());
-        }
-
-        // ProcessTurn
-        public void ProcessTurn()
-        {
-            if (CombatBehavior == null || IsPlayer || !IsHostile || RemainingTurns == 0)
-                return;
-
-            if (!IsAlert)
-            {
-                if (Session.Player != null)
-                {
-                    if (!IsFacingTarget(Session.Player))
-                        return;
-
-                    //if (Room?.WalkArea?.InLineOfSight(Session.Player.Position, Position, this) == true)
-                    IsAlert = true;
-                }
-
-                return;
-            }
-
-            if (Session.Player != null && RemainingTurns > 0)
-            {
-                if (DistanceToTarget(Session.Player) <= CombatBehavior.Archetype.MeleeRange)
-                {
-                    RemainingTurns = 0;
-                    return;
-                }
-            }
-
-            RemainingTurns -= 1;
         }
     }
 }

@@ -690,10 +690,6 @@ namespace Remizione
                 OnDrawShadow(gameTime);
         }
 
-        // Ethereal
-        [ScriptProperty]
-        public bool Ethereal { get; set; }
-
         // FaceTo
         public void FaceTo(GameThing target)
         {
@@ -743,7 +739,7 @@ namespace Remizione
                     if (field > 0)
                     {
                         floatingTween ??= new FloatTween();
-                        floatingTween.Start(TweenStyle.CubicInOut, 0, field, 200, -1);
+                        floatingTween.Start(TweenStyle.CubicInOut, 0, field, 1000, -1);
                     }
                     else
                     {
@@ -1220,9 +1216,6 @@ namespace Remizione
         {
             // Si la cantidad es 0 o negativa, no hay interacción de daño.
             if (!CanTakeDamage())
-                return 0;
-
-            if (attacker.Ethereal)
                 return 0;
 
             // ---------------------------------------------------------

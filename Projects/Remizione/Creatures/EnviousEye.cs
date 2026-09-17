@@ -14,11 +14,11 @@ namespace Remizione
         public EnviousEye(GameSession session, string name)
             : base(session, name)
         {
-            AnimationSettings.SupressAll();
             BodySize = BodySize.Small;
             FastMoveFactor = 3;
             scaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, Vector2.Zero, new(0, .1f), 600, -1);
             Scale = new(.9f);
+            SuppressMoveBounceEffect = true;
         }
 
         #region Protected members

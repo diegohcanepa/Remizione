@@ -67,6 +67,9 @@ namespace Remizione
         // UpdateOpacityFactor
         private void UpdateOpacityFactor(GameTime gameTime)
         {
+            if (Session.Player?.RenderLayer > RenderLayer.Default)
+                return;
+
             const int tweenDuration = 200;
             const float revealOpacity = .5f;
 

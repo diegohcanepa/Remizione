@@ -17,17 +17,20 @@ namespace Remizione
             Atlas = Atlases.Environment;
             DepthOffset = -2;
             DisplayNameKey = "Prop.Fleshiness";
-            Hotspot = new Polygon("0,0;7,0;7,7;0,7");
+            Hotspot = new Polygon("0,0;13,0;13,5;0,5");
             RenderLayer = RenderLayer.Default;
 
+            /*
             this.AttachedLight = new("Light", LightKind.Fleshiness)
             {
                 PivotOrigin = RectanglePoint.Center,
+                Scale = new(2, .5f)
             };
 
             this.Color = AttachedLight.Color;
+            */
 
-            AttachedLightPosition = new(3, 4);
+            AttachedLightPosition = new(3, 2);
         }
 
         #region Protected members
@@ -37,9 +40,15 @@ namespace Remizione
         {
             base.OnLoad();
 
+            if (AttachedLight != null)
+            {
+                AttachedLight.Unlit(true);
+                AttachedLight.Lit();
+            }
+
             fadeTween.Start(TweenStyle.CubicIn, 0, 1, 1000);
             Tweens.OpacityTween = FloatTween.Create(TweenStyle.Linear, .5f, .6f, 90, -1);
-            Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicIn, .1f, .75f, 400);
+            Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicIn, 0, .75f, 400);
         }
 
         // OnUpdate
