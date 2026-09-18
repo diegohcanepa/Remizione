@@ -78,6 +78,13 @@
             "Random"
           ]
         },
+        "scope": {
+          "type": "string",
+          "enum": [
+            "Scene",
+            "Global"
+          ]
+        },        
         "soundCount": {
           "type": "integer",
           "minimum": 1,

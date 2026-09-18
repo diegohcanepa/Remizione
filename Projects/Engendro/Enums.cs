@@ -66,6 +66,9 @@ namespace Engendro
     // SoundCategoryName
     public enum SoundCategoryName { FX, Ambience, Voice, Music }
 
+    // SoundScope
+    public enum SoundScope { Scene, Global }
+
     // SoundPopMode
     public enum SoundPopMode { Cyclic, Random }
 

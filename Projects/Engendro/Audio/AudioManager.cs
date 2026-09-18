@@ -56,6 +56,10 @@ namespace Engendro.Audio
                 if (element.GetEnum<SoundPopMode>("popMode") is SoundPopMode popMode)
                     settings.PopMode = popMode;
 
+                // Scope
+                if (element.GetEnum<SoundScope>("scope") is SoundScope scope)
+                    settings.Scope = scope;
+
                 // SoundCount
                 if (element.GetInt32("soundCount") is int soundCount)
                 {

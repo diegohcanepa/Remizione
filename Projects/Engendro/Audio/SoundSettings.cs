@@ -64,6 +64,9 @@ namespace Engendro.Audio
         // PopMode
         public SoundPopMode PopMode { get; set; }
 
+        // Scope
+        public SoundScope Scope { get; set; }
+
         // Sounds
         public List<string> Sounds { get; set; } = [];
 

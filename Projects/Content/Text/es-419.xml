@@ -37,6 +37,8 @@
   <String Key="Item.Loquat.Name">Níspero</String>
   <String Key="Item.PrayerBonfire.Name">Plegaria de la hoguera</String>
   <String Key="Item.ServantCross.Name">Cruz del Siervo</String>
+  <String Key="Item.SulfurStone.Description">Un trozo de azufre cristalizado que arde con memoria propia: no necesita chispa, se enciende porque "recuerda" haber sido fuego alguna vez.
+Los penitentes la usan para encender las Hogueras, cuyo calor no cura la carne sino que ayuda al cuerpo a recomponer la forma que casi pierde. Se dice que sabe a lo último que quemó.</String>
   <String Key="Item.SulfurStone.Effect">Enciende hogueras</String>
   <String Key="Item.SulfurStone.Name">Piedra de azufre</String>
   <String Key="Item.TrapdoorKey.Name">Llave de trampilla</String>

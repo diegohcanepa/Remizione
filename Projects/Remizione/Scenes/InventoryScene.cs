@@ -83,7 +83,7 @@ namespace Remizione
             // Item description
             itemDescription = new(Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.TerraDark,
+                Color = ColorPalette.Text.Terra,
                 MaximumWidth = 200,
                 Multiline = false,
                 PivotOrigin = RectanglePoint.Bottom,
@@ -127,6 +127,8 @@ namespace Remizione
             {
                 if (GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item item)
                 {
+                    MouseCursor.PerformClick();
+                    Sound.Play(SoundNames.Interact);
                     ItemContainer.Session.ShowItemInfo(item);
                 }
             }

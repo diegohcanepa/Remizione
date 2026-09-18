@@ -286,7 +286,8 @@ namespace Engendro.Audio
 
             if (State == SoundState.Stopped)
             {
-                this.Scene = EngendroGame.Instance?.SceneManager.CurrentScene;
+                if (Sound.Scope == SoundScope.Scene)
+                    this.Scene = EngendroGame.Instance?.SceneManager.CurrentScene;
 
                 if (fadeIn > 0)
                     Volume.FadeIn(fadeIn);
@@ -316,7 +317,9 @@ namespace Engendro.Audio
         {
             if (State == SoundState.Stopped)
             {
-                this.Scene = EngendroGame.Instance?.SceneManager.CurrentScene;
+                if (Sound.Scope == SoundScope.Scene)
+                    this.Scene = EngendroGame.Instance?.SceneManager.CurrentScene;
+
                 this.delayPlayCooldown = delay;
                 this.delayPlayFadeIn = fadeIn;
                 this.RemainingTime = Looped ? -1 : Duration;
