@@ -20,7 +20,7 @@ namespace Remizione
             AllowPauseMenu = false;
             AtlasName = string.Empty;
 
-            this.button = new UIButton(InputBindings.Exit)
+            this.button = new UIButton()
             {
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom)
@@ -62,7 +62,7 @@ namespace Remizione
 
             if (buttonDisplayCooldown <= 0 && credits.IsRunning)
             {
-                if (button.TestPressed(0))
+                if (button.TestPressed())
                 {
                     credits.Hide();
                     buttonDisplayCooldown = int.MaxValue;

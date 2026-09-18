@@ -45,7 +45,7 @@ namespace Remizione
             if (IsClosed || !AllowInput)
                 return HandleInputResult.Unhandled;
 
-            if (ControlGroup.FirstControl is UIButton control && control.TestPressed(PlayerIndex.One))
+            if (ControlGroup.FirstControl is UIButton control && control.TestPressed())
             {
                 Close();
                 return HandleInputResult.Handled;

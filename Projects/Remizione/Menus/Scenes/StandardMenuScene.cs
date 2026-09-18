@@ -57,7 +57,7 @@ namespace Remizione.Menus
         protected override HandleInputResult OnHandleInput()
         {
             // Back
-            if (ControlGroup.Controls[0].TestPressed(0))
+            if (ControlGroup.Controls[0].TestPressed())
             {
                 Pop();
                 return HandleInputResult.Handled;

@@ -10,7 +10,6 @@ namespace Remizione
     /// </summary>
     public sealed class UIMessage : GameObject
     {
-        private readonly Sprite container = new(Atlases.UI.GetImage("MessageContainer")) { PivotOrigin = RectanglePoint.Center };
         private readonly FloatTween fadeTween = new();
         private readonly Sprite icon = new() { PivotOrigin = RectanglePoint.Right };
         private readonly TextSprite messageText;
@@ -38,7 +37,6 @@ namespace Remizione
                 return;
 
             Game.SpriteBatch.Begin(Game.Camera);
-            container.Draw(gameTime);
             icon.Draw(gameTime);
             Game.SpriteBatch.End();
 
@@ -80,16 +78,14 @@ namespace Remizione
 
             var color = ColorPalette.Text.Highlight;
 
-            if (message is MessageKind.NotEnoughCoins or MessageKind.ItemDiscarded or MessageKind.LiftNotAllowed)
+            if (message is MessageKind.NotEnoughCoins or MessageKind.LiftNotAllowed)
             {
                 Sound.Play(SoundNames.Error);
             }
-
             else if (message == MessageKind.InventoryFull)
             {
                 icon.RenderImage = Atlases.UI.Sack;
             }
-
             else
             {
                 Sound.Play(SoundNames.Error);
@@ -113,8 +109,6 @@ namespace Remizione
             fadeTween.Start(TweenStyle.CubicIn, 1, 0, 200);
             scaleTween.Start(TweenStyle.CubicIn, scale * .8f, scale, 50);
             messageText.Tweens.ScaleTween = scaleTween;
-            container.Position = messageText.Position;
-            container.Y += 2;
             IsVisible = true;
         }
     }

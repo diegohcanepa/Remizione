@@ -64,7 +64,7 @@ namespace Remizione
         // Add
         public UIButton Add(InputBinding inputBinding)
         {
-            UIButton control = new(inputBinding)
+            UIButton control = new()
             {
                 PivotOrigin = RectanglePoint.RightBottom,
             };

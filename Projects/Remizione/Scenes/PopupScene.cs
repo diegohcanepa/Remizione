@@ -35,7 +35,7 @@ namespace Remizione
             buttons = new UIButton[inputBindings.Length];
             for (var i = 0; i < inputBindings.Length; i++)
             {
-                buttons[i] = new UIButton(inputBindings[i]) { PivotOrigin = RectanglePoint.RightTop };
+                buttons[i] = new UIButton();
             }
         }
 
@@ -65,7 +65,7 @@ namespace Remizione
         {
             for (var i = 0; i < buttons.Length; i++)
             {
-                if (buttons[i].TestPressed(0))
+                if (buttons[i].TestPressed())
                 {
                     Result = bindings[i];
                     Game.SceneManager.Pop();

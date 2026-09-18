@@ -254,21 +254,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Inventory-assets/ItemInfoContainer.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>35,10,69,20</rect>
-                <key>scale9Paddings</key>
-                <rect>35,10,69,20</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Inventory-assets/QuickInventoryBackground.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -395,21 +380,6 @@
                 <rect>4,3,8,6</rect>
                 <key>scale9Paddings</key>
                 <rect>4,3,8,6</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">MessageContainer-assets/MessageContainer.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>50,8,100,15</rect>
-                <key>scale9Paddings</key>
-                <rect>50,8,100,15</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -894,7 +864,6 @@
                     <filename>UI-assets</filename>
                     <filename>XboxControls-assets</filename>
                     <filename>KeyboardControls-assets</filename>
-                    <filename>MessageContainer-assets</filename>
                     <filename>UIIcons-assets</filename>
                     <filename>MouseCursors-assets</filename>
                     <filename>Items-assets</filename>

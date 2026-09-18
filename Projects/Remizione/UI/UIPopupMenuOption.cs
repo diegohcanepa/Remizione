@@ -62,7 +62,7 @@ namespace Remizione
                 nameText.Color = ColorPalette.Text.Highlight;
 
             else if (IsHovered)
-                nameText.Color = ColorPalette.Text.Hover;
+                nameText.Color = ColorPalette.Text.Purple;
 
             else
                 nameText.Color = ColorPalette.Text.Default;

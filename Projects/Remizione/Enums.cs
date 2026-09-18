@@ -171,6 +171,9 @@ namespace Remizione
     // UIControlGroupLayoutStyle
     public enum UIControlGroupLayoutStyle { Vertically, Horizontally }
 
+    // UserAction
+    public enum UserAction { Discard }
+
     // Verb
     public enum Verb { None, Use, Examine, Bonfire, Talk, Attack, Lift, GoLeft, GoRight, GoUp, GoDown, PickUp }
 

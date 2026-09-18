@@ -88,7 +88,7 @@ namespace Remizione
             text.Color = color;
             text.Scale = new(scale);
             text.Text = value;
-            Launch(origin, text, Math.Max(1000, value.Length * 180));
+            Launch(origin, text, 2000);
         }
 
         #endregion

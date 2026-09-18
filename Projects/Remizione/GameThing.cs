@@ -1183,7 +1183,7 @@ namespace Remizione
         {
             if (Session.ObjectPools.FlyOffs.Get() is FlyOff flyOff)
             {
-                flyOff.ShowText(GetOverheadPosition(), text, color, 3000);
+                flyOff.ShowText(GetOverheadPosition(), text, color);
                 return flyOff;
             }
 

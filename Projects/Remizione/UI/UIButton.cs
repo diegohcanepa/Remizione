@@ -2,7 +2,6 @@
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace Remizione
 {
@@ -11,178 +10,19 @@ namespace Remizione
     /// </summary>
     public sealed class UIButton : GameObject, IBoundingBox
     {
-        #region Private fields
-
-        private readonly Sprite containerPattern;
-        private readonly Sprite containerEdgeLeft;
-        private const float horzImagePadding = 1.5f;
-        private readonly Sprite image;
-        private InputBinding? inputBinding;
         private readonly TextSprite label;
-        private InputMethod lastKnownInputMethod;
-        private Vector2 position;
-        private readonly float scaleFactor;
-        private readonly Vector2Tween scaleTween = new();
-
-        #endregion
-
-        #region Constructor
 
         // Constructor
-        public UIButton(InputBinding? inputBinding = null, float scaleFactor = 1)
+        public UIButton()
         {
-            this.inputBinding = inputBinding;
-            this.scaleFactor = scaleFactor;
-
-            this.Camera = Game.Camera;
-
-            // Container
-            this.containerPattern = new Sprite(Atlases.UI.UIButtonContainerPattern)
-            {
-                PivotOrigin = RectanglePoint.Right,
-                Scale = ScaleInfo.UIElement.Medium * scaleFactor
-            };
-
-            // ContainerEdgeLeft
-            this.containerEdgeLeft = new Sprite(Atlases.UI.UIButtonContainerEdge)
-            {
-                PivotOrigin = RectanglePoint.Right,
-                Scale = ScaleInfo.UIElement.Medium * scaleFactor
-            };
-
-            // Label
             this.label = new TextSprite(Fonts.CommonOutline)
             {
                 Color = ColorPalette.Text.Default,
-                Scale = ScaleInfo.Text.Large * scaleFactor
+                Scale = ScaleInfo.Text.Huge
             };
-
-            // Image
-            this.image = new Sprite()
-            {
-                Scale = ScaleInfo.UIElement.Medium * scaleFactor
-            };
-
-            this.label.Text = inputBinding == null ? string.Empty : Localization.GetValue(inputBinding);
-
-            Invalidate();
         }
-
-        #endregion
 
         #region Private members
-
-        // FindInputBindingImage
-        private static AtlasImage? FindInputBindingImage(string? sourceImageName, InputBinding? inputBinding)
-        {
-            const string KeyboardPrefix = "Keyboard";
-
-            if (Atlases.UI is not UIAtlas atlas)
-                return null;
-
-            var gamePad = InputManager.DefaultPlayer.LastInputMethod == InputMethod.GamePad;
-
-            string? imageName = null;
-
-            if (!string.IsNullOrWhiteSpace(sourceImageName))
-            {
-                imageName = sourceImageName;
-            }
-            else if (inputBinding != null)
-            {
-                if (gamePad)
-                    imageName = inputBinding.Button.ToString();
-                else
-                    imageName = inputBinding.Keys[0].ToString();
-            }
-
-            if (imageName != null && inputBinding != null)
-            {
-                if (gamePad)
-                    imageName = GamePadDevice.Style.ToString() + imageName;
-                else
-                    imageName = KeyboardPrefix + imageName;
-            }
-
-            return string.IsNullOrWhiteSpace(imageName) ? null : atlas.FindImage(imageName);
-        }
-
-        // Invalidate
-        private void Invalidate()
-        {
-            // Image
-            image.RenderImage = FindInputBindingImage(ImageName, InputBinding);
-            image.PivotOrigin = PivotOrigin;
-            image.Position = Position;
-
-            if (HasText)
-                LayoutText();
-
-            label.OpacityFactor = IsEnabled ? 1 : .3f;
-
-            InvalidateBoundingBox();
-
-            if (PivotOrigin is RectanglePoint.Bottom or RectanglePoint.Top)
-            {
-                var offset = (BoundingBox.Width / 2) - (image.BoundingBox.Width / 2);
-
-                image.X -= offset;
-                containerEdgeLeft.X -= offset;
-                containerPattern.X -= offset;
-                label.X -= offset;
-            }
-
-            InvalidateBoundingBox();
-        }
-
-        // InvalidateBoundingBox
-        private void InvalidateBoundingBox()
-        {
-            if (HasText)
-                BoundingBox = RectangleF.Union(image.BoundingBox, containerPattern.BoundingBox, containerEdgeLeft.BoundingBox);
-            else
-                BoundingBox = image.BoundingBox;
-        }
-
-        // LayoutText
-        private void LayoutText()
-        {
-            if (image.IsEmpty)
-                return;
-
-            if (image.Pivot.AtRight)
-            {
-                label.PivotOrigin = RectanglePoint.Right;
-                label.Position = image.BoundingBox.GetPoint(RectanglePoint.Left, -horzImagePadding, .2f);
-            }
-            else
-            {
-                label.PivotOrigin = RectanglePoint.Left;
-                label.Position = image.BoundingBox.GetPoint(RectanglePoint.Right, horzImagePadding, .2f);
-            }
-
-            containerPattern.ScaleX = label.BoundingBox.Width + (6 * scaleFactor);
-            containerPattern.Y = ImageBoundingBox.GetPoint(RectanglePoint.Center, 0, 0).Y;
-            containerEdgeLeft.Y = containerPattern.Y;
-
-            if (image.Pivot.AtRight)
-            {
-                containerEdgeLeft.Effects = SpriteEffects.None;
-                containerEdgeLeft.PivotOrigin = RectanglePoint.Right;
-                containerPattern.PivotOrigin = RectanglePoint.Right;
-                containerPattern.X = ImageBoundingBox.GetPoint(RectanglePoint.Left).X + 5;
-                containerEdgeLeft.X = containerPattern.BoundingBox.GetPoint(RectanglePoint.Left).X;
-            }
-            else
-            {
-                containerEdgeLeft.Effects = SpriteEffects.FlipHorizontally;
-                containerEdgeLeft.PivotOrigin = RectanglePoint.Left;
-                containerPattern.PivotOrigin = RectanglePoint.Left;
-                containerPattern.X = ImageBoundingBox.GetPoint(RectanglePoint.Right).X - 5;
-                containerEdgeLeft.X = containerPattern.BoundingBox.GetPoint(RectanglePoint.Right).X;
-            }
-        }
-
         #endregion
 
         #region Protected members
@@ -190,45 +30,12 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (image.IsEmpty)
-                return;
-
-            Effect? shader = null;
-
-            if (IsMouseOver)
-            {
-                RemizioneGame.Effects.ColorSaturation.SetColor(.7f, .7f, .7f, 1);
-                shader = RemizioneGame.Effects.ColorSaturation.Effect;
-            }
-
-            Game.SpriteBatch.Begin(Camera, SamplerState.PointClamp, shader);
-
-            if (HasText)
-            {
-                containerPattern.Draw(gameTime);
-                containerEdgeLeft.Draw(gameTime);
-            }
-            image.Draw(gameTime);
-
-            Game.SpriteBatch.End();
-
-            Game.SpriteBatch.Begin(Camera, SamplerState.LinearClamp, shader);
-
-            if (HasText)
-                label.Draw(gameTime);
-
-            Game.SpriteBatch.End();
+            label.Draw(gameTime);
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (InputManager.DefaultPlayer.LastInputMethod != lastKnownInputMethod)
-            {
-                lastKnownInputMethod = InputManager.DefaultPlayer.LastInputMethod;
-                Invalidate();
-            }
-
             IsMouseOver = false;
 
             if (IsEnabled)
@@ -237,121 +44,24 @@ namespace Remizione
                     IsMouseOver = BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition);
             }
 
-            image.Update(gameTime);
             label.Update(gameTime);
 
-            if (IsMouseOver)
-                label.Color = ColorPalette.Text.Hover;
+            label.Color = IsMouseOver ? HoverColor : TextColor;
         }
 
         #endregion
-
-        // AllowPressEffect
-        public bool AllowPressEffect { get; set; } = true;
 
         // AllowSound
         public bool AllowSound { get; set; } = true;
 
         // BoundingBox
-        public RectangleF BoundingBox { get; private set; }
+        public RectangleF BoundingBox => label.BoundingBox;
 
-        // ButtonOpacity
-        public float ButtonOpacity
-        {
-            get => image.OpacityFactor;
-            set => image.OpacityFactor = value;
-        }
-
-        // Camera
-        public Camera Camera { get; set; }
-
-        // HasText
-        public bool HasText => !HideText && !label.IsEmpty;
-
-        // HideText
-        public bool HideText
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    Invalidate();
-                }
-            }
-        }
-
-        // ImageBoundingBox
-        public RectangleF ImageBoundingBox => image.BoundingBox;
-
-        // ImageName
-        public string? ImageName
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    Invalidate();
-                }
-            }
-        }
-
-        // InputBinding
-        public InputBinding? InputBinding
-        {
-            get => inputBinding;
-            set
-            {
-                if (value != inputBinding)
-                {
-                    inputBinding = value;
-                    Invalidate();
-                }
-            }
-        }
-
-        // IsBeating
-        public bool IsBeating
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-
-                    image.Scale = ScaleInfo.UIElement.Medium * scaleFactor;
-
-                    if (field)
-                    {
-                        scaleTween.Start(TweenStyle.Linear, image.Scale, image.Scale * 1.1f * scaleFactor, 100, -1);
-                        image.Tweens.ScaleTween = scaleTween;
-                    }
-                    else
-                    {
-                        scaleTween.Stop();
-                        image.Tweens.ScaleTween = null;
-                    }
-                }
-            }
-        }
+        // HoverColor
+        public Color HoverColor { get; set; } = ColorPalette.Text.Yellow;
 
         // IsEnabled
-        public bool IsEnabled
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    Invalidate();
-                }
-            }
-        } = true;
+        public bool IsEnabled { get; set; } = true;
 
         // IsMouseOver
         public bool IsMouseOver { get; private set; }
@@ -359,29 +69,22 @@ namespace Remizione
         // PivotOrigin
         public RectanglePoint PivotOrigin
         {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    Invalidate();
-                }
-            }
+            get => label.PivotOrigin;
+            set => label.PivotOrigin = value;
         }
 
         // Position
         public Vector2 Position
         {
-            get => position;
-            set
-            {
-                if (value != position)
-                {
-                    position = value;
-                    Invalidate();
-                }
-            }
+            get => label.Position;
+            set => label.Position = value;
+        }
+
+        // Scale
+        public Vector2 Scale
+        {
+            get => label.Scale;
+            set => label.Scale = value;
         }
 
         // Sound
@@ -391,7 +94,7 @@ namespace Remizione
         public object? Tag { get; set; }
 
         // TestPressed
-        public bool TestPressed(PlayerIndex playerIndex)
+        public bool TestPressed()
         {
             if (!IsEnabled)
                 return false;
@@ -399,9 +102,6 @@ namespace Remizione
             var result = false;
 
             if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed() && IsMouseOver)
-                result = true;
-
-            else if (inputBinding != null && inputBinding.IsPressed(playerIndex))
                 result = true;
 
             if (result && AllowSound)
@@ -412,20 +112,6 @@ namespace Remizione
                     Sound.Play(SoundNames.UISelectA);
             }
 
-            if (AllowPressEffect)
-            {
-                if (result && !scaleTween.IsRunning)
-                {
-                    scaleTween.Start(TweenStyle.Linear, ScaleInfo.UIElement.Medium * scaleFactor, image.Scale * .95f * scaleFactor, 60, 2);
-                    image.Tweens.ScaleTween = scaleTween;
-                }
-            }
-            else
-            {
-                scaleTween.Stop();
-                image.Scale = ScaleInfo.UIElement.Medium * scaleFactor;
-            }
-
             return result;
         }
 
@@ -433,53 +119,24 @@ namespace Remizione
         public string? Text
         {
             get => label.Text;
-            set
-            {
-                if (value != label.Text)
-                {
-                    label.Text = value;
-                    Invalidate();
-                }
-            }
+            set => label.Text = value;
         }
 
         // TextColor
-        public Color TextColor
-        {
-            get => label.Color;
-            set
-            {
-                if (value != label.Color)
-                    label.Color = value;
-            }
-        }
+        public Color TextColor { get; set; } = ColorPalette.Text.Terra;
 
         // X
         public float X
         {
-            get => position.X;
-            set
-            {
-                if (value != position.X)
-                {
-                    position.X = value;
-                    Invalidate();
-                }
-            }
+            get => label.X;
+            set => label.X = value;
         }
 
         // Y
         public float Y
         {
-            get => position.Y;
-            set
-            {
-                if (value != position.Y)
-                {
-                    position.Y = value;
-                    Invalidate();
-                }
-            }
+            get => label.Y;
+            set => label.Y = value;
         }
     }
 }

@@ -9,13 +9,18 @@ namespace Remizione
     /// </summary>
     public sealed class ItemInfoScene : Scene
     {
+        #region Private fields
+
         private readonly UIButton button;
+        private readonly TextSprite descriptionText;
         private readonly Sprite image;
         private readonly Sprite imageSlot;
         private Item? item;
-        private readonly TextSprite itemNameText;
         private readonly GameSession session;
-        private readonly TextSprite descriptionText;
+        private readonly Sprite shadow;
+        private readonly TextSprite titleText;
+
+        #endregion
 
         #region Constructor
 
@@ -40,11 +45,21 @@ namespace Remizione
             this.image = new()
             {
                 PivotOrigin = RectanglePoint.Center,
-                Position = imageSlot.BoundingBox.GetPoint(RectanglePoint.Center),
+                Position = imageSlot.BoundingBox.GetPoint(RectanglePoint.Center, 0, -1),
             };
 
-            // Item name
-            this.itemNameText = new(Fonts.CommonOutline)
+            // Shadow
+            shadow = new()
+            {
+                Color = Color.Black,
+                Opacity = .3f,
+                PivotOrigin = RectanglePoint.Center,
+                Y = image.BoundingBox.Center.Y + 1,
+                X = image.BoundingBox.Center.X - .5f
+            };
+
+            // Title text
+            this.titleText = new(Fonts.CommonOutline)
             {
                 Color = ColorPalette.MouseCursor.Tooltip,
                 PivotOrigin = RectanglePoint.Top,
@@ -59,16 +74,18 @@ namespace Remizione
                 Color = ColorPalette.MouseCursor.Tooltip * .8f,
                 MaximumWidth = 190,
                 PivotOrigin = RectanglePoint.Top,
-                Position = itemNameText.BoundingBox.GetPoint(RectanglePoint.Bottom),
+                Position = titleText.BoundingBox.GetPoint(RectanglePoint.Bottom),
                 Scale = ScaleInfo.Text.VeryLarge
             };
 
             // Button
-            this.button = new(null, 1.5f)
+            this.button = new()
             {
-                ImageName = nameof(Atlases.UI.DiscardItemIcon),
-                PivotOrigin = RectanglePoint.RightTop,
-                Position = Screen.Area.GetPoint(RectanglePoint.RightBottom, 0, -2)
+                HoverColor = ColorPalette.Text.OrangeLight,
+                TextColor = ColorPalette.Text.Orange,
+                PivotOrigin = RectanglePoint.RightBottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -3, -3),
+                Text = Localization.GetValue(UserAction.Discard)
             };
         }
 
@@ -102,21 +119,25 @@ namespace Remizione
         {
             Game.SpriteBatch.Begin(Game.Camera);
             imageSlot.Draw(gameTime);
+            shadow.Draw(gameTime);
             image.Draw(gameTime);
-            itemNameText.Draw(gameTime);
+            titleText.Draw(gameTime);
             descriptionText.Draw(gameTime);
-            Game.SpriteBatch.End();
             button.Draw(gameTime);
+            Game.SpriteBatch.End();
         }
 
         // OnHandleInput
         protected override HandleInputResult OnHandleInput()
         {
-            if (button.TestPressed(PlayerIndex.One))
+            if (button.TestPressed())
             {
-                item?.Remove();
-                session.InteractionContext.HeldItem = null;
-                session.HUD.Message.Show(MessageKind.ItemDiscarded);
+                if (item != null)
+                {
+                    item.Remove();
+                    session.Player?.ShowFlyOff(item.Definition.DisplayName, ColorPalette.Text.Orange);
+                }
+
                 Game.SceneManager.Pop();
                 return HandleInputResult.Handled;
             }
@@ -131,7 +152,7 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             button.Update(gameTime);
-            itemNameText.Update(gameTime);
+            titleText.Update(gameTime);
             descriptionText.Update(gameTime);
         }
 
@@ -141,9 +162,11 @@ namespace Remizione
         public void Show(Item item)
         {
             this.item = item;
-            this.itemNameText.Text = item.Definition.DisplayName;
+            this.titleText.Text = item.Definition.DisplayName;
             this.descriptionText.Text = item.Definition.Description;
             this.image.RenderImage = item.Definition.Image;
+            this.shadow.RenderImage = item.Definition.Image;
+            //this.button.Position = descriptionText.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 6);
         }
     }
 }
