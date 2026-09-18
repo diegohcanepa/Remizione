@@ -117,13 +117,6 @@ namespace Remizione
                 Owner.Session.InteractionContext.HeldItem = null;
                 Owner.Session.InteractionData.Clear();
             }
-            /*
-            else if (Owner.Session.InventoryEnabled)
-            {
-                MouseCursor.PerformClick();
-                Owner.Session.ShowInventory();
-            }
-            */
 
             return true;
         }

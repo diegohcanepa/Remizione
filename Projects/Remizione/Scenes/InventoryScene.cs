@@ -127,7 +127,7 @@ namespace Remizione
             {
                 if (GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item item)
                 {
-                    // Discard??
+                    ItemContainer.Session.ShowItemInfo(item);
                 }
             }
 

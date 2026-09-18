@@ -66,6 +66,7 @@
     { "name": "RatDeath", "soundCount": 2 },
     { "name": "Raven" },
     { "name": "SpearTrap" },
+    { "name": "SpeakerMale", "soundCount": 3 },
     { "name": "StatusPoison" },
     { "name": "Thunder", "soundCount": 4 },
     { "name": "TrapdoorOpen" },

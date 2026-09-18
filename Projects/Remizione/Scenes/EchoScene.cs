@@ -1,9 +1,8 @@
-﻿using Engendro;
+﻿using Adberration.Scripting;
+using Engendro;
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Remizione.Scripting;
 
@@ -16,14 +15,11 @@ namespace Remizione
     {
         #region Private fields
 
-        private bool allowSkip;
-        private readonly ContentManager content;
         private readonly Sprite background = new(Atlases.UI.EchoBackground) { PivotOrigin = RectanglePoint.LeftBottom, Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom) };
-        private readonly FloatTween opacityTween = new();
         private readonly GameSession session;
-        private SoundEffect? soundEffect;
-        private SoundEffectInstance? soundEffectInstance;
-        private readonly TextSprite subjectSprite;
+        private SoundInstance? speakerSoundInstance;
+        private readonly TextSprite speakerSprite;
+        private readonly FloatTween textOpacityTween = new();
         private readonly TextSprite textSprite;
 
         #endregion
@@ -36,8 +32,16 @@ namespace Remizione
         {
             this.session = session;
             this.PausePreviousScenes = false;
-            this.content = new(Game.Services, Game.Content.RootDirectory);
 
+            // Speaker text
+            this.speakerSprite = new(Fonts.Common)
+            {
+                Color = ColorPalette.MouseCursor.Tooltip,
+                PivotOrigin = RectanglePoint.Bottom,
+                Scale = ScaleInfo.Text.Huge
+            };
+
+            // Text sprite
             this.textSprite = new(Fonts.Common)
             {
                 Color = ColorPalette.Text.Terra,
@@ -46,38 +50,20 @@ namespace Remizione
                 Position = background.BoundingBox.GetPoint(RectanglePoint.Top, 0, 20),
                 Scale = ScaleInfo.Text.ExtraLarge
             };
-
-            this.subjectSprite = new(Fonts.Common)
-            {
-                Color = ColorPalette.Text.MouseCursor,
-                PivotOrigin = RectanglePoint.LeftBottom,
-                Scale = ScaleInfo.Text.VeryLarge
-            };
         }
 
         #endregion
 
         #region Private members
 
-        // DisposeSound
-        private void DisposeSound()
-        {
-            if (soundEffectInstance != null)
-            {
-                soundEffectInstance.Stop();
-                soundEffectInstance.Dispose();
-                soundEffectInstance = null;
-            }
-
-            soundEffect?.Dispose();
-            soundEffect = null;
-        }
-
         // HandleMouseInput
         private bool HandleMouseInput()
         {
             if (InputManager.DefaultPlayer.LastInputMethod != InputMethod.Mouse)
                 return false;
+
+            if (!textSprite.IsTyping)
+                speakerSoundInstance?.Stop(400);
 
             if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed() ||
                 InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
@@ -88,10 +74,8 @@ namespace Remizione
                 }
                 else
                 {
-                    DisposeSound();
                     CanClose = true;
-
-                    if (session.AwaitingScript?.NextStatement is not EchoCommand)
+                    if (session.AwaitingScript?.NextStatement is not EchoCommand and not AwaitCommand)
                         Game.SceneManager.Pop();
                 }
 
@@ -101,27 +85,26 @@ namespace Remizione
             return false;
         }
 
-        // LoadVoiceSoundEffect
-        private SoundEffect? LoadVoiceSoundEffect(string soundName, string languageTag)
-        {
-            if (string.IsNullOrWhiteSpace(soundName) || string.IsNullOrWhiteSpace(languageTag))
-                return null;
-
-            var filePath = Sound.EncodeAssetName(AudioManager.VoiceCategory, languageTag, soundName);
-
-            try
-            {
-                return content.Load<SoundEffect>(filePath);
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
         #endregion
 
         #region Protected members
+
+        // OnActivate
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            MouseCursor.Icon = MouseCursorIcon.Talk;
+            MouseCursor.Tooltip = null;
+            MouseCursor.CustomImage = null;
+        }
+
+        // OnDeactivate
+        protected override void OnDeactivate()
+        {
+            base.OnDeactivate();
+            speakerSoundInstance?.Stop();
+            speakerSoundInstance = null;
+        }
 
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
@@ -131,7 +114,7 @@ namespace Remizione
             Game.SpriteBatch.End();
 
             Game.SpriteBatch.Begin(Game.Camera);
-            subjectSprite.Draw(gameTime);
+            speakerSprite.Draw(gameTime);
             textSprite.Draw(gameTime);
             Game.SpriteBatch.End();
         }
@@ -139,7 +122,7 @@ namespace Remizione
         // OnHandleInput
         protected override HandleInputResult OnHandleInput()
         {
-            if (allowSkip && HandleMouseInput())
+            if (HandleMouseInput())
                 return HandleInputResult.Handled;
 
             return base.OnHandleInput();
@@ -149,14 +132,7 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             textSprite.Update(gameTime);
-            background.Opacity = textSprite.Opacity;
-
-            if (!CanClose && !allowSkip && soundEffectInstance?.State == SoundState.Stopped)
-            {
-                DisposeSound();
-                opacityTween.Start(TweenStyle.CubicIn, 1, 0, 500, () => Game.SceneManager.Pop());
-                textSprite.Tweens.OpacityTween = opacityTween;
-            }
+            background.Update(gameTime);
         }
 
         #endregion
@@ -165,62 +141,39 @@ namespace Remizione
         public bool CanClose { get; private set; }
 
         // Show
-        public void Show(string text, string? soundName)
+        public void Show(string text, GameThing? speaker = null, string? soundName = null)
         {
-            var index = text.IndexOf("|", System.StringComparison.Ordinal);
-            if (index > 0)
-                this.subjectSprite.Text = text.Substring(0, index);
-            else
-                this.subjectSprite.Clear();
+            this.speakerSprite.Text = speaker?.DisplayName;
+            this.textSprite.Text = text;
 
-            this.textSprite.Text = index == -1 ? text : text.Substring(index + 1);
-
-            if (!string.IsNullOrWhiteSpace(soundName))
-                this.textSprite.Color = ColorPalette.Text.Yellow * .8f;
-            else if (index >= 0)
-                this.textSprite.Color = ColorPalette.Text.Orange * .8f;
+            // Speaker
+            if (!speakerSprite.IsEmpty)
+            {
+                this.textSprite.Color = ColorPalette.MouseCursor.Tooltip * .6f;
+                if (!string.IsNullOrWhiteSpace(soundName))
+                {
+                    speakerSoundInstance = Sound.Find(soundName)?.PopInstance();
+                    if (speakerSoundInstance != null)
+                    {
+                        speakerSoundInstance.Looped = true;
+                        speakerSoundInstance.Play();
+                    }
+                }
+            }
             else
+            {
                 this.textSprite.Color = ColorPalette.Text.TerraLight * .8f;
+            }
 
-            if (subjectSprite.Length > 0)
-                subjectSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.LeftTop);
-
-            DisposeSound();
-
-            MouseCursor.Tooltip = null;
+            if (speakerSprite.Length > 0)
+                speakerSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.Top, 0, 1);
 
             CanClose = false;
 
-            //textSprite.StartTyping();
+            textSprite.StartTyping();
 
-            SoundEffect? soundEffect = null;
-            if (!string.IsNullOrWhiteSpace(soundName))
-            {
-                if (TextRepository.LanguagePackage?.LanguageTag is string languageTag)
-                    soundEffect = LoadVoiceSoundEffect(soundName, languageTag);
-
-                soundEffect ??= LoadVoiceSoundEffect(soundName, "en-US");
-            }
-
-            if (!string.IsNullOrWhiteSpace(soundName))
-            {
-                if (soundEffect != null)
-                {
-                    soundEffectInstance = soundEffect.CreateInstance();
-                    soundEffectInstance.Volume = AudioManager.VoiceCategory.Volume.Effective;
-                    soundEffectInstance.Pitch = .1f;
-                    soundEffectInstance.Play();
-                }
-            }
-
-            background.Opacity = 0;
-            opacityTween.Start(TweenStyle.CubicIn, 0, 1, 500);
-            textSprite.Tweens.OpacityTween = opacityTween;
-
-            MouseCursor.CustomImage = null;
-            MouseCursor.Icon = this.allowSkip ? MouseCursorIcon.Talk : MouseCursorIcon.Wait;
-
-            this.allowSkip = soundEffect == null;
+            textOpacityTween.Start(TweenStyle.CubicIn, 0, 1, 500);
+            textSprite.Tweens.OpacityTween = textOpacityTween;
         }
     }
 }

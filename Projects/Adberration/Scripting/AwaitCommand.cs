@@ -6,7 +6,7 @@ namespace Adberration.Scripting
     // AwaitCommand
     // Syntax: {Int32Range}
     [ForceAwait]
-    internal sealed class AwaitCommand : AwaitableCommand
+    public sealed class AwaitCommand : AwaitableCommand
     {
         private int duration;
 

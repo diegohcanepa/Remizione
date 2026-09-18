@@ -201,6 +201,7 @@
 			<Word>create-dialog-block</Word>
 			<Word>echo</Word>
 			<Word>hide-overlay-text</Word>
+			<Word>narrate</Word>
 			<Word>say</Word>
 			<Word>show-overlay-text</Word>
 			<Word>terminate-dialog-block</Word>

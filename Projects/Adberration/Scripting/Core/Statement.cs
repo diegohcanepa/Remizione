@@ -72,6 +72,7 @@ namespace Adberration.Scripting
         protected static readonly string ScopeArg = "#scope";
         protected static readonly string SoundArg = "#sound";
         protected static readonly string SpawnPointArg = "#spawn-point";
+        protected static readonly string SpeakerArg = "#speaker";
         protected static readonly string SpeedFactorArg = "#speed-factor";
         protected static readonly string StartDelayArg = "#start-delay";
         protected static readonly string StyleArg = "#style";

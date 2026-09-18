@@ -2,17 +2,16 @@
 
 namespace Remizione.Scripting
 {
-    // EchoCommand
+    // NarrateCommand
     // Arguments: {"Text"} [#lid:Integer] [#literal] [#speaker:GameThing]
     [ForceAwait]
-    internal sealed class EchoCommand : LocalizableCommand
+    internal sealed class NarrateCommand : LocalizableCommand
     {
         // Constructor
-        public EchoCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 1, LiteralArg, LocalizationIdArg, SpeakerArg, VoiceArg)
+        public NarrateCommand(Script script, string source, StatementBody body)
+            : base(script, source, body, 1, LiteralArg, LocalizationIdArg, VoiceArg)
         {
             Parser.ParseQuotedString(this, 0);
-            Parser.ParseEntityArgument<GameThing>(this, SpeakerArg, null);
             Parser.ParseNameArgument(this, VoiceArg);
         }
 
@@ -21,12 +20,11 @@ namespace Remizione.Scripting
         // OnExecute
         protected override void OnExecute()
         {
-            var speaker = Parser.ParseEntityArgument<GameThing>(this, SpeakerArg, null);
             var text = GetDisplayText();
             var soundName = Parser.ParseNameArgument(this, VoiceArg);
 
             if (Session is GameSession session)
-                session.Echo(text, speaker, soundName);
+                session.Narrate(text, soundName);
         }
 
         // TextClauseIndex
@@ -37,13 +35,13 @@ namespace Remizione.Scripting
         // GetTextEmitterName
         protected override string GetTextEmitterName()
         {
-            return "(Echo)";
+            return "(Narrate)";
         }
 
         // IsAwaiting
         public override bool IsAwaiting()
         {
-            return Game.SceneManager.CurrentScene is EchoScene scene && !scene.CanClose;
+            return Game.SceneManager.CurrentScene is NarrationScene scene && !scene.CanClose;
         }
     }
 }

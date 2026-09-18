@@ -761,6 +761,27 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/Raven.wav;Audio/FX/Raven
 
+#begin Audio/FX/SpeakerMale1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/SpeakerMale1.wav;Audio/FX/SpeakerMale1
+
+#begin Audio/FX/SpeakerMale2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/SpeakerMale2.wav;Audio/FX/SpeakerMale2
+
+#begin Audio/FX/SpeakerMale3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/SpeakerMale3.wav;Audio/FX/SpeakerMale3
+
 #begin Audio/FX/SpearTrap.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

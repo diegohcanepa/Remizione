@@ -1,7 +1,6 @@
 ﻿using Adberration;
 using Adberration.Scripting;
 using Engendro;
-using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Remizione.Props;
@@ -27,6 +26,8 @@ namespace Remizione
         private readonly ScriptConsole? console;
         private readonly EchoScene echoScene;
         private readonly InventoryScene inventoryScene;
+        private readonly ItemInfoScene itemInfoScene;
+        private readonly NarrationScene narrationScene;
         private Vector2? playerPosition;
         private FrozenDictionary<string, GameThing>? proceduralCatalog;
         private readonly RoomEditor? roomEditor;
@@ -56,8 +57,10 @@ namespace Remizione
             this.InteractionContext = new(this);
             this.InteractionData = new(this);
             this.echoScene = new EchoScene(this);
+            this.narrationScene = new NarrationScene(this);
             this.PlayerData = new(this);
             this.inventoryScene = new(PlayerData.Inventory);
+            this.itemInfoScene = new(this);
             this.HUD = new(this);
             this.LootGenerator = new(this);
             this.RenewSeed();
@@ -147,6 +150,7 @@ namespace Remizione
             AotTypeRegistry.Register("exit-session", typeof(ExitSessionCommand));
             AotTypeRegistry.Register("if-can-pickup", typeof(IfCanPickUpStatement));
             AotTypeRegistry.Register("if-test-skill", typeof(IfTestSkillStatement));
+            AotTypeRegistry.Register("narrate", typeof(NarrateCommand));
             AotTypeRegistry.Register("pickup", typeof(PickUpCommand));
             AotTypeRegistry.Register("place-item", typeof(PlaceItemCommand));
             AotTypeRegistry.Register("say", typeof(SayCommand));
@@ -501,6 +505,15 @@ namespace Remizione
         [ScriptProperty]
         public bool DisplayHPMeter { get; set; } = true;
 
+        // Echo
+        public void Echo(string text, GameThing? speaker, string? soundName)
+        {
+            if (Game.SceneManager.CurrentScene is not EchoScene)
+                Game.SceneManager.Push(echoScene);
+
+            echoScene.Show(text, speaker, soundName);
+        }
+
         // Environment
         public Environment Environment { get; }
 
@@ -633,6 +646,15 @@ namespace Remizione
 
         // MasterRunRng (RNG supremo de la partida entera. Solo se usa para generar pisos.)
         public Random MasterRunRng { get; } = new();
+
+        // Narrate
+        public void Narrate(string text, string? soundName)
+        {
+            if (Game.SceneManager.CurrentScene is not NarrationScene)
+                Game.SceneManager.Push(narrationScene);
+
+            narrationScene.Show(text, soundName);
+        }
 
         // NextRoom
         [ScriptProperty]
@@ -790,20 +812,18 @@ namespace Remizione
             Game.SceneManager.Push(scene);
         }
 
-        // ShowEcho
-        public void ShowEcho(string text, string? soundName)
-        {
-            if (Game.SceneManager.CurrentScene is not EchoScene)
-                Game.SceneManager.Push(echoScene);
-
-            echoScene.Show(text, soundName);
-        }
-
         // ShowInventory
         public void ShowInventory()
         {
             if (inventoryScene != null)
                 Game.SceneManager.Push(inventoryScene);
+        }
+
+        // ShowItemInfo
+        public void ShowItemInfo(Item item)
+        {
+            itemInfoScene.Show(item);
+            Game.SceneManager.Push(itemInfoScene);
         }
 
         // Unlock
