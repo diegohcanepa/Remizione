@@ -66,24 +66,6 @@ namespace Remizione
             soundEffect = null;
         }
 
-        // LoadVoiceSoundEffect
-        private SoundEffect? LoadVoiceSoundEffect(string soundName, string languageTag)
-        {
-            if (string.IsNullOrWhiteSpace(soundName) || string.IsNullOrWhiteSpace(languageTag))
-                return null;
-
-            var filePath = Sound.EncodeAssetName(AudioManager.VoiceCategory, languageTag, soundName);
-
-            try
-            {
-                return content.Load<SoundEffect>(filePath);
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
         #endregion
 
         #region Protected members
@@ -160,13 +142,10 @@ namespace Remizione
             if (!string.IsNullOrWhiteSpace(soundName))
             {
                 if (TextRepository.LanguagePackage?.LanguageTag is string languageTag)
-                    soundEffect = LoadVoiceSoundEffect(soundName, languageTag);
+                    soundEffect = AudioManager.LoadVoice(content, soundName, languageTag);
 
-                soundEffect ??= LoadVoiceSoundEffect(soundName, "en-US");
-            }
+                soundEffect ??= AudioManager.LoadVoice(content, soundName, "en-US");
 
-            if (!string.IsNullOrWhiteSpace(soundName))
-            {
                 if (soundEffect != null)
                 {
                     soundEffectInstance = soundEffect.CreateInstance();

@@ -83,7 +83,7 @@ namespace Remizione
             // Item description
             itemDescription = new(Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Terra,
+                Color = ColorPalette.Inventory.EffectDescription,
                 MaximumWidth = 200,
                 Multiline = false,
                 PivotOrigin = RectanglePoint.Bottom,
@@ -310,10 +310,11 @@ namespace Remizione
                     }
 
                     itemLabel.X = icons[item.Index].BoundingBox.Center.X;
+                    itemLabel.Color = item.Definition.IsKeyItem ? ColorPalette.Inventory.KeyItem : ColorPalette.Inventory.Item;
                     itemDescription.X = icons[item.Index].BoundingBox.Center.X;
                     itemLabel.Text = item.Definition.DisplayName;
-                    MouseCursor.Tooltip = item.Definition.DisplayName;
                     itemDescription.Text = item.Definition.EffectDescription;
+                    MouseCursor.Tooltip = item.Definition.DisplayName;
                     icons[item.Index].Scale = ScaleInfo.UIElement.ExtraLarge;
                     shadows[item.Index].Scale = ScaleInfo.UIElement.ExtraLarge;
                     itemLabel.Tag = item;

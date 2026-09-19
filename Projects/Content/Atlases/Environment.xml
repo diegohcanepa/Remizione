@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:69b4e7dabe95cf3c27ba637c05986dd0:754943b1016e0bde7f5dd14f685704b1:90dd61259f597836213851943cf8b193$ -->
+<!-- $TexturePacker:SmartUpdate:e9800b0a2042eac229d5c3614027ae92:78b7201f432b2d1c1a6bce298bec16f8:90dd61259f597836213851943cf8b193$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -71,11 +71,11 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Gut12.png" x="31" y="437" w="4" h="2"/>
     <sprite n="GutStain1.png" x="17" y="367" w="18" h="11"/>
     <sprite n="GutStain2.png" x="17" y="393" w="17" h="10"/>
+    <sprite n="ItemOrb.png" x="37" y="366" w="7" h="10"/>
     <sprite n="Lightning01.png" x="77" y="162" w="35" h="181"/>
     <sprite n="Lightning02.png" x="2" y="162" w="35" h="182"/>
     <sprite n="Lightning03.png" x="39" y="162" w="36" h="181"/>
     <sprite n="LightningLight.png" x="2" y="2" w="266" h="158"/>
-    <sprite n="LootOrb.png" x="37" y="366" w="7" h="10"/>
     <sprite n="PistolBullet.png" x="48" y="509" w="8" h="1"/>
     <sprite n="PotteryA.png" x="17" y="432" w="12" h="7"/>
     <sprite n="PotteryB.png" x="2" y="487" w="12" h="12"/>

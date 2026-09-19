@@ -10,6 +10,7 @@ using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Xml;
 
@@ -24,6 +25,7 @@ namespace Remizione
         #region Private fields
 
         private readonly ScriptConsole? console;
+        private readonly List<(ItemDefinition itemDef, GameRoom room, Vector2 position)> droppedKeyItems = [];
         private readonly EchoScene echoScene;
         private readonly InventoryScene inventoryScene;
         private readonly ItemInfoScene itemInfoScene;
@@ -86,8 +88,6 @@ namespace Remizione
                     TextErrorColor = ColorPalette.Text.Terra
                 };
 
-                console.CommandList.Add("add-item Apple");
-
                 roomEditor = new RoomEditor(this);
             }
 
@@ -111,7 +111,6 @@ namespace Remizione
             AotTypeRegistry.Register(typeof(Actor));
             AotTypeRegistry.Register(typeof(Bonfire));
             AotTypeRegistry.Register(typeof(BronzeKey));
-            AotTypeRegistry.Register(typeof(CloseUpRoom));
             AotTypeRegistry.Register(typeof(Coin));
             AotTypeRegistry.Register(typeof(CreditsRoom));
             AotTypeRegistry.Register(typeof(Decoration));
@@ -119,7 +118,7 @@ namespace Remizione
             AotTypeRegistry.Register(typeof(Fleshiness));
             AotTypeRegistry.Register(typeof(GameRoom));
             AotTypeRegistry.Register(typeof(GoldenKey));
-            AotTypeRegistry.Register(typeof(LootOrb));
+            AotTypeRegistry.Register(typeof(ItemOrb));
             AotTypeRegistry.Register(typeof(Pottery));
             AotTypeRegistry.Register(typeof(ProceduralRoom));
             AotTypeRegistry.Register(typeof(Prop));
@@ -142,7 +141,6 @@ namespace Remizione
             AotTypeRegistry.Register("await-dialog-block", typeof(AwaitDialogBlockCommand));
             AotTypeRegistry.Register("await-input", typeof(AwaitInputCommand));
             AotTypeRegistry.Register("await-npc-turn", typeof(AwaitNPCTurnCommand));
-            AotTypeRegistry.Register("await-popup", typeof(AwaitPopupCommand));
             AotTypeRegistry.Register("consume-item", typeof(ConsumeItemCommand));
             AotTypeRegistry.Register("create-dialog-block", typeof(CreateDialogBlockCommand));
             AotTypeRegistry.Register("echo", typeof(EchoCommand));
@@ -336,6 +334,26 @@ namespace Remizione
                         unlockedDefinitions.Add(name);
                 }
             }
+
+            // Dropped key items
+            droppedKeyItems.Clear();
+            if (sessionNode.Attributes["DroppedKeyItems"]?.Value is string droppedKeyItemsValue)
+            {
+                var orbs = droppedKeyItemsValue.Split(';');
+
+                foreach (var item in orbs)
+                {
+                    var itemData = item.Split('|');
+                    if (GameData.Items.Find(itemData[0]) is ItemDefinition itemDefinition)
+                    {
+                        if (FindEntity<GameRoom>(itemData[1]) is GameRoom room)
+                        {
+                            var pos = DataConvert.ToVector2(itemData[2]);
+                            droppedKeyItems.Add(new(itemDefinition, room, pos));
+                        }
+                    }                                   
+                }
+            }
         }
 
         // OnResume
@@ -400,6 +418,12 @@ namespace Remizione
             {
                 propDef.AssertScriptDeclaration(this);
             }
+
+            foreach (var item in droppedKeyItems)
+            {
+                ItemOrb.Drop(item.itemDef, item.room, item.position);
+            }
+            droppedKeyItems.Clear();
         }
 
         // OnUpdate
@@ -479,6 +503,23 @@ namespace Remizione
 
             // UnlockedDefinitions
             output.WriteAttributeString("UnlockedDefinitions", string.Join(",", unlockedDefinitions));
+
+            // Dropped key items
+            var keyItems = new List<string>();
+            foreach (var room in Entities.OfType<GameRoom>())
+            {
+                // Orbs
+                foreach (var orb in room.Children.OfType<ItemOrb>())
+                {
+                    if (orb.ItemReward is { IsKeyItem: true } itemDef)
+                    {
+                        var value = $"{itemDef.Name}|{room.Name}|{DataConvert.ToString(orb.Position)}";
+                        keyItems.Add(value);
+                    }
+                }
+            }
+
+            output.WriteAttributeString("DroppedKeyItems", string.Join(";", keyItems));
         }
 
         // OnOutcomeCompleted

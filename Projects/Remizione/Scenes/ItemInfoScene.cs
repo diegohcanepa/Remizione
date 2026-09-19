@@ -19,7 +19,7 @@ namespace Remizione
         private Item? item;
         private readonly GameSession session;
         private readonly Sprite shadow;
-        private readonly TextSprite titleText;
+        private readonly TextSprite nameText;
 
         #endregion
 
@@ -59,8 +59,8 @@ namespace Remizione
                 X = image.BoundingBox.Center.X - .5f
             };
 
-            // Title text
-            this.titleText = new(Fonts.Common)
+            // Name text
+            this.nameText = new(Fonts.Common)
             {
                 Color = ColorPalette.MouseCursor.Tooltip,
                 PivotOrigin = RectanglePoint.Top,
@@ -72,21 +72,21 @@ namespace Remizione
             // Description
             this.descriptionText = new(Fonts.Common)
             {
-                Color = ColorPalette.Text.Terra,
+                Color = ColorPalette.Inventory.EffectDescription,
                 MaximumWidth = 190,
                 PivotOrigin = RectanglePoint.Top,
-                Position = titleText.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 1),
+                Position = nameText.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 1),
                 Scale = ScaleInfo.Text.VeryLarge
             };
 
             // Button
             this.button = new()
             {
-                HoverColor = ColorPalette.Text.OrangeLight,
-                TextColor = ColorPalette.Text.Orange,
+                HoverColor = ColorPalette.Text.TerraLight,
+                TextColor = ColorPalette.Text.Terra,
                 PivotOrigin = RectanglePoint.RightBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -3, -3),
-                Text = Localization.GetValue(UserAction.Discard)
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -20, -3),
+                Text = Localization.GetValue(UserAction.Drop)
             };
         }
 
@@ -122,7 +122,7 @@ namespace Remizione
             imageSlot.Draw(gameTime);
             shadow.Draw(gameTime);
             image.Draw(gameTime);
-            titleText.Draw(gameTime);
+            nameText.Draw(gameTime);
             descriptionText.Draw(gameTime);
             button.Draw(gameTime);
             Game.SpriteBatch.End();
@@ -154,7 +154,7 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             button.Update(gameTime);
-            titleText.Update(gameTime);
+            nameText.Update(gameTime);
             descriptionText.Update(gameTime);
         }
 
@@ -164,7 +164,8 @@ namespace Remizione
         public void Show(Item item)
         {
             this.item = item;
-            this.titleText.Text = item.Definition.DisplayName;
+            this.nameText.Color = item.Definition.IsKeyItem ? ColorPalette.Inventory.KeyItem : ColorPalette.Inventory.Item;
+            this.nameText.Text = item.Definition.DisplayName;
             this.descriptionText.Text = item.Definition.Description;
             this.image.RenderImage = item.Definition.Image;
             this.shadow.RenderImage = item.Definition.Image;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
 using System;
 using System.Text.Json;
 
@@ -58,6 +59,8 @@ namespace Engendro.Audio
                 // Scope
                 if (element.GetEnum<SoundScope>("scope") is SoundScope scope)
                     settings.Scope = scope;
+                else if (category == SoundCategoryName.Music)
+                    settings.Scope = SoundScope.Global;
 
                 // SoundCount
                 if (element.GetInt32("soundCount") is int soundCount)
@@ -172,6 +175,23 @@ namespace Engendro.Audio
             foreach (var sound in Sound.Sounds)
             {
                 sound.Load();
+            }
+        }
+
+        // LoadVoice
+        public static SoundEffect? LoadVoice(ContentManager content, string soundName, string languageTag)
+        {
+            if (string.IsNullOrWhiteSpace(soundName) || string.IsNullOrWhiteSpace(languageTag))
+                return null;
+
+            var filePath = Sound.EncodeAssetName(VoiceCategory, languageTag, soundName);
+            try
+            {
+                return content.Load<SoundEffect>(filePath);
+            }
+            catch
+            {
+                return null;
             }
         }
 

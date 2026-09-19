@@ -11,7 +11,7 @@ namespace Adberration.Scripting
             : base(script, source, body, 1)
         {
             var tag = Parser.ParseName(this, 0);
-            if (tag != ScriptSyntax.NullValue && !Sound.AvailableTags.Contains(tag))
+            if (tag != ScriptSyntax.NullValue && !Sound.AllTags.Contains(tag))
             {
                 throw ScriptExceptionBuilder.UndeclaredTag(this, tag);
             }

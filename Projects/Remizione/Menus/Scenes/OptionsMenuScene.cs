@@ -38,7 +38,6 @@ namespace Remizione.Menus
 
             menu.AddOption(new VibrationOption(game));
             menu.AddOption(new AudioOption(game));
-            menu.AddOption(new GamePadOption(game));
 
             //?
             /*

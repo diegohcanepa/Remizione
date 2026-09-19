@@ -23,20 +23,15 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public Light(string name, LightKind lightKind)
+        public Light(string name, LightKind lightKind = LightKind.Default)
         {
             Name = name;
-            LightKind = lightKind;
-
             lightSprite = new()
             {
                 RenderImage = Atlases.Environment.DefaultLight,
                 PivotOrigin = RectanglePoint.Center
             };
-
-            Color = GetInitialColor(lightKind);
-
-            Setup();
+            LightKind = lightKind;
         }
 
         #endregion
@@ -85,7 +80,8 @@ namespace Remizione
             return lightKind switch
             {
                 LightKind.Fleshiness => new Color(255, 200, 200),
-                LightKind.LootOrb => new(240, 181, 65),
+                LightKind.KeyItemOrb => ColorPalette.Inventory.KeyItem,
+                LightKind.ItemOrb => ColorPalette.Inventory.Item,
                 LightKind.SulfurBonfire => new(134, 146, 31),
                 LightKind.Outdoor => ColorPalette.OutdoorLight,
                 _ => Color.White
@@ -136,7 +132,8 @@ namespace Remizione
                     unlitTweenDuration = 1500;
                     break;
 
-                case LightKind.LootOrb:
+                case LightKind.KeyItemOrb:
+                case LightKind.ItemOrb:
                     lightSprite.Tweens.OpacityTween = CreateFlickerTween(LightKind);
                     litTweenDuration = 1000;
                     unlitTweenDuration = 1000;
@@ -232,7 +229,19 @@ namespace Remizione
         public bool IsEmitting => currentFade > 0;
 
         // LightKind
-        public LightKind LightKind { get; }
+        public LightKind LightKind
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    Color = GetInitialColor(field);
+                    Setup();
+                }
+            }
+        }
 
         // Lit
         public void Lit(bool immediate = false, int duration = 0)

@@ -23,11 +23,6 @@ namespace Remizione.Menus
         private readonly Menu menu;
         private readonly Sprite roofLight;
 
-#if XBOX_ONE
-        private readonly TextSprite xboxActiveUser;
-        private readonly UIControl xboxSigningButton;
-#endif
-
         #endregion
 
         #region Constructor
@@ -93,22 +88,6 @@ namespace Remizione.Menus
             };
 
             this.fadeInTimer = new Timer(FadeIn);
-
-#if XBOX_ONE
-            // XBox active user
-            xboxActiveUser = new TextSprite(Game, Fonts.Regular)
-            { 
-                Color = ColorPalette.MenuItemTextActive,
-                PivotOrigin = RectanglePoint.LeftBottom
-            };
-
-            // XBox sign in button
-            xboxSigningButton = new UIControl(Game, GameInput.SignIn)
-            {
-                PivotOrigin = RectanglePoint.LeftBottom,
-                Text = VladUtils.EncodePlatformMessageKey(PlatformMessageKey.SignIn)
-            };
-#endif
         }
 
         #endregion
@@ -122,21 +101,6 @@ namespace Remizione.Menus
 
             Width = Screen.NativeWidth;
             Height = Screen.NativeHeight;
-
-            Invalidate();
-        }
-
-        // Invalidate
-        private void Invalidate()
-        {
-#if XBOX_ONE
-            xboxSigningButton.Position = Screen.SafeArea.GetPoint(RectanglePoint.LeftBottom);
-            xboxSigningButton.Text = string.IsNullOrWhiteSpace(Game.ActiveUser) ? VladUtils.EncodePlatformMessageKey(PlatformMessageKey.SignIn) : VladUtils.EncodePlatformMessageKey(PlatformMessageKey.ChangeUser);
-
-            xboxActiveUser.Position = xboxSigningButton.BoundingBox.GetPoint(RectanglePoint.LeftTop, 0, -2);
-            xboxActiveUser.Text = Game.ActiveUser;
-            xboxActiveUser.Scale = xboxSigningButton.TextScale;
-#endif
         }
 
         // ResetNextBlinkTimer
@@ -198,30 +162,12 @@ namespace Remizione.Menus
             experienceAdviceText.Draw(gameTime);
             Game.SpriteBatch.End();
 
-#if XBOX_ONE
-            xboxSigningButton.Draw(gameTime);
-
-            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
-            xboxActiveUser.Draw(gameTime);
-            Game.SpriteBatch.End();
-#endif
             DrawVersionInformation(gameTime);
         }
 
         // OnHandleInput
         protected override HandleInputResult OnHandleInput()
         {
-
-#if XBOX_ONE
-            if (xboxSigningButton.TestPressed(VladInputHelper.PlayerIndex))
-            {
-                // Sign In / Change User cod here
-                XboxOne.ChangeSignInUser();
-
-                return HandleInputResult.Handled;
-            }
-#endif
-
             return menu.HandleInput();
         }
 
@@ -233,8 +179,6 @@ namespace Remizione.Menus
             TransitionManager.CurrentTransition.In(0);
             fadeInTimer.Start(500);
 
-            Invalidate();
-
             ResetNextBlinkTimer();
         }
 
@@ -242,11 +186,6 @@ namespace Remizione.Menus
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
-
-#if XBOX_ONE
-            xboxActiveUser.Update(gameTime);
-            xboxSigningButton.Update(gameTime);
-#endif
 
             lightBlink.Update(gameTime);
             darknessTween.Update(gameTime);
@@ -264,7 +203,6 @@ namespace Remizione.Menus
         // WishlistNow
         public static void WishlistNow()
         {
-#if WINDOWS
             System.Diagnostics.ProcessStartInfo info = new()
             {
                 FileName = $"steam://store/{GameSettings.SteamAppID}",
@@ -272,7 +210,6 @@ namespace Remizione.Menus
             };
 
             System.Diagnostics.Process.Start(info);
-#endif
         }
     }
 }

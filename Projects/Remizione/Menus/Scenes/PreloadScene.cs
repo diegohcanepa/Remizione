@@ -21,13 +21,7 @@ namespace Remizione.Menus
 
             BackgroundColor = Color.Black;
             FadeDuration = 300;
-
-#if WINDOWS
-            NextScene = new ControllerAdviceScene(game);
-#else
-            NextScene = new PressToStartScene(game);
-#endif
-
+            NextScene = new TitleMenuScene(game);
         }
 
         #region Private members

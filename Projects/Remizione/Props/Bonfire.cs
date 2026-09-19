@@ -136,7 +136,7 @@ namespace Remizione
                 if (value != field)
                 {
                     field = value;
-                    
+
                     if (field)
                     {
                         flame.Player.Play("Default", true);

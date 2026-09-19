@@ -52,7 +52,7 @@ namespace Engendro.Audio
         // FindSoundInstanceByTag
         private static SoundInstance? FindSoundInstanceByTag(string tag)
         {
-            if (!Sound.AvailableTags.Contains(tag))
+            if (!Sound.AllTags.Contains(tag))
                 return null;
 
             SoundInstance? result;
@@ -194,7 +194,7 @@ namespace Engendro.Audio
         // PlayTag
         public bool PlayTag(string tag, int fadeIn)
         {
-            if (Sound.AvailableTags.Contains(tag) && tag != CurrentTag)
+            if (Sound.AllTags.Contains(tag) && tag != CurrentTag)
             {
                 PlayTagCore(tag, fadeIn);
                 CurrentTag = tag;

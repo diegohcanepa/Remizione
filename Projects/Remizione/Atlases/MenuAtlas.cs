@@ -13,13 +13,6 @@ namespace Remizione
         {
             BottomOrnament = this[nameof(BottomOrnament)];
             ContainerScreen = this[nameof(ContainerScreen)];
-            ControllerAdvice = this[nameof(ControllerAdvice)];
-            ControlsKeyboard = this[nameof(ControlsKeyboard)];
-            ControlsNintendoSwitch = this[nameof(ControlsNintendoSwitch)];
-            ControlsPlayStation4 = this[nameof(ControlsPlayStation4)];
-            ControlsPlayStation5 = this[nameof(ControlsPlayStation5)];
-            ControlsXboxOne = this[nameof(ControlsXboxOne)];
-            ControlsWindows = this[nameof(ControlsWindows)];
             DemoRibbon = this[nameof(DemoRibbon)];
             DeveloperLogo = this[nameof(DeveloperLogo)];
             FadeCircle = this[nameof(FadeCircle)];
@@ -34,7 +27,6 @@ namespace Remizione
             OptionHighlight = this[nameof(OptionHighlight)];
             PauseMenuBackground = this[nameof(PauseMenuBackground)];
             PublisherLogo = this[nameof(PublisherLogo)];
-            RatShadow = this[nameof(RatShadow)];
             StartGameMenuBackground = this[nameof(StartGameMenuBackground)];
             StartGameMenuSelectedSlotContainer = this[nameof(StartGameMenuSelectedSlotContainer)];
             TitleScreen = this[nameof(TitleScreen)];
@@ -48,27 +40,6 @@ namespace Remizione
 
         // ContainerScreen
         public AtlasImage ContainerScreen { get; }
-
-        // ControllerAdvice
-        public AtlasImage ControllerAdvice { get; }
-
-        // ControlsKeyboard
-        public AtlasImage ControlsKeyboard { get; }
-
-        // ControlsNintendoSwitch
-        public AtlasImage ControlsNintendoSwitch { get; }
-
-        // ControlsPlayStation4
-        public AtlasImage ControlsPlayStation4 { get; }
-
-        // ControlsPlayStation5
-        public AtlasImage ControlsPlayStation5 { get; }
-
-        // ControlsWindows
-        public AtlasImage ControlsWindows { get; }
-
-        // ControlsXboxOne
-        public AtlasImage ControlsXboxOne { get; }
 
         // DemoRibbon
         public AtlasImage DemoRibbon { get; }
@@ -111,9 +82,6 @@ namespace Remizione
 
         // PublisherLogo
         public AtlasImage PublisherLogo { get; }
-
-        // RatShadow
-        public AtlasImage RatShadow { get; }
 
         // StartGameMenuBackground
         public AtlasImage StartGameMenuBackground { get; }

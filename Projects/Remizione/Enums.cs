@@ -77,7 +77,7 @@ namespace Remizione
     public enum KnockbackIntensity { None, Low, Medium, High }
 
     // LightKind
-    public enum LightKind { Default, Fleshiness, Lantern, Fire, SulfurBonfire, Global, MuzzleFlash, Outdoor, Player, LootOrb }
+    public enum LightKind { Default, Fleshiness, Lantern, Fire, KeyItemOrb, SulfurBonfire, Global, MuzzleFlash, Outdoor, Player, ItemOrb }
 
     // LightState
     public enum LightState { Off, On, TurningOn, TurningOff }
@@ -172,7 +172,7 @@ namespace Remizione
     public enum UIControlGroupLayoutStyle { Vertically, Horizontally }
 
     // UserAction
-    public enum UserAction { Discard }
+    public enum UserAction { Discard, Drop }
 
     // Verb
     public enum Verb { None, Use, Examine, Bonfire, Talk, Attack, Lift, GoLeft, GoRight, GoUp, GoDown, PickUp }

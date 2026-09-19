@@ -6,16 +6,16 @@ namespace Engendro.Audio
     /// <summary>
     /// SoundSettings
     /// </summary>
-    public sealed class SoundSettings
+    internal sealed class SoundSettings
     {
         // Caption
-        public string Caption { get; set; } = string.Empty;
+        internal string Caption { get; set; } = string.Empty;
 
         // Category
-        public SoundCategory Category { get; set; } = AudioManager.FXCategory;
+        internal SoundCategory Category { get; set; } = AudioManager.FXCategory;
 
         // MaxInstances
-        public int MaxInstances
+        internal int MaxInstances
         {
             get;
             set
@@ -26,7 +26,7 @@ namespace Engendro.Audio
         } = 6;
 
         // Pan
-        public float Pan
+        internal float Pan
         {
             get;
             set
@@ -41,10 +41,10 @@ namespace Engendro.Audio
         }
 
         // PauseAware
-        public bool PauseAware { get; set; } = true;
+        internal bool PauseAware { get; set; } = true;
 
         // Pitch
-        public float Pitch
+        internal float Pitch
         {
             get;
             set
@@ -59,25 +59,25 @@ namespace Engendro.Audio
         }
 
         // PitchVariance
-        public Ratio PitchVariance { get; set; }
+        internal Ratio PitchVariance { get; set; }
 
         // PopMode
-        public SoundPopMode PopMode { get; set; }
+        internal SoundPopMode PopMode { get; set; }
 
         // Scope
-        public SoundScope Scope { get; set; }
+        internal SoundScope Scope { get; set; }
 
         // Sounds
-        public List<string> Sounds { get; set; } = [];
+        internal List<string> Sounds { get; set; } = [];
 
         // Tags
-        public string? Tags { get; set; }
+        internal string? Tags { get; set; }
 
         // TransitionAware
-        public bool TransitionAware { get; set; } = true;
+        internal bool TransitionAware { get; set; } = true;
 
         // Volume
-        public float Volume
+        internal float Volume
         {
             get;
             set

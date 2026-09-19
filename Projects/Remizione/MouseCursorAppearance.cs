@@ -160,6 +160,12 @@ namespace Remizione
             else
             {
                 MouseCursor.Tooltip = target.DisplayName;
+
+                if (target.Verb == Verb.Attack)
+                    MouseCursor.TooltipColor = ColorPalette.Text.Red;
+                else
+                    MouseCursor.TooltipColor = target is ItemOrb && target.ItemReward?.IsKeyItem == true ? ColorPalette.Inventory.KeyItem : ColorPalette.Inventory.Item;
+
                 MouseCursor.SubTextColor = ColorPalette.MouseCursor.SubText;
                 MouseCursor.SubText = target.StateTip;
             }

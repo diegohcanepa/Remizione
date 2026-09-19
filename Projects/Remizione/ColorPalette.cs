@@ -46,6 +46,14 @@ namespace Remizione
             internal static Color Fore { get; } = new(164, 60, 60);
         }
 
+        // Inventory
+        internal static class Inventory
+        {
+            internal static Color EffectDescription { get; } = MouseCursor.Tooltip;
+            internal static Color KeyItem { get; } = Text.SkyBlue * .7f;
+            internal static Color Item { get; } = Text.Terra;
+        }
+
         // MenuItemTextActive
         internal static Color MenuItemTextActive { get; } = new(240, 240, 240);
 
@@ -120,7 +128,7 @@ namespace Remizione
             internal static Color Orange { get; } = new(171, 81, 48);
             internal static Color OrangeLight { get; } = new(207, 117, 43);
             internal static Color Purple { get; } = new(156, 42, 112);
-            internal static Color Red { get; } = new(173, 47, 69);
+            internal static Color Red { get; } = new(164, 60, 60);
             internal static Color RedLight { get; } = new(230, 69, 57);
             internal static Color Sentence { get; } = new(172, 167, 144);
             internal static Color SkyBlue { get; } = new(79, 164, 184);

@@ -236,12 +236,7 @@ namespace Remizione
             ItemReward ??= Session.LootGenerator.RollForLoot(Definition);
 
             if (ItemReward != null)
-            {
-                var loot = Session.CreateThingClone<Prop>(nameof(LootOrb));
-                loot.ItemReward = ItemReward;
-                loot.Position = Position;
-                room.Children.Add(loot);
-            }
+                ItemOrb.Drop(ItemReward, room, Position);
 
             ItemReward = null;
         }

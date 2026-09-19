@@ -14,7 +14,7 @@ namespace Adberration.Scripting
             Parser.ParseInt32Argument(this, FadeArg);
             Parser.ParseEnumArgument<MusicTagScope>(this, ScopeArg);
 
-            if (tag != ScriptSyntax.NullValue && !Sound.AvailableTags.Contains(tag))
+            if (tag != ScriptSyntax.NullValue && !Sound.AllTags.Contains(tag))
             {
                 throw ScriptExceptionBuilder.UndeclaredTag(this, tag);
             }

@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>6</int>
         <key>texturePackerVersion</key>
-        <string>7.6.2</string>
+        <string>7.11.0</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -193,41 +193,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">ControllerAdvice-assets/ControllerAdvice.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>133,168,265,335</rect>
-                <key>scale9Paddings</key>
-                <rect>133,168,265,335</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Controls-assets/ControlsKeyboard.png</key>
-            <key type="filename">Controls-assets/ControlsNintendoSwitch.png</key>
-            <key type="filename">Controls-assets/ControlsPlayStation4.png</key>
-            <key type="filename">Controls-assets/ControlsPlayStation5.png</key>
-            <key type="filename">Controls-assets/ControlsWindows.png</key>
-            <key type="filename">Controls-assets/ControlsXboxOne.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>166,101,332,203</rect>
-                <key>scale9Paddings</key>
-                <rect>166,101,332,203</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Logos-assets/DeveloperLogo.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -410,43 +375,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Rat-assets/Rat01.png</key>
-            <key type="filename">Rat-assets/Rat02.png</key>
-            <key type="filename">Rat-assets/Rat03.png</key>
-            <key type="filename">Rat-assets/Rat04.png</key>
-            <key type="filename">Rat-assets/Rat05.png</key>
-            <key type="filename">Rat-assets/Rat06.png</key>
-            <key type="filename">Rat-assets/Rat07.png</key>
-            <key type="filename">Rat-assets/Rat08.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>7,4,14,7</rect>
-                <key>scale9Paddings</key>
-                <rect>7,4,14,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Rat-assets/RatShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>5,2,11,3</rect>
-                <key>scale9Paddings</key>
-                <rect>5,2,11,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">StartGameMenu-assets/StartGameMenuSelectedSlotContainer.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -489,9 +417,6 @@
                     <filename>TitleScreen-assets</filename>
                     <filename>ContainerScreen-assets</filename>
                     <filename>StartGameMenu-assets</filename>
-                    <filename>Controls-assets</filename>
-                    <filename>ControllerAdvice-assets</filename>
-                    <filename>Rat-assets</filename>
                 </array>
             </struct>
         </map>

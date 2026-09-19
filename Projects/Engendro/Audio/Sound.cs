@@ -15,8 +15,8 @@ namespace Engendro.Audio
     {
         #region Private fields
 
+        private static readonly HashSet<string> allTags = [];
         private readonly List<string> assetNames = [];
-        private static readonly List<string> availableTagList = [];
         private int indexOfLastNamePopped = -1;
         private readonly List<SoundInstance?> instancePool;
         private static readonly Dictionary<string, Sound> instancesByName = [];
@@ -28,7 +28,7 @@ namespace Engendro.Audio
         #region Constructor
 
         // Constructor
-        private Sound(string name, SoundCategory category, IList<string> soundNames, string[]? tags, int maxInstances, float volume, float pan, float pitch, Ratio pitchVariance, SoundPopMode popMode, bool transitionAware, SoundScope scope, bool pauseAware, string caption)
+        private Sound(string name, SoundSettings settings)
         {
             // Name cannot be empty
             CodeContract.NotEmpty(name, nameof(name));
@@ -38,58 +38,53 @@ namespace Engendro.Audio
                 CodeContract.ThrowDuplicatedNameException(nameof(name));
 
             this.Name = name;
-            this.Category = category;
-
-            if (maxInstances < 1)
-                throw new ArgumentOutOfRangeException(nameof(maxInstances), "Maximum instances value must be greater than zero.");
-
-            CodeContract.ValidRatio(volume, nameof(volume));
-            CodeContract.ValidRange(pan, -1, 1, nameof(pan));
-            CodeContract.ValidRange(pitch, -1, 1, nameof(pitch));
-
-            this.Category = category;
-            this.MaxInstances = Math.Max(1, maxInstances);
+            this.Category = settings.Category;
+            this.MaxInstances = settings.MaxInstances;
             this.instancePool = [];
 
-            for (var i = 0; i < maxInstances; i++)
+            for (var i = 0; i < MaxInstances; i++)
             {
                 this.instancePool.Add(null);
             }
 
-            this.PopMode = popMode;
-            this.Volume = volume;
-            this.Pan = pan;
-            this.Pitch = pitch;
-            this.PitchVariance = pitchVariance;
-            this.Caption = caption;
-            this.Scope = scope;
+            this.PopMode = settings.PopMode;
+            this.Volume = settings.Volume;
+            this.Pan = settings.Pan;
+            this.Pitch = settings.Pitch;
+            this.PitchVariance = settings.PitchVariance;
+            this.Caption = settings.Caption;
+            this.Scope = settings.Scope;
 
-            if (soundNames == null || soundNames.Count == 0)
-                soundNames = [Name];
-
-            for (var i = 0; i < soundNames.Count; i++)
+            if (settings.Sounds.Count == 0)
             {
-                assetNames.Add(soundNames[i]);
-                soundEffects.Add(soundNames[i], null);
+                assetNames.Add(Name);
+                soundEffects.Add(Name, null);
+            }
+            else
+            {
+                for (var i = 0; i < settings.Sounds.Count; i++)
+                {
+                    assetNames.Add(settings.Sounds[i]);
+                    soundEffects.Add(settings.Sounds[i], null);
+                }
             }
 
-            Tags = new ReadOnlyCollection<string>(tags ?? []);
-            TransitionAware = transitionAware;
-            PauseAware = pauseAware;
+            if (string.IsNullOrWhiteSpace(settings.Tags))
+                Tags = [];
+            else
+                Tags = new ReadOnlyCollection<string>(settings.Tags.Split(','));
+
+            TransitionAware = settings.TransitionAware;
+
+            PauseAware = settings.PauseAware;
 
             instancesByName.Add(name, this);
             instanceList.Add(this);
 
-            if (!availableTagList.Contains(Name))
-                availableTagList.Add(Name);
-
             for (var i = 0; i < Tags.Count; i++)
             {
                 var tag = Tags[i];
-                if (!availableTagList.Contains(tag))
-                {
-                    availableTagList.Add(tag);
-                }
+                allTags.Add(tag);
             }
         }
 
@@ -131,8 +126,8 @@ namespace Engendro.Audio
 
         #endregion
 
-        // AvailableTags
-        public static ReadOnlyCollection<string> AvailableTags { get; } = new(availableTagList);
+        // AllTags
+        public static ReadOnlySet<string> AllTags { get; } = allTags.AsReadOnly();
 
         // Caption
         public string Caption { get; }
@@ -141,23 +136,9 @@ namespace Engendro.Audio
         public SoundCategory Category { get; }
 
         // Create
-        public static Sound Create(string name, SoundSettings settings)
+        internal static Sound Create(string name, SoundSettings settings)
         {
-            var tags = string.IsNullOrWhiteSpace(settings.Tags) ? null : settings.Tags.Split(',');
-
-            return new Sound(name, settings.Category,
-                                               settings.Sounds,
-                                               tags,
-                                               settings.MaxInstances,
-                                               settings.Volume,
-                                               settings.Pan,
-                                               settings.Pitch,
-                                               settings.PitchVariance,
-                                               settings.PopMode,
-                                               settings.TransitionAware,
-                                               settings.Scope,
-                                               settings.PauseAware,
-                                               settings.Caption);
+            return new Sound(name, settings);
         }
 
         // EncodeAssetName
@@ -222,11 +203,10 @@ namespace Engendro.Audio
         // Get
         public static Sound Get(string name)
         {
-            var result = Find(name);
-            if (result == null)
+            if (Find(name) is not Sound sound)
                 throw new InvalidOperationException($"The sound '{name}' does not exist.");
-            else
-                return result;
+
+            return sound;
         }
 
         // IsLoaded
@@ -392,7 +372,8 @@ namespace Engendro.Audio
             {
                 if (soundEffects[name] is SoundEffect soundEffect)
                 {
-                    instancePool[availableIndex] = new SoundInstance(this, soundEffect);
+                    instance = new SoundInstance(this, soundEffect);
+                    instancePool[availableIndex] = instance;
                 }
             }
 
