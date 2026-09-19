@@ -18,7 +18,6 @@ namespace Remizione
             CreditsBar = this[nameof(CreditsBar)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
             DialogOptionBullet = this[nameof(DialogOptionBullet)];
-            DiscardItemIcon = this[nameof(DiscardItemIcon)];
             EchoBackground = this[nameof(EchoBackground)];
             FakeItem = this[nameof(FakeItem)];
             HeartIcon = this[nameof(HeartIcon)];
@@ -57,9 +56,6 @@ namespace Remizione
 
         // DialogOptionBullet
         public AtlasImage DialogOptionBullet { get; }
-
-        // DiscardItemIcon
-        public AtlasImage DiscardItemIcon { get; }
 
         // EchoBackground
         public AtlasImage EchoBackground { get; }

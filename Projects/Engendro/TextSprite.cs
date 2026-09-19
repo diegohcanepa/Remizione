@@ -1,6 +1,4 @@
-﻿using Engendro.Audio;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -20,7 +18,6 @@ namespace Engendro
         private string formattedText = string.Empty;
         private bool customSpacing;
         private const string ellipsesValue = "...";
-        private bool hasTypingSoundControl;
         private string lastWord = string.Empty;
         private int previousLineSpacing;
         private float previousSpacing;
@@ -32,15 +29,13 @@ namespace Engendro
         private Vector2 textSize;
         private Timer? textTimer;
         private int _typingIndex;
-        private SoundInstance? typingSound;
-        private float typingSoundVolume;
 
         #endregion
 
         #region Constructor
 
         // Constructor
-        public TextSprite(Font? font)
+        public TextSprite(Font font)
         {
             this.Font = font;
         }
@@ -528,25 +523,12 @@ namespace Engendro
 
                 if (!textTimer.IsRunning)
                 {
-                    // Lógica principal de tipeo optimizada
                     if (TryTypeText(out var duration))
                     {
                         if (duration == this.TypingSpeed)
-                        {
-                            if (typingSound != null && typingSound.State == SoundState.Stopped && hasTypingSoundControl)
-                            {
-                                typingSound.Volume.Current = typingSoundVolume;
-                                typingSound.Play();
-                                hasTypingSoundControl = false;
-                            }
                             TypingState = RunningState.Running;
-                        }
                         else
-                        {
                             TypingState = RunningState.Paused;
-                            typingSound?.Stop();
-                            hasTypingSoundControl = true;
-                        }
 
                         textTimer.Start(duration);
                     }
@@ -573,7 +555,7 @@ namespace Engendro
         public string? DisplayText => _renderBuffer.ToString();
 
         // Font
-        public Font? Font
+        public Font Font
         {
             get;
             set
@@ -699,40 +681,18 @@ namespace Engendro
         // StartTyping
         public void StartTyping()
         {
-            StartTyping(null);
-        }
-
-        // StartTyping
-        public void StartTyping(SoundInstance? sound)
-        {
             // Checkeo de _formattedText para evitar arrancar con nada o basura
             if (IsEmpty || string.IsNullOrWhiteSpace(formattedText) || TypingSpeed == 0)
-            {
                 return;
-            }
-
-            if (sound != null && sound.IsDisposed)
-            {
-                sound = null;
-            }
 
             lastWord = string.Empty;
-
-            this.typingSound = sound;
 
             // REINICIO: Limpiamos buffer y cursor
             _renderBuffer.Clear();
             _typingIndex = 0;
 
             textTimer ??= new Timer();
-
             textTimer.Start(TypingSpeed);
-            if (typingSound != null)
-            {
-                typingSoundVolume = typingSound.Volume.Current;
-                typingSound.Looped = true;
-                typingSound.Play();
-            }
 
             TypingState = RunningState.Running;
         }
@@ -748,7 +708,6 @@ namespace Engendro
                 _typingIndex = formattedText.Length;
 
                 textTimer?.Stop();
-                typingSound?.Stop();
                 TypingState = RunningState.Stopped;
             }
         }

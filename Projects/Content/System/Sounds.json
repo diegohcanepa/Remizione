@@ -44,7 +44,7 @@
     { "name": "ImpactB" },
     { "name": "InertShadowMove", "soundCount": 2, "volume": 0.5 },
     { "name": "Interact", "scope": "Global","soundCount": 4, "volume": 0.5 },
-    { "name": "ItemAdded" },
+    { "name": "ItemAdd" },
     { "name": "ItemDiscard" },
     { "name": "Keyboard" },
     { "name": "Lever" },

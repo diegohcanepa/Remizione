@@ -1,7 +1,6 @@
 ﻿using Adberration.Scripting;
 using Engendro;
 using Engendro.Audio;
-using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -144,7 +143,7 @@ namespace Remizione
         public bool CanClose { get; private set; }
 
         // Show
-        public void Show(string text, string? soundName)
+        public void Show(string text, string soundName)
         {
             this.textSprite.Text = text;
             if (!string.IsNullOrWhiteSpace(soundName))

@@ -1,6 +1,5 @@
 ﻿using Engendro.Collections;
 using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,13 +11,12 @@ namespace Engendro.Audio
     /// Sound
     /// </summary>
     // TODO: Hay un bug cuando un sonido toca loopeado y te vas con el cursor al otro monitor y queda loopeando.
-    public sealed partial class Sound : IDisposable, INamedObject
+    public sealed class Sound : INamedObject
     {
         #region Private fields
 
         private readonly List<string> assetNames = [];
         private static readonly List<string> availableTagList = [];
-        private ContentManager? content;
         private int indexOfLastNamePopped = -1;
         private readonly List<SoundInstance?> instancePool;
         private static readonly Dictionary<string, Sound> instancesByName = [];
@@ -102,36 +100,13 @@ namespace Engendro.Audio
         // IsInstancePaused
         private bool IsInstancePaused(int index)
         {
-            return instancePool[index] is SoundInstance inst && !inst.IsDisposed && inst.State == SoundState.Paused;
+            return instancePool[index] is SoundInstance inst && inst.State == SoundState.Paused;
         }
 
         // IsInstancePlaying
         private bool IsInstancePlaying(int index)
         {
-            return instancePool[index] is SoundInstance inst && !inst.IsDisposed && inst.State == SoundState.Playing;
-        }
-
-        // LoadCore
-        private void LoadCore(ContentManager content)
-        {
-            if (IsLoaded)
-                return;
-
-            this.content = content;
-
-            for (var i = 0; i < soundEffects.Count; i++)
-            {
-                soundEffects[assetNames[i]] = LoadSoundEffect(content, i);
-            }
-
-            IsLoaded = true;
-        }
-
-        // LoadSoundEffect
-        private SoundEffect LoadSoundEffect(ContentManager content, int assetNameIndex)
-        {
-            var assetName = EncodeAssetName(Category, assetNames[assetNameIndex]);
-            return content.Load<SoundEffect>(assetName);
+            return instancePool[index] is SoundInstance inst && inst.State == SoundState.Playing;
         }
 
         // NextSoundName
@@ -152,29 +127,6 @@ namespace Engendro.Audio
 
                 return assetNames[indexOfLastNamePopped];
             }
-        }
-
-        // UnloadCore
-        private void UnloadCore()
-        {
-            if (!IsLoaded)
-                return;
-
-            for (var i = 0; i < instancePool.Count; i++)
-            {
-                if (instancePool[i] is SoundInstance soundInstance)
-                {
-                    soundInstance.Dispose();
-                    instancePool[i] = null;
-                }
-            }
-
-            instanceList.Remove(this);
-            instancesByName.Remove(Name);
-
-            this.content = null;
-
-            IsLoaded = false;
         }
 
         #endregion
@@ -208,17 +160,6 @@ namespace Engendro.Audio
                                                settings.Caption);
         }
 
-        // Dispose
-        public void Dispose()
-        {
-            if (IsDisposed)
-                return;
-
-            UnloadCore();
-
-            IsDisposed = true;
-        }
-
         // EncodeAssetName
         public static string EncodeAssetName(SoundCategory category, string name)
         {
@@ -247,9 +188,6 @@ namespace Engendro.Audio
         // FadeIn
         public void FadeIn(int duration)
         {
-            if (IsDisposed)
-                return;
-
             for (var i = 0; i < instancePool.Count; i++)
             {
                 instancePool[i]?.Volume.FadeIn(duration);
@@ -259,9 +197,6 @@ namespace Engendro.Audio
         // FadeOut
         public void FadeOut(int duration)
         {
-            if (IsDisposed)
-                return;
-
             for (var i = 0; i < instancePool.Count; i++)
             {
                 instancePool[i]?.Volume.FadeOut(duration);
@@ -294,9 +229,6 @@ namespace Engendro.Audio
                 return result;
         }
 
-        // IsDisposed
-        public bool IsDisposed { get; private set; }
-
         // IsLoaded
         public bool IsLoaded { get; private set; }
 
@@ -316,13 +248,18 @@ namespace Engendro.Audio
         }
 
         // Load
-        public void Load(ContentManager content)
+        public void Load()
         {
-            if (this.content == null)
-                LoadCore(content);
+            if (IsLoaded)
+                return;
 
-            else if (this.content != content)
-                throw new InvalidOperationException("Sound has been loaded from another content manager.");
+            for (var i = 0; i < soundEffects.Count; i++)
+            {
+                var assetName = EncodeAssetName(Category, assetNames[i]);
+                soundEffects[assetNames[i]] = EngendroGame.Instance.Content.Load<SoundEffect>(assetName);
+            }
+
+            IsLoaded = true;
         }
 
         // MaxInstances
@@ -342,15 +279,12 @@ namespace Engendro.Audio
         {
             List<SoundInstance> result = [];
 
-            if (!IsDisposed)
+            for (var i = 0; i < instancePool.Count; i++)
             {
-                for (var i = 0; i < instancePool.Count; i++)
+                if (IsInstancePlaying(i) && instancePool[i] is SoundInstance soundInstance)
                 {
-                    if (IsInstancePlaying(i) && instancePool[i] is SoundInstance soundInstance)
-                    {
-                        soundInstance.Pause();
-                        result.Add(soundInstance);
-                    }
+                    soundInstance.Pause();
+                    result.Add(soundInstance);
                 }
             }
 
@@ -381,8 +315,6 @@ namespace Engendro.Audio
         // Play
         public SoundInstance? Play(bool looped, ISoundEmitter? emitter)
         {
-            CodeContract.NotDisposed(nameof(Sound), IsDisposed);
-
             if (PopInstance() is SoundInstance instance)
             {
                 instance.Emitter = emitter;
@@ -430,11 +362,7 @@ namespace Engendro.Audio
         // PopInstance
         public SoundInstance? PopInstance(int index)
         {
-            if (!IsLoaded && AudioManager.DefaultContent != null)
-                LoadCore(AudioManager.DefaultContent);
-
-            CodeContract.NotDisposed(nameof(Sound), IsDisposed);
-            CodeContract.EnsureLoaded(nameof(Sound), IsLoaded);
+            Load();
 
             // Pick next sound name
             var name = NextSoundName(index);
@@ -464,9 +392,7 @@ namespace Engendro.Audio
             {
                 if (soundEffects[name] is SoundEffect soundEffect)
                 {
-                    instance = new SoundInstance(this, soundEffect);
-                    instancePool[availableIndex]?.Dispose();
-                    instancePool[availableIndex] = instance;
+                    instancePool[availableIndex] = new SoundInstance(this, soundEffect);
                 }
             }
 
@@ -478,9 +404,6 @@ namespace Engendro.Audio
         // Reset
         public void Reset()
         {
-            if (IsDisposed)
-                return;
-
             Stop();
             for (var i = 0; i < instancePool.Count; i++)
             {
@@ -491,9 +414,6 @@ namespace Engendro.Audio
         // Resume
         public void Resume()
         {
-            if (IsDisposed)
-                return;
-
             for (var i = 0; i < instancePool.Count; i++)
             {
                 if (IsInstancePaused(i))
@@ -518,9 +438,6 @@ namespace Engendro.Audio
         // Stop
         public void Stop(int fadeOut)
         {
-            if (IsDisposed)
-                return;
-
             for (var i = 0; i < instancePool.Count; i++)
             {
                 if (IsInstancePlaying(i))
@@ -541,43 +458,6 @@ namespace Engendro.Audio
 
         // TransitionAware
         public bool TransitionAware { get; }
-
-        // TryLoad
-        public bool TryLoad(ContentManager content)
-        {
-            if (this.content == null)
-            {
-                try
-                {
-                    LoadCore(content);
-                    return true;
-                }
-                catch (ContentLoadException)
-                {
-                }
-            }
-
-            return false;
-        }
-
-        // UnloadFromContent
-        public static int UnloadFromContent(ContentManager content)
-        {
-            List<Sound> list = [];
-
-            for (var i = 0; i < instanceList.Count; i++)
-            {
-                if (instanceList[i].content == content)
-                    list.Add(instanceList[i]);
-            }
-
-            for (var i = 0; i < list.Count; i++)
-            {
-                list[i].UnloadCore();
-            }
-
-            return list.Count;
-        }
 
         // Volume
         public float Volume { get; }

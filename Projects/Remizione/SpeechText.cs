@@ -237,17 +237,9 @@ namespace Remizione
                 autoHideCooldown = text.Length * this.text.TypingSpeed;
 
             // Typing
-            if (SpeechTextSettings.Typing && awaitInput)
+            if (awaitInput)
             {
-                if (SpeechTextSettings.TypingSound)
-                {
-                    this.text.StartTyping(Actor.SpeechSound?.PopInstance());
-                }
-                else
-                {
-                    this.text.StartTyping();
-                }
-
+                this.text.StartTyping();
                 State = SpeechTextState.Typing;
             }
 

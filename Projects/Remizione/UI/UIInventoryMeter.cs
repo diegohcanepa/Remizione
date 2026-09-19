@@ -85,7 +85,7 @@ namespace Remizione
             icon.Tweens.RotationTween = rotationTween;
             icon.Tweens.ScaleTween = scaleTween;
 
-            Sound.Play(SoundNames.ItemAdded);
+            Sound.Play(SoundNames.ItemAdd);
         }
 
         // AnimateAddItem

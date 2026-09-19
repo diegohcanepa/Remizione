@@ -9,7 +9,7 @@ namespace Engendro.Audio
     /// <summary>
     /// SoundInstance
     /// </summary>
-    public sealed partial class SoundInstance : IDisposable
+    public sealed partial class SoundInstance
     {
         #region Private fields
 
@@ -75,16 +75,13 @@ namespace Engendro.Audio
         // StopCore
         private void StopCore()
         {
-            if (!IsDisposed)
-            {
-                panTween.Stop();
-                stopTween.Stop();
-                instance.Stop();
-                emitter = null;
-                RemainingTime = 0;
-                Scene = null;
-                runningInstances.Remove(this);
-            }
+            panTween.Stop();
+            stopTween.Stop();
+            instance.Stop();
+            emitter = null;
+            RemainingTime = 0;
+            Scene = null;
+            runningInstances.Remove(this);
         }
 
         // UpdateCore
@@ -166,17 +163,6 @@ namespace Engendro.Audio
         // AllowReuse
         public bool AllowReuse { get; set; } = true;
 
-        // Dispose
-        public void Dispose()
-        {
-            if (IsDisposed)
-                return;
-
-            StopCore();
-            instance.Dispose();
-            IsDisposed = true;
-        }
-
         // Duration
         public int Duration { get; }
 
@@ -222,9 +208,6 @@ namespace Engendro.Audio
             }
         }
 
-        // IsDisposed
-        public bool IsDisposed { get; private set; }
-
         // IsPlaying
         public bool IsPlaying => RemainingTime != 0;
 
@@ -255,9 +238,6 @@ namespace Engendro.Audio
             if (RemainingTime == 0)
                 return;
 
-            if (IsDisposed)
-                return;
-
             pauseCount++;
             if (pauseCount == 1)
                 instance.Pause();
@@ -282,8 +262,6 @@ namespace Engendro.Audio
         // Play
         public void Play(int fadeIn)
         {
-            CodeContract.NotDisposed(nameof(SoundInstance), IsDisposed);
-
             if (State == SoundState.Stopped)
             {
                 if (Sound.Scope == SoundScope.Scene)
@@ -356,9 +334,6 @@ namespace Engendro.Audio
         public void Resume()
         {
             if (RemainingTime == 0)
-                return;
-
-            if (IsDisposed)
                 return;
 
             if (pauseCount > 0)

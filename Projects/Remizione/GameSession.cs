@@ -650,7 +650,7 @@ namespace Remizione
         public Random MasterRunRng { get; } = new();
 
         // Narrate
-        public void Narrate(string text, string? soundName)
+        public void Narrate(string text, string soundName)
         {
             if (Game.SceneManager.CurrentScene is not NarrationScene)
                 Game.SceneManager.Push(narrationScene);

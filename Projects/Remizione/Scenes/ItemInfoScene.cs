@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 
@@ -59,7 +60,7 @@ namespace Remizione
             };
 
             // Title text
-            this.titleText = new(Fonts.CommonOutline)
+            this.titleText = new(Fonts.Common)
             {
                 Color = ColorPalette.MouseCursor.Tooltip,
                 PivotOrigin = RectanglePoint.Top,
@@ -69,12 +70,12 @@ namespace Remizione
             };
 
             // Description
-            this.descriptionText = new(Fonts.CommonOutline)
+            this.descriptionText = new(Fonts.Common)
             {
-                Color = ColorPalette.MouseCursor.Tooltip * .8f,
+                Color = ColorPalette.Text.Terra,
                 MaximumWidth = 190,
                 PivotOrigin = RectanglePoint.Top,
-                Position = titleText.BoundingBox.GetPoint(RectanglePoint.Bottom),
+                Position = titleText.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 1),
                 Scale = ScaleInfo.Text.VeryLarge
             };
 
@@ -135,7 +136,8 @@ namespace Remizione
                 if (item != null)
                 {
                     item.Remove();
-                    session.Player?.ShowFlyOff(item.Definition.DisplayName, ColorPalette.Text.Orange);
+                    Sound.Play(SoundNames.ItemDiscard);
+                    session.Player?.ShowFlyOff($"-{item.Definition.DisplayName}", ColorPalette.Text.Terra);
                 }
 
                 Game.SceneManager.Pop();
@@ -166,7 +168,6 @@ namespace Remizione
             this.descriptionText.Text = item.Definition.Description;
             this.image.RenderImage = item.Definition.Image;
             this.shadow.RenderImage = item.Definition.Image;
-            //this.button.Position = descriptionText.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 6);
         }
     }
 }

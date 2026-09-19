@@ -52,9 +52,6 @@ namespace Remizione
             AudioManager.FXCategory.Volume.Master = data.FXVolume;
             AudioManager.MasterVolume = data.MasterVolume;
             AudioManager.MusicCategory.Volume.Master = data.MusicVolume;
-
-            SpeechTextSettings.Typing = data.SpeechTextTyping;
-            SpeechTextSettings.TypingSound = data.SpeechTextTypingSound;
         }
 
         // FromDefaultValues
@@ -91,8 +88,6 @@ namespace Remizione
                 LanguageTag = TextRepository.LanguagePackage?.LanguageTag ?? string.Empty,
                 MasterVolume = AudioManager.MasterVolume,
                 MusicVolume = AudioManager.MusicCategory.Volume.Master,
-                SpeechTextTyping = SpeechTextSettings.Typing,
-                SpeechTextTypingSound = SpeechTextSettings.TypingSound
             };
 
             return result;

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
 using System;
 using System.Text.Json;
 
@@ -137,18 +136,6 @@ namespace Engendro.Audio
         // AmbienceCategory
         public static SoundCategory AmbienceCategory { get; } = new SoundCategory(SoundCategoryName.Ambience.ToString());
 
-        // DefaultContent
-        public static ContentManager DefaultContent
-        {
-            get
-            {
-                if (EngendroGame.Instance == null)
-                    throw new InvalidOperationException();
-
-                return EngendroGame.Instance.Content;
-            }
-        }
-
         // FXCategory
         public static SoundCategory FXCategory { get; } = new SoundCategory(SoundCategoryName.FX.ToString());
 
@@ -184,7 +171,7 @@ namespace Engendro.Audio
             // Sounds
             foreach (var sound in Sound.Sounds)
             {
-                sound.Load(DefaultContent);
+                sound.Load();
             }
         }
 

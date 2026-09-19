@@ -488,12 +488,12 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/Interact4.wav;Audio/FX/Interact4
 
-#begin Audio/FX/ItemAdded.wav
+#begin Audio/FX/ItemAdd.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
-/build:Audio/FX/ItemAdded.wav;Audio/FX/ItemAdded
+/build:Audio/FX/ItemAdd.wav;Audio/FX/ItemAdd
 
 #begin Audio/FX/ItemDiscard.wav
 /importer:WavImporter

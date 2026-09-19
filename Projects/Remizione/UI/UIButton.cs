@@ -12,6 +12,8 @@ namespace Remizione
     {
         private readonly TextSprite label;
 
+        #region Constructor
+
         // Constructor
         public UIButton()
         {
@@ -22,7 +24,6 @@ namespace Remizione
             };
         }
 
-        #region Private members
         #endregion
 
         #region Protected members
@@ -56,6 +57,13 @@ namespace Remizione
 
         // BoundingBox
         public RectangleF BoundingBox => label.BoundingBox;
+
+        // Font
+        public Font Font
+        {
+            get => label.Font;
+            set => label.Font = value;
+        }
 
         // HoverColor
         public Color HoverColor { get; set; } = ColorPalette.Text.Yellow;
@@ -109,7 +117,7 @@ namespace Remizione
                 if (Sound != null)
                     Sound.Play();
                 else
-                    Sound.Play(SoundNames.UISelectA);
+                    Sound.Play(SoundNames.Interact);
             }
 
             return result;

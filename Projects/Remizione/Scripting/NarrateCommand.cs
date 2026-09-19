@@ -3,16 +3,16 @@
 namespace Remizione.Scripting
 {
     // NarrateCommand
-    // Arguments: {"Text"} [#lid:Integer] [#literal] [#speaker:GameThing]
+    // Arguments: {"Text"} {SoundName} [#lid:Integer]
     [ForceAwait]
     internal sealed class NarrateCommand : LocalizableCommand
     {
         // Constructor
         public NarrateCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 1, LiteralArg, LocalizationIdArg, VoiceArg)
+            : base(script, source, body, 2, LocalizationIdArg)
         {
             Parser.ParseQuotedString(this, 0);
-            Parser.ParseNameArgument(this, VoiceArg);
+            Parser.ParseName(this, 1);
         }
 
         #region Protected members
@@ -21,7 +21,7 @@ namespace Remizione.Scripting
         protected override void OnExecute()
         {
             var text = GetDisplayText();
-            var soundName = Parser.ParseNameArgument(this, VoiceArg);
+            var soundName = Parser.ParseName(this, 1);
 
             if (Session is GameSession session)
                 session.Narrate(text, soundName);
