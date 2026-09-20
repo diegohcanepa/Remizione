@@ -60,24 +60,24 @@ namespace Remizione
         #endregion
 
         // Add
-        public Item Add(string name)
+        public Item Add(string name, int amount = 1)
         {
             return Add(GameData.Items.Get(name));
         }
 
         // Add
-        public Item Add(ItemDefinition definition)
+        public Item Add(ItemDefinition definition, int amount = 1)
         {
             if (!CanAddItem(definition))
                 throw new InvalidOperationException("Item container is full.");
 
             if (Find(definition.Name) is Item item)
             {
-                item.Amount += 1;
+                item.Amount += amount;
             }
             else
             {
-                item = new Item(this, definition);
+                item = new Item(this, definition) { Amount = amount };
                 Add(item);
             }
 

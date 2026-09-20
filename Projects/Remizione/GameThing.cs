@@ -236,7 +236,7 @@ namespace Remizione
             ItemReward ??= Session.LootGenerator.RollForLoot(Definition);
 
             if (ItemReward != null)
-                ItemOrb.Drop(ItemReward, room, Position);
+                ItemOrb.Drop(ItemReward, 1, room, Position);
 
             ItemReward = null;
         }
@@ -1042,8 +1042,20 @@ namespace Remizione
                 if (value != field)
                 {
                     field = value;
+                    ItemRewardAmount = field == null ? 0 : 1;
                     OnItemRewardChanged();
                 }
+            }
+        }
+
+        // ItemRewardAmount
+        public int ItemRewardAmount
+        {
+            get;
+            set
+            {
+                if (value != field)
+                    field = Math.Max(0, value);
             }
         }
 

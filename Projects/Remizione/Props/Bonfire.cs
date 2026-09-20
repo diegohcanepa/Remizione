@@ -68,6 +68,21 @@ namespace Remizione
 
         #endregion
 
+        #region Private members
+
+        // Cleanup
+        private void Cleanup()
+        {
+            static bool CanCleanup(Entity entity)
+            {
+                return entity is not ItemOrb itemOrb || itemOrb.AllowCleanup;
+            }
+
+            Session.CleanUpRuntimeEntities(CanCleanup);
+        }
+
+        #endregion
+
         #region Protected members
 
         // OnDraw
@@ -115,13 +130,15 @@ namespace Remizione
         public void Activate()
         {
             Session.Environment.GlobalLight.Unlit();
-            globalOpacityTween.Start(TweenStyle.CubicIn, 1, 0, 2000, Session.CleanUpRuntimeEntities);
+            globalOpacityTween.Start(TweenStyle.CubicIn, 1, 0, 2000, Cleanup);
         }
 
         // Deactivate
         [ScriptMethod]
         public void Deactivate()
         {
+            Session.RenewSeed();
+            (Parent as ProceduralRoom)?.Populate();
             Session.Environment.GlobalLight.Lit();
             globalOpacityTween.Start(TweenStyle.CubicIn, 0, 1, 2000);
         }

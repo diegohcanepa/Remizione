@@ -931,14 +931,17 @@ namespace Adberration
         public int Chapter { get; set; }
 
         // CleanUpRuntimeEntities
-        public void CleanUpRuntimeEntities()
+        public void CleanUpRuntimeEntities(Func<Entity, bool>? predicate = null)
         {
             var runtimeEntities = new List<Entity>();
 
             for (var i = 0; i < entityList.Count; i++)
             {
                 if (entityList[i].InstanceKind == EntityInstanceKind.RuntimeClone)
-                    runtimeEntities.Add(entityList[i]);
+                {
+                    if (predicate == null || predicate.Invoke(entityList[i]))
+                        runtimeEntities.Add(entityList[i]);
+                }
             }
 
             for (var i = 0; i < runtimeEntities.Count; i++)

@@ -133,11 +133,11 @@ namespace Remizione
         {
             if (button.TestPressed())
             {
-                if (item != null)
+                if (item != null && session.Room is { } room && session.Player is { } player)
                 {
                     item.Remove();
                     Sound.Play(SoundNames.ItemDiscard);
-                    session.Player?.ShowFlyOff($"-{item.Definition.DisplayName}", ColorPalette.Text.Terra);
+                    ItemOrb.Drop(item.Definition, item.Amount, room, player.Position);
                 }
 
                 Game.SceneManager.Pop();

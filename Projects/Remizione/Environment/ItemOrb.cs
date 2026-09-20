@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Remizione
 {
@@ -8,6 +9,7 @@ namespace Remizione
     /// </summary>
     public sealed class ItemOrb : Pickable
     {
+        private int expirationTimer = Random.Shared.Next(10000, 20000);
         private readonly FloatTween fadeTween = new();
 
         #region Constructor
@@ -18,7 +20,6 @@ namespace Remizione
         {
             ApproachBehavior = ApproachBehavior.Over;
             Atlas = Atlases.Environment;
-            DepthOffset = -2;
             Hotspot = new Polygon("0,0;7,0;7,7;0,7");
             RenderLayer = RenderLayer.Default;
 
@@ -80,19 +81,37 @@ namespace Remizione
                 fadeTween.Update(gameTime);
                 OpacityFactor = fadeTween.CurrentValue;
             }
+
+            if (Session.OutcomeTarget != this)
+            {
+                if (expirationTimer >= 0 && ItemReward != null && !ItemReward.IsKeyItem)
+                {
+                    expirationTimer -= gameTime.ElapsedGameTime.Milliseconds;
+                    if (expirationTimer < 0)
+                    {
+                        AttachedLight?.Unlit();
+                        Tweens.OpacityTween = FloatTween.Create(TweenStyle.Linear, Opacity, 0, 1000, Unparent);
+                    }
+                }
+            }
         }
 
         #endregion
 
-        // Drop
-        public static ItemOrb? Drop(ItemDefinition itemDefinition, GameRoom room, Vector2 position)
-        {
-            var loot = room.Session.CreateThingClone<ItemOrb>(nameof(ItemOrb));
-            loot.ItemReward = itemDefinition;
-            loot.Position = position;
-            room.Children.Add(loot);
+        // AllowCleanup
+        public bool AllowCleanup => ItemReward == null || !ItemReward.IsKeyItem;
 
-            return loot;
+        // Drop
+        public static ItemOrb? Drop(ItemDefinition itemDefinition, int amount, GameRoom room, Vector2 position)
+        {
+            var orb = room.Session.CreateThingClone<ItemOrb>(nameof(ItemOrb));
+            
+            orb.ItemReward = itemDefinition;
+            orb.ItemRewardAmount = amount;
+            orb.Position = position;
+            room.Children.Add(orb);
+
+            return orb;
         }
     }
 }

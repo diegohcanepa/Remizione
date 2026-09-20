@@ -50,6 +50,7 @@
 			"actionKind": "Script",
 			"deselectOnUse": true,
 			"isDepletable": true,
+			"isKeyItem": true,
 			"isStackable": true
 		}		
 	]

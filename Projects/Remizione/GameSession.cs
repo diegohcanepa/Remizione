@@ -25,7 +25,7 @@ namespace Remizione
         #region Private fields
 
         private readonly ScriptConsole? console;
-        private readonly List<(ItemDefinition itemDef, GameRoom room, Vector2 position)> droppedKeyItems = [];
+        private readonly List<(ItemDefinition itemDef, int amount, GameRoom room, Vector2 position)> droppedKeyItems = [];
         private readonly EchoScene echoScene;
         private readonly InventoryScene inventoryScene;
         private readonly ItemInfoScene itemInfoScene;
@@ -346,12 +346,13 @@ namespace Remizione
                     var itemData = item.Split('|');
                     if (GameData.Items.Find(itemData[0]) is ItemDefinition itemDefinition)
                     {
-                        if (FindEntity<GameRoom>(itemData[1]) is GameRoom room)
+                        var amount = XmlConvert.ToInt32(itemData[1]);
+                        if (FindEntity<GameRoom>(itemData[2]) is GameRoom room)
                         {
-                            var pos = DataConvert.ToVector2(itemData[2]);
-                            droppedKeyItems.Add(new(itemDefinition, room, pos));
+                            var pos = DataConvert.ToVector2(itemData[3]);
+                            droppedKeyItems.Add(new(itemDefinition, amount, room, pos));
                         }
-                    }                                   
+                    }
                 }
             }
         }
@@ -421,7 +422,7 @@ namespace Remizione
 
             foreach (var item in droppedKeyItems)
             {
-                ItemOrb.Drop(item.itemDef, item.room, item.position);
+                ItemOrb.Drop(item.itemDef, item.amount, item.room, item.position);
             }
             droppedKeyItems.Clear();
         }
@@ -513,7 +514,7 @@ namespace Remizione
                 {
                     if (orb.ItemReward is { IsKeyItem: true } itemDef)
                     {
-                        var value = $"{itemDef.Name}|{room.Name}|{DataConvert.ToString(orb.Position)}";
+                        var value = $"{itemDef.Name}|{XmlConvert.ToString(orb.ItemRewardAmount)}|{room.Name}|{DataConvert.ToString(orb.Position)}";
                         keyItems.Add(value);
                     }
                 }
@@ -797,18 +798,6 @@ namespace Remizione
         public void RenewSeed()
         {
             Seed = RandomNumberGenerator.GetInt32(int.MaxValue);
-        }
-
-        // RespawnWorld
-        [ScriptMethod]
-        public void RespawnWorld()
-        {
-            CleanUpRuntimeEntities();
-
-            RenewSeed();
-
-            if (Room is ProceduralRoom room)
-                room.Populate();
         }
 
         // Room
