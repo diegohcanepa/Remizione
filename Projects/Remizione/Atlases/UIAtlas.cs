@@ -19,9 +19,10 @@ namespace Remizione
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
             DialogOptionBullet = this[nameof(DialogOptionBullet)];
             EchoBackground = this[nameof(EchoBackground)];
+            ExamineItem = this[nameof(ExamineItem)];
             FakeItem = this[nameof(FakeItem)];
             HeartIcon = this[nameof(HeartIcon)];
-            InventoryItemSlot = this[nameof(InventoryItemSlot)];
+            InventoryItemSlots = CreateReadOnlyCollection("InventoryItemSlot", 1, 3);
             MiniMapNodes = CreateReadOnlyCollection<MapNodeState>("MiniMapNode");
             MouseLeftButtonIcon = this[nameof(MouseLeftButtonIcon)];
             MouseRightButtonIcon = this[nameof(MouseRightButtonIcon)];
@@ -59,14 +60,17 @@ namespace Remizione
         // EchoBackground
         public AtlasImage EchoBackground { get; }
 
+        // ExamineItem
+        public AtlasImage ExamineItem { get; }
+
         // FakeItem
         public AtlasImage FakeItem { get; }
 
         // HeartIcon
         public AtlasImage HeartIcon { get; }
 
-        // InventoryItemSlot
-        public AtlasImage InventoryItemSlot { get; }
+        // InventoryItemSlots
+        public ReadOnlyCollection<AtlasImage> InventoryItemSlots { get; }
 
         // MiniMapRooms
         public ReadOnlyCollection<AtlasImage> MiniMapNodes { get; }

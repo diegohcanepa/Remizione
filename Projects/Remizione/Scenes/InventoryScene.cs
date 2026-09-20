@@ -15,6 +15,7 @@ namespace Remizione
         private readonly TextSprite[] amounts = new TextSprite[ItemContainer.MaximumCapacity];
         private bool autoHide;
         private readonly Sprite background = new(Atlases.UI.QuickInventoryBackground) { PivotOrigin = RectanglePoint.LeftBottom, Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom) };
+        private readonly Sprite examineItem = new(Atlases.UI.ExamineItem) { PivotOrigin = RectanglePoint.RightBottom, Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom), Scale = ScaleInfo.UIElement.Medium };
         private readonly Sprite[] icons = new Sprite[ItemContainer.MaximumCapacity];
         private readonly TextSprite itemLabel;
         private readonly TextSprite itemDescription;
@@ -39,7 +40,7 @@ namespace Remizione
                 slots[i] = new()
                 {
                     PivotOrigin = RectanglePoint.Center,
-                    RenderImage = Atlases.UI.InventoryItemSlot,
+                    RenderImage = Atlases.UI.InventoryItemSlots.GetRandomItem(),
                     Y = Screen.Area.Bottom - 20
                 };
 
@@ -131,6 +132,10 @@ namespace Remizione
                     MouseCursor.PerformClick();
                     Sound.Play(SoundNames.Interact);
                     ItemContainer.Session.ShowItemInfo(item);
+                }
+                else
+                {
+                    MouseCursor.Shake();
                 }
             }
 
@@ -236,6 +241,8 @@ namespace Remizione
                 itemLabel.Draw(gameTime);
                 itemDescription.Draw(gameTime);
             }
+
+            examineItem.Draw(gameTime);
 
             Game.SpriteBatch.End();
         }

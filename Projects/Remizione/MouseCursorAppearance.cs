@@ -162,7 +162,7 @@ namespace Remizione
                 MouseCursor.Tooltip = target.DisplayName;
 
                 if (target.ItemRewardAmount > 1)
-                    MouseCursor.Tooltip += $" (x{target.ItemRewardAmount })";
+                    MouseCursor.Tooltip += $" (x{target.ItemRewardAmount})";
 
                 MouseCursor.TooltipColor = ColorPalette.MouseCursor.Tooltip;
                 MouseCursor.SubTextColor = ColorPalette.MouseCursor.SubText;

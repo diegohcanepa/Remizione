@@ -39,7 +39,7 @@ namespace Remizione
             {
                 PivotOrigin = RectanglePoint.Top,
                 Position = Screen.Area.GetPoint(RectanglePoint.Top, 0, 20),
-                RenderImage = Atlases.UI.InventoryItemSlot
+                RenderImage = Atlases.UI.InventoryItemSlots[0]
             };
 
             // Image

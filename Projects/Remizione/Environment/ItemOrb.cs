@@ -105,7 +105,7 @@ namespace Remizione
         public static ItemOrb? Drop(ItemDefinition itemDefinition, int amount, GameRoom room, Vector2 position)
         {
             var orb = room.Session.CreateThingClone<ItemOrb>(nameof(ItemOrb));
-            
+
             orb.ItemReward = itemDefinition;
             orb.ItemRewardAmount = amount;
             orb.Position = position;

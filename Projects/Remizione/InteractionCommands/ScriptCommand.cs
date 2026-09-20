@@ -59,11 +59,11 @@ namespace Remizione.InteractionCommands
             }
             */
 
-            player.FaceTo(target);
-            data.Session.BeginOutcome(resolvedScript, target);
-
             if (data.Session.InteractionContext.HeldItem?.Definition.DeselectOnUse == true)
                 data.Session.InteractionContext.HeldItem = null;
+
+            player.FaceTo(target);
+            data.Session.BeginOutcome(resolvedScript, target);
         }
     }
 }
