@@ -152,6 +152,12 @@ namespace Remizione
         // EffectDescription
         public string EffectDescription { get; private set; } = string.Empty;
 
+        // GetDisplayName
+        public string GetDisplayName(int amount)
+        {
+            return amount == 1 ? DisplayName : DisplayName + $" (x{amount})";
+        }
+
         // HPCost
         public int HPCost { get; }
 

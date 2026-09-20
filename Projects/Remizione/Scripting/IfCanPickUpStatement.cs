@@ -23,7 +23,18 @@ namespace Remizione.Scripting
 
             if (target.ItemReward != null)
             {
-                if (!session.PlayerData.Inventory.CanAddItem(target.ItemReward))
+                // Check stack
+                if (session.PlayerData.Inventory.Find(target.ItemReward.Name) is Item item)
+                {
+                    if (item.IsStackFull)
+                    {
+                        session.HUD?.Message.Show(MessageKind.StackFull);
+                        return false;
+                    }
+                }
+
+                // Check for free inventory slot
+                else if (session.PlayerData.Inventory.IsFull)
                 {
                     session.HUD?.Message.Show(MessageKind.InventoryFull);
                     return false;

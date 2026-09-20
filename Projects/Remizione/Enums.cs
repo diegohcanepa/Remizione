@@ -102,7 +102,7 @@ namespace Remizione
     }
 
     // MessageKind
-    public enum MessageKind { CannotPlaceItem, GateOpened, HandsFull, InventoryFull, ItemDiscarded, LiftNotAllowed, NotEnoughCoins, OutOfReach, OutOfLine, PathCleared }
+    public enum MessageKind { CannotPlaceItem, GateOpened, HandsFull, InventoryFull, LiftNotAllowed, OutOfReach, OutOfLine, StackFull }
 
     // MeterColor
     public enum MeterColor { Green, Orange, Purple, SkyBlue, White }

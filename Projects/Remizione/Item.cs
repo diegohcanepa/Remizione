@@ -85,8 +85,8 @@ namespace Remizione
         // Inventory
         public ItemContainer Inventory { get; }
 
-        // IsFull
-        public bool IsFull => Definition.IsStackable || Definition.IsDepletable ? Amount == GameSettings.MaxItemAmount : Amount == 1;
+        // IsStackFull
+        public bool IsStackFull => Definition.IsStackable || Definition.IsDepletable ? Amount == GameSettings.MaxItemAmount : Amount == 1;
 
         // MissChance
         public Ratio MissChance { get; }

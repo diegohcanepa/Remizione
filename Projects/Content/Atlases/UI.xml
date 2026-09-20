@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:7c457c92c2fa846fbb9ee98c5a4e565e:a94094dee126e4d8e52e46162ea31565:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:8bf169a45a06710d23d8c31d88737bbc:e7343ee4564a78563373aee832e583d1:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -50,11 +50,6 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="ExamineItem.png" x="484" y="34" w="19" h="11"/>
     <sprite n="FakeItem.png" x="449" y="71" w="14" h="14"/>
     <sprite n="HeartIcon.png" x="79" y="330" w="9" h="9"/>
-    <sprite n="InventoryItemAmount1.png" x="502" y="252" w="8" h="10"/>
-    <sprite n="InventoryItemAmount2.png" x="502" y="264" w="8" h="10"/>
-    <sprite n="InventoryItemAmount3.png" x="250" y="262" w="8" h="10"/>
-    <sprite n="InventoryItemAmount4.png" x="124" y="290" w="8" h="10"/>
-    <sprite n="InventoryItemAmount5.png" x="124" y="302" w="8" h="10"/>
     <sprite n="InventoryItemSlot.png" x="244" y="147" w="17" h="17"/>
     <sprite n="KeyboardD.png" x="465" y="71" w="14" h="14"/>
     <sprite n="KeyboardDelete.png" x="484" y="2" w="19" h="14"/>
@@ -90,7 +85,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="MouseCursorFlameIcon.png" x="68" y="319" w="9" h="10"/>
     <sprite n="MouseCursorHandIcon.png" x="57" y="319" w="9" h="11"/>
     <sprite n="MouseCursorLeftIcon.png" x="24" y="311" w="9" h="9"/>
-    <sprite n="MouseCursorLiftIcon.png" x="124" y="314" w="8" h="9"/>
+    <sprite n="MouseCursorLiftIcon.png" x="502" y="252" w="8" h="9"/>
     <sprite n="MouseCursorMagnifierIcon.png" x="110" y="318" w="12" h="12"/>
     <sprite n="MouseCursorRightIcon.png" x="2" y="322" w="9" h="9"/>
     <sprite n="MouseCursorSackIcon.png" x="279" y="79" w="8" h="8"/>

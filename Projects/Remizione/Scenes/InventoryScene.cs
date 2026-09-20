@@ -12,7 +12,7 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly Sprite[] amounts = new Sprite[ItemContainer.MaximumCapacity];
+        private readonly TextSprite[] amounts = new TextSprite[ItemContainer.MaximumCapacity];
         private bool autoHide;
         private readonly Sprite background = new(Atlases.UI.QuickInventoryBackground) { PivotOrigin = RectanglePoint.LeftBottom, Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom) };
         private readonly Sprite[] icons = new Sprite[ItemContainer.MaximumCapacity];
@@ -61,11 +61,12 @@ namespace Remizione
                 };
 
                 // Amount
-                amounts[i] = new Sprite()
+                amounts[i] = new(Fonts.Common)
                 {
+                    Color = ColorPalette.Text.Terra,
                     PivotOrigin = RectanglePoint.Top,
-                    Scale = ScaleInfo.UIElement.Small,
-                    Y = slots[i].BoundingBox.Bottom + 1
+                    Scale = ScaleInfo.Text.ExtraLarge,
+                    Y = slots[i].BoundingBox.Bottom - 1
                 };
             }
 
@@ -154,7 +155,6 @@ namespace Remizione
                 slots[i].X = x;
 
                 icons[i].RenderImage = null;
-                amounts[i].RenderImage = null;
                 shadows[i].RenderImage = null;
 
                 if (i < ItemContainer.Count)
@@ -168,10 +168,7 @@ namespace Remizione
                     amounts[i].X = icons[i].BoundingBox.Center.X;
 
                     if (ItemContainer[i].Definition.IsStackable || ItemContainer[i].Definition.IsDepletable)
-                    {
-                        if (ItemContainer[i].Amount.IsBetween(1, 5))
-                            amounts[i].RenderImage = Atlases.UI.InventoryItemAmounts[ItemContainer[i].Amount - 1];
-                    }
+                        amounts[i].Text = $"x{ItemContainer[i].Amount}";
                 }
             }
         }

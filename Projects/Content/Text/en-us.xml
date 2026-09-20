@@ -5,8 +5,8 @@
   <String Key="Actor.Penitent">Penitent</String>
   <String Key="Actor.Rat">Rat</String>
   <String Key="DamageType.Physical">Physical</String>
-  <String Key="EffectTemplate.Damage"></String>
-  <String Key="EffectTemplate.EnergyRestore"></String>
+  <String Key="EffectTemplate.Damage" />
+  <String Key="EffectTemplate.EnergyRestore" />
   <String Key="EffectTemplate.HPGain">+{amount} Fleshiness</String>
   <String Key="EffectTemplate.HPLoss">-{amount} Fleshiness</String>
   <String Key="FloatingMessage.Failed">Failed!</String>
@@ -37,7 +37,7 @@
   <String Key="Item.Loquat.Name">Loquat</String>
   <String Key="Item.PrayerBonfire.Name">Bonfire prayer</String>
   <String Key="Item.ServantCross.Name">Servant's Cross</String>
-  <String Key="Item.SulfurStone.Description"></String>
+  <String Key="Item.SulfurStone.Description" />
   <String Key="Item.SulfurStone.Effect">Light bonfires</String>
   <String Key="Item.SulfurStone.Name">Sulfur stone</String>
   <String Key="Item.TrapdoorKey.Name">Trapdoor key</String>
@@ -140,21 +140,18 @@
   <String Key="MessageBox.SlotDeleted">The slot has been deleted.</String>
   <String Key="MessageBox.Warning">Warning!</String>
   <String Key="MessageKind.CannotPlaceItem">There is not enough space on the ground.</String>
-  <String Key="MessageKind.ExtraEnergy">Holy Drool capacity increased!</String>
   <String Key="MessageKind.ExtraHeart">You feel stronger!</String>
   <String Key="MessageKind.GateOpened">A metal gate opened.</String>
   <String Key="MessageKind.HandsFull">Your hands are full.</String>
   <String Key="MessageKind.InventoryFull">Out of space.</String>
-  <String Key="MessageKind.ItemDiscarded">Item discarded.</String>
   <String Key="MessageKind.LiftNotAllowed">You can't lift that.</String>
-  <String Key="MessageKind.NotEnoughCoins">Not enough coins.</String>
   <String Key="MessageKind.NotEnoughDrool">Not enough Holy Drool</String>
   <String Key="MessageKind.OutOfLine">Out of line!</String>
   <String Key="MessageKind.OutOfReach">Out of reach.</String>
-  <String Key="MessageKind.PathCleared">The way is open.</String>
+  <String Key="MessageKind.StackFull">Stack limit reached.</String>
   <String Key="Misc.All">All</String>
   <String Key="Misc.And">and</String>
-  <String Key="Misc.Chance"></String>
+  <String Key="Misc.Chance" />
   <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=—áéíóúÁÉÍÓÚ</String>
   <String Key="Misc.CopyrightDeveloper">© 2024 Indiesruption</String>
   <String Key="Misc.Credits">Remizione

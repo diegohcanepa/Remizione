@@ -90,7 +90,7 @@ namespace Remizione
         // CanAddItem
         public bool CanAddItem(ItemDefinition definition)
         {
-            return Find(definition.Name) is Item item ? !item.IsFull : !IsFull;
+            return Find(definition.Name) is Item item ? !item.IsStackFull : !IsFull;
         }
 
         // Capacity

@@ -110,14 +110,11 @@ namespace Remizione
         {
             AotTypeRegistry.Register(typeof(Actor));
             AotTypeRegistry.Register(typeof(Bonfire));
-            AotTypeRegistry.Register(typeof(BronzeKey));
-            AotTypeRegistry.Register(typeof(Coin));
             AotTypeRegistry.Register(typeof(CreditsRoom));
             AotTypeRegistry.Register(typeof(Decoration));
             AotTypeRegistry.Register(typeof(EnviousEye));
             AotTypeRegistry.Register(typeof(Fleshiness));
             AotTypeRegistry.Register(typeof(GameRoom));
-            AotTypeRegistry.Register(typeof(GoldenKey));
             AotTypeRegistry.Register(typeof(ItemOrb));
             AotTypeRegistry.Register(typeof(Pottery));
             AotTypeRegistry.Register(typeof(ProceduralRoom));
@@ -125,7 +122,6 @@ namespace Remizione
             AotTypeRegistry.Register(typeof(Rat));
             AotTypeRegistry.Register(typeof(SpearTrap));
             AotTypeRegistry.Register(typeof(Torch));
-            AotTypeRegistry.Register(typeof(TrapdoorKey));
             AotTypeRegistry.Register(typeof(Trunk));
 
             AotTypeRegistry.Register("add-dialog-option", typeof(AddDialogOptionCommand));

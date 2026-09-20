@@ -76,7 +76,7 @@ namespace Remizione
             internal static Color SubText { get; } = new Color(172, 160, 148);
 
             // Tooltip
-            internal static Color Tooltip { get; } = new Color(247, 232, 213) * .7f;
+            internal static Color Tooltip { get; } = new(172, 167, 144);
         }
 
         // OutdoorLight
@@ -130,7 +130,6 @@ namespace Remizione
             internal static Color Purple { get; } = new(156, 42, 112);
             internal static Color Red { get; } = new(164, 60, 60);
             internal static Color RedLight { get; } = new(230, 69, 57);
-            internal static Color Sentence { get; } = new(172, 167, 144);
             internal static Color SkyBlue { get; } = new(79, 164, 184);
             internal static Color SteelBlue { get; } = new(76, 104, 133);
             internal static Color TerraDarker { get; } = new(61, 41, 54);
