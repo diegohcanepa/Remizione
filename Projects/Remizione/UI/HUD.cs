@@ -48,12 +48,12 @@ namespace Remizione
             //runModifiers.Draw(gameTime);
             Statuses.Draw(gameTime);
             graceScore.Draw(gameTime);
-            RoomTitle.Draw(gameTime);
             Game.SpriteBatch.End();
 
             if (Session.IsCurrentScene && Session.InventoryEnabled)
                 InventoryMeter.Draw(gameTime);
 
+            RoomTitle.Draw(gameTime);
             Message.Draw(gameTime);
         }
 

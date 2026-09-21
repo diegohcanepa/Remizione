@@ -228,6 +228,7 @@
 			<Word>attach-light</Word>
 			<Word>consume-item</Word>
 			<Word>flip</Word>
+			<Word>fly-to</Word>
 			<Word>focus-xy</Word>
 			<Word>focus</Word>
 			<Word>follow</Word>

@@ -356,6 +356,7 @@ namespace Adberration
             AotTypeRegistry.Register("export-localizable-texts", typeof(ExportLocalizableTextsCommand));
             AotTypeRegistry.Register("fade-sound", typeof(FadeSoundCommand));
             AotTypeRegistry.Register("flag", typeof(FlagCommand), CodingContext.Declaration);
+            AotTypeRegistry.Register("fly-to", typeof(FlyToCommand));
             AotTypeRegistry.Register("focus", typeof(FocusCommand));
             AotTypeRegistry.Register("focus-xy", typeof(FocusXYCommand));
             AotTypeRegistry.Register("follow", typeof(FollowCommand));
@@ -923,7 +924,13 @@ namespace Adberration
         public Camera Camera { get; }
 
         // CanSave
-        public virtual bool CanSave => AllowSaving && !IsSaving && !IsAwaiting && SaveFileNumber >= 0 && Room?.CanSave == true;
+        public virtual bool CanSave(bool immediate = false)
+        {
+            if (IsAwaiting && !immediate)
+                return false;
+
+            return AllowSaving && !IsSaving && SaveFileNumber >= 0 && Room?.CanSave == true;
+        }
 
         // Chapter
         [ScriptProperty]
@@ -1214,8 +1221,8 @@ namespace Adberration
             if (IsRunning)
                 throw new InvalidOperationException("Game session is already running.");
 
-            // if (startingRoom == null && !IsNewSession)
-            //    throw new InvalidOperationException("There is no starting room.");
+            if (StartingRoom == null && !IsNewSession)
+                throw new InvalidOperationException("There is no starting room.");
 
             IsRunning = true;
 
@@ -1238,7 +1245,7 @@ namespace Adberration
         }
 
         // Save
-        public bool Save()
+        public bool Save(bool immediate = false)
         {
             AssertInitialized();
             CodeContract.NotDisposed(nameof(Session), IsDisposed);
@@ -1252,7 +1259,7 @@ namespace Adberration
             if (IsSaving)
                 throw new InvalidOperationException("A save operation is already in progress.");
 
-            if (!CanSave)
+            if (!CanSave(immediate))
             {
                 if (AllowSaving)
                     pendingSave = true;

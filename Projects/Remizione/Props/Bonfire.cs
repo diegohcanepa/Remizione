@@ -21,6 +21,7 @@ namespace Remizione
             : base(session, name)
         {
             Atlas = Atlases.Props;
+            DepthOffset = -2;
 
             // Flame
             this.flame = new()
@@ -110,12 +111,12 @@ namespace Remizione
 
         #endregion
 
-        // Activate
+        // BeginRest
         [ScriptMethod]
-        public void Activate() => Activate(false);
+        public void BeginRest() => BeginRest(false);
 
-        // Activate
-        public void Activate(bool immediate)
+        // BeginRest
+        public void BeginRest(bool immediate)
         {
             if (Room == null)
                 return;
@@ -139,28 +140,22 @@ namespace Remizione
                             thing.Tweens.OpacityTween = FloatTween.Create(TweenStyle.Linear, thing.Opacity, 0, 1500);
                     }
                 }
+
+                Session.Camera.StopFollowing();
+                Session.Camera.FlyTo(TweenStyle.CubicInOut, new Vector2(X - 50, Y - 10), 1.2f, 2000);
+
+                Session.Save(true);
             }
         }
 
-        // Deactivate
+        // EndRest
         [ScriptMethod]
-        public void Deactivate()
+        public void EndRest()
         {
             Session.RenewSeed();
             (Parent as ProceduralRoom)?.Populate();
             Session.Environment.GlobalLight.Lit();
             globalOpacityTween.Start(TweenStyle.CubicIn, 0, 1, 2000);
-
-            if (Session.Player != null && Room != null)
-            {
-                if (Session.Player.IsDead)
-                    Session.Player.Reheal();
-
-                Room.Children.Add(Session.Player);
-                Session.Player.Position = GetApproachPosition(Session.Player);
-                Session.Camera.Follow(Session.Player);
-                Session.Camera.FocusTarget();
-            }
         }
 
         // IsLit
@@ -188,17 +183,6 @@ namespace Remizione
                     }
                 }
             }
-        }
-
-        // RespawnPlayer
-        [ScriptMethod]
-        public void RespawnPlayer()
-        {
-            Activate(true);
-            Deactivate();
-
-            if (Room != null)
-                Session.HUD.RoomTitle.Show(Room);
         }
     }
 }

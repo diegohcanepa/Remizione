@@ -57,10 +57,10 @@ namespace Remizione.Menus
             MessageBoxScene messageBox = new(Game, MessageBoxOptions.Yes | MessageBoxOptions.No, ExitToMainMenuMessageAction, MessageBoxOptions.No)
             {
                 Message = "@MessageBox.QuitToMenu",
-                SubMessage = "@MessageBox." + (Game.CurrentSession.CanSave ? "ProgressWillBeSaved" : "ProgressWarning")
+                SubMessage = "@MessageBox." + (Game.CurrentSession.CanSave() ? "ProgressWillBeSaved" : "ProgressWarning")
             };
 
-            if (!Game.CurrentSession.CanSave)
+            if (!Game.CurrentSession.CanSave())
             {
                 messageBox.SubMessageColor = ColorPalette.MessageBoxRedText;
             }

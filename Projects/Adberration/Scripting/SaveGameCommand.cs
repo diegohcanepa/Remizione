@@ -1,18 +1,19 @@
 ﻿namespace Adberration.Scripting
 {
     // SaveGameCommand
+    // Arguments: [#immediate]
     internal sealed class SaveGameCommand : NonAwaitableCommand
     {
         // Constructor
         internal SaveGameCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 0)
+            : base(script, source, body, 0, ImmediateArg)
         {
         }
 
         // OnExecute
         protected override void OnExecute()
         {
-            Session.Save();
+            Session.Save(HasArg(ImmediateArg));
         }
     }
 }

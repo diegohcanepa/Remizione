@@ -95,8 +95,8 @@ namespace Remizione
             // Saving icon
             this.savingIcon = new Sprite(Atlases.UI.SavingIcon)
             {
-                PivotOrigin = RectanglePoint.RightTop,
-                Position = Screen.Area.GetPoint(RectanglePoint.RightTop, -6, 4)
+                PivotOrigin = RectanglePoint.Center,
+                Position = Screen.Area.GetPoint(RectanglePoint.RightTop, -9, 7)
             };
 
             LocalizationSource = LocalizationSource.Script;
@@ -246,6 +246,14 @@ namespace Remizione
             Game.SceneManager.PopUntil(this);
             MouseCursor.Reset();
             SyncProceduralMusic();
+
+            if (lastBonfireName != null)
+            {
+                TransitionManager.DefaultTransition.In(0);
+                LastBonfire = FindEntity<Bonfire>(lastBonfireName);
+                RespawnWorld();
+                TransitionManager.DefaultTransition.Out(3000);
+            }
         }
 
         // OnExitRoom
@@ -376,6 +384,7 @@ namespace Remizione
         {
             base.OnSave();
             savingIcon.Tweens.OpacityTween = FloatTween.Create(TweenStyle.QuadraticInOut, 1, .8f, 300, 10);
+            savingIcon.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.QuadraticInOut, 1, 1.05f, 150, 20);
         }
 
         // OnScriptLibraryLoaded
@@ -426,14 +435,6 @@ namespace Remizione
             }
             
             droppedKeyItems.Clear();
-
-            if (lastBonfireName != null)
-            {
-                TransitionManager.DefaultTransition.In(0);
-                LastBonfire = FindEntity<Bonfire>(lastBonfireName);
-                LastBonfire?.Deactivate();
-                TransitionManager.DefaultTransition.Out(3000);
-            }
         }
 
         // OnUpdate
@@ -550,9 +551,19 @@ namespace Remizione
         [ScriptProperty]
         public Actor? ActiveNPC { get; private set; }
 
-        // CleanupCurrentRoom
+        // ApplyDeath
         [ScriptMethod]
-        public void CleanupCurrentRoom() => Room?.Cleanup();
+        public void ApplyDeath()
+        {
+            var allRooms = new List<GameRoom>(Entities.OfType<GameRoom>());
+            foreach (var room in allRooms)
+            {
+                room.Cleanup();
+            }
+
+            PlayerData.Inventory.Clear();
+            PlayerData.Grace = 0;
+        }
 
         // DangerousTarget
         [ScriptProperty]
@@ -819,6 +830,36 @@ namespace Remizione
         public void RenewSeed()
         {
             Seed = RandomNumberGenerator.GetInt32(int.MaxValue);
+        }
+
+        // RespawnWorld
+        [ScriptMethod]
+        public void RespawnWorld()
+        {
+            if (Player?.IsDead == true)
+                Player.Reheal();
+
+            if (LastBonfire != null)
+            {
+                LastBonfire.BeginRest(true);
+                LastBonfire.EndRest();
+
+                if (Room != null)
+                {
+                    if (Player != null)
+                    {
+                        Room.Children.Add(Player);
+
+                        if (LastBonfire != null)
+                            Player.Position = LastBonfire.GetApproachPosition(Player);
+
+                        Camera.Follow(Player);
+                        Camera.FocusTarget();
+                    }
+
+                    HUD.RoomTitle.Show(Room);
+                }
+            }
         }
 
         // Room

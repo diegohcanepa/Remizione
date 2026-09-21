@@ -13,8 +13,8 @@
         // IsAwaiting
         public override bool IsAwaiting()
         {
-            return Session.Camera.IsMoving ||
-                                           (Session.Camera.Target != null && !Session.Camera.IsTargetFocused);
+            return Session.Camera.IsMoving || Session.Camera.IsFlying ||
+                   (Session.Camera.Target != null && !Session.Camera.IsTargetFocused);
         }
     }
 }
