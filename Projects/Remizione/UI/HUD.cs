@@ -2,6 +2,7 @@
 using Engendro;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
+using Remizione.UI;
 
 namespace Remizione
 {
@@ -47,6 +48,7 @@ namespace Remizione
             //runModifiers.Draw(gameTime);
             Statuses.Draw(gameTime);
             graceScore.Draw(gameTime);
+            RoomTitle.Draw(gameTime);
             Game.SpriteBatch.End();
 
             if (Session.IsCurrentScene && Session.InventoryEnabled)
@@ -65,6 +67,7 @@ namespace Remizione
             Message.Update(gameTime);
             graceScore.Update(gameTime);
             DestinationMark.Update(gameTime);
+            RoomTitle.Update(gameTime);
         }
 
         #endregion
@@ -96,6 +99,9 @@ namespace Remizione
             Statuses.Actor = Session.Player;
             Message.Hide();
         }
+
+        // RoomTitle
+        public UIRoomTitle RoomTitle { get; } = new();
 
         // Statuses
         public UIStatuses Statuses { get; }

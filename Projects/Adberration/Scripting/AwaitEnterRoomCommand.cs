@@ -18,13 +18,10 @@
         protected override void OnExecute()
         {
             room = AssertEntity<Room>(0);
-            if (room != null)
-            {
-                if (!Session.EnterRoom(room))
-                {
-                    room = null;
-                }
-            }
+            room ??= Session.StartingRoom;
+
+            if (room != null && !Session.EnterRoom(room))
+                room = null;
         }
 
         // OnExecutionCompleted

@@ -508,6 +508,18 @@ namespace Remizione
         // CanUseLightingSystem
         public bool CanUseLightingSystem => Session.LightingSystem && LightingSystem;
 
+        // Cleanup
+        public void Cleanup()
+        {
+            static bool CanCleanup(Entity entity)
+            {
+                return entity is not ItemOrb itemOrb || itemOrb.AllowCleanup;
+            }
+
+            CleanupAnnonymousThings();
+            Session.CleanUpVolatileRuntimeClones(CanCleanup);
+        }
+
         // ControlMouseCursor
         public virtual bool ControlMouseCursor => false;
 

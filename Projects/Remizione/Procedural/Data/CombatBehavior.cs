@@ -40,6 +40,9 @@ namespace Remizione
                 }
             }
 
+            // TurnCooldown
+            TurnCooldown = element.GetInt32("turnCooldown", 0);
+
             // TurnInterval
             TurnInterval = element.GetInt32("turnInterval", 2);
 
@@ -59,6 +62,9 @@ namespace Remizione
 
         // Name
         public string Name { get; }
+
+        // TurnCooldown
+        public int TurnCooldown { get; }
 
         // TurnInterval
         public int TurnInterval { get; }

@@ -269,6 +269,24 @@ namespace Adberration
         // CanSave
         public bool CanSave => Persistent && AllowSaving;
 
+        // CleanupAnnonymousThings
+        [ScriptMethod]
+        public void CleanupAnnonymousThings()
+        {
+            var annonymousEntities = new List<Entity>();
+
+            for (var i = 0; i < Children.Count; i++)
+            {
+                if (Children[i].InstanceKind == EntityInstanceKind.Anonymous)
+                    annonymousEntities.Add(Children[i]);
+            }
+
+            for (var i = 0; i < annonymousEntities.Count; i++)
+            {
+                annonymousEntities[i].Unparent();
+            }
+        }
+
         // CulledThings
         public ReadOnlyCollection<Thing> CulledThings { get; }
 

@@ -50,7 +50,7 @@ namespace Remizione
 
             AttachedLight.Unlit(true);
 
-            AttachedLightPosition = new(15, 4);
+            AttachedLightPosition = new(10, 4);
         }
 
         #endregion
@@ -64,22 +64,7 @@ namespace Remizione
         bool ISafeZone.IsEnabled => IsLit;
 
         // Radius
-        float ISafeZone.Radius => 30;
-
-        #endregion
-
-        #region Private members
-
-        // Cleanup
-        private void Cleanup()
-        {
-            static bool CanCleanup(Entity entity)
-            {
-                return entity is not ItemOrb itemOrb || itemOrb.AllowCleanup;
-            }
-
-            Session.CleanUpRuntimeEntities(CanCleanup);
-        }
+        float ISafeZone.Radius => 50;
 
         #endregion
 
@@ -127,10 +112,34 @@ namespace Remizione
 
         // Activate
         [ScriptMethod]
-        public void Activate()
+        public void Activate() => Activate(false);
+
+        // Activate
+        public void Activate(bool immediate)
         {
-            Session.Environment.GlobalLight.Unlit();
-            globalOpacityTween.Start(TweenStyle.CubicIn, 1, 0, 2000, Cleanup);
+            if (Room == null)
+                return;
+
+            Session.Environment.GlobalLight.Unlit(immediate);
+
+            if (immediate)
+            {
+                Light.GlobalOpacity = 0;
+                Room.Cleanup();
+            }
+            else
+            {
+                globalOpacityTween.Start(TweenStyle.CubicIn, 1, 0, 2000, Room.Cleanup);
+
+                if (Session.Room != null)
+                {
+                    foreach (var thing in Session.Room.CulledThings)
+                    {
+                        if (thing.InstanceKind == EntityInstanceKind.RuntimeClone)
+                            thing.Tweens.OpacityTween = FloatTween.Create(TweenStyle.Linear, thing.Opacity, 0, 1500);
+                    }
+                }
+            }
         }
 
         // Deactivate
@@ -141,6 +150,17 @@ namespace Remizione
             (Parent as ProceduralRoom)?.Populate();
             Session.Environment.GlobalLight.Lit();
             globalOpacityTween.Start(TweenStyle.CubicIn, 0, 1, 2000);
+
+            if (Session.Player != null && Room != null)
+            {
+                if (Session.Player.IsDead)
+                    Session.Player.Reheal();
+
+                Room.Children.Add(Session.Player);
+                Session.Player.Position = GetApproachPosition(Session.Player);
+                Session.Camera.Follow(Session.Player);
+                Session.Camera.FocusTarget();
+            }
         }
 
         // IsLit
@@ -168,6 +188,17 @@ namespace Remizione
                     }
                 }
             }
+        }
+
+        // RespawnPlayer
+        [ScriptMethod]
+        public void RespawnPlayer()
+        {
+            Activate(true);
+            Deactivate();
+
+            if (Room != null)
+                Session.HUD.RoomTitle.Show(Room);
         }
     }
 }

@@ -229,6 +229,7 @@ Bla bla bla</String>
   <String Key="Prop.TrapDoor">Trampilla</String>
   <String Key="Prop.Trunk">Baúl</String>
   <String Key="Prop.Tunnel">Túnel</String>
+  <String Key="Room.Threshold">El Umbral</String>
   <String Key="UserAction.Discard">Descartar</String>
   <String Key="UserAction.Drop">Soltar</String>
 </Strings>

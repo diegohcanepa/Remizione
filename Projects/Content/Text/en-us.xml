@@ -5,8 +5,8 @@
   <String Key="Actor.Penitent">Penitent</String>
   <String Key="Actor.Rat">Rat</String>
   <String Key="DamageType.Physical">Physical</String>
-  <String Key="EffectTemplate.Damage" />
-  <String Key="EffectTemplate.EnergyRestore" />
+  <String Key="EffectTemplate.Damage"></String>
+  <String Key="EffectTemplate.EnergyRestore"></String>
   <String Key="EffectTemplate.HPGain">+{amount} Fleshiness</String>
   <String Key="EffectTemplate.HPLoss">-{amount} Fleshiness</String>
   <String Key="FloatingMessage.Failed">Failed!</String>
@@ -37,7 +37,7 @@
   <String Key="Item.Loquat.Name">Loquat</String>
   <String Key="Item.PrayerBonfire.Name">Bonfire prayer</String>
   <String Key="Item.ServantCross.Name">Servant's Cross</String>
-  <String Key="Item.SulfurStone.Description" />
+  <String Key="Item.SulfurStone.Description"></String>
   <String Key="Item.SulfurStone.Effect">Light bonfires</String>
   <String Key="Item.SulfurStone.Name">Sulfur stone</String>
   <String Key="Item.TrapdoorKey.Name">Trapdoor key</String>
@@ -151,7 +151,7 @@
   <String Key="MessageKind.StackFull">Stack limit reached.</String>
   <String Key="Misc.All">All</String>
   <String Key="Misc.And">and</String>
-  <String Key="Misc.Chance" />
+  <String Key="Misc.Chance"></String>
   <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=—áéíóúÁÉÍÓÚ</String>
   <String Key="Misc.CopyrightDeveloper">© 2024 Indiesruption</String>
   <String Key="Misc.Credits">Remizione
@@ -228,6 +228,7 @@ Bla bla bla</String>
   <String Key="Prop.TrapDoor">Trap door</String>
   <String Key="Prop.Trunk">Trunk</String>
   <String Key="Prop.Tunnel">Tunnel</String>
+  <String Key="Room.Threshold">The Threshold</String>
   <String Key="UserAction.Discard">Discard</String>
   <String Key="UserAction.Drop">Drop</String>
 </Strings>

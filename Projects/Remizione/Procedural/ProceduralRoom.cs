@@ -127,7 +127,7 @@ namespace Remizione
             for (int i = 0; i < safeZones.Count; i++)
             {
                 var zone = safeZones[i];
-                if (Vector2.DistanceSquared(position, zone.Center) < (zone.Radius * zone.Radius))
+                if (Geometry.IsPointInEllipse(position, zone.Center, zone.Radius, zone.Radius))
                     return true;
             }
 
@@ -349,7 +349,9 @@ namespace Remizione
             spawnCounter.Clear();
             occupiedPositions.Clear();
             SpawnProps();
-            SpawnActors();
+
+            if (Session.Player?.MaxHP > 0)
+                SpawnActors();
         }
     }
 }

@@ -3,6 +3,7 @@
   "data": [
     {
       "name": "Threshold",
+      "maxEnemies": 3,
       "placeholders": [
         {
           "position": "255,130"

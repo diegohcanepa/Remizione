@@ -20,6 +20,7 @@ namespace Remizione
         private BloodSplash? bloodSplash;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
+        private const float InitialSpeedMultiplier = .15f;
         private Vector2? lastKnownLiftPosition;
         private readonly FloatTween moveVerticalTween = new();
         private readonly List<Vector2> pendingPathNodes = [];
@@ -27,8 +28,8 @@ namespace Remizione
         private readonly FloatTween shakeTween = FloatTween.Create(TweenStyle.Linear, 0, .5f, 40, -1);
         private SpeechText? speechText;
         private readonly ColorTween tintTween = new();
+        private float turnTimer;
         private float moveAccelerationMultiplier = .75f;
-        private const float InitialSpeedMultiplier = 0.15f;
 
         #endregion
 
@@ -106,13 +107,20 @@ namespace Remizione
             if (CombatBehavior == null)
             {
                 RemainingTurns = 0;
+                turnTimer = 0;
             }
             else
             {
+                turnTimer = Random.Shared.Next(CombatBehavior.TurnCooldown / 2, CombatBehavior.TurnCooldown + 1);
+
                 if (randomize && CombatBehavior.TurnInterval > 1)
-                    RemainingTurns = Random.Shared.Next(1, CombatBehavior.TurnInterval + 1);
+                {
+                    RemainingTurns = RemainingTurns = Random.Shared.Next(1, CombatBehavior.TurnInterval + 1);
+                }
                 else
+                {
                     RemainingTurns = CombatBehavior.TurnInterval;
+                }
             }
         }
 
@@ -539,7 +547,6 @@ namespace Remizione
             if (IsMoving && moveAccelerationMultiplier < 1f)
             {
                 float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-                // Interpolación lineal. Usamos MathF por performance al trabajar con floats.
                 moveAccelerationMultiplier = float.Min(1f, moveAccelerationMultiplier + (dt / MoveAccelerationTime));
             }
 
@@ -547,6 +554,19 @@ namespace Remizione
             {
                 if (IsAlert && IsHostile && Session.Player != null)
                     FaceTo(Session.Player);
+            }
+
+            if (!Session.IsAwaiting && RemainingTurns > 0 && IsHostile)
+            {
+                if (CombatBehavior != null && turnTimer > 0)
+                {
+                    turnTimer -= gameTime.ElapsedGameTime.Milliseconds;
+                    if (turnTimer <= 0)
+                    {
+                        RemainingTurns--;
+                        turnTimer = CombatBehavior.TurnCooldown;
+                    }
+                }
             }
         }
 
@@ -619,6 +639,8 @@ namespace Remizione
         {
             if (CombatBehavior == null || IsPlayer || Session.Player == null || !IsHostile || Session.IsAwaiting)
                 return null;
+
+            turnTimer = CombatBehavior == null ? 0 : CombatBehavior.TurnInterval;
 
             CombatDecision = Brain.Decide(this, Session.Player);
 

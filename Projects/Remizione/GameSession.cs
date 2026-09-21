@@ -29,6 +29,7 @@ namespace Remizione
         private readonly EchoScene echoScene;
         private readonly InventoryScene inventoryScene;
         private readonly ItemInfoScene itemInfoScene;
+        private string? lastBonfireName;
         private readonly NarrationScene narrationScene;
         private Vector2? playerPosition;
         private FrozenDictionary<string, GameThing>? proceduralCatalog;
@@ -293,6 +294,9 @@ namespace Remizione
             if (sessionNode == null || sessionNode.Attributes == null)
                 throw new InvalidOperationException("Session node attributes not found.");
 
+            // LastBonfire
+            lastBonfireName = sessionNode.Attributes[nameof(LastBonfire)]?.Value;
+
             // DisplayHPMeter
             if (sessionNode.Attributes[nameof(DisplayHPMeter)]?.Value is string displayHPMeterValue)
                 DisplayHPMeter = XmlConvert.ToBoolean(displayHPMeterValue);
@@ -391,7 +395,7 @@ namespace Remizione
 
             Dictionary<string, GameThing> dict = [];
 
-            // Collect all things that has a data-driven definition
+            // Collect all things that has data-driven definitions
             foreach (var entity in Entities)
             {
                 if (entity is not GameThing thing)
@@ -420,7 +424,16 @@ namespace Remizione
             {
                 ItemOrb.Drop(item.itemDef, item.amount, item.room, item.position);
             }
+            
             droppedKeyItems.Clear();
+
+            if (lastBonfireName != null)
+            {
+                TransitionManager.DefaultTransition.In(0);
+                LastBonfire = FindEntity<Bonfire>(lastBonfireName);
+                LastBonfire?.Deactivate();
+                TransitionManager.DefaultTransition.Out(3000);
+            }
         }
 
         // OnUpdate
@@ -475,6 +488,10 @@ namespace Remizione
         // OnWrite
         protected override void OnWrite(XmlWriter output)
         {
+            // LastBonfire
+            if (LastBonfire != null)
+                output.WriteAttributeString(nameof(LastBonfire), LastBonfire.Name);
+
             // DisplayHPMeter
             output.WriteAttributeString(nameof(DisplayHPMeter), XmlConvert.ToString(DisplayHPMeter));
 
@@ -532,6 +549,10 @@ namespace Remizione
         // ActiveNPC
         [ScriptProperty]
         public Actor? ActiveNPC { get; private set; }
+
+        // CleanupCurrentRoom
+        [ScriptMethod]
+        public void CleanupCurrentRoom() => Room?.Cleanup();
 
         // DangerousTarget
         [ScriptProperty]
@@ -676,6 +697,10 @@ namespace Remizione
                     actor.Die();
             }
         }
+
+        // LastBonfire
+        [ScriptProperty]
+        public Bonfire? LastBonfire { get; set; }
 
         // LightingSystem
         [ScriptProperty]

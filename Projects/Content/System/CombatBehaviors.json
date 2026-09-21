@@ -4,6 +4,7 @@
       {
         "name": "EnviousEye",
         "archetype": "Harasser",
+        "turnCooldown": 10000,
         "intents": [
           {
             "name": "Bite",

@@ -42,7 +42,6 @@ namespace Adberration
         private bool pendingSave;
         private readonly List<Entity> persistentEntities = [];
         private readonly Dictionary<string, int> randomNumbers = [];
-        private Room? startingRoom;
 
         #endregion
 
@@ -644,7 +643,7 @@ namespace Adberration
                         room.Unload();
                 }
 
-                CleanUpRuntimeEntities();
+                CleanUpVolatileRuntimeClones();
                 IsRunning = false;
                 OnShutDown();
             }
@@ -930,8 +929,8 @@ namespace Adberration
         [ScriptProperty]
         public int Chapter { get; set; }
 
-        // CleanUpRuntimeEntities
-        public void CleanUpRuntimeEntities(Func<Entity, bool>? predicate = null)
+        // CleanUpVolatileRuntimeClones
+        public void CleanUpVolatileRuntimeClones(Func<Entity, bool>? predicate = null)
         {
             var runtimeEntities = new List<Entity>();
 
@@ -1005,7 +1004,10 @@ namespace Adberration
 
             CodeContract.NotDisposed(nameof(Session), IsDisposed);
 
-            // Same room
+            if (nextRoom == Room)
+                return false;
+
+            // Entering same room
             if (IsEnteringRoom(nextRoom))
                 return false;
 
@@ -1227,9 +1229,9 @@ namespace Adberration
                 else
                     throw new InvalidOperationException("Undefined 'NewSession' script.");
             }
-            else if (startingRoom != null)
+            else if (StartingRoom != null)
             {
-                EnterRoom(startingRoom);
+                EnterRoom(StartingRoom);
             }
 
             OnRunCompleted();
@@ -1304,7 +1306,7 @@ namespace Adberration
 
             OnScriptLibraryLoaded();
 
-            startingRoom = null;
+            StartingRoom = null;
             if (!IsNewSession)
             {
                 State = GameSessionState.Loading;
@@ -1314,7 +1316,7 @@ namespace Adberration
                     using (stm)
                     {
                         using var input = !XOREncryptor.IsEncryptedXml(stm) ? stm : XOREncryptor.AsStream(stm, XOREncryptor.EncryptionKey);
-                        startingRoom = ReadCore(input);
+                        StartingRoom = ReadCore(input);
                     }
                 }
 
@@ -1337,6 +1339,9 @@ namespace Adberration
 
             canRun = true;
         }
+
+        // StartingRoom
+        public Room? StartingRoom { get; private set; }
 
         // State
         public GameSessionState State { get; private set; }

@@ -24,6 +24,9 @@
         "archetype": {
           "$ref": "enums.schema.json#/$defs/CombatArchetypeName"
         },
+        "turnCooldown": {
+          "type": "integer"
+        },
         "intents": {
           "type": "array",
            "items": {
