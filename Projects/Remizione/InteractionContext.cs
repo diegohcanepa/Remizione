@@ -33,12 +33,6 @@ namespace Remizione
 
             for (int i = Session.Room.CulledThings.Count - 1; i >= 0; i--)
             {
-                if (Session.Room.CulledThings[i] == Session.Player)
-                {
-                    if (HeldItem == null)
-                        continue;
-                }
-
                 if (Session.Room.CulledThings[i] is GameThing target)
                 {
                     if (!target.IsMoving && target.CanInteract() && target.RuntimeHotspot.Contains(mousePos))

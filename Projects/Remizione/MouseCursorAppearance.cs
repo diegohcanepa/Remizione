@@ -9,6 +9,7 @@ namespace Remizione
     internal sealed class MouseCursorAppearance(InteractionContext context)
     {
         private GameThing? lastKnownTarget;
+        private Verb? lastKnownVerb;
 
         #region Private members
 
@@ -18,7 +19,7 @@ namespace Remizione
             if (context.HeldItem?.Definition.Image != MouseCursor.CustomImage)
                 MouseCursor.CustomImage = context.HeldItem?.Definition.Image;
 
-            if (context.Target == context.Session.Player && context.HeldItem == null)
+            if (context.Target != null && !context.Target.CanInteract())
                 return;
 
             // Modal speech text active
@@ -28,7 +29,7 @@ namespace Remizione
                 return;
             }
 
-            if (context.Session.Player != null && !context.Session.Player.CanHandleInput)
+            if (context.Session.Player != null && !context.Session.Player.CanHandleInput && context.Session.ActiveNPC == null)
             {
                 MouseCursor.Icon = MouseCursorIcon.Wait;
                 return;
@@ -63,7 +64,7 @@ namespace Remizione
                 return;
             }
 
-            if (context.HeldItem != null && (context.Target == null || !context.Target.IsGoToVerb))
+            if (context.HeldItem != null && (context.Target == null || !Utils.IsGoToVerb(context.Target.Verb)))
             {
                 MouseCursor.CustomImage = context.HeldItem.Definition.Image;
                 MouseCursor.HightlightColor = context.Target == null ? null : ColorPalette.MouseCursor.Highlight;
@@ -129,6 +130,11 @@ namespace Remizione
                     MouseCursor.Icon = MouseCursorIcon.Sack;
                     break;
 
+                // Place
+                case Verb.Drop:
+                    MouseCursor.Icon = MouseCursorIcon.Drop;
+                    break;
+
                 // Bonfire
                 case Verb.Bonfire:
                     MouseCursor.Icon = MouseCursorIcon.Flame;
@@ -159,14 +165,13 @@ namespace Remizione
             }
             else
             {
-                MouseCursor.Tooltip = target.DisplayName;
+                MouseCursor.Tooltip = target.Label;
 
                 if (target.ItemRewardAmount > 1)
                     MouseCursor.Tooltip += $" (x{target.ItemRewardAmount})";
 
                 MouseCursor.TooltipColor = ColorPalette.MouseCursor.Tooltip;
                 MouseCursor.SubTextColor = ColorPalette.MouseCursor.SubText;
-                MouseCursor.SubText = target.StateTip;
             }
         }
 
@@ -177,10 +182,11 @@ namespace Remizione
         {
             RefreshIcon();
 
-            if (context.Target != lastKnownTarget)
+            if (context.Target != lastKnownTarget || context.Target?.Verb != lastKnownVerb)
             {
                 SyncText(context.Target);
                 lastKnownTarget = context.Target;
+                lastKnownVerb = context.Target?.Verb;
             }
         }
     }

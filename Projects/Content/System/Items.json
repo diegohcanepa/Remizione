@@ -34,11 +34,6 @@
 			]
 		},
 		{
-			"name": "Lift",
-			"actionKind": "Proximity",
-			"category": "Misc"
-		},
-		{
 			"name": "PrayerBonfire",
 			"category": "Sacred",
 			"actionKind": "Script",

@@ -19,7 +19,7 @@ namespace Remizione
             ApproachBehavior = ApproachBehavior.ClosestSide;
             Atlas = Atlases.Props;
             DeathSound = Sound.Find(SoundNames.WoodDebris);
-            DisplayNameKey = "Prop.Trunk";
+            LabelKey = "Prop.Trunk";
             LockedSound = Sound.Find(SoundNames.TrunkLocked);
             OpenSound = Sound.Find(SoundNames.TrunkOpen);
             OverheadOrigin = new(6, 2);

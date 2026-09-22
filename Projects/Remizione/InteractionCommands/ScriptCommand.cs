@@ -10,7 +10,7 @@ namespace Remizione.InteractionCommands
         private Script? resolvedScript;
 
         // CanExecute
-        public override bool CanExecute(InteractionData data, Actor player, GameThing target)
+        public override bool CanExecute(InteractionData data, Actor player, GameThing target, Verb verb)
         {
             var heldItem = data.Session.InteractionContext.HeldItem;
             resolvedScript = null;
@@ -22,7 +22,7 @@ namespace Remizione.InteractionCommands
             }
             else
             {
-                if (target.IsGoToVerb)
+                if (Utils.IsGoToVerb(target.Verb))
                 {
                     resolvedScript = target.OutcomeScript;
                 }
@@ -36,7 +36,7 @@ namespace Remizione.InteractionCommands
         }
 
         // Execute
-        public override void Execute(InteractionData data, Actor player, GameThing target)
+        public override void Execute(InteractionData data, Actor player, GameThing target, Verb verb)
         {
             if (resolvedScript == null)
                 return;

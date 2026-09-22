@@ -27,7 +27,7 @@ namespace Remizione
             : base(session, name)
         {
             this.IgnoreKnockback = true;
-            this.Verb = Verb.Use;
+            this.DefaultVerb = Verb.Use;
             this.IsHittable = false;
             this.Definition = GameData.Props.Find(DeclaredName);
 
@@ -230,18 +230,14 @@ namespace Remizione
         // Definition
         public override PropDefinition? Definition { get; }
 
-        // GetThrowableImageName
-        public virtual string GetThrowableImageName()
+        // GetCarriedPropImageName
+        public virtual string GetCarriedPropImageName()
         {
             return DeclaredName;
         }
 
         // IsAmbientLight
         public bool IsAmbientLight => AttachedLight != null && AttachedLight.Ambient;
-
-        // IsLiftable
-        [ScriptProperty]
-        public bool IsLiftable { get; set; }
 
         // RevealArea
         [ScriptProperty]

@@ -4,6 +4,13 @@
     {
       "name": "PotteryA",
       "baseDropChance": 0.5,
+      "effects": [
+        {
+          "context": "Contact",
+          "effectType": "Damage",
+          "amount": "6"
+        }
+      ],      
       "tags": [
         "Pottery"
       ],

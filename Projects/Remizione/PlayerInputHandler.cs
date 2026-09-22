@@ -34,7 +34,7 @@ namespace Remizione
         }
 
         // ResolveInteraction
-        private void ResolveInteraction()
+        private void ResolveInteraction(Verb verb)
         {
             if (!Owner.IsPlayer)
                 return;
@@ -59,24 +59,13 @@ namespace Remizione
             }
 
             // 2. Outcome interaction: Approach and interact with target
-            if (context.HeldItem == null || context.Target.IsGoToVerb)
+            if (context.HeldItem == null || Utils.IsGoToVerb(context.Target.Verb))
             {
-                Owner.ResolveInteraction(context.Target, null);
+                Owner.ResolveInteraction(context.Target, verb, null);
                 return;
             }
 
-            // 3. Lift action
-            if (context.HeldItem.Name == ItemNames.Lift)
-            {
-                if (context.Target is not Prop prop || !prop.IsLiftable)
-                {
-                    Owner.Session.HUD?.Message.Show(MessageKind.LiftNotAllowed);
-                    MouseCursor.Shake();
-                    return;
-                }
-            }
-
-            if (Owner.ResolveInteraction(context.Target, context.HeldItem))
+            if (Owner.ResolveInteraction(context.Target, verb, context.HeldItem))
                 return;
 
             MouseCursor.Shake();
@@ -88,7 +77,9 @@ namespace Remizione
             if (!InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
                 return false;
 
-            ResolveInteraction();
+            var context = Owner.Session.InteractionContext;
+
+            ResolveInteraction(context.Target?.Verb ?? Verb.None);
 
             return true;
         }
@@ -99,23 +90,20 @@ namespace Remizione
             if (!InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
                 return false;
 
-            // Drop throwable
-            if (Owner.ActiveThrowable != null)
-            {
-                MouseCursor.PerformClick();
-                Owner.DropActiveThrowable();
-                return true;
-            }
-
-            Owner.StopMoving();
-
             // Drop held item
             if (Owner.Session.InteractionContext.HeldItem != null)
             {
                 MouseCursor.PerformClick(false);
+                Owner.StopMoving();
                 Sound.Play(SoundNames.Interact);
                 Owner.Session.InteractionContext.HeldItem = null;
                 Owner.Session.InteractionData.Clear();
+            }
+
+            if (Owner.Session.InteractionContext.Target is GameThing target)
+            {
+                Sound.Play(SoundNames.Interact);
+                ResolveInteraction(Verb.Attack);
             }
 
             return true;

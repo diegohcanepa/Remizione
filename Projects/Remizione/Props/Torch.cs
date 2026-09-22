@@ -13,8 +13,8 @@ namespace Remizione
         {
             Atlas = Atlases.Props;
             ApproachBehavior = ApproachBehavior.None;
-            DisplayNameKey = "Prop.Torch";
-            Verb = Verb.Examine;
+            LabelKey = "Prop.Torch";
+            DefaultVerb = Verb.Examine;
 
             this.AttachedLight = new("Light", LightKind.Default)
             {

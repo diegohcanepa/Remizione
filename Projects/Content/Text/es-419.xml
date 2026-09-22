@@ -232,4 +232,6 @@ Bla bla bla</String>
   <String Key="Room.Threshold">El Umbral</String>
   <String Key="UserAction.Discard">Descartar</String>
   <String Key="UserAction.Drop">Soltar</String>
+  <String Key="Verb.Attack">Golpear</String>
+  <String Key="Verb.Lift">Alzar</String>
 </Strings>

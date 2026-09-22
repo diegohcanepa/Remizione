@@ -87,6 +87,9 @@ namespace Remizione
             return $"Build {GameSettings.Build} " + (EngendroGame.DebugMode ? "(dev)" : "(rel)");
         }
 
+        // IsGoToVerb
+        public static bool IsGoToVerb(Verb verb) => verb is Verb.GoLeft or Verb.GoRight or Verb.GoUp or Verb.GoDown;
+
         // LayoutControlsHorizontally
         internal static void LayoutControlsHorizontally(UIButton[] controlList, float spacing)
         {

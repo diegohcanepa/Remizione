@@ -18,7 +18,7 @@ namespace Remizione
         // GetAnimationName
         protected override string GetAnimationName()
         {
-            if (Owner.ActiveThrowable == null)
+            if (Owner.CarriedProp == null)
                 return base.GetAnimationName();
             else
                 return AnimationNames.StandCarry;

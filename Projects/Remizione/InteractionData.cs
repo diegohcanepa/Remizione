@@ -13,6 +13,7 @@ namespace Remizione
         private InteractionCommand? activeCommand;
         private readonly CombatCommand combatCommand = new();
         private readonly InteractionCommand[] commandChain;
+        private readonly DropCarriedPropCommand endLiftCommand = new();
         private readonly ItemCommand itemCommand = new();
         private readonly LiftCommand liftCommand = new();
         private readonly ScriptCommand scriptCommand = new();
@@ -24,7 +25,7 @@ namespace Remizione
         public InteractionData(GameSession session)
         {
             this.Session = session;
-            this.commandChain = [throwCommand, combatCommand, liftCommand, scriptCommand, itemCommand];
+            this.commandChain = [throwCommand, combatCommand, endLiftCommand, liftCommand, scriptCommand, itemCommand];
         }
 
         // CanExecute
@@ -35,6 +36,7 @@ namespace Remizione
         {
             Target = null;
             TargetPosition = Vector2.Zero;
+            Verb = Verb.None;
             activeCommand = null;
         }
 
@@ -46,7 +48,7 @@ namespace Remizione
             if (!CanExecute || player == null || Target == null)
                 return;
 
-            activeCommand!.Execute(this, player, Target);
+            activeCommand!.Execute(this, player, Target, Verb);
 
             Clear();
         }
@@ -55,7 +57,7 @@ namespace Remizione
         public bool IsAttack => activeCommand == combatCommand;
 
         // Prepare
-        public void Prepare()
+        public void Prepare(Verb verb)
         {
             Clear();
 
@@ -65,10 +67,12 @@ namespace Remizione
             if (context.Target is not GameThing target || Session.Player is not Actor player)
                 return;
 
-            if (player.ActiveThrowable != null && target.Verb != Verb.Attack && !target.IsGoToVerb)
+            /*
+            if (player.ActiveThrowable != null && target.Verb != Verb.Attack && !Utils.IsGoToVerb(verb))
                 return;
+            */
 
-            if (heldItem != null && !target.IsGoToVerb)
+            if (heldItem != null && !Utils.IsGoToVerb(verb))
             {
                 if (player == target)
                 {
@@ -83,10 +87,11 @@ namespace Remizione
 
             Target = target;
             TargetPosition = target.Position;
+            Verb = verb;
 
             for (int i = 0; i < commandChain.Length; i++)
             {
-                if (commandChain[i].CanExecute(this, player, target))
+                if (commandChain[i].CanExecute(this, player, target, verb))
                 {
                     activeCommand = commandChain[i];
                     break;
@@ -102,5 +107,8 @@ namespace Remizione
 
         // TargetPosition
         public Vector2 TargetPosition { get; private set; }
+
+        // Verb
+        public Verb Verb { get; private set; }
     }
 }

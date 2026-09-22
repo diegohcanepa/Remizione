@@ -45,7 +45,7 @@ namespace Remizione
             if (ItemReward == null)
             {
                 AttachedLight?.Unlit(true);
-                DisplayNameKey = string.Empty;
+                LabelKey = string.Empty;
                 return;
             }
 
@@ -58,7 +58,7 @@ namespace Remizione
             this.AttachedLight.LightKind = lightKind;
             this.Color = AttachedLight.Color;
 
-            DisplayNameKey = ItemReward != null ? $"Item.{ItemReward.Name}.Name" : string.Empty;
+            LabelKey = ItemReward != null ? $"Item.{ItemReward.Name}.Name" : string.Empty;
         }
 
         // OnLoad

@@ -6,7 +6,7 @@
     public static class GameSettings
     {
         // Build
-        public const int Build = 1255;
+        public const int Build = 1330;
 
         // CameraFollowSpeed
         public const float CameraSmoothSpeed = 2;
@@ -24,7 +24,7 @@
         public const int DefaultTransitionDuration = 500;
 
         // DefaultZoom
-        public const float DefaultZoom = 1.2f;
+        public const float DefaultZoom = 1.1f;
 
         // GameFolder
         public const string GameFolder = "Remizione";

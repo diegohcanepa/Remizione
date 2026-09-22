@@ -165,7 +165,7 @@ namespace Remizione
         {
             this.item = item;
             this.nameText.Color = item.Definition.IsKeyItem ? ColorPalette.Inventory.KeyItem : ColorPalette.Inventory.Item;
-            this.nameText.Text = item.Definition.GetDisplayName(item.Amount);
+            this.nameText.Text = item.Definition.GetLabel(item.Amount);
             this.descriptionText.Text = item.Definition.Description;
             this.image.RenderImage = item.Definition.Image;
             this.shadow.RenderImage = item.Definition.Image;

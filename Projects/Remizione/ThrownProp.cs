@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using System;
+using Engendro;
 using Microsoft.Xna.Framework;
 
 namespace Remizione
@@ -10,21 +11,18 @@ namespace Remizione
     {
         #region Private fields
 
+        private readonly float throwArcHeight = 2; // Altura máxima en px que sube el prop sobre la línea de tiro
+        private readonly int throwDuration = 500;     // Duración total del tiro en ms
         private float depth;
-        private float floorY;               // Cuánto se frena en horizontal al chocar
-        private readonly float gravity;     // gravedad base
-        private readonly Vector2 initialVelocity;     // gravedad base
-        private bool isGrounded;
         private readonly Actor owner;
         private GameThing? target;
-        private Vector2 velocity;
-        private readonly float weight;      // Masa relativa (afecta la gravedad)
+        private readonly FloatTween xTween = new();
+        private readonly FloatTween yTween = new();
 
         #endregion
 
         #region Constructor
 
-        // Constructor
         public ThrownProp(Actor owner, Prop prop)
             : base(prop.Session, string.Empty)
         {
@@ -32,13 +30,10 @@ namespace Remizione
             this.Prop = prop;
             this.Atlas = Atlases.Environment;
             this.PivotOrigin = RectanglePoint.Center;
-            this.initialVelocity = new(110, -50);
             this.IgnoreWalkArea = true;
-            this.weight = .8f;
-            this.gravity = 500;
 
             var animation = AddAnimation(AnimationNames.Default);
-            animation.AddFrame(prop.GetThrowableImageName(), 1000);
+            animation.AddFrame(prop.GetCarriedPropImageName(), 1000);
         }
 
         #endregion
@@ -61,43 +56,38 @@ namespace Remizione
             }
         }
 
-        // CheckFloorCollision
-        private void CheckFloorCollision()
+        private void Launch(GameThing? target, Vector2 targetPosition)
         {
-            if (isGrounded)
-                return;
-
-            if (Position.Y >= floorY)
-            {
-                Position = new Vector2(Position.X, floorY);
-                Break();
-            }
-        }
-
-        // Launch
-        private void Launch(GameThing? target)
-        {
-            if (owner.Room == null || owner.GetActiveThrowablePosition() == null)
+            var startPos = owner.GetCarriedPropPosition();
+            if (owner.Room == null || startPos == null)
                 return;
 
             this.target = target;
-            this.isGrounded = false;
-            this.velocity = initialVelocity;
             this.RenderLayer = RenderLayer.Default;
 
             depth = owner.Depth + .01f;
+            this.Position = startPos.Value;
 
-            this.Position = owner.GetActiveThrowablePosition() ?? Vector2.Zero;
-            this.floorY = owner.Y;
+            // 1. Movimiento en X: Directo y lineal hasta el destino
+            xTween.Start(TweenStyle.Linear, X, targetPosition.X, throwDuration);
 
-            if (target == null)
-            {
-                velocity.X = 0;
-            }
-            else if (owner.IsFlippedHorizontally)
-            {
-                velocity.X *= -1;
-            }
+            // 2. Movimiento en Y: Dividido en 2 fases para crear la parábola del arco
+            int halfDuration = throwDuration / 2;
+
+            // Calculamos el pico del arco (punto medio entre el origen y el destino, subiendo 'throwArcHeight')
+            float peakY = Math.Min(Y, targetPosition.Y) - throwArcHeight;
+
+            // Fase 1: Subida con desaceleración (QuadEaseOut simula perder impulso hacia arriba)
+            yTween.Start(TweenStyle.QuadraticOut, Y, peakY, halfDuration,
+                () =>
+                {
+                    // Fase 2: Caída con aceleración (QuadEaseIn simula atracción por gravedad)
+                    yTween.Start(TweenStyle.QuadraticIn, Y, targetPosition.Y, halfDuration, Break);
+                }
+            );
+
+            Tweens.XTween = xTween;
+            Tweens.YTween = yTween;
 
             owner.Room.Children.Add(this);
         }
@@ -106,39 +96,27 @@ namespace Remizione
 
         #region Protected members
 
-        // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
 
-            float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            // Apply gravity
-            if (!isGrounded)
-                velocity += new Vector2(0, gravity * weight * dt);
-
-            // Movement
-            Position += velocity * dt;
-
-            // Target collision
+            // Únicamente verificamos colisión durante el vuelo.
+            // La posición se actualiza automáticamente por el engine mediante XTween y YTween.
             CheckCollision();
-
-            // Floor collision
-            CheckFloorCollision();
         }
 
         #endregion
 
-        // Break
         public void Break()
         {
+            // Cancelamos los tweens por si colisionó antes de tiempo con un enemigo
+            Tweens.Reset();
+
             if (Prop.DeathSound != null)
                 PlaySound(Prop.DeathSound);
 
             RenderLayer = RenderLayer.Background;
-            velocity = Vector2.Zero;
             DepthOffset = 0;
-            isGrounded = true;
             Prop.Position = this.Position;
 
             if (Room != null)
@@ -149,22 +127,20 @@ namespace Remizione
             Session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);
         }
 
-        // Depth
         public override float Depth => depth;
 
-        // Drop
         public void Drop()
         {
-            Launch(null);
+            // Drop sin target: cae un poco más abajo de los pies del owner
+            var startPos = owner.GetCarriedPropPosition() ?? owner.Position;
+            Launch(null, new Vector2(startPos.X, owner.Y + 1));
         }
 
-        // Prop
         public Prop Prop { get; }
 
-        // Throw
         public void Throw(GameThing target)
         {
-            Launch(target);
+            Launch(target, target.Position);
         }
     }
 }

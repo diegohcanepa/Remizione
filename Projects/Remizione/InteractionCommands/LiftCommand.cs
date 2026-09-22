@@ -6,15 +6,15 @@
     public sealed class LiftCommand : InteractionCommand
     {
         // CanExecute
-        public override bool CanExecute(InteractionData data, Actor player, GameThing target)
+        public override bool CanExecute(InteractionData data, Actor player, GameThing target, Verb verb)
         {
-            return data.Session.InteractionContext.HeldItem == null && target.Verb == Verb.Lift;
+            return data.Session.InteractionContext.HeldItem == null && verb == Verb.Lift;
         }
 
         // Execute
-        public override void Execute(InteractionData data, Actor player, GameThing target)
+        public override void Execute(InteractionData data, Actor player, GameThing target, Verb verb)
         {
-            if (target is Prop { IsLiftable: true } prop)
+            if (target is Prop prop && verb == Verb.Lift)
                 player.Lift(prop);
         }
     }

@@ -18,7 +18,7 @@ namespace Remizione
         private const string exclamationLow = "!";
         private const string exclamationMedium = "!!";
         private const string exclamationHigh = "!!!";
-        private const int maxWidth = 90;
+        private const int maxWidth = 80;
 
         #endregion
 
@@ -187,6 +187,9 @@ namespace Remizione
 
         #endregion
 
+        // ActiveTexts
+        public static ReadOnlyCollection<SpeechText> ActiveTexts { get; } = new(activeTexts);
+
         // Actor
         public Actor Actor { get; }
 
@@ -196,9 +199,9 @@ namespace Remizione
         // DrawTexts
         public static void DrawTexts(GameTime gameTime)
         {
-            for (int i = 0; i < VisibleTexts.Count; i++)
+            for (int i = 0; i < ActiveTexts.Count; i++)
             {
-                VisibleTexts[i].Draw(gameTime);
+                ActiveTexts[i].Draw(gameTime);
             }
         }
 
@@ -278,8 +281,5 @@ namespace Remizione
 
         // Text
         public string? Text => text.Text;
-
-        // VisibleTexts
-        public static ReadOnlyCollection<SpeechText> VisibleTexts { get; } = new ReadOnlyCollection<SpeechText>(activeTexts);
     }
 }

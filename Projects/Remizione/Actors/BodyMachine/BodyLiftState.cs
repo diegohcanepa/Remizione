@@ -28,11 +28,11 @@ namespace Remizione
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (!eventDone && Target?.IsLiftable == true && Owner.AnimationPlayer.Frame?.IsTrigger == true)
+            if (!eventDone && Owner.AnimationPlayer.Frame?.IsTrigger == true)
             {
                 eventDone = true;
                 //Owner.PlaySound(SoundNames.Gesture1);
-                Owner.ActiveThrowable = Target;
+                Owner.CarriedProp = Target;
                 return;
             }
 

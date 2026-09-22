@@ -88,6 +88,7 @@ namespace Remizione
                 {
                     TextErrorColor = ColorPalette.Text.Terra
                 };
+                console.CommandList.Add("put PotteryA into $Room #at:260,130");
 
                 roomEditor = new RoomEditor(this);
             }
@@ -471,7 +472,7 @@ namespace Remizione
 
             if (PlayerData.Inventory.Count > 0)
             {
-                if (Player != null && Player.ActiveThrowable == null)
+                if (Player != null && Player.CarriedProp == null)
                 {
                     if (!IsAwaiting && IsCurrentScene)
                     {

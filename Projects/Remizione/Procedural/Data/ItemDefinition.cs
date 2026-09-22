@@ -100,9 +100,8 @@ namespace Remizione
         {
             base.OnRefreshLocalizedValues();
 
-            this.DisplayName = TextRepository.GetValue($"Item.{Name}.Name");
             this.Description = TextRepository.GetValue($"Item.{Name}.Description");
-
+            this.Label = TextRepository.GetValue($"Item.{Name}.Name");
             var effect = TextRepository.GetValue($"Item.{Name}.Effect");
             var effectDescriptors = EffectDescriptor.GetDescription(EffectDescriptors);
             var hasEffect = !string.IsNullOrWhiteSpace(effect);
@@ -146,16 +145,13 @@ namespace Remizione
         // DeselectOnUse
         public bool DeselectOnUse { get; }
 
-        // DisplayName
-        public string DisplayName { get; private set; } = string.Empty;
-
         // EffectDescription
         public string EffectDescription { get; private set; } = string.Empty;
 
-        // GetDisplayName
-        public string GetDisplayName(int amount)
+        // GetLabel
+        public string GetLabel(int amount)
         {
-            return amount == 1 ? DisplayName : DisplayName + $" (x{amount})";
+            return amount == 1 ? Label : Label + $" (x{amount})";
         }
 
         // HPCost
@@ -181,6 +177,9 @@ namespace Remizione
 
         // IsStackable
         public bool IsStackable { get; }
+
+        // Label
+        public string Label { get; private set; } = string.Empty;
 
         // LightColor
         public Color? LightColor { get; }

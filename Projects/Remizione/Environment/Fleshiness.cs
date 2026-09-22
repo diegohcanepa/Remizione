@@ -16,7 +16,7 @@ namespace Remizione
         {
             Atlas = Atlases.Environment;
             DepthOffset = -2;
-            DisplayNameKey = "Prop.Fleshiness";
+            LabelKey = "Prop.Fleshiness";
             Hotspot = new Polygon("0,0;13,0;13,5;0,5");
             RenderLayer = RenderLayer.Default;
 

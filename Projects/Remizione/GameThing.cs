@@ -241,12 +241,6 @@ namespace Remizione
             ItemReward = null;
         }
 
-        // GetDisplayName
-        protected virtual string GetDisplayName()
-        {
-            return TextRepository.GetValue(DisplayNameKey);
-        }
-
         // GetKnockbackMultiplier
         protected virtual float GetKnockbackMultiplier(GameThing target)
         {
@@ -479,7 +473,7 @@ namespace Remizione
             if (!AllowInteraction)
                 return false;
 
-            if (IsDead || string.IsNullOrWhiteSpace(DisplayName))
+            if (IsDead || string.IsNullOrWhiteSpace(Label))
                 return false;
 
             if (InteractCondition != null && !InteractCondition.Evaluate())
@@ -551,6 +545,10 @@ namespace Remizione
         // CollisionHeight
         [ScriptProperty]
         public int CollisionHeight { get; set; }
+
+        // DefaultVerb
+        [ScriptProperty]
+        public Verb DefaultVerb { get; set; }
 
         // Definition
         public virtual ThingDefinition? Definition { get; }
@@ -625,24 +623,6 @@ namespace Remizione
         [ScriptProperty]
         public Sound? DeathSound { get; set; }
 
-        // DisplayName
-        public string DisplayName { get; private set; } = string.Empty;
-
-        // DisplayNameKey
-        [ScriptProperty]
-        public string DisplayNameKey
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    DisplayName = GetDisplayName();
-                }
-            }
-        } = string.Empty;
-
         // DistanceToTarget
         public float DistanceToTarget(GameThing target)
         {
@@ -674,8 +654,11 @@ namespace Remizione
             if (hpMeter == null)
                 return;
 
-            if (Session.InteractionContext.Target == this || hpMeter.IsAnimating)
-                hpMeter.Draw(gameTime);
+            if (!IsDead)
+            {
+                if (Session.InteractionContext.Target == this || hpMeter.IsAnimating)
+                    hpMeter.Draw(gameTime);
+            }
         }
 
         // DrawShadow
@@ -976,9 +959,6 @@ namespace Remizione
         // IsEmittingLight
         public virtual bool IsEmittingLight => AttachedLight?.IsEmitting == true && !IgnoreAttachedLight;
 
-        // IsGoToVerb
-        public bool IsGoToVerb => Verb is Verb.GoLeft or Verb.GoRight or Verb.GoUp or Verb.GoDown;
-
         // IsFacingTarget
         public bool IsFacingTarget(GameThing target)
         {
@@ -1059,8 +1039,23 @@ namespace Remizione
             }
         }
 
-        // LootDisplayName
-        public string LootDisplayName { get; private set; } = string.Empty;
+        // Label
+        public virtual string Label { get; private set; } = string.Empty;
+
+        // LabelKey
+        [ScriptProperty]
+        public string LabelKey
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    Label = TextRepository.GetValue(LabelKey);
+                }
+            }
+        } = string.Empty;
 
         // MaxHP
         [ScriptProperty]
@@ -1200,24 +1195,6 @@ namespace Remizione
         // SpawnPoint
         public Vector2 SpawnPoint { get; set; }
 
-        // StateTip
-        public string StateTip { get; private set; } = string.Empty;
-
-        // StateTipKey
-        [ScriptProperty]
-        public string StateTipKey
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    StateTip = TextRepository.GetValue($"StateTip.{field}");
-                }
-            }
-        } = string.Empty;
-
         // TakeDamage
         public int TakeDamage(GameThing attacker, DamageType damageType, int amount, Vector2 knockbackForce)
         {
@@ -1315,7 +1292,7 @@ namespace Remizione
 
         // Verb
         [ScriptProperty]
-        public Verb Verb { get; set; }
+        public virtual Verb Verb => DefaultVerb;
 
         // WalkArea
         public WalkArea? WalkArea

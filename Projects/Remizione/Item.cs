@@ -106,7 +106,7 @@ namespace Remizione
         // ToString
         public override string ToString()
         {
-            return Definition.DisplayName;
+            return Definition.Label;
         }
     }
 }

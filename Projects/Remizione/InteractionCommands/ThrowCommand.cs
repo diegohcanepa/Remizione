@@ -6,17 +6,17 @@
     public sealed class ThrowCommand : InteractionCommand
     {
         // CanExecute
-        public override bool CanExecute(InteractionData data, Actor player, GameThing target)
+        public override bool CanExecute(InteractionData data, Actor player, GameThing target, Verb verb)
         {
             var heldItem = data.Session.InteractionContext.HeldItem;
-            return heldItem == null && player.ActiveThrowable is not null && target is { IsGoToVerb: false, Verb: Verb.Attack };
+            return heldItem == null && player.CarriedProp is not null && target.Verb == Verb.Attack;
         }
 
         // Execute
-        public override void Execute(InteractionData data, Actor player, GameThing target)
+        public override void Execute(InteractionData data, Actor player, GameThing target, Verb verb)
         {
             player.StopMoving();
-            player.ThrowActiveTrowable(target);
+            player.ThrowCarriedProp(target);
         }
     }
 }

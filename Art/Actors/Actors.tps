@@ -267,6 +267,39 @@
             <key type="filename">Penitent-assets/Fatigue03.png</key>
             <key type="filename">Penitent-assets/Fatigue04.png</key>
             <key type="filename">Penitent-assets/Fatigue05.png</key>
+            <key type="filename">Penitent-assets/MoveCarry01.png</key>
+            <key type="filename">Penitent-assets/MoveCarry02.png</key>
+            <key type="filename">Penitent-assets/MoveCarry03.png</key>
+            <key type="filename">Penitent-assets/MoveCarry04.png</key>
+            <key type="filename">Penitent-assets/MoveCarry05.png</key>
+            <key type="filename">Penitent-assets/MoveCarry06.png</key>
+            <key type="filename">Penitent-assets/MoveCarry07.png</key>
+            <key type="filename">Penitent-assets/MoveCarry08.png</key>
+            <key type="filename">Penitent-assets/StandCarry01.png</key>
+            <key type="filename">Penitent-assets/ThrowObject01.png</key>
+            <key type="filename">Penitent-assets/ThrowObject02.png</key>
+            <key type="filename">Penitent-assets/ThrowObject03.png</key>
+            <key type="filename">Penitent-assets/ThrowObject04.png</key>
+            <key type="filename">Penitent-assets/ThrowObject05.png</key>
+            <key type="filename">Penitent-assets/UseCross01.png</key>
+            <key type="filename">Penitent-assets/UseCross02.png</key>
+            <key type="filename">Penitent-assets/UseCross03.png</key>
+            <key type="filename">Penitent-assets/UseCross04.png</key>
+            <key type="filename">Penitent-assets/UseCross05.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,6,14,12</rect>
+                <key>scale9Paddings</key>
+                <rect>7,6,14,12</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Penitent-assets/Fatigue06.png</key>
             <key type="filename">Penitent-assets/Fatigue07.png</key>
             <key type="filename">Penitent-assets/Fatigue08.png</key>
@@ -328,11 +361,6 @@
             <key type="filename">Penitent-assets/StandUp05.png</key>
             <key type="filename">Penitent-assets/StandUp06.png</key>
             <key type="filename">Penitent-assets/Talk01.png</key>
-            <key type="filename">Penitent-assets/UseCross01.png</key>
-            <key type="filename">Penitent-assets/UseCross02.png</key>
-            <key type="filename">Penitent-assets/UseCross03.png</key>
-            <key type="filename">Penitent-assets/UseCross04.png</key>
-            <key type="filename">Penitent-assets/UseCross05.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

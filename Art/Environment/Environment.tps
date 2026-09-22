@@ -370,6 +370,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Environment-assets/ItemOrb.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,3,3,5</rect>
+                <key>scale9Paddings</key>
+                <rect>2,3,3,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Environment-assets/LightningLight.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -382,21 +397,6 @@
                 <rect>67,40,133,79</rect>
                 <key>scale9Paddings</key>
                 <rect>67,40,133,79</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Environment-assets/LootOrb.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,3,3,5</rect>
-                <key>scale9Paddings</key>
-                <rect>2,3,3,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -685,22 +685,6 @@
                 <rect>4,3,9,5</rect>
                 <key>scale9Paddings</key>
                 <rect>4,3,9,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ThrownProps-assets/GoldenTrunk.png</key>
-            <key type="filename">ThrownProps-assets/Trunk.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,3,7,5</rect>
-                <key>scale9Paddings</key>
-                <rect>3,3,7,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

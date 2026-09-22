@@ -16,11 +16,11 @@ namespace Remizione
         {
             Atlas = Atlases.Props;
             ApproachBehavior = ApproachBehavior.ClosestSide;
-            Verb = Verb.Attack;
+            DefaultVerb = Verb.Lift;
             IsHittable = true;
             DeathSound = Sound.Find(SoundNames.PotteryBreak);
             DepthOffset = -2;
-            DisplayNameKey = "Prop.Pottery";
+            LabelKey = "Prop.Pottery";
         }
 
         #region Protected members
@@ -44,9 +44,9 @@ namespace Remizione
         public bool CanHideLoot { get; set; }
 
         // GetThrowableImageName
-        public override string GetThrowableImageName()
+        public override string GetCarriedPropImageName()
         {
-            var result = base.GetThrowableImageName();
+            var result = base.GetCarriedPropImageName();
             if (HPRatio < 1)
                 result += CrackedSuffix;
 

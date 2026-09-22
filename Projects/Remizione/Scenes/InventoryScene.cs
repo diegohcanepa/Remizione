@@ -316,9 +316,9 @@ namespace Remizione
                     itemLabel.X = icons[item.Index].BoundingBox.Center.X;
                     itemLabel.Color = item.Definition.IsKeyItem ? ColorPalette.Inventory.KeyItem : ColorPalette.Inventory.Item;
                     itemDescription.X = icons[item.Index].BoundingBox.Center.X;
-                    itemLabel.Text = item.Definition.DisplayName;
+                    itemLabel.Text = item.Definition.Label;
                     itemDescription.Text = item.Definition.EffectDescription;
-                    MouseCursor.Tooltip = item.Definition.DisplayName;
+                    MouseCursor.Tooltip = item.Definition.Label;
                     icons[item.Index].Scale = ScaleInfo.UIElement.ExtraLarge;
                     shadows[item.Index].Scale = ScaleInfo.UIElement.ExtraLarge;
                     itemLabel.Tag = item;
