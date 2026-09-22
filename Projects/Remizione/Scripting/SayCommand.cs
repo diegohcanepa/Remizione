@@ -11,11 +11,12 @@ namespace Remizione.Scripting
 
         // Constructor
         public SayCommand(Script script, string source, StatementBody args)
-            : base(script, source, args, 2, ConditionArg, LiteralArg, LocalizationIdArg, NoAwaitArg)
+            : base(script, source, args, 2, ConditionArg, LiteralArg, LocalizationIdArg, NoAwaitArg, SoundArg)
         {
             AssertEntity<Actor>(0);
             Parser.ParseQuotedString(this, 1);
             Parser.ParseFlagConditionArgument(this, ConditionArg);
+            Parser.ParseNameArgument(this, SoundArg);
         }
 
         #region Protected members
@@ -34,7 +35,8 @@ namespace Remizione.Scripting
             }
 
             string text = GetDisplayText();
-            actor.Say(text, !HasArg(NoAwaitArg));
+            var soundName = Parser.ParseNameArgument(this, SoundArg);
+            actor.Say(text, !HasArg(NoAwaitArg), soundName);
         }
 
         // OnExecutionCompleted

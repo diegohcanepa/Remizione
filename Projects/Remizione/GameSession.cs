@@ -235,7 +235,7 @@ namespace Remizione
 
             console?.Draw(gameTime);
 
-            SpeechText.DrawSpeechTexts(gameTime);
+            SpeechText.DrawTexts(gameTime);
 
             roomEditor?.Draw(gameTime);
         }

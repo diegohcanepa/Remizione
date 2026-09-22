@@ -130,7 +130,7 @@ namespace Remizione
             this.textSprite.Text = text;
             if (!string.IsNullOrWhiteSpace(soundName))
             {
-                this.textSprite.Color = ColorPalette.Text.Yellow * .8f;
+                this.textSprite.Color = ColorPalette.MouseCursor.Tooltip;
                 MouseCursor.Icon = MouseCursorIcon.Wait;
             }
 

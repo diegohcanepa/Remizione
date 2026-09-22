@@ -97,14 +97,6 @@ namespace Remizione
         // ShadowSpot
         internal static Color ShadowSpot { get; } = Color.Black * .7f;
 
-        // SpeechText
-        internal static class SpeechText
-        {
-            internal static Color Fill { get; } = new(196, 195, 191);
-            internal static Color Shadow { get; } = Color.Black * .2f;
-            internal static Color Text { get; } = MouseCursor.Tooltip;
-        }
-
         // StatMeter
         internal static class StatMeter
         {

@@ -1240,10 +1240,10 @@ namespace Remizione
         }
 
         // Say
-        public void Say(string text, bool awaitInput)
+        public void Say(string text, bool awaitInput, string? soundName)
         {
             speechText ??= new SpeechText(this);
-            speechText.Show(text, awaitInput);
+            speechText.Show(text, awaitInput, soundName);
         }
 
         // ShowStatusReaction

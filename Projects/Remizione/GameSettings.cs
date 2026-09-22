@@ -23,6 +23,9 @@
         // DefaultTransitionDuration
         public const int DefaultTransitionDuration = 500;
 
+        // DefaultZoom
+        public const float DefaultZoom = 1.2f;
+
         // GameFolder
         public const string GameFolder = "Remizione";
 

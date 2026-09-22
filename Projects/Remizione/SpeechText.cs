@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -27,6 +28,7 @@ namespace Remizione
         private int autoHideCooldown;
         private int inputCooldown;
         private readonly Vector2Tween shakeTween = new();
+        private SoundInstance? speakerSoundInstance;
         private readonly TextSprite text;
 
         private bool isPositionedBelow;
@@ -42,7 +44,7 @@ namespace Remizione
             // Text
             this.text = new TextSprite(Fonts.CommonOutline)
             {
-                Color = ColorPalette.SpeechText.Text,
+                Color = ColorPalette.MouseCursor.Tooltip,
                 MaximumWidth = maxWidth,
                 PivotOrigin = RectanglePoint.LeftTop,
             };
@@ -175,24 +177,31 @@ namespace Remizione
             shakeTween.Update(gameTime);
             text.Update(gameTime);
 
+            if (!text.IsTyping)
+                speakerSoundInstance?.Stop(400);
+
             if (State == SpeechTextState.Typing)
                 Layout();
         }
 
         #endregion
 
+        // Actor
         public Actor Actor { get; }
 
+        // AwaitInput
         public bool AwaitInput { get; private set; }
 
-        public static void DrawSpeechTexts(GameTime gameTime)
+        // DrawTexts
+        public static void DrawTexts(GameTime gameTime)
         {
-            for (int i = 0; i < VisibleBubbles.Count; i++)
+            for (int i = 0; i < VisibleTexts.Count; i++)
             {
-                VisibleBubbles[i].Draw(gameTime);
+                VisibleTexts[i].Draw(gameTime);
             }
         }
 
+        // Hide
         public void Hide()
         {
             activeTexts.Remove(this);
@@ -204,12 +213,16 @@ namespace Remizione
             text.Clear();
             text.StopTyping();
             shakeTween.Stop();
+            speakerSoundInstance?.Stop();
+            speakerSoundInstance = null;
             State = SpeechTextState.Hidden;
         }
 
+        // ModalInstance
         public static SpeechText? ModalInstance { get; private set; }
 
-        public void Show(string text, bool awaitInput)
+        // Show
+        public void Show(string text, bool awaitInput, string? soundName)
         {
             if (string.IsNullOrWhiteSpace(text))
                 return;
@@ -243,17 +256,29 @@ namespace Remizione
                 State = SpeechTextState.Typing;
             }
 
+            if (!string.IsNullOrWhiteSpace(soundName))
+            {
+                speakerSoundInstance = Sound.Find(soundName)?.PopInstance();
+                if (speakerSoundInstance != null)
+                {
+                    speakerSoundInstance.Looped = true;
+                    speakerSoundInstance.Play();
+                }
+            }
+
             Layout();
             Shake(text);
             Actor.StartTalking();
             inputCooldown = 100;
         }
 
+        // State
         public SpeechTextState State { get; private set; }
 
+        // Text
         public string? Text => text.Text;
 
-        // Se mantiene el nombre de la colección por si la llamas desde fuera
-        public static ReadOnlyCollection<SpeechText> VisibleBubbles { get; } = new ReadOnlyCollection<SpeechText>(activeTexts);
+        // VisibleTexts
+        public static ReadOnlyCollection<SpeechText> VisibleTexts { get; } = new ReadOnlyCollection<SpeechText>(activeTexts);
     }
 }
