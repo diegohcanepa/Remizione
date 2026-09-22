@@ -9,10 +9,9 @@ namespace Remizione.Scripting
     {
         // Constructor
         public EchoCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 1, LiteralArg, LocalizationIdArg, SpeakerArg, SoundArg)
+            : base(script, source, body, 1, LiteralArg, LocalizationIdArg, SoundArg)
         {
             Parser.ParseQuotedString(this, 0);
-            Parser.ParseEntityArgument<GameThing>(this, SpeakerArg, null);
             Parser.ParseNameArgument(this, SoundArg);
         }
 
@@ -21,12 +20,8 @@ namespace Remizione.Scripting
         // OnExecute
         protected override void OnExecute()
         {
-            var speaker = Parser.ParseEntityArgument<GameThing>(this, SpeakerArg, null);
-            var text = GetDisplayText();
-            var soundName = Parser.ParseNameArgument(this, SoundArg);
-
             if (Session is GameSession session)
-                session.Echo(text, speaker, soundName);
+                session.Echo(GetDisplayText());
         }
 
         // TextClauseIndex

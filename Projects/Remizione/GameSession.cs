@@ -433,7 +433,7 @@ namespace Remizione
             {
                 ItemOrb.Drop(item.itemDef, item.amount, item.room, item.position);
             }
-            
+
             droppedKeyItems.Clear();
         }
 
@@ -578,12 +578,12 @@ namespace Remizione
         public bool DisplayHPMeter { get; set; } = true;
 
         // Echo
-        public void Echo(string text, GameThing? speaker, string? soundName)
+        public void Echo(string text)
         {
             if (Game.SceneManager.CurrentScene is not EchoScene)
                 Game.SceneManager.Push(echoScene);
 
-            echoScene.Show(text, speaker, soundName);
+            echoScene.Show(text);
         }
 
         // Environment

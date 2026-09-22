@@ -18,7 +18,6 @@ namespace Remizione
         private readonly Sprite background = new(Atlases.UI.EchoBackground) { PivotOrigin = RectanglePoint.LeftBottom, Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom) };
         private readonly GameSession session;
         private SoundInstance? speakerSoundInstance;
-        private readonly TextSprite speakerSprite;
         private readonly FloatTween textOpacityTween = new();
         private readonly TextSprite textSprite;
 
@@ -32,14 +31,6 @@ namespace Remizione
         {
             this.session = session;
             this.PausePreviousScenes = false;
-
-            // Speaker text
-            this.speakerSprite = new(Fonts.Common)
-            {
-                Color = ColorPalette.MouseCursor.Tooltip,
-                PivotOrigin = RectanglePoint.Bottom,
-                Scale = ScaleInfo.Text.Huge
-            };
 
             // Text sprite
             this.textSprite = new(Fonts.Common)
@@ -114,7 +105,6 @@ namespace Remizione
             Game.SpriteBatch.End();
 
             Game.SpriteBatch.Begin(Game.Camera);
-            speakerSprite.Draw(gameTime);
             textSprite.Draw(gameTime);
             Game.SpriteBatch.End();
         }
@@ -141,32 +131,10 @@ namespace Remizione
         public bool CanClose { get; private set; }
 
         // Show
-        public void Show(string text, GameThing? speaker = null, string? soundName = null)
+        public void Show(string text)
         {
-            this.speakerSprite.Text = speaker?.DisplayName;
             this.textSprite.Text = text;
-
-            // Speaker
-            if (!speakerSprite.IsEmpty)
-            {
-                this.textSprite.Color = ColorPalette.MouseCursor.Tooltip * .6f;
-                if (!string.IsNullOrWhiteSpace(soundName))
-                {
-                    speakerSoundInstance = Sound.Find(soundName)?.PopInstance();
-                    if (speakerSoundInstance != null)
-                    {
-                        speakerSoundInstance.Looped = true;
-                        speakerSoundInstance.Play();
-                    }
-                }
-            }
-            else
-            {
-                this.textSprite.Color = ColorPalette.Text.TerraLight * .8f;
-            }
-
-            if (speakerSprite.Length > 0)
-                speakerSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.Top, 0, 1);
+            this.textSprite.Color = ColorPalette.Text.TerraLight * .8f;
 
             CanClose = false;
 

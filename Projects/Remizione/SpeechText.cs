@@ -37,6 +37,7 @@ namespace Remizione
 
         #region Constructor
 
+        // Constructor
         public SpeechText(Actor actor)
         {
             this.Actor = actor;
