@@ -175,7 +175,7 @@ namespace Remizione
     public enum UserAction { Discard, Drop }
 
     // Verb
-    public enum Verb { None, Use, Examine, Bonfire, Talk, Attack, Lift, Drop, GoLeft, GoRight, GoUp, GoDown, PickUp }
+    public enum Verb { None, Use, Examine, Rest, Talk, Attack, Lift, Drop, GoLeft, GoRight, GoUp, GoDown, PickUp }
 
     // VolumeCategory
     public enum VolumeCategory { Ambient, FX, Music, Voice, Master }

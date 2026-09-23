@@ -12,7 +12,7 @@ namespace Remizione.InteractionCommands
         // CanExecute
         public override bool CanExecute(InteractionData data, Actor player, GameThing target, Verb verb)
         {
-            var heldItem = data.Session.InteractionContext.HeldItem;
+            var heldItem = player.Session.InteractionContext.HeldItem;
             resolvedScript = null;
 
             if (heldItem == null)
@@ -43,11 +43,11 @@ namespace Remizione.InteractionCommands
 
             player.StopMoving();
 
-            if (target.Verb == Verb.PickUp && !data.Session.InventoryEnabled)
+            if (target.Verb == Verb.PickUp && !player.Session.InventoryEnabled)
             {
                 MouseCursor.CustomImage = null;
                 player.Session.InteractionContext.HeldItem = null;
-                data.Session.AwaitRoutine(RoutineNames.NoSack);
+                player.Session.AwaitRoutine(RoutineNames.NoSack);
                 return;
             }
 
@@ -59,11 +59,11 @@ namespace Remizione.InteractionCommands
             }
             */
 
-            if (data.Session.InteractionContext.HeldItem?.Definition.DeselectOnUse == true)
-                data.Session.InteractionContext.HeldItem = null;
+            if (player.Session.InteractionContext.HeldItem?.Definition.DeselectOnUse == true)
+                player.Session.InteractionContext.HeldItem = null;
 
             player.FaceTo(target);
-            data.Session.BeginOutcome(resolvedScript, target);
+            player.Session.BeginOutcome(resolvedScript, target);
         }
     }
 }

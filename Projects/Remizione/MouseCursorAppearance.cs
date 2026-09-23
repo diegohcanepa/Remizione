@@ -135,8 +135,8 @@ namespace Remizione
                     MouseCursor.Icon = MouseCursorIcon.Drop;
                     break;
 
-                // Bonfire
-                case Verb.Bonfire:
+                // Rest
+                case Verb.Rest:
                     MouseCursor.Icon = MouseCursorIcon.Flame;
                     break;
 

@@ -121,9 +121,6 @@ namespace Remizione
                 }
                 else if (AwaitInput && (InputBindings.SpeechText.IsPressed(0) || InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed()) && inputCooldown <= 0)
                 {
-                    if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
-                        MouseCursor.PerformClick();
-
                     State = SpeechTextState.Idle;
                     text.StopTyping();
                     Actor.StopTalking();
@@ -140,9 +137,6 @@ namespace Remizione
                 }
                 else if (AwaitInput && (InputBindings.SpeechText.IsPressed(0) || InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed()))
                 {
-                    if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
-                        MouseCursor.PerformClick();
-
                     Hide();
                 }
             }

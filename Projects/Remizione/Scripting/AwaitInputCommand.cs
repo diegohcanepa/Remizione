@@ -18,7 +18,6 @@ namespace Remizione.Scripting
         // OnExecutionCompleted
         protected override void OnExecutionCompleted()
         {
-            MouseCursor.PerformClick();
             InputManager.DefaultPlayer.Mouse.Reset();
         }
 

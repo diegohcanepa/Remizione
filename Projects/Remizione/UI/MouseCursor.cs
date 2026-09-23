@@ -20,7 +20,6 @@ namespace Remizione
         private static readonly Sprite cursorSprite;
         private static readonly Vector2 defaultScale = ScaleInfo.UIElement.Large;
         private static OutlineEffect? effect;
-        private static readonly Vector2Tween scaleTween = new();
         private static readonly FloatTween shakeTween = new();
         private static readonly TextSprite subTextSprite = new(Fonts.CommonOutline) { Color = ColorPalette.Text.Terra, Scale = ScaleInfo.Text.Medium };
         private static readonly TextSprite tooltipSprite;
@@ -198,16 +197,6 @@ namespace Remizione
                     field = value;
                     InvalidateCursorImage();
                 }
-            }
-        }
-
-        // PerformClick
-        public static void PerformClick(bool animate = true)
-        {
-            if (animate)
-            {
-                scaleTween.Start(TweenStyle.QuadraticIn, cursorSprite.Scale * .9f, cursorSprite.Scale, 150);
-                cursorSprite.Tweens.ScaleTween = scaleTween;
             }
         }
 

@@ -105,7 +105,6 @@ namespace Remizione
             {
                 if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y < AutoHideThreshold)
                 {
-                    MouseCursor.PerformClick(false);
                     Game.SceneManager.Pop();
                 }
                 else if (ItemContainer.Session.InteractionContext.HeldItem == null && GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item grabbedItem)
@@ -113,7 +112,6 @@ namespace Remizione
                     if (grabbedItem.Definition.Image != null)
                     {
                         ItemContainer.Session.InteractionContext.HeldItem = grabbedItem;
-                        MouseCursor.PerformClick(false);
                         Sound.Play(SoundNames.Interact);
                         Game.SceneManager.Pop();
                         return true;
@@ -129,7 +127,6 @@ namespace Remizione
             {
                 if (GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item item)
                 {
-                    MouseCursor.PerformClick();
                     Sound.Play(SoundNames.Interact);
                     ItemContainer.Session.ShowItemInfo(item);
                 }

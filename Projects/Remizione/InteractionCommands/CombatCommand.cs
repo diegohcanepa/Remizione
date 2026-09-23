@@ -10,7 +10,7 @@
         // CanExecute
         public override bool CanExecute(InteractionData data, Actor player, GameThing target, Verb verb)
         {
-            var heldItem = data.Session.InteractionContext.HeldItem;
+            var heldItem = player.Session.InteractionContext.HeldItem;
 
             resolvedIntent = null;
 

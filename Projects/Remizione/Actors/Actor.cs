@@ -66,19 +66,6 @@ namespace Remizione
             return BloodSplashOrigin == Vector2.Zero ? Vector2.Zero : this.GetAnchoredPosition(BloodSplashOrigin);
         }
 
-        // HandlePendingInteraction
-        private void HandlePendingInteraction()
-        {
-            if (!IsPlayer || !IsInCurrentRoom || IsDead)
-                return;
-
-            // Session is busy
-            if (Session.State != GameSessionState.Idle)
-                return;
-
-            Session.InteractionData.Execute();
-        }
-
         // Hurt
         private void Hurt()
         {
@@ -416,7 +403,12 @@ namespace Remizione
             {
                 StopMoving();
                 IsFollowingPath = false;
-                HandlePendingInteraction();
+
+                // Único punto de contacto: avisar que llegamos a destino
+                if (IsPlayer && !IsDead && IsInCurrentRoom)
+                {
+                    Session.InteractionData.ExecutePending(this);
+                }
             }
         }
 
@@ -1171,59 +1163,6 @@ namespace Remizione
         [ScriptProperty]
         public RemainsKind RemainsKind { get; set; } = RemainsKind.Guts;
 
-        // ResolveInteraction
-        public bool ResolveInteraction(GameThing target, Verb verb, Item? item)
-        {
-            if (!IsPlayer || IsDead)
-                return false;
-
-            Session.InteractionData.Prepare(verb);
-            if (!Session.InteractionData.CanExecute)
-            {
-                MouseCursor.Shake();
-                return false;
-            }
-
-            if ((item == null && target == this) || (item?.Definition.ActionKind is ActionKind.InPlace or ActionKind.Self))
-            {
-                HandlePendingInteraction();
-            }
-            else
-            {
-                ApproachBehavior? behavior = Session.InteractionData.IsAttack || CarriedProp != null ? ApproachBehavior.ClosestSide : null;
-                var destination = target.GetApproachPosition(this, behavior);
-
-                if (destination != Vector2.Zero)
-                {
-                    if (CarriedProp != null)
-                    {
-                        if (target.X < X)
-                            destination.X += 32;
-                        else
-                            destination.X -= 32;
-                    }
-                    else if (item?.Definition.ActionKind == ActionKind.Projectile)
-                    {
-                        destination.X = X;
-                    }
-                }
-
-                var walkThreshold = Session.InteractionData.IsAttack ? 0 : GameSettings.WalkThreshold;
-                var moveToResult = destination == Vector2.Zero ? MoveToResult.NoPath : MoveTo(destination, walkThreshold);
-                if (destination != Vector2.Zero && moveToResult == MoveToResult.NoPath)
-                {
-                    FaceTo(target);
-                    return false;
-                }
-                else if (moveToResult == MoveToResult.LessThan1px || destination == Vector2.Zero)
-                {
-                    HandlePendingInteraction();
-                }
-            }
-
-            return true;
-        }
-
         // Say
         public void Say(string text, bool awaitInput, string? soundName)
         {
@@ -1295,9 +1234,10 @@ namespace Remizione
         // ThrowCarriedProp
         public void ThrowCarriedProp(GameThing target)
         {
-            if (CarriedProp is null)
+            if (CarriedProp == null)
                 return;
 
+            StopMoving();
             FaceTo(target);
             var state = BodyMachine.FindOrCreateState<ActorThrowObjectState>();
             state.Target = target;

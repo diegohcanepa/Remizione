@@ -58,7 +58,7 @@ namespace Remizione
             this.Game = game;
             this.Environment = new Environment();
             this.InteractionContext = new(this);
-            this.InteractionData = new(this);
+            this.InteractionData = new();
             this.echoScene = new EchoScene(this);
             this.narrationScene = new NarrationScene(this);
             this.PlayerData = new(this);
@@ -276,7 +276,7 @@ namespace Remizione
             if (roomEditor?.HandleInput() == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
-            else if (HUD?.HandleInput() == HandleInputResult.Handled)
+            else if (HUD.HandleInput() == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
             else

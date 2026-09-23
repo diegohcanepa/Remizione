@@ -78,7 +78,6 @@ namespace Remizione
             {
                 if (menu.GetOptionAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) != null)
                 {
-                    MouseCursor.PerformClick();
                     RunSelectedOption();
                     return true;
                 }

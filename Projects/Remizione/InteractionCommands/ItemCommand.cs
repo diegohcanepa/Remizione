@@ -8,13 +8,13 @@
         // CanExecute
         public override bool CanExecute(InteractionData data, Actor player, GameThing target, Verb verb)
         {
-            return data.Session.InteractionContext.HeldItem != null;
+            return player.Session.InteractionContext.HeldItem != null;
         }
 
         // Execute
         public override void Execute(InteractionData data, Actor player, GameThing target, Verb verb)
         {
-            if (data.Session.InteractionContext.HeldItem is Item heldItem)
+            if (player.Session.InteractionContext.HeldItem is Item heldItem)
                 player.ExecuteAction(heldItem, target);
         }
     }

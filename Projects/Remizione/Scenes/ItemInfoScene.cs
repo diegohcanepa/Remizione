@@ -103,7 +103,6 @@ namespace Remizione
             if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed() ||
                 InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
             {
-                MouseCursor.PerformClick();
                 Game.SceneManager.Pop();
                 return true;
             }
