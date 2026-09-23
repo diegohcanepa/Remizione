@@ -98,6 +98,7 @@ namespace Remizione
                 Sound.Play(SoundNames.Interact);
                 Owner.Session.InteractionContext.HeldItem = null;
                 Owner.Session.InteractionData.Clear();
+                return true;
             }
 
             if (Owner.Session.InteractionContext.Target is GameThing target)

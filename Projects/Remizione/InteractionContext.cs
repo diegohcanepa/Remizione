@@ -7,7 +7,6 @@ namespace Remizione
     /// </summary>
     public sealed class InteractionContext
     {
-        private bool isRefreshing;
         private readonly MouseCursorAppearance mouseCursorAppearance;
 
         #region Constructor
@@ -46,36 +45,17 @@ namespace Remizione
         #endregion
 
         // HeldItem
-        public Item? HeldItem
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    if (!isRefreshing)
-                        mouseCursorAppearance.Refresh();
-                }
-            }
-        }
+        public Item? HeldItem { get; set; }
 
         // Refresh
         public void Refresh()
         {
-            if (isRefreshing)
-                return;
-
-            isRefreshing = true;
-
             Target = Session.IsGameplayActive ? ScanTarget() : null;
 
             if (HeldItem?.Amount == 0)
                 HeldItem = null;
 
             mouseCursorAppearance.Refresh();
-
-            isRefreshing = false;
         }
 
         // Session
