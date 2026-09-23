@@ -8,6 +8,10 @@
       "isUnlockedByDefault": true,
       "lootPool": [
         {
+          "item": "<Nothing>",
+          "weight": 20
+        },
+        {
           "item": "Loquat",
           "weight": 10
         }

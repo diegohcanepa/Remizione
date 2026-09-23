@@ -40,15 +40,15 @@ namespace Remizione
         {
             var rng = session.Random;
 
-            // 1. PASO 1: Suelta algo?
+            // 1. Will drop?
             if (!CheckDropSuccess(def, rng))
                 return null;
 
-            // 2. PASO 2: Selección Ponderada desde la tabla exclusiva de la entidad
+            // 2. Get item
             if (def.LootPool.GetItem(rng)?.Context is not ItemDefinition itemDefinition)
                 return null;
 
-            // 3. Validación final: Evitar dar duplicados si es un ítem único (no apilable)
+            // 3. Avoid duplicated item if item cannot be stacked
             if (!itemDefinition.IsStackable && session.PlayerData.Inventory.Find(itemDefinition.Name) != null)
                 return null;
 

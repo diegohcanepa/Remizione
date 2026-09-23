@@ -35,15 +35,16 @@ namespace Remizione
             {
                 foreach (var itemJson in poolArray.EnumerateArray())
                 {
-                    string item = itemJson.GetString("item", string.Empty);
-                    if (GameData.Items.Find(item) is not ItemDefinition itemDefinition)
+                    string itemName = itemJson.GetString("item", string.Empty);
+                    var itemDefinition = GameData.Items.Find(itemName);
+                    if (itemName != ChanceTable.Nothing && itemDefinition == null)
                     {
-                        RaiseValidationError(this, $"The item '{item}' does not exist.", nameof(LootPool));
+                        RaiseValidationError(this, $"The item '{itemName}' does not exist.", nameof(LootPool));
                     }
                     else
                     {
                         int weight = itemJson.GetInt32("weight", 0);
-                        tempPool.Add(item, weight, itemDefinition);
+                        tempPool.Add(itemName, weight, itemDefinition);
                     }
                 }
             }
