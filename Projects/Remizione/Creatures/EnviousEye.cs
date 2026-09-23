@@ -17,7 +17,7 @@ namespace Remizione
             BodySize = BodySize.Small;
             FastMoveFactor = 3;
             scaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, Vector2.Zero, new(0, .1f), 600, -1);
-            Scale = new(.9f);
+            Scale = new(.8f);
             SuppressMoveBounceEffect = true;
         }
 

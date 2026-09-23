@@ -28,7 +28,6 @@ namespace Remizione
             this.hpMeter = new(session);
             this.InventoryMeter = new(session.PlayerData.Inventory);
             //this.runModifiers = new(run);
-            this.Statuses = new(session);
             this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 14));
 
             // Grace
@@ -46,7 +45,6 @@ namespace Remizione
             if (Session.DisplayHPMeter)
                 hpMeter.Draw(gameTime);
             //runModifiers.Draw(gameTime);
-            Statuses.Draw(gameTime);
             graceScore.Draw(gameTime);
             Game.SpriteBatch.End();
 
@@ -61,7 +59,6 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             //runModifiers.Update(gameTime);
-            Statuses.Update(gameTime);
             InventoryMeter.Update(gameTime);
             hpMeter.Update(gameTime);
             Message.Update(gameTime);
@@ -96,14 +93,11 @@ namespace Remizione
         // Reset
         public void Reset()
         {
-            Statuses.Actor = Session.Player;
+            //Statuses.Actor = Session.Player;
             Message.Hide();
         }
 
         // RoomTitle
         public UIRoomTitle RoomTitle { get; } = new();
-
-        // Statuses
-        public UIStatuses Statuses { get; }
     }
 }

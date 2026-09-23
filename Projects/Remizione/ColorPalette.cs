@@ -32,6 +32,22 @@ namespace Remizione
         // CreditLine
         internal static Color CreditLine { get; } = new(230, 230, 212);
 
+        // Damage
+        internal static class Damage
+        {
+            internal static Color Physical { get; } = Text.Red;
+            internal static Color Poison { get; } = Text.Green;
+            internal static Color GetColor(DamageType damageType)
+            {
+                return damageType switch
+                {
+                    DamageType.Physical => Physical,
+                    DamageType.Poison => Poison,
+                    _ => MouseCursor.Tooltip
+                };
+            }
+        }
+
         // DestinationMark
         internal static Color DestinationMark { get; } = new(143, 77, 87);
 

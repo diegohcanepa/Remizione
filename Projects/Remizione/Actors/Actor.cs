@@ -25,7 +25,6 @@ namespace Remizione
         private readonly FloatTween moveVerticalTween = new();
         private readonly List<Vector2> pendingPathNodes = [];
         private List<AtlasImage>? remainsPieces;
-        private readonly FloatTween shakeTween = FloatTween.Create(TweenStyle.Linear, 0, .5f, 40, -1);
         private SpeechText? speechText;
         private readonly ColorTween tintTween = new();
         private float turnTimer;
@@ -47,7 +46,6 @@ namespace Remizione
             this.DefaultVerb = Verb.Talk;
             this.Faction = Definition == null ? Faction.Good : Definition.Faction;
             this.CombatBehavior = GameData.CombatBehaviors.Find(DeclaredName);
-            this.StatusManager = new(this);
             this.BodyMachine = new StateMachine<Actor>(this, new BodyStandState());
             this.BodyMachine.AddState(new BodyMoveState());
 
@@ -340,10 +338,6 @@ namespace Remizione
             if (moveVerticalTween.IsRunning)
                 Y -= moveVerticalTween.CurrentValue;
 
-            var shake = !Session.IsAwaiting && RemainingTurns == 0 && IsHostile;
-            if (shake)
-                X += shakeTween.CurrentValue;
-
             if (tintTween.IsRunning)
                 Color = tintTween.CurrentValue;
 
@@ -362,9 +356,6 @@ namespace Remizione
 
             if (moveVerticalTween.IsRunning)
                 Y += moveVerticalTween.CurrentValue;
-
-            if (shake)
-                X -= shakeTween.CurrentValue;
 
             footstepEffect?.Draw(gameTime);
         }
@@ -388,7 +379,6 @@ namespace Remizione
             IsAlert = true;
             ResetRemainingTurns(true);
             OpacityFactor = 1;
-            shakeTween.RandomizeTime();
             Stand();
         }
 
@@ -404,11 +394,8 @@ namespace Remizione
                 StopMoving();
                 IsFollowingPath = false;
 
-                // Único punto de contacto: avisar que llegamos a destino
-                if (IsPlayer && !IsDead && IsInCurrentRoom)
-                {
+                if (IsPlayer && IsInCurrentRoom)
                     Session.InteractionData.ExecutePending(this);
-                }
             }
         }
 
@@ -498,7 +485,6 @@ namespace Remizione
             UpdateFootstep();
             footstepEffect?.Update(gameTime);
             BodyMachine.Update(gameTime);
-            shakeTween.Update(gameTime);
             tintTween.Update(gameTime);
 
             // Lógica de aceleración
@@ -1171,6 +1157,7 @@ namespace Remizione
         }
 
         // ShowStatusReaction
+        /*
         public void ShowStatusReaction(Status status, bool showIcon)
         {
             switch (status.StatusType)
@@ -1187,6 +1174,7 @@ namespace Remizione
                     break;
             }
         }
+        */
 
         // SpeechColor
         public Color SpeechColor { get; set; } = Color.Transparent;
@@ -1217,9 +1205,6 @@ namespace Remizione
         {
             Animate(AnimationNames.Talk, true, AnimationDirection.Forward, false);
         }
-
-        // StatusManager
-        public StatusContainer StatusManager { get; }
 
         // StopTalking
         public void StopTalking()

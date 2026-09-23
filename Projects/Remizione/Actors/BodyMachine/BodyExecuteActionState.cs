@@ -77,10 +77,10 @@ namespace Remizione
                 }
                 */
 
-                if (!missChance.Roll())
-                    EffectDescriptor.Apply(action.EffectDescriptors, Owner, Target, EffectContext.Attack);
-                else
+                if (missChance.Roll())
                     Owner.ShowFlyOff(missText, Color.WhiteSmoke);
+                else
+                    EffectDescriptor.Apply(action.EffectDescriptors, Owner, Target, EffectContext.Attack);
 
                 //Owner.Session.InterruptAwaitingScript();
             }

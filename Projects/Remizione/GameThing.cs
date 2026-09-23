@@ -30,9 +30,11 @@ namespace Remizione
         private const float KnockbackFriction = 0.90f; // Ajustá este valor (0.8 - 0.95)
         private PathNode[]? pathNodes;
         private int? pendingDamageAmount;
+        private DamageType pendingDamageType;
         private int renderLayerDepth;
         private readonly ShadowSpot shadowSpot;
         private bool shouldClampToWalkablePosition;
+        private readonly StatusManager statusManager = new();
 
         #endregion
 
@@ -184,7 +186,10 @@ namespace Remizione
             var vertices = new Vector2[vertexCount];
 
             var offset = ColliderPlacement == PlacementMode.Relative ? GetPivotBasedPolyOffset() : Vector2.Zero;
-            Collider.GetVertices(vertices, offset);
+
+            // Si la escala es 1 para absolutos y dinámica para relativos:
+            Vector2 currentScale = ColliderPlacement == PlacementMode.Relative ? Scale : Vector2.One;
+            Collider.GetVertices(vertices, offset, currentScale);
 
             holePoly.SetVertices(vertices);
             RuntimeCollider.SetVertices(vertices, .05f);
@@ -406,9 +411,10 @@ namespace Remizione
                     {
                         if (pendingDamageAmount.HasValue)
                         {
-                            var color = IsPlayer ? ColorPalette.Text.Red : ColorPalette.Text.Orange;
-                            Session.ObjectPools.FlyOffs.Get()?.ShowAmount(this, color, pendingDamageAmount.Value);
+                            var color = ColorPalette.Damage.GetColor(pendingDamageType);
+                            Session.ObjectPools.FlyOffs.Get()?.ShowAmount(this, color, Math.Abs(pendingDamageAmount.Value));
                             pendingDamageAmount = null;
+                            pendingDamageType = DamageType.None;
                         }
 
                         OnKnockbackCompleted();
@@ -823,15 +829,6 @@ namespace Remizione
                 return this.GetAnchoredPosition(OverheadOrigin + offset);
         }
 
-        // GetResistanceModifier
-        public float GetResistanceModifier(DamageType damageType)
-        {
-            if (ResistanceTable.Find(ResistanceTableName) is ResistanceTable table)
-                return table.GetModifier(damageType);
-
-            return 1;
-        }
-
         // HasHostilesNearby
         public bool HasHostilesNearby()
         {
@@ -1142,9 +1139,8 @@ namespace Remizione
                     {
                         var offset = GetPivotBasedPolyOffset();
                         offset.Y -= Altitude;
-
                         var vertices = new Vector2[Hotspot.Vertices.Count];
-                        Hotspot.GetVertices(vertices, offset);
+                        Hotspot.GetVertices(vertices, offset, Scale);
                         field.SetVertices(vertices);
                         if (IsFlippedHorizontally)
                             field.FlipHorizontally(X);
@@ -1223,7 +1219,7 @@ namespace Remizione
             if (MaxHP > 0)
             {
                 // Aplicar resistencias
-                amount = (int)(amount * GetResistanceModifier(damageType));
+                //amount = (int)(amount * GetResistanceModifier(damageType));
 
                 // Clamp para no restar más de lo que tiene
                 if (amount > HP)
@@ -1247,7 +1243,10 @@ namespace Remizione
                     OnTakeDamage(attacker, amount, damageType);
 
                     if (!IsDead)
+                    {
                         pendingDamageAmount = -amount;
+                        pendingDamageType = damageType;
+                    }
                 }
             }
             else
@@ -1275,7 +1274,6 @@ namespace Remizione
                     pushDirection = new Vector2(1, 0);
                 }
 
-                // Aplicamos la fuerza
                 knockbackVelocity = pushDirection * knockbackForce.Length() * 5f;
             }
 

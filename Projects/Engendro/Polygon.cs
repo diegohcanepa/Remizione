@@ -441,6 +441,31 @@ namespace Engendro
         }
 
         // GetVertices
+        public void GetVertices(Span<Vector2> destination, Vector2 offset, Vector2 scale)
+        {
+            if (vertices.Count > destination.Length)
+                throw new ArgumentException("Destination span is too small.");
+
+            for (int i = 0; i < vertices.Count; i++)
+            {
+                // El orden es crítico: PRIMERO escalar localmente, LUEGO trasladar al mundo
+                destination[i] = (vertices[i] * scale) + offset;
+            }
+        }
+
+        // GetVertices
+        public void GetVertices(Span<Vector2> destination, Vector2 offset, float scale)
+        {
+            if (vertices.Count > destination.Length)
+                throw new ArgumentException("Destination span is too small.");
+
+            for (int i = 0; i < vertices.Count; i++)
+            {
+                destination[i] = (vertices[i] * scale) + offset;
+            }
+        }
+
+        // GetVertices
         public static Vector2[] GetVertices(string value)
         {
             var values = value.Split(';');

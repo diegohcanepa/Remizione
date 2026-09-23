@@ -38,15 +38,12 @@ namespace Remizione
             ApproachBehavior? behavior = this.IsAttack || player.CarriedProp != null ? ApproachBehavior.ClosestSide : null;
             var destination = target.GetApproachPosition(player, behavior);
 
-            // Ajustes manuales de distancia para objetos levantados y proyectiles
+            // Adjust distance for range attacks
             if (destination != Vector2.Zero)
             {
                 if (player.CarriedProp != null)
                 {
-                    if (target.X < player.X)
-                        destination.X += 32;
-                    else
-                        destination.X -= 32;
+                    destination.X += target.X < player.X ? 32 : -32;
                 }
                 else if (player.Session.InteractionContext.HeldItem?.Definition.ActionKind == ActionKind.Projectile)
                 {
@@ -73,14 +70,14 @@ namespace Remizione
         {
             Clear();
 
-            var heldItem = player.Session.InteractionContext.HeldItem;
-
+            // Player is carrying prop. Can attack or drop only
             if (player.CarriedProp != null)
             {
                 if (verb is not Verb.Attack and not Verb.Drop)
                     return;
             }
 
+            var heldItem = player.Session.InteractionContext.HeldItem;
             if (heldItem != null && !Utils.IsGoToVerb(verb))
             {
                 if (player == target)
@@ -122,8 +119,7 @@ namespace Remizione
         // ExecutePending
         public void ExecutePending(Actor player)
         {
-            // Al validar las variables locales, el compilador sabe que no son nulas
-            if (Target == null || activeCommand == null)
+            if (player.IsDead || Target == null || activeCommand == null)
                 return;
 
             if (player.Session.State != GameSessionState.Idle)
@@ -165,18 +161,14 @@ namespace Remizione
                 return;
             }
 
-            // Evaluar si la acción debe ejecutarse en el lugar (InPlace, consumibles, o auto-click)
+            // In-place action?
             bool executeInPlace = (context.HeldItem == null && Target == player) ||
                                   (context.HeldItem?.Definition.ActionKind is ActionKind.InPlace or ActionKind.Self);
 
             if (executeInPlace)
-            {
                 ExecutePending(player);
-            }
             else
-            {
                 ApproachAndExecute(player, Target);
-            }
         }
 
         // ProcessSecondaryAction
