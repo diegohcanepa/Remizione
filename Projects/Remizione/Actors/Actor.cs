@@ -376,7 +376,6 @@ namespace Remizione
         protected override void OnLoad()
         {
             base.OnLoad();
-            IsAlert = true;
             ResetRemainingTurns(true);
             OpacityFactor = 1;
             Stand();
@@ -494,9 +493,11 @@ namespace Remizione
                 moveAccelerationMultiplier = float.Min(1f, moveAccelerationMultiplier + (dt / MoveAccelerationTime));
             }
 
-            if (!Session.IsAwaiting && !IsMoving)
+            if (!Session.IsAwaiting && !IsMoving && !IsPlayer && Faction == Faction.Evil)
             {
-                if (IsAlert && IsHostile && Session.Player != null)
+                Brain.UpdatePerception(this, Session.Player);
+
+                if (IsHostile && Session.Player != null)
                     FaceTo(Session.Player);
             }
 
@@ -554,11 +555,14 @@ namespace Remizione
         // BeginTurn
         public Script? BeginTurn()
         {
-            if (CombatBehavior == null || IsPlayer || Session.Player == null || !IsHostile || Session.IsAwaiting)
+            // Le quitamos el "!IsHostile" de acá arriba
+            if (CombatBehavior == null || IsPlayer || Session.Player == null || Session.IsAwaiting)
                 return null;
 
             turnTimer = CombatBehavior == null ? 0 : CombatBehavior.TurnInterval;
 
+            // Ahora el Brain siempre corre. Si está lejos, devolverá Lurk/Random. 
+            // Si te acercas, el Brain mismo pasará IsHostile a true y devolverá Attack/MoveNearby.
             CombatDecision = Brain.Decide(this, Session.Player);
 
             if (OutcomeScript != null && CombatDecision != null)
@@ -815,9 +819,6 @@ namespace Remizione
         [ScriptProperty]
         public Sound? HurtVoice { get; set; }
 
-        // IsAlert
-        public bool IsAlert { get; set; }
-
         // IsInAttackLane
         public bool IsInAttackLane(GameThing target, int attackLaneThickness = 3)
         {
@@ -967,42 +968,31 @@ namespace Remizione
                 MoveTo(bestPoint);
         }
 
-        // MoveNearby
         public virtual void MoveNearby(GameThing target)
         {
             var arch = CombatBehavior?.Archetype;
-            if (arch == null)
+            if (arch == null || WalkArea == null)
                 return;
 
-            if (WalkArea == null)
-                return;
-
-            // 1. Calculamos el vector dirección hacia el jugador
             Vector2 direction = target.Position - Position;
             float currentDistance = direction.Length();
 
             if (currentDistance <= 0.1f)
-                return; // Ya está encima, no hay nada que mover
+                return;
 
             direction.Normalize();
 
-            // 2. El MeleeAttackRange del arquetipo define el paso máximo de persecución de este turno
-            float maxStepThisTurn = arch.MeleeRange;
+            // AHORA SÍ: El paso de este turno está limitado por su velocidad de zancada, no por el rango de golpe
+            float maxStepThisTurn = arch.MaxStepPerTurn;
 
-            // 3. El punto ideal es la posición del jugador menos un pequeño margen (ej. 12px) 
-            // para que el sprite del bicho quede perfectamente enfrente y no encima del centro del player
+            // No queremos que camine sobre el centro del player, frenamos a un margen razonable
             float idealStopDistance = Math.Max(0f, currentDistance - 12f);
 
-            // No caminamos más de nuestro rango de ataque por turno, ni nos pasamos del punto ideal
             float actualMoveDistance = Math.Min(maxStepThisTurn, idealStopDistance);
 
-            // 4. Proyectamos el punto de destino en línea recta hacia el objetivo
             Vector2 potentialTarget = Position + (direction * actualMoveDistance);
-
-            // 5. Lo blindamos pasándolo por el polígono transitable del cuarto
             Vector2 bestPoint = WalkArea.Polygon.Clamp(potentialTarget);
 
-            // Si el punto es válido y nos saca de la inercia (evita vibraciones contra muros)
             if (Vector2.Distance(Position, bestPoint) > 4f)
                 MoveTo(bestPoint);
         }
@@ -1098,24 +1088,11 @@ namespace Remizione
         // ProcessTurn
         public void ProcessTurn()
         {
-            if (CombatBehavior == null || IsPlayer || !IsHostile || RemainingTurns == 0)
+            if (CombatBehavior == null || IsPlayer || RemainingTurns == 0)
                 return;
 
-            if (!IsAlert)
-            {
-                if (Session.Player != null)
-                {
-                    if (!IsFacingTarget(Session.Player))
-                        return;
-
-                    //if (Room?.WalkArea?.InLineOfSight(Session.Player.Position, Position, this) == true)
-                    IsAlert = true;
-                }
-
-                return;
-            }
-
-            if (Session.Player != null && RemainingTurns > 0)
+            // Si el Brain determinó que estamos en rango para pegar, cortamos los turnos de espera.
+            if (Session.Player != null && IsHostile && RemainingTurns > 0)
             {
                 if (DistanceToTarget(Session.Player) <= CombatBehavior.Archetype.MeleeRange)
                 {

@@ -702,8 +702,6 @@ namespace Remizione
                 if (field != value)
                 {
                     field = value;
-                    if (field == Faction.Evil)
-                        IsHostile = true;
                     OnFactionChanged();
                 }
             }

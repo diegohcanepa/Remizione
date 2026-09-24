@@ -549,9 +549,6 @@ namespace Remizione
         // Lights
         public NamedReadOnlyCollection<Light> Lights { get; }
 
-        // PlayerLightBounds
-        public static RectangleF PlayerLightBounds => playerLight.BoundingBox;
-
         // RefreshAmbientLightSources
         public void RefreshAmbientLightSources()
         {

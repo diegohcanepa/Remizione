@@ -21,17 +21,6 @@ namespace Remizione
         public override Ratio FleeChance => 0.00f;
 
         // MeleeRange
-        public override int MeleeRange => 40;
-
-        /// <summary>
-        /// Opcional: Podrías definir que el Ojo no "salta" (Charge) 
-        /// sino que simplemente te "pisa" (Attack) con un impacto pesado.
-        /// </summary>
-        public override CombatDecisionType GetDecisionType(CombatIntent intent)
-        {
-            // Si quieres que el ojo sea una masa pesada que no salta,
-            // podrías forzar 'Attack' en lugar de 'Charge' incluso para contacto.
-            return CombatDecisionType.Attack;
-        }
+        public override float MeleeRange => 40;
     }
 }

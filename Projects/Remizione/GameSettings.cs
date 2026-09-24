@@ -14,9 +14,6 @@
         // ContentRootDirectory
         public const string ContentRootDirectory = "Content";
 
-        // DarknessMissChancePenalty
-        public const float DarknessMissChancePenalty = .2f;
-
         // DefaultInventoryCapacity
         public const int DefaultInventoryCapacity = 5;
 

@@ -19,6 +19,6 @@ namespace Remizione
         public override Ratio FleeChance => 0.15f;
 
         // MeleeRange
-        public override int MeleeRange => 30;
+        public override float MeleeRange => 5;
     }
 }

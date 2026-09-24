@@ -21,7 +21,6 @@ namespace Remizione
                 CombatArchetypeName.Harasser => Harasser,
                 CombatArchetypeName.Lurker => Lurker,
                 CombatArchetypeName.Stalker => Stalker,
-                CombatArchetypeName.KamikazeFlyer => KamikazeFlyer,
                 CombatArchetypeName.Volatile => Volatile,
                 //CombatArchetypeName.Berserk => Berserk,
                 //CombatArchetypeName.Coward => Coward,
@@ -31,9 +30,6 @@ namespace Remizione
 
         // Harasser
         public static HarasserArchetype Harasser { get; } = new();
-
-        // KamikazeFlyer
-        public static KamikazeFlyerArchetype KamikazeFlyer { get; } = new();
 
         // Lurker
         public static LurkerArchetype Lurker { get; } = new();

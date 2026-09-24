@@ -37,8 +37,8 @@ namespace Remizione
             // MaxProps
             this.MaxProps = element.GetInt32("maxProps", 0);
 
-            if (MinEnemies > MaxEnemies)
-                RaiseValidationError(this, $"Minimum enemies exceeds maximum enemies.");
+            if (MinProps > MaxProps)
+                RaiseValidationError(this, $"Minimum props exceeds maximum props.");
 
             // Placeholders
             if (element.TryGetProperty("placeholders", out JsonElement placeholdersElement))

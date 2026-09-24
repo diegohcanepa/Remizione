@@ -6,59 +6,53 @@ namespace Remizione
 {
     /// <summary>
     /// CombatArchetype
+    /// Define el rol táctico base y la conducta de un tipo de enemigo.
     /// </summary>
     public abstract class CombatArchetype
     {
-        // AttackChance
         // Probabilidad (0 a 1) de que el NPC intente un ataque en su turno.
-        // Un valor bajo (0.2) crea un comportamiento de "acecho".
         public abstract Ratio AttackChance { get; }
 
-        // FallbackMovement
+        // Distancia a la que detecta al jugador y entra en hostilidad.
+        public virtual float AwarenessRange => 100;
+
+        // Movimiento por defecto cuando está tranquilo o no ataca.
         public virtual FallbackMovementKind FallbackMovement => FallbackMovementKind.None;
 
-        // FleeChance (Probabilidad de que efectivamente huya una vez herido.)
+        // Probabilidad de huir una vez alcanzado el umbral de vida.
         public abstract Ratio FleeChance { get; }
 
-        // FleeHPThreshold
         // Umbral de vida (0 a 1) por debajo del cual el NPC considera huir.
         public abstract Ratio FleeHPThreshold { get; }
 
-        // GetDecisionType
-        public virtual CombatDecisionType GetDecisionType(CombatIntent intent)
-        {
-            return CombatDecisionType.Attack;
-        }
+        // Distancia MÁXIMA que camina en un solo turno de persecución
+        public virtual float MaxStepPerTurn => 10;
 
-        // GetIntentWeight
-        // Calcula el peso específico de un intent sin descartar proyectiles por distancia.
+        // Distancia máxima a la que se considera en rango cuerpo a cuerpo.
+        public virtual float MeleeRange => 30;
+
+        // Distancia a la que el enemigo pierde de vista al jugador y se desactiva.
+        public virtual float LoseSightRange => 200;
+
+        /// <summary>
+        /// Calcula el peso de un ataque según su rango de distancia.
+        /// </summary>
         public virtual float GetIntentWeight(CombatIntent intent, Actor actor, float distance)
         {
-            // Si el jugador está fuera del rango operativo de este ataque en particular, el peso es cero.
             if (distance < intent.MinRange || distance > intent.MaxRange)
                 return 0;
 
-            // Si está dentro de sus límites físicos, se respeta su peso base.
             return intent.SpawnWeight;
         }
 
-        // IsInMeleeRange
-        public bool IsInMeleeRange(GameThing source, GameThing target)
-        {
-            return source.DistanceToTarget(target) <= MeleeRange;
-        }
-
-        // MeleeRange
-        public virtual int MeleeRange => 30;
-
-        // SelectIntent
-        // Selecciona un ataque de la lista disponible basándose en pesos y distancia.
+        /// <summary>
+        /// Selecciona un ataque de la lista disponible usando selección ponderada en Stack (sin GC).
+        /// </summary>
         public virtual CombatIntent? SelectIntent(Actor actor, IList<CombatIntent> intents, float distance)
         {
             if (intents == null || intents.Count == 0)
                 return null;
 
-            // Usamos stackalloc para evitar asignaciones en el Heap (GC Friendly)
             Span<float> weights = stackalloc float[intents.Count];
             float totalWeight = 0;
             bool anyInRange = false;
@@ -75,18 +69,17 @@ namespace Remizione
                 totalWeight += weight;
             }
 
-            // Si nada está en rango o todos los pesos son 0
             if (!anyInRange || totalWeight <= 0)
                 return null;
 
-            // Selección Aleatoria Ponderada
             float roll = (float)Random.Shared.NextDouble() * totalWeight;
             float cumulative = 0;
 
             for (int i = 0; i < intents.Count; i++)
             {
                 cumulative += weights[i];
-                if (roll <= cumulative) return intents[i];
+                if (roll <= cumulative)
+                    return intents[i];
             }
 
             return null;
