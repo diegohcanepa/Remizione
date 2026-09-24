@@ -29,7 +29,13 @@ namespace Remizione
                 return;
             }
 
-            if (context.Session.Player != null && !context.Session.Player.CanHandleInput && context.Session.ActiveNPC == null)
+            if (context.Session.AttackingNPC != null)
+            {
+                MouseCursor.Icon = MouseCursorIcon.Skull;
+                return;
+            }
+
+            if (context.Session.IsAwaiting)
             {
                 MouseCursor.Icon = MouseCursorIcon.Wait;
                 return;
@@ -50,16 +56,8 @@ namespace Remizione
                     return;
                 }
 
-                if (context.Session.ActiveNPC == null)
-                {
-                    if (context.Session.IsCurrentScene)
-                        MouseCursor.Icon = MouseCursorIcon.Wait;
-                }
-                else if (context.Session.ActiveNPC.CombatDecisionType is CombatDecisionType.Attack or CombatDecisionType.Charge or CombatDecisionType.Curse)
-                {
-                    MouseCursor.Icon = MouseCursorIcon.Skull;
-                    MouseCursor.CustomImage = null;
-                }
+                if (context.Session.IsCurrentScene)
+                    MouseCursor.Icon = MouseCursorIcon.Wait;
 
                 return;
             }

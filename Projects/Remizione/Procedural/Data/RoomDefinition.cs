@@ -79,7 +79,7 @@ namespace Remizione
 
             for (int i = 0; i < placeholders.Count; i++)
             {
-                if (placeholders[i].ContentType == PlaceholderContentType.Prop)
+                if (placeholders[i].ContentType == contentType)
                     result.Add(placeholders[i]);
             }
 

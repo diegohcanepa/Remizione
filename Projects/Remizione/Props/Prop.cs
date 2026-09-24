@@ -105,6 +105,9 @@ namespace Remizione
 
         #region Protected members
 
+        // BlocksLineOfSight
+        protected override bool BlocksLineOfSight => !RevealArea.IsEmpty;
+
         // BounceCore
         protected void BounceCore(float intensity, int bounceCount)
         {

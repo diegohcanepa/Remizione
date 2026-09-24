@@ -44,6 +44,9 @@ namespace Remizione
 
         #region IHoleArea explicit implementation
 
+        // BlocksLineOfSight
+        bool IHoleArea.BlocksLineOfSight => BlocksLineOfSight;
+
         // CollisionHeight
         int IHoleArea.CollisionHeight => 0;
 
@@ -51,6 +54,9 @@ namespace Remizione
         bool IHoleArea.IsActive => true;
 
         #endregion
+
+        // BlocksLineOfSight
+        public bool BlocksLineOfSight { get; set; }
 
         // ClampOutside
         public Vector2 ClampOutside(Vector2 position)

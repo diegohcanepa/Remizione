@@ -12,8 +12,7 @@ namespace Engendro
         #region Private fields
 
         private int counter;
-        private int delayCooldown;
-        private int elapsedInterval;
+        private float elapsedInterval;
         private int valueIndex;
         private readonly List<T> values;
 
@@ -34,11 +33,8 @@ namespace Engendro
         // CurrentValue
         public T CurrentValue => values[valueIndex];
 
-        // InDelayPhase
-        public bool InDelayPhase => delayCooldown > 0;
-
         // Interval
-        public Int32Range Interval { get; private set; }
+        public float Interval { get; private set; }
 
         // IsRunning
         public bool IsRunning { get; private set; }
@@ -48,7 +44,6 @@ namespace Engendro
         {
             valueIndex = 0;
             IsRunning = false;
-            delayCooldown = 0;
             Count = 0;
         }
 
@@ -60,27 +55,15 @@ namespace Engendro
         }
 
         // Start
-        public void Start(int interval)
+        public void Start(float interval)
         {
             Start(interval, -1);
         }
 
         // Start
-        public void Start(int interval, int count, int startDelay = 0)
+        public void Start(float interval, int count)
         {
-            Start(new Int32Range(interval), count, startDelay);
-        }
-
-        // Start
-        public void Start(Int32Range interval, int startDelay = 0)
-        {
-            Start(interval, -1, startDelay);
-        }
-
-        // Start
-        public void Start(Int32Range interval, int count, int startDelay = 0)
-        {
-            if (interval.Maximum < 1)
+            if (interval <= 0f)
             {
                 Stop();
                 return;
@@ -90,8 +73,7 @@ namespace Engendro
             this.Interval = interval;
             this.Count = count;
             this.counter = 0;
-            this.delayCooldown = startDelay;
-            this.elapsedInterval = interval.GetRandomValue(Random.Shared);
+            this.elapsedInterval = interval;
 
             IsRunning = true;
         }
@@ -108,32 +90,27 @@ namespace Engendro
             if (!IsRunning)
                 return;
 
-            if (delayCooldown > 0)
-            {
-                delayCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-                return;
-            }
+            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (elapsedInterval > 0)
-            {
-                elapsedInterval -= gameTime.ElapsedGameTime.Milliseconds;
-            }
-            else
-            {
-                if (Count > 0)
-                    counter++;
+            elapsedInterval -= delta;
 
-                if (Count > 0 && Count == counter)
+            while (elapsedInterval <= 0f && IsRunning)
+            {
+                valueIndex++;
+                if (valueIndex == values.Count)
+                {
+                    valueIndex = 0;
+                    if (Count > 0)
+                        counter++;
+                }
+
+                if (Count > 0 && counter >= Count)
                 {
                     Stop();
+                    break;
                 }
-                else
-                {
-                    this.elapsedInterval = Interval.GetRandomValue(Random.Shared);
-                    valueIndex++;
-                    if (valueIndex == values.Count)
-                        valueIndex = 0;
-                }
+
+                elapsedInterval += Interval;
             }
         }
     }

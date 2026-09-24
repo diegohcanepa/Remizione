@@ -10,6 +10,9 @@ namespace Remizione
     /// </summary>
     public interface IHoleArea
     {
+        // BlocksLineOfSight
+        bool BlocksLineOfSight { get; }
+
         // ClampOutside
         Vector2 ClampOutside(Vector2 position);
 

@@ -54,6 +54,9 @@ namespace Remizione
 
         #region IHoleArea explicit implementation
 
+        // BlocksLineOfSight
+        bool IHoleArea.BlocksLineOfSight => BlocksLineOfSight;
+
         // ClampOutside
         Vector2 IHoleArea.ClampOutside(Vector2 position)
         {
@@ -225,6 +228,9 @@ namespace Remizione
         #endregion
 
         #region Protected members
+
+        // BlocksLineOfSight
+        protected virtual bool BlocksLineOfSight => false;
 
         // CanCheckCollisions
         protected virtual bool CanCheckCollisions()
@@ -845,6 +851,12 @@ namespace Remizione
             return false;
         }
 
+        // HasLineOfSightTo
+        public bool HasLineOfSightTo(GameThing target)
+        {
+            return Room?.WalkArea == null ? true : Room.WalkArea.InLineOfSight(Position, target.Position, this, out _);
+        }
+
         // HitTest
         public bool HitTest(Vector2 value)
         {
@@ -1007,6 +1019,16 @@ namespace Remizione
         // IsPlayer
         [ScriptProperty]
         public bool IsPlayer => Session.Player == this;
+
+        // IsTargetedByPlayer
+        public bool IsTargetedByPlayer
+        {
+            get
+            {
+                return Session.Player?.ExecutingActionTarget == this ||
+                       Session.InteractionData.Target == this;
+            }
+        }
 
         // ItemReward
         public ItemDefinition? ItemReward

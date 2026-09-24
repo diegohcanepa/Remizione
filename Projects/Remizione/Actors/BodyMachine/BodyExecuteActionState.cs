@@ -115,9 +115,6 @@ namespace Remizione
             base.Exit();
             Action = null;
             Target = null;
-
-            if (Owner.IsPlayer)
-                Owner.Session.ProcessTurn();
         }
 
         // Target

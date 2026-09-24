@@ -347,9 +347,9 @@ namespace Remizione
         }
 
         // InLineOfSight
-        public bool InLineOfSight(Vector2 value1, Vector2 value2, object? sender, out IHoleArea? blockingArea)
+        public bool InLineOfSight(Vector2 value1, Vector2 value2, object? sender, out IHoleArea? blockingHoleArea)
         {
-            blockingArea = null;
+            blockingHoleArea = null;
 
             if ((value1 - value2).LengthSquared() < float.Epsilon)
                 return true;
@@ -359,13 +359,13 @@ namespace Remizione
 
             for (var i = 0; i < holeAreas.Count; i++)
             {
-                if (holeAreas[i] == sender)
+                if (holeAreas[i] == sender || !holeAreas[i].BlocksLineOfSight)
                     continue;
 
                 // Si la línea cruza la pared del agujero OR si el destino está adentro del agujero...
                 if (!holeAreas[i].InLineOfSight(value1, value2) || holeAreas[i].Contains(value2))
                 {
-                    blockingArea = holeAreas[i];
+                    blockingHoleArea = holeAreas[i];
                     return false;
                 }
             }

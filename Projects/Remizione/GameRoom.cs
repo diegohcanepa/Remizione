@@ -377,7 +377,7 @@ namespace Remizione
         // OnHandleInput
         protected override HandleInputResult OnHandleInput()
         {
-            if (Session.Player != null)
+            if (Session.Player != null && Session.AttackingNPC == null)
                 return Session.Player.HandleInput();
             else
                 return base.OnHandleInput();

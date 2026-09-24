@@ -112,6 +112,7 @@ namespace Remizione
                 awaitingScript = "(None)";
             }
 
+            DrawText(gameTime, text, $"InteractionData.Target: {session.InteractionData.Target}");
             DrawText(gameTime, text, $"Awaiting script: {awaitingScript}");
             DrawText(gameTime, text, $"Registered entities: {session.Entities.Count}");
         }

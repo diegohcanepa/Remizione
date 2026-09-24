@@ -16,6 +16,7 @@ namespace Remizione
     {
         #region Private fields
 
+        private Blinker<float>? blinkTimer;
         private BloodSplash? bloodSplash;
         private Sprite? carriedPropSprite;
         private ParticlePopEffect? footstepEffect;
@@ -27,7 +28,6 @@ namespace Remizione
         private List<AtlasImage>? remainsPieces;
         private SpeechText? speechText;
         private readonly ColorTween tintTween = new();
-        private float turnTimer;
         private float moveAccelerationMultiplier = .75f;
 
         #endregion
@@ -48,10 +48,18 @@ namespace Remizione
             this.CombatBehavior = GameData.CombatBehaviors.Find(DeclaredName);
             this.BodyMachine = new StateMachine<Actor>(this, new BodyStandState());
             this.BodyMachine.AddState(new BodyMoveState());
+            this.ShadowSpotSize = 6;
 
-            ShadowSpotSize = 6;
-
-            ResetRemainingTurns();
+            // CombatMachine
+            if (CombatBehavior != null)
+            {
+                CombatMachine = new StateMachine<Actor>(this, new CombatIdleState());
+                CombatMachine.AddState(new CombatStepState());
+                CombatMachine.AddState(new  CombatExposedState());
+                CombatMachine.AddState(new CombatAttackState());
+                CombatMachine.AddState(new CombatCooldownState());
+                CombatMachine.Start();
+            }
         }
 
         #endregion
@@ -83,30 +91,6 @@ namespace Remizione
         {
             base.MoveTo(pendingPathNodes[0]);
             pendingPathNodes.RemoveAt(0);
-        }
-
-        // ResetRemainingTurns
-        [ScriptMethod]
-        private void ResetRemainingTurns(bool randomize = false)
-        {
-            if (CombatBehavior == null)
-            {
-                RemainingTurns = 0;
-                turnTimer = 0;
-            }
-            else
-            {
-                turnTimer = Random.Shared.Next(CombatBehavior.TurnCooldown / 2, CombatBehavior.TurnCooldown + 1);
-
-                if (randomize && CombatBehavior.TurnInterval > 1)
-                {
-                    RemainingTurns = RemainingTurns = Random.Shared.Next(1, CombatBehavior.TurnInterval + 1);
-                }
-                else
-                {
-                    RemainingTurns = CombatBehavior.TurnInterval;
-                }
-            }
         }
 
         // SpawnRemains
@@ -341,7 +325,13 @@ namespace Remizione
             if (tintTween.IsRunning)
                 Color = tintTween.CurrentValue;
 
+            if (blinkTimer?.IsRunning == true)
+                OpacityFactor -= blinkTimer.CurrentValue;
+
             base.OnDraw(gameTime);
+
+            if (blinkTimer?.IsRunning == true)
+                OpacityFactor += blinkTimer.CurrentValue;
 
             bloodSplash?.Draw(gameTime);
 
@@ -370,13 +360,13 @@ namespace Remizione
         {
             base.OnInitialize();
             BodyMachine.Start();
+            CombatMachine?.Start();
         }
 
         // OnLoad
         protected override void OnLoad()
         {
             base.OnLoad();
-            ResetRemainingTurns(true);
             OpacityFactor = 1;
             Stand();
         }
@@ -437,12 +427,6 @@ namespace Remizione
 
             FastMove = false;
             moveVerticalTween.Stop();
-
-            if (EnforceTurn)
-            {
-                EnforceTurn = false;
-                Session.ProcessTurn();
-            }
         }
 
         // OnTakeDamage
@@ -455,7 +439,7 @@ namespace Remizione
 
             if (IsPlayer)
             {
-                if (Session.ActiveNPC == null && Session.InterruptAwaitingScript())
+                if (Session.InterruptAwaitingScript())
                 {
                     this.Game.SceneManager.PopUntil(Session);
                     StopTalking();
@@ -470,6 +454,12 @@ namespace Remizione
             Session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);
 
             Hurt();
+
+            if (IsPlayer)
+            {
+                blinkTimer ??= new(.4f, 0);
+                blinkTimer.Start(.1f, 10);
+            }
         }
 
         // OnUpdate
@@ -477,6 +467,7 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
 
+            blinkTimer?.Update(gameTime);
             speechText?.Update(gameTime);
             moveVerticalTween.Update(gameTime);
             bloodSplash?.Update(gameTime);
@@ -485,6 +476,9 @@ namespace Remizione
             footstepEffect?.Update(gameTime);
             BodyMachine.Update(gameTime);
             tintTween.Update(gameTime);
+
+            if (!IsDead && !Session.IsAwaiting && !IsPlayer)
+                CombatMachine?.Update(gameTime);
 
             // Lógica de aceleración
             if (IsMoving && moveAccelerationMultiplier < 1f)
@@ -495,23 +489,8 @@ namespace Remizione
 
             if (!Session.IsAwaiting && !IsMoving && !IsPlayer && Faction == Faction.Evil)
             {
-                Brain.UpdatePerception(this, Session.Player);
-
                 if (IsHostile && Session.Player != null)
                     FaceTo(Session.Player);
-            }
-
-            if (!Session.IsAwaiting && RemainingTurns > 0 && IsHostile)
-            {
-                if (CombatBehavior != null && turnTimer > 0)
-                {
-                    turnTimer -= gameTime.ElapsedGameTime.Milliseconds;
-                    if (turnTimer <= 0)
-                    {
-                        RemainingTurns--;
-                        turnTimer = CombatBehavior.TurnCooldown;
-                    }
-                }
             }
         }
 
@@ -552,32 +531,6 @@ namespace Remizione
             }
         }
 
-        // BeginTurn
-        public Script? BeginTurn()
-        {
-            // Le quitamos el "!IsHostile" de acá arriba
-            if (CombatBehavior == null || IsPlayer || Session.Player == null || Session.IsAwaiting)
-                return null;
-
-            turnTimer = CombatBehavior == null ? 0 : CombatBehavior.TurnInterval;
-
-            // Ahora el Brain siempre corre. Si está lejos, devolverá Lurk/Random. 
-            // Si te acercas, el Brain mismo pasará IsHostile a true y devolverá Attack/MoveNearby.
-            CombatDecision = Brain.Decide(this, Session.Player);
-
-            if (OutcomeScript != null && CombatDecision != null)
-            {
-                ResetRemainingTurns();
-                return OutcomeScript;
-            }
-            else
-            {
-                CombatDecision = null;
-            }
-
-            return null;
-        }
-
         // BloodSplashOrigin
         [ScriptProperty]
         public Vector2 BloodSplashOrigin { get; set; }
@@ -585,17 +538,16 @@ namespace Remizione
         // BodySize
         public BodySize BodySize { get; set; } = BodySize.Medium;
 
+        /*
         // CanHandleInput
         public bool CanHandleInput
         {
             get
             {
-                if (IsDead || Session.IsAwaiting)
-                    return false;
-
-                return BodyMachine.CurrentState is BodyStandState or BodyMoveState;
+                return IsDead ? false : BodyMachine.CurrentState is BodyStandState or BodyMoveState;
             }
         }
+        */
 
         // CanInteract
         public override bool CanInteract()
@@ -609,7 +561,10 @@ namespace Remizione
         // CanTakeDamage
         public override bool CanTakeDamage()
         {
-            if (IsPlayer && Session.AwaitingScript != null && Session.ActiveNPC == null)
+            if (IsInvulnerable)
+                return false;
+
+            if (IsPlayer && Session.AwaitingScript != null)
             {
                 return Session.AwaitingScript.Interruptible && base.CanTakeDamage();
             }
@@ -657,12 +612,8 @@ namespace Remizione
         // CombatBehavior
         public CombatBehavior? CombatBehavior { get; }
 
-        // CombatDecision
-        public CombatDecision? CombatDecision { get; set; }
-
-        // CombatDecisionType
-        [ScriptProperty]
-        public CombatDecisionType CombatDecisionType => CombatDecision?.Type ?? CombatDecisionType.None;
+        // CombatMachine
+        public StateMachine<Actor>? CombatMachine { get; }
 
         // Definition
         public override ActorDefinition? Definition { get; }
@@ -731,9 +682,6 @@ namespace Remizione
             }
         }
 
-        // EnforceTurn
-        public bool EnforceTurn { get; set; }
-
         // ExecuteAction
         public bool ExecuteAction(IAction action, GameThing? target)
         {
@@ -761,6 +709,9 @@ namespace Remizione
             return true;
         }
 
+        // ExecutingActionTarget
+        public GameThing? ExecutingActionTarget => (BodyMachine.CurrentState as BodyExecuteActionState)?.Target;
+
         // FastMove
         public bool FastMove { get; set; }
 
@@ -777,7 +728,6 @@ namespace Remizione
                 DiscardCarriedProp();
                 var state = BodyMachine.FindOrCreateState<BodyFatigueState>();
                 BodyMachine.ChangeState(state.GetType());
-                Session.ProcessTurn(10);
                 return true;
             }
 
@@ -803,7 +753,7 @@ namespace Remizione
         // HandleInput
         public HandleInputResult HandleInput()
         {
-            if (InputHandler == null || Session.IsAwaiting || !IsPlayer || !CanHandleInput)
+            if (InputHandler == null || IsDead || Session.IsAwaiting)
                 return HandleInputResult.Unhandled;
 
             if (InputHandler != null && Session.IsCurrentScene)
@@ -819,6 +769,12 @@ namespace Remizione
         [ScriptProperty]
         public Sound? HurtVoice { get; set; }
 
+        // IsExecutingAction
+        public bool IsExecutingAction => BodyMachine.CurrentState is BodyExecuteActionState;
+
+        // IsFollowingPath
+        public bool IsFollowingPath { get; private set; }
+
         // IsInAttackLane
         public bool IsInAttackLane(GameThing target, int attackLaneThickness = 3)
         {
@@ -826,21 +782,14 @@ namespace Remizione
             return dy <= attackLaneThickness;
         }
 
-        // IsFollowingPath
-        public bool IsFollowingPath { get; private set; }
-
-        // IsReacting
-        [ScriptProperty]
-        public bool IsReacting => Session.ActiveNPC == this;
-
-        // IsPerformingAction
-        public bool IsPerformingAction => BodyMachine.CurrentState is BodyExecuteActionState;
-
         // IsStanding
         public bool IsStanding => BodyMachine.CurrentState is BodyStandState;
 
         // IsStandingOrMoving
         public bool IsStandingOrMoving => BodyMachine.CurrentState is BodyStandState or BodyMoveState;
+
+        // IsInvulnerable
+        public bool IsInvulnerable => blinkTimer?.IsRunning == true;
 
         // Label
         public override string Label
@@ -908,6 +857,7 @@ namespace Remizione
             if (WalkArea == null)
                 return;
 
+            /*
             if (CombatBehavior?.Archetype is not { } arch)
                 return;
 
@@ -966,6 +916,8 @@ namespace Remizione
             // Evitamos vibraciones rústicas contra los colisionadores
             if (Vector2.Distance(Position, bestPoint) > 4f)
                 MoveTo(bestPoint);
+
+            */
         }
 
         public virtual void MoveNearby(GameThing target)
@@ -1064,6 +1016,25 @@ namespace Remizione
         // MoveToDestination
         public Vector2? MoveToDestination => pendingPathNodes.Count == 0 ? null : pendingPathNodes[^1];
 
+        // MoveTowards
+        public void MoveTowards(Vector2 targetPosition, float maxDistance)
+        {
+            if (maxDistance <= 0)
+                return;
+
+            Vector2 currentPos = Position;
+            Vector2 direction = targetPosition - currentPos;
+
+            if (direction != Vector2.Zero)
+            {
+                direction.Normalize();
+                Vector2 destination = currentPos + direction * maxDistance;
+
+                // Le ordena a la BodyMachine caminar hacia ese punto intermedio del tramo
+                MoveTo(destination);
+            }
+        }
+
         // PixelsMoved
         public float PixelsMoved { get; set; }
 
@@ -1085,41 +1056,11 @@ namespace Remizione
             }
         } = PlayerNumber.None;
 
-        // ProcessTurn
-        public void ProcessTurn()
-        {
-            if (CombatBehavior == null || IsPlayer || RemainingTurns == 0)
-                return;
-
-            // Si el Brain determinó que estamos en rango para pegar, cortamos los turnos de espera.
-            if (Session.Player != null && IsHostile && RemainingTurns > 0)
-            {
-                if (DistanceToTarget(Session.Player) <= CombatBehavior.Archetype.MeleeRange)
-                {
-                    RemainingTurns = 0;
-                    return;
-                }
-            }
-
-            RemainingTurns -= 1;
-        }
-
         // Recharge
         [ScriptMethod]
         public virtual void Recharge()
         {
             Energy = MaxEnergy;
-        }
-
-        // RemainingTurns
-        public int RemainingTurns
-        {
-            get;
-            set
-            {
-                if (value != field)
-                    field = Math.Max(0, value);
-            }
         }
 
         // RemainsKind

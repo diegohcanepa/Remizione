@@ -42,6 +42,9 @@ namespace Engendro
 
         #region Protected members
 
+        // CalculateOpacity
+        protected virtual float CalculateOpacity() => Opacity * OpacityFactor;
+
         // GetAbsolutePosition
         protected Vector2 GetAbsolutePosition()
         {
@@ -71,12 +74,12 @@ namespace Engendro
             if (RenderImage.TextureArea.IsEmpty)
             {
                 // No, so draw the entire texture
-                Game.SpriteBatch.Draw(RenderImage.Atlas.Texture, pos, null, Color * Opacity * OpacityFactor, Rotation, Pivot.Position, Scale * ScaleFactor, Effects, 0);
+                Game.SpriteBatch.Draw(RenderImage.Atlas.Texture, pos, null, Color * CalculateOpacity(), Rotation, Pivot.Position, Scale * ScaleFactor, Effects, 0);
             }
             else
             {
                 // Yes, so just draw the specified SourceRect
-                Game.SpriteBatch.Draw(RenderImage.Atlas.Texture, pos, RenderImage.TextureArea, Color * Opacity * OpacityFactor, Rotation, Pivot.Position, Scale * ScaleFactor, Effects, 0);
+                Game.SpriteBatch.Draw(RenderImage.Atlas.Texture, pos, RenderImage.TextureArea, Color * CalculateOpacity(), Rotation, Pivot.Position, Scale * ScaleFactor, Effects, 0);
             }
         }
 

@@ -35,12 +35,18 @@ namespace Remizione
 
             // MinRange
             MinRange = element.GetInt32("minRange", 0);
+            if (MinRange < 0)
+                RaiseValidationError(this, "Property 'minRange' cannot be negative.", nameof(MinRange));
 
             // MaxRange
-            MaxRange = element.GetInt32("maxRange", int.MaxValue);
+            if (element.GetInt32("maxRange") is not int maxRange)
+                RaiseValidationError(this, "Property 'maxRange' is mandatory in JSON definition.", nameof(MaxRange));
+            else
+                MaxRange = maxRange;
 
             if (MinRange > MaxRange)
-                RaiseValidationError(this, $"Minimum range exceeds the maximum range.");
+                RaiseValidationError(this, $"Minimum range ({MinRange}) exceeds maximum range ({MaxRange}).", nameof(MaxRange));
+
 
             // MissChance
             MissChance = Math.Max(0, element.GetFloat("missChance", 0));

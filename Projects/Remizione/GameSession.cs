@@ -138,7 +138,6 @@ namespace Remizione
             AotTypeRegistry.Register("await-credits", typeof(AwaitCreditsCommand));
             AotTypeRegistry.Register("await-dialog-block", typeof(AwaitDialogBlockCommand));
             AotTypeRegistry.Register("await-input", typeof(AwaitInputCommand));
-            AotTypeRegistry.Register("await-npc-turn", typeof(AwaitNPCTurnCommand));
             AotTypeRegistry.Register("consume-item", typeof(ConsumeItemCommand));
             AotTypeRegistry.Register("create-dialog-block", typeof(CreateDialogBlockCommand));
             AotTypeRegistry.Register("echo", typeof(EchoCommand));
@@ -538,19 +537,10 @@ namespace Remizione
             output.WriteAttributeString("DroppedKeyItems", string.Join(";", keyItems));
         }
 
-        // OnOutcomeCompleted
-        protected override void OnOutcomeCompleted(Script script, Thing target)
-        {
-            base.OnOutcomeCompleted(script, target);
-            ActiveNPC?.CombatDecision = null;
-            ProcessTurn();
-        }
-
         #endregion
 
-        // ActiveNPC
-        [ScriptProperty]
-        public Actor? ActiveNPC { get; private set; }
+        // AttackingNPC
+        public GameThing? AttackingNPC { get; set; }
 
         // ApplyDeath
         [ScriptMethod]
@@ -625,25 +615,6 @@ namespace Remizione
             {
                 if (value != field)
                     field = Math.Max(0, value);
-            }
-        }
-
-        // HasPendingTurns
-        [ScriptProperty]
-        public bool HasPendingTurns
-        {
-            get
-            {
-                if (Room != null)
-                {
-                    for (var i = 0; i < Room.Children.Count; i++)
-                    {
-                        if (Room.Children[i] is Actor actor && !actor.IsPlayer && actor.CombatDecision?.Intent != null)
-                            return true;
-                    }
-                }
-
-                return false;
             }
         }
 
@@ -769,60 +740,6 @@ namespace Remizione
         // PreviousRoom
         [ScriptProperty]
         public new GameRoom? PreviousRoom => (GameRoom?)base.PreviousRoom;
-
-        // ProcessTurn
-        public void ProcessTurn(int turnPenalty = 0)
-        {
-            if (Room is not GameRoom room)
-                return;
-
-            if (Player?.IsDead == true)
-                return;
-
-            if (turnPenalty != 0)
-            {
-                for (var i = 0; i < room.Children.Count; i++)
-                {
-                    if (room.Children[i] is Actor actor && !actor.IsPlayer)
-                        actor.RemainingTurns -= Math.Abs(turnPenalty);
-                }
-            }
-
-            if (Player != null)
-            {
-                for (var i = 0; i < room.Children.Count; i++)
-                {
-                    if (room.Children[i] is Actor actor && actor != Player && actor.RemainingTurns > 0)
-                    {
-                        if (actor.DistanceTo(Player) <= 5)
-                            actor.RemainingTurns = 0;
-                    }
-                }
-            }
-
-            for (var i = 0; i < room.Children.Count; i++)
-            {
-                if (room.Children[i] is Actor actor && !actor.IsPlayer && actor.RemainingTurns == 0)
-                {
-                    if (actor.BeginTurn() is { } script)
-                    {
-                        ActiveNPC = actor;
-                        BeginOutcome(script, actor);
-                        return;
-                    }
-                }
-            }
-
-            for (var i = 0; i < room.Children.Count; i++)
-            {
-                if (room.Children[i] is Actor actor && !actor.IsPlayer)
-                {
-                    actor.ProcessTurn();
-                }
-            }
-
-            ActiveNPC = null;
-        }
 
         // Random
         public Random Random { get; private set; } = new(0);

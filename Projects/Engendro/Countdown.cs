@@ -8,21 +8,19 @@ namespace Engendro
     /// </summary>
     public sealed class Countdown
     {
-        private int restartDuration;
+        private float restartDuration;
 
         // DefaultDuration
-        public int DefaultDuration { get; set; } = 1000;
+        public float DefaultDuration { get; set; } = 1;
 
         // IsRunning
-        public bool IsRunning => TimeLeft > 0;
+        public bool IsRunning => TimeLeft > 0f;
 
         // Restart
         public void Restart()
         {
             if (restartDuration > 0)
-            {
                 Start(restartDuration);
-            }
         }
 
         // Start
@@ -32,39 +30,30 @@ namespace Engendro
         }
 
         // Start
-        public void Start(int duration)
+        public void Start(float duration)
         {
             restartDuration = duration;
-            TimeLeft = Math.Max(0, duration);
-        }
-
-        // StartFromRange
-        public void StartFromRange()
-        {
-            Start(TimeRange.GetRandomValue(Random.Shared));
+            TimeLeft = MathF.Max(0f, duration);
         }
 
         // Stop
         public void Stop()
         {
-            TimeLeft = 0;
+            TimeLeft = 0f;
         }
 
         // TimeLeft
-        public int TimeLeft { get; private set; }
-
-        // TimeRange
-        public Int32Range TimeRange { get; set; }
+        public float TimeLeft { get; private set; }
 
         // Update
         public void Update(GameTime gameTime)
         {
             if (IsRunning)
             {
-                TimeLeft -= gameTime.ElapsedGameTime.Milliseconds;
+                TimeLeft -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                if (TimeLeft <= 0)
-                    TimeLeft = 0;
+                if (TimeLeft <= 0f)
+                    TimeLeft = 0f;
             }
         }
     }

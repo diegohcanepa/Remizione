@@ -10,6 +10,7 @@
             "name": "Bite",
             "soundTrigger": "RatAttack",
             "actionKind": "Proximity",
+            "maxRange": 5,
             "effects": [
               {
                 "context": "Attack",
@@ -28,11 +29,12 @@
       },
       {
         "name": "Penitent",
-        "archetype": "Stalker",
+        "archetype": "Harasser",
         "intents": [
           {
             "name": "Punch",
             "actionKind": "Proximity",
+            "maxRange": 5,
             "effects": [
               {
                 "context": "Attack",
@@ -46,13 +48,14 @@
       },
       {
         "name": "Rat",
-        "archetype": "Lurker",
+        "archetype": "Harasser",
         "intents": [
           {
             "name": "Bite",
             "soundTrigger": "RatAttack",
             "actionKind": "Proximity",
             "missChance": 0.1,
+            "maxRange": 5,
             "effects": [
               {
                 "context": "Attack",

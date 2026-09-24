@@ -32,7 +32,7 @@ namespace Remizione
             }
 
             activeStatuses[type] = current;
-            
+
             return false;
         }
 
@@ -43,7 +43,7 @@ namespace Remizione
         public float GetStatusMultiplier(StatusType type)
         {
             float baseMultiplier = 1;
-            
+
             if (baseResistances.TryGetValue(type, out float customBase))
                 baseMultiplier = customBase;
 

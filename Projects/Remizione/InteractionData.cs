@@ -1,5 +1,4 @@
 ﻿using Adberration;
-using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Remizione.InteractionCommands;
@@ -145,7 +144,6 @@ namespace Remizione
             if (context.Target == null)
             {
                 Clear();
-                player.EnforceTurn = true;
                 var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(player.Session.Camera);
                 var walkThreshold = player.HasHostilesNearby() ? 0 : GameSettings.WalkThreshold;
                 player.MoveTo(destination, walkThreshold);

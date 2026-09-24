@@ -106,7 +106,7 @@ namespace Remizione.Menus
         // ResetNextBlinkTimer
         private void ResetNextBlinkTimer()
         {
-            nextBlinkTimer.Start(Random.Shared.Next(7000, 15000));
+            nextBlinkTimer.Start(Random.Shared.Next(7, 15));
         }
 
         // ShowCredits
