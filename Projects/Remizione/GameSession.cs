@@ -552,6 +552,7 @@ namespace Remizione
                 room.Cleanup();
             }
 
+            AttackingNPC = null;
             PlayerData.Inventory.Clear();
             PlayerData.Grace = 0;
         }

@@ -43,7 +43,10 @@ namespace Engendro
         #region Protected members
 
         // CalculateOpacity
-        protected virtual float CalculateOpacity() => Opacity * OpacityFactor;
+        protected virtual float CalculateOpacity()
+        {
+            return Opacity * OpacityFactor;
+        }
 
         // GetAbsolutePosition
         protected Vector2 GetAbsolutePosition()

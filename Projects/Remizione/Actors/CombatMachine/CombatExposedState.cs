@@ -3,27 +3,33 @@ using Microsoft.Xna.Framework;
 
 namespace Remizione
 {
-    public class CombatExposedState : State<Actor>
+    /// <summary>
+    /// CombatExposedState
+    /// </summary>
+    public sealed class CombatExposedState : State<Actor>
     {
         private float timer;
 
+        // Enter
         public override void Enter()
         {
             Owner.StopMoving();
             timer = Owner.CombatBehavior?.Archetype.ExposedPauseDuration ?? 1.2f;
         }
 
+        // Update
         public override void Update(GameTime gameTime)
         {
-            var target = Owner.Session.Player;
-            if (target == null || Owner.CombatBehavior?.Archetype is not { } arch)
+            if (Owner.Session.Player is not Actor target)
+                return;
+
+            if (Owner.CombatBehavior?.Archetype is not { } arch)
             {
                 Machine.ChangeState<CombatIdleState>();
                 return;
             }
 
-            // 1. TURNO DEL JUGADOR:
-            // Si el jugador me seleccionó para atacarme, me quedo expuesto congelado esperando el impacto.
+            // If targeted by player, remains exposed until impact
             if (Owner.IsTargetedByPlayer)
                 return;
 

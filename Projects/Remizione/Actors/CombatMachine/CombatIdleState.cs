@@ -3,23 +3,29 @@ using Microsoft.Xna.Framework;
 
 namespace Remizione
 {
-    public class CombatIdleState : State<Actor>
+    /// <summary>
+    /// CombatIdleState
+    /// </summary>
+    public sealed class CombatIdleState : State<Actor>
     {
+        // Update
         public override void Update(GameTime gameTime)
         {
-            var target = Owner.Session.Player;
-            if (target == null || Owner.CombatBehavior?.Archetype is not { } arch)
+            if (Owner.Session.Player is not Actor target)
                 return;
 
-            // 1. Verificación barata primero: ¿está dentro del radio de alerta?
-            if (Owner.DistanceToTarget(target) <= arch.AwarenessRange)
+            if (Owner.CombatBehavior?.Archetype is not { } arch)
+                return;
+
+            // Is inside AwarenessRange?
+            if (Owner.DistanceToTarget(target) > arch.AwarenessRange)
+                return;
+
+            // Is in LOS?
+            if (Owner.HasLineOfSightTo(target))
             {
-                // 2. Verificación cara después: ¿hay línea de visión limpia sin obstáculos?
-                if (Owner.HasLineOfSightTo(target))
-                {
-                    Owner.IsHostile = true;
-                    Machine.ChangeState<CombatStepState>();
-                }
+                Owner.IsHostile = true;
+                Machine.ChangeState<CombatStepState>();
             }
         }
     }

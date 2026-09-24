@@ -449,6 +449,9 @@ namespace Remizione
             Utils.ApplySoundEmitter(this, instance, masterVolume);
         }
 
+        // WillCounterAttack
+        protected virtual bool WillCounterAttack() => false;
+
         #endregion
 
         // AffectsPathfinding
@@ -1021,14 +1024,8 @@ namespace Remizione
         public bool IsPlayer => Session.Player == this;
 
         // IsTargetedByPlayer
-        public bool IsTargetedByPlayer
-        {
-            get
-            {
-                return Session.Player?.ExecutingActionTarget == this ||
+        public bool IsTargetedByPlayer => Session.Player?.ExecutingActionTarget == this ||
                        Session.InteractionData.Target == this;
-            }
-        }
 
         // ItemReward
         public ItemDefinition? ItemReward
@@ -1280,7 +1277,7 @@ namespace Remizione
             // ---------------------------------------------------------
             // El empuje se aplica independientemente de la vida. 
             // Una caja de metal indestructible (MaxHP=0) debería poder ser empujada.
-            if (MaxHP > 0 && knockbackForce != Vector2.Zero && !IgnoreKnockback)
+            if (MaxHP > 0 && knockbackForce != Vector2.Zero && !IgnoreKnockback && !WillCounterAttack())
             {
                 knockbackForce *= attacker.GetKnockbackMultiplier(this);
 

@@ -6,10 +6,11 @@ namespace Remizione
     /// <summary>
     /// CombatCooldownState
     /// </summary>
-    public class CombatCooldownState : State<Actor>
+    public sealed class CombatCooldownState : State<Actor>
     {
         private float timer;
 
+        // Enter
         public override void Enter()
         {
             Owner.StopMoving();
@@ -19,6 +20,7 @@ namespace Remizione
             timer = duration;
         }
 
+        // Update
         public override void Update(GameTime gameTime)
         {
             timer -= (float)gameTime.ElapsedGameTime.TotalSeconds;

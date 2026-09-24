@@ -3,14 +3,15 @@ using Microsoft.Xna.Framework;
 
 namespace Remizione
 {
-    public class CombatAttackState : State<Actor>
+    /// <summary>
+    /// CombatAttackState
+    /// </summary>
+    public sealed class CombatAttackState : State<Actor>
     {
-        public CombatIntent? Intent { get; set; }
-        public GameThing? Target { get; set; }
-
         private enum AttackPhase { Aligning, Striking }
         private AttackPhase currentPhase;
 
+        // Enter
         public override void Enter()
         {
             if (Intent == null || Target == null)
@@ -34,6 +35,20 @@ namespace Remizione
             currentPhase = AttackPhase.Aligning;
         }
 
+        // Exit
+        public override void Exit()
+        {
+            if (Target == Owner.Session.Player)
+                Owner.Session.AttackingNPC = null;
+        }
+
+        // Intent
+        public CombatIntent? Intent { get; set; }
+
+        // Target
+        public GameThing? Target { get; set; }
+
+        // Update
         public override void Update(GameTime gameTime)
         {
             switch (currentPhase)
@@ -56,12 +71,6 @@ namespace Remizione
                     }
                     break;
             }
-        }
-
-        public override void Exit()
-        {
-            if (Target == Owner.Session.Player)
-                Owner.Session.AttackingNPC = null;
         }
     }
 }

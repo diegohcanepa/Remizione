@@ -7,6 +7,10 @@ namespace Remizione
     {
         // Rangos de Percepción
         public virtual float AwarenessRange => 100f;
+
+        // Chance de contrataque
+        public virtual float CounterAttackChance => .35f;
+
         public virtual float LoseSightRange => 200f;
 
         // Tiempo de pausa/enfriamiento del enemigo post-ataque (en segundos)

@@ -471,20 +471,42 @@ namespace Engendro
 
         public float SmoothSpeed { get; set; } = .01f;
 
-        public void StopFollowing() => Target = null;
-        public void StopMoving() => moveTween.Stop();
-        public void StopFlying() => flightTween.Stop();
-        public void StopRotating() => rotationTween.Stop();
+        public void StopFollowing()
+        {
+            Target = null;
+        }
+
+        public void StopMoving()
+        {
+            moveTween.Stop();
+        }
+
+        public void StopFlying()
+        {
+            flightTween.Stop();
+        }
+
+        public void StopRotating()
+        {
+            rotationTween.Stop();
+        }
+
         public void StopShaking()
         {
             shakeHorzTween.Stop();
             shakeVertTween.Stop();
         }
-        public void StopZooming() => zoomTween.Stop();
+        public void StopZooming()
+        {
+            zoomTween.Stop();
+        }
 
         public ITransform? Target { get; private set; }
 
-        public override string ToString() => Name;
+        public override string ToString()
+        {
+            return Name;
+        }
 
         public void Update(GameTime gameTime)
         {

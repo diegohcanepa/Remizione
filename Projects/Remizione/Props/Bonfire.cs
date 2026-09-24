@@ -113,7 +113,10 @@ namespace Remizione
 
         // BeginRest
         [ScriptMethod]
-        public void BeginRest() => BeginRest(false);
+        public void BeginRest()
+        {
+            BeginRest(false);
+        }
 
         // BeginRest
         public void BeginRest(bool immediate)

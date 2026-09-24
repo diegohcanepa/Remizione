@@ -55,7 +55,7 @@ namespace Remizione
             {
                 CombatMachine = new StateMachine<Actor>(this, new CombatIdleState());
                 CombatMachine.AddState(new CombatStepState());
-                CombatMachine.AddState(new  CombatExposedState());
+                CombatMachine.AddState(new CombatExposedState());
                 CombatMachine.AddState(new CombatAttackState());
                 CombatMachine.AddState(new CombatCooldownState());
                 CombatMachine.Start();
@@ -492,6 +492,50 @@ namespace Remizione
                 if (IsHostile && Session.Player != null)
                     FaceTo(Session.Player);
             }
+        }
+
+        // WillCounterAttack
+        protected override bool WillCounterAttack()
+        {
+            if (IsPlayer)
+                return false;
+
+            if (Session.Player is not Actor player)
+                return false;
+
+            if (CombatBehavior == null || CombatMachine == null)
+                return false;
+
+            var arch = CombatBehavior.Archetype;
+            if (arch == null) return false;
+
+            // Evaluamos el azar usando la probabilidad del arquetipo
+            float roll = Random.Shared.NextSingle(); // Retorna un float entre 0.0f y 1.0f
+
+            if (roll < arch.CounterAttackChance)
+            {
+                // ¡CONTRAATAQUE!
+                // 1. Forzamos al jugador a clavar su posición para recibir el golpe
+                player.StopMoving();
+
+                // 2. Buscamos la intención de ataque más adecuada para la distancia actual
+                float distance = DistanceToTarget(player);
+                var intent = arch.SelectIntent(this, CombatBehavior.Intents, distance);
+
+                if (intent != null)
+                {
+                    var attackState = CombatMachine.FindOrCreateState<CombatAttackState>();
+                    attackState.Intent = intent;
+                    attackState.Target = player;
+
+                    // 3. Saltamos de inmediato a CombatAttackState
+                    CombatMachine.ChangeState(attackState.GetType());
+
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         #endregion
@@ -1028,7 +1072,7 @@ namespace Remizione
             if (direction != Vector2.Zero)
             {
                 direction.Normalize();
-                Vector2 destination = currentPos + direction * maxDistance;
+                Vector2 destination = currentPos + (direction * maxDistance);
 
                 // Le ordena a la BodyMachine caminar hacia ese punto intermedio del tramo
                 MoveTo(destination);
