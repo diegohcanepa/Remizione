@@ -81,7 +81,7 @@ namespace Remizione
             // SoundTrigger
             this.SoundTrigger = element.GetObject("soundTrigger", Sound.Get);
 
-            this.Image = Atlases.UI.FindImage(Name);
+            this.Image = Atlases.UI.GetImage(Name);
 
             IsPassive = LightModifier != 0 || LuckModifier != 0;
 
@@ -158,7 +158,7 @@ namespace Remizione
         public int HPCost { get; }
 
         // Image
-        public AtlasImage? Image { get; }
+        public AtlasImage Image { get; }
 
         // InitialAmount
         public int InitialAmount { get; }

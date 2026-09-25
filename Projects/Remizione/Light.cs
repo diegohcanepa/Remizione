@@ -41,9 +41,11 @@ namespace Remizione
         // CreateColorTween
         private static ColorTween? CreateColorTween(LightKind lightKind, Color color)
         {
+            return null;
+
             return lightKind switch
             {
-                LightKind.Fire => ColorTween.Create(TweenStyle.Linear, color, color * .9f, 90, -1),
+                LightKind.Fire => ColorTween.Create(TweenStyle.Linear, color, color * .98f, 90, -1),
                 LightKind.Lantern => ColorTween.Create(TweenStyle.Linear, color * .98f, color * .96f, 90, -1),
                 LightKind.SulfurBonfire => ColorTween.Create(TweenStyle.Linear, color, color * .96f, 90, -1),
                 _ => null,
@@ -53,6 +55,8 @@ namespace Remizione
         // CreateFlickerTween
         private static FloatTween? CreateFlickerTween(LightKind lightKind)
         {
+            return null;
+
             return lightKind switch
             {
                 LightKind.Fire or
@@ -67,7 +71,7 @@ namespace Remizione
         {
             return lightKind switch
             {
-                LightKind.Fire => Vector2Tween.Create(TweenStyle.Linear, scale, scale * 1.05f, 1200, -1),
+                LightKind.Fire => Vector2Tween.Create(TweenStyle.Linear, scale, scale * 1.1f, 1200, -1),
                 LightKind.SulfurBonfire => Vector2Tween.Create(TweenStyle.Linear, scale, scale * 1.01f, 1200, -1),
                 LightKind.Lantern => Vector2Tween.Create(TweenStyle.Linear, scale, scale * 1.1f, Random.Shared.Next(1100, 1400), -1),
                 _ => null,
@@ -79,6 +83,7 @@ namespace Remizione
         {
             return lightKind switch
             {
+                LightKind.Fire => new Color(255, 160, 160),
                 LightKind.Fleshiness => new Color(255, 200, 200),
                 LightKind.KeyItemOrb => ColorPalette.Inventory.KeyItem,
                 LightKind.ItemOrb => ColorPalette.Inventory.Item,
@@ -112,7 +117,6 @@ namespace Remizione
                     break;
 
                 case LightKind.Fire:
-                    Passes = 2;
                     lightSprite.Tweens.OpacityTween = CreateFlickerTween(LightKind);
                     litTweenDuration = 2000;
                     unlitTweenDuration = 2000;

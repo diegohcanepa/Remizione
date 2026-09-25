@@ -122,7 +122,7 @@ namespace Remizione
             AotTypeRegistry.Register(typeof(ProceduralRoom));
             AotTypeRegistry.Register(typeof(Prop));
             AotTypeRegistry.Register(typeof(SpearTrap));
-            AotTypeRegistry.Register(typeof(Torch));
+            AotTypeRegistry.Register(typeof(GroundTorch));
             AotTypeRegistry.Register(typeof(Trunk));
 
             AotTypeRegistry.Register("add-dialog-option", typeof(AddDialogOptionCommand));

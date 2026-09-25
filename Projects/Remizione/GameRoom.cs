@@ -188,12 +188,14 @@ namespace Remizione
 
             Game.GraphicsDevice.Clear(AmbientLights ? LightMapColor : Color.Black);
 
+            /*
             if (AllowGlobalLight)
             {
                 Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
                 Session.Environment.GlobalLight.Draw(gameTime);
                 Game.SpriteBatch.End();
             }
+            */
 
             Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
 

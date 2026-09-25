@@ -36,6 +36,9 @@
   <String Key="Item.Lift.Name">Alzar</String>
   <String Key="Item.Loquat.Name">Níspero</String>
   <String Key="Item.PrayerBonfire.Name">Plegaria de la hoguera</String>
+  <String Key="Item.PyritePebble.Description">Un trozo denso y violento de mineral sin luz propia. Al frotarlo con rabia contra la tea, el hierro atrapado en la piedra escupe un fogonazo seco y breve. La luz de los desesperados.</String>
+  <String Key="Item.PyritePebble.Effect">Prende materiales inflamables</String>
+  <String Key="Item.PyritePebble.Name">Guijarro de pirita</String>
   <String Key="Item.ServantCross.Name">Cruz del Siervo</String>
   <String Key="Item.SulfurStone.Description">Un trozo de azufre cristalizado que arde con memoria propia: no necesita chispa, se enciende porque "recuerda" haber sido fuego alguna vez.
 Los penitentes la usan para encender las Hogueras, cuyo calor no cura la carne sino que ayuda al cuerpo a recomponer la forma que casi pierde. Se dice que sabe a lo último que quemó.</String>

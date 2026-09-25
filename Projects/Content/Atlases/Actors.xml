@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:d4cd96924155bd71e16a1777f7512b1d:a8c4bb49c475c9c3bdaae6a21daea6c2:b23792595b5c0e9561078184f535bec7$ -->
+<!-- $TexturePacker:SmartUpdate:e27e51b7f9fb0a62e6f321436631732a:68d9cf7ae3bdfb7314c56d5ba00a43c2:b23792595b5c0e9561078184f535bec7$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -20,28 +20,28 @@ verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="Actors.png" width="512" height="512">
-    <sprite n="EnviousEye-assets/Bite01.png" x="143" y="54" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/Bite02.png" x="170" y="54" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/Bite03.png" x="197" y="54" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/Move01.png" x="224" y="54" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/Move02.png" x="251" y="54" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/Move03.png" x="278" y="54" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/Move04.png" x="305" y="54" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/Stand01.png" x="224" y="54" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/Stand02.png" x="332" y="54" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/Stand03.png" x="359" y="62" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/Stand04.png" x="386" y="62" w="25" h="11"/>
-    <sprite n="EnviousEye-assets/Stand05.png" x="413" y="62" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Bite01.png" x="263" y="54" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Bite02.png" x="290" y="54" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Bite03.png" x="317" y="54" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Move01.png" x="344" y="54" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Move02.png" x="371" y="54" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Move03.png" x="398" y="54" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Move04.png" x="425" y="62" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Stand01.png" x="344" y="54" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Stand02.png" x="452" y="62" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Stand03.png" x="479" y="62" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Stand04.png" x="263" y="67" w="25" h="11"/>
+    <sprite n="EnviousEye-assets/Stand05.png" x="290" y="67" w="25" h="11"/>
     <sprite n="Hopeless-assets/Stand01.png" x="2" y="496" w="24" h="14"/>
     <sprite n="Hopeless-assets/Vanish01.png" x="28" y="496" w="24" h="14"/>
-    <sprite n="Hopeless-assets/Vanish02.png" x="440" y="62" w="24" h="14"/>
-    <sprite n="Hopeless-assets/Vanish03.png" x="466" y="62" w="24" h="14"/>
-    <sprite n="Hopeless-assets/Vanish04.png" x="143" y="67" w="24" h="14"/>
-    <sprite n="Hopeless-assets/Vanish05.png" x="96" y="71" w="24" h="14"/>
-    <sprite n="Hopeless-assets/Vanish06.png" x="169" y="67" w="24" h="14"/>
-    <sprite n="Hopeless-assets/Vanish07.png" x="195" y="67" w="24" h="14"/>
-    <sprite n="Hopeless-assets/Vanish08.png" x="221" y="67" w="24" h="14"/>
-    <sprite n="Hopeless-assets/Vanish09.png" x="247" y="67" w="24" h="14"/>
+    <sprite n="Hopeless-assets/Vanish02.png" x="317" y="67" w="24" h="14"/>
+    <sprite n="Hopeless-assets/Vanish03.png" x="343" y="67" w="24" h="14"/>
+    <sprite n="Hopeless-assets/Vanish04.png" x="369" y="67" w="24" h="14"/>
+    <sprite n="Hopeless-assets/Vanish05.png" x="395" y="67" w="24" h="14"/>
+    <sprite n="Hopeless-assets/Vanish06.png" x="421" y="75" w="24" h="14"/>
+    <sprite n="Hopeless-assets/Vanish07.png" x="447" y="75" w="24" h="14"/>
+    <sprite n="Hopeless-assets/Vanish08.png" x="473" y="75" w="24" h="14"/>
+    <sprite n="Hopeless-assets/Vanish09.png" x="96" y="71" w="24" h="14"/>
     <sprite n="InertShadow-assets/Move01.png" x="32" y="28" w="19" h="20"/>
     <sprite n="InertShadow-assets/Move02.png" x="32" y="50" w="19" h="20"/>
     <sprite n="InertShadow-assets/Move03.png" x="54" y="488" w="19" h="20"/>
@@ -125,42 +125,45 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Penitent-assets/Punch06.png" x="62" y="331" w="28" h="24"/>
     <sprite n="Penitent-assets/Punch07.png" x="62" y="357" w="28" h="24"/>
     <sprite n="Penitent-assets/Punch08.png" x="62" y="383" w="28" h="24"/>
+    <sprite n="Penitent-assets/RaiseArm01.png" x="2" y="2" w="28" h="24"/>
+    <sprite n="Penitent-assets/RaiseArm02.png" x="62" y="409" w="28" h="24"/>
+    <sprite n="Penitent-assets/RaiseArm03.png" x="62" y="435" w="28" h="24"/>
     <sprite n="Penitent-assets/RestIn01.png" x="452" y="2" w="28" h="24"/>
-    <sprite n="Penitent-assets/RestIn02.png" x="62" y="409" w="28" h="24"/>
-    <sprite n="Penitent-assets/RestIn03.png" x="62" y="435" w="28" h="24"/>
-    <sprite n="Penitent-assets/RestIn04.png" x="62" y="461" w="28" h="24"/>
-    <sprite n="Penitent-assets/RestIn05.png" x="114" y="28" w="28" h="24"/>
-    <sprite n="Penitent-assets/RestOut01.png" x="144" y="28" w="28" h="24"/>
-    <sprite n="Penitent-assets/RestOut02.png" x="174" y="28" w="28" h="24"/>
-    <sprite n="Penitent-assets/RestOut03.png" x="204" y="28" w="28" h="24"/>
-    <sprite n="Penitent-assets/Stand01.png" x="234" y="28" w="28" h="24"/>
-    <sprite n="Penitent-assets/StandCarry01.png" x="264" y="28" w="28" h="24"/>
-    <sprite n="Penitent-assets/StandUp01.png" x="62" y="461" w="28" h="24"/>
-    <sprite n="Penitent-assets/StandUp02.png" x="114" y="28" w="28" h="24"/>
-    <sprite n="Penitent-assets/StandUp03.png" x="144" y="28" w="28" h="24"/>
-    <sprite n="Penitent-assets/StandUp04.png" x="174" y="28" w="28" h="24"/>
-    <sprite n="Penitent-assets/StandUp05.png" x="204" y="28" w="28" h="24"/>
+    <sprite n="Penitent-assets/RestIn02.png" x="62" y="461" w="28" h="24"/>
+    <sprite n="Penitent-assets/RestIn03.png" x="114" y="28" w="28" h="24"/>
+    <sprite n="Penitent-assets/RestIn04.png" x="144" y="28" w="28" h="24"/>
+    <sprite n="Penitent-assets/RestIn05.png" x="174" y="28" w="28" h="24"/>
+    <sprite n="Penitent-assets/RestOut01.png" x="204" y="28" w="28" h="24"/>
+    <sprite n="Penitent-assets/RestOut02.png" x="234" y="28" w="28" h="24"/>
+    <sprite n="Penitent-assets/RestOut03.png" x="264" y="28" w="28" h="24"/>
+    <sprite n="Penitent-assets/Stand01.png" x="294" y="28" w="28" h="24"/>
+    <sprite n="Penitent-assets/StandCarry01.png" x="324" y="28" w="28" h="24"/>
+    <sprite n="Penitent-assets/StandUp01.png" x="144" y="28" w="28" h="24"/>
+    <sprite n="Penitent-assets/StandUp02.png" x="174" y="28" w="28" h="24"/>
+    <sprite n="Penitent-assets/StandUp03.png" x="204" y="28" w="28" h="24"/>
+    <sprite n="Penitent-assets/StandUp04.png" x="234" y="28" w="28" h="24"/>
+    <sprite n="Penitent-assets/StandUp05.png" x="264" y="28" w="28" h="24"/>
     <sprite n="Penitent-assets/StandUp06.png" x="452" y="2" w="28" h="24"/>
-    <sprite n="Penitent-assets/Talk01.png" x="234" y="28" w="28" h="24"/>
+    <sprite n="Penitent-assets/Talk01.png" x="294" y="28" w="28" h="24"/>
     <sprite n="Penitent-assets/ThrowObject01.png" x="62" y="279" w="28" h="24"/>
     <sprite n="Penitent-assets/ThrowObject02.png" x="62" y="305" w="28" h="24"/>
     <sprite n="Penitent-assets/ThrowObject03.png" x="62" y="331" w="28" h="24"/>
     <sprite n="Penitent-assets/ThrowObject04.png" x="62" y="357" w="28" h="24"/>
     <sprite n="Penitent-assets/ThrowObject05.png" x="62" y="383" w="28" h="24"/>
-    <sprite n="Penitent-assets/UseCross01.png" x="294" y="28" w="28" h="24"/>
-    <sprite n="Penitent-assets/UseCross02.png" x="324" y="28" w="28" h="24"/>
-    <sprite n="Penitent-assets/UseCross03.png" x="354" y="28" w="28" h="24"/>
-    <sprite n="Penitent-assets/UseCross04.png" x="324" y="28" w="28" h="24"/>
-    <sprite n="Penitent-assets/UseCross05.png" x="294" y="28" w="28" h="24"/>
+    <sprite n="Penitent-assets/UseCross01.png" x="354" y="28" w="28" h="24"/>
+    <sprite n="Penitent-assets/UseCross02.png" x="384" y="28" w="28" h="24"/>
+    <sprite n="Penitent-assets/UseCross03.png" x="414" y="28" w="28" h="24"/>
+    <sprite n="Penitent-assets/UseCross04.png" x="384" y="28" w="28" h="24"/>
+    <sprite n="Penitent-assets/UseCross05.png" x="354" y="28" w="28" h="24"/>
     <sprite n="Rat-assets/Bite01.png" x="53" y="54" w="28" h="15"/>
     <sprite n="Rat-assets/Bite02.png" x="83" y="54" w="28" h="15"/>
-    <sprite n="Rat-assets/Bite03.png" x="384" y="28" w="28" h="15"/>
-    <sprite n="Rat-assets/Move01.png" x="414" y="28" w="28" h="15"/>
-    <sprite n="Rat-assets/Move02.png" x="444" y="28" w="28" h="15"/>
-    <sprite n="Rat-assets/Move03.png" x="474" y="28" w="28" h="15"/>
-    <sprite n="Rat-assets/Move04.png" x="384" y="45" w="28" h="15"/>
-    <sprite n="Rat-assets/Move05.png" x="414" y="45" w="28" h="15"/>
-    <sprite n="Rat-assets/Stand01.png" x="444" y="45" w="28" h="15"/>
-    <sprite n="Rat-assets/Stand02.png" x="474" y="45" w="28" h="15"/>
-    <sprite n="Rat-assets/Stand03.png" x="113" y="54" w="28" h="15"/>
+    <sprite n="Rat-assets/Bite03.png" x="444" y="28" w="28" h="15"/>
+    <sprite n="Rat-assets/Move01.png" x="474" y="28" w="28" h="15"/>
+    <sprite n="Rat-assets/Move02.png" x="444" y="45" w="28" h="15"/>
+    <sprite n="Rat-assets/Move03.png" x="474" y="45" w="28" h="15"/>
+    <sprite n="Rat-assets/Move04.png" x="113" y="54" w="28" h="15"/>
+    <sprite n="Rat-assets/Move05.png" x="143" y="54" w="28" h="15"/>
+    <sprite n="Rat-assets/Stand01.png" x="173" y="54" w="28" h="15"/>
+    <sprite n="Rat-assets/Stand02.png" x="203" y="54" w="28" h="15"/>
+    <sprite n="Rat-assets/Stand03.png" x="233" y="54" w="28" h="15"/>
 </TextureAtlas>

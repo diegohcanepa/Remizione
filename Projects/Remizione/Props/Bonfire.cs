@@ -46,7 +46,7 @@ namespace Remizione
                 IgnoreGlobalOpacity = true,
                 PivotOrigin = RectanglePoint.Center,
                 Position = new(9),
-                Scale = new(9, 6)
+                Scale = new(19, 16)
             };
 
             AttachedLight.Unlit(true);

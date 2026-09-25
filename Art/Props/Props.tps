@@ -198,6 +198,40 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">CrossA-assets/CrossA.png</key>
+            <key type="filename">CrossA-assets/CrossAShadow.png</key>
+            <key type="filename">CrossC-assets/CrossC.png</key>
+            <key type="filename">CrossC-assets/CrossCShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,6,9,11</rect>
+                <key>scale9Paddings</key>
+                <rect>5,6,9,11</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">CrossB-assets/CrossB.png</key>
+            <key type="filename">CrossB-assets/CrossBShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,5,9,9</rect>
+                <key>scale9Paddings</key>
+                <rect>5,5,9,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">CrossLargeA-assets/CrossLargeA.png</key>
             <key type="filename">CrossLargeA-assets/CrossLargeAShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -211,6 +245,40 @@
                 <rect>6,10,11,19</rect>
                 <key>scale9Paddings</key>
                 <rect>6,10,11,19</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">GroundTorch-assets/GroundTorch01.png</key>
+            <key type="filename">GroundTorch-assets/GroundTorch02.png</key>
+            <key type="filename">GroundTorch-assets/GroundTorch03.png</key>
+            <key type="filename">GroundTorch-assets/GroundTorch04.png</key>
+            <key type="filename">GroundTorch-assets/GroundTorch05.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>30,15,60,30</rect>
+                <key>scale9Paddings</key>
+                <rect>30,15,60,30</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">GroundTorch-assets/GroundTorchShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,7,7,13</rect>
+                <key>scale9Paddings</key>
+                <rect>3,7,7,13</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -628,6 +696,10 @@
                     <filename>StoneSmallB-assets</filename>
                     <filename>StoneSmallC-assets</filename>
                     <filename>LargeRockB-assets</filename>
+                    <filename>GroundTorch-assets</filename>
+                    <filename>CrossA-assets</filename>
+                    <filename>CrossB-assets</filename>
+                    <filename>CrossC-assets</filename>
                 </array>
             </struct>
         </map>

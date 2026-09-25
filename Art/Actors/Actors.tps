@@ -275,6 +275,9 @@
             <key type="filename">Penitent-assets/MoveCarry06.png</key>
             <key type="filename">Penitent-assets/MoveCarry07.png</key>
             <key type="filename">Penitent-assets/MoveCarry08.png</key>
+            <key type="filename">Penitent-assets/RaiseArm01.png</key>
+            <key type="filename">Penitent-assets/RaiseArm02.png</key>
+            <key type="filename">Penitent-assets/RaiseArm03.png</key>
             <key type="filename">Penitent-assets/StandCarry01.png</key>
             <key type="filename">Penitent-assets/ThrowObject01.png</key>
             <key type="filename">Penitent-assets/ThrowObject02.png</key>

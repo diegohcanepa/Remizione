@@ -34,9 +34,11 @@
 			]
 		},
 		{
-			"name": "PrayerBonfire",
-			"category": "Sacred",
+			"name": "PyritePebble",
+			"category": "Misc",
 			"actionKind": "Script",
+			"deselectOnUse": true,
+			"isDepletable": true,
 			"isStackable": true
 		},
 		{
@@ -47,6 +49,6 @@
 			"isDepletable": true,
 			"isKeyItem": true,
 			"isStackable": true
-		}		
+		}
 	]
 }
