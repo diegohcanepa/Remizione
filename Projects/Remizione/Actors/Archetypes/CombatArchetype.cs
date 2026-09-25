@@ -1,40 +1,67 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace Remizione
 {
+    /// <summary>
+    /// CombatArchetype
+    /// </summary>
     public abstract class CombatArchetype
     {
-        // Rangos de Percepción
+        // AwarenessRange (perception range)
         public virtual float AwarenessRange => 100f;
 
-        // Chance de contrataque
+        // CooldownDuration (post-attack cooldown in seconds)
+        public virtual float CooldownDuration => 1.5f;
+
+        // CounterAttackChance
         public virtual float CounterAttackChance => .35f;
 
-        public virtual float LoseSightRange => 200f;
+        // ExecuteStepMovement
+        public virtual void ExecuteStepMovement(Actor source, GameThing target, float stepDistance, float currentDistance)
+        {
+            // 1. EVALUACIÓN DE HUIDA (FALLBACK)
+            // Acá podés sumar condiciones, por ejemplo: si la vida de source < 20% y Fallback == Flee
+            if (FallbackMovement == FallbackMovementKind.Flee)
+            {
+                // Calcular vector opuesto para alejarse
+                Vector2 directionAway = Vector2.Normalize(source.Position - target.Position);
+                Vector2 escapePoint = source.Position + (directionAway * stepDistance);
+                source.MoveTo(escapePoint);
+                return;
+            }
 
-        // Tiempo de pausa/enfriamiento del enemigo post-ataque (en segundos)
-        public virtual float CooldownDuration => 1.5f;
+            // 2. EVALUACIÓN DE KITING (RANGO)
+            // Si el NPC solo tiene ataques a distancia y el jugador está demasiado cerca
+            // (Opcional, pero vital si tenés enemigos con escopetas/magia)
+            /*
+            float minAttackRange = GetMinAttackRange(source.CombatBehavior.Intents);
+            if (currentDistance < minAttackRange)
+            {
+                Vector2 directionAway = Vector2.Normalize(source.Position - target.Position);
+                source.MoveTo(source.Position + (directionAway * stepDistance));
+                return;
+            }
+            */
+
+            // 3. DEFAULT: AVANZAR AL COMBATE
+            source.MoveTowards(target.Position, stepDistance);
+        }
 
         // ExposedPauseDuration
         public virtual float ExposedPauseDuration => 4;
 
-        // ExecuteMovement
-        public virtual void ExecuteMovement(Actor source, GameThing target)
-        {
-            source.MoveNearby(target);
-        }
-
-        // Velocidad o tramo máximo de movimiento por paso
-        public virtual float MaxStepPerTurn => 20f;
-
-        // Tipo de movimiento cuando no ataca
+        // FallbackMovement
         public virtual FallbackMovementKind FallbackMovement => FallbackMovementKind.None;
 
-        /// <summary>
-        /// Selecciona un ataque disponible basándose puramente en la distancia actual.
-        /// Si hay varios válidos, elige uno de forma simple sin cálculos pesados.
-        /// </summary>
+        // LoseSightRange
+        public virtual float LoseSightRange => 200;
+
+        // MaxStepPerTurn
+        public virtual float MaxStepPerTurn => 20;
+
+        // SelectIntent
         public virtual CombatIntent? SelectIntent(Actor source, IList<CombatIntent> intents, float distance)
         {
             if (intents == null || intents.Count == 0)

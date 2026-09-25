@@ -1,6 +1,5 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
-using System;
 
 namespace Remizione
 {
@@ -12,20 +11,25 @@ namespace Remizione
         // Enter
         public override void Enter()
         {
-            if (Owner.Session.Player is not Actor target)
-                return;
-
-            if (Owner.CombatBehavior?.Archetype is not { } arch)
+            var target = Owner.Session.Player;
+            if (target == null || Owner.CombatBehavior?.Archetype is not { } arch)
             {
                 Machine.ChangeState<CombatIdleState>();
                 return;
             }
 
-            // Limit move distance based on the archetype
             float distance = Owner.DistanceToTarget(target);
-            float stepDistance = Math.Min(distance, arch.MaxStepPerTurn);
 
-            Owner.MoveTowards(target.Position, stepDistance);
+            // Usamos MaxStepPerTurn como la magnitud del paso (ya sea para avanzar o huir)
+            float stepDistance = arch.MaxStepPerTurn;
+
+            // Si estamos avanzando, limitamos el paso para no traspasar al objetivo.
+            // (Si huimos, simplemente caminamos el paso entero hacia atrás).
+            if (distance < stepDistance)
+                stepDistance = distance;
+
+            // Delegamos la decisión direccional al arquetipo
+            arch.ExecuteStepMovement(Owner, target, stepDistance, distance);
         }
 
         // Update

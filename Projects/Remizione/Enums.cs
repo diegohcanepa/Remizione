@@ -57,6 +57,7 @@ namespace Remizione
     public enum FallbackMovementKind
     {
         None,     // Se queda estático aguantando la posición (útil para torretas o jefes pesados)
+        Flee,     // Escapa
         Random,   // Cruza el room de forma errática (el comportamiento viejo)
         Lurk      // Merodea agazapado en órbita corta (para las ratas y alimañas)
     }

@@ -450,7 +450,10 @@ namespace Remizione
         }
 
         // WillCounterAttack
-        protected virtual bool WillCounterAttack() => false;
+        protected virtual bool WillCounterAttack()
+        {
+            return false;
+        }
 
         #endregion
 
@@ -994,6 +997,7 @@ namespace Remizione
                 if (value != field)
                 {
                     field = value;
+
                     if (field)
                         hpMeter ??= FlatMeter.CreateHPMeter();
                     else
