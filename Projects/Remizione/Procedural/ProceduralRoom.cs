@@ -309,14 +309,12 @@ namespace Remizione
             where T : GameThing
         {
             var instance = Session.CreateThingClone<T>(name);
+            instance.HomePosition = position;
             instance.Position = position;
             Children.Add(instance);
 
             spawnCounter.Increment(name);
             occupiedPositions.Add(position);
-
-            if (instance is ISpawnNotification spawnNotification)
-                spawnNotification.OnSpawned(this);
 
             return instance;
         }

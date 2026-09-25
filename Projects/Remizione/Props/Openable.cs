@@ -148,7 +148,6 @@ namespace Remizione
             {
                 soundInstance.TransitionAware = false;
                 soundInstance.Play();
-                Bounce();
             }
 
             actionInProgress = true;

@@ -18,7 +18,8 @@
       ]
     },
     {
-      "name": "Rat"
+      "name": "Rat",
+      "isUnlockedByDefault": true
     }
   ]
 }

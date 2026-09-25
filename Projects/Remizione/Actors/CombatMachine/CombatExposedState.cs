@@ -34,7 +34,7 @@ namespace Remizione
                 return;
 
             float distance = Owner.DistanceToTarget(target);
-            bool isTargetInvulnerable = target is Actor a && a.IsInvulnerable;
+            bool isTargetInvulnerable = target.IsInvulnerable;
 
             // 2. EVALUACIÓN DE ATAQUE:
             // Solo atacamos si el jugador no está invulnerable (parpadeando) y hay línea de visión sin obstáculos.
@@ -67,6 +67,13 @@ namespace Remizione
                 if (distance > arch.LoseSightRange || !Owner.HasLineOfSightTo(target))
                 {
                     Owner.IsHostile = false;
+
+                    float leash = Owner.CombatBehavior?.LeashRadius ?? 0f;
+                    if (leash > 0f)
+                    {
+                        Owner.MoveRandomlyAround(Owner.HomePosition, leash);
+                    }
+
                     Machine.ChangeState<CombatIdleState>();
                 }
                 else

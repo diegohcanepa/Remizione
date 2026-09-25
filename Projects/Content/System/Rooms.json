@@ -4,7 +4,7 @@
     {
       "name": "Threshold",
       "minEnemies": 1,
-      "maxEnemies": 3,
+      "maxEnemies": 5,
       "placeholders": [
         {
           "position": "255,130"

@@ -1,6 +1,7 @@
 ﻿using Adberration;
 using Engendro;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System.Globalization;
 
 namespace Remizione
@@ -11,7 +12,7 @@ namespace Remizione
     public sealed class FlyOff : SessionGameObject<GameSession>
     {
         private const int fadeDuration = 200;
-        private static readonly float defaultScale = ScaleInfo.Text.VeryLarge.X;
+        private static readonly float defaultScale = ScaleInfo.Text.Small.X;
 
         private Sprite? activeSprite;
         private readonly Sprite icon = new() { PivotOrigin = RectanglePoint.Bottom, Scale = ScaleInfo.UIElement.Medium };
@@ -99,6 +100,8 @@ namespace Remizione
         {
             if (activeSprite != null)
             {
+                Game.SpriteBatch.Begin(Session.Camera, activeSprite is TextSprite ? SamplerState.LinearClamp : SamplerState.PointClamp);
+
                 if (shake)
                     activeSprite.X += shakeTween.CurrentValue;
 
@@ -106,6 +109,8 @@ namespace Remizione
 
                 if (shake)
                     activeSprite.X -= shakeTween.CurrentValue;
+
+                Game.SpriteBatch.End();
             }
         }
 

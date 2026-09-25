@@ -375,7 +375,6 @@ namespace Remizione
         {
             base.OnUnload();
             OpacityFactor = 1;
-            SpawnPoint = Vector2.Zero;
         }
 
         // OnUpdate
@@ -860,7 +859,7 @@ namespace Remizione
         // HasLineOfSightTo
         public bool HasLineOfSightTo(GameThing target)
         {
-            return Room?.WalkArea == null ? true : Room.WalkArea.InLineOfSight(Position, target.Position, this, out _);
+            return Room?.WalkArea == null || Room.WalkArea.InLineOfSight(Position, target.Position, this, out _);
         }
 
         // HitTest
@@ -875,6 +874,9 @@ namespace Remizione
         // HitTestPolygon
         [ScriptProperty]
         public TestPolygon HitTestPolygon { get; set; }
+
+        // HomePosition
+        public Vector2 HomePosition { get; set; }
 
         // Hotspot
         [ScriptProperty]
@@ -1208,9 +1210,6 @@ namespace Remizione
 
             return null;
         }
-
-        // SpawnPoint
-        public Vector2 SpawnPoint { get; set; }
 
         // TakeDamage
         public int TakeDamage(GameThing attacker, DamageType damageType, int amount, Vector2 knockbackForce)

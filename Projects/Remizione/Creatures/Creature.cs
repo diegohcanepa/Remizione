@@ -4,21 +4,17 @@ using Microsoft.Xna.Framework;
 namespace Remizione
 {
     /// <summary>
-    /// EnviousEye
+    /// Creature
     /// </summary>
-    public sealed class EnviousEye : Actor
+    public class Creature : Actor
     {
         private readonly Vector2Tween scaleTween;
 
         // Constructor
-        public EnviousEye(GameSession session, string name)
+        public Creature(GameSession session, string name)
             : base(session, name)
         {
-            BodySize = BodySize.Small;
-            FastMoveFactor = 3;
             scaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, Vector2.Zero, new(0, .1f), 600, -1);
-            Scale = new(.8f);
-            SuppressMoveBounceEffect = true;
         }
 
         #region Protected members

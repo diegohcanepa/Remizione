@@ -24,9 +24,6 @@
         "archetype": {
           "$ref": "enums.schema.json#/$defs/CombatArchetypeName"
         },
-        "turnCooldown": {
-          "type": "integer"
-        },
         "intents": {
           "type": "array",
            "items": {
@@ -34,10 +31,8 @@
           },
           "minItems": 0
         },
-        "turnInterval": {
-          "type": "integer",
-          "default": 2,
-          "minimum": 1
+        "leashRadius": {
+          "type": "integer"
         }
       },
       "required": [

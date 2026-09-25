@@ -9,7 +9,75 @@ namespace Remizione
     /// </summary>
     public abstract class CombatArchetype
     {
-        // AwarenessRange (perception range)
+        #region Protected members
+
+        // ExecuteFleeMovement
+        // Huida pura en dirección opuesta al jugador.
+        protected virtual void ExecuteFleeMovement(Actor source, GameThing target, float stepDistance)
+        {
+            Vector2 directionAway = Vector2.Normalize(source.Position - target.Position);
+            if (directionAway == Vector2.Zero)
+                directionAway = new Vector2(1, 0);
+
+            Vector2 escapePoint = source.Position + (directionAway * stepDistance);
+
+            // Si hay WalkArea, ajustamos al polígono caminable
+            if (source.WalkArea != null)
+                escapePoint = source.WalkArea.Polygon.Clamp(escapePoint);
+
+            source.MoveTo(escapePoint);
+        }
+
+        // ExecuteLurkMovement
+        // Acecho errático perimetral (órbita + empuje a bordes). Reutilizable por cualquier enemigo.
+        protected virtual void ExecuteLurkMovement(Actor source, GameThing target, float stepDistance, float currentDistance)
+        {
+            if (source.WalkArea == null)
+            {
+                ExecuteFleeMovement(source, target, stepDistance);
+                return;
+            }
+
+            Vector2 toTarget = target.Position - source.Position;
+            if (currentDistance <= 0.1f) return;
+
+            float minLurkDistance = 40f;
+            float maxLurkDistance = 110f;
+
+            Vector2 desiredDirection;
+
+            if (currentDistance < minLurkDistance)
+            {
+                desiredDirection = -toTarget;
+            }
+            else if (currentDistance > maxLurkDistance)
+            {
+                desiredDirection = toTarget;
+            }
+            else
+            {
+                toTarget.Normalize();
+                var perpendicularLeft = new Vector2(-toTarget.Y, toTarget.X);
+                var perpendicularRight = new Vector2(toTarget.Y, -toTarget.X);
+
+                bool chooseLeft = ((int)source.Position.X + (int)source.Position.Y) % 2 == 0;
+                Vector2 orbitDirection = chooseLeft ? perpendicularLeft : perpendicularRight;
+
+                desiredDirection = (orbitDirection * 0.7f) - (toTarget * 0.3f);
+            }
+
+            desiredDirection.Normalize();
+            Vector2 potentialTarget = source.Position + (desiredDirection * stepDistance);
+            Vector2 bestPoint = source.WalkArea.Polygon.Clamp(potentialTarget);
+
+            if (Vector2.Distance(source.Position, bestPoint) > 3f)
+                source.MoveTo(bestPoint);
+        }
+
+        #endregion
+
+        // AwarenessRange
+        // A qué distancia me detecta un enemigo en idle
         public virtual float AwarenessRange => 100f;
 
         // CooldownDuration (post-attack cooldown in seconds)
@@ -18,6 +86,26 @@ namespace Remizione
         // CounterAttackChance
         public virtual float CounterAttackChance => .35f;
 
+        // ExecuteStepMovement
+        public virtual void ExecuteStepMovement(Actor source, GameThing target, float stepDistance, float currentDistance)
+        {
+            // 1. EVALUACIÓN DE ESTRATEGIA DE HUIDA / REPLIEGUE
+            switch (FallbackMovement)
+            {
+                case FallbackMovementKind.Flee:
+                    ExecuteFleeMovement(source, target, stepDistance);
+                    return;
+
+                case FallbackMovementKind.Lurk:
+                    ExecuteLurkMovement(source, target, stepDistance, currentDistance);
+                    return;
+            }
+
+            // 2. DEFAULT: AVANZAR EN LÍNEA RECTA AL COMBATE
+            source.MoveTowards(target.Position, stepDistance);
+        }
+        
+        /*
         // ExecuteStepMovement
         public virtual void ExecuteStepMovement(Actor source, GameThing target, float stepDistance, float currentDistance)
         {
@@ -35,7 +123,6 @@ namespace Remizione
             // 2. EVALUACIÓN DE KITING (RANGO)
             // Si el NPC solo tiene ataques a distancia y el jugador está demasiado cerca
             // (Opcional, pero vital si tenés enemigos con escopetas/magia)
-            /*
             float minAttackRange = GetMinAttackRange(source.CombatBehavior.Intents);
             if (currentDistance < minAttackRange)
             {
@@ -43,11 +130,11 @@ namespace Remizione
                 source.MoveTo(source.Position + (directionAway * stepDistance));
                 return;
             }
-            */
 
             // 3. DEFAULT: AVANZAR AL COMBATE
             source.MoveTowards(target.Position, stepDistance);
         }
+        */
 
         // ExposedPauseDuration
         public virtual float ExposedPauseDuration => 4;
@@ -56,6 +143,7 @@ namespace Remizione
         public virtual FallbackMovementKind FallbackMovement => FallbackMovementKind.None;
 
         // LoseSightRange
+        // A qué distancia me deja de perseguir aunque lo esté viendo
         public virtual float LoseSightRange => 200;
 
         // MaxStepPerTurn

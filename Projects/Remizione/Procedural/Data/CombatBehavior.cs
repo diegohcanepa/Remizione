@@ -40,11 +40,8 @@ namespace Remizione
                 }
             }
 
-            // TurnCooldown
-            TurnCooldown = element.GetInt32("turnCooldown", 0);
-
-            // TurnInterval
-            TurnInterval = element.GetInt32("turnInterval", 2);
+            // LeashRadius
+            LeashRadius = element.GetInt32("leashRadius", 0);
 
             Intents = new(intents);
         }
@@ -60,13 +57,12 @@ namespace Remizione
         // Intents
         public NamedReadOnlyCollection<CombatIntent> Intents { get; }
 
+        // LeashRadius
+        // Radio máximo de dispersión permitido alrededor de la HomePosition.
+        // Es nómade si es <= 0
+        public float LeashRadius { get; }
+
         // Name
         public string Name { get; }
-
-        // TurnCooldown
-        public int TurnCooldown { get; }
-
-        // TurnInterval
-        public int TurnInterval { get; }
     }
 }

@@ -580,6 +580,7 @@ namespace Remizione
         public Vector2 BloodSplashOrigin { get; set; }
 
         // BodySize
+        [ScriptProperty]
         public BodySize BodySize { get; set; } = BodySize.Medium;
 
         /*
@@ -994,8 +995,13 @@ namespace Remizione
         }
 
         // MoveRandomly
-        [ScriptMethod]
-        public void MoveRandomly()
+        public void MoveRandomly(float maxDistance = 0)
+        {
+            MoveRandomlyAround(Position, maxDistance);
+        }
+
+        // MoveRandomlyAround
+        public void MoveRandomlyAround(Vector2 center, float maxDistance = 0)
         {
             if (Room?.WalkArea is WalkArea walkArea)
             {
@@ -1004,7 +1010,10 @@ namespace Remizione
                 for (var i = 0; i < 10; i++)
                 {
                     destination = walkArea.RandomWalkablePoint(Random.Shared);
-                    if (DistanceTo(destination) > 20)
+                    float distFromActor = DistanceTo(destination);
+                    float distFromCenter = Vector2.Distance(center, destination);
+
+                    if (distFromActor > 20 && (maxDistance <= 0 || distFromCenter <= maxDistance))
                     {
                         MoveTo(destination);
                         return;
@@ -1068,14 +1077,22 @@ namespace Remizione
 
             Vector2 currentPos = Position;
             Vector2 direction = targetPosition - currentPos;
+            float distance = direction.Length();
 
-            if (direction != Vector2.Zero)
+            if (distance > 0.0001f)
             {
-                direction.Normalize();
-                Vector2 destination = currentPos + (direction * maxDistance);
-
-                // Le ordena a la BodyMachine caminar hacia ese punto intermedio del tramo
-                MoveTo(destination);
+                // Si el objetivo está más cerca que el tramo máximo, camina directo al punto final
+                // para no sobrepasarlo.
+                if (distance <= maxDistance)
+                {
+                    MoveTo(targetPosition);
+                }
+                else
+                {
+                    direction /= distance; // Evita normalize redundante si ya tenías la longitud
+                    Vector2 destination = currentPos + (direction * maxDistance);
+                    MoveTo(destination);
+                }
             }
         }
 

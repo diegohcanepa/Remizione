@@ -4,13 +4,13 @@
       {
         "name": "EnviousEye",
         "archetype": "Harasser",
-        "turnCooldown": 10000,
         "intents": [
           {
             "name": "Bite",
             "soundTrigger": "RatAttack",
             "actionKind": "Proximity",
             "maxRange": 5,
+            "missChance": 0.5,
             "effects": [
               {
                 "context": "Attack",
@@ -48,7 +48,7 @@
       },
       {
         "name": "Rat",
-        "archetype": "Harasser",
+        "archetype": "Lurker",
         "intents": [
           {
             "name": "Bite",

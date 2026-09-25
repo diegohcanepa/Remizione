@@ -13,8 +13,8 @@ namespace Remizione
         #region Private fields
 
         private readonly Vector2Tween bounceScaleTween = new();
-        private List<AtlasImage>? remainsPieces;
         private bool isRevealBoxDirty;
+        private List<AtlasImage>? remainsPieces;
         private readonly FloatTween revealTween = new();
         private readonly FloatTween xTween = new();
 
@@ -107,13 +107,6 @@ namespace Remizione
 
         // BlocksLineOfSight
         protected override bool BlocksLineOfSight => !RevealArea.IsEmpty;
-
-        // BounceCore
-        protected void BounceCore(float intensity, int bounceCount)
-        {
-            bounceScaleTween.Start(TweenStyle.QuadraticInOut, Scale, new Vector2(1f, intensity), 100, bounceCount);
-            xTween.Start(TweenStyle.QuadraticInOut, X, X - 1, 40, 6);
-        }
 
         // MatchShadowTransform
         protected bool MatchShadowTransform { get; set; } = true;
@@ -216,13 +209,6 @@ namespace Remizione
         protected Sprite Shadow { get; }
 
         #endregion
-
-        // Bounce
-        [ScriptMethod]
-        public virtual void Bounce()
-        {
-            BounceCore(.95f, 2);
-        }
 
         // CanInteract
         public override bool CanInteract()

@@ -123,12 +123,10 @@ namespace Remizione
         // DrawFlyOffs
         private void DrawFlyOffs(GameTime gameTime)
         {
-            Game.SpriteBatch.Begin(Session.Camera);
             for (var i = Session.ObjectPools.FlyOffs.InUse.Count - 1; i >= 0; i--)
             {
                 Session.ObjectPools.FlyOffs.InUse[i].Draw(gameTime);
             }
-            Game.SpriteBatch.End();
         }
 
         // DrawMeters

@@ -112,16 +112,15 @@ namespace Remizione
         {
             AotTypeRegistry.Register(typeof(Actor));
             AotTypeRegistry.Register(typeof(Bonfire));
+            AotTypeRegistry.Register(typeof(Creature));
             AotTypeRegistry.Register(typeof(CreditsRoom));
             AotTypeRegistry.Register(typeof(Decoration));
-            AotTypeRegistry.Register(typeof(EnviousEye));
             AotTypeRegistry.Register(typeof(Fleshiness));
             AotTypeRegistry.Register(typeof(GameRoom));
             AotTypeRegistry.Register(typeof(ItemOrb));
             AotTypeRegistry.Register(typeof(Pottery));
             AotTypeRegistry.Register(typeof(ProceduralRoom));
             AotTypeRegistry.Register(typeof(Prop));
-            AotTypeRegistry.Register(typeof(Rat));
             AotTypeRegistry.Register(typeof(SpearTrap));
             AotTypeRegistry.Register(typeof(Torch));
             AotTypeRegistry.Register(typeof(Trunk));
