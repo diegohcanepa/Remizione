@@ -10,13 +10,6 @@ namespace Remizione
     {
         #region Private members
 
-        // AssertInterruptible
-        private static void AssertInterruptibleClause(Script script)
-        {
-            if (!script.Interruptible)
-                throw new InvalidOperationException($"{script.Name} must be interruptible.");
-        }
-
         // ExtractItemName
         private static string? ExtractItemName(Script script)
         {
@@ -44,10 +37,7 @@ namespace Remizione
 
                 // The overload part must be the item name
                 if (script.ScriptType == ScriptType.Outcome && script.OverloadName.Length > 0)
-                {
                     itemName = script.OverloadName;
-                    AssertInterruptibleClause(script);
-                }
 
                 // If script name is an item verb
                 else if (script.Name.StartsWith("Item-", StringComparison.Ordinal))

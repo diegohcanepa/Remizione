@@ -8,7 +8,7 @@
         // CanExecute
         public override bool CanExecute(InteractionData data, Actor player, GameThing target, Verb verb)
         {
-            return player.Session.InteractionContext.HeldItem != null;
+            return player.Session.InteractionContext.HeldItem is IAction action && action.ActionKind != ActionKind.ScriptOutcome;
         }
 
         // Execute

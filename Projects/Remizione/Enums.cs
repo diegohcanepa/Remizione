@@ -3,7 +3,7 @@
 namespace Remizione
 {
     // ActionKind
-    public enum ActionKind { Script, Proximity, InPlace, Projectile, Self }
+    public enum ActionKind { ScriptOutcome, Proximity, InPlace, Projectile, Self }
 
     // ApproachBehavior
     public enum ApproachBehavior

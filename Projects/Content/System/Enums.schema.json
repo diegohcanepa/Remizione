@@ -5,7 +5,7 @@
     "ActionKind": {
       "type": "string",
       "enum": [
-        "Script",
+        "ScriptOutcome",
         "Proximity",
         "InPlace",
         "Projectile",

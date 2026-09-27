@@ -3,9 +3,9 @@
 namespace Remizione.InteractionCommands
 {
     /// <summary>
-    /// ScriptCommand
+    /// ScriptOutcomeCommand
     /// </summary>
-    public sealed class ScriptCommand : InteractionCommand
+    public sealed class ScriptOutcomeCommand : InteractionCommand
     {
         private Script? resolvedScript;
 
@@ -26,7 +26,7 @@ namespace Remizione.InteractionCommands
                 {
                     resolvedScript = target.OutcomeScript;
                 }
-                else if (heldItem.Definition.ActionKind == ActionKind.Script)
+                else if (heldItem.Definition.ActionKind == ActionKind.ScriptOutcome)
                 {
                     resolvedScript = target.Session.ScriptLibrary.FindOutcomeOverload(target.DeclaredName, heldItem.Name);
                 }

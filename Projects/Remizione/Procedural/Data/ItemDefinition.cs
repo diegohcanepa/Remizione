@@ -18,7 +18,7 @@ namespace Remizione
             : base(element)
         {
             // ActionKind
-            ActionKind = element.GetEnum("actionKind", ActionKind.Script);
+            ActionKind = element.GetEnum("actionKind", ActionKind.ScriptOutcome);
 
             // AnimationName
             AnimationName = element.GetString("animationName");

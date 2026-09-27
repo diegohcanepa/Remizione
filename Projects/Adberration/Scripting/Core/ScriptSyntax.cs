@@ -79,9 +79,6 @@ namespace Adberration.Scripting
         // InequalityOp
         public const string InequalityOp = "!=";
 
-        // InterruptibleKeyword
-        public const string InterruptibleKeyword = "Interruptible";
-
         // IsClonedName
         public static bool IsClonedName(string name)
         {
@@ -144,6 +141,9 @@ namespace Adberration.Scripting
 
         // PropertyValueStartTag
         public const string PropertyValueStartTag = "{";
+
+        // ProtectedKeyword
+        public const string ProtectedKeyword = "Protected";
 
         // RangeDelimiter
         public const string RangeDelimiter = "..";

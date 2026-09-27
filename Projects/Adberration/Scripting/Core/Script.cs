@@ -169,12 +169,12 @@ namespace Adberration.Scripting
                     ThrowScriptSyntaxError(this, signature, $"The {ScriptSyntax.CloneableKeyword} keyword is not supported in this context.");
             }
 
-            // Interruptible
-            Interruptible = tokens.Contains(ScriptSyntax.InterruptibleKeyword);
-            if (Interruptible)
+            // Protected
+            Protected = tokens.Contains(ScriptSyntax.ProtectedKeyword);
+            if (Protected)
             {
-                if (scriptType is not ScriptType.Routine and not ScriptType.Outcome)
-                    ThrowScriptSyntaxError(this, signature, $"The {ScriptSyntax.InterruptibleKeyword} keyword is not supported in this context.");
+                if (scriptType is not ScriptType.Outcome)
+                    ThrowScriptSyntaxError(this, signature, $"The {ScriptSyntax.ProtectedKeyword} keyword is only supported by outcomes.");
             }
 
             // Assign Entity Name

@@ -439,7 +439,7 @@ namespace Remizione
 
             if (IsPlayer)
             {
-                if (Session.InterruptAwaitingScript())
+                if (Session.InterruptAwaitingScripts())
                 {
                     this.Game.SceneManager.PopUntil(Session);
                     StopTalking();
@@ -609,14 +609,10 @@ namespace Remizione
             if (IsInvulnerable)
                 return false;
 
-            if (IsPlayer && Session.AwaitingScript != null)
-            {
-                return Session.AwaitingScript.Interruptible && base.CanTakeDamage();
-            }
-            else
-            {
-                return base.CanTakeDamage();
-            }
+            if (IsPlayer && Session.AwaitingScript?.Protected == true)
+                return false;
+
+            return base.CanTakeDamage();
         }
 
         // CarriedProp

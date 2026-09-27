@@ -197,6 +197,8 @@ namespace Remizione
         protected override void OnActivate()
         {
             base.OnActivate();
+            ItemContainer.Session.InteractionContext.HeldItem = null;
+            ItemContainer.Session.InteractionContext.Refresh();
             Reset();
         }
 

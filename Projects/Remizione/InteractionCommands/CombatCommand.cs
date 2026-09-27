@@ -21,7 +21,7 @@
             }
             else
             {
-                if (!Utils.IsGoToVerb(verb) && heldItem.Definition.ActionKind != ActionKind.Script)
+                if (!Utils.IsGoToVerb(verb) && heldItem.Definition.ActionKind != ActionKind.ScriptOutcome)
                     resolvedIntent = player.CombatBehavior?.Intents.Find(heldItem.Name);
             }
 

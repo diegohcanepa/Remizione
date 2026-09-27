@@ -32,6 +32,7 @@
   <String Key="Item.BronzeKey.Name">Llave de bronce</String>
   <String Key="Item.Coin.Name">Moneda</String>
   <String Key="Item.CrudeKey.Description">Un pedazo de hierro deforme, limado a mano. Diseñada para ceder herrajes de cofres.</String>
+  <String Key="Item.CrudeKey.Effect">Abre cerrojos</String>
   <String Key="Item.CrudeKey.Name">Llave rústica</String>
   <String Key="Item.GoldenKey.Name">Llave dorada</String>
   <String Key="Item.Lift.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>

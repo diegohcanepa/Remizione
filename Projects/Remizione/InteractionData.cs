@@ -18,7 +18,7 @@ namespace Remizione
         private readonly DropCarriedPropCommand endLiftCommand = new();
         private readonly ItemCommand itemCommand = new();
         private readonly LiftCommand liftCommand = new();
-        private readonly ScriptCommand scriptCommand = new();
+        private readonly ScriptOutcomeCommand scriptCommand = new();
         private readonly ThrowCommand throwCommand = new();
 
         #endregion

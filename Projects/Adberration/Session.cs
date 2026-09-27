@@ -32,6 +32,7 @@ namespace Adberration
         private readonly Stack<Script> awaitingScripts = new();
         private readonly Stack<Room> busyRooms = new();
         private readonly Stack<Script> busyRoomsScripts = new();
+        private bool canInterruptAwaitingScripts;
         private bool canRun;
         private readonly Dictionary<string, Entity> entities = [];
         private readonly NamedCollection<Entity> entityList = [];
@@ -882,7 +883,10 @@ namespace Adberration
                 {
                     awaitingScripts.Push(script);
                     if (awaitingScripts.Count == 1)
+                    {
+                        canInterruptAwaitingScripts = !script.Protected;
                         OnAwait();
+                    }
                 }
 
                 if (!ScriptProcessor.IsExecutingScript(script))
@@ -1095,9 +1099,12 @@ namespace Adberration
             return randomNumbers[name];
         }
 
-        // InterruptAwaitingScript
-        public bool InterruptAwaitingScript()
+        // InterruptAwaitingScripts
+        public bool InterruptAwaitingScripts()
         {
+            if (!canInterruptAwaitingScripts)
+                return false;
+
             var result = false;
 
             while (awaitingScripts.Count > 0)
