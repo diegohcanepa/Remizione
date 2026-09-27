@@ -15,12 +15,30 @@ namespace Remizione
     /// </summary>
     public class GameRoom : Room
     {
+        private static readonly BlendState LightMaxBlend = new BlendState
+        {
+            ColorSourceBlend = Blend.One,
+            ColorDestinationBlend = Blend.One,
+            ColorBlendFunction = BlendFunction.Max,
+            AlphaSourceBlend = Blend.One,
+            AlphaDestinationBlend = Blend.One,
+            AlphaBlendFunction = BlendFunction.Max
+        };
+
+        private static readonly BlendState SubtractivePlayerBlend = new BlendState
+        {
+            ColorSourceBlend = Blend.InverseDestinationColor,
+            ColorDestinationBlend = Blend.One,
+            ColorBlendFunction = BlendFunction.Add,
+            AlphaSourceBlend = Blend.InverseDestinationAlpha,
+            AlphaDestinationBlend = Blend.One,
+            AlphaBlendFunction = BlendFunction.Add
+        };
+
         #region Private fields
 
         private Color brightnessColor;
         private int currentDrawIndex;
-        private readonly Color defaultPlayerLightColor = new(190, 190, 190);
-        private readonly Vector2 defaultPlayerLightScale = new(5);
         private static DustEmitter dustEmitter = null!;
         private static FireflyEmitter fireflyEmitter = null!;
         private RenderTarget2D? lightMapTarget;
@@ -28,8 +46,10 @@ namespace Remizione
         private readonly List<ILightSource> lightSources = [];
         private static readonly Light playerLight = new("PlayerLight", LightKind.Player)
         {
+            Color = new(230, 230, 195),
             PivotOrigin = RectanglePoint.Center,
             Position = Screen.Center,
+            Scale = new(7)
         };
         private readonly List<TriggerArea> triggerAreas = [];
         private readonly List<WalkArea> walkAreas = [];
@@ -52,7 +72,6 @@ namespace Remizione
 
             dustEmitter ??= new DustEmitter(session, 6, 1000, 35);
             fireflyEmitter ??= new FireflyEmitter(session, 1, 500, 20);
-            playerLight.Unlit(true);
         }
 
         #endregion
@@ -181,55 +200,28 @@ namespace Remizione
             if (renderTarget == null)
                 return;
 
-            // Save current render target
             var previousRenderTarget = Game.RenderTargets.CurrentTarget;
 
             Game.GraphicsDevice.SetRenderTarget(renderTarget);
+            Game.GraphicsDevice.Clear(Color.Black);
 
-            Game.GraphicsDevice.Clear(AmbientLights ? LightMapColor : Color.Black);
-
-            /*
-            if (AllowGlobalLight)
-            {
-                Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
-                Session.Environment.GlobalLight.Draw(gameTime);
-                Game.SpriteBatch.End();
-            }
-            */
-
-            Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
+            // PASO 1: Dibujar luces de la escena usando LightMaxBlend para que NO saturen entre sí
+            Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, LightMaxBlend, null);
 
             // Owned lights
             for (int i = 0; i < lights.Count; i++)
             {
-                if (lights[i].IsEmitting)
+                if (lights[i].IsEmitting && lights[i].BoundingBox.Intersects(Session.Camera.CullingBox))
                 {
-                    if (lights[i].BoundingBox.Intersects(Session.Camera.CullingBox))
-                    {
-                        lights[i].Draw(gameTime);
-                    }
+                    lights[i].Draw(gameTime);
                 }
             }
 
-            // Light sources
+            // Light sources (antorchas, hogueras, props iluminados)
             for (int i = 0; i < CulledThings.Count; i++)
             {
                 if (CulledThings[i] is GameThing thing && thing.IsEmittingLight && CulledThings[i].IsInCullingBox)
                     thing.DrawLights(gameTime);
-            }
-
-            if (Session.Player != null)
-            {
-                /*
-                if (!AmbientLights)
-                {
-                    // TODO: Check old stat
-                    playerLight.Color = Session.CurrentRun?.PlayerInventory.AmbientLightColor ?? defaultPlayerLightColor;
-                    playerLight.Scale = defaultPlayerLightScale;// * Session.PlayerStats.AmbientLight.Value;
-                    playerLight.Position = Session.Player.GetAnchoredPosition(15, 15);
-                    playerLight.Draw(gameTime);
-                }
-                */
             }
 
             if (BrightnessModifier > 0)
@@ -237,10 +229,17 @@ namespace Remizione
 
             Game.SpriteBatch.End();
 
+            if (Session.Player != null)
+            {
+                Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, SubtractivePlayerBlend, null);
+                playerLight.Position = Session.Player.BoundingBox.Center;
+                playerLight.Draw(gameTime);
+                Game.SpriteBatch.End();
+            }
+
             if (AllowFireflyParticles)
                 DrawFireflyParticles(gameTime);
 
-            // Restore previous render target
             Game.GraphicsDevice.SetRenderTarget(previousRenderTarget);
         }
 
@@ -293,8 +292,6 @@ namespace Remizione
 
             if (AllowFireflyParticles)
                 fireflyEmitter?.Activate();
-
-            RefreshAmbientLightSources();
         }
 
         // OnDeactivate
@@ -396,11 +393,6 @@ namespace Remizione
             lightSources.Clear();
         }
 
-        // OnRefreshAmbientLightSources
-        protected virtual void OnRefreshAmbientLightSources()
-        {
-        }
-
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
@@ -414,10 +406,7 @@ namespace Remizione
                 lights[i].Update(gameTime);
             }
 
-            if (AllowGlobalLight)
-                Session.Environment.GlobalLight.Update(gameTime);
-
-            if (!AmbientLights && Session.Player != null)
+            if (Session.Player != null)
                 playerLight.Update(gameTime);
 
             // Dust particles
@@ -480,16 +469,9 @@ namespace Remizione
         [ScriptProperty]
         public bool AllowFireflyParticles { get; set; }
 
-        // AllowGlobalLight
-        [ScriptProperty]
-        public bool AllowGlobalLight { get; set; } = true;
-
         // AllowPauseMenu
         [ScriptProperty]
         public bool AllowPauseMenu { get; set; } = true;
-
-        // AmbientLights
-        public bool AmbientLights { get; private set; }
 
         // BrightnessModifier
         [ScriptProperty]
@@ -549,42 +531,6 @@ namespace Remizione
         // Lights
         public NamedReadOnlyCollection<Light> Lights { get; }
 
-        // RefreshAmbientLightSources
-        public void RefreshAmbientLightSources()
-        {
-            var hasAmbientLights = false;
-
-            for (var i = 0; i < Lights.Count; i++)
-            {
-                if (Lights[i].Ambient && Lights[i].IsEmitting)
-                {
-                    hasAmbientLights = true;
-                    break;
-                }
-            }
-
-            if (!hasAmbientLights)
-            {
-                for (var i = 0; i < Children.Count; i++)
-                {
-                    if (Children[i] is Prop prop && prop.IsAmbientLight && prop.IsEmittingLight)
-                    {
-                        hasAmbientLights = true;
-                        break;
-                    }
-                }
-            }
-
-            if (hasAmbientLights)
-                playerLight.Unlit();
-            else
-                playerLight.Lit();
-
-            AmbientLights = hasAmbientLights;
-
-            OnRefreshAmbientLightSources();
-        }
-
         // SelectWalkArea
         public void SelectWalkArea(string name)
         {
@@ -593,18 +539,6 @@ namespace Remizione
 
         // Session
         public new GameSession Session { get; }
-
-        // TurnOffAmbientLights
-        public void TurnOffAmbientLights()
-        {
-            for (var i = 0; i < Children.Count; i++)
-            {
-                if (Children[i] is Prop prop && prop.IsAmbientLight)
-                    prop.IgnoreAttachedLight = true;
-            }
-
-            RefreshAmbientLightSources();
-        }
 
         // TriggerAreas
         public RoomAreaReadOnlyCollection<TriggerArea> TriggerAreas { get; }

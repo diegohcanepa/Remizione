@@ -198,6 +198,22 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Chest-assets/Chest.png</key>
+            <key type="filename">Chest-assets/ChestShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,4,8,7</rect>
+                <key>scale9Paddings</key>
+                <rect>4,4,8,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">CrossA-assets/CrossA.png</key>
             <key type="filename">CrossA-assets/CrossAShadow.png</key>
             <key type="filename">CrossC-assets/CrossC.png</key>
@@ -628,6 +644,37 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Trunk-assets/Trunk01.png</key>
+            <key type="filename">Trunk-assets/Trunk02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,5,9,10</rect>
+                <key>scale9Paddings</key>
+                <rect>5,5,9,10</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Trunk-assets/TrunkShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,2,9,3</rect>
+                <key>scale9Paddings</key>
+                <rect>5,2,9,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">WaterPuddleA-assets/WaterPuddleA.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -700,6 +747,8 @@
                     <filename>CrossA-assets</filename>
                     <filename>CrossB-assets</filename>
                     <filename>CrossC-assets</filename>
+                    <filename>Chest-assets</filename>
+                    <filename>Trunk-assets</filename>
                 </array>
             </struct>
         </map>

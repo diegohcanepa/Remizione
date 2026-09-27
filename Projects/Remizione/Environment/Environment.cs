@@ -10,18 +10,6 @@ namespace Remizione
         // Constructor
         public Environment()
         {
-            // Global light
-            this.GlobalLight = new("GlobalLight", LightKind.Global)
-            {
-                PivotOrigin = RectanglePoint.Center,
-                Position = Screen.Center,
-                Scale = new(18, 10)
-            };
-
-            GlobalLight.Lit();
         }
-
-        // GlobalLight
-        public Light GlobalLight { get; }
     }
 }

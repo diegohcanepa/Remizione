@@ -225,9 +225,6 @@ namespace Remizione
             return DeclaredName;
         }
 
-        // IsAmbientLight
-        public bool IsAmbientLight => AttachedLight != null && AttachedLight.Ambient;
-
         // RevealArea
         [ScriptProperty]
         public Rectangle RevealArea { get; set; }

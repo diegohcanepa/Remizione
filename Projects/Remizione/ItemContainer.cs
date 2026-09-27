@@ -84,9 +84,6 @@ namespace Remizione
             return item;
         }
 
-        // AmbientLightColor
-        public Color? AmbientLightColor { get; private set; }
-
         // CanAddItem
         public bool CanAddItem(ItemDefinition definition)
         {

@@ -31,6 +31,8 @@
   <String Key="Item.BittenApple.Name">Manzana mordida</String>
   <String Key="Item.BronzeKey.Name">Llave de bronce</String>
   <String Key="Item.Coin.Name">Moneda</String>
+  <String Key="Item.CrudeKey.Description">Un pedazo de hierro deforme, limado a mano. Diseñada para ceder herrajes de cofres.</String>
+  <String Key="Item.CrudeKey.Name">Llave rústica</String>
   <String Key="Item.GoldenKey.Name">Llave dorada</String>
   <String Key="Item.Lift.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Lift.Name">Alzar</String>
@@ -217,6 +219,7 @@ Bla bla bla</String>
   <String Key="Playtime.Minute">minuto</String>
   <String Key="Playtime.Minutes">minutos</String>
   <String Key="Prop.Bonfire">Hoguera de azufre</String>
+  <String Key="Prop.Chest">Cofre</String>
   <String Key="Prop.Coin">Moneda</String>
   <String Key="Prop.Cross">Cruz</String>
   <String Key="Prop.CrucifiedMan">Hombre crucificado</String>

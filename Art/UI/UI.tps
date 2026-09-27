@@ -282,7 +282,6 @@
             <key type="filename">KeyboardControls-assets/KeyboardSackSlot.png</key>
             <key type="filename">KeyboardControls-assets/KeyboardX.png</key>
             <key type="filename">KeyboardControls-assets/KeyboardZ.png</key>
-            <key type="filename">MouseCursors-assets/MouseCursorMagnifierIcon.png</key>
             <key type="filename">XboxControls-assets/XboxGadgetsSlot.png</key>
             <key type="filename">XboxControls-assets/XboxJunkSlot.png</key>
             <key type="filename">XboxControls-assets/XboxSackSlot.png</key>

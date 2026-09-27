@@ -46,7 +46,7 @@ namespace Remizione
                 IgnoreGlobalOpacity = true,
                 PivotOrigin = RectanglePoint.Center,
                 Position = new(9),
-                Scale = new(19, 16)
+                Scale = new(11, 8)
             };
 
             AttachedLight.Unlit(true);
@@ -124,8 +124,6 @@ namespace Remizione
             if (Room == null)
                 return;
 
-            Session.Environment.GlobalLight.Unlit(immediate);
-
             if (immediate)
             {
                 Light.GlobalOpacity = 0;
@@ -157,7 +155,6 @@ namespace Remizione
         {
             Session.RenewSeed();
             (Parent as ProceduralRoom)?.Populate();
-            Session.Environment.GlobalLight.Lit();
             globalOpacityTween.Start(TweenStyle.CubicIn, 0, 1, 2000);
         }
 

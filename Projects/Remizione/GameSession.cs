@@ -598,14 +598,6 @@ namespace Remizione
             return proceduralCatalog == null ? throw new InvalidOperationException() : proceduralCatalog[name];
         }
 
-        // GlobalLightScale
-        [ScriptProperty]
-        public Vector2 GlobalLightScale
-        {
-            get => Environment.GlobalLight.Scale;
-            set => Environment.GlobalLight.Scale = value;
-        }
-
         // GoldenKeys
         [ScriptProperty]
         public int GoldenKeys

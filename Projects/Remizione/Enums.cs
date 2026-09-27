@@ -109,7 +109,7 @@ namespace Remizione
     public enum MeterColor { Green, Orange, Purple, SkyBlue, White }
 
     // MouseCursorIcon
-    public enum MouseCursorIcon { Cross, Arrow, Attack, Down, Eye, Hand, Left, Lift, Drop, Magnifier, Flame, Right, Sack, Skull, Talk, Up, Wait }
+    public enum MouseCursorIcon { Cross, Arrow, Attack, Down, Eye, Hand, Left, Lift, Drop, Flame, Right, Sack, Skull, Talk, Up, Wait }
 
     // NameValidationRule
     public enum NameValidationRule

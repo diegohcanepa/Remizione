@@ -23,7 +23,7 @@ namespace Remizione
                 Passes = 2,
                 PivotOrigin = RectanglePoint.Center,
                 Position = new(9),
-                Scale = new(18)
+                Scale = new(12)
             };
 
             AttachedLight.Unlit(true);
@@ -62,7 +62,6 @@ namespace Remizione
                     if (field)
                     {
                         InvalidateAnimation();
-                        PlaySound(SoundNames.Bonfire, true);
                         AttachedLight?.Lit(Session.State == GameSessionState.Loading);
                     }
                 }

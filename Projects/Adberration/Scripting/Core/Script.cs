@@ -634,9 +634,6 @@ namespace Adberration.Scripting
             return false;
         }
 
-        // Interruptible
-        public bool Interruptible { get; private set; }
-
         // IsCompiled
         public bool IsCompiled { get; private set; }
 
@@ -654,6 +651,9 @@ namespace Adberration.Scripting
 
         // Persistent
         public bool Persistent { get; private set; }
+
+        // Protected
+        public bool Protected { get; private set; }
 
         // ScriptType
         public ScriptType ScriptType { get; protected set; }

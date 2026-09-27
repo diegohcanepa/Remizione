@@ -38,34 +38,6 @@ namespace Remizione
 
         #region Static members
 
-        // CreateColorTween
-        private static ColorTween? CreateColorTween(LightKind lightKind, Color color)
-        {
-            return null;
-
-            return lightKind switch
-            {
-                LightKind.Fire => ColorTween.Create(TweenStyle.Linear, color, color * .98f, 90, -1),
-                LightKind.Lantern => ColorTween.Create(TweenStyle.Linear, color * .98f, color * .96f, 90, -1),
-                LightKind.SulfurBonfire => ColorTween.Create(TweenStyle.Linear, color, color * .96f, 90, -1),
-                _ => null,
-            };
-        }
-
-        // CreateFlickerTween
-        private static FloatTween? CreateFlickerTween(LightKind lightKind)
-        {
-            return null;
-
-            return lightKind switch
-            {
-                LightKind.Fire or
-                LightKind.SulfurBonfire or
-                LightKind.Lantern => FloatTween.Create(TweenStyle.Linear, 1f, .98f, 80, -1),
-                _ => null,
-            };
-        }
-
         // CreateScaleTween
         private static Vector2Tween? CreateScaleTween(LightKind lightKind, Vector2 scale)
         {
@@ -87,8 +59,9 @@ namespace Remizione
                 LightKind.Fleshiness => new Color(255, 200, 200),
                 LightKind.KeyItemOrb => ColorPalette.Inventory.KeyItem,
                 LightKind.ItemOrb => ColorPalette.Inventory.Item,
-                LightKind.SulfurBonfire => new(134, 146, 31),
+                LightKind.SulfurBonfire => new(184, 196, 81),
                 LightKind.Outdoor => ColorPalette.OutdoorLight,
+                LightKind.Player => Color.White * .7f,
                 _ => Color.White
             };
         }
@@ -111,13 +84,11 @@ namespace Remizione
             switch (LightKind)
             {
                 case LightKind.Fleshiness:
-                    lightSprite.Tweens.OpacityTween = CreateFlickerTween(LightKind);
                     litTweenDuration = 2000;
                     unlitTweenDuration = 1000;
                     break;
 
                 case LightKind.Fire:
-                    lightSprite.Tweens.OpacityTween = CreateFlickerTween(LightKind);
                     litTweenDuration = 2000;
                     unlitTweenDuration = 2000;
                     break;
@@ -129,16 +100,13 @@ namespace Remizione
 
                 case LightKind.SulfurBonfire:
                     Passes = 2;
-                    lightSprite.Tweens.ColorTween = CreateColorTween(LightKind, Color);
                     lightSprite.Tweens.ScaleTween = CreateScaleTween(LightKind, Scale);
-                    lightSprite.Tweens.OpacityTween = CreateFlickerTween(LightKind);
                     litTweenDuration = 1500;
                     unlitTweenDuration = 1500;
                     break;
 
                 case LightKind.KeyItemOrb:
                 case LightKind.ItemOrb:
-                    lightSprite.Tweens.OpacityTween = CreateFlickerTween(LightKind);
                     litTweenDuration = 1000;
                     unlitTweenDuration = 1000;
                     break;
@@ -199,9 +167,6 @@ namespace Remizione
 
         #endregion
 
-        // Ambient
-        public bool Ambient { get; set; }
-
         // BoundingBox
         public RectangleF BoundingBox => lightSprite.BoundingBox;
 
@@ -214,11 +179,7 @@ namespace Remizione
                 if (value != field)
                 {
                     field = value;
-
                     lightSprite.Color = value;
-
-                    if (lightSprite.Tweens.ColorTween != null)
-                        lightSprite.Tweens.ColorTween = CreateColorTween(LightKind, value);
                 }
             }
         }

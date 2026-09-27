@@ -31,6 +31,8 @@
   <String Key="Item.BittenApple.Name">Bitten apple</String>
   <String Key="Item.BronzeKey.Name">Bronze key</String>
   <String Key="Item.Coin.Name">Coin</String>
+  <String Key="Item.CrudeKey.Description" />
+  <String Key="Item.CrudeKey.Name">Crude key</String>
   <String Key="Item.GoldenKey.Name">Golden key</String>
   <String Key="Item.Lift.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Lift.Name">Lift</String>
@@ -216,6 +218,7 @@ Bla bla bla</String>
   <String Key="Playtime.Minute">minute</String>
   <String Key="Playtime.Minutes">minutes</String>
   <String Key="Prop.Bonfire">Sulfur Bonfire</String>
+  <String Key="Prop.Chest">Chest</String>
   <String Key="Prop.Coin">Coin</String>
   <String Key="Prop.Cross">Cross</String>
   <String Key="Prop.CrucifiedMan">Crucified man</String>

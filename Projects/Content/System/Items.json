@@ -42,6 +42,14 @@
 			"isStackable": true
 		},
 		{
+			"name": "CrudeKey",
+			"category": "Misc",
+			"actionKind": "Script",
+			"deselectOnUse": true,
+			"isDepletable": true,
+			"isStackable": true
+		},
+		{
 			"name": "SulfurStone",
 			"category": "Misc",
 			"actionKind": "Script",

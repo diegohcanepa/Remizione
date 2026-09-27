@@ -229,6 +229,9 @@ namespace Remizione
 
         #region Protected members
 
+        // AllowInertShadowInteraction
+        protected bool AllowInertShadowInteraction { get; init; }
+
         // BlocksLineOfSight
         protected virtual bool BlocksLineOfSight => false;
 
@@ -487,6 +490,12 @@ namespace Remizione
         // CanInteract
         public virtual bool CanInteract()
         {
+            if (!AllowInertShadowInteraction)
+            {
+                if (Session.Player == null || Session.Player.MaxHP == 0)
+                    return false;
+            }
+
             if (!AllowInteraction)
                 return false;
 
