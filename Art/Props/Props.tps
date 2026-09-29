@@ -316,6 +316,8 @@
             </struct>
             <key type="filename">LargeRockB-assets/LargeRockB.png</key>
             <key type="filename">LargeRockB-assets/LargeRockBShadow.png</key>
+            <key type="filename">LargeRockC-assets/LargeRockC.png</key>
+            <key type="filename">LargeRockC-assets/LargeRockCShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -733,6 +735,7 @@
                     <filename>CrossC-assets</filename>
                     <filename>Chest-assets</filename>
                     <filename>Trunk-assets</filename>
+                    <filename>LargeRockC-assets</filename>
                 </array>
             </struct>
         </map>

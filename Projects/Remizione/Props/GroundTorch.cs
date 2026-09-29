@@ -20,7 +20,6 @@ namespace Remizione
 
             this.AttachedLight = new("Light", LightKind.Fire)
             {
-                Passes = 2,
                 PivotOrigin = RectanglePoint.Center,
                 Position = new(9),
                 Scale = new(12)

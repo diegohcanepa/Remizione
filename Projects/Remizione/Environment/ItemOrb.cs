@@ -20,7 +20,7 @@ namespace Remizione
         {
             ApproachBehavior = ApproachBehavior.Over;
             Atlas = Atlases.Environment;
-            Hotspot = new Polygon("0,0;7,0;7,7;0,7");
+            Hotspot = new Polygon("0,0;9,0;9,7;0,7");
             RenderLayer = RenderLayer.Default;
             AttachedLightPosition = new(3, 4);
         }
@@ -43,6 +43,7 @@ namespace Remizione
 
             AttachedLight ??= new("Light")
             {
+                BlendMode = LightBlendMode.Additive,
                 PivotOrigin = RectanglePoint.Center,
             };
 

@@ -532,10 +532,7 @@ namespace Remizione
             if (IsDead || string.IsNullOrWhiteSpace(Label))
                 return false;
 
-            if (InteractCondition != null && !InteractCondition.Evaluate())
-                return false;
-
-            return true;
+            return InteractCondition == null || InteractCondition.Evaluate();
         }
 
         // CanTakeDamage

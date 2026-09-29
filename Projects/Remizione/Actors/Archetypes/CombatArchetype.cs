@@ -83,9 +83,6 @@ namespace Remizione
         // CooldownDuration (post-attack cooldown in seconds)
         public virtual float CooldownDuration => 1.5f;
 
-        // CounterAttackChance
-        public virtual float CounterAttackChance => .35f;
-
         // ExecuteStepMovement
         public virtual void ExecuteStepMovement(Actor source, GameThing target, float stepDistance, float currentDistance)
         {
@@ -147,7 +144,7 @@ namespace Remizione
         public virtual float LoseSightRange => 200;
 
         // MaxStepPerTurn
-        public virtual float MaxStepPerTurn => 20;
+        public virtual float MaxStepPerTurn => 40;
 
         // SelectIntent
         public virtual CombatIntent? SelectIntent(Actor source, IList<CombatIntent> intents, float distance)

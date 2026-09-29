@@ -56,7 +56,7 @@ namespace Remizione
             return lightKind switch
             {
                 LightKind.Fire => new Color(255, 160, 160),
-                LightKind.KeyItemOrb => ColorPalette.Inventory.KeyItem,
+                LightKind.KeyItemOrb => ColorPalette.Text.SkyBlue,
                 LightKind.CommonItemOrb => ColorPalette.Text.Terra,
                 LightKind.SulfurBonfire => new(184, 196, 81),
                 LightKind.Outdoor => ColorPalette.OutdoorLight,
@@ -74,7 +74,6 @@ namespace Remizione
         {
             litTweenDuration = 0;
             unlitTweenDuration = 0;
-            Passes = 1;
 
             lightSprite.Tweens.Reset();
             lightSprite.Color = Color;
@@ -93,7 +92,6 @@ namespace Remizione
                     break;
 
                 case LightKind.SulfurBonfire:
-                    Passes = 2;
                     lightSprite.Tweens.ScaleTween = CreateScaleTween(LightKind, Scale);
                     litTweenDuration = 1500;
                     unlitTweenDuration = 1500;
@@ -129,10 +127,7 @@ namespace Remizione
             // Aplicamos la opacidad combinada (Flicker * Fade de encendido)
             lightSprite.Opacity = originalSpriteOpacity * currentFade * (IgnoreGlobalOpacity ? 1 : GlobalOpacity);
 
-            for (int i = 0; i < Passes; i++)
-            {
-                lightSprite.Draw(gameTime);
-            }
+            lightSprite.Draw(gameTime);
 
             // Restauramos la opacidad original para no romper la evolución del tween de flicker del sprite
             lightSprite.Opacity = originalSpriteOpacity;
@@ -228,9 +223,6 @@ namespace Remizione
 
         // Name
         public string Name { get; }
-
-        // Passes
-        public int Passes { get; set; } = 1;
 
         // PivotOrigin
         public RectanglePoint PivotOrigin

@@ -87,6 +87,20 @@ namespace Engendro.Input
 
         #endregion
 
+        // DeltaPosition
+        public Point DeltaPosition => state.Position - previousState.Position;
+
+        // DeltaVirtualPosition
+        public Vector2 DeltaVirtualPosition
+        {
+            get
+            {
+                var currentVirtual = EngendroGame.Instance.ViewportAdapter.ToVirtual(state.Position);
+                var previousVirtual = EngendroGame.Instance.ViewportAdapter.ToVirtual(previousState.Position);
+                return currentVirtual - previousVirtual;
+            }
+        }
+
         // HasInput
         public override bool HasInput()
         {

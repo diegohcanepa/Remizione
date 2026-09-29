@@ -205,7 +205,7 @@ namespace Remizione
             Game.SpriteBatch.End();
 
             // PASADA 3: Luces sustractivas (Player)
-            if (Session.Player != null)
+            if (Session.Player?.MaxHP == 0)
             {
                 Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, CustomBlendState.SubtractivePlayer, null);
                 playerLight.Position = Session.Player.BoundingBox.Center;

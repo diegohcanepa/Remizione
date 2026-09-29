@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:b0d39853f3dd108d18972311e0d0fae7:33226623ceb18059353d88e1d5f06ee5:90dd61259f597836213851943cf8b193$ -->
+<!-- $TexturePacker:SmartUpdate:895a14ecc12ebc1f82ba9db026717733:0a01a79afb45b5541112c05922dd5551:90dd61259f597836213851943cf8b193$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -21,11 +21,11 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="Environment.png" width="512" height="512">
     <sprite n="Bible.png" x="15" y="501" w="6" h="8"/>
-    <sprite n="BiblePiece1.png" x="17" y="468" w="3" h="4"/>
-    <sprite n="BiblePiece2.png" x="31" y="501" w="5" h="3"/>
-    <sprite n="BiblePiece3.png" x="45" y="492" w="4" h="3"/>
-    <sprite n="BiblePiece4.png" x="23" y="444" w="3" h="3"/>
-    <sprite n="BiblePiece5.png" x="30" y="497" w="3" h="2"/>
+    <sprite n="BiblePiece1.png" x="23" y="456" w="3" h="4"/>
+    <sprite n="BiblePiece2.png" x="42" y="501" w="5" h="3"/>
+    <sprite n="BiblePiece3.png" x="28" y="466" w="4" h="3"/>
+    <sprite n="BiblePiece4.png" x="43" y="486" w="3" h="3"/>
+    <sprite n="BiblePiece5.png" x="36" y="497" w="3" h="2"/>
     <sprite n="BiblePiece6.png" x="509" y="2" w="1" h="1"/>
     <sprite n="BiblePiece7.png" x="509" y="5" w="1" h="1"/>
     <sprite n="BiblePiece8.png" x="509" y="2" w="1" h="1"/>
@@ -38,70 +38,70 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="BloodSplashHigh04.png" x="2" y="427" w="13" h="18"/>
     <sprite n="BloodSplashHigh05.png" x="2" y="447" w="13" h="18"/>
     <sprite n="BloodSplashHigh06.png" x="2" y="467" w="13" h="18"/>
-    <sprite n="BloodSplashLow01.png" x="17" y="416" w="14" h="7"/>
-    <sprite n="BloodSplashLow02.png" x="26" y="404" w="14" h="7"/>
-    <sprite n="BloodSplashLow03.png" x="36" y="380" w="14" h="7"/>
-    <sprite n="BloodSplashLow04.png" x="37" y="366" w="14" h="7"/>
-    <sprite n="BloodSplashLow05.png" x="43" y="345" w="14" h="7"/>
-    <sprite n="BloodSplashLow06.png" x="36" y="389" w="14" h="7"/>
-    <sprite n="Bone1.png" x="38" y="492" w="5" h="3"/>
-    <sprite n="Bone2.png" x="41" y="487" w="5" h="3"/>
-    <sprite n="Bone3.png" x="35" y="497" w="3" h="2"/>
-    <sprite n="Bone4.png" x="31" y="506" w="5" h="3"/>
-    <sprite n="Bone5.png" x="38" y="501" w="5" h="3"/>
+    <sprite n="BloodSplashLow01.png" x="37" y="366" w="14" h="7"/>
+    <sprite n="BloodSplashLow02.png" x="43" y="345" w="14" h="7"/>
+    <sprite n="BloodSplashLow03.png" x="17" y="405" w="14" h="7"/>
+    <sprite n="BloodSplashLow04.png" x="17" y="414" w="14" h="7"/>
+    <sprite n="BloodSplashLow05.png" x="17" y="423" w="14" h="7"/>
+    <sprite n="BloodSplashLow06.png" x="17" y="432" w="14" h="7"/>
+    <sprite n="Bone1.png" x="48" y="506" w="5" h="3"/>
+    <sprite n="Bone2.png" x="49" y="501" w="5" h="3"/>
+    <sprite n="Bone3.png" x="41" y="497" w="3" h="2"/>
+    <sprite n="Bone4.png" x="55" y="506" w="5" h="3"/>
+    <sprite n="Bone5.png" x="28" y="456" w="5" h="3"/>
     <sprite n="DefaultLight.png" x="2" y="346" w="19" h="19"/>
     <sprite n="DestinationMark.png" x="23" y="359" w="7" h="6"/>
-    <sprite n="DustParticle1.png" x="23" y="449" w="3" h="3"/>
-    <sprite n="FireflyParticle1.png" x="23" y="454" w="3" h="3"/>
+    <sprite n="DustParticle1.png" x="31" y="441" w="3" h="3"/>
+    <sprite n="FireflyParticle1.png" x="31" y="446" w="3" h="3"/>
     <sprite n="FireflyParticle2.png" x="40" y="359" w="5" h="5"/>
     <sprite n="Fleshiness.png" x="2" y="501" w="11" h="9"/>
     <sprite n="GlobalLight.png" x="270" y="2" w="237" h="129"/>
-    <sprite n="Gut1.png" x="36" y="398" w="6" h="4"/>
-    <sprite n="Gut2.png" x="40" y="497" w="3" h="2"/>
-    <sprite n="Gut3.png" x="17" y="434" w="4" h="5"/>
-    <sprite n="Gut4.png" x="22" y="483" w="4" h="2"/>
-    <sprite n="Gut5.png" x="29" y="434" w="2" h="2"/>
-    <sprite n="Gut6.png" x="25" y="459" w="3" h="3"/>
-    <sprite n="Gut7.png" x="17" y="474" w="3" h="4"/>
-    <sprite n="Gut8.png" x="29" y="438" w="2" h="2"/>
-    <sprite n="Gut9.png" x="45" y="497" w="4" h="3"/>
-    <sprite n="Gut10.png" x="45" y="502" w="4" h="3"/>
-    <sprite n="Gut11.png" x="17" y="441" w="4" h="5"/>
-    <sprite n="Gut12.png" x="28" y="483" w="4" h="2"/>
+    <sprite n="Gut1.png" x="17" y="478" w="6" h="4"/>
+    <sprite n="Gut2.png" x="46" y="497" w="3" h="2"/>
+    <sprite n="Gut3.png" x="17" y="450" w="4" h="5"/>
+    <sprite n="Gut4.png" x="23" y="474" w="4" h="2"/>
+    <sprite n="Gut5.png" x="35" y="461" w="2" h="2"/>
+    <sprite n="Gut6.png" x="31" y="451" w="3" h="3"/>
+    <sprite n="Gut7.png" x="23" y="462" w="3" h="4"/>
+    <sprite n="Gut8.png" x="39" y="461" w="2" h="2"/>
+    <sprite n="Gut9.png" x="29" y="471" w="4" h="3"/>
+    <sprite n="Gut10.png" x="34" y="466" w="4" h="3"/>
+    <sprite n="Gut11.png" x="17" y="457" w="4" h="5"/>
+    <sprite n="Gut12.png" x="27" y="483" w="4" h="2"/>
     <sprite n="GutStain1.png" x="17" y="367" w="18" h="11"/>
-    <sprite n="GutStain2.png" x="17" y="380" w="17" h="10"/>
-    <sprite n="ItemOrb.png" x="17" y="404" w="7" h="10"/>
+    <sprite n="GutStain2.png" x="17" y="393" w="17" h="10"/>
+    <sprite n="ItemOrb.png" x="17" y="380" w="13" h="11"/>
     <sprite n="Lightning01.png" x="77" y="162" w="35" h="181"/>
     <sprite n="Lightning02.png" x="2" y="162" w="35" h="182"/>
     <sprite n="Lightning03.png" x="39" y="162" w="36" h="181"/>
     <sprite n="LightningLight.png" x="2" y="2" w="266" h="158"/>
-    <sprite n="PistolBullet.png" x="26" y="413" w="8" h="1"/>
-    <sprite n="PotteryA.png" x="17" y="425" w="12" h="7"/>
+    <sprite n="PistolBullet.png" x="17" y="484" w="8" h="1"/>
+    <sprite n="PotteryA.png" x="17" y="441" w="12" h="7"/>
     <sprite n="PotteryB.png" x="2" y="487" w="12" h="12"/>
     <sprite n="PotteryB_Cracked.png" x="16" y="487" w="12" h="12"/>
-    <sprite n="ShadowSpot4.png" x="45" y="507" w="4" h="3"/>
-    <sprite n="ShadowSpot5.png" x="38" y="506" w="5" h="3"/>
-    <sprite n="ShadowSpot6.png" x="30" y="492" w="6" h="3"/>
-    <sprite n="ShadowSpot7.png" x="35" y="473" w="7" h="3"/>
-    <sprite n="ShadowSpot8.png" x="34" y="478" w="8" h="3"/>
-    <sprite n="ShadowSpot9.png" x="30" y="487" w="9" h="3"/>
-    <sprite n="ShadowSpot10.png" x="22" y="478" w="10" h="3"/>
-    <sprite n="ShadowSpot11.png" x="22" y="473" w="11" h="3"/>
-    <sprite n="ShadowSpotW12.png" x="22" y="468" w="12" h="3"/>
+    <sprite n="ShadowSpot4.png" x="35" y="471" w="4" h="3"/>
+    <sprite n="ShadowSpot5.png" x="28" y="461" w="5" h="3"/>
+    <sprite n="ShadowSpot6.png" x="40" y="506" w="6" h="3"/>
+    <sprite n="ShadowSpot7.png" x="31" y="506" w="7" h="3"/>
+    <sprite n="ShadowSpot8.png" x="42" y="492" w="8" h="3"/>
+    <sprite n="ShadowSpot9.png" x="31" y="501" w="9" h="3"/>
+    <sprite n="ShadowSpot10.png" x="30" y="492" w="10" h="3"/>
+    <sprite n="ShadowSpot11.png" x="30" y="487" w="11" h="3"/>
+    <sprite n="ShadowSpotW12.png" x="25" y="478" w="12" h="3"/>
     <sprite n="ShadowSpotW13.png" x="43" y="354" w="13" h="3"/>
     <sprite n="ShadowSpotW14.png" x="37" y="375" w="14" h="3"/>
-    <sprite n="ToxicGut1.png" x="17" y="462" w="6" h="4"/>
-    <sprite n="ToxicGut2.png" x="25" y="464" w="3" h="2"/>
-    <sprite n="ToxicGut3.png" x="17" y="448" w="4" h="5"/>
-    <sprite n="ToxicGut4.png" x="34" y="483" w="4" h="2"/>
-    <sprite n="ToxicGut5.png" x="31" y="425" w="2" h="2"/>
-    <sprite n="ToxicGut6.png" x="28" y="444" w="3" h="3"/>
-    <sprite n="ToxicGut7.png" x="17" y="480" w="3" h="4"/>
-    <sprite n="ToxicGut8.png" x="31" y="429" w="2" h="2"/>
-    <sprite n="ToxicGut9.png" x="23" y="434" w="4" h="3"/>
-    <sprite n="ToxicGut10.png" x="23" y="439" w="4" h="3"/>
-    <sprite n="ToxicGut11.png" x="17" y="455" w="4" h="5"/>
-    <sprite n="ToxicGut12.png" x="40" y="483" w="4" h="2"/>
+    <sprite n="ToxicGut1.png" x="23" y="450" w="6" h="4"/>
+    <sprite n="ToxicGut2.png" x="51" y="497" w="3" h="2"/>
+    <sprite n="ToxicGut3.png" x="17" y="464" w="4" h="5"/>
+    <sprite n="ToxicGut4.png" x="33" y="483" w="4" h="2"/>
+    <sprite n="ToxicGut5.png" x="40" y="465" w="2" h="2"/>
+    <sprite n="ToxicGut6.png" x="35" y="456" w="3" h="3"/>
+    <sprite n="ToxicGut7.png" x="23" y="468" w="3" h="4"/>
+    <sprite n="ToxicGut8.png" x="41" y="469" w="2" h="2"/>
+    <sprite n="ToxicGut9.png" x="39" y="476" w="4" h="3"/>
+    <sprite n="ToxicGut10.png" x="39" y="481" w="4" h="3"/>
+    <sprite n="ToxicGut11.png" x="17" y="471" w="4" h="5"/>
+    <sprite n="ToxicGut12.png" x="30" y="497" w="4" h="2"/>
     <sprite n="ToxicGutStain1.png" x="23" y="346" w="18" h="11"/>
-    <sprite n="ToxicGutStain2.png" x="17" y="392" w="17" h="10"/>
+    <sprite n="ToxicGutStain2.png" x="32" y="380" w="17" h="10"/>
 </TextureAtlas>
