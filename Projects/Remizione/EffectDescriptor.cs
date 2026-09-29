@@ -11,16 +11,11 @@ namespace Remizione
     /// </summary>
     public sealed class EffectDescriptor
     {
-        private static readonly Vector2 KnockbackLow = new(15, 5);
-        private static readonly Vector2 KnockbackMedium = new(25, 5);
-        private static readonly Vector2 KnockbackHigh = new(35, 5);
+        private static readonly Vector2 KnockbackLow = new(10, 5);
+        private static readonly Vector2 KnockbackMedium = new(20, 5);
+        private static readonly Vector2 KnockbackHigh = new(30, 5);
 
         #region Constructor
-
-        // Constructor
-        public EffectDescriptor()
-        {
-        }
 
         // Constructor
         public EffectDescriptor(JsonElement element)
@@ -30,7 +25,7 @@ namespace Remizione
             this.Context = element.GetEnum("context", EffectContext.Contact);
             this.DamageType = element.GetEnum("damageType", DamageType.Physical);
             this.EffectType = element.GetEnum("effectType", EffectType.None);
-            this.Knockback = element.GetEnum("knockback", KnockbackIntensity.Low);
+            this.KnockbackIntensity = element.GetEnum("knockback", KnockbackIntensity.Low);
             this.Sound = element.GetObject("sound", Sound.Get);
             this.StatusType = element.GetEnum<StatusType>("statusType");
             this.Target = element.GetEnum("target", EffectTarget.Target);
@@ -232,7 +227,7 @@ namespace Remizione
         // GetKnockbackForce
         public Vector2 GetKnockbackForce()
         {
-            return Knockback switch
+            return KnockbackIntensity switch
             {
                 KnockbackIntensity.None => Vector2.Zero,
                 KnockbackIntensity.Low => KnockbackLow,
@@ -242,8 +237,8 @@ namespace Remizione
             };
         }
 
-        // Knockback
-        public KnockbackIntensity Knockback { get; }
+        // KnockbackIntensity
+        public KnockbackIntensity KnockbackIntensity { get; }
 
         // Sound
         public Sound? Sound { get; }

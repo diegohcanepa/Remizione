@@ -16,23 +16,23 @@ namespace Remizione
             PersistentType persistentType;
 
             // Actor
-            persistentType = MapType(typeof(Actor));
-            persistentType.Map(nameof(Actor.Effects));
-            persistentType.Map(nameof(Actor.HP));
-            persistentType.Map(nameof(Actor.Position));
+            persistentType = Track(typeof(Actor));
+            persistentType.Track(nameof(Actor.Effects));
+            persistentType.Track(nameof(Actor.HP));
+            persistentType.Track(nameof(Actor.Position));
 
             // Bonfire
-            persistentType = MapType(typeof(Bonfire));
-            persistentType.Map(nameof(Bonfire.IsLit));
+            persistentType = Track(typeof(Bonfire));
+            persistentType.Track(nameof(Bonfire.IsLit));
 
             // Fleshines
-            persistentType = MapType(typeof(Fleshiness));
-            persistentType.Map(nameof(Fleshiness.Position));
+            persistentType = Track(typeof(Fleshiness));
+            persistentType.Track(nameof(Fleshiness.Position));
 
             // Trunk
-            persistentType = MapType(typeof(Trunk));
-            persistentType.Map(nameof(Trunk.IsOpen));
-            persistentType.Map(nameof(Trunk.ItemRewardName));
+            persistentType = Track(typeof(Trunk));
+            persistentType.Track(nameof(Trunk.IsOpen));
+            persistentType.Track(nameof(Trunk.ItemRewardName));
         }
     }
 }

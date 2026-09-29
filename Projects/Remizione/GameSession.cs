@@ -52,7 +52,7 @@ namespace Remizione
 
         // Constructor
         public GameSession(RemizioneGame game, int slotNumber)
-            : base(game, new RemizionePersistenceModel(), Path.Combine("Content", ContentFolder.System.ToString(), "ScriptLibrary.esl"), slotNumber)
+            : base(game, Path.Combine("Content", ContentFolder.System.ToString(), "ScriptLibrary.esl"), slotNumber)
         {
             this.Game = game;
             this.Environment = new Environment();
@@ -65,6 +65,7 @@ namespace Remizione
             this.itemInfoScene = new(this);
             this.HUD = new(this);
             this.LootGenerator = new(this);
+            this.PersistenceModel = new RemizionePersistenceModel();
             this.RenewSeed();
 
             ObjectPools = new ObjectPools(this);

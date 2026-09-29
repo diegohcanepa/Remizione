@@ -13,6 +13,8 @@ namespace Adberration
         // Constructor
         internal PersistentProperty(PersistentType persistentType, string propertyName)
         {
+            ArgumentException.ThrowIfNullOrWhiteSpace(propertyName);
+
             this.PersistentType = persistentType;
             this.Name = propertyName;
             this.PropertyInfo = persistentType.Type.GetRuntimeProperty(propertyName) ?? throw new InvalidOperationException("Property does not exist.");

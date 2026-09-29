@@ -25,7 +25,7 @@
     "damageType": {
       "$ref": "enums.schema.json#/$defs/DamageType"
     },
-    "knockback": {
+    "knockbackIntensity": {
       "$ref": "enums.schema.json#/$defs/KnockbackIntensity"
     },
     "target": {

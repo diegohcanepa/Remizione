@@ -11,16 +11,16 @@ namespace Adberration
     /// <summary>
     /// PersistenceModel
     /// </summary>
-    public abstract class PersistenceModel
+    public class PersistenceModel
     {
-        private readonly Collection<PersistentType> mappedTypes = [];
+        private readonly Collection<PersistentType> trackedTypes = [];
 
         #region Constructor
 
         // Constructor
         protected PersistenceModel(string version)
         {
-            this.MappedTypes = new ReadOnlyCollection<PersistentType>(mappedTypes);
+            this.TrackedTypes = new(trackedTypes);
             this.Version = version;
         }
 
@@ -36,7 +36,7 @@ namespace Adberration
             var t = obj.GetType();
             while (true)
             {
-                if (FindMappedType(t) is PersistentType persistentType)
+                if (Find(t) is PersistentType persistentType)
                 {
                     stack.Push(persistentType);
                     if (persistentType.PersistenceScope == PersistentTypeScope.DeclaredOnly)
@@ -47,9 +47,7 @@ namespace Adberration
 
                 t = t.BaseType;
                 if (t == null || !typeof(Entity).IsAssignableFrom(t))
-                {
                     break;
-                }
             }
 
             return [.. stack];
@@ -65,7 +63,7 @@ namespace Adberration
             // Properties
             foreach (var persistentType in GetPersistentTypeHierarchy(entity))
             {
-                foreach (var property in persistentType.MappedProperties)
+                foreach (var property in persistentType.TrackedProperties)
                 {
                     PropertySerializer.Deserialize(property, entity, input);
                 }
@@ -77,7 +75,7 @@ namespace Adberration
         {
             foreach (var persistentType in GetPersistentTypeHierarchy(obj))
             {
-                foreach (var property in persistentType.MappedProperties)
+                foreach (var property in persistentType.TrackedProperties)
                 {
                     PropertySerializer.Serialize(property, obj, output);
                 }
@@ -86,15 +84,16 @@ namespace Adberration
 
         #endregion
 
-        // FindMappedType
-        public PersistentType? FindMappedType(Type type)
+        // Empty
+        public static PersistenceModel Empty = new(string.Empty);
+
+        // Find
+        public PersistentType? Find(Type type)
         {
-            for (var i = 0; i < mappedTypes.Count; i++)
+            for (var i = 0; i < trackedTypes.Count; i++)
             {
-                if (mappedTypes[i].Type == type)
-                {
-                    return mappedTypes[i];
-                }
+                if (trackedTypes[i].Type == type)
+                    return trackedTypes[i];
             }
 
             return null;
@@ -104,94 +103,66 @@ namespace Adberration
         public static bool IsTypeSupported(Type type)
         {
             if (type == typeof(bool))
-            {
                 return true;
-            }
 
             if (type == typeof(Color))
-            {
                 return true;
-            }
 
             if (typeof(Entity).IsAssignableFrom(type))
-            {
                 return true;
-            }
 
             if (typeof(Enum).IsAssignableFrom(type))
-            {
                 return true;
-            }
 
             if (type == typeof(int))
-            {
                 return true;
-            }
 
             if (type == typeof(long))
-            {
                 return true;
-            }
 
             if (type == typeof(Polygon))
-            {
                 return true;
-            }
 
             if (type == typeof(Rectangle))
-            {
                 return true;
-            }
 
             if (type == typeof(RectangleF))
-            {
                 return true;
-            }
 
             if (type == typeof(float))
-            {
                 return true;
-            }
 
             if (type == typeof(string))
-            {
                 return true;
-            }
 
             if (type == typeof(TimeSpan))
-            {
                 return true;
-            }
 
             if (type == typeof(Vector2))
-            {
                 return true;
-            }
 
             return false;
         }
 
-        // MappedTypes
-        public ReadOnlyCollection<PersistentType> MappedTypes { get; }
-
-        // MapType
-        public PersistentType MapType(Type type)
+        // Track
+        public PersistentType Track(Type type)
         {
-            return MapType(type, PersistentTypeScope.InheritedAndDeclared);
+            return Track(type, PersistentTypeScope.InheritedAndDeclared);
         }
 
-        // MapType
-        public PersistentType MapType(Type type, PersistentTypeScope persistenceScope)
+        // Track
+        public PersistentType Track(Type type, PersistentTypeScope persistenceScope)
         {
-            if (FindMappedType(type) != null)
-            {
-                throw new ArgumentException("Type already mapped.", nameof(type));
-            }
+            if (Find(type) != null)
+                throw new ArgumentException("Type already exists.", nameof(type));
 
             PersistentType result = new(type, persistenceScope);
-            mappedTypes.Add(result);
+            trackedTypes.Add(result);
             return result;
         }
+
+        // TrackedTypes
+        public ReadOnlyCollection<PersistentType> TrackedTypes { get; }
 
         // Version
         public string Version { get; }

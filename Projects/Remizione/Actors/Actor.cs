@@ -491,50 +491,6 @@ namespace Remizione
             }
         }
 
-        // WillCounterAttack
-        protected override bool WillCounterAttack()
-        {
-            if (IsPlayer)
-                return false;
-
-            if (Session.Player is not Actor player)
-                return false;
-
-            if (CombatBehavior == null || CombatMachine == null)
-                return false;
-
-            var arch = CombatBehavior.Archetype;
-            if (arch == null) return false;
-
-            // Evaluamos el azar usando la probabilidad del arquetipo
-            float roll = Random.Shared.NextSingle(); // Retorna un float entre 0.0f y 1.0f
-
-            if (roll < arch.CounterAttackChance)
-            {
-                // ¡CONTRAATAQUE!
-                // 1. Forzamos al jugador a clavar su posición para recibir el golpe
-                player.StopMoving();
-
-                // 2. Buscamos la intención de ataque más adecuada para la distancia actual
-                float distance = DistanceToTarget(player);
-                var intent = arch.SelectIntent(this, CombatBehavior.Intents, distance);
-
-                if (intent != null)
-                {
-                    var attackState = CombatMachine.FindOrCreateState<CombatAttackState>();
-                    attackState.Intent = intent;
-                    attackState.Target = player;
-
-                    // 3. Saltamos de inmediato a CombatAttackState
-                    CombatMachine.ChangeState(attackState.GetType());
-
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         #endregion
 
         // Animate

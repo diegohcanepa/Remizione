@@ -55,7 +55,7 @@ namespace Adberration
         #region Constructor
 
         // Constructor
-        protected Session(AdventureGame game, PersistenceModel persistenceModel, string scriptLibraryPath, int saveFileNumber)
+        protected Session(AdventureGame game, string scriptLibraryPath, int saveFileNumber)
         {
             this.Game = game;
             this.ExclusiveDraw = true;
@@ -66,7 +66,6 @@ namespace Adberration
             this.ScriptEnvironment = new ScriptEnvironment(this);
             this.Entities = new NamedReadOnlyCollection<Entity>(entityList);
             this.Camera = new Camera("Room") { CullingBoxScale = new Vector2(4) };
-            this.PersistenceModel = persistenceModel;
             this.SaveFileName = saveFileNumber >= 0 ? SaveFile.EncodeName(saveFileNumber) : string.Empty;
         }
 
@@ -1185,7 +1184,7 @@ namespace Adberration
         public virtual Thing? OutcomeTarget { get; private set; }
 
         // PersistenceModel
-        public PersistenceModel PersistenceModel { get; protected set; }
+        public PersistenceModel PersistenceModel { get; init; } = PersistenceModel.Empty;
 
         // PlayMusicTag
         public void PlayMusicTag(string tag, MusicTagScope scope, int fade)

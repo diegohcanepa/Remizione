@@ -7,11 +7,8 @@ namespace Remizione
     /// </summary>
     public interface ILightSource
     {
-        // BlendMode
-        public LightBlendMode BlendMode { get; }
-
         // DrawLights
-        void DrawLights(GameTime gameTime);
+        void DrawLights(GameTime gameTime, LightBlendMode blendMode);
 
         // IsEmittingLight
         bool IsEmittingLight { get; }

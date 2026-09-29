@@ -17,9 +17,11 @@ namespace Remizione
     {
         #region Private fields
 
+        private Vector2[] collisionVerticesBuffer = [];
         private bool dieCalled;
         private FloatTween? floatingTween;
         private readonly Polygon holePoly = new();
+        private Vector2[] hotspotVerticesBuffer = [];
         private FlatMeter? hpMeter;
         private static readonly Vector2 hurtShakeForce = new(1.5f, 0);
         private Vector2Tween? hurtShakeTween;
@@ -28,6 +30,7 @@ namespace Remizione
         private bool isHotspotDirty = true;
         private Vector2 knockbackVelocity;
         private const float KnockbackFriction = 0.90f; // Ajustá este valor (0.8 - 0.95)
+        private Vector2 lastCheckedPosition;
         private PathNode[]? pathNodes;
         private int? pendingDamageAmount;
         private DamageType pendingDamageType;
@@ -123,6 +126,24 @@ namespace Remizione
 
         #endregion
 
+        #region ILightSource implementation
+
+        // DrawLights
+        void ILightSource.DrawLights(GameTime gameTime, LightBlendMode blendMode)
+        {
+            if (AttachedLight?.BlendMode == blendMode)
+            {
+                if (AttachedLightPosition != Vector2.Zero)
+                    AttachedLight.Position = this.GetAnchoredPosition(AttachedLightPosition);
+                AttachedLight.Draw(gameTime);
+            }
+        }
+
+        // IsEmittingLight
+        bool ILightSource.IsEmittingLight => AttachedLight?.IsEmitting == true && !IgnoreAttachedLight;
+
+        #endregion
+
         #region Private members
 
         // CheckCollisions
@@ -187,16 +208,18 @@ namespace Remizione
                 return;
 
             int vertexCount = Collider.Vertices.Count;
-            var vertices = new Vector2[vertexCount];
+
+            if (collisionVerticesBuffer.Length != vertexCount)
+                collisionVerticesBuffer = new Vector2[vertexCount];
 
             var offset = ColliderPlacement == PlacementMode.Relative ? GetPivotBasedPolyOffset() : Vector2.Zero;
-
-            // Si la escala es 1 para absolutos y dinámica para relativos:
             Vector2 currentScale = ColliderPlacement == PlacementMode.Relative ? Scale : Vector2.One;
-            Collider.GetVertices(vertices, offset, currentScale);
 
-            holePoly.SetVertices(vertices);
-            RuntimeCollider.SetVertices(vertices, .05f);
+            // Usamos el buffer reutilizado
+            Collider.GetVertices(collisionVerticesBuffer, offset, currentScale);
+
+            holePoly.SetVertices(collisionVerticesBuffer);
+            RuntimeCollider.SetVertices(collisionVerticesBuffer, .05f);
 
             if (ColliderPlacement == PlacementMode.Relative && IsFlippedHorizontally)
             {
@@ -223,6 +246,43 @@ namespace Remizione
             {
                 hpMeter.MaximumValue = MaxHP;
                 hpMeter.Value = HP;
+            }
+        }
+
+        // UpdateKnockback
+        private void UpdateKnockback(GameTime gameTime)
+        {
+            float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            // 1. Aplicar movimiento basado en dt
+            Position += knockbackVelocity * dt;
+
+            // 2. Aplicar fricción independiente de FPS (basada en target de 60Hz)
+            knockbackVelocity *= MathF.Pow(KnockbackFriction, dt * 60f);
+
+            // 3. Limpiar valores residuales muy chicos
+            if (knockbackVelocity.LengthSquared() < 100f)
+                knockbackVelocity = Vector2.Zero;
+
+            // Si terminó el knockback, resolver muertes o daños pendientes
+            if (knockbackVelocity == Vector2.Zero)
+            {
+                if (IsDead)
+                {
+                    Die();
+                }
+                else
+                {
+                    if (pendingDamageAmount.HasValue)
+                    {
+                        var color = ColorPalette.Damage.GetColor(pendingDamageType);
+                        Session.ObjectPools.FlyOffs.Get()?.ShowAmount(this, color, Math.Abs(pendingDamageAmount.Value));
+                        pendingDamageAmount = null;
+                        pendingDamageType = DamageType.None;
+                    }
+
+                    OnKnockbackCompleted();
+                }
             }
         }
 
@@ -309,11 +369,6 @@ namespace Remizione
 
             if (hurtShakeTween != null && hurtShakeTween.IsRunning)
                 Position -= hurtShakeTween.CurrentValue;
-        }
-
-        // OnDrawLights
-        protected virtual void OnDrawLights(GameTime gameTime)
-        {
         }
 
         // OnDrawShadow
@@ -407,38 +462,7 @@ namespace Remizione
 
             if (knockbackVelocity != Vector2.Zero)
             {
-                float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-                // 1. Aplicar movimiento
-                Position += knockbackVelocity * dt;
-
-                // 2. Aplicar fricción (decaimiento)
-                knockbackVelocity *= KnockbackFriction;
-
-                // 3. Limpiar valores residuales muy chicos
-                if (knockbackVelocity.LengthSquared() < 100) // Ajustá según tu escala de píxeles
-                    knockbackVelocity = Vector2.Zero;
-
-                // Si murió por el golpe, chequear acá si paró para llamar a Die() visualmente
-                if (knockbackVelocity == Vector2.Zero)
-                {
-                    if (IsDead)
-                    {
-                        Die();
-                    }
-                    else
-                    {
-                        if (pendingDamageAmount.HasValue)
-                        {
-                            var color = ColorPalette.Damage.GetColor(pendingDamageType);
-                            Session.ObjectPools.FlyOffs.Get()?.ShowAmount(this, color, Math.Abs(pendingDamageAmount.Value));
-                            pendingDamageAmount = null;
-                            pendingDamageType = DamageType.None;
-                        }
-
-                        OnKnockbackCompleted();
-                    }
-                }
+                UpdateKnockback(gameTime);
             }
             else if (IsDead && !dieCalled)
             {
@@ -447,10 +471,11 @@ namespace Remizione
 
             base.OnUpdate(gameTime);
 
-            if (shouldClampToWalkablePosition || Session.Player == this)
+            if (shouldClampToWalkablePosition || Position != lastCheckedPosition)
             {
                 ClampToWalkablePosition();
                 shouldClampToWalkablePosition = false;
+                lastCheckedPosition = Position;
             }
 
             AttachedLight?.Update(gameTime);
@@ -460,12 +485,6 @@ namespace Remizione
         protected override void OnUpdateEmittingSound(SoundInstance instance, float masterVolume)
         {
             Utils.ApplySoundEmitter(this, instance, masterVolume);
-        }
-
-        // WillCounterAttack
-        protected virtual bool WillCounterAttack()
-        {
-            return false;
         }
 
         #endregion
@@ -491,8 +510,6 @@ namespace Remizione
 
         // AttachedLightPosition
         public Vector2 AttachedLightPosition { get; set; }
-
-        public LightBlendMode BlendMode { get; set; }
 
         // CanBeHit
         public virtual bool CanBeHit()
@@ -672,22 +689,6 @@ namespace Remizione
                 return Vector2.Distance(target.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.RightBottom), RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.LeftBottom));
             else
                 return Vector2.Distance(target.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.LeftBottom), RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.RightBottom));
-        }
-
-        // DrawLights
-        public void DrawLights(GameTime gameTime)
-        {
-            if (!IsEmittingLight)
-                return;
-
-            if (AttachedLight != null)
-            {
-                if (AttachedLightPosition != Vector2.Zero)
-                    AttachedLight.Position = this.GetAnchoredPosition(AttachedLightPosition);
-                AttachedLight.Draw(gameTime);
-            }
-
-            OnDrawLights(gameTime);
         }
 
         // DrawMeter
@@ -996,9 +997,6 @@ namespace Remizione
         [ScriptProperty]
         public bool IsDead => (HP <= 0 && MaxHP > 0) || (HP == int.MinValue);
 
-        // IsEmittingLight
-        public virtual bool IsEmittingLight => AttachedLight?.IsEmitting == true && !IgnoreAttachedLight;
-
         // IsFacingTarget
         public bool IsFacingTarget(GameThing target)
         {
@@ -1205,9 +1203,18 @@ namespace Remizione
                     {
                         var offset = GetPivotBasedPolyOffset();
                         offset.Y -= Altitude;
-                        var vertices = new Vector2[Hotspot.Vertices.Count];
-                        Hotspot.GetVertices(vertices, offset, Scale);
-                        field.SetVertices(vertices);
+
+                        int vertexCount = Hotspot.Vertices.Count;
+
+                        // Validación y reúso del buffer
+                        if (hotspotVerticesBuffer.Length != vertexCount)
+                        {
+                            hotspotVerticesBuffer = new Vector2[vertexCount];
+                        }
+
+                        Hotspot.GetVertices(hotspotVerticesBuffer, offset, Scale);
+                        field.SetVertices(hotspotVerticesBuffer);
+
                         if (IsFlippedHorizontally)
                             field.FlipHorizontally(X);
                     }
@@ -1323,7 +1330,7 @@ namespace Remizione
             // ---------------------------------------------------------
             // El empuje se aplica independientemente de la vida. 
             // Una caja de metal indestructible (MaxHP=0) debería poder ser empujada.
-            if (MaxHP > 0 && knockbackForce != Vector2.Zero && !IgnoreKnockback && !WillCounterAttack())
+            if (MaxHP > 0 && knockbackForce != Vector2.Zero && !IgnoreKnockback)
             {
                 knockbackForce *= attacker.GetKnockbackMultiplier(this);
 

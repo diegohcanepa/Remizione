@@ -15,36 +15,6 @@ namespace Remizione
     /// </summary>
     public class GameRoom : Room
     {
-        private static readonly BlendState LightSoftAdditiveBlend = new BlendState
-        {
-            ColorSourceBlend = Blend.One,
-            ColorDestinationBlend = Blend.InverseSourceColor,
-            ColorBlendFunction = BlendFunction.Add,
-            AlphaSourceBlend = Blend.One,
-            AlphaDestinationBlend = Blend.InverseSourceAlpha,
-            AlphaBlendFunction = BlendFunction.Add
-        };
-
-        private static readonly BlendState LightMaxBlend = new BlendState
-        {
-            ColorSourceBlend = Blend.One,
-            ColorDestinationBlend = Blend.One,
-            ColorBlendFunction = BlendFunction.Max,
-            AlphaSourceBlend = Blend.One,
-            AlphaDestinationBlend = Blend.One,
-            AlphaBlendFunction = BlendFunction.Max
-        };
-
-        private static readonly BlendState SubtractivePlayerBlend = new BlendState
-        {
-            ColorSourceBlend = Blend.InverseDestinationColor,
-            ColorDestinationBlend = Blend.One,
-            ColorBlendFunction = BlendFunction.Add,
-            AlphaSourceBlend = Blend.InverseDestinationAlpha,
-            AlphaDestinationBlend = Blend.One,
-            AlphaBlendFunction = BlendFunction.Add
-        };
-
         #region Private fields
 
         private Color brightnessColor;
@@ -217,7 +187,7 @@ namespace Remizione
 
             // PASADA 1: Luces ambientales (BlendState Max)
             // Evita que las luces suaves saturen entre sí.
-            Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, LightMaxBlend, null);
+            Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, CustomBlendState.LightMax, null);
 
             DrawLightsWithBlendMode(gameTime, LightBlendMode.Max);
 
@@ -237,7 +207,7 @@ namespace Remizione
             // PASADA 3: Luces sustractivas (Player)
             if (Session.Player != null)
             {
-                Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, SubtractivePlayerBlend, null);
+                Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, CustomBlendState.SubtractivePlayer, null);
                 playerLight.Position = Session.Player.BoundingBox.Center;
                 //playerLight.Draw(gameTime); // Mantenido comentado tal como lo tenías
                 Game.SpriteBatch.End();
@@ -264,11 +234,8 @@ namespace Remizione
             // Light sources (antorchas, hogueras, props iluminados)
             for (int i = 0; i < CulledThings.Count; i++)
             {
-                // NOTA: Asegúrate de exponer 'LightBlendMode' en GameThing o de castear a tu interfaz correspondiente.
-                if (CulledThings[i] is GameThing thing && thing.IsEmittingLight && thing.AttachedLight?.BlendMode == blendMode && CulledThings[i].IsInCullingBox)
-                {
-                    thing.DrawLights(gameTime);
-                }
+                if (CulledThings[i] is ILightSource lightSource && lightSource.IsEmittingLight && CulledThings[i].IsInCullingBox)
+                    lightSource.DrawLights(gameTime, blendMode);
             }
         }
 
@@ -548,56 +515,6 @@ namespace Remizione
 
         // IsWalkable
         public virtual bool IsWalkable => true;
-
-        /// <summary>
-        /// Devuelve true si la posición en el MUNDO está iluminada por alguna luz de la sala.
-        /// </summary>
-        public bool IsWorldPositionLit(Vector2 worldPosition)
-        {
-            // Si la sala no usa sistema de luces o tiene luces ambientales generales, todo está iluminado
-            if (!CanUseLightingSystem || LightMapColor != Color.Black)
-                return true;
-
-            // 1. Revisar luces estáticas de la room
-            for (int i = 0; i < lights.Count; i++)
-            {
-                var light = lights[i];
-                if (light.IsEmitting)
-                {
-                    // Chequeo rápido de BoundingBox en espacio de mundo
-                    if (light.BoundingBox.Contains(worldPosition))
-                    {
-                        // Si querés precisión circular basada en el radio/escala de la luz:
-                        float radius = Math.Max(light.BoundingBox.Width, light.BoundingBox.Height) * 0.5f;
-                        float dist = Vector2.Distance(worldPosition, light.Position);
-
-                        if (dist <= radius)
-                            return true; // Está dentro del radio de una luz
-                    }
-                }
-            }
-
-            // 2. Revisar props / entidades que emiten luz (hogueras, antorchas)
-            for (int i = 0; i < CulledThings.Count; i++)
-            {
-                if (CulledThings[i] is GameThing thing && thing.IsEmittingLight && thing.IsInCullingBox)
-                {
-                    // Asumiendo un radio de luz por defecto o propiedad de la entidad
-                    float radius = 50f; // Ajustá este radio de cobertura según tus props
-                    if (Vector2.Distance(worldPosition, thing.Position) <= radius)
-                        return true;
-                }
-            }
-
-            // 3. Revisar si la luz suave del player lo está iluminando
-            if (Session.Player != null)
-            {
-                if (Vector2.Distance(worldPosition, Session.Player.Position) <= playerLight.BoundingBox.Width / 2)
-                    return true;
-            }
-
-            return false; // Está en oscuridad total
-        }
 
         // LightingSystem
         [ScriptProperty]
