@@ -468,7 +468,6 @@
             <key type="filename">PotteryB-assets/PotteryBRemains4.png</key>
             <key type="filename">PotteryE-assets/PotteryEPiece1.png</key>
             <key type="filename">PotteryE-assets/PotteryEPiece3.png</key>
-            <key type="filename">Props-assets/EmptySack.png</key>
             <key type="filename">Props-assets/Sack.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -488,10 +487,6 @@
             <key type="filename">PotteryC-assets/PotteryCPiece5.png</key>
             <key type="filename">PotteryD-assets/PotteryDPiece3.png</key>
             <key type="filename">PotteryD-assets/PotteryDPiece6.png</key>
-            <key type="filename">Props-assets/Coin01.png</key>
-            <key type="filename">Props-assets/Coin02.png</key>
-            <key type="filename">Props-assets/Coin03.png</key>
-            <key type="filename">Props-assets/Coin04.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -554,18 +549,6 @@
                 <false/>
             </struct>
             <key type="filename">PotteryD-assets/PotteryDPiece5.png</key>
-            <key type="filename">Props-assets/BronzeKey01.png</key>
-            <key type="filename">Props-assets/BronzeKey02.png</key>
-            <key type="filename">Props-assets/BronzeKey03.png</key>
-            <key type="filename">Props-assets/BronzeKey04.png</key>
-            <key type="filename">Props-assets/GoldenKey01.png</key>
-            <key type="filename">Props-assets/GoldenKey02.png</key>
-            <key type="filename">Props-assets/GoldenKey03.png</key>
-            <key type="filename">Props-assets/GoldenKey04.png</key>
-            <key type="filename">Props-assets/TrapdoorKey01.png</key>
-            <key type="filename">Props-assets/TrapdoorKey02.png</key>
-            <key type="filename">Props-assets/TrapdoorKey03.png</key>
-            <key type="filename">Props-assets/TrapdoorKey04.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -646,6 +629,7 @@
             </struct>
             <key type="filename">Trunk-assets/Trunk01.png</key>
             <key type="filename">Trunk-assets/Trunk02.png</key>
+            <key type="filename">Trunk-assets/TrunkLoot.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

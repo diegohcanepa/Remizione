@@ -253,6 +253,7 @@
             </struct>
             <key type="filename">Items-assets/AppleOn.png</key>
             <key type="filename">Items-assets/BarrenFig.png</key>
+            <key type="filename">Items-assets/CrudeKey.png</key>
             <key type="filename">Items-assets/FakeItem.png</key>
             <key type="filename">Items-assets/Loquat.png</key>
             <key type="filename">Items-assets/PrayerBonfire.png</key>

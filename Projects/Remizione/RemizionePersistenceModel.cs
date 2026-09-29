@@ -24,6 +24,15 @@ namespace Remizione
             // Bonfire
             persistentType = MapType(typeof(Bonfire));
             persistentType.Map(nameof(Bonfire.IsLit));
+
+            // Fleshines
+            persistentType = MapType(typeof(Fleshiness));
+            persistentType.Map(nameof(Fleshiness.Position));
+
+            // Trunk
+            persistentType = MapType(typeof(Trunk));
+            persistentType.Map(nameof(Trunk.IsOpen));
+            persistentType.Map(nameof(Trunk.ItemRewardName));
         }
     }
 }

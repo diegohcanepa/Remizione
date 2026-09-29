@@ -12,7 +12,6 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly Vector2Tween bounceScaleTween = new();
         private bool isRevealBoxDirty;
         private List<AtlasImage>? remainsPieces;
         private readonly FloatTween revealTween = new();
@@ -189,12 +188,6 @@ namespace Remizione
 
             Shadow.Update(gameTime);
 
-            if (bounceScaleTween.IsRunning)
-            {
-                bounceScaleTween.Update(gameTime);
-                Scale = bounceScaleTween.CurrentValue;
-            }
-
             if (xTween.IsRunning)
             {
                 xTween.Update(gameTime);
@@ -209,12 +202,6 @@ namespace Remizione
         protected Sprite Shadow { get; }
 
         #endregion
-
-        // CanInteract
-        public override bool CanInteract()
-        {
-            return !bounceScaleTween.IsRunning && base.CanInteract();
-        }
 
         // Definition
         public override PropDefinition? Definition { get; }

@@ -74,11 +74,14 @@ namespace Remizione
     // ItemCategory
     public enum ItemCategory { Access, Food, Luck, Medicine, Misc, Sacred }
 
+    // ItemKind
+    public enum ItemKind { Common, Key, Fleshiness }
+
     // KnockbackIntensity
     public enum KnockbackIntensity { None, Low, Medium, High }
 
     // LightKind
-    public enum LightKind { Default, Fleshiness, Lantern, Fire, KeyItemOrb, SulfurBonfire, Global, MuzzleFlash, Outdoor, Player, ItemOrb }
+    public enum LightKind { Default, Lantern, Fire, KeyItemOrb, SulfurBonfire, Global, MuzzleFlash, Outdoor, Player, CommonItemOrb, FleshinessItemOrb }
 
     // LightState
     public enum LightState { Off, On, TurningOn, TurningOff }
@@ -141,6 +144,13 @@ namespace Remizione
 
     // PuzzleKind
     public enum PuzzleKind { BronzeKey, GateLever }
+
+    // RaycastContext
+    public enum RaycastContext
+    {
+        LineOfSight,
+        Navigation
+    }
 
     // RemainsKind
     public enum RemainsKind { None, Custom, Bones, Guts, ToxicGuts }

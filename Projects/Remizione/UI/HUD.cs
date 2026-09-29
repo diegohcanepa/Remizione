@@ -48,7 +48,7 @@ namespace Remizione
             graceScore.Draw(gameTime);
             Game.SpriteBatch.End();
 
-            if (Session.IsCurrentScene && Session.InventoryEnabled)
+            if (Session.InventoryEnabled)
                 InventoryMeter.Draw(gameTime);
 
             RoomTitle.Draw(gameTime);

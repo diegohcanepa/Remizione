@@ -56,9 +56,8 @@ namespace Remizione
             return lightKind switch
             {
                 LightKind.Fire => new Color(255, 160, 160),
-                LightKind.Fleshiness => new Color(255, 200, 200),
                 LightKind.KeyItemOrb => ColorPalette.Inventory.KeyItem,
-                LightKind.ItemOrb => ColorPalette.Inventory.Item,
+                LightKind.CommonItemOrb => ColorPalette.Text.Terra,
                 LightKind.SulfurBonfire => new(184, 196, 81),
                 LightKind.Outdoor => ColorPalette.OutdoorLight,
                 LightKind.Player => Color.White * .7f,
@@ -83,11 +82,6 @@ namespace Remizione
 
             switch (LightKind)
             {
-                case LightKind.Fleshiness:
-                    litTweenDuration = 2000;
-                    unlitTweenDuration = 1000;
-                    break;
-
                 case LightKind.Fire:
                     litTweenDuration = 2000;
                     unlitTweenDuration = 2000;
@@ -106,7 +100,7 @@ namespace Remizione
                     break;
 
                 case LightKind.KeyItemOrb:
-                case LightKind.ItemOrb:
+                case LightKind.CommonItemOrb:
                     litTweenDuration = 1000;
                     unlitTweenDuration = 1000;
                     break;

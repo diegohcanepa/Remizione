@@ -2,11 +2,11 @@
 
 namespace Remizione.Scripting
 {
-    // IfCanPickUpStatement
-    internal sealed class IfCanPickUpStatement : SelectionStatement
+    // IfCanPickUpItemRewardStatement
+    internal sealed class IfCanPickUpItemRewardStatement : SelectionStatement
     {
         // Constructor
-        internal IfCanPickUpStatement(Script script, string source, StatementBody args)
+        internal IfCanPickUpItemRewardStatement(Script script, string source, StatementBody args)
             : base(script, StatementType.If, source, args, 1)
         {
             AssertEntity<GameThing>(0);

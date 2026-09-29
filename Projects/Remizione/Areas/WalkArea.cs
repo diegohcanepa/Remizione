@@ -18,13 +18,22 @@ namespace Remizione
         #region Private fields
 
         private readonly IReadOnlyPolygon deflatedPolygon;
+        private readonly IReadOnlyPolygon inflatedPolygon;
+
+        // Grafo estático precalculado (Nunca cambia a menos que cambie la topología del Room)
+        private readonly List<PathNode> staticNodes = [];
+        private bool isStaticGraphDirty = true;
+
+        // Elementos dinámicos temporales para Pathfinding
         private readonly PathNode findPathEndNode = new();
         private readonly PathNode findPathStartNode = new();
-        private readonly List<IHoleArea> holeAreas = [];
+        private readonly List<IHoleArea> dynamicHoles = [];
+        private readonly List<PathNode> workingNodes = [];
+
+        // Geometría estática
         private readonly NamedCollection<HoleArea> holes = [];
-        private readonly IReadOnlyPolygon inflatedPolygon;
-        private readonly List<PathNode> linkedNodes = [];
         private readonly List<PathNode> walkAreaNodes = [];
+        private readonly List<IHoleArea> staticThingHoles = []; // Entidades GameThing marcadas como IsStatic
 
         #endregion
 
@@ -38,10 +47,9 @@ namespace Remizione
             this.inflatedPolygon = new Polygon(Polygon.Vertices, .01f);
             this.Holes = new RoomAreaReadOnlyCollection<HoleArea>(holes);
 
-            // Create nodes (concave vertices)
+            // Nodos base (Vértices cóncavos del WalkArea)
             if (!Polygon.IsEmpty)
             {
-                // Deflate polygon by a marginal value to allow InLineOfSight between them
                 var p = new Polygon(Polygon.Vertices, -.05f);
 
                 for (var i = 0; i < p.Vertices.Count; i++)
@@ -51,26 +59,47 @@ namespace Remizione
                 }
             }
 
-            ObstacleAreas = new ReadOnlyCollection<IHoleArea>(holeAreas);
+            ObstacleAreas = new ReadOnlyCollection<IHoleArea>(dynamicHoles); // Se expone la caché dinámica (si es requerida externamente)
+        }
+
+        #endregion
+
+        #region Pathfinding Optimizaciones
+
+        /// <summary>
+        /// Raycast optimizado que solo chequea colisión contra el polígono externo, 'holes' fijos y entidades IsStatic.
+        /// No interactúa con los obstáculos dinámicos efímeros.
+        /// </summary>
+        private bool InLineOfSightAgainstStaticGeometry(Vector2 value1, Vector2 value2, RaycastContext context)
+        {
+            if ((value1 - value2).LengthSquared() < float.Epsilon)
+                return true;
+
+            if (!inflatedPolygon.InLineOfSight(value1, value2))
+                return false;
+
+            // Geometría nativa
+            for (var i = 0; i < holes.Count; i++)
+            {
+                var hole = holes[i];
+                if (context == RaycastContext.LineOfSight && !hole.BlocksLineOfSight) continue;
+                if (!hole.InLineOfSight(value1, value2) || hole.Contains(value2)) return false;
+            }
+
+            // Entidades marcadas como estáticas
+            for (var i = 0; i < staticThingHoles.Count; i++)
+            {
+                var hole = staticThingHoles[i];
+                if (context == RaycastContext.LineOfSight && !hole.BlocksLineOfSight) continue;
+                if (!hole.InLineOfSight(value1, value2) || hole.Contains(value2)) return false;
+            }
+
+            return true;
         }
 
         #endregion
 
         #region Private members
-
-        // CollectHoles
-        private void CollectHoles(List<IHoleArea> list, ref RectangleF clipBox)
-        {
-            // Holes
-            for (var i = 0; i < holes.Count; i++)
-            {
-                if (!holes[i].Polygon.BoundingRectangleF.Intersects(clipBox))
-                    continue;
-
-                if (holes[i].Test())
-                    list.Add(holes[i]);
-            }
-        }
 
         // CollectThingHoles
         private void CollectThingHoles(GameThing requester, List<IHoleArea> list, ref RectangleF clipBox)
@@ -82,6 +111,10 @@ namespace Remizione
 
                 if (Room.CulledThings[i] is IHoleArea holeArea && holeArea.IsActive)
                 {
+                    // Si la entidad es estática, ya está en el grafo estático. La ignoramos aquí.
+                    if (holeArea.IsStatic)
+                        continue;
+
                     if (requester.Altitude > holeArea.CollisionHeight)
                         continue;
 
@@ -100,71 +133,83 @@ namespace Remizione
             var start = deflatedPolygon.Clamp(requester.Position);
             destination = deflatedPolygon.Clamp(destination);
 
-            // Straight path
-            if (InLineOfSight(start, destination, out IHoleArea? _))
+            // Straight path (Evaluado contra TODA la geometría, estática y dinámica)
+            if (InLineOfSight(start, destination, RaycastContext.Navigation, out IHoleArea? _))
                 return [destination];
 
-            // Create temp start/end nodes
+            // Asegurar que el esqueleto estático existe
+            if (isStaticGraphDirty)
+                BuildStaticNavGraph();
+
             findPathStartNode.Position = GetWalkablePoint(start);
             findPathEndNode.Position = GetWalkablePoint(destination);
 
-            linkedNodes.Add(findPathStartNode);
-            LinkStartNode(findPathStartNode);
+            workingNodes.Clear();
+            workingNodes.AddRange(staticNodes);
 
-            linkedNodes.Add(findPathEndNode);
-            LinkEndNode(findPathEndNode);
-
-            return AStar.CalculatePath(findPathStartNode, findPathEndNode, linkedNodes);
-        }
-
-        // LinkNodes
-        private void LinkNodes()
-        {
-            for (var i = 0; i < linkedNodes.Count; i++)
-                linkedNodes[i].Reset();
-
-            for (var a = 0; a < linkedNodes.Count; a++)
+            // Purgar variables G, H y Parent del AStar anterior en los nodos estáticos, PERO preservar sus Links.
+            for (var i = 0; i < workingNodes.Count; i++)
             {
-                linkedNodes[a].Links.Clear();
+                var n = workingNodes[i];
+                n.GCost = 1;
+                n.HCost = 0;
+                n.Parent = null;
+                n.HeapIndex = 0;
+            }
 
-                for (var b = 0; b < linkedNodes.Count; b++)
+            int baseNodeCount = workingNodes.Count;
+
+            // Anexar nodos de agujeros dinámicos
+            for (int i = 0; i < dynamicHoles.Count; i++)
+            {
+                dynamicHoles[i].CollectPathNodes(workingNodes);
+            }
+
+            // Anexar inicio y fin dinámicos
+            workingNodes.Add(findPathStartNode);
+            workingNodes.Add(findPathEndNode);
+
+            int startNodeIndex = workingNodes.Count - 2;
+            int endNodeIndex = workingNodes.Count - 1;
+
+            // 1. Limpiar completamente los links de los nodos DYNAMICOS generados en este frame
+            for (int i = baseNodeCount; i < workingNodes.Count; i++)
+            {
+                workingNodes[i].Links.Clear();
+            }
+
+            // 2. Conectar nodos DYNAMICOS contra todos los nodos visibles
+            for (var a = baseNodeCount; a < workingNodes.Count; a++)
+            {
+                for (var b = 0; b < workingNodes.Count; b++)
                 {
-                    if (b > a)
-                        continue;
+                    if (a == b) continue;
 
-                    if (linkedNodes[a] == linkedNodes[b])
-                        continue;
-
-                    if (InLineOfSight(linkedNodes[a].Position, linkedNodes[b].Position, out IHoleArea? _))
+                    // Validación total (Holes + StaticThings + DynamicHoles)
+                    if (InLineOfSight(workingNodes[a].Position, workingNodes[b].Position, RaycastContext.Navigation, out IHoleArea? _))
                     {
-                        linkedNodes[a].Links.Add(b);
-                        linkedNodes[b].Links.Add(a);
+                        workingNodes[a].Links.Add(b);
+                        workingNodes[b].Links.Add(a); // Esto modifica el esqueleto estático temporalmente
                     }
                 }
             }
-        }
 
-        // LinkStartNode
-        private void LinkStartNode(PathNode startNode)
-        {
-            for (var i = 0; i < linkedNodes.Count; i++)
-            {
-                if (InLineOfSight(startNode.Position, linkedNodes[i].Position, out IHoleArea? _))
-                    startNode.Links.Add(i);
-            }
-        }
+            var result = AStar.CalculatePath(workingNodes[startNodeIndex], workingNodes[endNodeIndex], workingNodes);
 
-        // LinkEndNode
-        private void LinkEndNode(PathNode endNode)
-        {
-            for (var i = 0; i < linkedNodes.Count; i++)
+            // 3. PURGAR ESQUELETO: Remover los links temporales añadidos a los nodos estáticos.
+            for (int i = 0; i < baseNodeCount; i++)
             {
-                if (InLineOfSight(endNode.Position, linkedNodes[i].Position, out IHoleArea? _))
+                var links = workingNodes[i].Links;
+                for (int j = links.Count - 1; j >= 0; j--)
                 {
-                    endNode.Links.Add(i);
-                    linkedNodes[i].Links.Add(linkedNodes.IndexOf(endNode));
+                    if (links[j] >= baseNodeCount)
+                    {
+                        links.RemoveAt(j);
+                    }
                 }
             }
+
+            return result;
         }
 
         // Prepare
@@ -174,7 +219,6 @@ namespace Remizione
 
             RectangleF clipBox;
 
-            // Define clip box for optimized path finding
             if (Room.Session.Camera.CullingBox.Contains(requester.Position) &&
                 Room.Session.Camera.CullingBox.Contains(destination))
             {
@@ -187,32 +231,38 @@ namespace Remizione
                 clipBox = RectangleF.Union(startRect, destinationRect);
             }
 
-            holeAreas.Clear();
-            linkedNodes.Clear();
+            dynamicHoles.Clear();
+            CollectThingHoles(requester, dynamicHoles, ref clipBox);
 
-            // Collect holes
-            CollectHoles(holeAreas, ref clipBox);
-            CollectThingHoles(requester, holeAreas, ref clipBox);
-
-            for (var i = 0; i < holeAreas.Count; i++)
+            // Validar si el destino cae dentro de geometría estática nativa...
+            for (var i = 0; i < holes.Count; i++)
             {
-                if (holeAreas[i].Contains(destination))
+                if (holes[i].Contains(destination))
                 {
-                    result = holeAreas[i].ClampOutside(destination);
+                    result = holes[i].ClampOutside(destination);
                     break;
                 }
             }
 
-            // Add walk area nodes
-            linkedNodes.AddRange(walkAreaNodes);
-
-            // Add hole nodes
-            for (var i = 0; i < holeAreas.Count; i++)
+            // ...o entidades estáticas...
+            for (var i = 0; i < staticThingHoles.Count; i++)
             {
-                holeAreas[i].CollectPathNodes(linkedNodes);
+                if (staticThingHoles[i].Contains(destination))
+                {
+                    result = staticThingHoles[i].ClampOutside(destination);
+                    break;
+                }
             }
 
-            LinkNodes();
+            // ...o geometría dinámica
+            for (var i = 0; i < dynamicHoles.Count; i++)
+            {
+                if (dynamicHoles[i].Contains(destination))
+                {
+                    result = dynamicHoles[i].ClampOutside(destination);
+                    break;
+                }
+            }
 
             return result;
         }
@@ -226,7 +276,6 @@ namespace Remizione
         {
             base.OnEnabledChanged();
 
-            // Holes
             for (var i = 0; i < holes.Count; i++)
             {
                 holes[i].IsEnabled = this.IsEnabled;
@@ -246,7 +295,58 @@ namespace Remizione
         {
             HoleArea result = new(this, name, condition, vertices);
             holes.Add(result);
+            MarkStaticGraphDirty(); // Invalida el esqueleto para forzar su regeneración
             return result;
+        }
+
+        // BuildStaticNavGraph
+        public void BuildStaticNavGraph()
+        {
+            staticNodes.Clear();
+            staticThingHoles.Clear();
+
+            // 1. Agregar nodos de área base
+            staticNodes.AddRange(walkAreaNodes);
+
+            // 2. Agregar nodos de agujeros fijos nativos (los que se añaden por AddHole)
+            for (var i = 0; i < holes.Count; i++)
+            {
+                holes[i].CollectPathNodes(staticNodes);
+            }
+
+            // 3. Recolectar entidades estáticas de la habitación completa.
+            for (var i = 0; i < Room.Children.Count; i++)
+            {
+                if (Room.Children[i] is IHoleArea hole && hole.IsActive && hole.IsStatic)
+                {
+                    if (!hole.Polygon.IsEmpty)
+                    {
+                        staticThingHoles.Add(hole);
+                        hole.CollectPathNodes(staticNodes);
+                    }
+                }
+            }
+
+            // 4. Limpiar links y variables de AStar (G, H, Parent, HeapIndex)
+            for (var i = 0; i < staticNodes.Count; i++)
+            {
+                staticNodes[i].Reset();
+            }
+
+            // 5. Calcular conexiones de LineOfSight para el esqueleto (Navigation Mode)
+            for (var a = 0; a < staticNodes.Count; a++)
+            {
+                for (var b = a + 1; b < staticNodes.Count; b++)
+                {
+                    if (InLineOfSightAgainstStaticGeometry(staticNodes[a].Position, staticNodes[b].Position, RaycastContext.Navigation))
+                    {
+                        staticNodes[a].Links.Add(b);
+                        staticNodes[b].Links.Add(a);
+                    }
+                }
+            }
+
+            isStaticGraphDirty = false;
         }
 
         // ClampInside
@@ -274,32 +374,15 @@ namespace Remizione
         // FindPath
         public Vector2[]? FindPath(GameThing requester, Vector2 destination)
         {
-            // Same position
             if (requester.Position == destination)
                 return null;
 
-            // Clamp destination to walk area
             if (!Contains(destination))
                 destination = ClampInside(destination, out _);
 
             destination = Prepare(requester, destination);
 
             var result = FindPathCore(requester, destination);
-
-            /*
-            // Raycast to closest point
-            if (result == null || result.Length == 0)
-            {
-                if (!InLineOfSight(requester.Position, destination, out IHoleArea? blockingArea) && blockingArea != null)
-                {
-                    if (blockingArea.Polygon.GetClosestIntersection(requester.Position, destination, out Vector2 closestImpactPoint))
-                    {
-                        destination = blockingArea.ClampOutside(closestImpactPoint);
-                        result = FindPathCore(requester, destination);
-                    }
-                }
-            }
-            */
 
             return result;
         }
@@ -310,11 +393,32 @@ namespace Remizione
             if (IsWalkableAt(point))
                 return point;
 
-            for (var i = 0; i < holeAreas.Count; i++)
+            // Clampeo contra entidades dinámicas
+            for (var i = 0; i < dynamicHoles.Count; i++)
             {
-                if (holeAreas[i].Contains(point))
+                if (dynamicHoles[i].Contains(point))
                 {
-                    point = holeAreas[i].ClampOutside(point);
+                    point = dynamicHoles[i].ClampOutside(point);
+                    break;
+                }
+            }
+
+            // Clampeo contra entidades estáticas
+            for (var i = 0; i < staticThingHoles.Count; i++)
+            {
+                if (staticThingHoles[i].Contains(point))
+                {
+                    point = staticThingHoles[i].ClampOutside(point);
+                    break;
+                }
+            }
+
+            // Clampeo contra agujeros nativos
+            for (var i = 0; i < holes.Count; i++)
+            {
+                if (holes[i].Contains(point))
+                {
+                    point = holes[i].ClampOutside(point);
                     break;
                 }
             }
@@ -324,6 +428,7 @@ namespace Remizione
 
             var distance = float.PositiveInfinity;
             PathNode? closestNode = null;
+
             for (var i = 0; i < walkAreaNodes.Count; i++)
             {
                 var newDistance = Vector2.Distance(point, walkAreaNodes[i].Position);
@@ -341,13 +446,13 @@ namespace Remizione
         public RoomAreaReadOnlyCollection<HoleArea> Holes { get; }
 
         // InLineOfSight
-        public bool InLineOfSight(Vector2 value1, Vector2 value2, out IHoleArea? blockingArea)
+        public bool InLineOfSight(Vector2 value1, Vector2 value2, RaycastContext context, out IHoleArea? blockingArea)
         {
-            return InLineOfSight(value1, value2, null, out blockingArea);
+            return InLineOfSight(value1, value2, context, null, out blockingArea);
         }
 
         // InLineOfSight
-        public bool InLineOfSight(Vector2 value1, Vector2 value2, object? sender, out IHoleArea? blockingHoleArea)
+        public bool InLineOfSight(Vector2 value1, Vector2 value2, RaycastContext context, object? sender, out IHoleArea? blockingHoleArea)
         {
             blockingHoleArea = null;
 
@@ -357,15 +462,44 @@ namespace Remizione
             if (!inflatedPolygon.InLineOfSight(value1, value2))
                 return false;
 
-            for (var i = 0; i < holeAreas.Count; i++)
+            // Raycast contra agujeros nativos
+            for (var i = 0; i < holes.Count; i++)
             {
-                if (holeAreas[i] == sender || !holeAreas[i].BlocksLineOfSight)
-                    continue;
+                var hole = holes[i];
+                if (hole == sender) continue;
+                if (context == RaycastContext.LineOfSight && !hole.BlocksLineOfSight) continue;
 
-                // Si la línea cruza la pared del agujero OR si el destino está adentro del agujero...
-                if (!holeAreas[i].InLineOfSight(value1, value2) || holeAreas[i].Contains(value2))
+                if (!hole.InLineOfSight(value1, value2) || hole.Contains(value2))
                 {
-                    blockingHoleArea = holeAreas[i];
+                    blockingHoleArea = hole;
+                    return false;
+                }
+            }
+
+            // Raycast contra entidades estáticas
+            for (var i = 0; i < staticThingHoles.Count; i++)
+            {
+                var hole = staticThingHoles[i];
+                if (hole == sender) continue;
+                if (context == RaycastContext.LineOfSight && !hole.BlocksLineOfSight) continue;
+
+                if (!hole.InLineOfSight(value1, value2) || hole.Contains(value2))
+                {
+                    blockingHoleArea = hole;
+                    return false;
+                }
+            }
+
+            // Raycast contra entidades dinámicas (recogidas por la cámara)
+            for (var i = 0; i < dynamicHoles.Count; i++)
+            {
+                var hole = dynamicHoles[i];
+                if (hole == sender) continue;
+                if (context == RaycastContext.LineOfSight && !hole.BlocksLineOfSight) continue;
+
+                if (!hole.InLineOfSight(value1, value2) || hole.Contains(value2))
+                {
+                    blockingHoleArea = hole;
                     return false;
                 }
             }
@@ -379,17 +513,23 @@ namespace Remizione
             if (!Contains(point))
                 return false;
 
-            /*
-            for (var i = 0; i < holeAreas.Count; i++)
+            for (var i = 0; i < holes.Count; i++)
             {
-                if (holeAreas[i].Contains(point))
-                {
-                    return false;
-                }
+                if (holes[i].Contains(point)) return false;
             }
-            */
+
+            for (var i = 0; i < staticThingHoles.Count; i++)
+            {
+                if (staticThingHoles[i].Contains(point)) return false;
+            }
 
             return true;
+        }
+
+        // MarkStaticGraphDirty
+        public void MarkStaticGraphDirty()
+        {
+            isStaticGraphDirty = true;
         }
 
         // ObstacleAreas
@@ -412,20 +552,12 @@ namespace Remizione
         // RandomWalkablePoint
         public Vector2 RandomWalkablePoint(Random rng, Vector2 origin, float minimumRadius, float maximumRadius)
         {
-            // Intentamos X veces encontrar un punto que caiga en zona válida por azar.
-            // Esto preserva la distribución y el radio que pediste.
             int attempts = 10;
             for (int i = 0; i < attempts; i++)
             {
                 var pt = Polygon.RandomPoint(rng, origin, minimumRadius, maximumRadius);
-
-                // Si el punto es caminable tal cual salió, lo usamos.
-                if (IsWalkableAt(pt))
-                    return pt;
+                if (IsWalkableAt(pt)) return pt;
             }
-
-            // FALLBACK: Si tras 10 intentos no encontramos nada (ej: el jugador está
-            // arrinconado contra una pared), tenemos dos opciones:
 
             return origin;
         }

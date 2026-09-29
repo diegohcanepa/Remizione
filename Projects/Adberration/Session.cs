@@ -358,6 +358,7 @@ namespace Adberration
             AotTypeRegistry.Register("fade-sound", typeof(FadeSoundCommand));
             AotTypeRegistry.Register("flag", typeof(FlagCommand), CodingContext.Declaration);
             AotTypeRegistry.Register("fly-to", typeof(FlyToCommand));
+            AotTypeRegistry.Register("fly-to-xy", typeof(FlyToXYCommand));
             AotTypeRegistry.Register("focus", typeof(FocusCommand));
             AotTypeRegistry.Register("focus-xy", typeof(FocusXYCommand));
             AotTypeRegistry.Register("follow", typeof(FollowCommand));

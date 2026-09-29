@@ -4,11 +4,11 @@ using System;
 
 namespace Remizione.Scripting
 {
-    // PickUp
-    internal sealed class PickUpCommand : NonAwaitableCommand
+    // PickUpItemRewardCommand
+    internal sealed class PickUpItemRewardCommand : NonAwaitableCommand
     {
         // Constructor
-        internal PickUpCommand(Script script, string source, StatementBody body)
+        internal PickUpItemRewardCommand(Script script, string source, StatementBody body)
             : base(script, source, body, 1)
         {
             AssertEntity<GameThing>(0);
@@ -29,9 +29,7 @@ namespace Remizione.Scripting
             // 1. Calculamos el espacio disponible en el inventario para este ítem
             var availableSpace = GameSettings.MaxItemAmount;
             if (session.PlayerData.Inventory.Find(target.ItemReward.Name) is Item carriedItem)
-            {
                 availableSpace = Math.Max(0, GameSettings.MaxItemAmount - carriedItem.Amount);
-            }
 
             // 2. Tomamos el mínimo entre lo disponible en el target y el espacio en inventario
             var collectAmount = Math.Min(target.ItemRewardAmount, availableSpace);
@@ -58,10 +56,7 @@ namespace Remizione.Scripting
 
             // 6. Si se vació por completo el target, limpiamos la recompensa y lo removemos
             if (target.ItemRewardAmount == 0)
-            {
                 target.ItemReward = null;
-                target.Unparent();
-            }
         }
     }
 }

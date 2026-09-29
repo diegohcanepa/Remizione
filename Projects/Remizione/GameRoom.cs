@@ -49,7 +49,7 @@ namespace Remizione
             Color = new(230, 230, 195),
             PivotOrigin = RectanglePoint.Center,
             Position = Screen.Center,
-            Scale = new(7)
+            Scale = new(4)
         };
         private readonly List<TriggerArea> triggerAreas = [];
         private readonly List<WalkArea> walkAreas = [];
@@ -203,7 +203,7 @@ namespace Remizione
             var previousRenderTarget = Game.RenderTargets.CurrentTarget;
 
             Game.GraphicsDevice.SetRenderTarget(renderTarget);
-            Game.GraphicsDevice.Clear(Color.Black);
+            Game.GraphicsDevice.Clear(LightMapColor);
 
             // PASO 1: Dibujar luces de la escena usando LightMaxBlend para que NO saturen entre sí
             Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, LightMaxBlend, null);
@@ -233,7 +233,7 @@ namespace Remizione
             {
                 Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, SubtractivePlayerBlend, null);
                 playerLight.Position = Session.Player.BoundingBox.Center;
-                playerLight.Draw(gameTime);
+                //playerLight.Draw(gameTime);
                 Game.SpriteBatch.End();
             }
 
@@ -520,13 +520,63 @@ namespace Remizione
         // IsWalkable
         public virtual bool IsWalkable => true;
 
+        /// <summary>
+        /// Devuelve true si la posición en el MUNDO está iluminada por alguna luz de la sala.
+        /// </summary>
+        public bool IsWorldPositionLit(Vector2 worldPosition)
+        {
+            // Si la sala no usa sistema de luces o tiene luces ambientales generales, todo está iluminado
+            if (!CanUseLightingSystem)
+                return true;
+
+            // 1. Revisar luces estáticas de la room
+            for (int i = 0; i < lights.Count; i++)
+            {
+                var light = lights[i];
+                if (light.IsEmitting)
+                {
+                    // Chequeo rápido de BoundingBox en espacio de mundo
+                    if (light.BoundingBox.Contains(worldPosition))
+                    {
+                        // Si querés precisión circular basada en el radio/escala de la luz:
+                        float radius = Math.Max(light.BoundingBox.Width, light.BoundingBox.Height) * 0.5f;
+                        float dist = Vector2.Distance(worldPosition, light.Position);
+
+                        if (dist <= radius)
+                            return true; // Está dentro del radio de una luz
+                    }
+                }
+            }
+
+            // 2. Revisar props / entidades que emiten luz (hogueras, antorchas)
+            for (int i = 0; i < CulledThings.Count; i++)
+            {
+                if (CulledThings[i] is GameThing thing && thing.IsEmittingLight && thing.IsInCullingBox)
+                {
+                    // Asumiendo un radio de luz por defecto o propiedad de la entidad
+                    float radius = 50f; // Ajustá este radio de cobertura según tus props
+                    if (Vector2.Distance(worldPosition, thing.Position) <= radius)
+                        return true;
+                }
+            }
+
+            // 3. Revisar si la luz suave del player lo está iluminando
+            if (Session.Player != null)
+            {
+                if (Vector2.Distance(worldPosition, Session.Player.Position) <= playerLight.BoundingBox.Width / 2)
+                    return true;
+            }
+
+            return false; // Está en oscuridad total
+        }
+
         // LightingSystem
         [ScriptProperty]
         public bool LightingSystem { get; set; }
 
         // LightMapColor
         [ScriptProperty]
-        public Color LightMapColor { get; set; } = Color.Black;
+        public Color LightMapColor { get; set; } = new(55, 55, 55);
 
         // Lights
         public NamedReadOnlyCollection<Light> Lights { get; }

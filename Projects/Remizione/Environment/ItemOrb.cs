@@ -22,14 +22,6 @@ namespace Remizione
             Atlas = Atlases.Environment;
             Hotspot = new Polygon("0,0;7,0;7,7;0,7");
             RenderLayer = RenderLayer.Default;
-
-            this.AttachedLight = new("Light", LightKind.ItemOrb)
-            {
-                PivotOrigin = RectanglePoint.Center,
-            };
-
-            this.Color = AttachedLight.Color;
-
             AttachedLightPosition = new(3, 4);
         }
 
@@ -54,7 +46,7 @@ namespace Remizione
                 PivotOrigin = RectanglePoint.Center,
             };
 
-            var lightKind = ItemReward.IsKeyItem ? LightKind.KeyItemOrb : LightKind.ItemOrb;
+            var lightKind = ItemReward.IsKeyItem ? LightKind.KeyItemOrb : LightKind.CommonItemOrb;
             this.AttachedLight.LightKind = lightKind;
             this.Color = AttachedLight.Color;
 

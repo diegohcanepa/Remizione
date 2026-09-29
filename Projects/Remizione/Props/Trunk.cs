@@ -1,6 +1,5 @@
 ﻿using Adberration.Scripting;
 using Engendro;
-using Engendro.Audio;
 using Microsoft.Xna.Framework;
 
 namespace Remizione
@@ -8,7 +7,7 @@ namespace Remizione
     /// <summary>
     /// Trunk
     /// </summary>
-    public class Trunk : Openable
+    public class Trunk : Prop
     {
         private readonly Sprite lootImage;
 
@@ -18,46 +17,78 @@ namespace Remizione
         {
             ApproachBehavior = ApproachBehavior.ClosestSide;
             Atlas = Atlases.Props;
-            DeathSound = Sound.Find(SoundNames.WoodDebris);
-            LabelKey = "Prop.Trunk";
-            LockedSound = Sound.Find(SoundNames.TrunkLocked);
-            OpenSound = Sound.Find(SoundNames.TrunkOpen);
-            OverheadOrigin = new(6, 2);
-            UnlockSound = Sound.Find(SoundNames.LockOpen);
+            AttachedLightPosition = new(6, 9);
 
-            this.lootImage = new(Atlas.FindImage($"{DeclaredName}LootBag"))
+            // Loot image
+            this.lootImage = new(Atlas.FindImage($"{DeclaredName}Loot"))
             {
                 PivotOrigin = RectanglePoint.Bottom,
             };
+            this.lootImage.Tweens.OpacityTween = FloatTween.Create(TweenStyle.Linear, .9f, 1, 90, -1);
+
+            SyncLabelKey();
         }
+
+        #region Private members
+
+        // SyncLabelKey
+        private void SyncLabelKey()
+        {
+            if (IsOpen && ItemReward != null)
+                LabelKey = ItemReward != null ? $"Item.{ItemReward.Name}.Name" : string.Empty;
+            else
+                LabelKey = "Prop.Trunk";
+        }
+
+        // SyncLight
+        private void SyncLight()
+        {
+            if (ItemReward == null)
+            {
+                AttachedLight = null;
+            }
+            else
+            {
+                var lightKind = ItemReward.IsKeyItem ? LightKind.KeyItemOrb : LightKind.CommonItemOrb;
+                this.AttachedLight ??= new("Light", lightKind)
+                {
+                    PivotOrigin = RectanglePoint.Center,
+                };
+                this.lootImage.Color = AttachedLight.Color;
+            }
+        }
+
+        #endregion
 
         #region Protected members
-
-        // OnClosureStatusChanged
-        protected override void OnClosureStatusChanged(bool actionInProgress)
-        {
-            /*
-            if (IsOpen)
-            {
-                if (Session.CurrentRun?.LootGenerator.RollForLoot(this) is ItemDefinition loot)
-                {
-                    this.Loot = loot;
-                    DisplayNameKey = $"Item.{loot.Name}.Name";
-                }
-
-                if (actionInProgress)
-                    Bounce();
-            }
-            */
-        }
 
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
             base.OnDraw(gameTime);
 
-            if (IsOpen && Loot != null)
+            if (IsOpen && ItemReward != null)
                 lootImage.Draw(gameTime);
+        }
+
+        // OnItemRewardChanged
+        protected override void OnItemRewardChanged()
+        {
+            base.OnItemRewardChanged();
+
+            if (ItemReward != null)
+            {
+                this.AttachedLight ??= new("Light")
+                {
+                    PivotOrigin = RectanglePoint.Center,
+                };
+
+                var lightKind = ItemReward.IsKeyItem ? LightKind.KeyItemOrb : LightKind.CommonItemOrb;
+                this.AttachedLight.LightKind = lightKind;
+                this.lootImage.Color = AttachedLight.Color;
+            }
+
+            SyncLabelKey();
         }
 
         // OnTransform
@@ -67,19 +98,41 @@ namespace Remizione
             lootImage?.MatchTransform(this.Sprite);
         }
 
+        // OnUpdate
+        protected override void OnUpdate(GameTime gameTime)
+        {
+            IgnoreAttachedLight = ItemReward == null || !IsOpen;
+
+            base.OnUpdate(gameTime);
+
+            if (IsOpen && ItemReward != null)
+                lootImage.Update(gameTime);
+        }
+
         #endregion
 
         // CanInteract
         public override bool CanInteract()
         {
-            return (!IsOpen || Loot != null) && base.CanInteract();
+            return (!IsOpen || ItemReward != null) && base.CanInteract();
         }
 
-        // HasLoot
+        // IsOpen
         [ScriptProperty]
-        public bool HasLoot => IsOpen && Loot != null;
+        public bool IsOpen
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    SyncLabelKey();
+                }
+            }
+        }
 
-        // Loot
-        public ItemDefinition? Loot { get; set; }
+        // Verb
+        public override Verb Verb => IsOpen && ItemReward != null ? Verb.PickUp : base.Verb;
     }
 }

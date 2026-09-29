@@ -35,6 +35,7 @@ namespace Remizione
         private readonly ShadowSpot shadowSpot;
         private bool shouldClampToWalkablePosition;
         private readonly StatusManager statusManager = new();
+        private static readonly Sprite targetImage = new(Atlases.UI.GetImage("MouseCursorAttackIcon")) { PivotOrigin = RectanglePoint.Center };
 
         #endregion
 
@@ -297,6 +298,12 @@ namespace Remizione
 
             base.OnDraw(gameTime);
 
+            if (Session.InteractionData.Target == this && Session.InteractionData.IsAttack)
+            {
+                targetImage.Position = RuntimeHotspot.BoundingRectangleF.Center;
+                targetImage.Draw(gameTime);
+            }
+
             if (floatingTween != null && floatingTween.IsRunning)
                 Altitude -= floatingTween.CurrentValue;
 
@@ -377,7 +384,11 @@ namespace Remizione
         protected override void OnUnload()
         {
             base.OnUnload();
+
             OpacityFactor = 1;
+
+            if (Session.AttackingNPC == this)
+                Session.AttackingNPC = null;
         }
 
         // OnUpdate
@@ -610,6 +621,9 @@ namespace Remizione
 
                 DropLoot();
             }
+
+            if (Session.AttackingNPC == this)
+                Session.AttackingNPC = null;
         }
 
 #if DEBUG
@@ -868,7 +882,7 @@ namespace Remizione
         // HasLineOfSightTo
         public bool HasLineOfSightTo(GameThing target)
         {
-            return Room?.WalkArea == null || Room.WalkArea.InLineOfSight(Position, target.Position, this, out _);
+            return Room?.WalkArea == null || Room.WalkArea.InLineOfSight(Position, target.Position, RaycastContext.LineOfSight, this, out _);
         }
 
         // HitTest
@@ -1038,6 +1052,10 @@ namespace Remizione
         [ScriptProperty]
         public bool IsPlayer => Session.Player == this;
 
+        // IsStatic
+        [ScriptProperty]
+        public bool IsStatic { get; set; }
+
         // IsTargetedByPlayer
         public bool IsTargetedByPlayer => Session.Player?.ExecutingActionTarget == this ||
                        Session.InteractionData.Target == this;
@@ -1065,6 +1083,20 @@ namespace Remizione
             {
                 if (value != field)
                     field = Math.Max(0, value);
+            }
+        }
+
+        // ItemRewardName
+        [ScriptProperty]
+        public string ItemRewardName
+        {
+            get => ItemReward?.Name ?? string.Empty;
+            set
+            {
+                if (value != ItemRewardName)
+                {
+                    ItemReward = GameData.Items.Find(value);
+                }
             }
         }
 

@@ -26,7 +26,9 @@ namespace Remizione.Scripting
             if (Session is not GameSession session)
                 return;
 
-            session.PlayerData.Inventory.Add(definition.Name);
+            var amount = Parser.ParseInt32Argument(this, AmountArg);
+
+            session.PlayerData.Inventory.Add(definition, amount);
         }
     }
 }

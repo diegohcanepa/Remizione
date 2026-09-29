@@ -12,17 +12,14 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly TextSprite[] amounts = new TextSprite[ItemContainer.MaximumCapacity];
         private bool autoHide;
         private readonly Sprite background = new(Atlases.UI.QuickInventoryBackground) { PivotOrigin = RectanglePoint.LeftBottom, Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom) };
         private readonly Sprite examineItem = new(Atlases.UI.ExamineItem) { PivotOrigin = RectanglePoint.RightBottom, Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom), Scale = ScaleInfo.UIElement.Medium };
-        private readonly Sprite[] icons = new Sprite[ItemContainer.MaximumCapacity];
         private readonly TextSprite itemLabel;
         private readonly TextSprite itemDescription;
         private Item? lastSelectedItem;
         private int lastSeenContainerVersion = -1;
-        private readonly Sprite[] shadows = new Sprite[ItemContainer.MaximumCapacity];
-        private readonly Sprite[] slots = new Sprite[ItemContainer.MaximumCapacity];
+        private readonly InventorySlot[] slots = new InventorySlot[ItemContainer.MaximumCapacity];
 
         #endregion
 
@@ -34,41 +31,9 @@ namespace Remizione
         {
             this.PausePreviousScenes = false;
 
-            for (var i = 0; i < icons.Length; i++)
+            for (var i = 0; i < slots.Length; i++)
             {
-                // Slots
-                slots[i] = new()
-                {
-                    PivotOrigin = RectanglePoint.Center,
-                    RenderImage = Atlases.UI.InventoryItemSlots.GetRandomItem(),
-                    Y = Screen.Area.Bottom - 20
-                };
-
-                // Icons
-                icons[i] = new()
-                {
-                    PivotOrigin = RectanglePoint.Center,
-                    Y = slots[i].BoundingBox.Center.Y - 1
-                };
-
-                // Shadows
-                shadows[i] = new()
-                {
-                    Color = Color.Black,
-                    Opacity = .3f,
-                    PivotOrigin = RectanglePoint.Center,
-                    Scale = ScaleInfo.UIElement.Large,
-                    Y = slots[i].BoundingBox.Center.Y + .5f
-                };
-
-                // Amount
-                amounts[i] = new(Fonts.Common)
-                {
-                    Color = ColorPalette.Text.Terra,
-                    PivotOrigin = RectanglePoint.Top,
-                    Scale = ScaleInfo.Text.ExtraLarge,
-                    Y = slots[i].BoundingBox.Bottom - 1
-                };
+                slots[i] = new InventorySlot();
             }
 
             this.ItemContainer = itemContainer;
@@ -78,7 +43,6 @@ namespace Remizione
             {
                 Color = ColorPalette.MouseCursor.Tooltip,
                 PivotOrigin = RectanglePoint.Bottom,
-                Y = slots[0].BoundingBox.Top - 8,
                 Scale = ScaleInfo.Text.VeryLarge
             };
 
@@ -89,7 +53,6 @@ namespace Remizione
                 MaximumWidth = 200,
                 Multiline = false,
                 PivotOrigin = RectanglePoint.Bottom,
-                Y = slots[0].BoundingBox.Top - 2,
                 Scale = ScaleInfo.Text.Large,
             };
         }
@@ -145,33 +108,31 @@ namespace Remizione
             float screenWidth = Screen.NativeWidth;
             int slotCount = ItemContainer.Count;
             float spacing = 2;
-            var slotSize = slots[0].BoundingBox.Width;
+            float slotSize = slots[0].BoundingBox.Width;
 
             float rowWidth = (slotCount * slotSize) + ((slotCount - 1) * spacing);
             float startingX = (screenWidth - rowWidth) / 2;
+            float y = Screen.Area.Bottom - 20;
 
-            for (int i = 0; i < ItemContainer.Count; i++)
+            for (int i = 0; i < ItemContainer.MaximumCapacity; i++)
             {
-                var x = startingX + (i * (slotSize + spacing)) + (slotSize / 2);
-
-                slots[i].X = x;
-
-                icons[i].RenderImage = null;
-                shadows[i].RenderImage = null;
-
                 if (i < ItemContainer.Count)
                 {
-                    icons[i].X = slots[i].BoundingBox.Center.X;
-                    icons[i].RenderImage = ItemContainer[i].Definition.Image;
-
-                    shadows[i].X = icons[i].X - .5f;
-                    shadows[i].RenderImage = ItemContainer[i].Definition.Image;
-
-                    amounts[i].X = icons[i].BoundingBox.Center.X;
-
-                    if (ItemContainer[i].Definition.IsStackable || ItemContainer[i].Definition.IsDepletable)
-                        amounts[i].Text = $"x{ItemContainer[i].Amount}";
+                    float x = startingX + (i * (slotSize + spacing)) + (slotSize / 2);
+                    slots[i].Position = new Vector2(x, y);
+                    slots[i].Item = ItemContainer[i];
                 }
+                else
+                {
+                    slots[i].Item = null;
+                }
+            }
+
+            // Actualizar la posición Y del label y descripción basándonos en la posición real fijada para los slots
+            if (ItemContainer.Count > 0)
+            {
+                itemLabel.Y = slots[0].BoundingBox.Top - 8;
+                itemDescription.Y = slots[0].BoundingBox.Top - 2;
             }
         }
 
@@ -179,13 +140,13 @@ namespace Remizione
         private void Reset()
         {
             itemLabel.Clear();
+            itemDescription.Clear();
 
             MouseCursor.Tooltip = null;
 
             for (var i = 0; i < ItemContainer.Count; i++)
             {
-                icons[i].Scale = ScaleInfo.UIElement.Large;
-                shadows[i].Scale = ScaleInfo.UIElement.Large;
+                slots[i].ResetVisualState();
             }
         }
 
@@ -222,17 +183,8 @@ namespace Remizione
 
             for (var i = 0; i < ItemContainer.Count; i++)
             {
-                slots[i].Draw(gameTime);
-
-                if (ItemContainer.Session.InteractionContext.HeldItem?.Index == i)
-                {
-                    if (!ItemContainer[i].Definition.IsStackable)
-                        continue;
-                }
-
-                shadows[i].Draw(gameTime);
-                icons[i].Draw(gameTime);
-                amounts[i].Draw(gameTime);
+                bool isHeld = ItemContainer.Session.InteractionContext.HeldItem?.Index == i;
+                slots[i].Draw(gameTime, isHeld);
             }
 
             if (lastSelectedItem != null)
@@ -302,35 +254,39 @@ namespace Remizione
             {
                 if (item != lastSelectedItem)
                 {
-                    if (lastSelectedItem?.Index >= 0)
+                    if (lastSelectedItem?.Index >= 0 && lastSelectedItem.Index < ItemContainer.Count)
                     {
-                        icons[lastSelectedItem.Index].Scale = ScaleInfo.UIElement.Large;
-                        shadows[lastSelectedItem.Index].Scale = ScaleInfo.UIElement.Large;
-                    }
-                    else
-                    {
-                        lastSelectedItem = null;
+                        slots[lastSelectedItem.Index].SetSelected(false);
                     }
 
-                    itemLabel.X = icons[item.Index].BoundingBox.Center.X;
+                    int currentSlotIndex = item.Index;
+                    float slotCenterX = slots[currentSlotIndex].BoundingBox.Center.X;
+
+                    itemLabel.X = slotCenterX;
                     itemLabel.Color = item.Definition.IsKeyItem ? ColorPalette.Inventory.KeyItem : ColorPalette.Inventory.Item;
-                    itemDescription.X = icons[item.Index].BoundingBox.Center.X;
                     itemLabel.Text = item.Definition.Label;
+
+                    itemDescription.X = slotCenterX;
                     itemDescription.Text = item.Definition.EffectDescription;
+
                     MouseCursor.Tooltip = item.Definition.Label;
-                    icons[item.Index].Scale = ScaleInfo.UIElement.ExtraLarge;
-                    shadows[item.Index].Scale = ScaleInfo.UIElement.ExtraLarge;
+
+                    slots[currentSlotIndex].SetSelected(true);
+
                     itemLabel.Tag = item;
                     lastSelectedItem = item;
                 }
             }
             else if (lastSelectedItem != null)
             {
-                if (lastSelectedItem.Index >= 0)
+                if (lastSelectedItem.Index >= 0 && lastSelectedItem.Index < ItemContainer.Count)
                 {
-                    icons[lastSelectedItem.Index].Scale = ScaleInfo.UIElement.Large;
-                    shadows[lastSelectedItem.Index].Scale = ScaleInfo.UIElement.Large;
+                    slots[lastSelectedItem.Index].SetSelected(false);
                 }
+
+                itemLabel.Clear();
+                itemDescription.Clear();
+                MouseCursor.Tooltip = null;
 
                 lastSelectedItem = null;
             }
@@ -360,8 +316,8 @@ namespace Remizione
         {
             for (int i = 0; i < ItemContainer.Count; i++)
             {
-                if (slots[i].BoundingBox.Contains(position))
-                    return i < ItemContainer.Count ? ItemContainer[i] : null;
+                if (slots[i].Contains(position))
+                    return slots[i].Item;
             }
 
             return null;

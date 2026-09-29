@@ -235,7 +235,7 @@ namespace Adberration
             // String
             if (propertyInfo.PropertyType == typeof(string))
             {
-                if (propValue is string value && value.Length > 0)
+                if (propValue is string value)
                     output.WriteAttributeString(storageName, value ?? string.Empty);
 
                 return;

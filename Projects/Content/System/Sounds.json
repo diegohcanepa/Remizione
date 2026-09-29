@@ -39,6 +39,7 @@
     { "name": "GutsLarge" },
     { "name": "GutsMedium" },
     { "name": "GutsSmall", "soundCount": 3 },
+    { "name": "HopelessDeath" },
     { "name": "HopelessVanish" },
     { "name": "ImpactA" },
     { "name": "ImpactB" },

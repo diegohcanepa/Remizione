@@ -36,7 +36,7 @@
 		{
 			"name": "PyritePebble",
 			"category": "Misc",
-			"actionKind": "Script",
+			"actionKind": "ScriptOutcome",
 			"deselectOnUse": true,
 			"isDepletable": true,
 			"isStackable": true
@@ -44,7 +44,7 @@
 		{
 			"name": "CrudeKey",
 			"category": "Misc",
-			"actionKind": "Script",
+			"actionKind": "ScriptOutcome",
 			"deselectOnUse": true,
 			"isDepletable": true,
 			"isStackable": true
@@ -52,7 +52,7 @@
 		{
 			"name": "SulfurStone",
 			"category": "Misc",
-			"actionKind": "Script",
+			"actionKind": "ScriptOutcome",
 			"deselectOnUse": true,
 			"isDepletable": true,
 			"isKeyItem": true,

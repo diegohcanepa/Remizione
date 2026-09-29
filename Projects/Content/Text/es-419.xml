@@ -225,11 +225,10 @@ Bla bla bla</String>
   <String Key="Prop.Cross">Cruz</String>
   <String Key="Prop.CrucifiedMan">Hombre crucificado</String>
   <String Key="Prop.Door">Puerta</String>
-  <String Key="Prop.EmptySack">Tripa seca</String>
   <String Key="Prop.Fleshiness">Carnadura</String>
   <String Key="Prop.Lever">Palanca</String>
   <String Key="Prop.Pottery">Vasija</String>
-  <String Key="Prop.Sack">Bolsa</String>
+  <String Key="Prop.Sack">Saco</String>
   <String Key="Prop.Tinder">Yesca</String>
   <String Key="Prop.Torch">Antorcha</String>
   <String Key="Prop.Tower">Torre</String>

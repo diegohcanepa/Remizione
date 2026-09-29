@@ -104,7 +104,7 @@ namespace Remizione
             // 2. DEFAULT: AVANZAR EN LÍNEA RECTA AL COMBATE
             source.MoveTowards(target.Position, stepDistance);
         }
-        
+
         /*
         // ExecuteStepMovement
         public virtual void ExecuteStepMovement(Actor source, GameThing target, float stepDistance, float currentDistance)

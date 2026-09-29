@@ -53,6 +53,9 @@ namespace Remizione
         // IsActive
         bool IHoleArea.IsActive => true;
 
+        // IsStatic
+        bool IHoleArea.IsStatic => true;
+
         #endregion
 
         // BlocksLineOfSight

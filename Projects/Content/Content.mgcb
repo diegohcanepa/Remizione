@@ -425,6 +425,13 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/GutsSmall3.wav;Audio/FX/GutsSmall3
 
+#begin Audio/FX/HopelessDeath.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/HopelessDeath.wav;Audio/FX/HopelessDeath
+
 #begin Audio/FX/HopelessVanish.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

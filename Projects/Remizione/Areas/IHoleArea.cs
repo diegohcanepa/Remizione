@@ -31,6 +31,9 @@ namespace Remizione
         // IsActive
         bool IsActive { get; }
 
+        // IsStatic
+        bool IsStatic { get; }
+
         // Name
         string Name { get; }
 

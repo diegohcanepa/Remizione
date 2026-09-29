@@ -16,7 +16,7 @@ namespace Remizione
         // ResetWanderTimer
         private void ResetWanderTimer()
         {
-            wanderTimer = (float)Random.Shared.NextDouble() * 3f + 2f;
+            wanderTimer = ((float)Random.Shared.NextDouble() * 3f) + 2f;
         }
 
         // UpdateWander

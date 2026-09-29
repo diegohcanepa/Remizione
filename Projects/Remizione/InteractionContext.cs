@@ -35,7 +35,10 @@ namespace Remizione
                 if (Session.Room.CulledThings[i] is GameThing target)
                 {
                     if (!target.IsMoving && target.CanInteract() && target.RuntimeHotspot.Contains(mousePos))
-                        return target;
+                    {
+                        if (Session.Room.IsWorldPositionLit(mousePos))
+                            return target;
+                    }
                 }
             }
 

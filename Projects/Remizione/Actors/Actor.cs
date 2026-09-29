@@ -405,9 +405,6 @@ namespace Remizione
         {
             lastKnownLiftPosition = null;
 
-            if (StartMovingSound != null)
-                PlaySound(StartMovingSound);
-
             BodyMachine.ChangeState<BodyMoveState>();
 
             // Reiniciamos el multiplicador de velocidad para aplicar la aceleración
@@ -1170,10 +1167,6 @@ namespace Remizione
         {
             BodyMachine.ChangeState<BodyStandState>(enforce);
         }
-
-        // StartMovingSound
-        [ScriptProperty]
-        public Sound? StartMovingSound { get; set; }
 
         // StartTalking
         public void StartTalking()

@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Xml;
@@ -60,7 +59,7 @@ namespace Remizione
         #endregion
 
         // Add
-        public Item Add(string name, int amount = 1)
+        public Item Add(string name)
         {
             return Add(GameData.Items.Get(name));
         }
@@ -68,6 +67,9 @@ namespace Remizione
         // Add
         public Item Add(ItemDefinition definition, int amount = 1)
         {
+            if (amount < 1)
+                amount = 1;
+
             if (!CanAddItem(definition))
                 throw new InvalidOperationException("Item container is full.");
 
@@ -156,5 +158,35 @@ namespace Remizione
 
         // Session
         public GameSession Session { get; }
+
+        // TryAdd
+        public Item? TryAdd(ItemDefinition definition, int amount = 1)
+        {
+            if (!CanAddItem(definition))
+                return null;
+
+            if (Find(definition.Name) is Item item)
+            {
+                item.Amount += amount;
+            }
+            else
+            {
+                item = new Item(this, definition) { Amount = amount };
+                Add(item);
+            }
+
+            return item;
+        }
+
+        // TryMove
+        public Item? TryMove(Item item, ItemContainer destination)
+        {
+            var result = destination.TryAdd(item.Definition, item.Amount);
+
+            if (result != null)
+                Remove(item.Name);
+
+            return result;
+        }
     }
 }

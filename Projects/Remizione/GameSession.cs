@@ -3,7 +3,6 @@ using Adberration.Scripting;
 using Engendro;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-using Remizione.Props;
 using Remizione.Scripting;
 using System;
 using System.Collections.Frozen;
@@ -114,7 +113,6 @@ namespace Remizione
             AotTypeRegistry.Register(typeof(Bonfire));
             AotTypeRegistry.Register(typeof(Creature));
             AotTypeRegistry.Register(typeof(CreditsRoom));
-            AotTypeRegistry.Register(typeof(Decoration));
             AotTypeRegistry.Register(typeof(Fleshiness));
             AotTypeRegistry.Register(typeof(GameRoom));
             AotTypeRegistry.Register(typeof(ItemOrb));
@@ -142,10 +140,10 @@ namespace Remizione
             AotTypeRegistry.Register("echo", typeof(EchoCommand));
             AotTypeRegistry.Register("ensure-session-scene", typeof(EnsureSessionSceneCommand));
             AotTypeRegistry.Register("exit-session", typeof(ExitSessionCommand));
-            AotTypeRegistry.Register("if-can-pickup", typeof(IfCanPickUpStatement));
+            AotTypeRegistry.Register("if-can-pickup-item-reward", typeof(IfCanPickUpItemRewardStatement));
             AotTypeRegistry.Register("if-test-skill", typeof(IfTestSkillStatement));
             AotTypeRegistry.Register("narrate", typeof(NarrateCommand));
-            AotTypeRegistry.Register("pickup", typeof(PickUpCommand));
+            AotTypeRegistry.Register("pickup-item-reward", typeof(PickUpItemRewardCommand));
             AotTypeRegistry.Register("place-item", typeof(PlaceItemCommand));
             AotTypeRegistry.Register("say", typeof(SayCommand));
             AotTypeRegistry.Register("select-walk-area", typeof(SelectWalkAreaCommand));
@@ -253,6 +251,9 @@ namespace Remizione
                 RespawnWorld();
                 TransitionManager.DefaultTransition.Out(3000);
             }
+
+            if (room is GameRoom gameRoom)
+                gameRoom.WalkArea?.BuildStaticNavGraph();
         }
 
         // OnExitRoom
@@ -525,7 +526,7 @@ namespace Remizione
                 // Orbs
                 foreach (var orb in room.Children.OfType<ItemOrb>())
                 {
-                    if (orb.ItemReward is { IsKeyItem: true } itemDef)
+                    if (orb.ItemReward is { IsKeyItem : true } itemDef)
                     {
                         var value = $"{itemDef.Name}|{XmlConvert.ToString(orb.ItemRewardAmount)}|{room.Name}|{DataConvert.ToString(orb.Position)}";
                         keyItems.Add(value);
@@ -552,8 +553,12 @@ namespace Remizione
             }
 
             AttackingNPC = null;
-            PlayerData.Inventory.Clear();
             PlayerData.Grace = 0;
+
+            if (Player != null)
+                Player.HP = Player.MaxHP / 2;
+
+            Save();
         }
 
         // DangerousTarget
@@ -746,9 +751,6 @@ namespace Remizione
         [ScriptMethod]
         public void RespawnWorld()
         {
-            if (Player?.IsDead == true)
-                Player.Reheal();
-
             if (LastBonfire != null)
             {
                 LastBonfire.BeginRest(true);
