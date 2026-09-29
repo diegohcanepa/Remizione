@@ -492,6 +492,8 @@ namespace Remizione
         // AttachedLightPosition
         public Vector2 AttachedLightPosition { get; set; }
 
+        public LightBlendMode BlendMode { get; set; }
+
         // CanBeHit
         public virtual bool CanBeHit()
         {

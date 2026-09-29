@@ -15,6 +15,16 @@ namespace Remizione
     /// </summary>
     public class GameRoom : Room
     {
+        private static readonly BlendState LightSoftAdditiveBlend = new BlendState
+        {
+            ColorSourceBlend = Blend.One,
+            ColorDestinationBlend = Blend.InverseSourceColor,
+            ColorBlendFunction = BlendFunction.Add,
+            AlphaSourceBlend = Blend.One,
+            AlphaDestinationBlend = Blend.InverseSourceAlpha,
+            AlphaBlendFunction = BlendFunction.Add
+        };
+
         private static readonly BlendState LightMaxBlend = new BlendState
         {
             ColorSourceBlend = Blend.One,
@@ -205,13 +215,47 @@ namespace Remizione
             Game.GraphicsDevice.SetRenderTarget(renderTarget);
             Game.GraphicsDevice.Clear(LightMapColor);
 
-            // PASO 1: Dibujar luces de la escena usando LightMaxBlend para que NO saturen entre sí
+            // PASADA 1: Luces ambientales (BlendState Max)
+            // Evita que las luces suaves saturen entre sí.
             Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, LightMaxBlend, null);
 
+            DrawLightsWithBlendMode(gameTime, LightBlendMode.Max);
+
+            if (BrightnessModifier > 0)
+                Game.Shapes.DrawRectangle(Session.Viewport.ToRectangle(), brightnessColor);
+
+            Game.SpriteBatch.End();
+
+            // PASADA 2: Luces emisivas intensas (BlendState Additive)
+            // Suma fotones. El fuego y la magia van aquí para lograr el núcleo blanco/caliente.
+            Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
+
+            DrawLightsWithBlendMode(gameTime, LightBlendMode.Additive);
+
+            Game.SpriteBatch.End();
+
+            // PASADA 3: Luces sustractivas (Player)
+            if (Session.Player != null)
+            {
+                Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, SubtractivePlayerBlend, null);
+                playerLight.Position = Session.Player.BoundingBox.Center;
+                //playerLight.Draw(gameTime); // Mantenido comentado tal como lo tenías
+                Game.SpriteBatch.End();
+            }
+
+            if (AllowFireflyParticles)
+                DrawFireflyParticles(gameTime);
+
+            Game.GraphicsDevice.SetRenderTarget(previousRenderTarget);
+        }
+
+        // DrawLightsWithBlendMode
+        private void DrawLightsWithBlendMode(GameTime gameTime, LightBlendMode blendMode)
+        {
             // Owned lights
             for (int i = 0; i < lights.Count; i++)
             {
-                if (lights[i].IsEmitting && lights[i].BoundingBox.Intersects(Session.Camera.CullingBox))
+                if (lights[i].IsEmitting && lights[i].BlendMode == blendMode && lights[i].BoundingBox.Intersects(Session.Camera.CullingBox))
                 {
                     lights[i].Draw(gameTime);
                 }
@@ -220,27 +264,12 @@ namespace Remizione
             // Light sources (antorchas, hogueras, props iluminados)
             for (int i = 0; i < CulledThings.Count; i++)
             {
-                if (CulledThings[i] is GameThing thing && thing.IsEmittingLight && CulledThings[i].IsInCullingBox)
+                // NOTA: Asegúrate de exponer 'LightBlendMode' en GameThing o de castear a tu interfaz correspondiente.
+                if (CulledThings[i] is GameThing thing && thing.IsEmittingLight && thing.AttachedLight?.BlendMode == blendMode && CulledThings[i].IsInCullingBox)
+                {
                     thing.DrawLights(gameTime);
+                }
             }
-
-            if (BrightnessModifier > 0)
-                Game.Shapes.DrawRectangle(Session.Viewport.ToRectangle(), brightnessColor);
-
-            Game.SpriteBatch.End();
-
-            if (Session.Player != null)
-            {
-                Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, SubtractivePlayerBlend, null);
-                playerLight.Position = Session.Player.BoundingBox.Center;
-                //playerLight.Draw(gameTime);
-                Game.SpriteBatch.End();
-            }
-
-            if (AllowFireflyParticles)
-                DrawFireflyParticles(gameTime);
-
-            Game.GraphicsDevice.SetRenderTarget(previousRenderTarget);
         }
 
         // TestTriggerAreas
@@ -526,7 +555,7 @@ namespace Remizione
         public bool IsWorldPositionLit(Vector2 worldPosition)
         {
             // Si la sala no usa sistema de luces o tiene luces ambientales generales, todo está iluminado
-            if (!CanUseLightingSystem)
+            if (!CanUseLightingSystem || LightMapColor != Color.Black)
                 return true;
 
             // 1. Revisar luces estáticas de la room
@@ -576,7 +605,7 @@ namespace Remizione
 
         // LightMapColor
         [ScriptProperty]
-        public Color LightMapColor { get; set; } = new(55, 55, 55);
+        public Color LightMapColor { get; set; } = new(45, 45, 45);
 
         // Lights
         public NamedReadOnlyCollection<Light> Lights { get; }

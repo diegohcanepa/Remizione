@@ -161,6 +161,9 @@ namespace Remizione
 
         #endregion
 
+        // BlendMode
+        public LightBlendMode BlendMode { get; set; }
+
         // BoundingBox
         public RectangleF BoundingBox => lightSprite.BoundingBox;
 

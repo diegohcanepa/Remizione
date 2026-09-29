@@ -80,6 +80,13 @@ namespace Remizione
     // KnockbackIntensity
     public enum KnockbackIntensity { None, Low, Medium, High }
 
+    // LightBlendMode
+    public enum LightBlendMode
+    {
+        Max,       // No quema, ideal para ambiente y rebotes
+        Additive   // Suma pura, ideal para fuego, explosiones y magia
+    }
+
     // LightKind
     public enum LightKind { Default, Lantern, Fire, KeyItemOrb, SulfurBonfire, Global, MuzzleFlash, Outdoor, Player, CommonItemOrb, FleshinessItemOrb }
 

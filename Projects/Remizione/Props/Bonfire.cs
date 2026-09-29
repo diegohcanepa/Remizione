@@ -43,8 +43,10 @@ namespace Remizione
 
             this.AttachedLight = new("Light", LightKind.SulfurBonfire)
             {
+                BlendMode = LightBlendMode.Additive,
                 IgnoreGlobalOpacity = true,
                 PivotOrigin = RectanglePoint.Center,
+                Passes = 2,
                 Position = new(9),
                 Scale = new(11, 8)
             };
