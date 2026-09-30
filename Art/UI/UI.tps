@@ -255,6 +255,7 @@
             <key type="filename">Items-assets/BarrenFig.png</key>
             <key type="filename">Items-assets/CrudeKey.png</key>
             <key type="filename">Items-assets/FakeItem.png</key>
+            <key type="filename">Items-assets/GadlingKnuckle.png</key>
             <key type="filename">Items-assets/Loquat.png</key>
             <key type="filename">Items-assets/PrayerBonfire.png</key>
             <key type="filename">Items-assets/PyritePebble.png</key>
@@ -360,6 +361,7 @@
             <key type="filename">MiniMap-assets/MiniMapNodeVisited.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorArrowIcon.png</key>
             <key type="filename">UI-assets/CheckMark.png</key>
+            <key type="filename">UI-assets/InteractionTargetMark.png</key>
             <key type="filename">UI-assets/PointingHand.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>

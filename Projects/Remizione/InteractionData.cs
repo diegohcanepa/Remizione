@@ -1,7 +1,9 @@
 ﻿using Adberration;
+using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Remizione.InteractionCommands;
+using SharpDX.MediaFoundation.DirectX;
 
 namespace Remizione
 {
@@ -177,28 +179,20 @@ namespace Remizione
 
             var context = player.Session.InteractionContext;
 
+            Clear();
+
             // Remove held item
-            if (context.HeldItem != null)
+            if (context.HeldItem == null)
+            {
+                context.HeldItem = player.Session.PlayerData.Inventory.Find(ItemNames.GadlingKnuckle);
+            }
+            else
             {
                 player.StopMoving();
                 context.HeldItem = null;
-                Clear();
-                return;
             }
 
-            // Attack
-            if (context.Target != null && !context.Target.IsPlayer)
-            {
-                Prepare(player, context.Target, Verb.Attack);
-
-                if (Target != null && activeCommand != null)
-                {
-                    ApproachAndExecute(player, Target);
-                    return;
-                }
-            }
-
-            MouseCursor.Shake();
+            Sound.Play(SoundNames.Interact);
         }
 
         // Target

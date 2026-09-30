@@ -73,7 +73,7 @@ namespace Remizione
             this.descriptionText = new(Fonts.Common)
             {
                 Color = ColorPalette.Inventory.EffectDescription,
-                MaximumWidth = 190,
+                MaximumWidth = 180,
                 PivotOrigin = RectanglePoint.Top,
                 Position = nameText.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 1),
                 Scale = ScaleInfo.Text.VeryLarge
@@ -168,6 +168,7 @@ namespace Remizione
             this.descriptionText.Text = item.Definition.Description;
             this.image.RenderImage = item.Definition.Image;
             this.shadow.RenderImage = item.Definition.Image;
+            this.button.IsEnabled = item.Definition.AllowDrop;
         }
     }
 }

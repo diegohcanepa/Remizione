@@ -32,7 +32,8 @@
         "archetype": "Harasser",
         "intents": [
           {
-            "name": "Punch",
+            "name": "GadlingKnuckle",
+            "animationName": "Punch",
             "actionKind": "Proximity",
             "maxRange": 5,
             "effects": [

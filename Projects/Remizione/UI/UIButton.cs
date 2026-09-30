@@ -10,6 +10,7 @@ namespace Remizione
     /// </summary>
     public sealed class UIButton : GameObject, IBoundingBox
     {
+        private readonly Color disabledColor = Color.Gray;
         private readonly TextSprite label;
 
         #region Constructor
@@ -47,7 +48,10 @@ namespace Remizione
 
             label.Update(gameTime);
 
-            label.Color = IsMouseOver ? HoverColor : TextColor;
+            if (IsMouseOver && IsEnabled)
+                label.Color = HoverColor;
+            else
+                label.Color = IsEnabled ? TextColor : disabledColor;
         }
 
         #endregion

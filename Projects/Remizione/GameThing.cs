@@ -38,7 +38,13 @@ namespace Remizione
         private readonly ShadowSpot shadowSpot;
         private bool shouldClampToWalkablePosition;
         private readonly StatusManager statusManager = new();
-        private static readonly Sprite targetImage = new(Atlases.UI.GetImage("MouseCursorAttackIcon")) { PivotOrigin = RectanglePoint.Center };
+        private static readonly Sprite targetImage = new(Atlases.Environment.InteractionMark)
+        {
+            Color = ColorPalette.DestinationMark,
+            PivotOrigin = RectanglePoint.Center,
+            Opacity = .6f,
+            Scale = new(.7f)
+        };
 
         #endregion
 
@@ -358,7 +364,7 @@ namespace Remizione
 
             base.OnDraw(gameTime);
 
-            if (Session.InteractionData.Target == this && Session.InteractionData.IsAttack)
+            if (Session.InteractionData.Target == this)
             {
                 targetImage.Position = RuntimeHotspot.BoundingRectangleF.Center;
                 targetImage.Draw(gameTime);

@@ -14,7 +14,7 @@ struct VSOutput
 	float2 texCoord		: TEXCOORD0;
 };
 
-float brightness = 0.9f;
+float brightness = 0.6f;
 
 float4 PixelShaderFunction(VSOutput input) : SV_TARGET0
 {

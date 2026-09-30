@@ -51,6 +51,21 @@
 			"isStackable": true
 		},
 		{
+			"name": "GadlingKnuckle",
+			"category": "Misc",
+			"actionKind": "Proximity",
+			"allowDrop": false,
+			"deselectOnUse": false,
+			"isKeyItem": true,
+			"effects": [
+				{
+					"context": "Attack",
+					"effectType": "Damage",
+					"amount": "1"
+				}
+			]			
+		},
+		{
 			"name": "SulfurStone",
 			"category": "Misc",
 			"actionKind": "ScriptOutcome",
