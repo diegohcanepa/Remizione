@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:895a14ecc12ebc1f82ba9db026717733:0a01a79afb45b5541112c05922dd5551:90dd61259f597836213851943cf8b193$ -->
+<!-- $TexturePacker:SmartUpdate:e506f49d73d33aef562ec665fce86bd4:2d81277d99855ac59fc77ce377c4b3cd:90dd61259f597836213851943cf8b193$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -70,7 +70,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Gut12.png" x="27" y="483" w="4" h="2"/>
     <sprite n="GutStain1.png" x="17" y="367" w="18" h="11"/>
     <sprite n="GutStain2.png" x="17" y="393" w="17" h="10"/>
-    <sprite n="ItemOrb.png" x="17" y="380" w="13" h="11"/>
+    <sprite n="ItemOrb.png" x="17" y="380" w="11" h="11"/>
     <sprite n="Lightning01.png" x="77" y="162" w="35" h="181"/>
     <sprite n="Lightning02.png" x="2" y="162" w="35" h="182"/>
     <sprite n="Lightning03.png" x="39" y="162" w="36" h="181"/>
@@ -103,5 +103,5 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="ToxicGut11.png" x="17" y="471" w="4" h="5"/>
     <sprite n="ToxicGut12.png" x="30" y="497" w="4" h="2"/>
     <sprite n="ToxicGutStain1.png" x="23" y="346" w="18" h="11"/>
-    <sprite n="ToxicGutStain2.png" x="32" y="380" w="17" h="10"/>
+    <sprite n="ToxicGutStain2.png" x="30" y="380" w="17" h="10"/>
 </TextureAtlas>

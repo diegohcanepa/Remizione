@@ -163,13 +163,6 @@ namespace Remizione
             InvalidateShadowImage();
         }
 
-        // OnTakeDamage
-        protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType)
-        {
-            if (!IsDead)
-                DropLoot();
-        }
-
         // OnTransform
         protected override void OnTransform(TransformChange change)
         {

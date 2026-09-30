@@ -10,7 +10,7 @@
             "soundTrigger": "RatAttack",
             "actionKind": "Proximity",
             "maxRange": 5,
-            "missChance": 0.5,
+            "missChance": 0.25,
             "effects": [
               {
                 "context": "Attack",

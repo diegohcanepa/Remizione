@@ -83,6 +83,9 @@ namespace Remizione
         // CooldownDuration (post-attack cooldown in seconds)
         public virtual float CooldownDuration => 1.5f;
 
+        // CounterAttackChance
+        public virtual float CounterAttackChance => .35f;
+
         // ExecuteStepMovement
         public virtual void ExecuteStepMovement(Actor source, GameThing target, float stepDistance, float currentDistance)
         {

@@ -487,6 +487,9 @@ namespace Remizione
             Utils.ApplySoundEmitter(this, instance, masterVolume);
         }
 
+        // WillCounterAttack
+        protected virtual bool WillCounterAttack() => false;
+
         #endregion
 
         // AffectsPathfinding
@@ -1327,7 +1330,7 @@ namespace Remizione
             // ---------------------------------------------------------
             // El empuje se aplica independientemente de la vida. 
             // Una caja de metal indestructible (MaxHP=0) debería poder ser empujada.
-            if (MaxHP > 0 && knockbackForce != Vector2.Zero && !IgnoreKnockback)
+            if (MaxHP > 0 && knockbackForce != Vector2.Zero && !IgnoreKnockback && !WillCounterAttack())
             {
                 knockbackForce *= attacker.GetKnockbackMultiplier(this);
 

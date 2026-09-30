@@ -13,6 +13,7 @@ namespace Remizione
         {
         }
 
+        /*
         // Update
         public override void Update(GameTime gameTime)
         {
@@ -26,5 +27,6 @@ namespace Remizione
                     Machine.ChangeState<BodyStandState>();
             }
         }
+        */
     }
 }
