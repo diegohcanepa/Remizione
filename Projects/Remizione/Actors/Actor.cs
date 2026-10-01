@@ -756,7 +756,7 @@ namespace Remizione
         public GameThing? ExecutingActionTarget => (BodyMachine.CurrentState as BodyExecuteActionState)?.Target;
 
         // FastMove
-        public bool FastMove { get; set; }
+        public bool FastMove { get; private set; }
 
         // FastMoveFactor
         [ScriptProperty(CodingContext.EntityDeclaration)]
@@ -1021,11 +1021,14 @@ namespace Remizione
         }
 
         // MoveTo
-        public MoveToResult MoveTo(Vector2 destination, float slowMoveThreshold = 0)
+        public MoveToResult MoveTo(Vector2 destination, bool fastMove = false)
         {
             // No path needed
             if (WalkArea == null || IgnoreWalkArea)
+            {
+                this.FastMove = fastMove;
                 return base.MoveTo(destination);
+            }
 
             if (!CanMove)
                 return MoveToResult.MoveNotAllowed;
@@ -1037,20 +1040,13 @@ namespace Remizione
 
             // No path
             if (path == null || path.Length == 0)
-            {
-                FastMove = false;
                 return MoveToResult.NoPath;
-            }
 
             // Only one path node equals to starting position
             if (path.Length == 1 && path[0] == Position)
-            {
-                FastMove = false;
                 return MoveToResult.LessThan1px;
-            }
 
-            if (IsPlayer)
-                FastMove = CarriedProp == null && FastMoveFactor > 1 && Vector2.Distance(Position, path[^1]) > slowMoveThreshold;
+            this.FastMove = fastMove && CarriedProp == null;
 
             pendingPathNodes.Clear();
             pendingPathNodes.AddRange(path);

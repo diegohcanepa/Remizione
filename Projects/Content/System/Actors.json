@@ -6,6 +6,14 @@
       "baseDropChance": 0.3,
       "graceReward": 5,
       "isUnlockedByDefault": true,
+      "effects": [
+        {
+          "context": "Contact",
+          "effectType": "Damage",
+          "sound": "RatAttack",
+          "amount": "1"
+        }
+      ],
       "lootPool": [
         {
           "item": "Loquat",

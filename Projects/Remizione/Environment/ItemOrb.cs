@@ -43,7 +43,8 @@ namespace Remizione
 
             AttachedLight ??= new("Light")
             {
-                PivotOrigin = RectanglePoint.Center
+                PivotOrigin = RectanglePoint.Center,
+                Scale = new(1)
             };
 
             var lightKind = ItemReward.IsKeyItem ? LightKind.KeyItemOrb : LightKind.CommonItemOrb;

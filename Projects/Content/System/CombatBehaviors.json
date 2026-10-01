@@ -6,18 +6,11 @@
         "archetype": "Harasser",
         "intents": [
           {
-            "name": "Bite",
-            "soundTrigger": "RatAttack",
+            "name": "Charge",
+            "soundStart": "EnviousEyeMove",
             "actionKind": "Proximity",
             "isCharge": true,
-            "maxRange": 5,
-            "effects": [
-              {
-                "context": "Attack",
-                "effectType": "Damage",
-                "amount": "1"
-              }
-            ]
+            "maxRange": 15
           }
         ]
       },

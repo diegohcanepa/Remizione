@@ -29,7 +29,7 @@ namespace Remizione
             if (Owner.CarriedProp != null)
                 return AnimationNames.MoveCarry;
 
-            else if (Owner.FastMove)
+            else if (Owner.FastMove && Owner.ContainsAnimation(AnimationNames.MoveFast))
                 return AnimationNames.MoveFast;
 
             else

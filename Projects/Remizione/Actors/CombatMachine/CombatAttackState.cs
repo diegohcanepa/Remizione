@@ -20,25 +20,34 @@ namespace Remizione
                 return;
             }
 
-            // 1. Clavamos al jugador de entrada para que no siga caminando
-            if (Target == Owner.Session.Player)
+            bool isCharge = Intent.IsCharge;
+            Owner.AllowContactDamage = isCharge;
+
+            // 1. Clavamos al jugador SOLO si es un ataque melee normal.
+            // Si es un Charge, dejamos al jugador libre para que pueda clickear y esquivar.
+            if (!isCharge && Target == Owner.Session.Player)
             {
                 Target.StopMoving();
                 Owner.Session.AttackingNPC = Owner;
             }
 
-            // 2. Calculamos el punto de contacto ideal
-            var interactionPoint = Target.GetApproachPosition(Owner, ApproachBehavior.ClosestSide);
+            // 2. Calculamos el punto destino en base a donde está el jugador AHORA MISMO.
+            // Como tu motor no recalcula la ruta en el camino, el NPC irá ciegamente hacia acá.
+            var interactionPoint = isCharge ? Target.Position : Target.GetApproachPosition(Owner, ApproachBehavior.ClosestSide);
 
-            // 3. Le ordenamos al cuerpo del NPC caminar fluidamente hacia ese punto
-            Owner.FastMove = Intent.IsCharge;
-            Owner.MoveTo(interactionPoint);
+            // 3. Le ordenamos al cuerpo del NPC moverse. Si es charge, va con fast = true.
+            if (isCharge && Intent.SoundStart != null)
+                Owner.PlaySound(Intent.SoundStart);
+
+            Owner.MoveTo(interactionPoint, isCharge);
             currentPhase = AttackPhase.Aligning;
         }
 
         // Exit
         public override void Exit()
         {
+            Owner.AllowContactDamage = false;
+
             if (Target == Owner.Session.Player)
                 Owner.Session.AttackingNPC = null;
         }
@@ -55,17 +64,28 @@ namespace Remizione
             switch (currentPhase)
             {
                 case AttackPhase.Aligning:
-                    // Esperamos a que el NPC termine de caminar físicamente hasta el punto de contacto
+                    // Mientras se mueve (Aligning), si es un Charge y lo toca, 
+                    // tu motor de colisiones aplicará el daño por contacto por fuera de acá.
+
                     if (!Owner.IsMoving && Intent != null)
                     {
-                        // Llegó al punto exacto: pasamos a la fase de golpe e iniciamos la animación
-                        currentPhase = AttackPhase.Striking;
-                        Owner.ExecuteAction(Intent, Target);
+                        if (Intent.IsCharge)
+                        {
+                            // Si terminó de correr la embestida, ya sea que haya impactado o chocado la pared,
+                            // pasamos directamente al cooldown sin ejecutar animación estática de golpe.
+                            Machine.ChangeState<CombatCooldownState>();
+                        }
+                        else
+                        {
+                            // Llegó al punto exacto para un ataque normal: iniciamos la animación
+                            currentPhase = AttackPhase.Striking;
+                            Owner.ExecuteAction(Intent, Target);
+                        }
                     }
                     break;
 
                 case AttackPhase.Striking:
-                    // Mientras dure la animación de ataque, esperamos a que el cuerpo termine
+                    // Mientras dure la animación de ataque estático, esperamos a que el cuerpo termine
                     if (!Owner.IsExecutingAction)
                     {
                         Machine.ChangeState<CombatCooldownState>();

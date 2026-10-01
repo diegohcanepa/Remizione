@@ -20,27 +20,45 @@ namespace Remizione
 
             float distance = Owner.DistanceToTarget(target);
 
-            // Usamos MaxStepPerTurn como la magnitud del paso (ya sea para avanzar o huir)
+            // Usamos MaxStepPerTurn como la magnitud del paso
             float stepDistance = arch.MaxStepPerTurn;
 
-            // Si estamos avanzando, limitamos el paso para no traspasar al objetivo.
-            // (Si huimos, simplemente caminamos el paso entero hacia atrás).
+            // Limitamos el paso si estamos más cerca que el máximo
             if (distance < stepDistance)
                 stepDistance = distance;
 
-            // Delegamos la decisión direccional al arquetipo
+            // Iniciamos el movimiento ciego
             arch.ExecuteStepMovement(Owner, target, stepDistance, distance);
         }
 
         // Update
         public override void Update(GameTime gameTime)
         {
+            if (Owner.Session.Player is not Actor target)
+                return;
+
+            // 1. Interrupción por evento externo o fin natural del paso
             if (Owner.IsTargetedByPlayer || !Owner.IsMoving)
             {
-                if (Owner.IsTargetedByPlayer)
+                if (Owner.IsMoving)
                     Owner.StopMoving();
 
                 Machine.ChangeState<CombatExposedState>();
+                return;
+            }
+
+            // 2. Interrupción activa (Radar): Evaluar si durante la caminata entramos en rango de ataque
+            if (Owner.CombatBehavior?.Archetype is { } arch && Owner.HasLineOfSightTo(target))
+            {
+                float distance = Owner.DistanceToTarget(target);
+                var intent = arch.SelectIntent(Owner, Owner.CombatBehavior.Intents, distance);
+
+                // Si encontramos un ataque válido a mitad de camino, abortamos la caminata
+                if (intent != null)
+                {
+                    Owner.StopMoving();
+                    Machine.ChangeState<CombatExposedState>();
+                }
             }
         }
     }

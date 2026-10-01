@@ -178,6 +178,11 @@ namespace Remizione
                         if (thing is IHoleArea holeArea && holeArea.Contains(Position))
                         {
                             OnCollisioning(thing, out var handled);
+
+                            // Contact damage
+                            if (AllowContactDamage && Definition != null && thing.Faction != Faction.Evil)
+                                EffectDescriptor.Apply(Definition.EffectDescriptors, this, thing, EffectContext.Contact);
+
                             if (!handled)
                             {
                                 Position = holeArea.ClampOutside(Position);
@@ -504,6 +509,9 @@ namespace Remizione
         // AffectsPathfinding
         [ScriptProperty]
         public bool AffectsPathfinding { get; set; } = true;
+
+        // AllowContactDamage
+        public bool AllowContactDamage { get; set; }
 
         // AllowInteraction
         [ScriptProperty]

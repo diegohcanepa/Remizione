@@ -50,8 +50,8 @@ namespace Remizione
                 }
             }
 
-            var walkThreshold = this.IsAttack ? 0 : GameSettings.WalkThreshold;
-            var moveToResult = destination == Vector2.Zero ? MoveToResult.NoPath : player.MoveTo(destination, walkThreshold);
+            var fastMove = this.IsAttack ? true : Vector2.Distance(player.Position, destination) > GameSettings.WalkThreshold;
+            var moveToResult = destination == Vector2.Zero ? MoveToResult.NoPath : player.MoveTo(destination, fastMove);
 
             if (destination != Vector2.Zero && moveToResult == MoveToResult.NoPath)
             {
@@ -141,8 +141,8 @@ namespace Remizione
             {
                 Clear();
                 var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(player.Session.Camera);
-                var walkThreshold = player.HasHostilesNearby() ? 0 : GameSettings.WalkThreshold;
-                player.MoveTo(destination, walkThreshold);
+                var fastMove = player.HasHostilesNearby() ? true : Vector2.Distance(player.Position, destination) > GameSettings.WalkThreshold;
+                player.MoveTo(destination, fastMove);
                 return;
             }
 
