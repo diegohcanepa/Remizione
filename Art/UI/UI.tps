@@ -352,77 +352,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">MiniMap-assets/MiniMapCoin.png</key>
-            <key type="filename">MiniMap-assets/MiniMapCoinAndLoot.png</key>
-            <key type="filename">MiniMap-assets/MiniMapNodeCurrent.png</key>
-            <key type="filename">MiniMap-assets/MiniMapNodeEnd.png</key>
-            <key type="filename">MiniMap-assets/MiniMapNodeNotVisited.png</key>
-            <key type="filename">MiniMap-assets/MiniMapNodeStart.png</key>
-            <key type="filename">MiniMap-assets/MiniMapNodeVisited.png</key>
-            <key type="filename">MouseCursors-assets/MouseCursorArrowIcon.png</key>
-            <key type="filename">UI-assets/CheckMark.png</key>
-            <key type="filename">UI-assets/InteractionTargetMark.png</key>
-            <key type="filename">UI-assets/PointingHand.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,3,3</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,3,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">MiniMap-assets/MiniMapContainer.png</key>
-            <key type="filename">MiniMap-assets/MiniMapContainerBorder.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>7,5,15,11</rect>
-                <key>scale9Paddings</key>
-                <rect>7,5,15,11</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">MiniMap-assets/MiniMapHeart.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,1,3,3</rect>
-                <key>scale9Paddings</key>
-                <rect>1,1,3,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">MiniMap-assets/MiniMapLoot.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,2,3,3</rect>
-                <key>scale9Paddings</key>
-                <rect>1,2,3,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Modifiers-assets/RunModifierDarknessIcon.png</key>
             <key type="filename">Modifiers-assets/RunModifierToxicIcon.png</key>
             <key type="filename">Modifiers-assets/TraitLockpickingIcon.png</key>
@@ -456,6 +385,23 @@
                 <rect>60,34,120,67</rect>
                 <key>scale9Paddings</key>
                 <rect>60,34,120,67</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">MouseCursors-assets/MouseCursorArrowIcon.png</key>
+            <key type="filename">UI-assets/CheckMark.png</key>
+            <key type="filename">UI-assets/PointingHand.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,3,3</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,3,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -668,6 +614,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">UI-assets/MiniMapMarker.png</key>
             <key type="filename">UI-assets/Pixel.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -869,7 +816,6 @@
                     <filename>Items-assets</filename>
                     <filename>Inventory-assets</filename>
                     <filename>MonitorFrame-assets</filename>
-                    <filename>MiniMap-assets</filename>
                     <filename>DialogBox-assets</filename>
                     <filename>Modifiers-assets</filename>
                 </array>

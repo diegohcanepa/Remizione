@@ -1209,13 +1209,14 @@ namespace Remizione
         {
             get
             {
-                if (IsPlayer && CarriedProp != null)
-                    return Verb.Drop;
-
-                if (Faction == Faction.Evil)
-                    return Verb.Attack;
-
-                return DefaultVerb;
+                if (IsPlayer)
+                {
+                    return CarriedProp != null ? Verb.Drop : Verb.Attack;
+                }
+                else
+                {
+                    return DefaultVerb;
+                }
             }
         }
  

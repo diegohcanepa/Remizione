@@ -3,7 +3,6 @@ using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Remizione.InteractionCommands;
-using SharpDX.MediaFoundation.DirectX;
 
 namespace Remizione
 {
@@ -163,6 +162,7 @@ namespace Remizione
 
             // In-place action?
             bool executeInPlace = (context.HeldItem == null && Target == player) ||
+                                  (Target.Faction == Faction.Evil && Target.Verb == Verb.Examine && context.HeldItem == null) ||
                                   (context.HeldItem?.Definition.ActionKind is ActionKind.InPlace or ActionKind.Self);
 
             if (executeInPlace)

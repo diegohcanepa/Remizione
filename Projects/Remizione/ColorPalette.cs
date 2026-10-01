@@ -82,6 +82,16 @@ namespace Remizione
         // MessageBoxRedText
         internal static Color MessageBoxRedText { get; } = new(224, 144, 144);
 
+        // MiniMap
+        internal static class MiniMap
+        {
+            // Bonfire
+            internal static Color Bonfire { get; } = new(96, 96, 18);
+
+            // Player
+            internal static Color Player { get; } = Text.SkyBlue;
+        }
+
         // MouseCursor
         internal static class MouseCursor
         {
@@ -102,7 +112,7 @@ namespace Remizione
         internal static Color PopupTitle { get; } = new(116, 95, 75);
 
         // SceneShade
-        internal static Color SceneShade { get; } = Color.Black * .6f;
+        internal static Color SceneShade { get; } = Color.Black * .5f;
 
         // Shadow
         internal static Color Shadow { get; } = Color.Black * .3f;

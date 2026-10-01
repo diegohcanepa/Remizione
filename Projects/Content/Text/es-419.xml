@@ -33,7 +33,7 @@
   <String Key="Item.CrudeKey.Effect">Abre cerrojos</String>
   <String Key="Item.CrudeKey.Name">Llave rústica</String>
   <String Key="Item.GadlingKnuckle.Description">Una placa de hierro tosco, martillada a golpes sobre el cuero podrido de un guante de verdugo. De la articulación sobresale una púa piramidal, mellada y negra de mugre seca.</String>
-  <String Key="Item.GadlingKnuckle.Effect"></String>
+  <String Key="Item.GadlingKnuckle.Effect" />
   <String Key="Item.GadlingKnuckle.Name">Puño de púa</String>
   <String Key="Item.Lift.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Lift.Name">Alzar</String>
@@ -187,6 +187,9 @@ Bla bla bla</String>
   <String Key="Misc.DollarSign">$</String>
   <String Key="Misc.Enter">Entrar</String>
   <String Key="Misc.EnterTunnel">Ir al túnel</String>
+  <String Key="Misc.Epigraph">Un día tu vida se va a terminar y alguien va a tener que decidir qué hacer con tus cosas.
+Van a abrir tus cajones y hacer tres montones:
+lo que se queda, lo que se regala y lo que se tira.</String>
   <String Key="Misc.Here">Aquí</String>
   <String Key="Misc.Inscription">Leyenda</String>
   <String Key="Misc.Level">Nivel</String>

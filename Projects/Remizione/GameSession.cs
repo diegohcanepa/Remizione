@@ -29,6 +29,7 @@ namespace Remizione
         private readonly InventoryScene inventoryScene;
         private readonly ItemInfoScene itemInfoScene;
         private string? lastBonfireName;
+        private readonly MiniMapScene miniMapScene;
         private readonly NarrationScene narrationScene;
         private Vector2? playerPosition;
         private FrozenDictionary<string, GameThing>? proceduralCatalog;
@@ -62,6 +63,7 @@ namespace Remizione
             this.narrationScene = new NarrationScene(this);
             this.PlayerData = new(this);
             this.inventoryScene = new(PlayerData.Inventory);
+            this.miniMapScene = new(this);
             this.itemInfoScene = new(this);
             this.HUD = new(this);
             this.LootGenerator = new(this);
@@ -470,18 +472,15 @@ namespace Remizione
                     InteractionContext.Refresh();
             }
 
-            if (PlayerData.Inventory.Count > 0)
+            if (Player != null && !IsAwaiting && PlayerData.Inventory.Count > 0 && IsCurrentScene)
             {
-                if (Player != null && Player.CarriedProp == null)
+                if (Player.CarriedProp == null)
                 {
-                    if (!IsAwaiting && IsCurrentScene)
+                    if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
                     {
-                        if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
-                        {
-                            InteractionContext.HeldItem = null;
-                            ShowInventory();
-                            return;
-                        }
+                        InteractionContext.HeldItem = null;
+                        ShowInventory();
+                        return;
                     }
                 }
             }
@@ -822,8 +821,7 @@ namespace Remizione
         // ShowInventory
         public void ShowInventory()
         {
-            if (inventoryScene != null)
-                Game.SceneManager.Push(inventoryScene);
+            Game.SceneManager.Push(inventoryScene);
         }
 
         // ShowItemInfo
@@ -831,6 +829,13 @@ namespace Remizione
         {
             itemInfoScene.Show(item);
             Game.SceneManager.Push(itemInfoScene);
+        }
+
+        // ShowMiniMap
+        public void ShowMiniMap()
+        {
+            Player?.StopMoving();
+            Game.SceneManager.Push(miniMapScene);
         }
 
         // Unlock

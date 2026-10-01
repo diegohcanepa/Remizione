@@ -55,7 +55,7 @@ namespace Engendro.Input
             previousState = state;
             state = Mouse.GetState();
 
-            // 1. Left button hold
+            // Left button hold
             if (state.LeftButton == ButtonState.Pressed)
             {
                 LeftButtonHoldTime += gameTime.ElapsedGameTime.Milliseconds;
@@ -65,7 +65,17 @@ namespace Engendro.Input
                 LeftButtonHoldTime = 0;
             }
 
-            // 2. Right button hold
+            // Middle button hold
+            if (state.MiddleButton == ButtonState.Pressed)
+            {
+                MiddleButtonHoldTime += gameTime.ElapsedGameTime.Milliseconds;
+            }
+            else
+            {
+                MiddleButtonHoldTime = 0;
+            }
+
+            // Right button hold
             if (state.RightButton == ButtonState.Pressed)
             {
                 RightButtonHoldTime += gameTime.ElapsedGameTime.Milliseconds;
@@ -131,6 +141,30 @@ namespace Engendro.Input
             return IsButtonUp(state.LeftButton);
         }
 
+        // IsMiddleButtonDown
+        public bool IsMiddleButtonDown()
+        {
+            return IsButtonDown(state.MiddleButton);
+        }
+
+        // IsMiddleButtonHeld
+        public bool IsMiddleButtonHeld(int threshold = 500)
+        {
+            return InputManager.AllowMouse && !InputManager.IsSuspended && MiddleButtonHoldTime >= threshold;
+        }
+
+        // IsMiddleButtonPressed
+        public bool IsMiddleButtonPressed()
+        {
+            return IsButtonPressed(state.MiddleButton, previousState.MiddleButton);
+        }
+
+        // IsMiddleButtonUp
+        public bool IsMiddleButtonUp()
+        {
+            return IsButtonUp(state.MiddleButton);
+        }
+
         // IsRightButtonDown
         public bool IsRightButtonDown()
         {
@@ -158,6 +192,9 @@ namespace Engendro.Input
         // LeftButtonHoldTime
         public int LeftButtonHoldTime { get; private set; }
 
+        // MiddleButtonHoldTime
+        public int MiddleButtonHoldTime { get; private set; }
+
         // Position
         public Point Position => state.Position;
 
@@ -169,6 +206,7 @@ namespace Engendro.Input
         {
             previousState = state;
             LeftButtonHoldTime = 0;
+            MiddleButtonHoldTime = 0;
             RightButtonHoldTime = 0;
         }
 

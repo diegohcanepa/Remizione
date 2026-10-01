@@ -52,6 +52,8 @@ namespace Remizione
 
             dustEmitter ??= new DustEmitter(session, 6, 1000, 35);
             fireflyEmitter ??= new FireflyEmitter(session, 1, 500, 20);
+
+            this.Label = TextRepository.GetValue($"Room.{Name}");
         }
 
         #endregion
@@ -381,12 +383,21 @@ namespace Remizione
         {
             base.OnLoad();
 
+            MiniMapImage = Atlas?.FindImage("Map");
+
             // Follow player
             if (FollowPlayer && Session.Player?.Room == this)
                 Session.Camera.Follow(Session.Player, true);
 
             lightMapTarget = Game.RenderTargets.AuxiliaryTargets[0];
             lightSources.Clear();
+        }
+
+        // OnUnload
+        protected override void OnUnload()
+        {
+            base.OnUnload();
+            MiniMapImage = null;
         }
 
         // OnUpdate
@@ -516,6 +527,9 @@ namespace Remizione
         // IsWalkable
         public virtual bool IsWalkable => true;
 
+        // Label
+        public string Label { get; }
+
         // LightingSystem
         [ScriptProperty]
         public bool LightingSystem { get; set; }
@@ -526,6 +540,9 @@ namespace Remizione
 
         // Lights
         public NamedReadOnlyCollection<Light> Lights { get; }
+
+        // MiniMapImage
+        public AtlasImage? MiniMapImage { get; private set; }
 
         // SelectWalkArea
         public void SelectWalkArea(string name)

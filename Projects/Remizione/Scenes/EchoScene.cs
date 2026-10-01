@@ -138,7 +138,7 @@ namespace Remizione
 
             CanClose = false;
 
-            textSprite.StartTyping();
+            //textSprite.StartTyping();
 
             textOpacityTween.Start(TweenStyle.CubicIn, 0, 1, 500);
             textSprite.Tweens.OpacityTween = textOpacityTween;

@@ -133,11 +133,6 @@ namespace Remizione
                     MouseCursor.Icon = MouseCursorIcon.Drop;
                     break;
 
-                // Rest
-                case Verb.Rest:
-                    MouseCursor.Icon = MouseCursorIcon.Flame;
-                    break;
-
                 // Talk
                 case Verb.Talk:
                     MouseCursor.Icon = MouseCursorIcon.Talk;

@@ -14,12 +14,7 @@
 
             resolvedIntent = null;
 
-            if (heldItem == null)
-            {
-                if (verb == Verb.Attack)
-                    resolvedIntent = player.CombatBehavior?.Intents[0];
-            }
-            else
+            if (heldItem != null)
             {
                 if (!Utils.IsGoToVerb(verb) && heldItem.Definition.ActionKind != ActionKind.ScriptOutcome)
                     resolvedIntent = player.CombatBehavior?.Intents.Find(heldItem.Name);

@@ -28,10 +28,17 @@ namespace Remizione
                 return HandleInputResult.Handled;
             }
 
-            // Rigght button
+            // Right button
             if (mouse.IsRightButtonPressed())
             {
                 Owner.Session.InteractionData.ProcessSecondaryAction(Owner);
+                return HandleInputResult.Handled;
+            }
+
+            // Middle button
+            if (InputBindings.Map.IsPressed(0))
+            {
+                Owner.Session.ShowMiniMap();
                 return HandleInputResult.Handled;
             }
 

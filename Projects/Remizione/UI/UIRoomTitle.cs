@@ -43,7 +43,7 @@ namespace Remizione.UI
         #endregion
 
         // Show
-        public void Show(Room room)
+        public void Show(GameRoom room)
         {
             void Hide()
             {
@@ -52,7 +52,7 @@ namespace Remizione.UI
                 labelText.Tweens.OpacityTween = opacityTween;
             }
 
-            labelText.Text = TextRepository.GetValue($"Room.{room.Name}");
+            labelText.Text = room.Label;
 
             labelText.Position = Screen.Area.GetPoint(RectanglePoint.Top, 0, 14);
 
