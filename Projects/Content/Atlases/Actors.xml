@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:81c4171892101dc7c06e1090a32419da:385df7658b52eec17d6bc85edae9fc74:b23792595b5c0e9561078184f535bec7$ -->
+<!-- $TexturePacker:SmartUpdate:57adce5c93d5af56b93b5434557ff0b9:832a923ea976af6fc12f89961958b933:b23792595b5c0e9561078184f535bec7$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -20,17 +20,17 @@ verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="Actors.png" width="512" height="512">
-    <sprite n="EnviousEye-assets/Move01.png" x="419" y="54" w="16" h="7"/>
-    <sprite n="EnviousEye-assets/Move02.png" x="419" y="63" w="16" h="7"/>
-    <sprite n="EnviousEye-assets/Move03.png" x="489" y="62" w="16" h="7"/>
-    <sprite n="EnviousEye-assets/MoveFast01.png" x="419" y="54" w="16" h="7"/>
-    <sprite n="EnviousEye-assets/MoveFast02.png" x="419" y="63" w="16" h="7"/>
-    <sprite n="EnviousEye-assets/MoveFast03.png" x="489" y="62" w="16" h="7"/>
-    <sprite n="EnviousEye-assets/Stand01.png" x="489" y="71" w="16" h="7"/>
-    <sprite n="EnviousEye-assets/Stand02.png" x="263" y="70" w="16" h="7"/>
-    <sprite n="EnviousEye-assets/Stand03.png" x="281" y="70" w="16" h="7"/>
-    <sprite n="EnviousEye-assets/Stand04.png" x="489" y="71" w="16" h="7"/>
-    <sprite n="EnviousEye-assets/Stand05.png" x="299" y="70" w="16" h="7"/>
+    <sprite n="EnviousEye-assets/Move01.png" x="419" y="54" w="16" h="8"/>
+    <sprite n="EnviousEye-assets/Move02.png" x="419" y="64" w="16" h="8"/>
+    <sprite n="EnviousEye-assets/Move03.png" x="489" y="62" w="16" h="8"/>
+    <sprite n="EnviousEye-assets/MoveFast01.png" x="419" y="54" w="16" h="8"/>
+    <sprite n="EnviousEye-assets/MoveFast02.png" x="419" y="64" w="16" h="8"/>
+    <sprite n="EnviousEye-assets/MoveFast03.png" x="489" y="62" w="16" h="8"/>
+    <sprite n="EnviousEye-assets/Stand01.png" x="489" y="72" w="16" h="8"/>
+    <sprite n="EnviousEye-assets/Stand02.png" x="263" y="70" w="16" h="8"/>
+    <sprite n="EnviousEye-assets/Stand03.png" x="281" y="70" w="16" h="8"/>
+    <sprite n="EnviousEye-assets/Stand04.png" x="489" y="72" w="16" h="8"/>
+    <sprite n="EnviousEye-assets/Stand05.png" x="299" y="70" w="16" h="8"/>
     <sprite n="Hopeless-assets/Stand01.png" x="2" y="496" w="24" h="14"/>
     <sprite n="Hopeless-assets/Vanish01.png" x="28" y="496" w="24" h="14"/>
     <sprite n="Hopeless-assets/Vanish02.png" x="263" y="54" w="24" h="14"/>

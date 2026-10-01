@@ -157,7 +157,7 @@ namespace Remizione
 
             // In-place action?
             bool executeInPlace = (context.HeldItem == null && Target == player) ||
-                                  (Target.Faction == Faction.Evil && Verb == Verb.Examine && context.HeldItem == null) ||
+                                  (Verb == Verb.Examine && context.HeldItem == null) ||
                                   (context.HeldItem?.Definition.ActionKind is ActionKind.InPlace or ActionKind.Self);
 
             if (executeInPlace)
