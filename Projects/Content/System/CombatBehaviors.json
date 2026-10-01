@@ -9,19 +9,13 @@
             "name": "Bite",
             "soundTrigger": "RatAttack",
             "actionKind": "Proximity",
+            "isCharge": true,
             "maxRange": 5,
-            "missChance": 0.25,
             "effects": [
               {
                 "context": "Attack",
                 "effectType": "Damage",
                 "amount": "1"
-              },
-              {
-                "context": "Attack",
-                "effectType": "Damage",
-                "damageType": "Poison",
-                "amount": "2"
               }
             ]
           }

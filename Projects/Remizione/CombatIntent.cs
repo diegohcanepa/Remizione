@@ -33,6 +33,9 @@ namespace Remizione
             // InPlaceEffectType
             InPlaceEffectType = element.GetEnum("inPlaceEffectType", InPlaceEffectType.None);
 
+            // IsCharge
+            IsCharge = element.GetBool("isCharge", false);
+
             // MinRange
             MinRange = element.GetInt32("minRange", 0);
             if (MinRange < 0)
@@ -46,7 +49,6 @@ namespace Remizione
 
             if (MinRange > MaxRange)
                 RaiseValidationError(this, $"Minimum range ({MinRange}) exceeds maximum range ({MaxRange}).", nameof(MaxRange));
-
 
             // MissChance
             MissChance = Math.Max(0, element.GetFloat("missChance", 0));
@@ -86,11 +88,14 @@ namespace Remizione
         // Category
         public CombatIntentCategory Category { get; }
 
+        // HPCost
+        public int HPCost { get; }
+
         // InPlaceEffectType
         public InPlaceEffectType InPlaceEffectType { get; }
 
-        // HPCost
-        public int HPCost { get; }
+        // IsCharge
+        public bool IsCharge { get; }
 
         // MaxRange
         public int MaxRange { get; }

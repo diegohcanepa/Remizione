@@ -40,6 +40,9 @@
         "energyCost": {
           "type": "integer"
         },
+        "isCharge": {
+          "type": "boolean"
+        },
         "minRange": {
           "type": "integer"
         },

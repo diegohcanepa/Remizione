@@ -1,4 +1,5 @@
-﻿using Adberration.Scripting;
+﻿using Adberration;
+using Adberration.Scripting;
 using Microsoft.Xna.Framework;
 
 namespace Remizione.Scripting
@@ -39,7 +40,7 @@ namespace Remizione.Scripting
 
             var destination = target.GetApproachPosition(source, behavior);
 
-            directionCooldown = source.MoveTo(destination) == Adberration.MoveToResult.Success ? 300 : 0;
+            directionCooldown = source.MoveTo(destination) == MoveToResult.Success ? 300 : 0;
         }
 
         // OnExecutionCompleted

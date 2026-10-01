@@ -3,14 +3,10 @@
   "data": [
     {
       "name": "EnviousEye",
-      "baseDropChance": 1,
+      "baseDropChance": 0.3,
       "graceReward": 5,
       "isUnlockedByDefault": true,
       "lootPool": [
-        {
-          "item": "<Nothing>",
-          "weight": 20
-        },
         {
           "item": "Loquat",
           "weight": 10

@@ -514,7 +514,7 @@ namespace Remizione
             // Evaluamos el azar usando la probabilidad del arquetipo
             float roll = Random.Shared.NextSingle(); // Retorna un float entre 0.0f y 1.0f
 
-            if (roll<arch.CounterAttackChance)
+            if (roll < arch.CounterAttackChance)
             {
                 // ¡CONTRAATAQUE!
                 // 1. Forzamos al jugador a clavar su posición para recibir el golpe

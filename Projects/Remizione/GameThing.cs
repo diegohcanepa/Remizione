@@ -494,7 +494,10 @@ namespace Remizione
         }
 
         // WillCounterAttack
-        protected virtual bool WillCounterAttack() => false;
+        protected virtual bool WillCounterAttack()
+        {
+            return false;
+        }
 
         #endregion
 

@@ -45,6 +45,6 @@
         public const string UserSettingsFileName = "UserSettings.cfg";
 
         // WalkThreshold
-        public const int WalkThreshold = 30;
+        public const int WalkThreshold = 15;
     }
 }

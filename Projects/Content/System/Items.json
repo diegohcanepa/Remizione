@@ -56,6 +56,7 @@
 			"actionKind": "Proximity",
 			"allowDrop": false,
 			"deselectOnUse": false,
+			"isDepletable": false,
 			"isKeyItem": true,
 			"effects": [
 				{

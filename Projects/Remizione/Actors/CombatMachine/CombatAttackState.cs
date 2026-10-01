@@ -31,6 +31,7 @@ namespace Remizione
             var interactionPoint = Target.GetApproachPosition(Owner, ApproachBehavior.ClosestSide);
 
             // 3. Le ordenamos al cuerpo del NPC caminar fluidamente hacia ese punto
+            Owner.FastMove = Intent.IsCharge;
             Owner.MoveTo(interactionPoint);
             currentPhase = AttackPhase.Aligning;
         }

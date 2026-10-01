@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -176,7 +175,7 @@ namespace Remizione
         private sealed class Marker : GameObject
         {
             private readonly Sprite image = new(Atlases.UI.MiniMapMarker)
-            { 
+            {
                 PivotOrigin = RectanglePoint.Center,
                 Scale = new(2)
             };

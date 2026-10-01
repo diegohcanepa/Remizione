@@ -527,7 +527,7 @@ namespace Remizione
                 // Orbs
                 foreach (var orb in room.Children.OfType<ItemOrb>())
                 {
-                    if (orb.ItemReward is { IsKeyItem : true } itemDef)
+                    if (orb.ItemReward is { IsKeyItem: true } itemDef)
                     {
                         var value = $"{itemDef.Name}|{XmlConvert.ToString(orb.ItemRewardAmount)}|{room.Name}|{DataConvert.ToString(orb.Position)}";
                         keyItems.Add(value);

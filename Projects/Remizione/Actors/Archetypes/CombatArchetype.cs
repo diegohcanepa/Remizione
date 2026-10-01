@@ -78,7 +78,7 @@ namespace Remizione
 
         // AwarenessRange
         // A qué distancia me detecta un enemigo en idle
-        public virtual float AwarenessRange => 100f;
+        public virtual float AwarenessRange => 10;
 
         // CooldownDuration (post-attack cooldown in seconds)
         public virtual float CooldownDuration => 1.5f;
@@ -144,7 +144,7 @@ namespace Remizione
 
         // LoseSightRange
         // A qué distancia me deja de perseguir aunque lo esté viendo
-        public virtual float LoseSightRange => 200;
+        public virtual float LoseSightRange => 20;
 
         // MaxStepPerTurn
         public virtual float MaxStepPerTurn => 40;
