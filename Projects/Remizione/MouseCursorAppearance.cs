@@ -22,6 +22,12 @@ namespace Remizione
             if (context.Target != null && !context.Target.CanInteract())
                 return;
 
+            if (context.Session.Player?.CarriedProp != null && context.Target != null)
+            {
+                SyncIcon(Verb.Attack);
+                return;
+            }
+
             // Modal speech text active
             if (SpeechText.ModalInstance != null)
             {
@@ -32,12 +38,6 @@ namespace Remizione
             if (context.Session.AttackingNPC != null)
             {
                 MouseCursor.Icon = MouseCursorIcon.Skull;
-                return;
-            }
-
-            if (context.Session.IsAwaiting)
-            {
-                MouseCursor.Icon = MouseCursorIcon.Wait;
                 return;
             }
 
@@ -126,11 +126,6 @@ namespace Remizione
                 // Pickup
                 case Verb.PickUp:
                     MouseCursor.Icon = MouseCursorIcon.Sack;
-                    break;
-
-                // Place
-                case Verb.Drop:
-                    MouseCursor.Icon = MouseCursorIcon.Drop;
                     break;
 
                 // Talk

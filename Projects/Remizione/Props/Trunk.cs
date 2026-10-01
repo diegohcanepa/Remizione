@@ -107,6 +107,8 @@ namespace Remizione
 
             if (IsOpen && ItemReward != null)
                 lootImage.Update(gameTime);
+
+            Verb = IsOpen && ItemReward != null ? Verb.PickUp : base.Verb;
         }
 
         #endregion
@@ -131,8 +133,5 @@ namespace Remizione
                 }
             }
         }
-
-        // Verb
-        public override Verb Verb => IsOpen && ItemReward != null ? Verb.PickUp : base.Verb;
     }
 }

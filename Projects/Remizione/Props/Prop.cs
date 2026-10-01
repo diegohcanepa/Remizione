@@ -26,9 +26,9 @@ namespace Remizione
             : base(session, name)
         {
             this.IgnoreKnockback = true;
-            this.DefaultVerb = Verb.Use;
             this.IsHittable = false;
             this.Definition = GameData.Props.Find(DeclaredName);
+            this.Verb = Verb.Use;
 
             // Shadow
             this.Shadow = new Sprite()

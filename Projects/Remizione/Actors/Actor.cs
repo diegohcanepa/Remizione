@@ -43,12 +43,12 @@ namespace Remizione
             this.ApproachBehavior = ApproachBehavior.FaceToFace;
             this.LabelKey = $"Actor.{DeclaredName}";
             this.IgnoreWalkArea = false;
-            this.DefaultVerb = Verb.Talk;
             this.Faction = Definition == null ? Faction.Good : Definition.Faction;
             this.CombatBehavior = GameData.CombatBehaviors.Find(DeclaredName);
             this.BodyMachine = new StateMachine<Actor>(this, new BodyStandState());
             this.BodyMachine.AddState(new BodyMoveState());
             this.ShadowSpotSize = 6;
+            this.Verb = Verb.Talk;
 
             // CombatMachine
             if (CombatBehavior != null)
@@ -1203,22 +1203,5 @@ namespace Remizione
             CarriedProp = null;
             BodyMachine.ChangeState(state.GetType());
         }
-
-        // Verb
-        public override Verb Verb
-        {
-            get
-            {
-                if (IsPlayer)
-                {
-                    return CarriedProp != null ? Verb.Drop : Verb.Attack;
-                }
-                else
-                {
-                    return DefaultVerb;
-                }
-            }
-        }
- 
     }
 }

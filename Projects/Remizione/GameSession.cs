@@ -142,6 +142,7 @@ namespace Remizione
             AotTypeRegistry.Register("create-dialog-block", typeof(CreateDialogBlockCommand));
             AotTypeRegistry.Register("echo", typeof(EchoCommand));
             AotTypeRegistry.Register("ensure-session-scene", typeof(EnsureSessionSceneCommand));
+            AotTypeRegistry.Register("epigrah", typeof(EpigraphCommand));
             AotTypeRegistry.Register("exit-session", typeof(ExitSessionCommand));
             AotTypeRegistry.Register("if-can-pickup-item-reward", typeof(IfCanPickUpItemRewardStatement));
             AotTypeRegistry.Register("if-test-skill", typeof(IfTestSkillStatement));
@@ -580,6 +581,17 @@ namespace Remizione
                 Game.SceneManager.Push(echoScene);
 
             echoScene.Show(text);
+        }
+
+        // Epigrah
+        public void Epigrah(string text)
+        {
+            if (Game.SceneManager.CurrentScene is not EpigrahScene)
+            {
+                var scene = new EpigrahScene();
+                Game.SceneManager.Push(scene);
+                scene.Show(text);
+            }
         }
 
         // Environment

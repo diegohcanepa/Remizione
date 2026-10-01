@@ -16,18 +16,17 @@ namespace Remizione
         private InteractionCommand? activeCommand;
         private readonly CombatCommand combatCommand = new();
         private readonly InteractionCommand[] commandChain;
-        private readonly DropCarriedPropCommand endLiftCommand = new();
         private readonly ItemCommand itemCommand = new();
         private readonly LiftCommand liftCommand = new();
         private readonly ScriptOutcomeCommand scriptCommand = new();
-        private readonly ThrowCommand throwCommand = new();
+        private readonly ThrowCarriedPropCommand throwCommand = new();
 
         #endregion
 
         // Constructor
         public InteractionData()
         {
-            this.commandChain = [throwCommand, combatCommand, endLiftCommand, liftCommand, scriptCommand, itemCommand];
+            this.commandChain = [throwCommand, combatCommand, liftCommand, scriptCommand, itemCommand];
         }
 
         #region Private members
@@ -70,12 +69,8 @@ namespace Remizione
         {
             Clear();
 
-            // Player is carrying prop. Can attack or drop only
             if (player.CarriedProp != null)
-            {
-                if (verb is not Verb.Attack and not Verb.Drop)
-                    return;
-            }
+                verb = Verb.Attack;
 
             var heldItem = player.Session.InteractionContext.HeldItem;
             if (heldItem != null && !Utils.IsGoToVerb(verb))
@@ -162,7 +157,7 @@ namespace Remizione
 
             // In-place action?
             bool executeInPlace = (context.HeldItem == null && Target == player) ||
-                                  (Target.Faction == Faction.Evil && Target.Verb == Verb.Examine && context.HeldItem == null) ||
+                                  (Target.Faction == Faction.Evil && Verb == Verb.Examine && context.HeldItem == null) ||
                                   (context.HeldItem?.Definition.ActionKind is ActionKind.InPlace or ActionKind.Self);
 
             if (executeInPlace)
@@ -181,8 +176,12 @@ namespace Remizione
 
             Clear();
 
-            // Remove held item
-            if (context.HeldItem == null)
+            if (player.CarriedProp != null)
+            {
+                player.StopMoving();
+                player.DropCarriedProp();
+            }
+            else if (context.HeldItem == null)
             {
                 context.HeldItem = player.Session.PlayerData.Inventory.Find(ItemNames.GadlingKnuckle);
             }

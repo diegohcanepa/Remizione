@@ -11,7 +11,7 @@
         {
             Atlas = Atlases.Props;
             IgnoreWalkArea = false;
-            DefaultVerb = Verb.PickUp;
+            Verb = Verb.PickUp;
         }
     }
 }

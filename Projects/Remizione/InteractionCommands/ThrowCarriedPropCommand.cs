@@ -1,9 +1,9 @@
 ﻿namespace Remizione.InteractionCommands
 {
     /// <summary>
-    /// ThrowCommand
+    /// ThrowCarriedPropCommand
     /// </summary>
-    public sealed class ThrowCommand : InteractionCommand
+    public sealed class ThrowCarriedPropCommand : InteractionCommand
     {
         // CanExecute
         public override bool CanExecute(InteractionData data, Actor player, GameThing target, Verb verb)

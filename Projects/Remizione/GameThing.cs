@@ -608,10 +608,6 @@ namespace Remizione
         [ScriptProperty]
         public int CollisionHeight { get; set; }
 
-        // DefaultVerb
-        [ScriptProperty]
-        public Verb DefaultVerb { get; set; }
-
         // Definition
         public virtual ThingDefinition? Definition { get; }
 
@@ -1366,7 +1362,7 @@ namespace Remizione
 
         // Verb
         [ScriptProperty]
-        public virtual Verb Verb => DefaultVerb;
+        public Verb Verb { get; set; }
 
         // WalkArea
         public WalkArea? WalkArea
