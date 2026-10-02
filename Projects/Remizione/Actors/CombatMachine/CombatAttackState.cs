@@ -21,7 +21,7 @@ namespace Remizione
             }
 
             bool isCharge = Intent.IsCharge;
-            Owner.AllowContactDamage = isCharge;
+            Owner.IsDealingContactDamage = isCharge;
 
             // 1. Clavamos al jugador SOLO si es un ataque melee normal.
             // Si es un Charge, dejamos al jugador libre para que pueda clickear y esquivar.
@@ -46,7 +46,7 @@ namespace Remizione
         // Exit
         public override void Exit()
         {
-            Owner.AllowContactDamage = false;
+            Owner.IsDealingContactDamage = false;
 
             if (Target == Owner.Session.Player)
                 Owner.Session.AttackingNPC = null;

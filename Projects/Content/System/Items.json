@@ -27,7 +27,7 @@
 				{
 					"context": "Use",
 					"effectType": "HPGain",
-					"amount": "4",
+					"amount": "2",
 					"target": "Self",
 					"sound": "ConsumeBite"
 				}

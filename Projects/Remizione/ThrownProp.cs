@@ -21,7 +21,6 @@ namespace Remizione
 
         #region Private fields
 
-        private readonly float throwArcHeight = 2; // Altura máxima en px que sube el prop sobre la línea de tiro
         private float depth;
         private readonly Actor owner;
         private GameThing? target;

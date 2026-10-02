@@ -180,7 +180,7 @@ namespace Remizione
                             OnCollisioning(thing, out var handled);
 
                             // Contact damage
-                            if (AllowContactDamage && Definition != null && thing.Faction != Faction.Evil)
+                            if (IsDealingContactDamage && Definition != null && thing.Faction != Faction.Evil)
                                 EffectDescriptor.Apply(Definition.EffectDescriptors, this, thing, EffectContext.Contact);
 
                             if (!handled)
@@ -495,20 +495,11 @@ namespace Remizione
             Utils.ApplySoundEmitter(this, instance, masterVolume);
         }
 
-        // WillCounterAttack
-        protected virtual bool WillCounterAttack()
-        {
-            return false;
-        }
-
         #endregion
 
         // AffectsPathfinding
         [ScriptProperty]
         public bool AffectsPathfinding { get; set; } = true;
-
-        // AllowContactDamage
-        public bool AllowContactDamage { get; set; }
 
         // AllowInteraction
         [ScriptProperty]
@@ -1007,6 +998,9 @@ namespace Remizione
         [ScriptProperty]
         public bool IsDead => (HP <= 0 && MaxHP > 0) || (HP == int.MinValue);
 
+        // IsDealingContactDamage
+        public bool IsDealingContactDamage { get; set; }
+
         // IsFacingTarget
         public bool IsFacingTarget(GameThing target)
         {
@@ -1274,6 +1268,8 @@ namespace Remizione
             if (!CanTakeDamage())
                 return 0;
 
+            StopMoving();
+
             // ---------------------------------------------------------
             // 1. FEEDBACK INICIAL
             // ---------------------------------------------------------
@@ -1336,7 +1332,7 @@ namespace Remizione
             // ---------------------------------------------------------
             // El empuje se aplica independientemente de la vida. 
             // Una caja de metal indestructible (MaxHP=0) debería poder ser empujada.
-            if (MaxHP > 0 && knockbackForce != Vector2.Zero && !IgnoreKnockback && !WillCounterAttack())
+            if (MaxHP > 0 && knockbackForce != Vector2.Zero && !IgnoreKnockback)
             {
                 knockbackForce *= attacker.GetKnockbackMultiplier(this);
 
