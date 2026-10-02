@@ -35,21 +35,9 @@ namespace Remizione
         private void ApproachAndExecute(Actor player, GameThing target)
         {
             ApproachBehavior? behavior = this.IsAttack || player.CarriedProp != null ? ApproachBehavior.ClosestSide : null;
+            
             var destination = target.GetApproachPosition(player, behavior);
-
-            // Adjust distance for range attacks
-            if (destination != Vector2.Zero)
-            {
-                if (player.CarriedProp != null)
-                {
-                    destination.X += target.X < player.X ? 32 : -32;
-                }
-                else if (player.Session.InteractionContext.HeldItem?.Definition.ActionKind == ActionKind.Projectile)
-                {
-                    destination.X = player.X;
-                }
-            }
-
+            
             var fastMove = this.IsAttack ? true : Vector2.Distance(player.Position, destination) > GameSettings.WalkThreshold;
             var moveToResult = destination == Vector2.Zero ? MoveToResult.NoPath : player.MoveTo(destination, fastMove);
 
@@ -156,7 +144,8 @@ namespace Remizione
             }
 
             // In-place action?
-            bool executeInPlace = (context.HeldItem == null && Target == player) ||
+            bool executeInPlace = (player.CarriedProp != null) ||
+                                  (context.HeldItem == null && Target == player) ||
                                   (Verb == Verb.Examine && context.HeldItem == null) ||
                                   (context.HeldItem?.Definition.ActionKind is ActionKind.InPlace or ActionKind.Self);
 

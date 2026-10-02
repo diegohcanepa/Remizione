@@ -137,7 +137,7 @@ namespace Remizione
         */
 
         // ExposedPauseDuration
-        public virtual float ExposedPauseDuration => 4;
+        public virtual float ExposedPauseDuration => 2;
 
         // FallbackMovement
         public virtual FallbackMovementKind FallbackMovement => FallbackMovementKind.None;

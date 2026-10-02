@@ -356,7 +356,6 @@
             <key type="filename">Modifiers-assets/RunModifierToxicIcon.png</key>
             <key type="filename">Modifiers-assets/TraitLockpickingIcon.png</key>
             <key type="filename">Modifiers-assets/TraitLuckIcon.png</key>
-            <key type="filename">MouseCursors-assets/MouseCursorAttackIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorCrossIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorSkullIcon.png</key>
             <struct type="IndividualSpriteSettings">
@@ -409,6 +408,8 @@
             <key type="filename">MouseCursors-assets/MouseCursorEyeIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorLeftIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorRightIcon.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorTargetGreenIcon.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorTargetRedIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorUpIcon.png</key>
             <key type="filename">UI-assets/ProhibitionIcon.png</key>
             <key type="filename">UIIcons-assets/HeartIcon.png</key>

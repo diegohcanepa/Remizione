@@ -1069,10 +1069,6 @@ namespace Remizione
         [ScriptProperty]
         public bool IsStatic { get; set; }
 
-        // IsTargetedByPlayer
-        public bool IsTargetedByPlayer => Session.Player?.ExecutingActionTarget == this ||
-                       Session.InteractionData.Target == this;
-
         // ItemReward
         public ItemDefinition? ItemReward
         {

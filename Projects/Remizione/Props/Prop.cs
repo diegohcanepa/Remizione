@@ -247,5 +247,9 @@ namespace Remizione
 
             return success;
         }
+
+        // ThrownDistance
+        [ScriptProperty]
+        public ThrowDistance ThrownDistance { get; set; }
     }
 }

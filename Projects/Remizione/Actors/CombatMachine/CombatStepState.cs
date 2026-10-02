@@ -38,11 +38,8 @@ namespace Remizione
                 return;
 
             // 1. Interrupción por evento externo o fin natural del paso
-            if (Owner.IsTargetedByPlayer || !Owner.IsMoving)
+            if (!Owner.IsMoving)
             {
-                if (Owner.IsMoving)
-                    Owner.StopMoving();
-
                 Machine.ChangeState<CombatExposedState>();
                 return;
             }

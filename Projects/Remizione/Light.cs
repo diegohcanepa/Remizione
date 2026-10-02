@@ -57,7 +57,7 @@ namespace Remizione
             {
                 LightKind.Fire => new Color(255, 160, 160),
                 LightKind.KeyItemOrb => ColorPalette.Text.SkyBlue,
-                LightKind.CommonItemOrb => ColorPalette.Text.YellowDark,
+                LightKind.CommonItemOrb => ColorPalette.Text.TerraLight,
                 LightKind.SulfurBonfire => new(184, 196, 81),
                 LightKind.Outdoor => ColorPalette.OutdoorLight,
                 LightKind.Player => Color.White * .7f,

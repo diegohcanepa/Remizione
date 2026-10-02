@@ -22,7 +22,7 @@ namespace Remizione
             Atlas = Atlases.Environment;
             Hotspot = new Polygon("0,0;9,0;9,7;0,7");
             RenderLayer = RenderLayer.Default;
-            AttachedLightPosition = new(3, 4);
+            AttachedLightPosition = new(5, 4);
         }
 
         #endregion
@@ -44,7 +44,7 @@ namespace Remizione
             AttachedLight ??= new("Light")
             {
                 PivotOrigin = RectanglePoint.Center,
-                Scale = new(1)
+                Scale = new(1, .5f)
             };
 
             var lightKind = ItemReward.IsKeyItem ? LightKind.KeyItemOrb : LightKind.CommonItemOrb;
