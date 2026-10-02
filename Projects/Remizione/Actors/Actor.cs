@@ -60,6 +60,9 @@ namespace Remizione
                 CombatMachine.AddState(new CombatCooldownState());
                 CombatMachine.Start();
             }
+
+            if (Definition?.HP > 0)
+                MaxHP = Definition.HP;
         }
 
         #endregion

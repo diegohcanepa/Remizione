@@ -29,6 +29,9 @@ namespace Remizione
             // GraceReward
             GraceReward = element.GetInt32("graceReward", 0);
 
+            // HP
+            HP = element.GetInt32("hp", 0);
+
             // LootPool
             var tempPool = new ChanceTable();
             if (element.TryGetProperty("lootPool", out JsonElement poolArray))
@@ -90,6 +93,9 @@ namespace Remizione
 
         // GraceReward
         public int GraceReward { get; }
+
+        // HP
+        public int HP { get; }
 
         // LootPool
         public ReadOnlyChanceTable LootPool { get; }

@@ -5,6 +5,7 @@
       "name": "EnviousEye",
       "baseDropChance": 0.3,
       "graceReward": 5,
+      "hp": 2,
       "isUnlockedByDefault": true,
       "effects": [
         {
@@ -20,10 +21,6 @@
           "weight": 10
         }
       ]
-    },
-    {
-      "name": "Rat",
-      "isUnlockedByDefault": false
     }
   ]
 }

@@ -25,9 +25,9 @@ namespace Remizione
         public Prop(GameSession session, string name)
             : base(session, name)
         {
+            this.Definition = GameData.Props.Find(DeclaredName);
             this.IgnoreKnockback = true;
             this.IsHittable = false;
-            this.Definition = GameData.Props.Find(DeclaredName);
             this.Verb = Verb.Use;
 
             // Shadow
@@ -36,6 +36,9 @@ namespace Remizione
                 Opacity = ColorPalette.ShadowOpacity,
                 PivotOrigin = RectanglePoint.Bottom,
             };
+
+            if (Definition?.HP > 0)
+                MaxHP = Definition.HP;
         }
 
         #endregion

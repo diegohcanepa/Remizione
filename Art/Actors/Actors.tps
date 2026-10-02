@@ -391,31 +391,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Rat-assets/Bite01.png</key>
-            <key type="filename">Rat-assets/Bite02.png</key>
-            <key type="filename">Rat-assets/Bite03.png</key>
-            <key type="filename">Rat-assets/Move01.png</key>
-            <key type="filename">Rat-assets/Move02.png</key>
-            <key type="filename">Rat-assets/Move03.png</key>
-            <key type="filename">Rat-assets/Move04.png</key>
-            <key type="filename">Rat-assets/Move05.png</key>
-            <key type="filename">Rat-assets/Stand01.png</key>
-            <key type="filename">Rat-assets/Stand02.png</key>
-            <key type="filename">Rat-assets/Stand03.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>7,4,14,7</rect>
-                <key>scale9Paddings</key>
-                <rect>7,4,14,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
         </map>
         <key>fileLists</key>
         <map type="SpriteSheetMap">
@@ -425,7 +400,6 @@
                 <array>
                     <filename>Penitent-assets</filename>
                     <filename>EnviousEye-assets</filename>
-                    <filename>Rat-assets</filename>
                     <filename>InertShadow-assets</filename>
                     <filename>Hopeless-assets</filename>
                 </array>

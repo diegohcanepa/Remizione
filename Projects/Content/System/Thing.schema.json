@@ -20,6 +20,9 @@
         "graceReward": {
           "type": "integer"
         },
+        "hp": {
+          "type": "integer"
+        },
         "lootPool": {
           "type": "array",
           "items": {
@@ -53,7 +56,10 @@
           "default": 0,
           "minimum": 1
         }
-      }
+      },
+      "required": [
+        "hp"
+      ]
     }
   ]
 }
