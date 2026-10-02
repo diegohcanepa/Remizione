@@ -35,6 +35,12 @@ namespace Remizione
                 return HandleInputResult.Handled;
             }
 
+            if (InputBindings.Map.IsPressed(0))
+            {
+                Owner.Session.ShowMiniMap();
+                return HandleInputResult.Handled;
+            }
+
             return HandleInputResult.Unhandled;
         }
 

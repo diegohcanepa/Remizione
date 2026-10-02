@@ -20,8 +20,9 @@ namespace Remizione
             Hotspot = new Polygon("0,0;9,0;9,7;0,7");
             OpacityFactor = .5f;
             RenderLayer = RenderLayer.Default;
-            AllowInertShadowInteraction = true;
         }
+
+        #region Protected members
 
         // OnLoad
         protected override void OnLoad()
@@ -44,5 +45,10 @@ namespace Remizione
                 OpacityFactor = fadeTween.CurrentValue;
             }
         }
+
+        #endregion
+
+        // CanInteract
+        public override bool CanInteract() => true;
     }
 }

@@ -301,9 +301,6 @@ namespace Remizione
 
         #region Protected members
 
-        // AllowInertShadowInteraction
-        protected bool AllowInertShadowInteraction { get; init; }
-
         // BlocksLineOfSight
         protected virtual bool BlocksLineOfSight => false;
 
@@ -540,16 +537,16 @@ namespace Remizione
         // CanInteract
         public virtual bool CanInteract()
         {
-            if (!AllowInertShadowInteraction)
-            {
-                if (Session.Player == null || Session.Player.MaxHP == 0)
-                    return false;
-            }
+            if (Verb == Verb.None || Session.Player == null)
+                return false;
 
             if (!AllowInteraction)
                 return false;
 
             if (IsDead || string.IsNullOrWhiteSpace(Label))
+                return false;
+
+            if (Session.Player.MaxHP == 0)
                 return false;
 
             return InteractCondition == null || InteractCondition.Evaluate();

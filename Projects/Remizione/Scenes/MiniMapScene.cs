@@ -109,8 +109,13 @@ namespace Remizione
                     if (thing.IsPlayer)
                         markers.Add(new(thing, ColorPalette.MiniMap.Player, true));
 
-                    else if (thing is Bonfire)
-                        markers.Add(new(thing, ColorPalette.MiniMap.Bonfire, false));
+                    // Bonfire
+                    else if (thing is Bonfire bonfire)
+                        markers.Add(new(thing, bonfire.IsLit ? ColorPalette.MiniMap.Bonfire : ColorPalette.MiniMap.Default, false));
+
+                    // Ground torch
+                    else if (thing is GroundTorch groundTorch)
+                        markers.Add(new(thing, groundTorch.IsLit ? ColorPalette.MiniMap.Torch : ColorPalette.MiniMap.Default, false));
                 }
             }
         }
