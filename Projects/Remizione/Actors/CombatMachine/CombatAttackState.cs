@@ -25,7 +25,7 @@ namespace Remizione
 
             // 1. Clavamos al jugador SOLO si es un ataque melee normal.
             // Si es un Charge, dejamos al jugador libre para que pueda clickear y esquivar.
-            if (!isCharge && Target == Owner.Session.Player)
+            if (Target == Owner.Session.Player)
             {
                 Target.StopMoving();
                 Owner.Session.AttackingNPC = Owner;

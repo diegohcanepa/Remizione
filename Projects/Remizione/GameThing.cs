@@ -178,17 +178,42 @@ namespace Remizione
                         if (thing is IHoleArea holeArea && holeArea.Contains(Position))
                         {
                             OnCollisioning(thing, out var handled);
-
-                            // Contact damage
-                            if (IsDealingContactDamage && Definition != null && thing.Faction != Faction.Evil)
-                                EffectDescriptor.Apply(Definition.EffectDescriptors, this, thing, EffectContext.Contact);
-
                             if (!handled)
                             {
                                 Position = holeArea.ClampOutside(Position);
                                 OnCollision(thing);
                             }
                         }
+                    }
+                }
+            }
+        }
+
+        // CheckContactDamage
+        private void CheckContactDamage()
+        {
+            if (!IsDealingContactDamage || Room == null)
+                return;
+
+            for (int i = 0; i < Room.CulledThings.Count; i++)
+            {
+                // Skip if it is the same thing
+                if (Room.CulledThings[i] == this)
+                    continue;
+
+                if (Room.CulledThings[i] is GameThing thing)
+                {
+                    if (thing.IsDead)
+                        continue;
+
+                    if (Altitude > thing.CollisionHeight)
+                        continue;
+
+                    // If thing is an obstacle (walk area hole)
+                    if (thing.RuntimeHotspot.ContainsVertex(RuntimeHotspot))
+                    {
+                        if (Definition != null && thing.Faction != Faction.Evil)
+                            EffectDescriptor.Apply(Definition.EffectDescriptors, this, thing, EffectContext.Contact);
                     }
                 }
             }
@@ -487,6 +512,8 @@ namespace Remizione
             }
 
             AttachedLight?.Update(gameTime);
+
+            CheckContactDamage();
         }
 
         // OnUpdateEmittingSound

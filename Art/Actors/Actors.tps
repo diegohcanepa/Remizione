@@ -258,6 +258,36 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Monk-assets/Stand01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,8,9,15</rect>
+                <key>scale9Paddings</key>
+                <rect>5,8,9,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Monk-assets/Stand02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,7,5,13</rect>
+                <key>scale9Paddings</key>
+                <rect>2,7,5,13</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Penitent-assets/Consume01.png</key>
             <key type="filename">Penitent-assets/Consume02.png</key>
             <key type="filename">Penitent-assets/Consume03.png</key>
@@ -407,6 +437,7 @@
                     <filename>EnviousEye-assets</filename>
                     <filename>InertShadow-assets</filename>
                     <filename>Hopeless-assets</filename>
+                    <filename>Monk-assets</filename>
                 </array>
             </struct>
         </map>

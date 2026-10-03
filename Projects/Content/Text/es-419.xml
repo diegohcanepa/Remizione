@@ -2,8 +2,8 @@
 <Strings>
   <String Key="Actor.EnviousEye">Ojo</String>
   <String Key="Actor.Hopeless">Desahuciado</String>
+  <String Key="Actor.Monk">Celador</String>
   <String Key="Actor.Penitent">Penitente</String>
-  <String Key="Actor.Rat">Rata</String>
   <String Key="DamageType.Physical">Físico</String>
   <String Key="EffectTemplate.Damage">{amount} daño</String>
   <String Key="EffectTemplate.EnergyRestore">Recarga de baba</String>
@@ -33,7 +33,7 @@
   <String Key="Item.CrudeKey.Effect">Abre cerrojos</String>
   <String Key="Item.CrudeKey.Name">Llave rústica</String>
   <String Key="Item.GadlingKnuckle.Description">Una placa de hierro tosco, martillada a golpes sobre el cuero podrido de un guante de verdugo. De la articulación sobresale una púa piramidal, mellada y negra de mugre seca.</String>
-  <String Key="Item.GadlingKnuckle.Effect"></String>
+  <String Key="Item.GadlingKnuckle.Effect" />
   <String Key="Item.GadlingKnuckle.Name">Puño de púa</String>
   <String Key="Item.Lift.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Lift.Name">Alzar</String>

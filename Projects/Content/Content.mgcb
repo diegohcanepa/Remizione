@@ -803,6 +803,20 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/SpeakerMale3.wav;Audio/FX/SpeakerMale3
 
+#begin Audio/FX/SpeakerMonk1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/SpeakerMonk1.wav;Audio/FX/SpeakerMonk1
+
+#begin Audio/FX/SpeakerMonk2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/SpeakerMonk2.wav;Audio/FX/SpeakerMonk2
+
 #begin Audio/FX/SpearTrap.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
