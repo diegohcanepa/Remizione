@@ -89,10 +89,10 @@ namespace Remizione
             internal static Color Bonfire { get; } = new(96, 96, 18);
 
             // Default
-            internal static Color Default { get; } = ColorPalette.Text.Terra;
+            internal static Color Default { get; } = Text.Terra;
 
             // Player
-            internal static Color Player { get; } = MouseCursor.Tooltip;
+            internal static Color Player { get; } = Text.SkyBlue;
 
             // Torch
             internal static Color Torch { get; } = Text.Red;

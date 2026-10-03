@@ -113,13 +113,13 @@ namespace Remizione
     }
 
     // MessageKind
-    public enum MessageKind { CannotPlaceItem, GateOpened, HandsFull, InventoryFull, LiftNotAllowed, OutOfReach, OutOfLine, StackFull }
+    public enum MessageKind { CannotPlaceItem, InventoryFull, OutOfReach, OutOfSight, StackFull }
 
     // MeterColor
     public enum MeterColor { Green, Orange, Purple, SkyBlue, White }
 
     // MouseCursorIcon
-    public enum MouseCursorIcon { Cross, Arrow, Down, Eye, Hand, Left, Lift, Right, Sack, Skull, Talk, TargetGreen, TargetRed, Up, Wait }
+    public enum MouseCursorIcon { Cross, Arrow, Down, Eye, Hand, Left, Lift, Right, Sack, Skull, Talk, Target, Up, Wait }
 
     // NameValidationRule
     public enum NameValidationRule

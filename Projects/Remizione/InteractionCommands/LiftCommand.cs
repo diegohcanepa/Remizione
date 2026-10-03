@@ -15,7 +15,7 @@
         public override void Execute(InteractionData data, Actor player, GameThing target, Verb verb)
         {
             if (target is Prop prop && verb == Verb.Lift)
-                player.Lift(prop);
+                player.Hold(prop);
         }
     }
 }

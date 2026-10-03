@@ -94,7 +94,7 @@ namespace Remizione
             markers.Clear();
 
             map.RenderImage = session.Room?.MiniMapImage;
-            titleText.Position = map.BoundingBox.GetPoint(RectanglePoint.Top, 0, -5);
+            titleText.Position = map.BoundingBox.GetPoint(RectanglePoint.Top, 0, -1);
             titleText.Text = session.Room?.Label;
 
             if (session.Room is not GameRoom room)

@@ -37,7 +37,9 @@ namespace Remizione
 
                 // The overload part must be the item name
                 if (script.ScriptType == ScriptType.Outcome && script.OverloadName.Length > 0)
+                {
                     itemName = script.OverloadName;
+                }
 
                 // If script name is an item verb
                 else if (script.Name.StartsWith("Item-", StringComparison.Ordinal))

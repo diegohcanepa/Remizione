@@ -34,7 +34,6 @@ namespace Remizione
             {
                 if (Session.Room.CulledThings[i] is GameThing target)
                 {
-                    //if (!target.IsMoving && target.CanInteract() && target.RuntimeHotspot.Contains(mousePos))
                     if (target.CanInteract() && target.RuntimeHotspot.Contains(mousePos))
                         return target;
                 }
@@ -52,6 +51,13 @@ namespace Remizione
         public void Refresh()
         {
             Target = Session.IsGameplayActive ? ScanTarget() : null;
+
+            // Clear target if player is carrying a prop and the target is undestructible (MaxHP == 0)
+            if (Session.Player?.HeldProp != null)
+            {
+                if (Target != null && Target.MaxHP == 0)
+                    Target = null;
+            }
 
             if (HeldItem?.Amount == 0)
                 HeldItem = null;

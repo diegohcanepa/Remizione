@@ -19,7 +19,7 @@ namespace Remizione
         private readonly ItemCommand itemCommand = new();
         private readonly LiftCommand liftCommand = new();
         private readonly ScriptOutcomeCommand scriptCommand = new();
-        private readonly ThrowCarriedPropCommand throwCommand = new();
+        private readonly ThrowHelpPropCommand throwCommand = new();
 
         #endregion
 
@@ -34,10 +34,10 @@ namespace Remizione
         // ApproachAndExecute
         private void ApproachAndExecute(Actor player, GameThing target)
         {
-            ApproachBehavior? behavior = this.IsAttack || player.CarriedProp != null ? ApproachBehavior.ClosestSide : null;
-            
+            ApproachBehavior? behavior = this.IsAttack || player.HeldProp != null ? ApproachBehavior.ClosestSide : null;
+
             var destination = target.GetApproachPosition(player, behavior);
-            
+
             var fastMove = this.IsAttack ? true : Vector2.Distance(player.Position, destination) > GameSettings.WalkThreshold;
             var moveToResult = destination == Vector2.Zero ? MoveToResult.NoPath : player.MoveTo(destination, fastMove);
 
@@ -57,7 +57,7 @@ namespace Remizione
         {
             Clear();
 
-            if (player.CarriedProp != null)
+            if (player.HeldProp != null)
                 verb = Verb.Attack;
 
             var heldItem = player.Session.InteractionContext.HeldItem;
@@ -125,11 +125,11 @@ namespace Remizione
             var context = player.Session.InteractionContext;
 
             // 1. Walk to (no target)
-            if (context.Target == null)
+            if (context.Target == null || (context.Target is Actor actor && actor.HeldProp != null))
             {
                 Clear();
                 var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(player.Session.Camera);
-                var fastMove = player.HasHostilesNearby() ? true : Vector2.Distance(player.Position, destination) > GameSettings.WalkThreshold;
+                var fastMove = player.HasHostilesNearby() || Vector2.Distance(player.Position, destination) > GameSettings.WalkThreshold;
                 player.MoveTo(destination, fastMove);
                 return;
             }
@@ -144,7 +144,7 @@ namespace Remizione
             }
 
             // In-place action?
-            bool executeInPlace = (player.CarriedProp != null) ||
+            bool executeInPlace = (player.HeldProp != null) ||
                                   (context.HeldItem == null && Target == player) ||
                                   (Verb == Verb.Examine && context.HeldItem == null) ||
                                   (context.HeldItem?.Definition.ActionKind is ActionKind.InPlace or ActionKind.Self);
@@ -165,10 +165,9 @@ namespace Remizione
 
             Clear();
 
-            if (player.CarriedProp != null)
+            if (player.HeldProp != null)
             {
-                player.StopMoving();
-                player.DropCarriedProp();
+                player.ReleaseHeldProp();
             }
             else if (context.HeldItem == null)
             {

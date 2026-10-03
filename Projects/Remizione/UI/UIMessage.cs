@@ -77,11 +77,7 @@ namespace Remizione
 
             var color = ColorPalette.Text.Highlight;
 
-            if (message is MessageKind.LiftNotAllowed)
-            {
-                Sound.Play(SoundNames.Error);
-            }
-            else if (message is MessageKind.InventoryFull or MessageKind.StackFull)
+            if (message is MessageKind.InventoryFull or MessageKind.StackFull)
             {
                 icon.RenderImage = Atlases.UI.Sack;
             }

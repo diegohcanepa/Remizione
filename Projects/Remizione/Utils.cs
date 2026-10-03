@@ -2,7 +2,6 @@
 using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
-using System;
 
 namespace Remizione
 {
@@ -80,21 +79,6 @@ namespace Remizione
             };
 
             return result;
-        }
-
-        // Factor de compresión para el eje Y (0.5f a 0.6f suele ser el estándar para top-down 2.5D / isométrico)
-        public const float YPerspectiveFactor = 0.5f;
-
-        /// <summary>
-        /// Calcula la distancia real sobre el plano del suelo compensando la compresión visual del eje Y.
-        /// </summary>
-        public static float FlatDistance(Vector2 origin, Vector2 destination)
-        {
-            float dx = destination.X - origin.X;
-            // Escalamos la diferencia vertical para ajustarla a la escala real del suelo
-            float dy = (destination.Y - origin.Y) / YPerspectiveFactor;
-
-            return MathF.Sqrt(dx * dx + dy * dy);
         }
 
         // GetVersion

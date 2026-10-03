@@ -32,8 +32,19 @@ namespace Remizione
             }
 
             // 2. Calculamos el punto destino en base a donde está el jugador AHORA MISMO.
-            // Como tu motor no recalcula la ruta en el camino, el NPC irá ciegamente hacia acá.
             var interactionPoint = isCharge ? Target.Position : Target.GetApproachPosition(Owner, ApproachBehavior.ClosestSide);
+
+            // [NUEVO] Opción 2: IA Comprometida/Castigable.
+            // Si el objetivo está más lejos que nuestro rango máximo (porque se alejó),
+            // recortamos el punto de destino para que el enemigo golpee al aire.
+            Vector2 direction = interactionPoint - Owner.Position;
+            float currentDistance = direction.Length();
+
+            if (currentDistance > Intent.MaxRange && currentDistance > 0)
+            {
+                direction.Normalize();
+                interactionPoint = Owner.Position + (direction * Intent.MaxRange);
+            }
 
             // 3. Le ordenamos al cuerpo del NPC moverse. Si es charge, va con fast = true.
             if (isCharge && Intent.SoundStart != null)

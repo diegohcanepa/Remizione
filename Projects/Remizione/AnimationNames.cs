@@ -19,6 +19,7 @@
         internal const string MoveFast = nameof(MoveFast);
         internal const string Open = nameof(Open);
         internal const string PickUp = nameof(PickUp);
+        internal const string Place = nameof(Place);
         internal const string Stand = nameof(Stand);
         internal const string StandCarry = nameof(StandCarry);
         internal const string Stun = nameof(Stun);

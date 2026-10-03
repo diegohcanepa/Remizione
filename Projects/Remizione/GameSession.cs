@@ -475,7 +475,7 @@ namespace Remizione
 
             if (Player != null && !IsAwaiting && PlayerData.Inventory.Count > 0 && IsCurrentScene)
             {
-                if (Player.CarriedProp == null)
+                if (Player.HeldProp == null)
                 {
                     if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
                     {

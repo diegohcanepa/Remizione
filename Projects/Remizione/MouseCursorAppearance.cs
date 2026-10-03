@@ -22,19 +22,9 @@ namespace Remizione
             if (context.Target != null && !context.Target.CanInteract())
                 return;
 
-            if (context.Session.Player?.CarriedProp != null && context.Target != null)
+            if (context.Session.Player?.HeldProp != null && context.Target != null)
             {
-                if (context.Target.IsPlayer)
-                {
-                    SyncIcon(Verb.None);
-                }
-                else
-                {
-                    SyncIcon(Verb.Attack);
-                    if (!ThrownProp.IsInThrowRange(context.Session.Player, context.Session.Player.CarriedProp, context.Target))
-                        MouseCursor.Icon = MouseCursorIcon.TargetRed;
-                }
-
+                SyncIcon(context.Target.IsPlayer ? Verb.None : Verb.Attack);
                 return;
             }
 
@@ -100,7 +90,7 @@ namespace Remizione
             {
                 // Attack
                 case Verb.Attack:
-                    MouseCursor.Icon = MouseCursorIcon.TargetGreen;
+                    MouseCursor.Icon = MouseCursorIcon.Target;
                     break;
 
                 // Examine

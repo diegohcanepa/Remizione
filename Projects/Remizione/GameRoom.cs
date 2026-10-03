@@ -154,6 +154,20 @@ namespace Remizione
             Game.SpriteBatch.End();
         }
 
+        // DrawThrowTrajectory
+        private void DrawThrowTrajectory(GameTime gameTime)
+        {
+            if (MouseCursor.Icon != MouseCursorIcon.Target)
+                return;
+
+            if (Session.Player?.HeldProp != null && Session.InteractionContext.Target?.RuntimeHotspot != null)
+            {
+                Game.SpriteBatch.Begin(Session.Camera, SamplerState.PointClamp, BlendState.AlphaBlend, null);
+                UIThrowTrajectory.Draw(gameTime, Session.Player, Session.Player.HeldProp, Session.InteractionContext.Target.RuntimeHotspot.BoundingRectangleF.Center);
+                Game.SpriteBatch.End();
+            }
+        }
+
         // DrawThings
         private void DrawThings(GameTime gameTime, RenderLayer renderLayer)
         {
@@ -338,6 +352,9 @@ namespace Remizione
                 Session.HUD.DestinationMark.Draw(gameTime);
                 Game.SpriteBatch.End();
             }
+
+            // Draw thrown trajectory if the player is carrying a prop and aiming at a hotspot
+            DrawThrowTrajectory(gameTime);
 
             // Default (layer)
             DrawThings(gameTime, RenderLayer.Default);

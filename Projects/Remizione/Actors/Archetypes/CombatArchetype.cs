@@ -147,7 +147,7 @@ namespace Remizione
         public virtual float LoseSightRange => 100;
 
         // MaxStepPerTurn
-        public virtual float MaxStepPerTurn => 40;
+        public virtual float MaxStepPerTurn => 10;
 
         // SelectIntent
         public virtual CombatIntent? SelectIntent(Actor source, IList<CombatIntent> intents, float distance)

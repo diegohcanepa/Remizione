@@ -89,7 +89,7 @@ namespace Remizione
                 return;
 
             // Si el item no es apilable y lo tenemos agarrado, no dibujamos la sombra/icono en el slot
-            if (isItemHeld && !Item!.Definition.IsStackable)
+            if (isItemHeld && !Item.Definition.IsStackable)
                 return;
 
             shadow.Draw(gameTime);

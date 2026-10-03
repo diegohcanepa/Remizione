@@ -10,7 +10,7 @@
             "soundStart": "EnviousEyeMove",
             "actionKind": "Proximity",
             "isCharge": true,
-            "maxRange": 15
+            "maxRange": 20
           }
         ]
       },

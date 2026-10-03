@@ -3,15 +3,15 @@
 namespace Remizione
 {
     /// <summary>
-    /// BodyLiftState
+    /// BodyPlaceHeldPropState
     /// </summary>
-    public sealed class BodyLiftState : BodyAnimatedState
+    public sealed class BodyPlaceHeldPropState : BodyAnimatedState
     {
         private bool eventDone;
 
         // Constructor
-        public BodyLiftState()
-            : base(AnimationNames.PickUp, false)
+        public BodyPlaceHeldPropState()
+            : base(AnimationNames.Place, false)
         {
         }
 
@@ -19,6 +19,7 @@ namespace Remizione
         public override void Enter()
         {
             base.Enter();
+            Owner.PlaySound(SoundNames.PenitentEffortRelease);
             eventDone = false;
         }
 
@@ -31,8 +32,6 @@ namespace Remizione
             if (!eventDone && Owner.AnimationPlayer.Frame?.IsTrigger == true)
             {
                 eventDone = true;
-                //Owner.PlaySound(SoundNames.Gesture1);
-                Owner.CarriedProp = Target;
                 return;
             }
 

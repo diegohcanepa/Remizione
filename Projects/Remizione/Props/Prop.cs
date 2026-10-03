@@ -14,7 +14,7 @@ namespace Remizione
 
         private bool isRevealBoxDirty;
         private List<AtlasImage>? remainsPieces;
-        private readonly FloatTween revealTween = new();
+        private FloatTween? revealTween;
         private readonly FloatTween xTween = new();
 
         #endregion
@@ -27,7 +27,7 @@ namespace Remizione
         {
             this.Definition = GameData.Props.Find(DeclaredName);
             this.IgnoreKnockback = true;
-            this.IsHittable = false;
+            //this.IsHittable = false;
             this.Verb = Verb.Use;
 
             // Shadow
@@ -75,31 +75,34 @@ namespace Remizione
             const int tweenDuration = 200;
             const float revealOpacity = .5f;
 
-            if (Session.Player != null && RevealBox.Contains(Session.Player.Position))
+            if (revealTween != null)
             {
-                if (Sprite.OpacityFactor == revealOpacity)
-                    return;
+                if (Session.Player != null && RevealBox.Contains(Session.Player.Position))
+                {
+                    if (Sprite.OpacityFactor == revealOpacity)
+                        return;
 
-                if (!revealTween.IsRunning || revealTween.EndValue == 1)
-                    revealTween.Start(TweenStyle.Linear, Sprite.OpacityFactor, .5f, tweenDuration);
-            }
-            else
-            {
-                if (Sprite.OpacityFactor == 1)
-                    return;
+                    if (!revealTween.IsRunning || revealTween.EndValue == 1)
+                        revealTween.Start(TweenStyle.Linear, Sprite.OpacityFactor, .5f, tweenDuration);
+                }
+                else
+                {
+                    if (Sprite.OpacityFactor == 1)
+                        return;
 
-                if (!revealTween.IsRunning || revealTween.EndValue == revealOpacity)
-                    revealTween.Start(TweenStyle.Linear, Sprite.OpacityFactor, 1, tweenDuration);
-            }
+                    if (!revealTween.IsRunning || revealTween.EndValue == revealOpacity)
+                        revealTween.Start(TweenStyle.Linear, Sprite.OpacityFactor, 1, tweenDuration);
+                }
 
-            if (revealTween.IsRunning)
-            {
-                revealTween.Update(gameTime);
-                Sprite.OpacityFactor = revealTween.CurrentValue;
-            }
-            else
-            {
-                Sprite.OpacityFactor = 1;
+                if (revealTween.IsRunning)
+                {
+                    revealTween.Update(gameTime);
+                    Sprite.OpacityFactor = revealTween.CurrentValue;
+                }
+                else
+                {
+                    Sprite.OpacityFactor = 1;
+                }
             }
         }
 
@@ -202,15 +205,27 @@ namespace Remizione
         // Definition
         public override PropDefinition? Definition { get; }
 
-        // GetCarriedPropImageName
-        public virtual string GetCarriedPropImageName()
+        // GetHeldPropImageName
+        public virtual string GetHeldPropImageName()
         {
             return DeclaredName;
         }
 
         // RevealArea
         [ScriptProperty]
-        public Rectangle RevealArea { get; set; }
+        public Rectangle RevealArea
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    isRevealBoxDirty = true;
+                    revealTween ??= new();
+                }
+            }
+        }
 
         // SkillChancePenalty
         [ScriptProperty]
@@ -253,6 +268,26 @@ namespace Remizione
 
         // ThrownDistance
         [ScriptProperty]
-        public ThrowDistance ThrownDistance { get; set; }
+        public ThrowDistance ThrownDistance
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    ThrownDistanceInPixels = ThrownDistance switch
+                    {
+                        ThrowDistance.Short => 50,
+                        ThrowDistance.Long => 100,
+                        ThrowDistance.None => 0,
+                        _ => throw new System.NotImplementedException(),
+                    };
+                }
+            }
+        }
+
+        // ThrownDistanceInPixels
+        public float ThrownDistanceInPixels { get; private set; }
     }
 }

@@ -49,6 +49,9 @@ namespace Remizione
         #endregion
 
         // CanInteract
-        public override bool CanInteract() => true;
+        public override bool CanInteract()
+        {
+            return true;
+        }
     }
 }

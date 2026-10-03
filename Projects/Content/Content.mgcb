@@ -649,6 +649,20 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/PenitentDeath.wav;Audio/FX/PenitentDeath
 
+#begin Audio/FX/PenitentEffort.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/PenitentEffort.wav;Audio/FX/PenitentEffort
+
+#begin Audio/FX/PenitentEffortRelease.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/PenitentEffortRelease.wav;Audio/FX/PenitentEffortRelease
+
 #begin Audio/FX/PickupCoin.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

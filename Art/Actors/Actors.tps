@@ -288,6 +288,11 @@
             <key type="filename">Penitent-assets/MoveCarry06.png</key>
             <key type="filename">Penitent-assets/MoveCarry07.png</key>
             <key type="filename">Penitent-assets/MoveCarry08.png</key>
+            <key type="filename">Penitent-assets/Place01.png</key>
+            <key type="filename">Penitent-assets/Place02.png</key>
+            <key type="filename">Penitent-assets/Place03.png</key>
+            <key type="filename">Penitent-assets/Place04.png</key>
+            <key type="filename">Penitent-assets/Place05.png</key>
             <key type="filename">Penitent-assets/RaiseArm01.png</key>
             <key type="filename">Penitent-assets/RaiseArm02.png</key>
             <key type="filename">Penitent-assets/RaiseArm03.png</key>

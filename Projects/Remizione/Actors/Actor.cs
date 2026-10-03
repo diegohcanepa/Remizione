@@ -18,9 +18,9 @@ namespace Remizione
 
         private Blinker<float>? blinkTimer;
         private BloodSplash? bloodSplash;
-        private Sprite? carriedPropSprite;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
+        private Sprite? heldPropSprite;
         private const float InitialSpeedMultiplier = .15f;
         private Vector2? lastKnownLiftPosition;
         private readonly FloatTween moveVerticalTween = new();
@@ -226,7 +226,7 @@ namespace Remizione
             if (FastMove)
                 result *= FastMoveFactor;
 
-            if (CarriedProp != null)
+            if (HeldProp != null)
                 result *= .9f;
 
             // Se aplica la curva de aceleración al resultado final
@@ -341,10 +341,10 @@ namespace Remizione
 
             bloodSplash?.Draw(gameTime);
 
-            if (carriedPropSprite?.RenderImage != null)
+            if (heldPropSprite?.RenderImage != null)
             {
-                carriedPropSprite.Position = RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, 3);
-                carriedPropSprite.Draw(gameTime);
+                heldPropSprite.Position = RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, 3);
+                heldPropSprite.Draw(gameTime);
             }
 
             if (tintTween.IsRunning)
@@ -450,7 +450,7 @@ namespace Remizione
                 CombatMachine.ChangeState<CombatHurtState>();
             }
 
-            DiscardCarriedProp();
+            DiscardHeldProp();
 
             if (!IsDead)
                 FaceTo(attacker);
@@ -574,7 +574,7 @@ namespace Remizione
         // CanInteract
         public override bool CanInteract()
         {
-            if (IsPlayer && Session.InteractionContext.HeldItem == null && CarriedProp == null)
+            if (IsPlayer && Session.InteractionContext.HeldItem == null && HeldProp == null)
                 return false;
 
             return base.CanInteract();
@@ -590,33 +590,6 @@ namespace Remizione
                 return false;
 
             return base.CanTakeDamage();
-        }
-
-        // CarriedProp
-        [ScriptProperty]
-        public Prop? CarriedProp
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-
-                    if (field != null)
-                    {
-                        carriedPropSprite ??= new Sprite() { PivotOrigin = RectanglePoint.Bottom };
-                        carriedPropSprite.RenderImage = Atlases.Environment.FindImage(field.GetCarriedPropImageName());
-                        field.Unparent();
-                        Stand();
-                    }
-                    else
-                    {
-                        carriedPropSprite?.RenderImage = null;
-                        Stand(true);
-                    }
-                }
-            }
         }
 
         // Charge
@@ -636,50 +609,50 @@ namespace Remizione
         // Definition
         public override ActorDefinition? Definition { get; }
 
-        // DiscardCarriedProp
+        // DiscardHeldProp
         [ScriptMethod]
-        public void DiscardCarriedProp()
+        public void DiscardHeldProp()
         {
-            if (CarriedProp == null)
+            if (HeldProp == null)
                 return;
 
-            if (CarriedProp.MaxHP > 0)
+            if (HeldProp.MaxHP > 0)
             {
                 StopMoving();
-                var thrownObject = new ThrownProp(this, CarriedProp);
+                var thrownObject = new ThrownProp(this, HeldProp);
                 thrownObject.Drop();
-                CarriedProp = null;
+                HeldProp = null;
                 lastKnownLiftPosition = null;
             }
             else
             {
-                DropCarriedProp();
+                DropHelpProp();
             }
         }
 
-        // DropCarriedProp
+        // DropHelpProp
         [ScriptMethod]
-        public void DropCarriedProp()
+        public void DropHelpProp()
         {
-            if (CarriedProp == null || Room == null)
+            if (HeldProp == null || Room == null)
                 return;
 
             StopMoving();
 
-            Room.Children.Add(CarriedProp);
+            Room.Children.Add(HeldProp);
 
             if (lastKnownLiftPosition == null)
             {
-                CarriedProp.Position = Position;
-                CarriedProp.Y += CarriedProp.RuntimeCollider.BoundingRectangleF.Height;
+                HeldProp.Position = Position;
+                HeldProp.Y += HeldProp.RuntimeCollider.BoundingRectangleF.Height;
             }
             else
             {
-                CarriedProp.Position = lastKnownLiftPosition.Value;
+                HeldProp.Position = lastKnownLiftPosition.Value;
                 lastKnownLiftPosition = null;
             }
 
-            CarriedProp = null;
+            HeldProp = null;
 
             PlaySound(SoundNames.PropPlace);
         }
@@ -743,7 +716,7 @@ namespace Remizione
             if (Sprite.Animations.Contains(ActorStateNames.Fatigue))
             {
                 StopMoving();
-                DiscardCarriedProp();
+                DiscardHeldProp();
                 var state = BodyMachine.FindOrCreateState<BodyFatigueState>();
                 BodyMachine.ChangeState(state.GetType());
                 return true;
@@ -762,10 +735,10 @@ namespace Remizione
         [ScriptProperty]
         public Sound? FootstepSound { get; set; }
 
-        // GetCarriedPropPosition
-        public Vector2? GetCarriedPropPosition()
+        // GetHeldPropPosition
+        public Vector2? GetHeldPropPosition()
         {
-            return carriedPropSprite?.Position;
+            return heldPropSprite?.Position;
         }
 
         // HandleInput
@@ -782,6 +755,52 @@ namespace Remizione
 
         // HasSpeechText
         public bool HasSpeechText => speechText != null && speechText.State != SpeechTextState.Hidden;
+
+        // HeldProp
+        [ScriptProperty]
+        public Prop? HeldProp
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+
+                    if (field != null)
+                    {
+                        heldPropSprite ??= new Sprite() { PivotOrigin = RectanglePoint.Bottom };
+                        heldPropSprite.RenderImage = Atlases.Environment.FindImage(field.GetHeldPropImageName());
+                        field.Unparent();
+                        Stand();
+                    }
+                    else
+                    {
+                        heldPropSprite?.RenderImage = null;
+                        Stand(true);
+                    }
+                }
+            }
+        }
+
+        // Hold
+        public void Hold(Prop prop)
+        {
+            if (IsDead)
+                return;
+
+            StopMoving();
+
+            FaceTo(prop);
+
+            var state = BodyMachine.FindOrCreateState<BodyHoldState>();
+            state.Target = prop;
+            lastKnownLiftPosition = prop.Position;
+            BodyMachine.ChangeState(state.GetType());
+
+            if (IsPlayer)
+                Session.InteractionContext.HeldItem = null;
+        }
 
         // HurtVoice
         [ScriptProperty]
@@ -814,30 +833,11 @@ namespace Remizione
         {
             get
             {
-                if (IsPlayer && CarriedProp != null)
-                    return CarriedProp.Label;
+                if (IsPlayer && HeldProp != null)
+                    return HeldProp.Label;
 
                 return base.Label;
             }
-        }
-
-        // Lift
-        public void Lift(Prop prop)
-        {
-            if (IsDead)
-                return;
-
-            StopMoving();
-
-            FaceTo(prop);
-
-            var state = BodyMachine.FindOrCreateState<BodyLiftState>();
-            state.Target = prop;
-            lastKnownLiftPosition = prop.Position;
-            BodyMachine.ChangeState(state.GetType());
-
-            if (IsPlayer)
-                Session.InteractionContext.HeldItem = null;
         }
 
         // MaxEnergy
@@ -1021,7 +1021,7 @@ namespace Remizione
             if (path.Length == 1 && path[0] == Position)
                 return MoveToResult.LessThan1px;
 
-            this.FastMove = fastMove && CarriedProp == null;
+            this.FastMove = fastMove && HeldProp == null;
 
             pendingPathNodes.Clear();
             pendingPathNodes.AddRange(path);
@@ -1093,6 +1093,17 @@ namespace Remizione
             Energy = MaxEnergy;
         }
 
+        // ReleaseHeldProp
+        public void ReleaseHeldProp()
+        {
+            if (HeldProp == null || Room == null)
+                return;
+
+            DropHelpProp();
+            var state = BodyMachine.FindOrCreateState<BodyPlaceHeldPropState>();
+            BodyMachine.ChangeState(state.GetType());
+        }
+
         // RemainsKind
         [ScriptProperty]
         public RemainsKind RemainsKind { get; set; } = RemainsKind.Guts;
@@ -1160,18 +1171,18 @@ namespace Remizione
         [ScriptProperty]
         public bool SuppressMoveBounceEffect { get; set; }
 
-        // ThrowCarriedProp
-        public void ThrowCarriedProp(GameThing target)
+        // ThrowHeldProp
+        public void ThrowHeldProp(GameThing target)
         {
-            if (CarriedProp == null)
+            if (HeldProp == null)
                 return;
 
             StopMoving();
             FaceTo(target);
             var state = BodyMachine.FindOrCreateState<ActorThrowObjectState>();
             state.Target = target;
-            state.Prop = CarriedProp;
-            CarriedProp = null;
+            state.Prop = HeldProp;
+            HeldProp = null;
             BodyMachine.ChangeState(state.GetType());
         }
     }

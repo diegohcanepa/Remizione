@@ -44,10 +44,10 @@ namespace Remizione
         [ScriptProperty]
         public bool CanHideLoot { get; set; }
 
-        // GetThrowableImageName
-        public override string GetCarriedPropImageName()
+        // GetHeldPropImageName
+        public override string GetHeldPropImageName()
         {
-            var result = base.GetCarriedPropImageName();
+            var result = base.GetHeldPropImageName();
             if (HPRatio < 1)
                 result += CrackedSuffix;
 

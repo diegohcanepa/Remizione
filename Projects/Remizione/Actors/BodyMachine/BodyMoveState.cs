@@ -26,7 +26,7 @@ namespace Remizione
         // GetAnimationName
         protected override string GetAnimationName()
         {
-            if (Owner.CarriedProp != null)
+            if (Owner.HeldProp != null)
                 return AnimationNames.MoveCarry;
 
             else if (Owner.FastMove && Owner.ContainsAnimation(AnimationNames.MoveFast))
