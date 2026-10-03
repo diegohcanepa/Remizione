@@ -36,9 +36,6 @@ namespace Remizione
             // IsCharge
             IsCharge = element.GetBool("isCharge", false);
 
-            // LocksTarget
-            LocksTarget = element.GetBool("locksTarget", false);
-
             // MinRange
             MinRange = element.GetInt32("minRange", 0);
             if (MinRange < 0)
@@ -99,9 +96,6 @@ namespace Remizione
 
         // IsCharge
         public bool IsCharge { get; }
-
-        // LocksTarget
-        public bool LocksTarget { get; }
 
         // MaxRange
         public int MaxRange { get; }

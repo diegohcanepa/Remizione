@@ -9,7 +9,6 @@
             "name": "Charge",
             "soundStart": "EnviousEyeMove",
             "actionKind": "Proximity",
-            "locksTarget": true,
             "isCharge": true,
             "maxRange": 20
           }

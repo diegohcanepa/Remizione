@@ -43,9 +43,6 @@
         "isCharge": {
           "type": "boolean"
         },
-        "locksTarget": {
-          "type": "boolean"
-        },
         "minRange": {
           "type": "integer"
         },

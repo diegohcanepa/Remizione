@@ -10,6 +10,7 @@ namespace Remizione
     {
         private enum AttackPhase { Aligning, Striking }
         private AttackPhase currentPhase;
+        private const float lockCommitDistance = 20;
 
         // Enter
         public override void Enter()
@@ -23,20 +24,10 @@ namespace Remizione
             bool isCharge = Intent.IsCharge;
             Owner.IsDealingContactDamage = isCharge;
 
-            // 1. Clavamos al jugador SOLO si es un ataque melee normal.
-            // Si es un Charge, dejamos al jugador libre para que pueda clickear y esquivar.
-            if (Intent.LocksTarget && Target == Owner.Session.Player)
-            {
-                Target.StopMoving();
-                Owner.Session.AttackingNPC = Owner;
-            }
-
-            // 2. Calculamos el punto destino en base a donde está el jugador AHORA MISMO.
+            // Calculamos el punto destino exacto en el instante en que inicia el ataque
             var interactionPoint = isCharge ? Target.Position : Target.GetApproachPosition(Owner, ApproachBehavior.ClosestSide);
 
-            // [NUEVO] Opción 2: IA Comprometida/Castigable.
-            // Si el objetivo está más lejos que nuestro rango máximo (porque se alejó),
-            // recortamos el punto de destino para que el enemigo golpee al aire.
+            // Opción 2: Si el jugador ya está más lejos que el MaxRange del ataque, recortamos el recorrido
             Vector2 direction = interactionPoint - Owner.Position;
             float currentDistance = direction.Length();
 
@@ -46,7 +37,13 @@ namespace Remizione
                 interactionPoint = Owner.Position + (direction * Intent.MaxRange);
             }
 
-            // 3. Le ordenamos al cuerpo del NPC moverse. Si es charge, va con fast = true.
+            // Si el enemigo ya arranca el ataque pegado al jugador (<= 15px), lo clavamos de entrada
+            if (currentDistance <= lockCommitDistance && Target == Owner.Session.Player)
+            {
+                Target.StopMoving();
+                Owner.Session.AttackingNPC = Owner;
+            }
+
             if (isCharge && Intent.SoundStart != null)
                 Owner.PlaySound(Intent.SoundStart);
 
@@ -75,20 +72,25 @@ namespace Remizione
             switch (currentPhase)
             {
                 case AttackPhase.Aligning:
-                    // Mientras se mueve (Aligning), si es un Charge y lo toca, 
-                    // tu motor de colisiones aplicará el daño por contacto por fuera de acá.
+                    // Mientras el enemigo avanza hacia el punto de impacto:
+                    // Si el jugador entra a la zona de compromiso (15px), anulamos su input
+                    if (Target != null && Target == Owner.Session.Player && Owner.Session.AttackingNPC == null)
+                    {
+                        if (Owner.DistanceToTarget(Target) <= lockCommitDistance)
+                        {
+                            Target.StopMoving();
+                            Owner.Session.AttackingNPC = Owner;
+                        }
+                    }
 
                     if (!Owner.IsMoving && Intent != null)
                     {
                         if (Intent.IsCharge)
                         {
-                            // Si terminó de correr la embestida, ya sea que haya impactado o chocado la pared,
-                            // pasamos directamente al cooldown sin ejecutar animación estática de golpe.
                             Machine.ChangeState<CombatCooldownState>();
                         }
                         else
                         {
-                            // Llegó al punto exacto para un ataque normal: iniciamos la animación
                             currentPhase = AttackPhase.Striking;
                             Owner.ExecuteAction(Intent, Target);
                         }
@@ -96,7 +98,6 @@ namespace Remizione
                     break;
 
                 case AttackPhase.Striking:
-                    // Mientras dure la animación de ataque estático, esperamos a que el cuerpo termine
                     if (!Owner.IsExecutingAction)
                     {
                         Machine.ChangeState<CombatCooldownState>();
