@@ -278,8 +278,8 @@ namespace Remizione
                     field = value;
                     ThrownDistanceInPixels = ThrownDistance switch
                     {
-                        ThrowDistance.Short => 50,
-                        ThrowDistance.Long => 100,
+                        ThrowDistance.ShortRange => 50,
+                        ThrowDistance.LongRange => 100,
                         ThrowDistance.None => 0,
                         _ => throw new System.NotImplementedException(),
                     };

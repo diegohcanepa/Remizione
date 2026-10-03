@@ -119,7 +119,7 @@ namespace Remizione
     public enum MeterColor { Green, Orange, Purple, SkyBlue, White }
 
     // MouseCursorIcon
-    public enum MouseCursorIcon { Cross, Arrow, Down, Eye, Hand, Left, Lift, Right, Sack, Skull, Talk, Target, Up, Wait }
+    public enum MouseCursorIcon { Cross, Arrow, Down, Eye, Hand, Left, Lift, Right, Sack, Talk, Target, Up, Wait }
 
     // NameValidationRule
     public enum NameValidationRule
@@ -187,7 +187,7 @@ namespace Remizione
     public enum TrapState { None, Idle, Warning, Activating, Active, Cooldown, Disabled }
 
     // ThrowDistance
-    public enum ThrowDistance { None, Short, Long }
+    public enum ThrowDistance { None, ShortRange, LongRange }
 
     // UIControlGroupLayoutStyle
     public enum UIControlGroupLayoutStyle { Vertically, Horizontally }

@@ -357,7 +357,6 @@
             <key type="filename">Modifiers-assets/TraitLockpickingIcon.png</key>
             <key type="filename">Modifiers-assets/TraitLuckIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorCrossIcon.png</key>
-            <key type="filename">MouseCursors-assets/MouseCursorSkullIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

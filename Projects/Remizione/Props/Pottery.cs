@@ -21,7 +21,7 @@ namespace Remizione
             DeathSound = Sound.Find(SoundNames.PotteryBreak);
             DepthOffset = -2;
             LabelKey = "Prop.Pottery";
-            ThrownDistance = ThrowDistance.Short;
+            ThrownDistance = ThrowDistance.ShortRange;
         }
 
         #region Protected members

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:e6bd0d93d8a8472e62286d32573c84a1:cfc70f0beb034bfc9106d695f74f08c2:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:d7d50c3c8390aea94fb6f125adec0493:20f5b1eb66bd435a457de87efda18a25:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -72,15 +72,14 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="MiniMapMarker.png" x="500" y="79" w="1" h="1"/>
     <sprite n="MonitorFrame.png" x="268" y="90" w="240" h="135"/>
     <sprite n="MouseCursorArrowIcon.png" x="504" y="63" w="6" h="6"/>
-    <sprite n="MouseCursorCrossIcon.png" x="94" y="319" w="9" h="11"/>
+    <sprite n="MouseCursorCrossIcon.png" x="82" y="318" w="9" h="11"/>
     <sprite n="MouseCursorDownIcon.png" x="325" y="71" w="9" h="6"/>
     <sprite n="MouseCursorEyeIcon.png" x="336" y="79" w="9" h="9"/>
-    <sprite n="MouseCursorHandIcon.png" x="30" y="319" w="9" h="11"/>
+    <sprite n="MouseCursorHandIcon.png" x="93" y="319" w="9" h="11"/>
     <sprite n="MouseCursorLeftIcon.png" x="504" y="41" w="6" h="9"/>
     <sprite n="MouseCursorLiftIcon.png" x="454" y="79" w="7" h="8"/>
     <sprite n="MouseCursorRightIcon.png" x="504" y="52" w="6" h="9"/>
     <sprite n="MouseCursorSackIcon.png" x="424" y="79" w="8" h="8"/>
-    <sprite n="MouseCursorSkullIcon.png" x="82" y="318" w="10" h="10"/>
     <sprite n="MouseCursorTalkIcon.png" x="413" y="79" w="9" h="8"/>
     <sprite n="MouseCursorTargetIcon.png" x="347" y="79" w="9" h="9"/>
     <sprite n="MouseCursorUpIcon.png" x="336" y="71" w="9" h="6"/>

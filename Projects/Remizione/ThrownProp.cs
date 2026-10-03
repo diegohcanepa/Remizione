@@ -41,8 +41,8 @@ namespace Remizione
             this.IgnoreWalkArea = true;
             this.effectiveArcHeight = Prop.ThrownDistance switch
             {
-                ThrowDistance.Long => 0.8f,  // Tiro directo y tenso (piedras/lanzas)
-                ThrowDistance.Short => 1.3f, // Tiro más abombado por el peso (vasijas)
+                ThrowDistance.LongRange => 0.8f,  // Tiro directo y tenso (piedras/lanzas)
+                ThrowDistance.ShortRange => 1.3f, // Tiro más abombado por el peso (vasijas)
                 _ => 1f
             };
 

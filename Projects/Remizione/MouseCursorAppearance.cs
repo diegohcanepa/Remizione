@@ -37,7 +37,7 @@ namespace Remizione
 
             if (context.Session.AttackingNPC != null)
             {
-                MouseCursor.Icon = MouseCursorIcon.Skull;
+                MouseCursor.Icon = MouseCursorIcon.Wait;
                 return;
             }
 
