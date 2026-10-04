@@ -8,17 +8,19 @@ namespace Remizione
     /// </summary>
     public sealed class CombatStepState : State<Actor>
     {
+        // Target dinámico
+        public Actor? Target { get; set; }
+
         // Enter
         public override void Enter()
         {
-            var target = Owner.Session.Player;
-            if (target == null || Owner.CombatBehavior?.Archetype is not { } arch)
+            if (Target == null || Target.IsDead || Owner.CombatBehavior?.Archetype is not { } arch)
             {
                 Machine.ChangeState<CombatIdleState>();
                 return;
             }
 
-            float distance = Owner.DistanceToTarget(target);
+            float distance = Owner.DistanceToTarget(Target);
 
             // Usamos MaxStepPerTurn como la magnitud del paso
             float stepDistance = arch.MaxStepPerTurn;
@@ -27,34 +29,41 @@ namespace Remizione
             if (distance < stepDistance)
                 stepDistance = distance;
 
-            // Iniciamos el movimiento ciego
-            arch.ExecuteStepMovement(Owner, target, stepDistance, distance);
+            // Iniciamos el movimiento
+            arch.ExecuteStepMovement(Owner, Target, stepDistance, distance);
         }
 
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (Owner.Session.Player is not Actor target)
+            if (Target == null || Target.IsDead)
+            {
+                Machine.ChangeState<CombatIdleState>();
                 return;
+            }
 
             // 1. Interrupción por evento externo o fin natural del paso
             if (!Owner.IsMoving)
             {
-                Machine.ChangeState<CombatExposedState>();
+                var exposedState = Machine.FindOrCreateState<CombatExposedState>();
+                exposedState.Target = Target;
+                Machine.ChangeState(exposedState.GetType());
                 return;
             }
 
             // 2. Interrupción activa (Radar): Evaluar si durante la caminata entramos en rango de ataque
-            if (Owner.CombatBehavior?.Archetype is { } arch && Owner.HasLineOfSightTo(target))
+            if (Owner.CombatBehavior?.Archetype is { } arch && Owner.HasLineOfSightTo(Target))
             {
-                float distance = Owner.DistanceToTarget(target);
+                float distance = Owner.DistanceToTarget(Target);
                 var intent = arch.SelectIntent(Owner, Owner.CombatBehavior.Intents, distance);
 
                 // Si encontramos un ataque válido a mitad de camino, abortamos la caminata
                 if (intent != null)
                 {
                     Owner.StopMoving();
-                    Machine.ChangeState<CombatExposedState>();
+                    var exposedState = Machine.FindOrCreateState<CombatExposedState>();
+                    exposedState.Target = Target;
+                    Machine.ChangeState(exposedState.GetType());
                 }
             }
         }

@@ -15,7 +15,6 @@ namespace Remizione
         {
             Owner.StopMoving();
 
-            // Leemos los segundos de pausa del arquetipo (ej: 1.5s)
             float duration = Owner.CombatBehavior?.Archetype.CooldownDuration ?? 1.5f;
             timer = duration;
         }
@@ -25,9 +24,9 @@ namespace Remizione
         {
             timer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            // Término el descanso, vuelve a evaluar la persecución
+            // Términó el descanso, forzamos un Idle para que escanee inmediatamente
             if (timer <= 0f)
-                Machine.ChangeState<CombatStepState>();
+                Machine.ChangeState<CombatIdleState>();
         }
     }
 }

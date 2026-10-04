@@ -97,8 +97,10 @@
     "Faction": {
       "type": "string",
       "enum": [
-        "Good",
-        "Evil"
+        "Player",
+        "Penitent",
+        "Creature",
+        "Neutral"
       ]
     },
     "InPlaceEffectType": {

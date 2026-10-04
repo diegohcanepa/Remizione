@@ -7,14 +7,10 @@ namespace Remizione
     /// </summary>
     public sealed class PropDefinition : ThingDefinition
     {
-        #region Constructor
-
         // Constructor
         public PropDefinition(JsonElement element)
-            : base(element, true, Faction.Good)
+            : base(element, true)
         {
         }
-
-        #endregion
     }
 }

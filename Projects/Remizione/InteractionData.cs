@@ -129,7 +129,7 @@ namespace Remizione
             {
                 Clear();
                 var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(player.Session.Camera);
-                var fastMove = player.HasHostilesNearby() || Vector2.Distance(player.Position, destination) > GameSettings.WalkThreshold;
+                var fastMove = Vector2.Distance(player.Position, destination) > GameSettings.WalkThreshold;
                 player.MoveTo(destination, fastMove);
                 return;
             }

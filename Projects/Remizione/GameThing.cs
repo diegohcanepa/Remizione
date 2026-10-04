@@ -189,36 +189,6 @@ namespace Remizione
             }
         }
 
-        // CheckContactDamage
-        private void CheckContactDamage()
-        {
-            if (!IsDealingContactDamage || Room == null)
-                return;
-
-            for (int i = 0; i < Room.CulledThings.Count; i++)
-            {
-                // Skip if it is the same thing
-                if (Room.CulledThings[i] == this)
-                    continue;
-
-                if (Room.CulledThings[i] is GameThing thing)
-                {
-                    if (thing.IsDead)
-                        continue;
-
-                    if (Altitude > thing.CollisionHeight)
-                        continue;
-
-                    // If thing is an obstacle (walk area hole)
-                    if (thing.RuntimeHotspot.ContainsVertex(RuntimeHotspot))
-                    {
-                        if (Definition != null && thing.Faction != Faction.Evil)
-                            EffectDescriptor.Apply(Definition.EffectDescriptors, this, thing, EffectContext.Contact);
-                    }
-                }
-            }
-        }
-
         // GetPivotBasedPolyOffset
         private Vector2 GetPivotBasedPolyOffset()
         {
@@ -278,11 +248,9 @@ namespace Remizione
         // SyncHPMeter
         private void SyncHPMeter()
         {
-            if (hpMeter != null)
-            {
-                hpMeter.MaximumValue = MaxHP;
-                hpMeter.Value = HP;
-            }
+            hpMeter ??= FlatMeter.CreateHPMeter();
+            hpMeter.MaximumValue = MaxHP;
+            hpMeter.Value = HP;
         }
 
         // UpdateKnockback
@@ -512,8 +480,6 @@ namespace Remizione
             }
 
             AttachedLight?.Update(gameTime);
-
-            CheckContactDamage();
         }
 
         // OnUpdateEmittingSound
@@ -757,21 +723,6 @@ namespace Remizione
             Direction = X < position.X ? FacingDirection.Right : FacingDirection.Left;
         }
 
-        // Faction
-        [ScriptProperty]
-        public Faction Faction
-        {
-            get;
-            set
-            {
-                if (field != value)
-                {
-                    field = value;
-                    OnFactionChanged();
-                }
-            }
-        }
-
         // FloatingForce
         [ScriptProperty]
         public float FloatingForce
@@ -890,24 +841,6 @@ namespace Remizione
                 return BoundingBox.GetPoint(RectanglePoint.Top, offset);
             else
                 return this.GetAnchoredPosition(OverheadOrigin + offset);
-        }
-
-        // HasHostilesNearby
-        public bool HasHostilesNearby()
-        {
-            if (Room == null)
-                return false;
-
-            for (var i = 0; i < Room.Children.Count; i++)
-            {
-                if (Room.Children[i] is not GameThing thing || !thing.IsInCullingBox || thing == this)
-                    continue;
-
-                if (thing.IsHostile && thing.DistanceTo(this) < 50)
-                    return true;
-            }
-
-            return false;
         }
 
         // HasLineOfSightTo
@@ -1042,27 +975,6 @@ namespace Remizione
         // IsHittable
         [ScriptProperty]
         public bool IsHittable { get; set; } = true;
-
-        // IsHostile
-        [ScriptProperty]
-        public bool IsHostile
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-
-                    if (field)
-                        hpMeter ??= FlatMeter.CreateHPMeter();
-                    else
-                        hpMeter = null;
-
-                    SyncHPMeter();
-                }
-            }
-        }
 
         // IsKnockbackInProgress
         public bool IsKnockbackInProgress => knockbackVelocity != Vector2.Zero;

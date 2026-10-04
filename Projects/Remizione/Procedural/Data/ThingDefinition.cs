@@ -17,14 +17,11 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        protected ThingDefinition(JsonElement element, bool defaultRequiresPlaceholder, Faction defaultFaction)
+        protected ThingDefinition(JsonElement element, bool defaultRequiresPlaceholder)
             : base(element)
         {
             // BaseDropChance
             BaseDropChance = MathF.Max(0, element.GetFloat("baseDropChance", .5f));
-
-            // Faction
-            Faction = element.GetEnum("faction", defaultFaction);
 
             // GraceReward
             GraceReward = element.GetInt32("graceReward", 0);
@@ -87,9 +84,6 @@ namespace Remizione
 
         // Effects
         public ReadOnlyCollection<EffectDescriptor> Effects { get; }
-
-        // Faction
-        public Faction Faction { get; }
 
         // GraceReward
         public int GraceReward { get; }

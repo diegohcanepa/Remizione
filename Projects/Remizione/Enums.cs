@@ -51,7 +51,13 @@ namespace Remizione
     public enum EffectTarget { Target, Self }
 
     // Faction
-    public enum Faction { Good, Evil }
+    public enum Faction
+    {
+        Player,
+        Penitent,
+        Creature,
+        Neutral
+    }
 
     // FallbackMovementKind
     public enum FallbackMovementKind

@@ -43,7 +43,7 @@ namespace Remizione
             this.ApproachBehavior = ApproachBehavior.FaceToFace;
             this.LabelKey = $"Actor.{DeclaredName}";
             this.IgnoreWalkArea = false;
-            this.Faction = Definition == null ? Faction.Good : Definition.Faction;
+            this.Faction = Definition == null ? Faction.Neutral : Definition.Faction;
             this.CombatBehavior = GameData.CombatBehaviors.Find(DeclaredName);
             this.BodyMachine = new StateMachine<Actor>(this, new BodyStandState());
             this.BodyMachine.AddState(new BodyMoveState());
@@ -69,6 +69,48 @@ namespace Remizione
         #endregion
 
         #region Private members
+
+        // CheckContactDamage
+        private void CheckContactDamage()
+        {
+            if (!IsDealingContactDamage || Room == null || Definition == null)
+                return;
+
+            if (!Definition.HasEffectsForContactContext)
+                return;
+
+            for (int i = 0; i < Room.CulledThings.Count; i++)
+            {
+                if (Room.CulledThings[i] is not GameThing candidate)
+                    continue;
+
+                if (candidate == this || candidate.IsDead)
+                    continue;
+
+                if (Altitude > candidate.CollisionHeight)
+                    continue;
+
+                if (!candidate.CanBeHit())
+                    continue;
+
+                // Si la colisión ocurre:
+                if (candidate.RuntimeHotspot.ContainsVertex(RuntimeHotspot))
+                {
+                    // CASO A: El objetivo es un personaje/enemigo (evaluamos hostilidad)
+                    if (candidate is Actor targetActor)
+                    {
+                        if (FactionMatrix.IsHostile(this, targetActor))
+                            EffectDescriptor.Apply(Definition.EffectDescriptors, this, targetActor, EffectContext.Contact);
+                    }
+                    
+                    // CASO B: El objetivo es un objeto destructible del escenario (vasijas, antorchas)
+                    else
+                    {
+                        EffectDescriptor.Apply(Definition.EffectDescriptors, this, candidate, EffectContext.Contact);
+                    }
+                }
+            }
+        }
 
         // GetBloodSplashPosition
         private Vector2 GetBloodSplashPosition()
@@ -437,6 +479,9 @@ namespace Remizione
         {
             IsDealingContactDamage = false;
 
+            if (Faction == Faction.Neutral && attacker is Actor targetActor && FactionMatrix.IsHostile(targetActor, this))
+                Faction = Faction.Penitent;
+
             if (CombatMachine != null && !IsPlayer && !IsDead)
             {
                 // Limpiamos cualquier rastro de ataque pendiente (si lo hubiera)
@@ -463,10 +508,6 @@ namespace Remizione
                     StopTalking();
                     speechText?.Hide();
                 }
-            }
-            else if (!IsDead)
-            {
-                IsHostile = true;
             }
 
             Session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);
@@ -508,11 +549,15 @@ namespace Remizione
                 moveAccelerationMultiplier = float.Min(1f, moveAccelerationMultiplier + (dt / MoveAccelerationTime));
             }
 
-            if (!Session.IsAwaiting && !IsMoving && !IsPlayer && Faction == Faction.Evil)
+            /*
+            if (!Session.IsAwaiting && !IsMoving && !IsPlayer && Faction == FactionOld.Evil)
             {
                 if (IsHostile && Session.Player != null)
                     FaceTo(Session.Player);
             }
+            */
+
+            CheckContactDamage();
         }
 
         #endregion
@@ -702,6 +747,21 @@ namespace Remizione
 
         // ExecutingActionTarget
         public GameThing? ExecutingActionTarget => (BodyMachine.CurrentState as BodyExecuteActionState)?.Target;
+
+        // Faction
+        [ScriptProperty]
+        public Faction Faction
+        {
+            get;
+            set
+            {
+                if (field != value)
+                {
+                    field = value;
+                    OnFactionChanged();
+                }
+            }
+        } = Faction.Neutral;
 
         // FastMove
         public bool FastMove { get; private set; }

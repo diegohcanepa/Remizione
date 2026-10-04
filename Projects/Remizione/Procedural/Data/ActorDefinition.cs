@@ -11,8 +11,11 @@ namespace Remizione
     {
         // Constructor
         public ActorDefinition(JsonElement element)
-            : base(element, false, Faction.Evil)
+            : base(element, false)
         {
+            // Faction
+            Faction = element.GetEnum("faction", Faction.Neutral);
+
             // MinPackSize
             MinPackSize = element.GetInt32("minPackSize", 1);
 
@@ -23,6 +26,9 @@ namespace Remizione
             if (MinPackSize > MaxPackSize)
                 RaiseValidationError(this, $"Minimum pack size exceeds the maximum pack size.");
         }
+
+        // Faction
+        public Faction Faction { get; }
 
         // MinPackSize
         public int MinPackSize { get; }

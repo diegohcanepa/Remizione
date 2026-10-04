@@ -11,6 +11,9 @@ namespace Remizione
         private float timer;
         private CombatIntent? pendingIntent;
 
+        // Target dinámico
+        public Actor? Target { get; set; }
+
         // Enter
         public override void Enter()
         {
@@ -18,10 +21,9 @@ namespace Remizione
             timer = Owner.CombatBehavior?.Archetype.ExposedPauseDuration ?? 1.2f;
             pendingIntent = null;
 
-            // Evaluamos de entrada qué ataque va a preparar durante esta pausa
-            if (Owner.Session.Player is Actor target && Owner.CombatBehavior?.Archetype is { } arch)
+            if (Target != null && !Target.IsDead && Owner.CombatBehavior?.Archetype is { } arch)
             {
-                float distance = Owner.DistanceToTarget(target);
+                float distance = Owner.DistanceToTarget(Target);
                 pendingIntent = arch.SelectIntent(Owner, Owner.CombatBehavior.Intents, distance);
             }
         }
@@ -29,22 +31,17 @@ namespace Remizione
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (Owner.Session.Player is not Actor target)
-                return;
-
-            if (Owner.CombatBehavior?.Archetype is not { } arch)
+            if (Target == null || Target.IsDead || Owner.CombatBehavior?.Archetype is not { } arch)
             {
                 Machine.ChangeState<CombatIdleState>();
                 return;
             }
 
-            float distance = Owner.DistanceToTarget(target);
+            float distance = Owner.DistanceToTarget(Target);
 
-            // 1. Si el jugador se fue de rango o perdió LoS durante el telegrafiado, aborta la carga
-            if (distance > arch.LoseSightRange || !Owner.HasLineOfSightTo(target))
+            // 1. Si el objetivo se fue de rango o perdió LoS, aborta y resetea aggro
+            if (distance > arch.LoseSightRange || !Owner.HasLineOfSightTo(Target))
             {
-                Owner.IsHostile = false;
-
                 float leash = Owner.CombatBehavior?.LeashRadius ?? 0f;
                 if (leash > 0f)
                 {
@@ -55,26 +52,25 @@ namespace Remizione
                 return;
             }
 
-            // 2. Consume el tiempo de telegrafiado/preparación visual (los 4s o lo que configures)
+            // 2. Consume el tiempo de telegrafiado/preparación visual
             timer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            // 3. Cuando el timer llega a 0, Lanza el ataque preparado
+            // 3. Cuando el timer llega a 0, lanza el ataque o da un paso
             if (timer <= 0f)
             {
-                bool isTargetInvulnerable = target.IsInvulnerable;
-
-                if (!isTargetInvulnerable && pendingIntent != null)
+                if (!Target.IsInvulnerable && pendingIntent != null)
                 {
                     var attackState = Machine.FindOrCreateState<CombatAttackState>();
                     attackState.Intent = pendingIntent;
-                    attackState.Target = target;
-
+                    attackState.Target = Target;
                     Machine.ChangeState(attackState.GetType());
                 }
                 else
                 {
-                    // Si el objetivo se volvió invulnerable o no hay intent, reevalúa dando un paso
-                    Machine.ChangeState<CombatStepState>();
+                    // Si el objetivo es invulnerable, intenta dar un paso
+                    var stepState = Machine.FindOrCreateState<CombatStepState>();
+                    stepState.Target = Target;
+                    Machine.ChangeState(stepState.GetType());
                 }
             }
         }

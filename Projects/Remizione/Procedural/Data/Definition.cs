@@ -56,6 +56,15 @@ namespace Remizione
 
             EffectDescriptors = effectDescriptors.AsReadOnly();
 
+            foreach (var effect in EffectDescriptors)
+            {
+                if (effect.Context == EffectContext.Contact)
+                {
+                    HasEffectsForContactContext = true;
+                    break;
+                }
+            }
+
             all.Add(this);
         }
 
@@ -82,6 +91,9 @@ namespace Remizione
 
         // EffectDescriptors
         public ReadOnlyCollection<EffectDescriptor> EffectDescriptors { get; }
+
+        // HasEffectsForContactContext
+        public bool HasEffectsForContactContext { get; }
 
         // IsDefined
         public static bool IsDefined(string name)

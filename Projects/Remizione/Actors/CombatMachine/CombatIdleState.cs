@@ -54,24 +54,17 @@ namespace Remizione
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (Owner.Session.Player is not Actor target)
-                return;
-
             if (Owner.CombatBehavior?.Archetype is not { } arch)
                 return;
 
-            // Is inside AwarenessRange?
-            if (Owner.DistanceToTarget(target) > arch.AwarenessRange)
-            {
-                UpdateWander(gameTime);
-                return;
-            }
+            // Búsqueda dinámica de objetivos usando FactionMatrix
+            Actor? target = TargetAcquisition.FindBestTarget(Owner, arch.AwarenessRange);
 
-            // Is in LOS?
-            if (Owner.HasLineOfSightTo(target))
+            if (target != null)
             {
-                Owner.IsHostile = true;
-                Machine.ChangeState<CombatStepState>();
+                var stepState = Machine.FindOrCreateState<CombatStepState>();
+                stepState.Target = target;
+                Machine.ChangeState(stepState.GetType());
             }
             else
             {
