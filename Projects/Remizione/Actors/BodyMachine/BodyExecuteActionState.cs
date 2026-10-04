@@ -32,6 +32,7 @@ namespace Remizione
             return false;
         }
 
+        /*
         // ResolveInPlaceAction
         private void ResolveInPlaceAction(IAction action)
         {
@@ -47,6 +48,7 @@ namespace Remizione
                 }
             }
         }
+        */
 
         // ResolveProjectileAction
         private void ResolveProjectileAction(IAction action)
@@ -132,11 +134,6 @@ namespace Remizione
 
                 switch (Action.ActionKind)
                 {
-                    // InPlaceAction
-                    case ActionKind.InPlace:
-                        ResolveInPlaceAction(Action);
-                        break;
-
                     // ProjectileAction
                     case ActionKind.Projectile:
                         ResolveProjectileAction(Action);

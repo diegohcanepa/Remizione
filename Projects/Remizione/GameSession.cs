@@ -554,8 +554,7 @@ namespace Remizione
             AttackingNPC = null;
             PlayerData.Grace = 0;
 
-            if (Player != null)
-                Player.HP = Player.MaxHP / 2;
+            Player?.HP = Player.MaxHP / 2;
 
             Save();
         }

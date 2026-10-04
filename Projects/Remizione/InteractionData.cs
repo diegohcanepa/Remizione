@@ -38,7 +38,7 @@ namespace Remizione
 
             var destination = target.GetApproachPosition(player, behavior);
 
-            var fastMove = this.IsAttack ? true : Vector2.Distance(player.Position, destination) > GameSettings.WalkThreshold;
+            var fastMove = this.IsAttack || Vector2.Distance(player.Position, destination) > GameSettings.WalkThreshold;
             var moveToResult = destination == Vector2.Zero ? MoveToResult.NoPath : player.MoveTo(destination, fastMove);
 
             if (destination != Vector2.Zero && moveToResult == MoveToResult.NoPath)
@@ -147,7 +147,7 @@ namespace Remizione
             bool executeInPlace = (player.HeldProp != null) ||
                                   (context.HeldItem == null && Target == player) ||
                                   (Verb == Verb.Examine && context.HeldItem == null) ||
-                                  (context.HeldItem?.Definition.ActionKind is ActionKind.InPlace or ActionKind.Self);
+                                  (context.HeldItem?.Definition.ActionKind is ActionKind.Self);
 
             if (executeInPlace)
                 ExecutePending(player);
