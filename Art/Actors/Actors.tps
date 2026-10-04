@@ -259,6 +259,9 @@
                 <false/>
             </struct>
             <key type="filename">Monk-assets/Stand01.png</key>
+            <key type="filename">Monk-assets/Talk01.png</key>
+            <key type="filename">Monk-assets/Talk02.png</key>
+            <key type="filename">Monk-assets/Talk03.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
