@@ -20,13 +20,47 @@
       "properties": {
         "name": {
           "type": "string"
-         },
+        },
         "archetype": {
-          "$ref": "enums.schema.json#/$defs/CombatArchetypeName"
+          "type": "object",
+          "properties": {
+            "awarenessRange": {
+              "type": "number",
+              "minimum": 0
+            },
+            "loseSightRange": {
+              "type": "number",
+              "minimum": 0
+            },
+            "cooldownDuration": {
+              "type": "number",
+              "minimum": 0
+            },
+            "exposedPauseDuration": {
+              "type": "number",
+              "minimum": 0
+            },
+            "maxStepPerTurn": {
+              "type": "number",
+              "minimum": 0
+            },
+            "fallbackMovement": {
+              "$ref": "enums.schema.json#/$defs/FallbackMovementKind"
+            }
+          },
+          "required": [
+            "awarenessRange",
+            "loseSightRange",
+            "cooldownDuration",
+            "exposedPauseDuration",
+            "maxStepPerTurn",
+            "fallbackMovement"
+          ],
+          "additionalProperties": false
         },
         "intents": {
           "type": "array",
-           "items": {
+          "items": {
             "$ref": "./CombatIntent.schema.json"
           },
           "minItems": 0
@@ -37,7 +71,6 @@
       },
       "required": [
         "name",
-        "archetype",
         "intents"
       ],
       "unevaluatedProperties": false

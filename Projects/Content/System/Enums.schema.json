@@ -12,19 +12,6 @@
         "Self"
       ]
     },
-    "CombatArchetypeName": {
-      "type": "string",
-      "enum": [
-        "Lurker",
-        "Harasser",
-        "KamikazeFlyer",
-        "Stalker",
-        "Tactical",
-        "Berserk",
-        "Coward",
-        "Volatile"
-      ]
-    },
     "DamageType": {
       "type": "string",
       "enum": [
@@ -103,6 +90,15 @@
         "Neutral"
       ]
     },
+    "FallbackMovementKind": {
+      "type": "string",
+      "enum": [
+        "None",
+        "Flee",
+        "Random",
+        "Lurk"
+      ]
+    },    
     "InPlaceEffectType": {
       "type": "string",
       "enum": [

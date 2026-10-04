@@ -15,7 +15,7 @@ namespace Remizione
         {
             Owner.StopMoving();
 
-            float duration = Owner.CombatBehavior?.Archetype.CooldownDuration ?? 1.5f;
+            float duration = Owner.CombatBehavior?.Archetype?.CooldownDuration ?? 1.5f;
             timer = duration;
         }
 

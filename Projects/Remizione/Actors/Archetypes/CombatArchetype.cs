@@ -7,13 +7,24 @@ namespace Remizione
     /// <summary>
     /// CombatArchetype
     /// </summary>
-    public abstract class CombatArchetype
+    public class CombatArchetype
     {
-        #region Protected members
+        // Constructor
+        public CombatArchetype(CombatArchetypeParams parameters)
+        {
+            this.AwarenessRange = parameters.AwarenessRange;
+            this.CooldownDuration = parameters.CooldownDuration;
+            this.ExposedPauseDuration = parameters.ExposedPauseDuration;
+            this.FallbackMovement = parameters.FallbackMovement;
+            this.LoseSightRange = parameters.LoseSightRange;
+            this.MaxStepPerTurn = parameters.MaxStepPerTurn;
+        }
+
+        #region Private members
 
         // ExecuteFleeMovement
         // Huida pura en dirección opuesta al jugador.
-        protected virtual void ExecuteFleeMovement(Actor source, GameThing target, float stepDistance)
+        private void ExecuteFleeMovement(Actor source, GameThing target, float stepDistance)
         {
             Vector2 directionAway = Vector2.Normalize(source.Position - target.Position);
             if (directionAway == Vector2.Zero)
@@ -30,7 +41,7 @@ namespace Remizione
 
         // ExecuteLurkMovement
         // Acecho errático perimetral (órbita + empuje a bordes). Reutilizable por cualquier enemigo.
-        protected virtual void ExecuteLurkMovement(Actor source, GameThing target, float stepDistance, float currentDistance)
+        private void ExecuteLurkMovement(Actor source, GameThing target, float stepDistance, float currentDistance)
         {
             if (source.WalkArea == null)
             {
@@ -78,16 +89,13 @@ namespace Remizione
 
         // AwarenessRange
         // A qué distancia me detecta un enemigo en idle
-        public virtual float AwarenessRange => 50;
+        public float AwarenessRange { get; }
 
         // CooldownDuration (post-attack cooldown in seconds)
-        public virtual float CooldownDuration => 1.5f;
-
-        // CounterAttackChance
-        public virtual float CounterAttackChance => .35f;
+        public float CooldownDuration { get; }
 
         // ExecuteStepMovement
-        public virtual void ExecuteStepMovement(Actor source, GameThing target, float stepDistance, float currentDistance)
+        public void ExecuteStepMovement(Actor source, GameThing target, float stepDistance, float currentDistance)
         {
             // 1. EVALUACIÓN DE ESTRATEGIA DE HUIDA / REPLIEGUE
             switch (FallbackMovement)
@@ -137,20 +145,20 @@ namespace Remizione
         */
 
         // ExposedPauseDuration
-        public virtual float ExposedPauseDuration => 2;
+        public float ExposedPauseDuration { get; }
 
         // FallbackMovement
-        public virtual FallbackMovementKind FallbackMovement => FallbackMovementKind.None;
+        public FallbackMovementKind FallbackMovement { get; }
 
         // LoseSightRange
         // A qué distancia me deja de perseguir aunque lo esté viendo
-        public virtual float LoseSightRange => 100;
+        public float LoseSightRange { get; }
 
         // MaxStepPerTurn
-        public virtual float MaxStepPerTurn => 10;
+        public float MaxStepPerTurn { get; }
 
         // SelectIntent
-        public virtual CombatIntent? SelectIntent(Actor source, IList<CombatIntent> intents, float distance)
+        public CombatIntent? SelectIntent(Actor source, IList<CombatIntent> intents, float distance)
         {
             if (intents == null || intents.Count == 0)
                 return null;

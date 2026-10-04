@@ -3,7 +3,15 @@
     "data": [
       {
         "name": "EnviousEye",
-        "archetype": "Harasser",
+        "archetype":
+        {
+          "awarenessRange": 50,
+          "cooldownDuration": 1.5,
+          "exposedPauseDuration": 2,
+          "fallbackMovement": "None",
+          "loseSightRange": 100,
+          "maxStepPerTurn": 10
+        },
         "intents": [
           {
             "name": "Charge",
@@ -16,7 +24,6 @@
       },
       {
         "name": "Penitent",
-        "archetype": "Harasser",
         "intents": [
           {
             "name": "GadlingKnuckle",
@@ -35,24 +42,23 @@
         ]
       },
       {
-        "name": "Rat",
-        "archetype": "Lurker",
+        "name": "PenitentA",
         "intents": [
           {
-            "name": "Bite",
-            "soundTrigger": "RatAttack",
+            "name": "GadlingKnuckle",
+            "animationName": "Punch",
             "actionKind": "Proximity",
-            "missChance": 0.1,
             "maxRange": 5,
             "effects": [
               {
                 "context": "Attack",
                 "effectType": "Damage",
-                "amount": "1"
+                "amount": "1",
+                "sound": "BareFist"
               }
             ]
           }
         ]
-      }
+      }      
     ]
   }

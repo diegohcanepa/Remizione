@@ -340,6 +340,86 @@
             <key type="filename">Penitent-assets/UseCross03.png</key>
             <key type="filename">Penitent-assets/UseCross04.png</key>
             <key type="filename">Penitent-assets/UseCross05.png</key>
+            <key type="filename">PenitentA-assets/Consume01.png</key>
+            <key type="filename">PenitentA-assets/Consume02.png</key>
+            <key type="filename">PenitentA-assets/Consume03.png</key>
+            <key type="filename">PenitentA-assets/Consume04.png</key>
+            <key type="filename">PenitentA-assets/Consume05.png</key>
+            <key type="filename">PenitentA-assets/Consume06.png</key>
+            <key type="filename">PenitentA-assets/Death01.png</key>
+            <key type="filename">PenitentA-assets/Death02.png</key>
+            <key type="filename">PenitentA-assets/Death03.png</key>
+            <key type="filename">PenitentA-assets/Death04.png</key>
+            <key type="filename">PenitentA-assets/Death05.png</key>
+            <key type="filename">PenitentA-assets/Death06.png</key>
+            <key type="filename">PenitentA-assets/Death07.png</key>
+            <key type="filename">PenitentA-assets/Death08.png</key>
+            <key type="filename">PenitentA-assets/Death09.png</key>
+            <key type="filename">PenitentA-assets/Death10.png</key>
+            <key type="filename">PenitentA-assets/Death11.png</key>
+            <key type="filename">PenitentA-assets/Fatigue01.png</key>
+            <key type="filename">PenitentA-assets/Fatigue02.png</key>
+            <key type="filename">PenitentA-assets/Fatigue03.png</key>
+            <key type="filename">PenitentA-assets/Fatigue04.png</key>
+            <key type="filename">PenitentA-assets/Fatigue05.png</key>
+            <key type="filename">PenitentA-assets/Fatigue06.png</key>
+            <key type="filename">PenitentA-assets/Fatigue07.png</key>
+            <key type="filename">PenitentA-assets/Fatigue08.png</key>
+            <key type="filename">PenitentA-assets/Fatigue09.png</key>
+            <key type="filename">PenitentA-assets/Fatigue10.png</key>
+            <key type="filename">PenitentA-assets/Fatigue11.png</key>
+            <key type="filename">PenitentA-assets/Fatigue12.png</key>
+            <key type="filename">PenitentA-assets/Fatigue13.png</key>
+            <key type="filename">PenitentA-assets/Fatigue14.png</key>
+            <key type="filename">PenitentA-assets/Hurt01.png</key>
+            <key type="filename">PenitentA-assets/Hurt02.png</key>
+            <key type="filename">PenitentA-assets/Hurt03.png</key>
+            <key type="filename">PenitentA-assets/Hurt04.png</key>
+            <key type="filename">PenitentA-assets/Move01.png</key>
+            <key type="filename">PenitentA-assets/Move02.png</key>
+            <key type="filename">PenitentA-assets/Move03.png</key>
+            <key type="filename">PenitentA-assets/Move04.png</key>
+            <key type="filename">PenitentA-assets/Move05.png</key>
+            <key type="filename">PenitentA-assets/Move06.png</key>
+            <key type="filename">PenitentA-assets/Move07.png</key>
+            <key type="filename">PenitentA-assets/Move08.png</key>
+            <key type="filename">PenitentA-assets/MoveFast01.png</key>
+            <key type="filename">PenitentA-assets/MoveFast02.png</key>
+            <key type="filename">PenitentA-assets/MoveFast03.png</key>
+            <key type="filename">PenitentA-assets/MoveFast04.png</key>
+            <key type="filename">PenitentA-assets/MoveFast05.png</key>
+            <key type="filename">PenitentA-assets/MoveFast06.png</key>
+            <key type="filename">PenitentA-assets/MoveFast07.png</key>
+            <key type="filename">PenitentA-assets/MoveFast08.png</key>
+            <key type="filename">PenitentA-assets/Place01.png</key>
+            <key type="filename">PenitentA-assets/Place02.png</key>
+            <key type="filename">PenitentA-assets/Place03.png</key>
+            <key type="filename">PenitentA-assets/Place04.png</key>
+            <key type="filename">PenitentA-assets/Place05.png</key>
+            <key type="filename">PenitentA-assets/Punch01.png</key>
+            <key type="filename">PenitentA-assets/Punch02.png</key>
+            <key type="filename">PenitentA-assets/Punch03.png</key>
+            <key type="filename">PenitentA-assets/Punch04.png</key>
+            <key type="filename">PenitentA-assets/Punch05.png</key>
+            <key type="filename">PenitentA-assets/Punch06.png</key>
+            <key type="filename">PenitentA-assets/Punch07.png</key>
+            <key type="filename">PenitentA-assets/Punch08.png</key>
+            <key type="filename">PenitentA-assets/RestOut01.png</key>
+            <key type="filename">PenitentA-assets/RestOut02.png</key>
+            <key type="filename">PenitentA-assets/RestOut03.png</key>
+            <key type="filename">PenitentA-assets/Stand01.png</key>
+            <key type="filename">PenitentA-assets/StandUp01.png</key>
+            <key type="filename">PenitentA-assets/StandUp02.png</key>
+            <key type="filename">PenitentA-assets/StandUp03.png</key>
+            <key type="filename">PenitentA-assets/StandUp04.png</key>
+            <key type="filename">PenitentA-assets/StandUp05.png</key>
+            <key type="filename">PenitentA-assets/StandUp06.png</key>
+            <key type="filename">PenitentA-assets/Talk01.png</key>
+            <key type="filename">PenitentA-assets/UseCross01.png</key>
+            <key type="filename">PenitentA-assets/UseCross02.png</key>
+            <key type="filename">PenitentA-assets/UseCross03.png</key>
+            <key type="filename">PenitentA-assets/UseCross04.png</key>
+            <key type="filename">PenitentA-assets/UseCross05.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -441,6 +521,7 @@
                     <filename>InertShadow-assets</filename>
                     <filename>Hopeless-assets</filename>
                     <filename>Monk-assets</filename>
+                    <filename>PenitentA-assets</filename>
                 </array>
             </struct>
         </map>

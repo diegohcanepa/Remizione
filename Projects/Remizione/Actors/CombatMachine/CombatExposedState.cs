@@ -18,7 +18,7 @@ namespace Remizione
         public override void Enter()
         {
             Owner.StopMoving();
-            timer = Owner.CombatBehavior?.Archetype.ExposedPauseDuration ?? 1.2f;
+            timer = Owner.CombatBehavior?.Archetype?.ExposedPauseDuration ?? 1.2f;
             pendingIntent = null;
 
             if (Target != null && !Target.IsDead && Owner.CombatBehavior?.Archetype is { } arch)

@@ -26,10 +26,11 @@ namespace Remizione
             CodeContract.ValidName(this.Name, string.Empty);
 
             // Archetype
-            if (element.GetEnum<CombatArchetypeName>("archetype") is not CombatArchetypeName archetype)
-                throw new InvalidOperationException("Missing archetype property.");
-            else
-                this.Archetype = Archetypes.Get(archetype);
+            if (element.TryGetProperty("archetype", out JsonElement archetypeElement))
+            {
+                var archetypeParams = new CombatArchetypeParams(archetypeElement);
+                Archetype = new(archetypeParams);
+            }
 
             // Intents
             if (element.TryGetProperty("intents", out JsonElement intentsArray))
@@ -49,7 +50,7 @@ namespace Remizione
         #endregion
 
         // Archetype
-        public CombatArchetype Archetype { get; }
+        public CombatArchetype? Archetype { get; }
 
         // DefaultIntent
         public CombatIntent? DefaultIntent { get; }

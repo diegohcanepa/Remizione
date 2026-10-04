@@ -25,6 +25,12 @@
     {
       "name": "Penitent",
       "hp": 2
-    }
+    },
+    {
+      "name": "PenitentA",
+      "graceReward": 5,
+      "hp": 6,
+      "isUnlockedByDefault": true
+    }    
   ]
 }

@@ -20,9 +20,6 @@ namespace Remizione
     // BodySize
     public enum BodySize { Small, Medium, Large }
 
-    // CombatArchetypeName
-    public enum CombatArchetypeName { Lurker, Harasser, Stalker, Tactical, Berserk, Coward, KamikazeFlyer, Volatile }
-
     // CombatDecisionType
     public enum CombatDecisionType { None, Attack, Curse, Charge, LurkMove, MoveNearby, RandomMove }
 

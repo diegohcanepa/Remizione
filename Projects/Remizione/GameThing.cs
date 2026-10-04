@@ -28,6 +28,7 @@ namespace Remizione
         private FloatTween? hurtTween;
         private bool isCollisionDirty;
         private bool isHotspotDirty = true;
+        private bool killedByPlayer;
         private Vector2 knockbackVelocity;
         private const float KnockbackFriction = 0.90f; // Ajustá este valor (0.8 - 0.95)
         private Vector2 lastCheckedPosition;
@@ -624,7 +625,7 @@ namespace Remizione
 
             if (!IsPlayer)
             {
-                if (Definition?.GraceReward > 0)
+                if (killedByPlayer && Definition?.GraceReward > 0)
                 {
                     Sound.Play(SoundNames.GraceGain);
                     Session.PlayerData.Grace += Definition.GraceReward;
@@ -1244,6 +1245,7 @@ namespace Remizione
                     if (IsDead)
                     {
                         knockbackForce = Vector2.Zero;
+                        killedByPlayer = attacker.IsPlayer;
                     }
                     else
                     {

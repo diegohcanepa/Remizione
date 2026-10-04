@@ -226,6 +226,7 @@ namespace Adberration
         [ScriptProperty]
         public bool IsMoving => Sprite.Velocity != Vector2.Zero;
 
+        // OnAdjustMoveDirection
         protected virtual Vector2 OnAdjustMoveDirection(Vector2 direction)
         {
             return direction;
@@ -280,23 +281,6 @@ namespace Adberration
         // ParallaxFactor
         [ScriptProperty]
         public Vector2 ParallaxFactor { get; set; } = Vector2.One;
-
-        /*
-        // PerformOutcome
-        [ScriptMethod]
-        public Script? PerformOutcome()
-        {
-            if (OutcomeScript == null)
-                return null;
-
-            if (OutcomeScript.HasCapability(ScriptCapability.SetTargetEntity))
-                OutcomeScript.SetTargetEntity(Name);
-
-            Session.BeginOutcome(OutcomeScript, this);
-
-            return OutcomeScript;
-        }
-        */
 
         // Room
         public virtual Room? Room => Parent as Room;
