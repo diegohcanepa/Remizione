@@ -49,7 +49,7 @@ namespace Remizione
         }
 
         // DestinationMark
-        internal static Color DestinationMark { get; } = new(143, 77, 87);
+        internal static Color DestinationMark { get; } = Text.Terra;
 
         // HighlightedText
         internal static Color HighlightedText { get; } = new(215, 215, 170);

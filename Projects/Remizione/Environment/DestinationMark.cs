@@ -20,7 +20,6 @@ namespace Remizione
             this.sprite = new Sprite(Atlases.Environment.DestinationMark)
             {
                 Color = ColorPalette.DestinationMark,
-                Opacity = .3f,
                 PivotOrigin = RectanglePoint.Center,
                 Scale = new(.7f)
             };

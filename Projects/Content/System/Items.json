@@ -51,6 +51,21 @@
 			"isStackable": true
 		},
 		{
+			"name": "FulguriteCrystal",
+			"category": "Misc",
+			"actionKind": "InPlace",
+			"deselectOnUse": false,
+			"isDepletable": true,
+			"inPlaceEffectType": "Lightning",
+			"effects": [
+				{
+					"context": "Attack",
+					"effectType": "Damage",
+					"amount": "1d4+2"
+				}
+			]			
+		},		
+		{
 			"name": "GadlingKnuckle",
 			"category": "Misc",
 			"actionKind": "Proximity",

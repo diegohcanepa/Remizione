@@ -43,12 +43,21 @@
       },
       {
         "name": "PenitentA",
+        "archetype":
+        {
+          "awarenessRange": 100,
+          "cooldownDuration": 1.5,
+          "exposedPauseDuration": 2,
+          "fallbackMovement": "None",
+          "loseSightRange": 200,
+          "maxStepPerTurn": 30
+        },        
         "intents": [
           {
             "name": "GadlingKnuckle",
             "animationName": "Punch",
             "actionKind": "Proximity",
-            "maxRange": 5,
+            "maxRange": 15,
             "effects": [
               {
                 "context": "Attack",

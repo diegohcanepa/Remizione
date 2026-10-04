@@ -255,6 +255,7 @@
             <key type="filename">Items-assets/BarrenFig.png</key>
             <key type="filename">Items-assets/CrudeKey.png</key>
             <key type="filename">Items-assets/FakeItem.png</key>
+            <key type="filename">Items-assets/FulguriteCrystal.png</key>
             <key type="filename">Items-assets/GadlingKnuckle.png</key>
             <key type="filename">Items-assets/Loquat.png</key>
             <key type="filename">Items-assets/PrayerBonfire.png</key>
