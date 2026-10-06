@@ -53,14 +53,11 @@ namespace Remizione
         // ResolveProjectileAction
         private void ResolveProjectileAction(IAction action)
         {
-            if (action.Projectile == null)
-                return;
-
-            if (Owner.AnimationPlayer.Frame?.SpawnPoint is Vector2 actionPoint && actionPoint != Vector2.Zero)
+            if (Target != null && Owner.AnimationPlayer.Frame?.SpawnPoint is Vector2 spawnPoint && spawnPoint != Vector2.Zero)
             {
                 var projectile = Owner.Session.ObjectPools.Projectiles.Get();
-                var pos = Owner.GetAnchoredPosition(actionPoint);
-                projectile.Launch(Owner, pos, Owner.Direction == Adberration.FacingDirection.Right ? Vector2.UnitX : -Vector2.UnitX, action.Projectile);
+                var pos = Owner.GetAnchoredPosition(spawnPoint);
+                projectile.Throw(Owner, pos, action, Target);
             }
         }
 
@@ -81,7 +78,7 @@ namespace Remizione
         // ResolveSelfAction
         private void ResolveSelfAction(IAction action)
         {
-            ActionProcessor.Apply(action, Owner, null, EffectContext.Use);
+            EffectDescriptor.Apply(action.EffectDescriptors, Owner, null, EffectContext.Use);
         }
 
         #endregion

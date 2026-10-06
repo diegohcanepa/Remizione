@@ -11,6 +11,14 @@
         "Self"
       ]
     },
+    "AttackTelegraphKind": {
+      "type": "string",
+      "enum": [
+        "None",
+        "Animation",
+        "Vibration"
+      ]
+    },
     "DamageType": {
       "type": "string",
       "enum": [
@@ -98,7 +106,7 @@
         "Lurk"
       ]
     },    
-    "InPlaceEffectType": {
+    "ImpactEffectType": {
       "type": "string",
       "enum": [
         "None",

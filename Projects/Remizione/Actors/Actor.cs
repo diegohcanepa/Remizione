@@ -508,9 +508,9 @@ namespace Remizione
                     StopTalking();
                     speechText?.Hide();
                 }
-            }
 
-            Session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);
+                Session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);
+            }
 
             Hurt();
 
@@ -1195,6 +1195,16 @@ namespace Remizione
         }
         */
 
+        // Vibrate
+        public void Vibrate(float progress)
+        {
+            float shakeIntensity = float.Lerp(.1f, .3f, progress);
+            float offsetX = (float)(Random.Shared.NextDouble() * 2 - 1) * shakeIntensity;
+            float offsetY = (float)(Random.Shared.NextDouble() * 2 - 1) * (shakeIntensity * 0.5f);
+
+            Sprite.Offset = new Vector2(offsetX, offsetY);
+        }
+
         // SpeechColor
         public Color SpeechColor { get; set; } = Color.Transparent;
 
@@ -1219,6 +1229,30 @@ namespace Remizione
         public void StartTalking()
         {
             Animate(AnimationNames.Talk, true, AnimationDirection.Forward, false);
+        }
+
+        // StartAttackTelegraph
+        public void StartAttackTelegraph(CombatIntent intent, float duration)
+        {
+            switch (intent.TelegraphKind)
+            {
+                // Animation
+                case AttackTelegraphKind.Animation:
+                    if (!string.IsNullOrEmpty(intent.TelegraphAnimationName))
+                        Animate(intent.TelegraphAnimationName, false, AnimationDirection.Forward, true);
+                    break;
+
+                // Vibration
+                case AttackTelegraphKind.Vibration:
+                    // La lógica de offset que vimos antes la puede controlar el propio Actor o un timer interno
+                    break;
+            }
+        }
+
+        // StopAttackTelegraph
+        public void StopAttackTelegraph()
+        {
+            Sprite.Offset = Vector2.Zero;
         }
 
         // StopTalking

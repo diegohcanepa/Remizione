@@ -13,7 +13,7 @@ namespace Adberration
     /// <summary>
     /// Entity
     /// </summary>
-    public abstract partial class Entity : GameObject, INamedObject, ITransform, ISoundEmitter
+    public abstract class Entity : GameObject, INamedObject, ITransform, ISoundEmitter
     {
         #region Private fields
 
@@ -580,6 +580,13 @@ namespace Adberration
         // Name
         public string Name { get; }
 
+        // Offset
+        public Vector2 Offset
+        {
+            get => Sprite.Offset;
+            set => Sprite.Offset = value;
+        }
+
         // Opacity
         [ScriptProperty]
         public float Opacity
@@ -848,7 +855,7 @@ namespace Adberration
         /// <summary>
         /// ChildCollection
         /// </summary>
-        public sealed partial class ChildCollection : IList<Thing>, IReadOnlyList<Thing>
+        public sealed class ChildCollection : IList<Thing>, IReadOnlyList<Thing>
         {
             #region Private fields
 

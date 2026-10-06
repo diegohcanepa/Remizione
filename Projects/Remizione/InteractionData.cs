@@ -147,7 +147,7 @@ namespace Remizione
             bool executeInPlace = (player.HeldProp != null) ||
                                   (context.HeldItem == null && Target == player) ||
                                   (Verb == Verb.Examine && context.HeldItem == null) ||
-                                  (context.HeldItem?.Definition.ActionKind is ActionKind.Self);
+                                  (context.HeldItem?.Definition.ActionKind is ActionKind.Self or ActionKind.Projectile);
 
             if (executeInPlace)
                 ExecutePending(player);

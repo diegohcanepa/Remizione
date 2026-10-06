@@ -45,8 +45,8 @@ namespace Remizione
             // InitialAmount
             InitialAmount = int.Clamp(element.GetInt32("initialAmount", 1), 1, GameSettings.MaxItemAmount);
 
-            // InPlaceEffectType
-            InPlaceEffectType = element.GetEnum("inPlaceEffectType", InPlaceEffectType.None);
+            // ImpactEffectType
+            ImpactEffectType = element.GetEnum("impactEffectType", ImpactEffectType.None);
 
             // IsDepletable
             IsDepletable = element.GetBool("isDepletable", true);
@@ -71,9 +71,8 @@ namespace Remizione
             // PickupSound
             PickupSound = element.GetObject("pickupSound", Sound.Get) ?? Sound.Get(SoundNames.PickupGeneric);
 
-            // Projectile
-            if (element.TryGetProperty("projectile", out JsonElement projectileElement) && projectileElement.ValueKind == JsonValueKind.Object)
-                Projectile = new ProjectileDescriptor(projectileElement);
+            // ProjectileImageName
+            ProjectileImageName = element.GetString("projectileImageName");
 
             // SkillChance
             SkillChance = element.GetInt32("skillChance", 0);
@@ -88,8 +87,8 @@ namespace Remizione
 
             IsPassive = LightModifier != 0 || LuckModifier != 0;
 
-            if (ActionKind == ActionKind.Projectile && Projectile == null)
-                RaiseValidationError(this, "Items with Projectile usage mode must have a Projectile defined.", nameof(ActionKind));
+            if (ActionKind == ActionKind.Projectile && string.IsNullOrWhiteSpace(ProjectileImageName))
+                ProjectileImageName = Name;
 
             RefreshLocalizedValues();
         }
@@ -169,8 +168,8 @@ namespace Remizione
         // InitialAmount
         public int InitialAmount { get; }
 
-        // InPlaceEffectType
-        public InPlaceEffectType InPlaceEffectType { get; }
+        // ImpactEffectType
+        public ImpactEffectType ImpactEffectType { get; }
 
         // IsDepletable
         public bool IsDepletable { get; }
@@ -202,8 +201,8 @@ namespace Remizione
         // Price
         public int Price { get; }
 
-        // Projectile
-        public ProjectileDescriptor? Projectile { get; }
+        // ProjectileImageName
+        public string ProjectileImageName { get; }
 
         // SkillChance
         public int SkillChance { get; }

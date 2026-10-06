@@ -39,12 +39,7 @@ namespace Remizione
             this.Atlas = Atlases.Environment;
             this.PivotOrigin = RectanglePoint.Center;
             this.IgnoreWalkArea = true;
-            this.effectiveArcHeight = Prop.ThrownDistance switch
-            {
-                ThrowDistance.LongRange => 0.8f,  // Tiro directo y tenso (piedras/lanzas)
-                ThrowDistance.ShortRange => 1.3f, // Tiro más abombado por el peso (vasijas)
-                _ => 1f
-            };
+            this.effectiveArcHeight = GameSettings.ThrownDistanceShortRange;
 
             var animation = AddAnimation(AnimationNames.Default);
             animation.AddFrame(prop.GetHeldPropImageName(), 1000);
@@ -144,36 +139,6 @@ namespace Remizione
 
         #endregion
 
-        // ClampToEffectiveRange
-        // Limita una posición de destino al rango máximo sobre el plano del suelo compensando la perspectiva.
-        public static Vector2 ClampToEffectiveRange(Vector2 origin, Vector2 destination, float maxDistance)
-        {
-            float currentFlatDistance = FlatDistance(origin, destination);
-
-            if (currentFlatDistance <= maxDistance)
-                return destination;
-
-            var delta = destination - origin;
-            var unscaledDelta = new Vector2(delta.X, delta.Y / YPerspectiveFactor);
-            var normalizedDirection = Vector2.Normalize(unscaledDelta);
-
-            var clampedUnscaled = normalizedDirection * maxDistance;
-            return new(origin.X + clampedUnscaled.X,
-                       origin.Y + (clampedUnscaled.Y * YPerspectiveFactor));
-        }
-
-        /// <summary>
-        /// Calcula la distancia real sobre el plano del suelo compensando la compresión visual del eje Y.
-        /// </summary>
-        public static float FlatDistance(Vector2 origin, Vector2 destination)
-        {
-            float dx = destination.X - origin.X;
-            // Escalamos la diferencia vertical para ajustarla a la escala real del suelo
-            float dy = (destination.Y - origin.Y) / YPerspectiveFactor;
-
-            return MathF.Sqrt((dx * dx) + (dy * dy));
-        }
-
         // Depth
         public override float Depth => depth;
 
@@ -190,10 +155,7 @@ namespace Remizione
         // Throw
         public void Throw(GameThing target)
         {
-            if (Prop.ThrownDistance == ThrowDistance.None)
-                return;
-
-            var targetPos = ClampToEffectiveRange(owner.Position, target.Position, Prop.ThrownDistanceInPixels);
+            var targetPos = Projectile.ClampToEffectiveRange(owner.Position, target.Position, GameSettings.ThrownDistanceShortRange);
 
             Launch(target, targetPos);
         }

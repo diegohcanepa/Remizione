@@ -41,6 +41,12 @@
         // Title
         public const string Title = "Remizione";
 
+        // ThrownDistanceLongRange
+        public const float ThrownDistanceLongRange = 100;
+
+        // ThrownDistanceShortRange
+        public const float ThrownDistanceShortRange = 50;
+
         // UserSettingsFileName
         public const string UserSettingsFileName = "UserSettings.cfg";
 

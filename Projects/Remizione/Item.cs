@@ -31,9 +31,7 @@ namespace Remizione
 
         ReadOnlyCollection<EffectDescriptor> IAction.EffectDescriptors => Definition.EffectDescriptors;
 
-        InPlaceEffectType IAction.InPlaceEffectType => Definition.InPlaceEffectType;
-
-        ProjectileDescriptor? IAction.Projectile => Definition.Projectile;
+        ImpactEffectType IAction.ImpactEffectType => Definition.ImpactEffectType;
 
         Sound? IAction.SoundStart => Definition.SoundStart;
 
@@ -93,6 +91,9 @@ namespace Remizione
 
         // Name
         public string Name => Definition.Name;
+
+        // ProjectileImageName
+        public string ProjectileImageName => Definition.ProjectileImageName;
 
         // Remove
         public void Remove()

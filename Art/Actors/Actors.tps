@@ -335,6 +335,11 @@
             <key type="filename">Penitent-assets/ThrowObject03.png</key>
             <key type="filename">Penitent-assets/ThrowObject04.png</key>
             <key type="filename">Penitent-assets/ThrowObject05.png</key>
+            <key type="filename">Penitent-assets/ThrowProjectile01.png</key>
+            <key type="filename">Penitent-assets/ThrowProjectile02.png</key>
+            <key type="filename">Penitent-assets/ThrowProjectile03.png</key>
+            <key type="filename">Penitent-assets/ThrowProjectile04.png</key>
+            <key type="filename">Penitent-assets/ThrowProjectile05.png</key>
             <key type="filename">Penitent-assets/UseCross01.png</key>
             <key type="filename">Penitent-assets/UseCross02.png</key>
             <key type="filename">Penitent-assets/UseCross03.png</key>

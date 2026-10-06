@@ -15,7 +15,7 @@ namespace Remizione
         private static readonly Sprite dotSprite = new(Atlases.UI.TrajectoryDot)
         {
             Color = ColorPalette.Text.Terra,
-            Opacity = .6f,
+            Opacity = .8f,
             PivotOrigin = RectanglePoint.Center,
             Scale = ScaleInfo.UIElement.Medium
         };
@@ -23,7 +23,7 @@ namespace Remizione
         private static readonly Sprite targetMarkerSprite = new(Atlases.UI.TrajectoryTargetMark)
         {
             Color = ColorPalette.Text.Terra,
-            Opacity = .6f,
+            Opacity = .8f,
             PivotOrigin = RectanglePoint.Center,
             Scale = ScaleInfo.UIElement.Medium
         };
@@ -31,17 +31,12 @@ namespace Remizione
         #endregion
 
         // Draw
-        public static void Draw(GameTime gameTime, Actor thrower, Prop prop, Vector2 targetWorldPos)
+        public static void Draw(GameTime gameTime, Vector2 origin, float distance, Vector2 targetWorldPos)
         {
-            if (prop.ThrownDistance == ThrowDistance.None)
-                return;
-
-            Vector2 start = thrower.Position;
-
             // 1. Calculamos la posición límite real usando la compresión plana de perspectiva
-            Vector2 end = ThrownProp.ClampToEffectiveRange(start, targetWorldPos, prop.ThrownDistanceInPixels);
+            Vector2 end = Projectile.ClampToEffectiveRange(origin, targetWorldPos, distance);
 
-            Vector2 direction = end - start;
+            Vector2 direction = end - origin;
             float totalDistance = direction.Length();
 
             if (totalDistance <= 1f)
@@ -52,7 +47,7 @@ namespace Remizione
             // 2. Dibujamos los puntos intermedios a intervalos regulares
             for (var current = StepIntervalPx; current < totalDistance; current += StepIntervalPx)
             {
-                Vector2 dotPosition = start + (direction * current);
+                Vector2 dotPosition = origin + (direction * current);
                 dotSprite.Position = dotPosition;
                 dotSprite.Draw(gameTime);
             }

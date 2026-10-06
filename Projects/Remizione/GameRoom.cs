@@ -154,8 +154,8 @@ namespace Remizione
             Game.SpriteBatch.End();
         }
 
-        // DrawThrowTrajectory
-        private void DrawThrowTrajectory(GameTime gameTime)
+        // DrawHeldPropThrowTrajectory
+        private void DrawHeldPropThrowTrajectory(GameTime gameTime)
         {
             if (MouseCursor.Icon != MouseCursorIcon.Target)
                 return;
@@ -163,7 +163,21 @@ namespace Remizione
             if (Session.Player?.HeldProp != null && Session.InteractionContext.Target?.RuntimeHotspot != null)
             {
                 Game.SpriteBatch.Begin(Session.Camera, SamplerState.PointClamp, BlendState.AlphaBlend, null);
-                UIThrowTrajectory.Draw(gameTime, Session.Player, Session.Player.HeldProp, Session.InteractionContext.Target.RuntimeHotspot.BoundingRectangleF.Center);
+                UIThrowTrajectory.Draw(gameTime, Session.Player.Position, GameSettings.ThrownDistanceShortRange, Session.InteractionContext.Target.RuntimeHotspot.BoundingRectangleF.Center);
+                Game.SpriteBatch.End();
+            }
+        }
+
+        // DrawHeldItemThrowTrajectory
+        private void DrawHeldItemThrowTrajectory(GameTime gameTime)
+        {
+            if (Session.InteractionContext.HeldItem == null || Session.Player == null)
+                return;
+
+            if (Session.InteractionContext.Target?.RuntimeHotspot != null)
+            {
+                Game.SpriteBatch.Begin(Session.Camera, SamplerState.PointClamp, BlendState.AlphaBlend, null);
+                UIThrowTrajectory.Draw(gameTime, Session.Player.Position, GameSettings.ThrownDistanceLongRange, Session.InteractionContext.Target.RuntimeHotspot.BoundingRectangleF.Center);
                 Game.SpriteBatch.End();
             }
         }
@@ -354,7 +368,8 @@ namespace Remizione
             }
 
             // Draw thrown trajectory if the player is carrying a prop and aiming at a hotspot
-            DrawThrowTrajectory(gameTime);
+            DrawHeldPropThrowTrajectory(gameTime);
+            DrawHeldItemThrowTrajectory(gameTime);
 
             // Default (layer)
             DrawThings(gameTime, RenderLayer.Default);

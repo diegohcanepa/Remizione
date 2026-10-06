@@ -53,10 +53,11 @@
 		{
 			"name": "FulguriteCrystal",
 			"category": "Misc",
-			"actionKind": "InPlace",
+			"actionKind": "Projectile",
+			"animationName": "ThrowProjectile",
 			"deselectOnUse": false,
 			"isDepletable": true,
-			"inPlaceEffectType": "Lightning",
+			"impactEffectType": "Lightning",
 			"effects": [
 				{
 					"context": "Attack",

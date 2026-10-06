@@ -62,8 +62,8 @@
               "maximum": 5,
               "minimum": 1
             },
-            "inPlaceEffectType": {
-              "$ref": "enums.schema.json#/$defs/InPlaceEffectType"
+            "impactEffectType": {
+              "$ref": "enums.schema.json#/$defs/ImpactEffectType"
             },
             "lightColor": {
               "type": "string"
@@ -81,9 +81,8 @@
               "type": "string",
               "description": "Nombre del archivo de sonido a reproducir cuando se colecta."
             },
-            "projectile": {
-              "$ref": "Projectile.schema.json",
-              "description": "Referencia al comportamiento y descriptor del proyectil que este ítem dispara o genera."
+            "projectileImageName": {
+              "type": "string"
             },
             "skillChance": {
               "type": "integer"

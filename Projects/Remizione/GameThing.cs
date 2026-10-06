@@ -503,10 +503,6 @@ namespace Remizione
         [ScriptProperty]
         public ApproachBehavior ApproachBehavior { get; set; }
 
-        // ApproachPosition
-        [ScriptProperty]
-        public Vector2 ApproachPosition { get; set; }
-
         // AttachedLight
         public Light? AttachedLight { get; set; }
 
@@ -757,12 +753,12 @@ namespace Remizione
                 return Vector2.Zero;
 
             // 1. Override Manual (Prioridad absoluta del editor)
-            if (ApproachPosition != Vector2.Zero)
+            if (StandPoint != Vector2.Zero)
             {
-                if (HotspotPlacement == PlacementMode.Absolute || behavior is ApproachBehavior.ApproachPosition)
-                    return ApproachPosition;
+                if (HotspotPlacement == PlacementMode.Absolute || behavior is ApproachBehavior.StandPoint)
+                    return StandPoint;
                 else
-                    return this.GetAnchoredPosition(ApproachPosition);
+                    return this.GetAnchoredPosition(StandPoint);
             }
 
             // Datos básicos
@@ -1200,6 +1196,10 @@ namespace Remizione
 
             return null;
         }
+
+        // StandPoint
+        [ScriptProperty]
+        public Vector2 StandPoint { get; set; }
 
         // TakeDamage
         public int TakeDamage(GameThing attacker, DamageType damageType, int amount, Vector2 knockbackForce)

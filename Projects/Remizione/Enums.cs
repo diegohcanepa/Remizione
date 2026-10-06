@@ -13,8 +13,16 @@ namespace Remizione
         InFront,         // Justo encima (para items o puertas)
         Over,
         Behind,
-        ApproachPosition,
+        StandPoint,
         None
+    }
+
+    // AttackTelegraphKind
+    public enum AttackTelegraphKind
+    {
+        None,
+        Animation,
+        Vibration
     }
 
     // BodySize
@@ -71,8 +79,8 @@ namespace Remizione
     // ImpactType
     public enum ImpactType { Low, Medium, High }
 
-    // InPlaceEffectType
-    public enum InPlaceEffectType { None, Lightning }
+    // ImpactEffectType
+    public enum ImpactEffectType { None, Lightning }
 
     // ItemCategory
     public enum ItemCategory { Access, Food, Luck, Medicine, Misc, Sacred }
@@ -188,9 +196,6 @@ namespace Remizione
 
     // TrapState
     public enum TrapState { None, Idle, Warning, Activating, Active, Cooldown, Disabled }
-
-    // ThrowDistance
-    public enum ThrowDistance { None, ShortRange, LongRange }
 
     // UIControlGroupLayoutStyle
     public enum UIControlGroupLayoutStyle { Vertically, Horizontally }

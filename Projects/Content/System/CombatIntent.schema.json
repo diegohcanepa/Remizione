@@ -12,14 +12,7 @@
       "type": "object",
       "properties": {
         "actionKind": {
-          "type": "string",
-          "enum": [
-            "InPlace",
-            "Projectile",
-            "Proximity",
-            "Self"
-          ],
-          "default": "Proximity"
+          "$ref": "enums.schema.json#/$defs/ActionKind"
         },
         "animationName": {
           "type": "string"
@@ -55,10 +48,6 @@
         "maxRange": {
           "type": "integer"
         },
-        "projectile": {
-          "$ref": "Projectile.schema.json",
-          "description": "Referencia al comportamiento y descriptor del proyectil que este ítem dispara o genera."
-        },
         "soundStart": {
           "type": "string",
           "description": "Nombre del archivo de sonido a reproducir cuando comienza la accion."
@@ -66,6 +55,12 @@
         "soundTrigger": {
           "type": "string",
           "description": "Nombre del archivo de sonido a reproducir en el trigger de la accion."
+        },
+        "telegraphAnimationName": {
+          "type": "string"
+        },
+        "telegraphKind": {
+          "$ref": "enums.schema.json#/$defs/AttackTelegraphKind"
         }
       },
       "required": [

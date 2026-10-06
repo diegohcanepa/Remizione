@@ -1,7 +1,6 @@
 ﻿using Engendro;
-using Engendro.Audio;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
+using System;
 
 namespace Remizione
 {
@@ -10,196 +9,170 @@ namespace Remizione
     /// </summary>
     public sealed class Projectile : GameThing
     {
-        #region Private fields
+        #region Constants
 
-        private Vector2 direction;
-        private readonly List<EffectDescriptor> effects = [];
-        private GameThing? emitter;
-        private float gravity;
-        private bool impactDone;
-        private readonly ParticlePopEffect particles = new();
-        private Sound? ricochetSound;
-        private RectangleF roomBounds;
-        private ProjectileTrajectoryType trajectory;
-        private float yVelocity;
+        private const float EffectiveArcHeight = 0.7f;
+        private const int MinThrowDuration = 300;   // Duración mínima en ms para tiros muy cortos
+        private const int MaxThrowDuration = 1600;  // Duración máxima en ms para tiros al límite
+        private const float ThrowSpeed = 1.2f;      // Píxeles por milisegundo (500 px/s)
 
         #endregion
+
+        #region Private fields
+
+        private float depth;
+        private GameThing? target;
+        private Actor thrower = null!;
+        private readonly FloatTween xTween = new();
+        private const float yPerspectiveFactor = .75f;
+        private readonly FloatTween yTween = new();
+
+        #endregion
+
+        #region Constructor
 
         // Constructor
         public Projectile(GameSession session)
             : base(session, string.Empty)
         {
+            this.Atlas = Atlases.Environment;
+            this.IgnoreWalkArea = true;
         }
+
+        #endregion
 
         #region Private members
 
-        // CheckImpacts
-        private bool CheckImpacts(Vector2 from, Vector2 to)
+        // CheckCollision
+        private void CheckCollision()
         {
-            if (Room == null)
-                return false;
-
-            for (var i = 0; i < Room.Children.Count; i++)
+            if (target == null)
+                return;
+            
+            if (target.CanBeHit() && !target.IsDead)
             {
-                if (Room.Children[i] is not GameThing thing || thing == this || thing == this.emitter || !thing.CanBeHit() || thing.Hotspot.IsEmpty)
-                    continue;
+                if (!target.RuntimeHotspot.BoundingRectangleF.Intersects(BoundingBox))
+                    return;
 
-                if (thing.IsInViewport)
+                if (Action.ImpactEffectType == ImpactEffectType.None)
                 {
-                    if (thing.RuntimeHotspot.BoundingRectangleF.Intersects(from, to))
-                    {
-                        if (effects != null)
-                            EffectDescriptor.Apply(effects, this, thing, EffectContext.ProjectileHit);
-                        Impact();
-                        return true;
-                    }
+                    if (target.RuntimeHotspot.BoundingRectangleF.Intersects(BoundingBox))
+                        EffectDescriptor.Apply(Action.EffectDescriptors, thrower, target, EffectContext.Contact);
                 }
-            }
+                else if (Action.ImpactEffectType == ImpactEffectType.Lightning)
+                {
+                    var lightning = new LightningInvocation(Action, target) { Position = target.Position };
+                    thrower?.Room?.Children.Add(lightning);
+                }
 
-            return false;
+                Hit();
+            }
         }
 
-        // CheckWallImpact
-        private bool CheckWallImpact(Vector2 position)
+        // FlatDistance
+        // Calcula la distancia real sobre el plano del suelo compensando la compresión visual del eje Y.
+        private static float FlatDistance(Vector2 origin, Vector2 destination)
         {
-            if (Room == null)
-                return false;
+            float dx = destination.X - origin.X;
+            // Escalamos la diferencia vertical para ajustarla a la escala real del suelo
+            float dy = (destination.Y - origin.Y) / yPerspectiveFactor;
 
-            for (var i = 0; i < Room.Walls.Count; i++)
-            {
-                if (Room.Walls[i].Contains(position))
-                {
-                    if (ricochetSound != null)
-                        PlaySound(ricochetSound);
-
-                    Impact();
-                    return true;
-                }
-            }
-
-            return false;
+            return MathF.Sqrt((dx * dx) + (dy * dy));
         }
 
-        // Destroy
-        private void Destroy()
+        // Hit
+        public void Hit()
         {
-            this.effects.Clear();
-            this.emitter = null;
             Unparent();
-            Session.ObjectPools.Projectiles.Return(this);
         }
 
-        // Impact
-        private void Impact()
+        // Launch
+        private void Launch(Vector2 spawnPosition, GameThing? target, Vector2 targetPosition)
         {
-            particles.Spawn(this.Position, Color.Gray);
-            impactDone = true;
+            if (thrower.Room == null)
+                return;
+
+            this.target = target;
+            this.RenderLayer = RenderLayer.Default;
+
+            depth = thrower.Depth + .01f;
+            this.Position = spawnPosition;
+
+            // Calculamos la duración proporcional a la distancia real de vuelo
+            float distance = Vector2.Distance(spawnPosition, targetPosition);
+            int throwDuration = Math.Clamp((int)(distance / ThrowSpeed), MinThrowDuration, MaxThrowDuration);
+
+            // 1. Movimiento en X: Directo y lineal hasta el destino
+            xTween.Start(TweenStyle.Linear, X, targetPosition.X, throwDuration);
+
+            // 2. Movimiento en Y: Dividido en 2 fases para crear la parábola del arco
+            int halfDuration = throwDuration / 2;
+
+            // Calculamos el pico del arco (punto medio entre el origen y el destino, subiendo 'throwArcHeight')
+            float peakY = Math.Min(Y, targetPosition.Y) - EffectiveArcHeight;
+
+            // Fase 1: Subida con desaceleración
+            yTween.Start(TweenStyle.QuadraticOut, Y, peakY, halfDuration,
+                () =>
+                {
+                    // Fase 2: Caída con aceleración
+                    yTween.Start(TweenStyle.QuadraticIn, Y, targetPosition.Y, halfDuration, Hit);
+                }
+            );
+
+            Tweens.XTween = xTween;
+            Tweens.YTween = yTween;
+
+            thrower?.Room?.Children.Add(this);
         }
 
         #endregion
 
         #region Protected members
 
-        // OnDraw
-        protected override void OnDraw(GameTime gameTime)
-        {
-            if (particles.IsActive)
-                particles.Draw(gameTime);
-            else if (!impactDone)
-                base.OnDraw(gameTime);
-        }
-
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
-
-            // Si por alguna razón la entidad ya se destruyó en este frame, abortamos inmediatamente
-            if (Room == null)
-                return;
-
-            if (impactDone)
-            {
-                if (particles.IsActive)
-                {
-                    particles.Update(gameTime);
-                }
-                else
-                {
-                    Destroy();
-                }
-
-                return;
-            }
-
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Vector2 previousPosition = this.Position;
-            Vector2 nextPosition = previousPosition;
-
-            // 1. Cálculo del movimiento simulado (Posición futura)
-            if (this.trajectory == ProjectileTrajectoryType.Linear)
-            {
-                nextPosition += this.direction * this.Speed * deltaTime;
-            }
-            else if (this.trajectory == ProjectileTrajectoryType.Parabolic)
-            {
-                float moveX = this.direction.X * this.Speed * deltaTime;
-
-                this.yVelocity += this.gravity * deltaTime;
-                float moveY = this.yVelocity * deltaTime;
-
-                nextPosition += new Vector2(moveX, moveY);
-            }
-
-            // 2. Control de salida de los límites absolutos de la habitación
-            if (!this.roomBounds.Contains(nextPosition))
-            {
-                Destroy();
-                return;
-            }
-
-            // 3. Verificación de impactos ambientales (Paredes) PRIMERO
-            // Si la posición futura se metió en una pared, muere acá y no procesa daño a entidades ocultas
-            if (CheckWallImpact(nextPosition))
-                return;
-
-            // 4. Verificación de impactos contra entidades usando el barrido anti-tunneling
-            if (CheckImpacts(previousPosition, nextPosition))
-                return;
-
-            // 5. Si no chocó con nada, aplicamos el movimiento real de forma segura
-            this.Position = nextPosition;
+            CheckCollision();
         }
 
         #endregion
 
-        // Launch
-        public void Launch(GameThing emitter, Vector2 spawnPosition, Vector2 direction, ProjectileDescriptor descriptor)
+        // IAction
+        public IAction Action { get; private set; } = null!;
+
+        // ClampToEffectiveRange
+        // Limita una posición de destino al rango máximo sobre el plano del suelo compensando la perspectiva.
+        public static Vector2 ClampToEffectiveRange(Vector2 origin, Vector2 destination, float maxDistance)
         {
-            if (emitter.Room == null)
-                return;
+            float currentFlatDistance = FlatDistance(origin, destination);
 
-            Sprite.ClearAnimations();
+            if (currentFlatDistance <= maxDistance)
+                return destination;
 
-            this.Atlas = Atlases.Environment;
-            this.emitter = emitter;
-            this.trajectory = descriptor.Trajectory;
-            this.Position = spawnPosition;
-            this.direction = direction != Vector2.Zero ? Vector2.Normalize(direction) : Vector2.Zero;
-            this.Speed = descriptor.Speed;
-            this.yVelocity = descriptor.InitialYVelocity;
-            this.gravity = descriptor.Gravity;
-            this.roomBounds = emitter.Room.BoundingBox;
-            this.ricochetSound = descriptor.RicochetSound;
-            this.impactDone = false;
+            var delta = destination - origin;
+            var unscaledDelta = new Vector2(delta.X, delta.Y / yPerspectiveFactor);
+            var normalizedDirection = Vector2.Normalize(unscaledDelta);
 
-            var anim = AddAnimation("Default");
-            anim.AddFrame("PistolBullet", 1000);
+            var clampedUnscaled = normalizedDirection * maxDistance;
+            return new(origin.X + clampedUnscaled.X,
+                       origin.Y + (clampedUnscaled.Y * yPerspectiveFactor));
+        }
 
-            this.effects.Clear();
-            this.effects.AddRange(descriptor.EffectDescriptors);
+        // Depth
+        public override float Depth => depth;
 
-            emitter.Room.Children.Add(this);
+        // Throw
+        public void Throw(Actor thrower, Vector2 spawnPosition, IAction action, GameThing target)
+        {
+            this.thrower = thrower;
+            this.Action = action;
+            this.PivotOrigin = RectanglePoint.Center;
+            var animation = AddAnimation(AnimationNames.Default);
+            animation.AddFrame(action.ProjectileImageName, 1000);
+             var targetPos = ClampToEffectiveRange(thrower.Position, target.Position, GameSettings.ThrownDistanceLongRange);
+            Launch(spawnPosition, target, targetPos);
         }
     }
 }

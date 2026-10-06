@@ -15,6 +15,7 @@
         "intents": [
           {
             "name": "Charge",
+            "telegraphKind": "Vibration",
             "soundStart": "EnviousEyeMove",
             "actionKind": "Proximity",
             "isCharge": true,

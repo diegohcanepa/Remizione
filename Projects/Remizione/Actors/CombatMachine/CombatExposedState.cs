@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Remizione
 {
@@ -8,8 +9,8 @@ namespace Remizione
     /// </summary>
     public sealed class CombatExposedState : State<Actor>
     {
-        private float timer;
         private CombatIntent? pendingIntent;
+        private float timer;
 
         // Target dinámico
         public Actor? Target { get; set; }
@@ -25,7 +26,22 @@ namespace Remizione
             {
                 float distance = Owner.DistanceToTarget(Target);
                 pendingIntent = arch.SelectIntent(Owner, Owner.CombatBehavior.Intents, distance);
+
+                // Notificamos al Actor que empiece su telegrafiado visual
+                if (pendingIntent != null)
+                {
+                    Owner.StartAttackTelegraph(pendingIntent, timer);
+
+                    if (pendingIntent.SoundStart != null)
+                        Owner.PlaySound(pendingIntent.SoundStart);
+                }
             }
+        }
+
+        // Exit
+        public override void Exit()
+        {
+            Owner.StopAttackTelegraph();
         }
 
         // Update
@@ -39,25 +55,29 @@ namespace Remizione
 
             float distance = Owner.DistanceToTarget(Target);
 
-            // 1. Si el objetivo se fue de rango o perdió LoS, aborta y resetea aggro
             if (distance > arch.LoseSightRange || !Owner.HasLineOfSightTo(Target))
             {
-                float leash = Owner.CombatBehavior?.LeashRadius ?? 0f;
-                if (leash > 0f)
-                {
-                    Owner.MoveRandomlyAround(Owner.HomePosition, leash);
-                }
-
                 Machine.ChangeState<CombatIdleState>();
                 return;
             }
 
-            // 2. Consume el tiempo de telegrafiado/preparación visual
+            // 1. Descontamos el timer
             timer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            // 3. Cuando el timer llega a 0, lanza el ataque o da un paso
+            // 2. EFECTO VISUAL: Vibración de telegrafiado
+            // Si el ataque requiere vibración, el estado solo le pide al Actor que se sacuda
+            if (timer > 0f && pendingIntent?.TelegraphKind == AttackTelegraphKind.Vibration)
+            {
+                float progress = 1f - (timer / arch.ExposedPauseDuration);
+                Owner.Vibrate(progress);
+            }
+
+            // 3. Transición al ataque
             if (timer <= 0f)
             {
+                // Limpiamos el offset por seguridad
+                Owner.Offset = Vector2.Zero;
+
                 if (!Target.IsInvulnerable && pendingIntent != null)
                 {
                     var attackState = Machine.FindOrCreateState<CombatAttackState>();
@@ -67,7 +87,6 @@ namespace Remizione
                 }
                 else
                 {
-                    // Si el objetivo es invulnerable, intenta dar un paso
                     var stepState = Machine.FindOrCreateState<CombatStepState>();
                     stepState.Target = Target;
                     Machine.ChangeState(stepState.GetType());

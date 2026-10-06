@@ -27,14 +27,14 @@ namespace Remizione
         // HPCost
         int HPCost { get; }
 
-        // InPlaceEffectType
-        InPlaceEffectType InPlaceEffectType { get; }
+        // ImpactEffectType
+        ImpactEffectType ImpactEffectType { get; }
 
         // MissChance
         Ratio MissChance { get; }
 
-        // Projectile
-        ProjectileDescriptor? Projectile { get; }
+        // ProjectileImageName
+        string ProjectileImageName { get; }
 
         // SoundStart
         Sound? SoundStart { get; }

@@ -98,7 +98,7 @@ namespace Engendro
             var dt = (float)gameTime.ElapsedGameTime.TotalSeconds * TimeScale;
 
             // Position
-            Position += Velocity * dt * GetSpeedFactor();
+            Position += Velocity * dt * GetSpeedFactor() + Offset;
 
             // Rotation
             Rotation += RotationSpeed * dt;
@@ -297,6 +297,9 @@ namespace Engendro
             Rotation = source.Rotation;
             Scale = source.Scale;
         }
+
+        // Offset
+        public Vector2 Offset { get; set; }
 
         // Opacity
         public float Opacity

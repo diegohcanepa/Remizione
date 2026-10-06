@@ -20,13 +20,29 @@ namespace Remizione
 
         #region Protected members
 
-        // OnExecute
-        protected override void OnExecute()
+        // OnLoad
+        protected override void OnLoad()
         {
+            base.OnLoad();
+            
             this.AnimationPlayer.Play(AnimationNames.Default, false);
             InputManager.DefaultPlayer.GamePad.Vibrate(200, .4f, .4f);
             Session.Camera.Shake(TweenStyle.Linear, new Vector2(1.5f), 66, 4);
             Sound.Play(SoundNames.Lightning);
+            RenderLayer = RenderLayer.Default;
+            Position = Target.Position;
+            EffectDescriptor.Apply(Action.EffectDescriptors, this, Target, EffectContext.Attack);
+        }
+
+        // OnUpdate
+        protected override void OnUpdate(GameTime gameTime)
+        {
+            base.OnUpdate(gameTime);
+
+            DepthOffset = Target.DepthOffset + 1;
+
+            if (!AnimationPlayer.IsPlaying)
+                Unparent();
         }
 
         #endregion

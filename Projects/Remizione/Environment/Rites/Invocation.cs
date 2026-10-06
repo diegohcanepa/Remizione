@@ -7,8 +7,6 @@ namespace Remizione
     /// </summary>
     public abstract class Invocation : GameThing
     {
-        private bool done;
-
         // Constructor
         protected Invocation(IAction action, GameThing target)
             : base(target.Session, string.Empty)
@@ -19,34 +17,6 @@ namespace Remizione
             this.Atlas = Atlases.Environment;
             this.Scale = ScaleInfo.UIElement.Small;
         }
-
-        #region Protected members
-
-        // OnExecute
-        protected virtual void OnExecute()
-        {
-        }
-
-        // OnUpdate
-        protected override void OnUpdate(GameTime gameTime)
-        {
-            if (!done && Room != null)
-            {
-                done = true;
-                RenderLayer = RenderLayer.Default;
-                Position = Target.Position;
-                OnExecute();
-                ActionProcessor.Apply(Action, this, Target, EffectContext.Attack);
-                return;
-            }
-
-            base.OnUpdate(gameTime);
-
-            if (!AnimationPlayer.IsPlaying)
-                Unparent();
-        }
-
-        #endregion
 
         // Action
         public IAction Action { get; }

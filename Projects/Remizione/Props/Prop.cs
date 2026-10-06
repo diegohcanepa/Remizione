@@ -265,29 +265,5 @@ namespace Remizione
 
             return success;
         }
-
-        // ThrownDistance
-        [ScriptProperty]
-        public ThrowDistance ThrownDistance
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    ThrownDistanceInPixels = ThrownDistance switch
-                    {
-                        ThrowDistance.ShortRange => 50,
-                        ThrowDistance.LongRange => 100,
-                        ThrowDistance.None => 0,
-                        _ => throw new System.NotImplementedException(),
-                    };
-                }
-            }
-        }
-
-        // ThrownDistanceInPixels
-        public float ThrownDistanceInPixels { get; private set; }
     }
 }

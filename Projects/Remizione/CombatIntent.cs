@@ -14,6 +14,9 @@ namespace Remizione
         public CombatIntent(JsonElement element)
             : base(element, NameValidationRule.AllowDuplicates)
         {
+            // ActionKind
+            ActionKind = element.GetEnum("actionKind", ActionKind.Proximity);
+
             // AnimationName
             AnimationName = element.GetString("animationName");
             if (string.IsNullOrWhiteSpace(AnimationName))
@@ -30,8 +33,8 @@ namespace Remizione
             // HPCost
             HPCost = Math.Max(0, element.GetInt32("hpCost", 0));
 
-            // InPlaceEffectType
-            InPlaceEffectType = element.GetEnum("inPlaceEffectType", InPlaceEffectType.None);
+            // ImpactEffectType
+            ImpactEffectType = element.GetEnum("impactEffectType", ImpactEffectType.None);
 
             // IsCharge
             IsCharge = element.GetBool("isCharge", false);
@@ -59,11 +62,11 @@ namespace Remizione
             // SoundTrigger
             this.SoundTrigger = element.GetObject("soundTrigger", Sound.Get);
 
-            // ActionKind
-            ActionKind = element.GetEnum("actionKind", ActionKind.Proximity);
+            // TelegraphAnimationName
+            TelegraphAnimationName = element.GetString("telegraphAnimationName");
 
-            if (ActionKind == ActionKind.Projectile && Projectile == null)
-                RaiseValidationError(this, "Items with Projectile action must have a Projectile defined.", nameof(ActionKind));
+            // TelegraphKind
+            TelegraphKind = element.GetEnum("telegraphKind", AttackTelegraphKind.None);
         }
 
         #region IAction interface
@@ -73,6 +76,9 @@ namespace Remizione
         {
             actor.ApplyAction(this);
         }
+
+        // ProjectileImageName
+        string IAction.ProjectileImageName => string.Empty;
 
         #endregion
 
@@ -91,8 +97,8 @@ namespace Remizione
         // HPCost
         public int HPCost { get; }
 
-        // InPlaceEffectType
-        public InPlaceEffectType InPlaceEffectType { get; }
+        // ImpactEffectType
+        public ImpactEffectType ImpactEffectType { get; }
 
         // IsCharge
         public bool IsCharge { get; }
@@ -106,13 +112,16 @@ namespace Remizione
         // MissChance
         public Ratio MissChance { get; }
 
-        // Projectile
-        public ProjectileDescriptor? Projectile { get; }
-
         // SoundStart
         public Sound? SoundStart { get; }
 
         // SoundTrigger
         public Sound? SoundTrigger { get; }
+
+        // TelegraphAnimationName
+        public string TelegraphAnimationName { get; }
+
+        // TelegraphKind
+        public AttackTelegraphKind TelegraphKind { get; }
     }
 }
