@@ -52,6 +52,7 @@
 		},
 		{
 			"name": "FulguriteCrystal",
+			"attackRange": "Medium",
 			"category": "Misc",
 			"actionKind": "Projectile",
 			"animationName": "ThrowProjectile",

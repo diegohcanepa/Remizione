@@ -52,5 +52,8 @@
 
         // WalkThreshold
         public const int WalkThreshold = 15;
+
+        // YTolerance
+        public const int YTolerance = 5;
     }
 }

@@ -1,9 +1,9 @@
 ﻿namespace Remizione.InteractionCommands
 {
     /// <summary>
-    /// LiftCommand
+    /// HoldCommand
     /// </summary>
-    public sealed class LiftCommand : InteractionCommand
+    public sealed class HoldCommand : InteractionCommand
     {
         // CanExecute
         public override bool CanExecute(InteractionData data, Actor player, GameThing target, Verb verb)

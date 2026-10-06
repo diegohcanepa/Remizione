@@ -154,34 +154,6 @@ namespace Remizione
             Game.SpriteBatch.End();
         }
 
-        // DrawHeldPropThrowTrajectory
-        private void DrawHeldPropThrowTrajectory(GameTime gameTime)
-        {
-            if (MouseCursor.Icon != MouseCursorIcon.Target)
-                return;
-
-            if (Session.Player?.HeldProp != null && Session.InteractionContext.Target?.RuntimeHotspot != null)
-            {
-                Game.SpriteBatch.Begin(Session.Camera, SamplerState.PointClamp, BlendState.AlphaBlend, null);
-                UIThrowTrajectory.Draw(gameTime, Session.Player.Position, GameSettings.ThrownDistanceShortRange, Session.InteractionContext.Target.RuntimeHotspot.BoundingRectangleF.Center);
-                Game.SpriteBatch.End();
-            }
-        }
-
-        // DrawHeldItemThrowTrajectory
-        private void DrawHeldItemThrowTrajectory(GameTime gameTime)
-        {
-            if (Session.InteractionContext.HeldItem == null || Session.Player == null)
-                return;
-
-            if (Session.InteractionContext.Target?.RuntimeHotspot != null)
-            {
-                Game.SpriteBatch.Begin(Session.Camera, SamplerState.PointClamp, BlendState.AlphaBlend, null);
-                UIThrowTrajectory.Draw(gameTime, Session.Player.Position, GameSettings.ThrownDistanceLongRange, Session.InteractionContext.Target.RuntimeHotspot.BoundingRectangleF.Center);
-                Game.SpriteBatch.End();
-            }
-        }
-
         // DrawThings
         private void DrawThings(GameTime gameTime, RenderLayer renderLayer)
         {
@@ -366,10 +338,6 @@ namespace Remizione
                 Session.HUD.DestinationMark.Draw(gameTime);
                 Game.SpriteBatch.End();
             }
-
-            // Draw thrown trajectory if the player is carrying a prop and aiming at a hotspot
-            DrawHeldPropThrowTrajectory(gameTime);
-            DrawHeldItemThrowTrajectory(gameTime);
 
             // Default (layer)
             DrawThings(gameTime, RenderLayer.Default);

@@ -34,6 +34,9 @@
             "animationName": {
               "type": "string"
             },
+            "attackRange": {
+              "$ref": "enums.schema.json#/$defs/AttackRange"
+            },
             "category": {
               "$ref": "enums.schema.json#/$defs/ItemCategory"
             },

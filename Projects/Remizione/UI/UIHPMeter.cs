@@ -32,7 +32,7 @@ namespace Remizione
             heartImages = Atlases.UI.RedHearts;
 
             icons = new Sprite[10];
-            var pos = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 3, 2);
+            var pos = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 5, 2);
 
             for (var i = 0; i < icons.Length; i++)
             {

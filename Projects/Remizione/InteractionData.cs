@@ -3,6 +3,7 @@ using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Remizione.InteractionCommands;
+using System;
 
 namespace Remizione
 {
@@ -16,8 +17,8 @@ namespace Remizione
         private InteractionCommand? activeCommand;
         private readonly CombatCommand combatCommand = new();
         private readonly InteractionCommand[] commandChain;
+        private readonly HoldCommand holdCommand = new();
         private readonly ItemCommand itemCommand = new();
-        private readonly LiftCommand liftCommand = new();
         private readonly ScriptOutcomeCommand scriptCommand = new();
         private readonly ThrowHelpPropCommand throwCommand = new();
 
@@ -26,17 +27,45 @@ namespace Remizione
         // Constructor
         public InteractionData()
         {
-            this.commandChain = [throwCommand, combatCommand, liftCommand, scriptCommand, itemCommand];
+            this.commandChain = [throwCommand, combatCommand, holdCommand, scriptCommand, itemCommand];
         }
 
         #region Private members
 
         // ApproachAndExecute
+        // ApproachAndExecute
         private void ApproachAndExecute(Actor player, GameThing target)
         {
-            ApproachBehavior? behavior = this.IsAttack || player.HeldProp != null ? ApproachBehavior.ClosestSide : null;
+            AttackRange range = GetCurrentAttackRange(player);
+            Vector2 destination;
 
-            var destination = target.GetApproachPosition(player, behavior);
+            // Solo si requiere cálculo especial de tiro a distancia (Medium / Long)
+            if (range is AttackRange.Medium or AttackRange.Long)
+            {
+                var (minX, maxX) = range.GetHorzRange();
+
+                var rangedDestination = target.GetRangedApproachPosition(
+                    player,
+                    maxX,
+                    minX,
+                    GameSettings.YTolerance
+                );
+
+                if (!rangedDestination.HasValue)
+                {
+                    player.FaceTo(target);
+                    Clear();
+                    return;
+                }
+
+                destination = rangedDestination.Value;
+            }
+            // Para TODO lo demás (piñas, interacciones, props no arrojables, etc.)
+            else
+            {
+                ApproachBehavior? behavior = this.IsAttack || player.HeldProp != null ? ApproachBehavior.ClosestSide : null;
+                destination = target.GetApproachPosition(player, behavior);
+            }
 
             var fastMove = this.IsAttack || Vector2.Distance(player.Position, destination) > GameSettings.WalkThreshold;
             var moveToResult = destination == Vector2.Zero ? MoveToResult.NoPath : player.MoveTo(destination, fastMove);
@@ -50,6 +79,45 @@ namespace Remizione
             {
                 ExecutePending(player);
             }
+        }
+
+        // GetCurrentAttackRange
+        private AttackRange GetCurrentAttackRange(Actor player)
+        {
+            // 1. Props en mano: solo es Medium si es explícitamente arrojable
+            if (player.HeldProp != null)
+            {
+                return player.HeldProp.Verb == Verb.Lift ? AttackRange.Medium : AttackRange.None;
+            }
+
+            // 2. Ítem equipado
+            var heldItem = player.Session.InteractionContext.HeldItem;
+            if (heldItem != null)
+            {
+                return heldItem.Definition.AttackRange;
+            }
+
+            // 3. Sin ítem ni prop (piña / interacción básica) -> Approch estándar
+            return AttackRange.None;
+        }
+
+        // IsInThrowZone
+        private bool IsInThrowZone(Actor player, GameThing target)
+        {
+            AttackRange range = GetCurrentAttackRange(player);
+
+            if (range == AttackRange.None)
+                return false;
+
+            var (minX, maxX) = range.GetHorzRange();
+
+            float deltaY = Math.Abs(player.Position.Y - target.Position.Y);
+            float deltaX = Math.Abs(player.Position.X - target.Position.X);
+
+            bool inYTolerance = deltaY <= GameSettings.YTolerance;
+            bool inXRange = deltaX >= minX && deltaX <= maxX;
+
+            return inYTolerance && inXRange;
         }
 
         // Prepare
@@ -143,11 +211,15 @@ namespace Remizione
                 return;
             }
 
+            // Identificar si la acción actual involucra un ataque a distancia o lanzamiento
+            AttackRange currentRange = GetCurrentAttackRange(player);
+            bool isRangedAction = currentRange is AttackRange.Medium or AttackRange.Long;
+
             // In-place action?
-            bool executeInPlace = (player.HeldProp != null) ||
-                                  (context.HeldItem == null && Target == player) ||
-                                  (Verb == Verb.Examine && context.HeldItem == null) ||
-                                  (context.HeldItem?.Definition.ActionKind is ActionKind.Self or ActionKind.Projectile);
+            bool executeInPlace = (context.HeldItem == null && Target == player && player.HeldProp == null) ||
+                                  (Verb == Verb.Examine && context.HeldItem == null && player.HeldProp == null) ||
+                                  (context.HeldItem?.Definition.ActionKind == ActionKind.Self) ||
+                                  (isRangedAction && IsInThrowZone(player, Target));
 
             if (executeInPlace)
                 ExecutePending(player);

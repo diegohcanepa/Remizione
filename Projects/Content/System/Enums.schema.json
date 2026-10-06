@@ -11,6 +11,15 @@
         "Self"
       ]
     },
+    "AttackRange": {
+      "type": "string",
+      "enum": [
+        "None",
+        "Short",
+        "Medium",
+        "Long"
+      ]
+    },
     "AttackTelegraphKind": {
       "type": "string",
       "enum": [

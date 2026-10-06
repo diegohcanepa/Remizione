@@ -27,6 +27,7 @@ namespace Remizione
         {
             this.Definition = GameData.Props.Find(DeclaredName);
             this.IgnoreKnockback = true;
+            this.HideHPMeter = true;
             //this.IsHittable = false;
             this.Verb = Verb.Use;
 

@@ -14,6 +14,7 @@ namespace Remizione
         private const float ThrowSpeed = 0.3f;      // Píxeles por milisegundo (500 px/s)
         private const int MinThrowDuration = 500;   // Duración mínima en ms para tiros muy cortos
         private const int MaxThrowDuration = 1600;  // Duración máxima en ms para tiros al límite
+        private const float MaxArcHeight = 24f;     // Altura máxima absoluta del pico del arco (en píxeles)
 
         #endregion
 
@@ -39,7 +40,7 @@ namespace Remizione
             this.Atlas = Atlases.Environment;
             this.PivotOrigin = RectanglePoint.Center;
             this.IgnoreWalkArea = true;
-            this.effectiveArcHeight = GameSettings.ThrownDistanceShortRange;
+            this.effectiveArcHeight = MaxArcHeight;
 
             var animation = AddAnimation(AnimationNames.Default);
             animation.AddFrame(prop.GetHeldPropImageName(), 1000);
@@ -102,14 +103,17 @@ namespace Remizione
             float distance = Vector2.Distance(startPos.Value, targetPosition);
             int throwDuration = Math.Clamp((int)(distance / ThrowSpeed), MinThrowDuration, MaxThrowDuration);
 
+            // Parábola sutil: sube un 15% de la distancia recorrida, con un piso de 6px y un techo suave de 24px
+            float arcHeight = MathHelper.Clamp(distance * 0.15f, 6f, MaxArcHeight);
+
             // 1. Movimiento en X: Directo y lineal hasta el destino
             xTween.Start(TweenStyle.Linear, X, targetPosition.X, throwDuration);
 
             // 2. Movimiento en Y: Dividido en 2 fases para crear la parábola del arco
             int halfDuration = throwDuration / 2;
 
-            // Calculamos el pico del arco (punto medio entre el origen y el destino, subiendo 'throwArcHeight')
-            float peakY = Math.Min(Y, targetPosition.Y) - effectiveArcHeight;
+            // Calculamos el pico del arco (punto medio entre el origen y el destino, subiendo 'arcHeight')
+            float peakY = Math.Min(Y, targetPosition.Y) - arcHeight;
 
             // Fase 1: Subida con desaceleración
             yTween.Start(TweenStyle.QuadraticOut, Y, peakY, halfDuration,

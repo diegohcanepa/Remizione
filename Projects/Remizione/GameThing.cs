@@ -685,7 +685,7 @@ namespace Remizione
         // DrawMeter
         public void DrawMeter(GameTime gameTime)
         {
-            if (hpMeter == null)
+            if (hpMeter == null || HideHPMeter)
                 return;
 
             if (!IsDead)
@@ -840,11 +840,76 @@ namespace Remizione
                 return this.GetAnchoredPosition(OverheadOrigin + offset);
         }
 
+        /// <summary>
+        /// Calcula la posición navegable más cercana para realizar un ataque de rango/lanzamiento,
+        /// respetando la tolerancia vertical en Y y el límite de alcance en X.
+        /// </summary>
+        /// <summary>
+        /// Calcula la posición navegable más cercana para realizar un ataque de rango/lanzamiento,
+        /// respetando la tolerancia vertical en Y y asegurando que el personaje quede dentro del 
+        /// rango permitido en X (ni demasiado lejos ni demasiado cerca).
+        /// </summary>
+        public Vector2? GetRangedApproachPosition(Actor actor, float maxDistanceX, float minDistanceX, float yTolerance)
+        {
+            Vector2 targetPos = this.Position;
+            Vector2 playerPos = actor.Position;
+
+            // 1. Determinar el lado (izquierda o derecha) donde está el jugador respecto al target
+            float directionX = playerPos.X >= targetPos.X ? 1f : -1f;
+
+            // 2. Definir la Y objetivo:
+            // Si el jugador ya está dentro de la franja de tolerancia Y, mantiene su Y actual.
+            // Si está fuera, busca la frontera más cercana de esa franja.
+            float targetY = playerPos.Y;
+            float deltaY = Math.Abs(playerPos.Y - targetPos.Y);
+
+            if (deltaY > yTolerance)
+            {
+                targetY = playerPos.Y > targetPos.Y
+                    ? targetPos.Y + yTolerance
+                    : targetPos.Y - yTolerance;
+            }
+
+            // 3. Definir la X objetivo:
+            float deltaX = Math.Abs(playerPos.X - targetPos.X);
+            float targetX = playerPos.X;
+
+            // Si la distancia X actual es mayor al rango máximo, se acerca al límite exterior.
+            if (deltaX > maxDistanceX)
+            {
+                targetX = targetPos.X + (directionX * maxDistanceX);
+            }
+            // Si está demasiado cerca del target (menos que la distancia mínima), retrocede hasta la distancia mínima.
+            else if (deltaX < minDistanceX)
+            {
+                targetX = targetPos.X + (directionX * minDistanceX);
+            }
+
+            Vector2 candidatePosition = new Vector2(targetX, targetY);
+
+            // 4. Validar si la posición candidata es navegable en el mapa.
+            var gameRoom = actor.Room as GameRoom;
+            var walkArea = gameRoom?.WalkArea;
+
+            if (walkArea == null)
+                return null;
+
+            if (walkArea.IsWalkableAt(candidatePosition))
+                return candidatePosition;
+
+            // Fallback: si el punto exacto no es caminable (ej. hay una pared detrás al retroceder), busca el punto libre más próximo.
+            return walkArea.GetWalkablePoint(candidatePosition);
+        }
+
         // HasLineOfSightTo
         public bool HasLineOfSightTo(GameThing target)
         {
             return Room?.WalkArea == null || Room.WalkArea.InLineOfSight(Position, target.Position, RaycastContext.LineOfSight, this, out _);
         }
+
+        // HideHPMeter
+        [ScriptProperty]
+        public bool HideHPMeter { get; set; }
 
         // HitTest
         public bool HitTest(Vector2 value)

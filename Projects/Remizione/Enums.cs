@@ -17,6 +17,14 @@ namespace Remizione
         None
     }
 
+    // AttackRange
+    public enum AttackRange
+    {
+        None,
+        Medium,  // Rango medio (piedras, cuchillos, vasijas/props)
+        Long     // Rango largo (lanzas, arcos)
+    }
+
     // AttackTelegraphKind
     public enum AttackTelegraphKind
     {

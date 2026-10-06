@@ -33,6 +33,9 @@ namespace Remizione
             if (AreaOfEffect < 0)
                 AreaOfEffect = 0;
 
+            // AttackRange
+            AttackRange = element.GetEnum("attackRange", AttackRange.None);
+
             // Category
             Category = element.GetEnum("category", ItemCategory.Misc);
 
@@ -140,6 +143,9 @@ namespace Remizione
 
         // AreaOfEffect
         public int AreaOfEffect { get; }
+
+        // AttackRange
+        public AttackRange AttackRange { get; }
 
         // Category
         public ItemCategory Category { get; }
