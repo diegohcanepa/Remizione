@@ -134,7 +134,7 @@ namespace Remizione
         public void Show(string text)
         {
             this.textSprite.Text = text;
-            this.textSprite.Color = ColorPalette.Text.TerraLight * .8f;
+            this.textSprite.Color = ColorPalette.MouseCursor.Tooltip;
 
             CanClose = false;
 

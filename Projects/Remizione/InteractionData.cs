@@ -20,7 +20,7 @@ namespace Remizione
         private readonly HoldCommand holdCommand = new();
         private readonly ItemCommand itemCommand = new();
         private readonly ScriptOutcomeCommand scriptCommand = new();
-        private readonly ThrowHelpPropCommand throwCommand = new();
+        private readonly ThrowHeldPropCommand throwCommand = new();
 
         #endregion
 
@@ -32,7 +32,6 @@ namespace Remizione
 
         #region Private members
 
-        // ApproachAndExecute
         // ApproachAndExecute
         private void ApproachAndExecute(Actor player, GameThing target)
         {
@@ -77,6 +76,17 @@ namespace Remizione
             }
             else if (moveToResult == MoveToResult.LessThan1px || destination == Vector2.Zero)
             {
+                // Medir cuánto se desplazó el target desde que se inició la orden
+                float targetDisplacement = Vector2.Distance(target.Position, this.TargetPosition);
+
+                // Si es un ataque de contacto y el target se movió de su posición original
+                if (this.IsAttack && range == AttackRange.None && targetDisplacement > 5f)
+                {
+                    player.FaceTo(target);
+                    Clear();
+                    return;
+                }
+
                 ExecutePending(player);
             }
         }
@@ -117,7 +127,11 @@ namespace Remizione
             bool inYTolerance = deltaY <= GameSettings.YTolerance;
             bool inXRange = deltaX >= minX && deltaX <= maxX;
 
-            return inYTolerance && inXRange;
+            if (!inYTolerance || !inXRange)
+                return false;
+
+            // Validación de línea de visión mediante tu método de Raycasting en el GameRoom
+            return player.Room?.HasLineOfSight(player.Position, target.Position) == true;
         }
 
         // Prepare

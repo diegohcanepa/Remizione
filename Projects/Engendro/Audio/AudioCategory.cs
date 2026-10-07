@@ -3,15 +3,15 @@
 namespace Engendro.Audio
 {
     /// <summary>
-    /// SoundCategory
+    /// AudioCategory
     /// </summary>
-    public sealed class SoundCategory
+    public sealed class AudioCategory
     {
         // Constructor
-        internal SoundCategory(string name)
+        internal AudioCategory(AudioCategoryName category)
         {
-            this.Name = name;
-            this.Volume = new Volume(name);
+            this.Name = category;
+            this.Volume = new Volume(Name.ToString());
         }
 
         #region Internal members
@@ -28,7 +28,7 @@ namespace Engendro.Audio
         public string ContentPath { get; set; } = string.Empty;
 
         // Name
-        public string Name { get; }
+        public AudioCategoryName Name { get; }
 
         // Volume
         public Volume Volume { get; }
@@ -36,7 +36,7 @@ namespace Engendro.Audio
         // ToString
         public override string ToString()
         {
-            return Name;
+            return Name.ToString();
         }
     }
 }

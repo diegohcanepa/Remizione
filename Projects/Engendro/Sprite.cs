@@ -98,7 +98,7 @@ namespace Engendro
             var dt = (float)gameTime.ElapsedGameTime.TotalSeconds * TimeScale;
 
             // Position
-            Position += Velocity * dt * GetSpeedFactor() + Offset;
+            Position += (Velocity * dt * GetSpeedFactor()) + Offset;
 
             // Rotation
             Rotation += RotationSpeed * dt;

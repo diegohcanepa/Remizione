@@ -24,7 +24,7 @@ namespace Remizione
         protected override void OnLoad()
         {
             base.OnLoad();
-            
+
             this.AnimationPlayer.Play(AnimationNames.Default, false);
             InputManager.DefaultPlayer.GamePad.Vibrate(200, .4f, .4f);
             Session.Camera.Shake(TweenStyle.Linear, new Vector2(1.5f), 66, 4);

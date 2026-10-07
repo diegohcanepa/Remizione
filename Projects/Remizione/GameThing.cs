@@ -904,7 +904,7 @@ namespace Remizione
         // HasLineOfSightTo
         public bool HasLineOfSightTo(GameThing target)
         {
-            return Room?.WalkArea == null || Room.WalkArea.InLineOfSight(Position, target.Position, RaycastContext.LineOfSight, this, out _);
+            return Room?.WalkArea == null || Room.WalkArea.HasLineOfSight(Position, target.Position, RaycastContext.LineOfSight, this, out _);
         }
 
         // HideHPMeter

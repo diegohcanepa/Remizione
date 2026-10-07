@@ -12,7 +12,7 @@ namespace Engendro.Audio
         internal string Caption { get; set; } = string.Empty;
 
         // Category
-        internal SoundCategory Category { get; set; } = AudioManager.FXCategory;
+        internal AudioCategory Category { get; set; } = AudioManager.FXCategory;
 
         // MaxInstances
         internal int MaxInstances

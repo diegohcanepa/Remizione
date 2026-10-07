@@ -20,6 +20,19 @@ namespace Engendro
 
         #region Private members
 
+        // GetAudioCategory
+        private static AudioCategories GetAudioCategory(AudioCategoryName name)
+        {
+            return name switch
+            {
+                AudioCategoryName.FX => AudioCategories.FX,
+                AudioCategoryName.Ambience => AudioCategories.Ambience,
+                AudioCategoryName.Voice => AudioCategories.Music,
+                AudioCategoryName.Music => AudioCategories.Voice,
+                _ => throw new NotImplementedException()
+            };
+        }
+
         // InvalidateBoundingBox
         private void InvalidateBoundingBox()
         {
@@ -188,20 +201,26 @@ namespace Engendro
         public void Pause()
         {
             pauseCount++;
+         
             if (pauseCount == 1)
             {
                 for (var i = 0; i < SoundInstance.RunningInstances.Count; i++)
                 {
                     var soundInstance = SoundInstance.RunningInstances[i];
+                    
                     if (soundInstance.Scene == this && soundInstance.PauseAware)
                     {
-                        soundInstance.Pause();
+                        if (PausedAudioCategories.HasFlag(GetAudioCategory(soundInstance.Sound.Category.Name)))
+                            soundInstance.Pause();
                     }
                 }
 
                 OnPause();
             }
         }
+
+        // PausedAudioCategories
+        public AudioCategories PausedAudioCategories { get; protected set; } = AudioCategories.FX | AudioCategories.Voice;
 
         // PausePreviousScenes
         public bool PausePreviousScenes { get; init; }
@@ -218,9 +237,11 @@ namespace Engendro
                     for (var i = 0; i < SoundInstance.RunningInstances.Count; i++)
                     {
                         var soundInstance = SoundInstance.RunningInstances[i];
-                        if (soundInstance.Scene == this)
+
+                        if (soundInstance.Scene == this && soundInstance.PauseAware)
                         {
-                            soundInstance.Resume();
+                            if (PausedAudioCategories.HasFlag(GetAudioCategory(soundInstance.Sound.Category.Name)))
+                                soundInstance.Resume();
                         }
                     }
 

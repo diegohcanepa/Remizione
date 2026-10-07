@@ -21,7 +21,6 @@ namespace Remizione
         #region Private fields
 
         private float depth;
-        private readonly float effectiveArcHeight;
         private readonly Actor owner;
         private GameThing? target;
         private readonly FloatTween xTween = new();
@@ -40,7 +39,6 @@ namespace Remizione
             this.Atlas = Atlases.Environment;
             this.PivotOrigin = RectanglePoint.Center;
             this.IgnoreWalkArea = true;
-            this.effectiveArcHeight = MaxArcHeight;
 
             var animation = AddAnimation(AnimationNames.Default);
             animation.AddFrame(prop.GetHeldPropImageName(), 1000);

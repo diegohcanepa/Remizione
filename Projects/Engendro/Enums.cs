@@ -8,6 +8,21 @@ namespace Engendro
     // AnimationDirection
     public enum AnimationDirection { Forward, Reverse }
 
+    // AudioCategories
+    [Flags]
+    public enum AudioCategories
+    {
+        None = 0,
+        FX = 1,
+        Ambience = 2,
+        Voice = 4,
+        Music = 8,
+        All = FX | Ambience | Voice | Music
+    }
+
+    // AudioCategoryName
+    public enum AudioCategoryName { FX, Ambience, Voice, Music }
+
     // CameraShakeState
     public enum CameraShakeState { None, X, Y, XY }
 
@@ -62,9 +77,6 @@ namespace Engendro
 
     // ScrollLock
     public enum ScrollLock { None, Horizontal, Vertical, All }
-
-    // SoundCategoryName
-    public enum SoundCategoryName { FX, Ambience, Voice, Music }
 
     // SoundScope
     public enum SoundScope { Scene, Global }

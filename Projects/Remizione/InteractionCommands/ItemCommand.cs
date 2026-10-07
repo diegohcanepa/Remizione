@@ -20,13 +20,6 @@
                 {
                     if (player.Session.Room?.WalkArea is not WalkArea walkArea)
                         return;
-
-                    if (!walkArea.InLineOfSight(player.Position, target.Position, RaycastContext.LineOfSight, out _))
-                    {
-                        player.Session.HUD.Message.Show(MessageKind.OutOfSight);
-                        MouseCursor.Shake();
-                        return;
-                    }
                 }
 
                 player.ExecuteAction(heldItem, target);

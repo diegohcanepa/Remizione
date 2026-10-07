@@ -520,6 +520,12 @@ namespace Remizione
         // FollowPlayer
         public bool FollowPlayer { get; set; } = true;
 
+        // HasLineOfSight
+        public bool HasLineOfSight(Vector2 value1, Vector2 value2)
+        {
+            return WalkArea == null || WalkArea.HasLineOfSight(value1, value2, RaycastContext.LineOfSight, out _);
+        }
+
         // IsProcedural
         [ScriptProperty]
         public virtual bool IsProcedural => false;

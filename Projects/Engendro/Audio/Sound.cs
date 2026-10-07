@@ -133,7 +133,7 @@ namespace Engendro.Audio
         public string Caption { get; }
 
         // Category
-        public SoundCategory Category { get; }
+        public AudioCategory Category { get; }
 
         // Create
         internal static Sound Create(string name, SoundSettings settings)
@@ -142,13 +142,13 @@ namespace Engendro.Audio
         }
 
         // EncodeAssetName
-        public static string EncodeAssetName(SoundCategory category, string name)
+        public static string EncodeAssetName(AudioCategory category, string name)
         {
             return EncodeAssetName(category, string.Empty, name);
         }
 
         // EncodeAssetName
-        public static string EncodeAssetName(SoundCategory category, string subfolder, string name)
+        public static string EncodeAssetName(AudioCategory category, string subfolder, string name)
         {
             if (!string.IsNullOrWhiteSpace(category.ContentPath))
             {

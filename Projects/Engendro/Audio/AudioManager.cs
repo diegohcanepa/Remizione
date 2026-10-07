@@ -14,7 +14,7 @@ namespace Engendro.Audio
         #region Private members
 
         // ParseCategory
-        private static void ParseCategory(JsonElement root, SoundCategoryName category)
+        private static void ParseCategory(JsonElement root, AudioCategoryName category)
         {
             if (!root.TryGetProperty(category.ToString(), out var array) || array.ValueKind != JsonValueKind.Array)
                 return;
@@ -59,7 +59,7 @@ namespace Engendro.Audio
                 // Scope
                 if (element.GetEnum<SoundScope>("scope") is SoundScope scope)
                     settings.Scope = scope;
-                else if (category == SoundCategoryName.Music)
+                else if (category == AudioCategoryName.Music)
                     settings.Scope = SoundScope.Global;
 
                 // SoundCount
@@ -77,7 +77,7 @@ namespace Engendro.Audio
                 // TransitionAware
                 if (element.GetBool("transitionAware") is bool transitionAware)
                     settings.TransitionAware = transitionAware;
-                else if (category == SoundCategoryName.Music)
+                else if (category == AudioCategoryName.Music)
                     settings.TransitionAware = false;
 
                 // Volume
@@ -137,20 +137,20 @@ namespace Engendro.Audio
         #endregion
 
         // AmbienceCategory
-        public static SoundCategory AmbienceCategory { get; } = new SoundCategory(SoundCategoryName.Ambience.ToString());
+        public static AudioCategory AmbienceCategory { get; } = new AudioCategory(AudioCategoryName.Ambience);
 
         // FXCategory
-        public static SoundCategory FXCategory { get; } = new SoundCategory(SoundCategoryName.FX.ToString());
+        public static AudioCategory FXCategory { get; } = new AudioCategory(AudioCategoryName.FX);
 
         // GetCategory
-        public static SoundCategory GetCategory(SoundCategoryName name)
+        public static AudioCategory GetCategory(AudioCategoryName name)
         {
             return name switch
             {
-                SoundCategoryName.Ambience => AmbienceCategory,
-                SoundCategoryName.Music => MusicCategory,
-                SoundCategoryName.Voice => VoiceCategory,
-                SoundCategoryName.FX => FXCategory,
+                AudioCategoryName.Ambience => AmbienceCategory,
+                AudioCategoryName.Music => MusicCategory,
+                AudioCategoryName.Voice => VoiceCategory,
+                AudioCategoryName.FX => FXCategory,
                 _ => throw new NotImplementedException(),
             };
         }
@@ -162,10 +162,10 @@ namespace Engendro.Audio
             using JsonDocument doc = JsonDocument.Parse(input);
             var root = doc.RootElement;
 
-            ParseCategory(root, SoundCategoryName.Ambience);
-            ParseCategory(root, SoundCategoryName.FX);
-            ParseCategory(root, SoundCategoryName.Music);
-            ParseCategory(root, SoundCategoryName.Voice);
+            ParseCategory(root, AudioCategoryName.Ambience);
+            ParseCategory(root, AudioCategoryName.FX);
+            ParseCategory(root, AudioCategoryName.Music);
+            ParseCategory(root, AudioCategoryName.Voice);
         }
 
         // LoadAllSounds
@@ -206,7 +206,7 @@ namespace Engendro.Audio
         public static Music Music { get; } = new();
 
         // MusicCategory
-        public static SoundCategory MusicCategory { get; } = new SoundCategory(SoundCategoryName.Music.ToString());
+        public static AudioCategory MusicCategory { get; } = new AudioCategory(AudioCategoryName.Music);
 
         // Reset
         public static void Reset()
@@ -220,6 +220,6 @@ namespace Engendro.Audio
         }
 
         // VoiceCategory
-        public static SoundCategory VoiceCategory { get; } = new SoundCategory(SoundCategoryName.Voice.ToString());
+        public static AudioCategory VoiceCategory { get; } = new AudioCategory(AudioCategoryName.Voice);
     }
 }

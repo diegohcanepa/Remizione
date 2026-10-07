@@ -48,7 +48,7 @@ namespace Remizione
         {
             if (target == null)
                 return;
-            
+
             if (target.CanBeHit() && !target.IsDead)
             {
                 if (!target.RuntimeHotspot.BoundingRectangleF.Intersects(BoundingBox))
@@ -171,7 +171,7 @@ namespace Remizione
             this.PivotOrigin = RectanglePoint.Center;
             var animation = AddAnimation(AnimationNames.Default);
             animation.AddFrame(action.ProjectileImageName, 1000);
-             var targetPos = ClampToEffectiveRange(thrower.Position, target.Position, GameSettings.ThrownDistanceLongRange);
+            var targetPos = ClampToEffectiveRange(thrower.Position, target.Position, GameSettings.ThrownDistanceLongRange);
             Launch(spawnPosition, target, targetPos);
         }
     }

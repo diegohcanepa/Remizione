@@ -1,9 +1,9 @@
 ﻿namespace Remizione.InteractionCommands
 {
     /// <summary>
-    /// ThrowHelpPropCommand
+    /// ThrowHeldPropCommand
     /// </summary>
-    public sealed class ThrowHelpPropCommand : InteractionCommand
+    public sealed class ThrowHeldPropCommand : InteractionCommand
     {
         // CanExecute
         public override bool CanExecute(InteractionData data, Actor player, GameThing target, Verb verb)
@@ -20,15 +20,7 @@
         // Execute
         public override void Execute(InteractionData data, Actor player, GameThing target, Verb verb)
         {
-            if (player.Session.Room?.WalkArea?.InLineOfSight(player.Position, target.Position, RaycastContext.LineOfSight, out _) == true)
-            {
-                player.ThrowHeldProp(target);
-            }
-            else
-            {
-                player.Session.HUD.Message.Show(MessageKind.OutOfSight);
-                MouseCursor.Shake();
-            }
+            player.ThrowHeldProp(target);
         }
     }
 }

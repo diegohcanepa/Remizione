@@ -102,7 +102,7 @@ namespace Remizione
                         if (FactionMatrix.IsHostile(this, targetActor))
                             EffectDescriptor.Apply(Definition.EffectDescriptors, this, targetActor, EffectContext.Contact);
                     }
-                    
+
                     // CASO B: El objetivo es un objeto destructible del escenario (vasijas, antorchas)
                     else
                     {
@@ -1199,8 +1199,8 @@ namespace Remizione
         public void Vibrate(float progress)
         {
             float shakeIntensity = float.Lerp(.1f, .3f, progress);
-            float offsetX = (float)(Random.Shared.NextDouble() * 2 - 1) * shakeIntensity;
-            float offsetY = (float)(Random.Shared.NextDouble() * 2 - 1) * (shakeIntensity * 0.5f);
+            float offsetX = (float)((Random.Shared.NextDouble() * 2) - 1) * shakeIntensity;
+            float offsetY = (float)((Random.Shared.NextDouble() * 2) - 1) * (shakeIntensity * 0.5f);
 
             Sprite.Offset = new Vector2(offsetX, offsetY);
         }

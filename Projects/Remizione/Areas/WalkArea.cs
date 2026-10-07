@@ -134,7 +134,7 @@ namespace Remizione
             destination = deflatedPolygon.Clamp(destination);
 
             // Straight path (Evaluado contra TODA la geometría, estática y dinámica)
-            if (InLineOfSight(start, destination, RaycastContext.Navigation, out IHoleArea? _))
+            if (HasLineOfSight(start, destination, RaycastContext.Navigation, out IHoleArea? _))
                 return [destination];
 
             // Asegurar que el esqueleto estático existe
@@ -186,7 +186,7 @@ namespace Remizione
                     if (a == b) continue;
 
                     // Validación total (Holes + StaticThings + DynamicHoles)
-                    if (InLineOfSight(workingNodes[a].Position, workingNodes[b].Position, RaycastContext.Navigation, out IHoleArea? _))
+                    if (HasLineOfSight(workingNodes[a].Position, workingNodes[b].Position, RaycastContext.Navigation, out IHoleArea? _))
                     {
                         workingNodes[a].Links.Add(b);
                         workingNodes[b].Links.Add(a); // Esto modifica el esqueleto estático temporalmente
@@ -442,17 +442,14 @@ namespace Remizione
             return closestNode == null ? point : closestNode.Position;
         }
 
-        // Holes
-        public RoomAreaReadOnlyCollection<HoleArea> Holes { get; }
-
-        // InLineOfSight
-        public bool InLineOfSight(Vector2 value1, Vector2 value2, RaycastContext context, out IHoleArea? blockingArea)
+        // HasLineOfSight
+        public bool HasLineOfSight(Vector2 value1, Vector2 value2, RaycastContext context, out IHoleArea? blockingArea)
         {
-            return InLineOfSight(value1, value2, context, null, out blockingArea);
+            return HasLineOfSight(value1, value2, context, null, out blockingArea);
         }
 
-        // InLineOfSight
-        public bool InLineOfSight(Vector2 value1, Vector2 value2, RaycastContext context, object? sender, out IHoleArea? blockingHoleArea)
+        // HasLineOfSight
+        public bool HasLineOfSight(Vector2 value1, Vector2 value2, RaycastContext context, object? sender, out IHoleArea? blockingHoleArea)
         {
             blockingHoleArea = null;
 
@@ -506,6 +503,9 @@ namespace Remizione
 
             return true;
         }
+
+        // Holes
+        public RoomAreaReadOnlyCollection<HoleArea> Holes { get; }
 
         // IsWalkableAt
         public bool IsWalkableAt(Vector2 point)
