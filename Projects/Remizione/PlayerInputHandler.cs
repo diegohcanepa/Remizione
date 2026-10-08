@@ -43,22 +43,27 @@ namespace Remizione
 
             if (isPrimary || isSecondary)
             {
-                consecutiveActionCount++;
-                actionWindowTimer = ActionWindowDuration;
-
-                // Si alcanzó el límite, resetea valores y dispara fatiga
+                // Evaluamos el límite ANTES de procesar la nueva orden
                 if (consecutiveActionCount >= MaxConsecutiveActions)
                 {
                     consecutiveActionCount = 0;
                     actionWindowTimer = 0f;
-                    Owner.Fatigue();
+                    Owner.Fatigue(); // Cancela la orden actual y aplica la penalización por spam de movilidad
                     return HandleInputResult.Handled;
                 }
 
+                // Ejecutamos la interacción
                 if (isPrimary)
                     Owner.Session.InteractionData.ProcessPrimaryAction(Owner);
                 else
                     Owner.Session.InteractionData.ProcessSecondaryAction(Owner);
+
+                // Solo incrementamos el contador si la orden resultó en un movimiento activo del Actor
+                if (Owner.IsMoving)
+                {
+                    consecutiveActionCount++;
+                    actionWindowTimer = ActionWindowDuration;
+                }
 
                 return HandleInputResult.Handled;
             }

@@ -411,10 +411,9 @@
             <key type="filename">MouseCursors-assets/MouseCursorTargetIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorUpIcon.png</key>
             <key type="filename">UI-assets/ProhibitionIcon.png</key>
-            <key type="filename">UIIcons-assets/HeartIcon.png</key>
-            <key type="filename">UIIcons-assets/RedHearts1.png</key>
-            <key type="filename">UIIcons-assets/RedHearts2.png</key>
-            <key type="filename">UIIcons-assets/RedHearts3.png</key>
+            <key type="filename">UIIcons-assets/FleshinessHearts1.png</key>
+            <key type="filename">UIIcons-assets/FleshinessHearts2.png</key>
+            <key type="filename">UIIcons-assets/FleshinessHearts3.png</key>
             <key type="filename">UIIcons-assets/StatusPoisonIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -494,6 +493,8 @@
                 <false/>
             </struct>
             <key type="filename">MouseCursors-assets/MouseCursorWaitIcon.png</key>
+            <key type="filename">UIIcons-assets/AoeHeart.png</key>
+            <key type="filename">UIIcons-assets/ShieldHeart.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

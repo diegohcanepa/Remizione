@@ -663,6 +663,20 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/PenitentEffortRelease.wav;Audio/FX/PenitentEffortRelease
 
+#begin Audio/FX/PenitentWheeze1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/PenitentWheeze1.wav;Audio/FX/PenitentWheeze1
+
+#begin Audio/FX/PenitentWheeze2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/PenitentWheeze2.wav;Audio/FX/PenitentWheeze2
+
 #begin Audio/FX/PickupCoin.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

@@ -5,10 +5,12 @@
   <String Key="Actor.Monk">Celador</String>
   <String Key="Actor.Penitent">Penitente</String>
   <String Key="DamageType.Physical">Físico</String>
+  <String Key="EffectTemplate.AotHeart">+{amount} Carnadura convulsa</String>
   <String Key="EffectTemplate.Damage">{amount} daño</String>
   <String Key="EffectTemplate.EnergyRestore">Recarga de baba</String>
   <String Key="EffectTemplate.HPGain">+{amount} Carnadura</String>
   <String Key="EffectTemplate.HPLoss">-{amount} Carnadura</String>
+  <String Key="EffectTemplate.ShieldHeart">+{amount} Refuerzo de carnadura</String>
   <String Key="FloatingMessage.Failed">¡Fallaste!</String>
   <String Key="FloatingMessage.Success">¡Éxito!</String>
   <String Key="HitType.Critical">¡Crítico!</String>
@@ -35,7 +37,7 @@
   <String Key="Item.FulguriteCrystal.Description">Una concreción áspera de sílice y escoria, nacida en el instante en que la rabia del cielo calcinó la tierra muerta. En su cara más llana lleva grabado a punzón el glifo de la fijación alquímica, sellado con cera rancia. Al romper el sello sobre un condenado, la piedra clama a las alturas y descarga un rayo fulminante que consume su carne.</String>
   <String Key="Item.FulguriteCrystal.Name">Fulgurite crystal</String>
   <String Key="Item.GadlingKnuckle.Description">Una placa de hierro tosco, martillada a golpes sobre el cuero podrido de un guante de verdugo. De la articulación sobresale una púa piramidal, mellada y negra de mugre seca.</String>
-  <String Key="Item.GadlingKnuckle.Effect"></String>
+  <String Key="Item.GadlingKnuckle.Effect" />
   <String Key="Item.GadlingKnuckle.Name">Puño de púa</String>
   <String Key="Item.Lift.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Lift.Name">Alzar</String>

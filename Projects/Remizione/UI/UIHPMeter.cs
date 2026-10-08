@@ -1,94 +1,116 @@
 ﻿using Adberration;
 using Engendro;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Remizione
 {
-    /// <summary>
-    /// UIHPMeter
-    /// </summary>
     public sealed class UIHPMeter : SessionGameObject<GameSession>
     {
         #region Private fields
 
         private Actor? actor;
-        private readonly Sprite[] icons;
-        private readonly ReadOnlyCollection<AtlasImage> heartImages;
-        private int lastKnownValue = int.MinValue;
-        private int lastKnownMaxValue = int.MinValue;
-        private int totalIcons;
+        private readonly List<Sprite> displaySprites = [];
+
+        private readonly ReadOnlyCollection<AtlasImage> redHeartImages;
+        private readonly AtlasImage aoeHeartImage;
+        private readonly AtlasImage shieldHeartImage;
+
+        private int lastHp = int.MinValue;
+        private int lastMaxHp = int.MinValue;
+        private int lastShields = int.MinValue;
+        private int lastAoeCount = int.MinValue;
 
         #endregion
 
         #region Constructor
 
-        // Constructor
         public UIHPMeter(GameSession session)
             : base(session)
         {
-            // Directamente referenciamos las imágenes de los corazones rojos:
-            // Frame 0 = Vacío, Frame 1 = Medio corazón, Frame 2 = Corazón lleno
-            heartImages = Atlases.UI.RedHearts;
-
-            icons = new Sprite[10];
-            var pos = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 5, 2);
-
-            for (var i = 0; i < icons.Length; i++)
-            {
-                icons[i] = new(heartImages[0])
-                {
-                    PivotOrigin = RectanglePoint.Center,
-                    Position = pos
-                };
-
-                pos.X += icons[i].BoundingBox.Width + 0.5f;
-            }
+            redHeartImages = Atlases.UI.FleshinessHearts;
+            aoeHeartImage = Atlases.UI.AoeHeart;
+            shieldHeartImage = Atlases.UI.ShieldHeart;
         }
 
         #endregion
 
         #region Private members
 
-        // Refresh
         private void Refresh()
         {
             if (actor == null)
                 return;
 
+            displaySprites.Clear();
+
+            var startPos = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 5, 2);
+            Vector2 currentPos = startPos;
+            float spacing = 0.5f;
+
+            // 1. CORAZONES (Fleshiness)
             int hp = actor.HP;
             int maxHp = actor.MaxHP;
+            int redContainers = maxHp / 2;
 
-            totalIcons = maxHp / 2;
-
-            for (int i = 0; i < totalIcons; i++)
+            for (int i = 0; i < redContainers; i++)
             {
-                if (i >= icons.Length)
-                    break;
+                int p1 = (i * 2) + 1;
+                int p2 = (i * 2) + 2;
 
-                int p1 = (i * 2) + 1; // Primer punto de vida de este icono
-                int p2 = (i * 2) + 2; // Segundo punto de vida de este icono
+                AtlasImage img = redHeartImages[0];
+                if (hp >= p2) img = redHeartImages[2];
+                else if (hp == p1) img = redHeartImages[1];
 
-                if (hp >= p2)
+                var sprite = new Sprite(img)
                 {
-                    icons[i].RenderImage = heartImages[2]; // Corazón Lleno
-                }
-                else if (hp == p1)
-                {
-                    icons[i].RenderImage = heartImages[1]; // Medio Corazón
-                }
-                else
-                {
-                    icons[i].RenderImage = heartImages[0]; // Corazón Vacío
-                }
+                    PivotOrigin = RectanglePoint.Center,
+                    Position = currentPos
+                };
+
+                displaySprites.Add(sprite);
+                currentPos.X += sprite.BoundingBox.Width + spacing;
             }
 
-            lastKnownValue = hp;
-            lastKnownMaxValue = maxHp;
+            currentPos.Y += 1;
 
-            var w = (totalIcons * icons[0].BoundingBox.Width) + (.5f * totalIcons);
+            // 2. CORAZONES (AoE)
+            for (int i = 0; i < actor.AoeHearts; i++)
+            {
+                var sprite = new Sprite(aoeHeartImage)
+                {
+                    PivotOrigin = RectanglePoint.Center,
+                    Position = currentPos
+                };
 
-            BoundingBox = new(icons[0].Position.X, icons[0].Position.Y, w, icons[0].BoundingBox.Height);
+                displaySprites.Add(sprite);
+                currentPos.X += sprite.BoundingBox.Width + spacing;
+            }
+
+            // 3. CORAZONES (Escudo)
+            for (int i = 0; i < actor.ShieldHearts; i++)
+            {
+                var sprite = new Sprite(shieldHeartImage)
+                {
+                    PivotOrigin = RectanglePoint.Center,
+                    Position = currentPos
+                };
+
+                displaySprites.Add(sprite);
+                currentPos.X += sprite.BoundingBox.Width + spacing;
+            }
+
+            lastHp = hp;
+            lastMaxHp = maxHp;
+            lastShields = actor.ShieldHearts;
+            lastAoeCount = actor.AoeHearts;
+
+            if (displaySprites.Count > 0)
+            {
+                float totalWidth = currentPos.X - startPos.X;
+                BoundingBox = new RectangleF(startPos.X, startPos.Y, totalWidth, displaySprites[0].BoundingBox.Height);
+            }
         }
 
         #endregion
@@ -101,9 +123,9 @@ namespace Remizione
             if (actor == null)
                 return;
 
-            for (var i = 0; i < totalIcons; i++)
+            for (int i = 0; i < displaySprites.Count; i++)
             {
-                icons[i].Draw(gameTime);
+                displaySprites[i].Draw(gameTime);
             }
         }
 
@@ -113,20 +135,16 @@ namespace Remizione
             if (Session.Player != actor)
             {
                 actor = Session.Player;
-
-                if (actor == null)
-                {
-                    lastKnownValue = int.MinValue;
-                    lastKnownMaxValue = int.MinValue;
-                }
-
                 Refresh();
             }
 
             if (actor == null)
                 return;
 
-            if (lastKnownValue != actor.HP || lastKnownMaxValue != actor.MaxHP)
+            if (lastHp != actor.HP ||
+                lastMaxHp != actor.MaxHP ||
+                lastShields != actor.ShieldHearts ||
+                lastAoeCount != actor.AoeHearts)
             {
                 Refresh();
             }

@@ -10,8 +10,8 @@
 			"effects": [
 				{
 					"context": "Use",
-					"effectType": "HPGain",
-					"amount": "8",
+					"effectType": "AoeHeart",
+					"amount": "1",
 					"target": "Self",
 					"sound": "ConsumeBite"
 				}
@@ -26,8 +26,8 @@
 			"effects": [
 				{
 					"context": "Use",
-					"effectType": "HPGain",
-					"amount": "2",
+					"effectType": "ShieldHeart",
+					"amount": "1",
 					"target": "Self",
 					"sound": "ConsumeBite"
 				}

@@ -260,7 +260,7 @@ namespace Remizione
         // OnHandleInput
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
-            #if DEBUG
+#if DEBUG
 
             // Console
             if (console?.IsActive == true)
@@ -270,7 +270,7 @@ namespace Remizione
             else if (roomEditor?.HandleInput() == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
-            #endif
+#endif
 
             // HUD
             if (HUD.HandleInput(gameTime) == HandleInputResult.Handled)

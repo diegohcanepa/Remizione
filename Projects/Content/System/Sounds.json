@@ -58,6 +58,7 @@
     { "name": "PenitentEffort", "volume": 0.3 },
     { "name": "PenitentEffortRelease", "volume": 0.3 },
     { "name": "PenitentDeath" },
+    { "name": "PenitentWheeze", "soundCount": 2, "volume": 0.3 },
     { "name": "PickupCoin" },
     { "name": "PickupGeneric" },
     { "name": "PickupKey" },

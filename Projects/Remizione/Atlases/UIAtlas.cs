@@ -12,6 +12,7 @@ namespace Remizione
         public UIAtlas()
             : base(EngendroGame.Instance.Content, "UI", ContentManagerExtension.EncodePath(ContentFolder.Atlases, "UI"), false)
         {
+            AoeHeart = this[nameof(AoeHeart)];
             CheckMark = this[nameof(CheckMark)];
             CloseWindowButton = this[nameof(CloseWindowButton)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
@@ -21,7 +22,7 @@ namespace Remizione
             EchoBackground = this[nameof(EchoBackground)];
             ExamineItem = this[nameof(ExamineItem)];
             FakeItem = this[nameof(FakeItem)];
-            HeartIcon = this[nameof(HeartIcon)];
+            FleshinessHearts = CreateReadOnlyCollection(nameof(FleshinessHearts), 1, 3);
             InventoryItemSlots = CreateReadOnlyCollection("InventoryItemSlot", 1, 3);
             MiniMapMarker = this[nameof(MiniMapMarker)];
             MouseLeftButtonIcon = this[nameof(MouseLeftButtonIcon)];
@@ -30,9 +31,9 @@ namespace Remizione
             PopupContainer = this[nameof(PopupContainer)];
             PopupContainerShadow = this[nameof(PopupContainerShadow)];
             QuickInventoryBackground = this[nameof(QuickInventoryBackground)];
-            RedHearts = CreateReadOnlyCollection(nameof(RedHearts), 1, 3);
             Sack = this[nameof(Sack)];
             SavingIcon = this[nameof(SavingIcon)];
+            ShieldHeart = this[nameof(ShieldHeart)];
             SpeechTextArrow = this[nameof(SpeechTextArrow)];
             SpeechTextPipe = this[nameof(SpeechTextPipe)];
             TrajectoryDot = this[nameof(TrajectoryDot)];
@@ -40,6 +41,9 @@ namespace Remizione
             UIButtonContainerEdge = this[nameof(UIButtonContainerEdge)];
             UIButtonContainerPattern = this[nameof(UIButtonContainerPattern)];
         }
+
+        // AoeHeart
+        public AtlasImage AoeHeart { get; }
 
         // CheckMark
         public AtlasImage CheckMark { get; }
@@ -68,8 +72,8 @@ namespace Remizione
         // FakeItem
         public AtlasImage FakeItem { get; }
 
-        // HeartIcon
-        public AtlasImage HeartIcon { get; }
+        // FleshinessHearts
+        public ReadOnlyCollection<AtlasImage> FleshinessHearts { get; }
 
         // InventoryItemSlots
         public ReadOnlyCollection<AtlasImage> InventoryItemSlots { get; }
@@ -95,14 +99,14 @@ namespace Remizione
         // QuickInventoryBackground
         public AtlasImage QuickInventoryBackground { get; }
 
-        // RedHearts
-        public ReadOnlyCollection<AtlasImage> RedHearts { get; }
-
         // Sack
         public AtlasImage Sack { get; }
 
         // SavingIcon
         public AtlasImage SavingIcon { get; }
+
+        // ShieldHeart
+        public AtlasImage ShieldHeart { get; }
 
         // SpeechTextArrow
         public AtlasImage SpeechTextArrow { get; }

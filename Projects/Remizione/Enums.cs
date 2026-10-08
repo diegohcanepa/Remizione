@@ -58,7 +58,7 @@ namespace Remizione
     public enum EffectContext { Collect, Contact, Attack, RemainsContact, RunModifier, Update, Use, ProjectileHit, Status, ApplyStatus }
 
     // EffectType
-    public enum EffectType { None, Damage, Death, EnergyGain, EnergyLoss, EnergyRestore, HPGain, HPLoss, HPRestore, MaxEnergyGain, MaxEnergyLoss, MaxHPGain, MaxHPLoss, Status }
+    public enum EffectType { None, AoeHeart, Damage, Death, EnergyGain, EnergyLoss, EnergyRestore, HPGain, HPLoss, HPRestore, MaxEnergyGain, MaxEnergyLoss, MaxHPGain, MaxHPLoss, ShieldHeart, Status }
 
     // EffectTarget
     public enum EffectTarget { Target, Self }

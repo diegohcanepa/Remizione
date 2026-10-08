@@ -2,7 +2,6 @@
 using Adberration.Scripting;
 using Engendro;
 using Engendro.Audio;
-using Engendro.Input;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -213,6 +212,27 @@ namespace Remizione
             }
 
             Unparent();
+        }
+
+        // TriggerAoeDamage
+        private void TriggerAoeDamage()
+        {
+            if (Room == null)
+                return;
+
+            for (int i = 0; i < Room.CulledThings.Count; i++)
+            {
+                if (Room.CulledThings[i] is Actor target && target != this && !target.IsDead)
+                {
+                    if (FactionMatrix.IsHostile(this, target))
+                    {
+                        // Firma correcta de GameThing: (attacker, damageType, amount, knockbackForce)
+                        //target.TakeDamage(this, DamageType.Magical, 10, Vector2.Zero);
+                    }
+                }
+            }
+
+            //PlaySound(SoundNames.AoeExplosion);
         }
 
         // UpdateDirection
@@ -475,6 +495,20 @@ namespace Remizione
         // OnTakeDamage
         protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType)
         {
+            // 1. Intercepción del pool de salud
+            if (AoeHearts > 0)
+            {
+                AoeHearts--;
+                HP += amount; // Restituye la vida roja que resta GameThing.TakeDamage
+                TriggerAoeDamage();
+            }
+            else if (ShieldHearts > 0)
+            {
+                ShieldHearts--;
+                HP += amount; // Restituye la vida roja que resta GameThing.TakeDamage
+            }
+
+            // 2. Flujo nativo de reacción al impacto en Actor
             IsDealingContactDamage = false;
 
             if (Faction == Faction.Neutral && attacker is Actor targetActor && FactionMatrix.IsHostile(targetActor, this))
@@ -482,14 +516,12 @@ namespace Remizione
 
             if (combatMachine != null && !IsPlayer && !IsDead)
             {
-                // Limpiamos cualquier rastro de ataque pendiente (si lo hubiera)
                 if (combatMachine.FindState<CombatAttackState>() is CombatAttackState attackState)
                 {
                     attackState.Intent = null;
                     attackState.Target = null;
                 }
 
-                // Lo mandamos al estado de aturdimiento SIN IMPORTAR qué estaba haciendo
                 combatMachine.ChangeState<CombatHurtState>();
             }
 
@@ -580,6 +612,10 @@ namespace Remizione
 
             return result;
         }
+
+        // AoeHearts
+        [ScriptProperty]
+        public int AoeHearts { get; set; }
 
         // ApplyAction
         public void ApplyAction(IAction action)
@@ -1122,6 +1158,10 @@ namespace Remizione
             speechText ??= new SpeechText(this);
             speechText.Show(text, awaitInput, soundName);
         }
+
+        // ShieldHearts
+        [ScriptProperty]
+        public int ShieldHearts { get; set; }
 
         // ShowStatusReaction
         /*

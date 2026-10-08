@@ -201,13 +201,13 @@ namespace Engendro
         public void Pause()
         {
             pauseCount++;
-         
+
             if (pauseCount == 1)
             {
                 for (var i = 0; i < SoundInstance.RunningInstances.Count; i++)
                 {
                     var soundInstance = SoundInstance.RunningInstances[i];
-                    
+
                     if (soundInstance.Scene == this && soundInstance.PauseAware)
                     {
                         if (PausedAudioCategories.HasFlag(GetAudioCategory(soundInstance.Sound.Category.Name)))
