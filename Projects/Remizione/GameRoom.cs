@@ -369,15 +369,6 @@ namespace Remizione
 #endif
         }
 
-        // OnHandleInput
-        protected override HandleInputResult OnHandleInput(GameTime gameTime)
-        {
-            if (Session.Player != null && Session.AttackingNPC == null)
-                return Session.Player.HandleInput(gameTime);
-            else
-                return base.OnHandleInput(gameTime);
-        }
-
         // OnLoad
         protected override void OnLoad()
         {

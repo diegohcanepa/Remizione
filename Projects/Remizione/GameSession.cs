@@ -31,6 +31,7 @@ namespace Remizione
         private string? lastBonfireName;
         private readonly MiniMapScene miniMapScene;
         private readonly NarrationScene narrationScene;
+        private readonly PlayerInputHandler<Actor> playerInputHandler = new(PlayerIndex.One);
         private Vector2? playerPosition;
         private FrozenDictionary<string, GameThing>? proceduralCatalog;
         private readonly RoomEditor? roomEditor;
@@ -179,21 +180,6 @@ namespace Remizione
 
         #region Protected members
 
-        // CanHandleRoomInput
-        protected override bool CanHandleRoomInput
-        {
-            get
-            {
-                if (console?.IsActive == true)
-                    return false;
-
-                if (roomEditor?.IsActive == true)
-                    return false;
-
-                return base.CanHandleRoomInput;
-            }
-        }
-
         // OnAwait
         protected override void OnAwait()
         {
@@ -274,14 +260,26 @@ namespace Remizione
         // OnHandleInput
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
-            if (roomEditor?.HandleInput() == HandleInputResult.Handled)
+            #if DEBUG
+
+            // Console
+            if (console?.IsActive == true)
                 return HandleInputResult.Handled;
 
-            else if (HUD.HandleInput(gameTime) == HandleInputResult.Handled)
+            // Room editor
+            else if (roomEditor?.HandleInput() == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
-            else
-                return base.OnHandleInput(gameTime);
+            #endif
+
+            // HUD
+            if (HUD.HandleInput(gameTime) == HandleInputResult.Handled)
+                return HandleInputResult.Handled;
+
+            if (playerInputHandler.Owner != null && AttackingNPC == null)
+                return playerInputHandler.HandleInput(gameTime);
+
+            return base.OnHandleInput(gameTime);
         }
 
         // OnPause
@@ -732,6 +730,7 @@ namespace Remizione
                 {
                     field?.StopMoving();
                     field = value;
+                    playerInputHandler.Owner = field;
                     HUD?.Reset();
                     InteractionData.Clear();
                     if (value != null)

@@ -11,7 +11,7 @@ namespace Engendro
     {
         #region Private fields
 
-        private int frameCooldown;
+        private float frameCooldown;
         private int frameIndex = -1;
         private readonly AnimatedSprite sprite;
 
@@ -105,14 +105,12 @@ namespace Engendro
             if (Animation == null || !IsPlaying)
                 return;
 
-            if (frameCooldown > 0)
+            if (frameCooldown > 0f)
             {
-                if (sprite.TimeScale == 1)
-                    frameCooldown -= gameTime.ElapsedGameTime.Milliseconds;
-                else
-                    frameCooldown -= (int)(gameTime.ElapsedGameTime.Milliseconds * sprite.TimeScale);
+                frameCooldown -= (float)gameTime.ElapsedGameTime.TotalMilliseconds * sprite.TimeScale;
             }
-            else
+
+            if (frameCooldown <= 0f)
             {
                 if (Animation.FrameCount > 1)
                     NextFrame();
@@ -192,7 +190,7 @@ namespace Engendro
                     break;
             }
 
-            frameCooldown = Frame == null ? 0 : Frame.Duration;
+            frameCooldown = Frame == null ? 0f : Frame.Duration;
 
             sprite.InvalidateInternalImage();
 
@@ -310,7 +308,7 @@ namespace Engendro
             }
 
             frameIndex = Animation.FrameCount > 0 ? 0 : -1;
-            frameCooldown = 0;
+            frameCooldown = 0f;
         }
     }
 }

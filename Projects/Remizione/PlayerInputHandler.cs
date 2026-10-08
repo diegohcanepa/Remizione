@@ -11,66 +11,56 @@ namespace Remizione
     {
         private int consecutiveActionCount;
         private float actionWindowTimer;
-        private const float ActionWindowDuration = 1.2f; // Tiempo sin clics para resetear el contador
-        private const int MaxConsecutiveActions = 3;     // Límite de acciones continuas
+        private const float ActionWindowDuration = 1.2f;
+        private const int MaxConsecutiveActions = 3;
 
         // Constructor
-        public PlayerInputHandler(T owner, PlayerIndex playerIndex)
+        public PlayerInputHandler(PlayerIndex playerIndex)
             : base(playerIndex)
         {
-            Owner = owner;
         }
-
-        #region Private members
-
-        // ProcessPlayerAction
-        private HandleInputResult ProcessPlayerAction(System.Action action)
-        {
-            // Si el jugador superó el límite de spam, bloqueamos la acción y forzamos fatiga
-            if (consecutiveActionCount >= MaxConsecutiveActions)
-            {
-                consecutiveActionCount = 0;
-                Owner.Fatigue(); // Activa BodyFatigueState en el Actor
-                return HandleInputResult.Handled;
-            }
-
-            // Ejecutamos la acción (ataque, movimiento o interacción)
-            action();
-
-            // Incrementamos el contador y reiniciamos la ventana de recuperación
-            consecutiveActionCount++;
-            actionWindowTimer = ActionWindowDuration;
-
-            return HandleInputResult.Handled;
-        }
-
-        #endregion
 
         // HandleInput
         public override HandleInputResult HandleInput(GameTime gameTime)
         {
-            // 1. Temporizador de ventana de recuperación
+            if (Owner == null || !Owner.IsInCurrentRoom || Owner.IsDead || Owner.IsFatigued)
+                return HandleInputResult.Unhandled;
+
+            // Timer para limpiar el contador si el jugador hace una pausa
             if (actionWindowTimer > 0f)
             {
                 actionWindowTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (actionWindowTimer <= 0f)
                 {
-                    consecutiveActionCount = 0; // El jugador hizo una pausa táctica, resetea
+                    consecutiveActionCount = 0;
                 }
             }
 
             var mouse = InputManager.DefaultPlayer.Mouse;
 
-            // Left button
-            if (mouse.IsLeftButtonPressed())
-            {
-                return ProcessPlayerAction(() => Owner.Session.InteractionData.ProcessPrimaryAction(Owner));
-            }
+            bool isPrimary = mouse.IsLeftButtonPressed();
+            bool isSecondary = mouse.IsRightButtonPressed();
 
-            // Right button
-            if (mouse.IsRightButtonPressed())
+            if (isPrimary || isSecondary)
             {
-                return ProcessPlayerAction(() => Owner.Session.InteractionData.ProcessSecondaryAction(Owner));
+                consecutiveActionCount++;
+                actionWindowTimer = ActionWindowDuration;
+
+                // Si alcanzó el límite, resetea valores y dispara fatiga
+                if (consecutiveActionCount >= MaxConsecutiveActions)
+                {
+                    consecutiveActionCount = 0;
+                    actionWindowTimer = 0f;
+                    Owner.Fatigue();
+                    return HandleInputResult.Handled;
+                }
+
+                if (isPrimary)
+                    Owner.Session.InteractionData.ProcessPrimaryAction(Owner);
+                else
+                    Owner.Session.InteractionData.ProcessSecondaryAction(Owner);
+
+                return HandleInputResult.Handled;
             }
 
             if (InputBindings.Map.IsPressed(0))
@@ -83,6 +73,6 @@ namespace Remizione
         }
 
         // Owner
-        public T Owner { get; }
+        public T? Owner { get; set; }
     }
 }

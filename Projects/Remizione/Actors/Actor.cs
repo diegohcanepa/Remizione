@@ -12,12 +12,13 @@ namespace Remizione
     /// <summary>
     /// Actor
     /// </summary>
-    public class Actor : GameThing, IInputHandler
+    public class Actor : GameThing
     {
         #region Private fields
 
         private Blinker<float>? blinkTimer;
         private BloodSplash? bloodSplash;
+        private StateMachine<Actor>? combatMachine { get; }
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
         private Sprite? heldPropSprite;
@@ -53,13 +54,13 @@ namespace Remizione
             // CombatMachine
             if (CombatBehavior != null)
             {
-                CombatMachine = new StateMachine<Actor>(this, new CombatIdleState());
-                CombatMachine.AddState(new CombatStepState());
-                CombatMachine.AddState(new CombatExposedState());
-                CombatMachine.AddState(new CombatAttackState());
-                CombatMachine.AddState(new CombatCooldownState());
-                CombatMachine.AddState(new CombatHurtState());
-                CombatMachine.Start();
+                combatMachine = new StateMachine<Actor>(this, new CombatIdleState());
+                combatMachine.AddState(new CombatStepState());
+                combatMachine.AddState(new CombatExposedState());
+                combatMachine.AddState(new CombatAttackState());
+                combatMachine.AddState(new CombatCooldownState());
+                combatMachine.AddState(new CombatHurtState());
+                combatMachine.Start();
             }
 
             if (Definition?.HP > 0)
@@ -310,9 +311,6 @@ namespace Remizione
             return 1;
         }
 
-        // InputHandler
-        protected InputHandler? InputHandler { get; set; }
-
         // OnAtlasChanged
         protected override void OnAtlasChanged()
         {
@@ -408,7 +406,7 @@ namespace Remizione
         {
             base.OnInitialize();
             BodyMachine.Start();
-            CombatMachine?.Start();
+            combatMachine?.Start();
         }
 
         // OnLoad
@@ -482,17 +480,17 @@ namespace Remizione
             if (Faction == Faction.Neutral && attacker is Actor targetActor && FactionMatrix.IsHostile(targetActor, this))
                 Faction = Faction.Penitent;
 
-            if (CombatMachine != null && !IsPlayer && !IsDead)
+            if (combatMachine != null && !IsPlayer && !IsDead)
             {
                 // Limpiamos cualquier rastro de ataque pendiente (si lo hubiera)
-                if (CombatMachine.FindState<CombatAttackState>() is CombatAttackState attackState)
+                if (combatMachine.FindState<CombatAttackState>() is CombatAttackState attackState)
                 {
                     attackState.Intent = null;
                     attackState.Target = null;
                 }
 
                 // Lo mandamos al estado de aturdimiento SIN IMPORTAR qué estaba haciendo
-                CombatMachine.ChangeState<CombatHurtState>();
+                combatMachine.ChangeState<CombatHurtState>();
             }
 
             DiscardHeldProp();
@@ -540,7 +538,7 @@ namespace Remizione
             tintTween.Update(gameTime);
 
             if (!IsDead && !Session.IsAwaiting && !IsPlayer)
-                CombatMachine?.Update(gameTime);
+                combatMachine?.Update(gameTime);
 
             // Lógica de aceleración
             if (IsMoving && moveAccelerationMultiplier < 1f)
@@ -605,17 +603,6 @@ namespace Remizione
         [ScriptProperty]
         public BodySize BodySize { get; set; } = BodySize.Medium;
 
-        /*
-        // CanHandleInput
-        public bool CanHandleInput
-        {
-            get
-            {
-                return IsDead ? false : BodyMachine.CurrentState is BodyStandState or BodyMoveState;
-            }
-        }
-        */
-
         // CanInteract
         public override bool CanInteract()
         {
@@ -647,9 +634,6 @@ namespace Remizione
 
         // CombatBehavior
         public CombatBehavior? CombatBehavior { get; }
-
-        // CombatMachine
-        public StateMachine<Actor>? CombatMachine { get; }
 
         // Definition
         public override ActorDefinition? Definition { get; }
@@ -801,18 +785,6 @@ namespace Remizione
             return heldPropSprite?.Position;
         }
 
-        // HandleInput
-        public HandleInputResult HandleInput(GameTime gameTime)
-        {
-            if (InputHandler == null || IsDead || Session.IsAwaiting)
-                return HandleInputResult.Unhandled;
-
-            if (InputHandler != null && Session.IsCurrentScene)
-                return InputHandler.HandleInput(gameTime);
-
-            return HandleInputResult.Unhandled;
-        }
-
         // HasSpeechText
         public bool HasSpeechText => speechText != null && speechText.State != SpeechTextState.Hidden;
 
@@ -869,6 +841,9 @@ namespace Remizione
         // IsExecutingAction
         public bool IsExecutingAction => BodyMachine.CurrentState is BodyExecuteActionState;
 
+        // IsFatigued
+        public bool IsFatigued => BodyMachine.CurrentState is BodyFatigueState;
+
         // IsFollowingPath
         public bool IsFollowingPath { get; private set; }
 
@@ -878,12 +853,6 @@ namespace Remizione
             float dy = Math.Abs(Position.Y - target.Y);
             return dy <= attackLaneThickness;
         }
-
-        // IsStanding
-        public bool IsStanding => BodyMachine.CurrentState is BodyStandState;
-
-        // IsStandingOrMoving
-        public bool IsStandingOrMoving => BodyMachine.CurrentState is BodyStandState or BodyMoveState;
 
         // IsInvulnerable
         public bool IsInvulnerable => blinkTimer?.IsRunning == true;
@@ -1124,27 +1093,6 @@ namespace Remizione
                 }
             }
         }
-
-        // PixelsMoved
-        public float PixelsMoved { get; set; }
-
-        // PlayerNumber
-        [ScriptProperty]
-        public PlayerNumber PlayerNumber
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    if (value == PlayerNumber.None)
-                        InputHandler = null;
-                    else
-                        InputHandler = new PlayerInputHandler<Actor>(this, (PlayerIndex)value);
-                }
-            }
-        } = PlayerNumber.None;
 
         // Recharge
         [ScriptMethod]

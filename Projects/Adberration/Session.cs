@@ -628,9 +628,6 @@ namespace Adberration
 
         #region Protected members
 
-        // CanHandleRoomInput
-        protected virtual bool CanHandleRoomInput => true;
-
         // Dispose
         protected override void Dispose(bool disposing)
         {
@@ -699,13 +696,8 @@ namespace Adberration
         // OnHandleInput
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
-            if (IsRunning && !IsDisposed && (State == GameSessionState.Idle || IsAwaiting))
-            {
-                if (Room != null && CanHandleRoomInput)
-                    return Room.HandleInput(gameTime);
-                else
-                    return base.OnHandleInput(gameTime);
-            }
+            if (Room != null && IsRunning && !IsDisposed && (State == GameSessionState.Idle || IsAwaiting))
+                return Room.HandleInput(gameTime);
 
             return HandleInputResult.Unhandled;
         }

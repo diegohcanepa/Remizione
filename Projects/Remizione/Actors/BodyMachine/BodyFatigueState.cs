@@ -7,26 +7,16 @@ namespace Remizione
     /// </summary>
     public sealed class BodyFatigueState : BodyAnimatedState
     {
-        private int timer;
-
         // Constructor
         public BodyFatigueState()
-            : base(AnimationNames.Fatigue, true)
+            : base(AnimationNames.Fatigue, false)
         {
-        }
-
-        // Enter
-        public override void Enter()
-        {
-            base.Enter();
-            timer = 2000;
         }
 
         // Update
         public override void Update(GameTime gameTime)
         {
-            timer -= gameTime.ElapsedGameTime.Milliseconds;
-            if (timer <= 0)
+            if (!Owner.AnimationPlayer.IsPlaying)
                 Machine.ChangeState<BodyStandState>();
         }
     }
