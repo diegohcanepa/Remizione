@@ -54,7 +54,7 @@ namespace Remizione.Menus
         }
 
         // OHandleInput
-        protected override HandleInputResult OnHandleInput()
+        protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
             // Back
             if (ControlGroup.Controls[0].TestPressed())
@@ -63,7 +63,7 @@ namespace Remizione.Menus
                 return HandleInputResult.Handled;
             }
 
-            return base.OnHandleInput();
+            return base.OnHandleInput(gameTime);
         }
 
         // OnUpdate

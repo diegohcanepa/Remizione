@@ -272,16 +272,16 @@ namespace Remizione
         }
 
         // OnHandleInput
-        protected override HandleInputResult OnHandleInput()
+        protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
             if (roomEditor?.HandleInput() == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
-            else if (HUD.HandleInput() == HandleInputResult.Handled)
+            else if (HUD.HandleInput(gameTime) == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
             else
-                return base.OnHandleInput();
+                return base.OnHandleInput(gameTime);
         }
 
         // OnPause

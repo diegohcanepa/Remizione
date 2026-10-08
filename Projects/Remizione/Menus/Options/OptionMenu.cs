@@ -144,7 +144,7 @@ namespace Remizione.Menus
         }
 
         // HandleInput
-        public HandleInputResult HandleInput()
+        public HandleInputResult HandleInput(GameTime gameTime)
         {
             if (SelectedOption == null)
             {

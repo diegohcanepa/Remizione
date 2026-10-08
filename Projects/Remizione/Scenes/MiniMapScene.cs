@@ -145,7 +145,7 @@ namespace Remizione
         }
 
         // OnHandleInput
-        protected override HandleInputResult OnHandleInput()
+        protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
             // Mouse input
             if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)

@@ -697,14 +697,14 @@ namespace Adberration
         }
 
         // OnHandleInput
-        protected override HandleInputResult OnHandleInput()
+        protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
             if (IsRunning && !IsDisposed && (State == GameSessionState.Idle || IsAwaiting))
             {
                 if (Room != null && CanHandleRoomInput)
-                    return Room.HandleInput();
+                    return Room.HandleInput(gameTime);
                 else
-                    return base.OnHandleInput();
+                    return base.OnHandleInput(gameTime);
             }
 
             return HandleInputResult.Unhandled;

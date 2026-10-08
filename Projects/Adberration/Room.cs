@@ -96,7 +96,7 @@ namespace Adberration
         }
 
         // OnHandleInput
-        protected virtual HandleInputResult OnHandleInput()
+        protected virtual HandleInputResult OnHandleInput(GameTime gameTime)
         {
             return HandleInputResult.Unhandled;
         }
@@ -299,12 +299,12 @@ namespace Adberration
         public int CustomWidth { get; set; }
 
         // HandleInput
-        public HandleInputResult HandleInput()
+        public HandleInputResult HandleInput(GameTime gameTime)
         {
             if (Session.IsAwaiting)
                 return HandleInputResult.Unhandled;
             else
-                return OnHandleInput();
+                return OnHandleInput(gameTime);
         }
 
         // IsCurrentRoom

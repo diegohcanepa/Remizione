@@ -169,7 +169,7 @@ namespace Remizione
         }
 
         // HandleInput
-        public HandleInputResult HandleInput()
+        public HandleInputResult HandleInput(GameTime gameTime)
         {
             if (optionList.Count > 1)
             {

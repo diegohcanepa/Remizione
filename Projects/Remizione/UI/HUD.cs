@@ -73,7 +73,7 @@ namespace Remizione
         public DestinationMark DestinationMark { get; } = new();
 
         // HandleInput
-        public HandleInputResult HandleInput()
+        public HandleInputResult HandleInput(GameTime gameTime)
         {
             if (Session.IsAwaiting)
                 return HandleInputResult.Unhandled;

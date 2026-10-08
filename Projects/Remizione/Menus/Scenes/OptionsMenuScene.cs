@@ -97,16 +97,16 @@ namespace Remizione.Menus
         }
 
         // OnHandleInput
-        protected override HandleInputResult OnHandleInput()
+        protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
-            if (menu.HandleInput() == HandleInputResult.Handled)
+            if (menu.HandleInput(gameTime) == HandleInputResult.Handled)
             {
                 InvalidateSelectedOptionText();
                 return HandleInputResult.Handled;
             }
             else
             {
-                return base.OnHandleInput();
+                return base.OnHandleInput(gameTime);
             }
         }
 

@@ -202,7 +202,7 @@ namespace Remizione.Menus
         }
 
         // OnHandleInput
-        protected override HandleInputResult OnHandleInput()
+        protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
             if (TransitionManager.CurrentTransition.IsRunning)
             {
@@ -215,7 +215,7 @@ namespace Remizione.Menus
                 return HandleInputResult.Handled;
             }
 
-            return menu.HandleInput();
+            return menu.HandleInput(gameTime);
         }
 
         // OnLoadContent

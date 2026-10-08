@@ -71,7 +71,7 @@ namespace Engendro
         }
 
         // OnHandleInput
-        protected virtual HandleInputResult OnHandleInput()
+        protected virtual HandleInputResult OnHandleInput(GameTime gameTime)
         {
             return HandleInputResult.Unhandled;
         }
@@ -152,10 +152,10 @@ namespace Engendro
         public bool ExclusiveDraw { get; init; }
 
         // HandleInput
-        public HandleInputResult HandleInput()
+        public HandleInputResult HandleInput(GameTime gameTime)
         {
             if (!InputManager.IsSuspended && IsCurrentScene)
-                return OnHandleInput();
+                return OnHandleInput(gameTime);
             else
                 return HandleInputResult.Unhandled;
         }

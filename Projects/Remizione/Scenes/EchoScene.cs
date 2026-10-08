@@ -110,12 +110,12 @@ namespace Remizione
         }
 
         // OnHandleInput
-        protected override HandleInputResult OnHandleInput()
+        protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
             if (HandleMouseInput())
                 return HandleInputResult.Handled;
 
-            return base.OnHandleInput();
+            return base.OnHandleInput(gameTime);
         }
 
         // OnUpdate

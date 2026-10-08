@@ -154,7 +154,7 @@ namespace Remizione
         }
 
         // HandleInput
-        public HandleInputResult HandleInput()
+        public HandleInputResult HandleInput(GameTime gameTime)
         {
             if (HandleMouseInput())
                 return HandleInputResult.Handled;

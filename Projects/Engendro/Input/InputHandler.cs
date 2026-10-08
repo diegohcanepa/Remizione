@@ -75,6 +75,6 @@ namespace Engendro.Input
         #endregion
 
         // HandleInput
-        public abstract HandleInputResult HandleInput();
+        public abstract HandleInputResult HandleInput(GameTime gameTime);
     }
 }

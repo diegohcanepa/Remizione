@@ -166,9 +166,9 @@ namespace Remizione.Menus
         }
 
         // OnHandleInput
-        protected override HandleInputResult OnHandleInput()
+        protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
-            return menu.HandleInput();
+            return menu.HandleInput(gameTime);
         }
 
         // OnLoadContent

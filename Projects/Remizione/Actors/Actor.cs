@@ -802,13 +802,13 @@ namespace Remizione
         }
 
         // HandleInput
-        public HandleInputResult HandleInput()
+        public HandleInputResult HandleInput(GameTime gameTime)
         {
             if (InputHandler == null || IsDead || Session.IsAwaiting)
                 return HandleInputResult.Unhandled;
 
             if (InputHandler != null && Session.IsCurrentScene)
-                return InputHandler.HandleInput();
+                return InputHandler.HandleInput(gameTime);
 
             return HandleInputResult.Unhandled;
         }

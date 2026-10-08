@@ -61,7 +61,7 @@ namespace Remizione
         }
 
         // OnHandleInput
-        protected override HandleInputResult OnHandleInput()
+        protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
             for (var i = 0; i < buttons.Length; i++)
             {
@@ -73,7 +73,7 @@ namespace Remizione
                 }
             }
 
-            return base.OnHandleInput();
+            return base.OnHandleInput(gameTime);
         }
 
         // OnLoadContent

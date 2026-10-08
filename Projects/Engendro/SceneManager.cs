@@ -111,7 +111,7 @@ namespace Engendro
 
             TransitionManager.CurrentTransition.Update(gameTime);
 
-            CurrentScene.HandleInput();
+            CurrentScene.HandleInput(gameTime);
 
             var sceneListSize = scenes.Count;
             var canUpdate = true;

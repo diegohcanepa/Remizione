@@ -193,7 +193,7 @@ namespace Remizione.Menus
         public new RemizioneGame Game { get; }
 
         // HandleInput
-        public HandleInputResult HandleInput()
+        public HandleInputResult HandleInput(GameTime gameTime)
         {
             if (SelectedItem == null)
             {

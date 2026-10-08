@@ -158,12 +158,12 @@ namespace Remizione
         }
 
         // OnHandleInput
-        protected override HandleInputResult OnHandleInput()
+        protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
             if (RunningOption != null)
                 return HandleInputResult.Unhandled;
 
-            if (menu.HandleInput() == HandleInputResult.Handled)
+            if (menu.HandleInput(gameTime) == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
             if (HandleMouseInput())
@@ -178,7 +178,7 @@ namespace Remizione
                 return HandleInputResult.Handled;
             }
 
-            return base.OnHandleInput();
+            return base.OnHandleInput(gameTime);
         }
 
         // OnLoadContent
