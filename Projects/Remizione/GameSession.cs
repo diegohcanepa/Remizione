@@ -276,7 +276,7 @@ namespace Remizione
             if (HUD.HandleInput(gameTime) == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
-            if (playerInputHandler.Owner != null && AttackingNPC == null)
+            if (playerInputHandler.Owner != null && !playerInputHandler.Owner.IsLockedByAttacker)
                 return playerInputHandler.HandleInput(gameTime);
 
             return base.OnHandleInput(gameTime);
@@ -536,9 +536,6 @@ namespace Remizione
 
         #endregion
 
-        // AttackingNPC
-        public GameThing? AttackingNPC { get; set; }
-
         // ApplyDeath
         [ScriptMethod]
         public void ApplyDeath()
@@ -549,7 +546,6 @@ namespace Remizione
                 room.Cleanup();
             }
 
-            AttackingNPC = null;
             PlayerData.Grace = 0;
 
             Player?.HP = Player.MaxHP / 2;

@@ -36,7 +36,7 @@ namespace Remizione
                 return;
             }
 
-            if (context.Session.AttackingNPC != null)
+            if (context.Session.Player?.IsLockedByAttacker == true)
             {
                 MouseCursor.Icon = MouseCursorIcon.Cross;
                 return;

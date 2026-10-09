@@ -346,6 +346,8 @@ namespace Remizione
         // OnDeath
         protected override void OnDeath()
         {
+            IsLockedByAttacker = false;
+
             blinkTimer?.Stop();
 
             speechText?.Hide();
@@ -528,6 +530,13 @@ namespace Remizione
                 blinkTimer ??= new(.4f, 0);
                 blinkTimer.Start(.1f, 10);
             }
+        }
+
+        // OnUnload
+        protected override void OnUnload()
+        {
+            base.OnUnload();
+            IsLockedByAttacker = false;
         }
 
         // OnUpdate
@@ -871,6 +880,9 @@ namespace Remizione
 
         // IsInvulnerable
         public bool IsInvulnerable => blinkTimer?.IsRunning == true;
+
+        // IsLockedByAttacker
+        public bool IsLockedByAttacker { get; set; }
 
         // Label
         public override string Label

@@ -91,7 +91,7 @@ namespace Remizione
     public enum ImpactEffectType { None, Lightning }
 
     // ItemCategory
-    public enum ItemCategory { Access, Food, Luck, Medicine, Misc, Sacred }
+    public enum ItemCategory { Access, Food, Luck, Medicine, Misc, Sacred, Weapon }
 
     // ItemKind
     public enum ItemKind { Common, Key, Fleshiness }

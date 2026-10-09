@@ -21,7 +21,7 @@ namespace Remizione
         private static readonly Vector2 defaultScale = ScaleInfo.UIElement.Large;
         private static OutlineEffect? effect;
         private static readonly FloatTween shakeTween = new();
-        private static readonly TextSprite subTextSprite = new(Fonts.CommonOutline) { Color = ColorPalette.Text.Terra, Scale = ScaleInfo.Text.Medium };
+        private static readonly TextSprite subTextSprite = new(Fonts.CommonOutline) { Scale = ScaleInfo.Text.Large };
         private static readonly TextSprite tooltipSprite;
 
         #endregion
@@ -55,7 +55,6 @@ namespace Remizione
                 Multiline = true,
                 Scale = ScaleInfo.Text.VeryLarge
             };
-
 
             Reset();
 
@@ -102,7 +101,7 @@ namespace Remizione
             if (!subTextSprite.IsEmpty)
             {
                 subTextSprite.PivotOrigin = RectanglePoint.LeftTop;
-                subTextSprite.Position = tooltipSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom, 0, -1);
+                subTextSprite.Position = tooltipSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom);
             }
 
             if (!tooltipSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox) ||
@@ -114,7 +113,7 @@ namespace Remizione
                 if (!subTextSprite.IsEmpty)
                 {
                     subTextSprite.PivotOrigin = RectanglePoint.RightTop;
-                    subTextSprite.Position = tooltipSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -1);
+                    subTextSprite.Position = tooltipSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom);
                 }
             }
         }

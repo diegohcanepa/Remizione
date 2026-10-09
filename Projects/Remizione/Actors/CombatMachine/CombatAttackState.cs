@@ -35,11 +35,11 @@ namespace Remizione
                 interactionPoint = Owner.Position + (direction * Intent.MaxRange);
             }
 
-            // Zona de no-retorno: clava el input SOLO si el target es el jugador humano
-            if (currentDistance <= lockCommitDistance && Target == Owner.Session.Player)
+            // Zona de no-retorno: Aplica a CUALQUIER Target (Player o NPC)
+            if (currentDistance <= lockCommitDistance)
             {
                 Target.StopMoving();
-                Owner.Session.AttackingNPC = Owner;
+                Target.IsLockedByAttacker = true;
             }
 
             if (isCharge && Intent.SoundStart != null)
@@ -53,9 +53,7 @@ namespace Remizione
         public override void Exit()
         {
             Owner.IsDealingContactDamage = false;
-
-            if (Target != null && Target == Owner.Session.Player)
-                Owner.Session.AttackingNPC = null;
+            Target?.IsLockedByAttacker = false;
         }
 
         // Intent
@@ -70,13 +68,13 @@ namespace Remizione
             switch (currentPhase)
             {
                 case AttackPhase.Aligning:
-                    // Verificamos de nuevo SOLO si el target es el humano
-                    if (Target != null && Target == Owner.Session.Player && Owner.Session.AttackingNPC == null)
+                    // Mantiene la verificación de compromiso para cualquier target
+                    if (Target != null && !Target.IsLockedByAttacker)
                     {
                         if (Owner.DistanceToTarget(Target) <= lockCommitDistance)
                         {
                             Target.StopMoving();
-                            Owner.Session.AttackingNPC = Owner;
+                            Target.IsLockedByAttacker = true;
                         }
                     }
 
@@ -89,7 +87,20 @@ namespace Remizione
                         else
                         {
                             currentPhase = AttackPhase.Striking;
-                            Owner.ExecuteAction(Intent, Target);
+
+                            float currentDistance = Target != null ? Owner.DistanceToTarget(Target) : float.MaxValue;
+                            bool isLockedByInitiative = Target != null && Target.IsLockedByAttacker;
+
+                            // Si el objetivo quedó bloqueado por iniciativa O está dentro del MaxRange, el golpe conecta
+                            if (isLockedByInitiative || currentDistance <= Intent.MaxRange)
+                            {
+                                Owner.ExecuteAction(Intent, Target);
+                            }
+                            else
+                            {
+                                // if (Intent.SoundMiss != null)
+                                //   Owner.PlaySound(Intent.SoundMiss);
+                            }
                         }
                     }
                     break;

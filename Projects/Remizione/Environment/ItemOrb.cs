@@ -21,7 +21,6 @@ namespace Remizione
             ApproachBehavior = ApproachBehavior.Over;
             Atlas = Atlases.Environment;
             Hotspot = new Polygon("0,0;9,0;9,7;0,7");
-            IsHittable = false;
             RenderLayer = RenderLayer.Default;
             AttachedLightPosition = new(5, 4);
         }

@@ -26,14 +26,11 @@ namespace Remizione
             if (Owner == null || !Owner.IsInCurrentRoom || Owner.IsDead || Owner.IsFatigued)
                 return HandleInputResult.Unhandled;
 
-            // Timer para limpiar el contador si el jugador hace una pausa
             if (actionWindowTimer > 0f)
             {
                 actionWindowTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (actionWindowTimer <= 0f)
-                {
                     consecutiveActionCount = 0;
-                }
             }
 
             var mouse = InputManager.DefaultPlayer.Mouse;
@@ -43,22 +40,19 @@ namespace Remizione
 
             if (isPrimary || isSecondary)
             {
-                // Evaluamos el límite ANTES de procesar la nueva orden
                 if (consecutiveActionCount >= MaxConsecutiveActions)
                 {
                     consecutiveActionCount = 0;
                     actionWindowTimer = 0f;
-                    Owner.Fatigue(); // Cancela la orden actual y aplica la penalización por spam de movilidad
+                    Owner.Fatigue();
                     return HandleInputResult.Handled;
                 }
 
-                // Ejecutamos la interacción
                 if (isPrimary)
                     Owner.Session.InteractionData.ProcessPrimaryAction(Owner);
                 else
                     Owner.Session.InteractionData.ProcessSecondaryAction(Owner);
 
-                // Solo incrementamos el contador si la orden resultó en un movimiento activo del Actor
                 if (Owner.IsMoving)
                 {
                     consecutiveActionCount++;

@@ -145,7 +145,11 @@ namespace Remizione
             var heldItem = player.Session.InteractionContext.HeldItem;
             if (heldItem != null && !Utils.IsGoToVerb(verb))
             {
-                if (player == target)
+                if (!target.CanBeHit() && heldItem.Definition.Category == ItemCategory.Weapon)
+                {
+                    return;
+                }
+                else if (player == target)
                 {
                     if (heldItem.Definition.ActionKind is ActionKind.Projectile or ActionKind.Proximity)
                         return;

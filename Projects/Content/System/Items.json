@@ -43,7 +43,7 @@
 		},
 		{
 			"name": "CrudeKey",
-			"category": "Misc",
+			"category": "Access",
 			"actionKind": "ScriptOutcome",
 			"deselectOnUse": true,
 			"isDepletable": true,
@@ -53,7 +53,7 @@
 		{
 			"name": "FulguriteCrystal",
 			"attackRange": "Medium",
-			"category": "Misc",
+			"category": "Weapon",
 			"actionKind": "Projectile",
 			"animationName": "ThrowProjectile",
 			"deselectOnUse": false,
@@ -69,7 +69,7 @@
 		},		
 		{
 			"name": "GadlingKnuckle",
-			"category": "Misc",
+			"category": "Weapon",
 			"actionKind": "Proximity",
 			"allowDrop": false,
 			"deselectOnUse": false,

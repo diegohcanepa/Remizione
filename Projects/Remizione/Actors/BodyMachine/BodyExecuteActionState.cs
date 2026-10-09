@@ -32,24 +32,6 @@ namespace Remizione
             return false;
         }
 
-        /*
-        // ResolveInPlaceAction
-        private void ResolveInPlaceAction(IAction action)
-        {
-            if (action.InPlaceEffectType == InPlaceEffectType.None)
-                return;
-
-            if (action.InPlaceEffectType == InPlaceEffectType.Lightning)
-            {
-                if (Target != null && Owner.Room != null)
-                {
-                    var lightning = new LightningInvocation(action, Target);
-                    Owner.Room.Children.Add(lightning);
-                }
-            }
-        }
-        */
-
         // ResolveProjectileAction
         private void ResolveProjectileAction(IAction action)
         {

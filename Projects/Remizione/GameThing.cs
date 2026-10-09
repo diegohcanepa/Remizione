@@ -428,11 +428,7 @@ namespace Remizione
         protected override void OnUnload()
         {
             base.OnUnload();
-
             OpacityFactor = 1;
-
-            if (Session.AttackingNPC == this)
-                Session.AttackingNPC = null;
         }
 
         // OnUpdate
@@ -499,7 +495,7 @@ namespace Remizione
         // CanBeHit
         public virtual bool CanBeHit()
         {
-            return IsHittable && !IsDead;
+            return IsHittable || (MaxHP > 0 && !IsDead);
         }
 
         // CanInteract
@@ -618,9 +614,6 @@ namespace Remizione
 
                 DropLoot();
             }
-
-            if (Session.AttackingNPC == this)
-                Session.AttackingNPC = null;
         }
 
 #if DEBUG
@@ -1023,7 +1016,7 @@ namespace Remizione
 
         // IsHittable
         [ScriptProperty]
-        public bool IsHittable { get; set; } = true;
+        public bool IsHittable { get; set; }
 
         // IsKnockbackInProgress
         public bool IsKnockbackInProgress => knockbackVelocity != Vector2.Zero;
