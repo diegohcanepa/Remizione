@@ -49,7 +49,7 @@ namespace Remizione
         }
 
         // DestinationMark
-        internal static Color DestinationMark { get; } = Text.Terra;
+        internal static Color DestinationMark { get; } = Text.TerraLight;
 
         // HighlightedText
         internal static Color HighlightedText { get; } = new(215, 215, 170);
@@ -91,8 +91,11 @@ namespace Remizione
             // Default
             internal static Color Default { get; } = Text.Terra;
 
+            // KeyItem
+            internal static Color KeyItem { get; } = Text.SkyBlue;
+
             // Player
-            internal static Color Player { get; } = Text.SkyBlue;
+            internal static Color Player { get; } = new(172, 167, 144);
 
             // Torch
             internal static Color Torch { get; } = Text.Red;

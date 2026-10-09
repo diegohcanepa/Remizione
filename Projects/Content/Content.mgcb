@@ -642,6 +642,27 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/Penitent5.wav;Audio/FX/Penitent5
 
+#begin Audio/FX/PenitentBreathSigh1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/PenitentBreathSigh1.wav;Audio/FX/PenitentBreathSigh1
+
+#begin Audio/FX/PenitentBreathSigh2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/PenitentBreathSigh2.wav;Audio/FX/PenitentBreathSigh2
+
+#begin Audio/FX/PenitentBreathSigh3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/PenitentBreathSigh3.wav;Audio/FX/PenitentBreathSigh3
+
 #begin Audio/FX/PenitentDeath.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

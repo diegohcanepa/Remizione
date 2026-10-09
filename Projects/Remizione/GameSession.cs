@@ -843,6 +843,7 @@ namespace Remizione
         public void ShowMiniMap()
         {
             Player?.StopMoving();
+            Camera.FocusTarget();
             Game.SceneManager.Push(miniMapScene);
         }
 

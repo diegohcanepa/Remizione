@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
 namespace Remizione
@@ -26,7 +27,8 @@ namespace Remizione
             : base()
         {
             this.session = session;
-            this.PausePreviousScenes = false;
+            this.PausePreviousScenes = true;
+            this.BackgroundColor = Color.Black;
 
             // Title text
             titleText = new(Fonts.CommonOutline)
@@ -116,6 +118,10 @@ namespace Remizione
                     // Ground torch
                     else if (thing is GroundTorch groundTorch)
                         markers.Add(new(thing, groundTorch.IsLit ? ColorPalette.MiniMap.Torch : ColorPalette.MiniMap.Default, false));
+
+                    // KeyItem
+                    else if (thing.ItemReward?.IsKeyItem == true)
+                        markers.Add(new(thing, ColorPalette.MiniMap.KeyItem, false));
                 }
             }
         }
@@ -132,15 +138,20 @@ namespace Remizione
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera);
-            Game.Shapes.DrawRectangle(Screen.Area, ColorPalette.SceneShade);
-            titleText.Draw(gameTime);
             map.Draw(gameTime);
-
             for (var i = 0; i < markers.Count; i++)
             {
                 markers[i].Draw(gameTime);
             }
+            Game.SpriteBatch.End();
 
+            Game.RenderTargets.Swap();
+            Game.SpriteBatch.Begin(effect: RemizioneGame.Effects.CRT.Effect);
+            Game.SpriteBatch.Draw(Game.RenderTargets.PreviousTarget, Vector2.Zero, Color.White);
+            Game.SpriteBatch.End();
+
+            Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
+            titleText.Draw(gameTime);
             Game.SpriteBatch.End();
         }
 

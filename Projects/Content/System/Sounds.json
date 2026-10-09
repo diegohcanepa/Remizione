@@ -55,6 +55,7 @@
     { "name": "Miracle", "soundCount": 2 },    
     { "name": "MoveToSack" },
     { "name": "Penitent", "soundCount": 5, "volume": 0.1 },
+    { "name": "PenitentBreathSigh", "soundCount": 3, "volume": 0.3 },
     { "name": "PenitentEffort", "volume": 0.3 },
     { "name": "PenitentEffortRelease", "volume": 0.3 },
     { "name": "PenitentDeath" },
