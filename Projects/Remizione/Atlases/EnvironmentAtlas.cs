@@ -19,7 +19,6 @@ namespace Remizione
             FireflyParticles = CreateReadOnlyCollection("FireflyParticle", 1, 2);
             Guts = CreateReadOnlyCollection("Gut", 1, 12);
             GutStains = CreateReadOnlyCollection("GutStain", 1, 2);
-            InteractionMark = this[nameof(InteractionMark)];
             LightningLight = this[nameof(LightningLight)];
             ToxicGuts = CreateReadOnlyCollection("ToxicGut", 1, 12);
             ToxicGutStains = CreateReadOnlyCollection("ToxicGutStain", 1, 2);
@@ -45,9 +44,6 @@ namespace Remizione
 
         // GutStains
         public ReadOnlyCollection<AtlasImage> GutStains { get; }
-
-        // InteractionMark
-        public AtlasImage InteractionMark { get; }
 
         // LightningLight
         public AtlasImage LightningLight { get; }

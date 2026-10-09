@@ -36,8 +36,6 @@ namespace Remizione
             ShieldHeart = this[nameof(ShieldHeart)];
             SpeechTextArrow = this[nameof(SpeechTextArrow)];
             SpeechTextPipe = this[nameof(SpeechTextPipe)];
-            TrajectoryDot = this[nameof(TrajectoryDot)];
-            TrajectoryTargetMark = this[nameof(TrajectoryTargetMark)];
             UIButtonContainerEdge = this[nameof(UIButtonContainerEdge)];
             UIButtonContainerPattern = this[nameof(UIButtonContainerPattern)];
         }
@@ -113,12 +111,6 @@ namespace Remizione
 
         // SpeechTextPipe
         public AtlasImage SpeechTextPipe { get; }
-
-        // TrajectoryDot
-        public AtlasImage TrajectoryDot { get; }
-
-        // TrajectoryTargetMark
-        public AtlasImage TrajectoryTargetMark { get; }
 
         // UIButtonContainerEdge
         public AtlasImage UIButtonContainerEdge { get; }

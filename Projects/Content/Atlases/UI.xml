@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:355455f72b00b0afbbb727ad68adae58:54b86bf95b22e51016e50de9036d5bf2:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:cc16f41a187c030dcfc71f64c1465cee:d95fd5eaed6c544469d1b3c88da7b3e0:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -25,7 +25,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="BarrenFig.png" x="244" y="196" w="14" h="14"/>
     <sprite n="CheckMark.png" x="504" y="71" w="6" h="5"/>
     <sprite n="CloseWindowButton.png" x="465" y="71" w="16" h="15"/>
-    <sprite n="ConditionMeterUnit.png" x="497" y="85" w="1" h="2"/>
+    <sprite n="ConditionMeterUnit.png" x="492" y="85" w="1" h="2"/>
     <sprite n="ContextMenuOptionSelector.png" x="372" y="71" w="4" h="5"/>
     <sprite n="CreditsBar.png" x="2" y="2" w="480" h="67"/>
     <sprite n="CrudeKey.png" x="244" y="212" w="14" h="14"/>
@@ -112,8 +112,6 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="TipBalloon.png" x="114" y="290" w="12" h="13"/>
     <sprite n="TraitLockpickingIcon.png" x="98" y="306" w="11" h="11"/>
     <sprite n="TraitLuckIcon.png" x="72" y="319" w="11" h="11"/>
-    <sprite n="TrajectoryDot.png" x="457" y="76" w="1" h="1"/>
-    <sprite n="TrajectoryTargetMark.png" x="492" y="85" w="3" h="3"/>
     <sprite n="UIButtonContainerEdge.png" x="505" y="2" w="5" h="11"/>
     <sprite n="UIButtonContainerPattern.png" x="262" y="159" w="1" h="11"/>
     <sprite n="UIControlContainerEdgeLeftLarge.png" x="505" y="15" w="5" h="11"/>

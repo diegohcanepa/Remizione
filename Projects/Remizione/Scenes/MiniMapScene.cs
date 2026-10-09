@@ -194,7 +194,7 @@ namespace Remizione
                     image.Color = color;
 
                     if (blink)
-                        image.Tweens.OpacityTween = FloatTween.Create(TweenStyle.Linear, .7f, 1, 300, -1);
+                        image.Tweens.OpacityTween = FloatTween.Create(TweenStyle.Linear, .3f, 1, 300, -1);
                 }
             }
 

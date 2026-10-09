@@ -39,13 +39,6 @@ namespace Remizione
         private readonly ShadowSpot shadowSpot;
         private bool shouldClampToWalkablePosition;
         private readonly StatusManager statusManager = new();
-        private static readonly Sprite targetImage = new(Atlases.Environment.InteractionMark)
-        {
-            Color = ColorPalette.DestinationMark,
-            PivotOrigin = RectanglePoint.Center,
-            Opacity = .6f,
-            Scale = new(.7f)
-        };
 
         #endregion
 
@@ -359,12 +352,6 @@ namespace Remizione
                 Position += hurtShakeTween.CurrentValue;
 
             base.OnDraw(gameTime);
-
-            if (Session.InteractionData.Target == this)
-            {
-                targetImage.Position = RuntimeHotspot.BoundingRectangleF.Center;
-                targetImage.Draw(gameTime);
-            }
 
             if (floatingTween != null && floatingTween.IsRunning)
                 Altitude -= floatingTween.CurrentValue;
@@ -688,7 +675,7 @@ namespace Remizione
             if (hpMeter == null || HideHPMeter)
                 return;
 
-            if (!IsDead)
+            if (!IsPlayer && !IsDead)
             {
                 if (Session.InteractionContext.Target == this || hpMeter.IsAnimating)
                     hpMeter.Draw(gameTime);
