@@ -8,6 +8,7 @@ namespace Remizione
     /// </summary>
     internal sealed class MouseCursorAppearance(InteractionContext context)
     {
+        private Item? lastKnownHeldItem;
         private GameThing? lastKnownTarget;
         private Verb? lastKnownVerb;
 
@@ -144,22 +145,25 @@ namespace Remizione
         }
 
         // SyncText
-        private static void SyncText(GameThing? target)
+        private void SyncText()
         {
-            if (target == null)
+            if (context.Target != null && context.HeldItem == null)
             {
-                MouseCursor.Tooltip = null;
+                MouseCursor.Tooltip = context.Target.Label;
                 MouseCursor.SubText = null;
+
+                if (context.Target.ItemRewardAmount > 1)
+                    MouseCursor.Tooltip += $" (x{context.Target.ItemRewardAmount})";
+            }
+            else if (context.HeldItem != null)
+            {
+                MouseCursor.Tooltip = context.HeldItem.Definition.Label;
+                MouseCursor.SubText = context.Target?.Label;
             }
             else
             {
-                MouseCursor.Tooltip = target.Label;
-
-                if (target.ItemRewardAmount > 1)
-                    MouseCursor.Tooltip += $" (x{target.ItemRewardAmount})";
-
-                MouseCursor.TooltipColor = ColorPalette.MouseCursor.Tooltip;
-                MouseCursor.SubTextColor = ColorPalette.MouseCursor.SubText;
+                MouseCursor.Tooltip = null;
+                MouseCursor.SubText = null;
             }
         }
 
@@ -170,10 +174,11 @@ namespace Remizione
         {
             RefreshIcon();
 
-            if (context.Target != lastKnownTarget || context.Target?.Verb != lastKnownVerb)
+            if (context.Target != lastKnownTarget || context.Target?.Verb != lastKnownVerb || context.HeldItem != lastKnownHeldItem)
             {
-                SyncText(context.Target);
+                SyncText();
                 lastKnownTarget = context.Target;
+                lastKnownHeldItem = context.HeldItem;
                 lastKnownVerb = context.Target?.Verb;
             }
         }
