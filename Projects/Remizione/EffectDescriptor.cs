@@ -11,9 +11,13 @@ namespace Remizione
     /// </summary>
     public sealed class EffectDescriptor
     {
+        #region Private fields
+
         private static readonly Vector2 KnockbackLow = new(10, 5);
         private static readonly Vector2 KnockbackMedium = new(20, 5);
         private static readonly Vector2 KnockbackHigh = new(30, 5);
+
+        #endregion
 
         #region Constructor
 
@@ -152,6 +156,46 @@ namespace Remizione
                         }
                         */
                         break;
+                }
+            }
+        }
+
+        // ApplyAoeDamage
+        public static void ApplyAoeDamage<T>(GameThing source, float radius, int amount, DamageType damageType, float knockbackForce = 0f) where T : GameThing
+        {
+            if (source.Room is not GameRoom room)
+                return;
+
+            float radiusSq = radius * radius;
+            var origin = source.Position;
+
+            for (int i = 0; i < room.CulledThings.Count; i++)
+            {
+                if (room.CulledThings[i] is T target && target != source && !target.IsDead)
+                {
+                    // 1. Filtrado por distancia en X/Y (distancia cuadrática)
+                    if (Vector2.DistanceSquared(origin, target.Position) <= radiusSq)
+                    {
+                        // 2. Evaluamos facción solo si está dentro del radio
+                        if (FactionMatrix.IsHostile(source, target))
+                        {
+                            Vector2 knockback = Vector2.Zero;
+
+                            // Opcional: Calcular dirección de empuje desde el centro de la explosión
+                            if (knockbackForce > 0f)
+                            {
+                                Vector2 pushDir = target.Position - origin;
+                                if (pushDir != Vector2.Zero)
+                                    pushDir.Normalize();
+                                else
+                                    pushDir = new Vector2(1, 0);
+
+                                knockback = pushDir * knockbackForce;
+                            }
+
+                            target.TakeDamage(source, damageType, amount, knockback);
+                        }
+                    }
                 }
             }
         }

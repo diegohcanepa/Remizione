@@ -214,27 +214,6 @@ namespace Remizione
             Unparent();
         }
 
-        // TriggerAoeDamage
-        private void TriggerAoeDamage()
-        {
-            if (Room == null)
-                return;
-
-            for (int i = 0; i < Room.CulledThings.Count; i++)
-            {
-                if (Room.CulledThings[i] is Actor target && target != this && !target.IsDead)
-                {
-                    if (FactionMatrix.IsHostile(this, target))
-                    {
-                        // Firma correcta de GameThing: (attacker, damageType, amount, knockbackForce)
-                        //target.TakeDamage(this, DamageType.Magical, 10, Vector2.Zero);
-                    }
-                }
-            }
-
-            //PlaySound(SoundNames.AoeExplosion);
-        }
-
         // UpdateDirection
         private void UpdateDirection()
         {
@@ -500,7 +479,7 @@ namespace Remizione
             {
                 AoeHearts--;
                 HP += amount; // Restituye la vida roja que resta GameThing.TakeDamage
-                TriggerAoeDamage();
+                EffectDescriptor.ApplyAoeDamage<Actor>(this, 50, 5, DamageType.Physical);
             }
             else if (ShieldHearts > 0)
             {

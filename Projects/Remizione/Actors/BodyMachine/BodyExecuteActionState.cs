@@ -122,35 +122,35 @@ namespace Remizione
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (Action != null && !eventDone && Owner.AnimationPlayer.Frame?.IsTrigger == true)
+            if (Action is IAction action && !eventDone && Owner.AnimationPlayer.Frame?.IsTrigger == true)
             {
                 eventDone = true;
 
-                if (Action.SoundTrigger != null)
-                    Owner.PlaySound(Action.SoundTrigger);
+                if (action.SoundTrigger != null)
+                    Owner.PlaySound(action.SoundTrigger);
 
-                switch (Action.ActionKind)
+                switch (action.ActionKind)
                 {
                     // ProjectileAction
                     case ActionKind.Projectile:
-                        ResolveProjectileAction(Action);
+                        ResolveProjectileAction(action);
                         break;
 
                     // ProximityAction
                     case ActionKind.Proximity:
-                        ResolveProximityAction(Action);
+                        ResolveProximityAction(action);
                         break;
 
                     // SelfAction
                     case ActionKind.Self:
-                        ResolveSelfAction(Action);
+                        ResolveSelfAction(action);
                         break;
 
                     default:
                         break;
                 }
 
-                Action.Consume(Owner);
+                action.Consume(Owner);
 
                 return;
             }

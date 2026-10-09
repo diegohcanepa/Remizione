@@ -73,15 +73,14 @@ namespace Remizione
                 currentPos.X += sprite.BoundingBox.Width + spacing;
             }
 
-            currentPos.Y += 1;
-
             // 2. CORAZONES (AoE)
             for (int i = 0; i < actor.AoeHearts; i++)
             {
                 var sprite = new Sprite(aoeHeartImage)
                 {
                     PivotOrigin = RectanglePoint.Center,
-                    Position = currentPos
+                    Position = currentPos,
+                    Scale = new(.8f)
                 };
 
                 displaySprites.Add(sprite);
@@ -94,7 +93,8 @@ namespace Remizione
                 var sprite = new Sprite(shieldHeartImage)
                 {
                     PivotOrigin = RectanglePoint.Center,
-                    Position = currentPos
+                    Position = currentPos,
+                    Scale = new(.8f)
                 };
 
                 displaySprites.Add(sprite);

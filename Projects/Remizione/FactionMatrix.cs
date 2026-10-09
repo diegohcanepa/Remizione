@@ -5,16 +5,23 @@
     /// </summary>
     public static class FactionMatrix
     {
-        public static bool IsHostile(Actor attacker, Actor target)
+        // IsHostile
+        public static bool IsHostile(GameThing attacker, GameThing target)
         {
+            if (attacker is not Actor attackerActor)
+                return false;
+
+            if (target is not Actor targetActor)
+                return false;
+
             if (attacker == target || target.IsDead)
                 return false;
 
             // Regla de los Penitentes: son rivales entre sí por botín y supervivencia
-            if (attacker.Faction == Faction.Penitent && target.Faction == Faction.Penitent)
+            if (attackerActor.Faction == Faction.Penitent && targetActor.Faction == Faction.Penitent)
                 return true;
 
-            return (attacker.Faction, target.Faction) switch
+            return (attackerActor.Faction, targetActor.Faction) switch
             {
                 // Monstruos atacan a todos los vivos
                 (Faction.Creature, Faction.Player) => true,
