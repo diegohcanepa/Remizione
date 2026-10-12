@@ -807,10 +807,9 @@ namespace Adberration
             Tweens.Reset();
 
             // Unload children
-            var entityList = Children.ToArray();
-            for (var i = 0; i < entityList.Length; i++)
+            for (int i = Children.Count - 1; i >= 0; i--)
             {
-                entityList[i].Unload();
+                Children[i].Unload();
             }
 
             OnUnload();
@@ -820,10 +819,9 @@ namespace Adberration
             if (Atlas?.Content != Game.Content)
                 Atlas = null;
 
-            var weakChildren = unparentList.ToArray();
-            for (var i = 0; i < weakChildren.Length; i++)
+            for (int i = unparentList.Count - 1; i >= 0; i--)
             {
-                weakChildren[i].Unparent();
+                Children[i].Unparent();
             }
 
             LoadState = LoadState.Unloaded;

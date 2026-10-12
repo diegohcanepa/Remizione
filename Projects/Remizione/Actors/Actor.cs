@@ -476,14 +476,7 @@ namespace Remizione
         // OnTakeDamage
         protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType)
         {
-            // 1. Intercepción del pool de salud
-            if (AoeHearts > 0)
-            {
-                AoeHearts--;
-                HP += amount; // Restituye la vida roja que resta GameThing.TakeDamage
-                EffectDescriptor.ApplyAoeDamage<Actor>(this, 50, 5, DamageType.Physical);
-            }
-            else if (ShieldHearts > 0)
+            if (ShieldHearts > 0)
             {
                 ShieldHearts--;
                 HP += amount; // Restituye la vida roja que resta GameThing.TakeDamage
@@ -600,10 +593,6 @@ namespace Remizione
 
             return result;
         }
-
-        // AoeHearts
-        [ScriptProperty]
-        public int AoeHearts { get; set; }
 
         // ApplyAction
         public void ApplyAction(IAction action)

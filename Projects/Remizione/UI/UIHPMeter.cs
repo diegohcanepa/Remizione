@@ -14,13 +14,11 @@ namespace Remizione
         private readonly List<Sprite> displaySprites = [];
 
         private readonly ReadOnlyCollection<AtlasImage> redHeartImages;
-        private readonly AtlasImage aoeHeartImage;
         private readonly AtlasImage shieldHeartImage;
 
         private int lastHp = int.MinValue;
         private int lastMaxHp = int.MinValue;
         private int lastShields = int.MinValue;
-        private int lastAoeCount = int.MinValue;
 
         #endregion
 
@@ -30,7 +28,6 @@ namespace Remizione
             : base(session)
         {
             redHeartImages = Atlases.UI.FleshinessHearts;
-            aoeHeartImage = Atlases.UI.AoeHeart;
             shieldHeartImage = Atlases.UI.ShieldHeart;
         }
 
@@ -73,21 +70,7 @@ namespace Remizione
                 currentPos.X += sprite.BoundingBox.Width + spacing;
             }
 
-            // 2. CORAZONES (AoE)
-            for (int i = 0; i < actor.AoeHearts; i++)
-            {
-                var sprite = new Sprite(aoeHeartImage)
-                {
-                    PivotOrigin = RectanglePoint.Center,
-                    Position = currentPos,
-                    Scale = new(.8f)
-                };
-
-                displaySprites.Add(sprite);
-                currentPos.X += sprite.BoundingBox.Width + spacing;
-            }
-
-            // 3. CORAZONES (Escudo)
+            // 2. CORAZONES (Escudo)
             for (int i = 0; i < actor.ShieldHearts; i++)
             {
                 var sprite = new Sprite(shieldHeartImage)
@@ -104,7 +87,6 @@ namespace Remizione
             lastHp = hp;
             lastMaxHp = maxHp;
             lastShields = actor.ShieldHearts;
-            lastAoeCount = actor.AoeHearts;
 
             if (displaySprites.Count > 0)
             {
@@ -141,13 +123,8 @@ namespace Remizione
             if (actor == null)
                 return;
 
-            if (lastHp != actor.HP ||
-                lastMaxHp != actor.MaxHP ||
-                lastShields != actor.ShieldHearts ||
-                lastAoeCount != actor.AoeHearts)
-            {
+            if (lastHp != actor.HP || lastMaxHp != actor.MaxHP || lastShields != actor.ShieldHearts)
                 Refresh();
-            }
         }
 
         #endregion

@@ -105,6 +105,8 @@ namespace Remizione
         // Refresh
         private void Refresh()
         {
+            lastSelectedItem = null;
+
             float screenWidth = Screen.NativeWidth;
             int slotCount = ItemContainer.Count;
             float spacing = 2;
@@ -148,6 +150,8 @@ namespace Remizione
             {
                 slots[i].ResetVisualState();
             }
+
+            lastSelectedItem = null;
         }
 
         #endregion
@@ -161,6 +165,12 @@ namespace Remizione
             ItemContainer.Session.InteractionContext.HeldItem = null;
             ItemContainer.Session.InteractionContext.Refresh();
             Reset();
+
+            if (lastSeenContainerVersion != ItemContainer.Version)
+            {
+                lastSeenContainerVersion = ItemContainer.Version;
+                Refresh();
+            }
         }
 
         // OnDeactivate
@@ -215,16 +225,7 @@ namespace Remizione
         protected override void OnLoadContent()
         {
             base.OnLoadContent();
-
             autoHide = false;
-
-            ItemContainer.Session.InteractionContext.HeldItem = null;
-
-            if (lastSeenContainerVersion != ItemContainer.Version)
-            {
-                lastSeenContainerVersion = ItemContainer.Version;
-                Refresh();
-            }
         }
 
         // OnUnloadContent

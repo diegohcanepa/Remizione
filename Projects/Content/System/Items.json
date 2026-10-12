@@ -39,6 +39,7 @@
 			"actionKind": "ScriptOutcome",
 			"deselectOnUse": true,
 			"isDepletable": true,
+			"isKeyItem": true,
 			"isStackable": true
 		},
 		{

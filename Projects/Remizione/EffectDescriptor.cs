@@ -74,11 +74,6 @@ namespace Remizione
                     case EffectType.None:
                         break;
 
-                    // AoeHeart
-                    case EffectType.AoeHeart:
-                        targetActor?.AoeHearts += amount;
-                        break;
-
                     // Damage
                     case EffectType.Damage:
                         realTarget?.TakeDamage(source, effect.DamageType, amount, effect.GetKnockbackForce());
@@ -227,7 +222,7 @@ namespace Remizione
                 var value = string.Empty;
 
                 // AoeHeart / ShieldHeart
-                if (effect.EffectType is EffectType.AoeHeart or EffectType.ShieldHeart)
+                if (effect.EffectType is EffectType.ShieldHeart)
                 {
                     if (effect.Amount != null)
                         value += GetTemplate(effect.EffectType).Replace("{amount}", effect.Amount.ToString());

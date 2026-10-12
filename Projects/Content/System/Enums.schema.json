@@ -75,7 +75,6 @@
       "type": "string",
       "enum": [
         "None",
-        "AoeHeart",
         "Damage",
         "Death",
         "EnergyGain",

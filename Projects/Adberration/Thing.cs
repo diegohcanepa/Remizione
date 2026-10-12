@@ -162,9 +162,6 @@ namespace Adberration
             set => Sprite.Altitude = value;
         }
 
-        // BottomPosition
-        public Vector2 BottomPosition => PivotOrigin == RectanglePoint.Bottom ? Position : BoundingBox.GetPoint(RectanglePoint.Bottom);
-
         // CanMove
         public virtual bool CanMove => IsInCurrentRoom && Speed > 0;
 
@@ -175,7 +172,7 @@ namespace Adberration
         }
 
         // Depth
-        public override float Depth => BottomPosition.Y + DepthOffset + Altitude;
+        public override float Depth => Y + DepthOffset + Altitude;
 
         // DepthOffset
         [ScriptProperty]

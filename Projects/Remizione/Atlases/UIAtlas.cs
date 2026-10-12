@@ -12,7 +12,6 @@ namespace Remizione
         public UIAtlas()
             : base(EngendroGame.Instance.Content, "UI", ContentManagerExtension.EncodePath(ContentFolder.Atlases, "UI"), false)
         {
-            AoeHeart = this[nameof(AoeHeart)];
             CheckMark = this[nameof(CheckMark)];
             CloseWindowButton = this[nameof(CloseWindowButton)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
@@ -39,9 +38,6 @@ namespace Remizione
             UIButtonContainerEdge = this[nameof(UIButtonContainerEdge)];
             UIButtonContainerPattern = this[nameof(UIButtonContainerPattern)];
         }
-
-        // AoeHeart
-        public AtlasImage AoeHeart { get; }
 
         // CheckMark
         public AtlasImage CheckMark { get; }
