@@ -31,7 +31,6 @@ namespace Remizione
         private string? lastBonfireName;
         private readonly MiniMapScene miniMapScene;
         private readonly NarrationScene narrationScene;
-        private readonly PlayerInputHandler<Actor> playerInputHandler = new(PlayerIndex.One);
         private Vector2? playerPosition;
         private FrozenDictionary<string, GameThing>? proceduralCatalog;
         private readonly RoomEditor? roomEditor;
@@ -276,8 +275,8 @@ namespace Remizione
             if (HUD.HandleInput(gameTime) == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
-            if (playerInputHandler.Owner != null && !playerInputHandler.Owner.IsLockedByAttacker)
-                return playerInputHandler.HandleInput(gameTime);
+            if (PlayerInputHandler.Owner != null && !PlayerInputHandler.Owner.IsLockedByAttacker)
+                return PlayerInputHandler.HandleInput(gameTime);
 
             return base.OnHandleInput(gameTime);
         }
@@ -726,7 +725,7 @@ namespace Remizione
                 {
                     field?.StopMoving();
                     field = value;
-                    playerInputHandler.Owner = field;
+                    PlayerInputHandler.Owner = field;
                     HUD?.Reset();
                     InteractionData.Clear();
                     if (value != null)
@@ -737,6 +736,9 @@ namespace Remizione
 
         // PlayerData
         public PlayerData PlayerData { get; }
+
+        // PlayerInputHandler
+        public PlayerInputHandler<Actor> PlayerInputHandler { get; } = new(PlayerIndex.One);
 
         // PreviousRoom
         [ScriptProperty]

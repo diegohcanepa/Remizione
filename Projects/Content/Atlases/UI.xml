@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:6040031d34de4579ab277ef9d8c3d61a:5c44429d80f21070e79ea6fa4b9ccc14:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:14b0876b5de12546017a4be9cb440a31:0042bd13162a7ad6aa6889b6c4747a9c:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -75,10 +75,11 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="MiniMapMarker.png" x="500" y="79" w="1" h="1"/>
     <sprite n="MonitorFrame.png" x="268" y="90" w="240" h="135"/>
     <sprite n="MouseCursorArrowIcon.png" x="504" y="63" w="6" h="6"/>
-    <sprite n="MouseCursorCrossIcon.png" x="98" y="319" w="9" h="11"/>
+    <sprite n="MouseCursorCrossIcon.png" x="111" y="319" w="9" h="11"/>
     <sprite n="MouseCursorDownIcon.png" x="325" y="71" w="9" h="6"/>
     <sprite n="MouseCursorEyeIcon.png" x="358" y="79" w="9" h="9"/>
-    <sprite n="MouseCursorHandIcon.png" x="85" y="331" w="9" h="11"/>
+    <sprite n="MouseCursorHandIcon.png" x="122" y="319" w="9" h="11"/>
+    <sprite n="MouseCursorInspectIcon.png" x="72" y="306" w="11" h="11"/>
     <sprite n="MouseCursorLeftIcon.png" x="504" y="41" w="6" h="9"/>
     <sprite n="MouseCursorLiftIcon.png" x="454" y="79" w="7" h="8"/>
     <sprite n="MouseCursorRightIcon.png" x="504" y="52" w="6" h="9"/>
@@ -97,9 +98,9 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="ProhibitionIcon.png" x="380" y="79" w="9" h="9"/>
     <sprite n="PyritePebble.png" x="18" y="290" w="14" h="14"/>
     <sprite n="QuickInventoryBackground.png" x="260" y="227" w="240" h="43"/>
-    <sprite n="RunModifierDarknessIcon.png" x="72" y="306" w="11" h="11"/>
-    <sprite n="RunModifierToxicIcon.png" x="85" y="306" w="11" h="11"/>
-    <sprite n="Sack.png" x="85" y="319" w="11" h="10"/>
+    <sprite n="RunModifierDarknessIcon.png" x="85" y="306" w="11" h="11"/>
+    <sprite n="RunModifierToxicIcon.png" x="98" y="306" w="11" h="11"/>
+    <sprite n="Sack.png" x="98" y="319" w="11" h="10"/>
     <sprite n="SackIcon.png" x="434" y="79" w="8" h="8"/>
     <sprite n="SavingIcon.png" x="444" y="79" w="8" h="8"/>
     <sprite n="Scroll.png" x="2" y="253" w="130" h="19"/>
@@ -109,8 +110,8 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="StatusPoisonIcon.png" x="402" y="79" w="9" h="9"/>
     <sprite n="SulfurStone.png" x="34" y="290" w="14" h="14"/>
     <sprite n="TipBalloon.png" x="114" y="290" w="12" h="13"/>
-    <sprite n="TraitLockpickingIcon.png" x="98" y="306" w="11" h="11"/>
-    <sprite n="TraitLuckIcon.png" x="72" y="319" w="11" h="11"/>
+    <sprite n="TraitLockpickingIcon.png" x="72" y="319" w="11" h="11"/>
+    <sprite n="TraitLuckIcon.png" x="85" y="319" w="11" h="11"/>
     <sprite n="UIButtonContainerEdge.png" x="505" y="2" w="5" h="11"/>
     <sprite n="UIButtonContainerPattern.png" x="481" y="71" w="1" h="11"/>
     <sprite n="UIControlContainerEdgeLeftLarge.png" x="505" y="15" w="5" h="11"/>

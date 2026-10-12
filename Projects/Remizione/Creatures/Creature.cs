@@ -18,7 +18,7 @@ namespace Remizione
             : base(session, name)
         {
             Faction = Faction.Creature;
-            Verb = Verb.Examine;
+            Verb = Verb.LookAt;
             breathTween = FloatTween.Create(TweenStyle.CubicInOut, 0, .05f, 600, -1);
             creepTween = FloatTween.Create(TweenStyle.CubicInOut, 0, -.1f, 200, -1);
         }

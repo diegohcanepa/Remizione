@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration;
+using Engendro;
 using Microsoft.Xna.Framework;
 
 namespace Remizione
@@ -6,20 +7,19 @@ namespace Remizione
     /// <summary>
     /// DestinationMark
     /// </summary>
-    public sealed class DestinationMark : GameObject
+    public sealed class DestinationMark : SessionGameObject<GameSession>
     {
         private Vector2? position;
         private readonly Sprite sprite;
         private readonly Vector2Tween scaleTween = new();
 
         // Constructor
-        public DestinationMark()
-            : base()
+        public DestinationMark(GameSession session)
+            : base(session)
         {
             // DestinationMark
             this.sprite = new Sprite(Atlases.Environment.DestinationMark)
             {
-                Color = ColorPalette.DestinationMark,
                 PivotOrigin = RectanglePoint.Center,
                 Scale = new(.7f)
             };
@@ -40,6 +40,7 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             sprite.Update(gameTime);
+            sprite.Color = Session.PlayerInputHandler.WillFatigueOnNextAction ? ColorPalette.Text.Red : ColorPalette.DestinationMark;
         }
 
         #endregion

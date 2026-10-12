@@ -15,7 +15,7 @@ namespace Remizione
         {
             Atlas = Atlases.Props;
             LabelKey = "Prop.Torch";
-            Verb = Verb.Examine;
+            Verb = Verb.LookAt;
             DepthOffset = -3;
 
             this.AttachedLight = new("Light", LightKind.Fire)

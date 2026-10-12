@@ -10,8 +10,8 @@
 			"effects": [
 				{
 					"context": "Use",
-					"effectType": "AoeHeart",
-					"amount": "1",
+					"effectType": "ShieldHeart",
+					"amount": "2",
 					"target": "Self",
 					"sound": "ConsumeBite"
 				}

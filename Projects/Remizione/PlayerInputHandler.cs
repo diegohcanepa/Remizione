@@ -73,5 +73,8 @@ namespace Remizione
 
         // Owner
         public T? Owner { get; set; }
+
+        // WillFatigueOnNextAction
+        public bool WillFatigueOnNextAction => Owner != null && actionWindowTimer > 0 && consecutiveActionCount >= MaxConsecutiveActions;
     }
 }

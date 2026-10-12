@@ -17,6 +17,12 @@ namespace Remizione
         // RefreshIcon
         private void RefreshIcon()
         {
+            if (context.Session.Player?.IsFatigued == true)
+            {
+                MouseCursor.Icon = MouseCursorIcon.Wait;
+                return;
+            }
+
             if (context.HeldItem?.Definition.Image != MouseCursor.CustomImage)
                 MouseCursor.CustomImage = context.HeldItem?.Definition.Image;
 
@@ -94,8 +100,8 @@ namespace Remizione
                     MouseCursor.Icon = MouseCursorIcon.Target;
                     break;
 
-                // Examine
-                case Verb.Examine:
+                // LookAt
+                case Verb.LookAt:
                     MouseCursor.Icon = MouseCursorIcon.Eye;
                     break;
 
@@ -127,6 +133,11 @@ namespace Remizione
                 // Pickup
                 case Verb.PickUp:
                     MouseCursor.Icon = MouseCursorIcon.Sack;
+                    break;
+
+                // Inspect
+                case Verb.Inspect:
+                    MouseCursor.Icon = MouseCursorIcon.Inspect;
                     break;
 
                 // Talk
