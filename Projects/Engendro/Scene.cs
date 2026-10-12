@@ -13,25 +13,13 @@ namespace Engendro
     {
         #region Private fields
 
+        private ContentManager? content;
         private bool isDisposed;
         private int pauseCount;
 
         #endregion
 
         #region Private members
-
-        // GetAudioCategory
-        private static AudioCategories GetAudioCategory(AudioCategoryName name)
-        {
-            return name switch
-            {
-                AudioCategoryName.FX => AudioCategories.FX,
-                AudioCategoryName.Ambience => AudioCategories.Ambience,
-                AudioCategoryName.Voice => AudioCategories.Music,
-                AudioCategoryName.Music => AudioCategories.Voice,
-                _ => throw new NotImplementedException()
-            };
-        }
 
         // InvalidateBoundingBox
         private void InvalidateBoundingBox()
@@ -50,7 +38,7 @@ namespace Engendro
                 return;
 
             if (disposing)
-                Content?.Dispose();
+                UnloadContent();
 
             isDisposed = true;
         }
@@ -138,9 +126,6 @@ namespace Engendro
                 Game.GraphicsDevice.Clear(BackgroundColor);
         }
 
-        // Content
-        public ContentManager? Content { get; private set; }
-
         // Dispose
         public void Dispose()
         {
@@ -191,7 +176,7 @@ namespace Engendro
         {
             if (!IsContentLoaded)
             {
-                Content = Game.GetNewContentManager();
+                content = Game.GetNewContentManager();
                 OnLoadContent();
                 IsContentLoaded = true;
             }
@@ -204,17 +189,7 @@ namespace Engendro
 
             if (pauseCount == 1)
             {
-                for (var i = 0; i < SoundInstance.RunningInstances.Count; i++)
-                {
-                    var soundInstance = SoundInstance.RunningInstances[i];
-
-                    if (soundInstance.Scene == this && soundInstance.PauseAware)
-                    {
-                        if (PausedAudioCategories.HasFlag(GetAudioCategory(soundInstance.Sound.Category.Name)))
-                            soundInstance.Pause();
-                    }
-                }
-
+                SoundInstance.PauseSceneInstances(this, PausedAudioCategories);
                 OnPause();
             }
         }
@@ -234,17 +209,7 @@ namespace Engendro
 
                 if (pauseCount == 0)
                 {
-                    for (var i = 0; i < SoundInstance.RunningInstances.Count; i++)
-                    {
-                        var soundInstance = SoundInstance.RunningInstances[i];
-
-                        if (soundInstance.Scene == this && soundInstance.PauseAware)
-                        {
-                            if (PausedAudioCategories.HasFlag(GetAudioCategory(soundInstance.Sound.Category.Name)))
-                                soundInstance.Resume();
-                        }
-                    }
-
+                    SoundInstance.ResumeSceneInstances(this, PausedAudioCategories);
                     OnResume();
                 }
             }
@@ -259,8 +224,9 @@ namespace Engendro
             if (IsContentLoaded)
             {
                 OnUnloadContent();
-                Content?.Dispose();
-                Content = null;
+                SoundInstance.StopSceneInstances(this);
+                content?.Dispose();
+                content = null;
                 IsContentLoaded = false;
             }
         }

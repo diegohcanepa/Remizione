@@ -46,7 +46,7 @@
     { "name": "InertShadowMove", "soundCount": 2, "volume": 0.5 },
     { "name": "Interact", "scope": "Global","soundCount": 4, "volume": 0.5 },
     { "name": "ItemAdd" },
-    { "name": "ItemDiscard" },
+    { "name": "ItemDiscard", "scope": "Global" },
     { "name": "Keyboard" },
     { "name": "Lever" },
     { "name": "Lightning" },

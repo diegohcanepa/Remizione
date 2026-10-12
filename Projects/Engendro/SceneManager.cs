@@ -95,7 +95,10 @@ namespace Engendro
             {
                 for (var i = scenes.Count - 1; i >= 0; i--)
                 {
-                    scenes[i].ClearBackground();
+                    // Solo limpiamos el fondo en la escena base de la pila para no borrar las escenas inferiores
+                    if (i == scenes.Count - 1)
+                        scenes[i].ClearBackground();
+
                     scenes[i].Draw(gameTime);
                 }
             }
@@ -113,31 +116,31 @@ namespace Engendro
 
             CurrentScene.HandleInput(gameTime);
 
-            var sceneListSize = scenes.Count;
             var canUpdate = true;
+
             for (var i = 0; i < scenes.Count; i++)
             {
-                scenes[i].ContinuousUpdate(gameTime);
-                if (sceneListSize > scenes.Count)
+                var sceneListSize = scenes.Count;
+                var current = scenes[i];
+
+                current.ContinuousUpdate(gameTime);
+
+                // Si ContinuousUpdate alteró la pila, abortamos la iteración de este frame de forma segura
+                if (sceneListSize != scenes.Count)
                     break;
 
                 if (canUpdate)
                 {
-                    if (i == 0)
-                    {
-                        scenes[i].Update(gameTime);
-                    }
-                    else if (!scenes[i - 1].PausePreviousScenes)
-                    {
-                        scenes[i].Update(gameTime);
-                    }
-                    else
+                    current.Update(gameTime);
+
+                    // Si Update alteró la pila, abortamos
+                    if (sceneListSize != scenes.Count)
+                        break;
+
+                    if (current.PausePreviousScenes)
                     {
                         canUpdate = false;
                     }
-
-                    if (sceneListSize > scenes.Count)
-                        break;
                 }
             }
         }
@@ -251,7 +254,21 @@ namespace Engendro
             }
             else
             {
-                return RemoveSceneCore(scene);
+                var index = scenes.IndexOf(scene);
+                if (index == -1)
+                    return false;
+
+                RemoveSceneCore(scene);
+
+                if (scene.PausePreviousScenes)
+                {
+                    for (var i = index; i < scenes.Count; i++)
+                    {
+                        scenes[i].Resume();
+                    }
+                }
+
+                return true;
             }
         }
 

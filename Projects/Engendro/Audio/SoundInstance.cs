@@ -198,16 +198,6 @@ namespace Engendro.Audio
             return Sound.Volume * Volume.Master * Sound.Category.Volume.Master;
         }
 
-        // GetRunningInstances
-        public static IEnumerable<SoundInstance> GetRunningInstances(string name)
-        {
-            for (var i = 0; i < runningInstances.Count; i++)
-            {
-                if (runningInstances[i].Sound.Name == name)
-                    yield return runningInstances[i];
-            }
-        }
-
         // IsPlaying
         public bool IsPlaying => RemainingTime != 0;
 
@@ -245,6 +235,20 @@ namespace Engendro.Audio
 
         // PauseAware
         public bool PauseAware { get; set; } = true;
+
+        // PauseSceneInstances
+        public static void PauseSceneInstances(Scene scene, AudioCategories categories)
+        {
+            for (var i = 0; i < runningInstances.Count; i++)
+            {
+                var instance = runningInstances[i];
+                if (instance.Scene == scene && instance.PauseAware)
+                {
+                    if (categories.HasFlag(instance.Sound.Category.Name.ToAudioCategories()))
+                        instance.Pause();
+                }
+            }
+        }
 
         // Pitch
         public float Pitch
@@ -344,8 +348,22 @@ namespace Engendro.Audio
             }
         }
 
+        // ResumeSceneInstances
+        public static void ResumeSceneInstances(Scene scene, AudioCategories categories)
+        {
+            for (var i = 0; i < runningInstances.Count; i++)
+            {
+                var instance = runningInstances[i];
+                if (instance.Scene == scene && instance.PauseAware)
+                {
+                    if (categories.HasFlag(instance.Sound.Category.Name.ToAudioCategories()))
+                        instance.Resume();
+                }
+            }
+        }
+
         // RunningInstances
-        public static ReadOnlyCollection<SoundInstance> RunningInstances { get; } = new ReadOnlyCollection<SoundInstance>(runningInstances);
+        public static ReadOnlyCollection<SoundInstance> RunningInstances { get; } = new(runningInstances);
 
         // Scene
         public Scene? Scene { get; private set; }
@@ -386,6 +404,17 @@ namespace Engendro.Audio
             {
                 RemainingTime = fadeOut;
                 stopTween.Start(TweenStyle.Linear, instance.Volume, 0, fadeOut);
+            }
+        }
+
+        // StopSceneInstances
+        public static void StopSceneInstances(Scene scene)
+        {
+            for (var i = runningInstances.Count - 1; i >= 0; i--)
+            {
+                var instance = runningInstances[i];
+                if (instance.Scene == scene)
+                    instance.Stop();
             }
         }
 

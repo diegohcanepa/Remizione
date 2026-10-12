@@ -332,7 +332,7 @@ namespace Remizione
             DrawShadows(gameTime);
 
             // Move destination mark
-            //if (Session.InteractionData.Target == null)
+            if (Session.InteractionData.Target == null && Session.Player?.RemainsKind != RemainsKind.None)
             {
                 Game.SpriteBatch.Begin(Session.Camera);
                 Session.HUD.DestinationMark.Draw(gameTime);

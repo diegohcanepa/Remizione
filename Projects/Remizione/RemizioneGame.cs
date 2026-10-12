@@ -184,8 +184,8 @@ namespace Remizione
         internal void StartSession(int slotNumber)
         {
             CurrentSession = new GameSession(this, slotNumber);
-            CurrentSession.Start();
             SceneManager.Push(CurrentSession);
+            CurrentSession.Start();
             CurrentSession.Run();
         }
 

@@ -7,7 +7,6 @@ namespace Engendro.Input
     /// </summary>
     public interface IInputHandler
     {
-        // HandleInput
         HandleInputResult HandleInput(GameTime gameTime);
     }
 }

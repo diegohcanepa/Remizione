@@ -26,10 +26,10 @@ namespace Remizione
             if (Owner == null || !Owner.IsInCurrentRoom || Owner.IsDead || Owner.IsFatigued)
                 return HandleInputResult.Unhandled;
 
-            if (actionWindowTimer > 0f)
+            if (actionWindowTimer > 0)
             {
                 actionWindowTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-                if (actionWindowTimer <= 0f)
+                if (actionWindowTimer <= 0)
                     consecutiveActionCount = 0;
             }
 
@@ -40,20 +40,24 @@ namespace Remizione
 
             if (isPrimary || isSecondary)
             {
-                if (consecutiveActionCount >= MaxConsecutiveActions)
+                if (isPrimary)
                 {
-                    consecutiveActionCount = 0;
-                    actionWindowTimer = 0f;
-                    Owner.Fatigue();
-                    return HandleInputResult.Handled;
+                    if (consecutiveActionCount >= MaxConsecutiveActions)
+                    {
+                        consecutiveActionCount = 0;
+                        actionWindowTimer = 0;
+                        Owner.Fatigue();
+                        return HandleInputResult.Handled;
+                    }
+
+                    Owner.Session.InteractionData.ProcessPrimaryAction(Owner);
+                }
+                else
+                {
+                    Owner.Session.InteractionData.ProcessSecondaryAction(Owner);
                 }
 
-                if (isPrimary)
-                    Owner.Session.InteractionData.ProcessPrimaryAction(Owner);
-                else
-                    Owner.Session.InteractionData.ProcessSecondaryAction(Owner);
-
-                if (Owner.IsMoving)
+                if (isPrimary && Owner.IsMoving)
                 {
                     consecutiveActionCount++;
                     actionWindowTimer = ActionWindowDuration;
