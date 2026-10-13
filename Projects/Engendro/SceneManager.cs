@@ -86,7 +86,7 @@ namespace Engendro
             if (CurrentScene == null)
                 return;
 
-            if (CurrentScene.ExclusiveDraw)
+            if (CurrentScene.IsOpaque)
             {
                 CurrentScene.ClearBackground();
                 CurrentScene.Draw(gameTime);
@@ -95,7 +95,6 @@ namespace Engendro
             {
                 for (var i = scenes.Count - 1; i >= 0; i--)
                 {
-                    // Solo limpiamos el fondo en la escena base de la pila para no borrar las escenas inferiores
                     if (i == scenes.Count - 1)
                         scenes[i].ClearBackground();
 

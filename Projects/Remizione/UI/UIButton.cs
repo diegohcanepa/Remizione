@@ -2,6 +2,7 @@
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Remizione
 {
@@ -12,6 +13,7 @@ namespace Remizione
     {
         private readonly Color disabledColor = Color.Gray;
         private readonly TextSprite label;
+        private readonly Sprite[] strips;
 
         #region Constructor
 
@@ -23,6 +25,35 @@ namespace Remizione
                 Color = ColorPalette.Text.Default,
                 Scale = ScaleInfo.Text.Huge
             };
+
+            strips = new Sprite[3];
+
+            strips[0] = new(Atlases.UI.UIButtonContainerEdge) { PivotOrigin = RectanglePoint.RightTop };
+            strips[1] = new(Atlases.UI.UIButtonContainerPattern) { PivotOrigin = RectanglePoint.Center };
+            strips[2] = new(Atlases.UI.UIButtonContainerEdge)
+            {
+                PivotOrigin = RectanglePoint.LeftTop,
+                Effects = SpriteEffects.FlipHorizontally
+            };
+        }
+
+        #endregion
+
+        #region Private members
+
+        // Layout
+        private void Layout()
+        {
+            if (label.IsEmpty)
+                BoundingBox = RectangleF.Empty;
+
+            strips[1].ScaleX = label.BoundingBox.Width / 2;
+            strips[1].Position = label.BoundingBox.GetPoint(RectanglePoint.Center, 0, -.75f);
+
+            strips[0].Position = strips[1].BoundingBox.GetPoint(RectanglePoint.LeftTop);
+            strips[2].Position = strips[1].BoundingBox.GetPoint(RectanglePoint.RightTop);
+
+            BoundingBox = RectangleF.Union(strips[0].BoundingBox, strips[1].BoundingBox, strips[2].BoundingBox);
         }
 
         #endregion
@@ -32,7 +63,13 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            label.Draw(gameTime);
+            if (!label.IsEmpty)
+            {
+                strips[0].Draw(gameTime);
+                strips[1].Draw(gameTime);
+                strips[2].Draw(gameTime);
+                label.Draw(gameTime);
+            }
         }
 
         // OnUpdate
@@ -60,7 +97,7 @@ namespace Remizione
         public bool AllowSound { get; set; } = true;
 
         // BoundingBox
-        public RectangleF BoundingBox => label.BoundingBox;
+        public RectangleF BoundingBox { get; private set; }
 
         // Font
         public Font Font
@@ -82,21 +119,42 @@ namespace Remizione
         public RectanglePoint PivotOrigin
         {
             get => label.PivotOrigin;
-            set => label.PivotOrigin = value;
+            set
+            {
+                if (value != label.PivotOrigin)
+                {
+                    label.PivotOrigin = value;
+                    Layout();
+                }
+            }
         }
 
         // Position
         public Vector2 Position
         {
             get => label.Position;
-            set => label.Position = value;
+            set
+            {
+                if (value != label.Position)
+                {
+                    label.Position = value;
+                    Layout();
+                }
+            }
         }
 
         // Scale
         public Vector2 Scale
         {
             get => label.Scale;
-            set => label.Scale = value;
+            set
+            {
+                if (value != label.Scale)
+                {
+                    label.Scale = value;
+                    Layout();
+                }
+            }
         }
 
         // Sound
@@ -131,7 +189,14 @@ namespace Remizione
         public string? Text
         {
             get => label.Text;
-            set => label.Text = value;
+            set
+            {
+                if (value != label.Text)
+                {
+                    label.Text = value;
+                    Layout();
+                }
+            }
         }
 
         // TextColor
@@ -141,14 +206,28 @@ namespace Remizione
         public float X
         {
             get => label.X;
-            set => label.X = value;
+            set
+            {
+                if (value != label.X)
+                {
+                    label.X = value;
+                    Layout();
+                }
+            }
         }
 
         // Y
         public float Y
         {
             get => label.Y;
-            set => label.Y = value;
+            set
+            {
+                if (value != label.Y)
+                {
+                    label.Y = value;
+                    Layout();
+                }
+            }
         }
     }
 }

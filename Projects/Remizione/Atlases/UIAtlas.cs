@@ -19,16 +19,15 @@ namespace Remizione
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
             DialogOptionBullet = this[nameof(DialogOptionBullet)];
             EchoBackground = this[nameof(EchoBackground)];
-            ExamineItem = this[nameof(ExamineItem)];
             FakeItem = this[nameof(FakeItem)];
             FleshinessHearts = CreateReadOnlyCollection(nameof(FleshinessHearts), 1, 3);
+            GoBackIcon = this[nameof(GoBackIcon)];
+            InspectItem = this[nameof(InspectItem)];
             InventoryItemSlots = CreateReadOnlyCollection("InventoryItemSlot", 1, 3);
             MiniMapMarker = this[nameof(MiniMapMarker)];
             MouseLeftButtonIcon = this[nameof(MouseLeftButtonIcon)];
             MouseRightButtonIcon = this[nameof(MouseRightButtonIcon)];
             Pixel = this[nameof(Pixel)];
-            PopupContainer = this[nameof(PopupContainer)];
-            PopupContainerShadow = this[nameof(PopupContainerShadow)];
             QuickInventoryBackground = this[nameof(QuickInventoryBackground)];
             Sack = this[nameof(Sack)];
             SavingIcon = this[nameof(SavingIcon)];
@@ -60,14 +59,17 @@ namespace Remizione
         // EchoBackground
         public AtlasImage EchoBackground { get; }
 
-        // ExamineItem
-        public AtlasImage ExamineItem { get; }
-
         // FakeItem
         public AtlasImage FakeItem { get; }
 
         // FleshinessHearts
         public ReadOnlyCollection<AtlasImage> FleshinessHearts { get; }
+
+        // GoBackIcon
+        public AtlasImage GoBackIcon { get; }
+
+        // InspectItem
+        public AtlasImage InspectItem { get; }
 
         // InventoryItemSlots
         public ReadOnlyCollection<AtlasImage> InventoryItemSlots { get; }
@@ -83,12 +85,6 @@ namespace Remizione
 
         // Pixel
         public AtlasImage Pixel { get; }
-
-        // PopupContainer
-        public AtlasImage PopupContainer { get; }
-
-        // PopupContainerShadow
-        public AtlasImage PopupContainerShadow { get; }
 
         // QuickInventoryBackground
         public AtlasImage QuickInventoryBackground { get; }

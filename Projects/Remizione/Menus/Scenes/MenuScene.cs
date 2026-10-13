@@ -19,7 +19,7 @@ namespace Remizione.Menus
         protected MenuScene(RemizioneGame game, AtlasImage? backgroundImage)
         {
             this.Game = game;
-            this.ExclusiveDraw = true;
+            this.IsOpaque = true;
             this.PausePreviousScenes = true;
             this.backgroundSprite = new Sprite(backgroundImage);
             version = Utils.CreateVersionLabel();

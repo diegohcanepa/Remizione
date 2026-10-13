@@ -14,6 +14,10 @@ namespace Remizione
 
         private readonly UIButton button;
         private readonly TextSprite descriptionText;
+        private readonly Sprite goBackimage = new(Atlases.UI.GoBackIcon)
+        {
+            Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop)
+        };
         private readonly Sprite image;
         private readonly Sprite imageSlot;
         private Item? item;
@@ -32,7 +36,7 @@ namespace Remizione
             this.BackgroundColor = Color.Black;
 
             PausePreviousScenes = true;
-            ExclusiveDraw = true;
+            IsOpaque = true;
 
             // Image slot
             this.imageSlot = new()
@@ -85,7 +89,7 @@ namespace Remizione
                 HoverColor = ColorPalette.Text.TerraLight,
                 TextColor = ColorPalette.MouseCursor.Tooltip,
                 PivotOrigin = RectanglePoint.RightBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -20, -3),
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -10, -5),
                 Text = Localization.GetValue(UserAction.Drop)
             };
         }
@@ -100,9 +104,9 @@ namespace Remizione
             if (InputManager.DefaultPlayer.LastInputMethod != InputMethod.Mouse)
                 return false;
 
-            if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed() ||
-                InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
+            if (InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
             {
+                Sound.Play(SoundNames.Interact);
                 Game.SceneManager.Pop();
                 return true;
             }
@@ -123,7 +127,9 @@ namespace Remizione
             image.Draw(gameTime);
             nameText.Draw(gameTime);
             descriptionText.Draw(gameTime);
-            button.Draw(gameTime);
+            if (button.IsEnabled)
+                button.Draw(gameTime);
+            goBackimage.Draw(gameTime);
             Game.SpriteBatch.End();
         }
 

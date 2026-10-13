@@ -58,7 +58,7 @@ namespace Adberration
         protected Session(AdventureGame game, string scriptLibraryPath, int saveFileNumber)
         {
             this.Game = game;
-            this.ExclusiveDraw = true;
+            this.IsOpaque = true;
             this.PausePreviousScenes = true;
             this.SaveFileNumber = saveFileNumber;
             this.ScriptProcessor = new ScriptProcessor(this);

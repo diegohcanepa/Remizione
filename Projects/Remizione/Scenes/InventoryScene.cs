@@ -14,7 +14,7 @@ namespace Remizione
 
         private bool autoHide;
         private readonly Sprite background = new(Atlases.UI.QuickInventoryBackground) { PivotOrigin = RectanglePoint.LeftBottom, Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom) };
-        private readonly Sprite examineItem = new(Atlases.UI.ExamineItem) { PivotOrigin = RectanglePoint.RightBottom, Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom), Scale = ScaleInfo.UIElement.Medium };
+        private readonly Sprite inspectItem = new(Atlases.UI.InspectItem) { PivotOrigin = RectanglePoint.RightBottom, Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -2 ,-2) };
         private readonly TextSprite itemLabel;
         private readonly TextSprite itemDescription;
         private Item? lastSelectedItem;
@@ -203,7 +203,7 @@ namespace Remizione
                 itemDescription.Draw(gameTime);
             }
 
-            examineItem.Draw(gameTime);
+            inspectItem.Draw(gameTime);
 
             Game.SpriteBatch.End();
         }

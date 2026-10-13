@@ -133,9 +133,6 @@ namespace Engendro
             GC.SuppressFinalize(this);
         }
 
-        // ExclusiveDraw
-        public bool ExclusiveDraw { get; init; }
-
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
         {
@@ -167,6 +164,9 @@ namespace Engendro
 
         // IsCurrentScene
         public bool IsCurrentScene => Game.SceneManager.CurrentScene == this;
+
+        // IsOpaque
+        public bool IsOpaque { get; init; }
 
         // IsPaused
         public bool IsPaused => pauseCount > 0;

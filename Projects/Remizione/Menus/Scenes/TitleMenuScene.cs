@@ -31,7 +31,7 @@ namespace Remizione.Menus
         internal TitleMenuScene(RemizioneGame game)
             : base(game, null)
         {
-            this.ExclusiveDraw = true;
+            this.IsOpaque = true;
 
             // Background
             background = new(Atlases.Menu.TitleScreen)

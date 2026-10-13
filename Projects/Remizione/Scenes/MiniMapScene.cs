@@ -28,6 +28,7 @@ namespace Remizione
         {
             this.session = session;
             this.PausePreviousScenes = true;
+            this.IsOpaque = true;
             this.BackgroundColor = Color.Black;
 
             // Title text

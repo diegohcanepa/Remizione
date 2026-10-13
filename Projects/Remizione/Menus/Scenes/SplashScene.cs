@@ -34,7 +34,7 @@ namespace Remizione.Menus
         // Constructor
         public SplashScene(RemizioneGame game, AtlasImage? image, Vector2 imagePosition, float imageScale, int duration)
         {
-            this.ExclusiveDraw = true;
+            this.IsOpaque = true;
 
             BackgroundColor = Color.Black;
 

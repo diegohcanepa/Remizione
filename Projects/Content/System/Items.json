@@ -10,7 +10,7 @@
 			"effects": [
 				{
 					"context": "Use",
-					"effectType": "ShieldHeart",
+					"effectType": "HPGain",
 					"amount": "2",
 					"target": "Self",
 					"sound": "ConsumeBite"
