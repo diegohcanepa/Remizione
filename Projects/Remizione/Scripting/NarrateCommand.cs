@@ -24,7 +24,7 @@ namespace Remizione.Scripting
             var soundName = Parser.ParseName(this, 1);
 
             if (Session is GameSession session)
-                session.Narrate(text, soundName);
+                session.Overlays.ShowNarration(text, soundName);
         }
 
         // TextClauseIndex

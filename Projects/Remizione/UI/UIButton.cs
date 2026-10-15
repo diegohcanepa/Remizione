@@ -3,6 +3,7 @@ using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace Remizione
 {
@@ -41,13 +42,14 @@ namespace Remizione
 
         #region Private members
 
-        // Layout
-        private void Layout()
+        // Refresh
+        private void Refresh()
         {
             if (label.IsEmpty)
                 BoundingBox = RectangleF.Empty;
 
-            strips[1].ScaleX = label.BoundingBox.Width / 2;
+            strips[1].ScaleX = float.Max(label.BoundingBox.Width, MinimumWidth - strips[0].BoundingBox.Width - strips[2].BoundingBox.Width) / 2;
+
             strips[1].Position = label.BoundingBox.GetPoint(RectanglePoint.Center, 0, -.75f);
 
             strips[0].Position = strips[1].BoundingBox.GetPoint(RectanglePoint.LeftTop);
@@ -93,6 +95,9 @@ namespace Remizione
 
         #endregion
 
+        // Action
+        public Action? Action { get; set; }
+
         // AllowSound
         public bool AllowSound { get; set; } = true;
 
@@ -107,13 +112,30 @@ namespace Remizione
         }
 
         // HoverColor
-        public Color HoverColor { get; set; } = ColorPalette.Text.Yellow;
+        public Color HoverColor { get; set; } = ColorPalette.Text.TerraLight;
 
         // IsEnabled
         public bool IsEnabled { get; set; } = true;
 
         // IsMouseOver
         public bool IsMouseOver { get; private set; }
+
+        // MinimumWidth
+        public float MinimumWidth
+        {
+            get;
+            set
+            {
+                if (value < 0)
+                    value = 0;
+
+                if (value != field)
+                {
+                    field = value;
+                    Refresh();
+                }
+            }
+        }
 
         // PivotOrigin
         public RectanglePoint PivotOrigin
@@ -124,7 +146,7 @@ namespace Remizione
                 if (value != label.PivotOrigin)
                 {
                     label.PivotOrigin = value;
-                    Layout();
+                    Refresh();
                 }
             }
         }
@@ -138,7 +160,7 @@ namespace Remizione
                 if (value != label.Position)
                 {
                     label.Position = value;
-                    Layout();
+                    Refresh();
                 }
             }
         }
@@ -152,7 +174,7 @@ namespace Remizione
                 if (value != label.Scale)
                 {
                     label.Scale = value;
-                    Layout();
+                    Refresh();
                 }
             }
         }
@@ -182,6 +204,9 @@ namespace Remizione
                     Sound.Play(SoundNames.Interact);
             }
 
+            if (result)
+                Action?.Invoke();
+
             return result;
         }
 
@@ -194,13 +219,16 @@ namespace Remizione
                 if (value != label.Text)
                 {
                     label.Text = value;
-                    Layout();
+                    Refresh();
                 }
             }
         }
 
         // TextColor
-        public Color TextColor { get; set; } = ColorPalette.Text.Terra;
+        public Color TextColor { get; set; } = ColorPalette.Text.Highlight;
+
+        // Tip
+        public string Tip { get; set; } = string.Empty;
 
         // X
         public float X
@@ -211,7 +239,7 @@ namespace Remizione
                 if (value != label.X)
                 {
                     label.X = value;
-                    Layout();
+                    Refresh();
                 }
             }
         }
@@ -225,7 +253,7 @@ namespace Remizione
                 if (value != label.Y)
                 {
                     label.Y = value;
-                    Layout();
+                    Refresh();
                 }
             }
         }

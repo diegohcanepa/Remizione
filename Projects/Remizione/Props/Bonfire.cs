@@ -112,15 +112,15 @@ namespace Remizione
 
         #endregion
 
-        // BeginRest
+        // BeginUse
         [ScriptMethod]
-        public void BeginRest()
+        public void BeginUse()
         {
-            BeginRest(false);
+            BeginUse(false);
         }
 
-        // BeginRest
-        public void BeginRest(bool immediate)
+        // BeginUse
+        public void BeginUse(bool immediate)
         {
             if (Room == null)
                 return;
@@ -150,9 +150,8 @@ namespace Remizione
             }
         }
 
-        // EndRest
-        [ScriptMethod]
-        public void EndRest()
+        // EndUse
+        public void EndUse()
         {
             Session.RenewSeed();
             (Parent as ProceduralRoom)?.Populate();

@@ -20,6 +20,7 @@ namespace Remizione
             Guts = CreateReadOnlyCollection("Gut", 1, 12);
             GutStains = CreateReadOnlyCollection("GutStain", 1, 2);
             LightningLight = this[nameof(LightningLight)];
+            Sparkle = this[nameof(Sparkle)];
             ToxicGuts = CreateReadOnlyCollection("ToxicGut", 1, 12);
             ToxicGutStains = CreateReadOnlyCollection("ToxicGutStain", 1, 2);
         }
@@ -47,6 +48,9 @@ namespace Remizione
 
         // LightningLight
         public AtlasImage LightningLight { get; }
+
+        // Saprkle
+        public AtlasImage Sparkle { get; }
 
         // ToxicGuts
         public ReadOnlyCollection<AtlasImage> ToxicGuts { get; }

@@ -4,6 +4,9 @@
   <String Key="Actor.Hopeless">Desahuciado</String>
   <String Key="Actor.Monk">Celador</String>
   <String Key="Actor.Penitent">Penitente</String>
+  <String Key="BonfireAction.Craft">Labrar</String>
+  <String Key="BonfireAction.Journey">Viajar</String>
+  <String Key="BonfireAction.Rise">Levantarse</String>
   <String Key="DamageType.Physical">Físico</String>
   <String Key="EffectTemplate.AotHeart">+{amount} Carnadura convulsa</String>
   <String Key="EffectTemplate.Damage">{amount} daño</String>
@@ -200,6 +203,7 @@ Bla bla bla</String>
   <String Key="Misc.Recovering">Recuperando</String>
   <String Key="Misc.SelectSlot">Seleccionar ranura</String>
   <String Key="Misc.Stamina">Resistencia</String>
+  <String Key="Misc.StandUp" />
   <String Key="Misc.Threshold">Umbral</String>
   <String Key="Misc.Unknown">???</String>
   <String Key="Misc.UseWith">Usar {0} con {1}</String>
@@ -228,6 +232,7 @@ Bla bla bla</String>
   <String Key="Prop.CrucifiedMan">Hombre crucificado</String>
   <String Key="Prop.Door">Puerta</String>
   <String Key="Prop.Fleshiness">Carnadura</String>
+  <String Key="Prop.GraceLight">Faro de gracia</String>
   <String Key="Prop.Lever">Palanca</String>
   <String Key="Prop.Pottery">Vasija</String>
   <String Key="Prop.Sack">Saco</String>

@@ -2,7 +2,9 @@
 
 namespace Remizione.Scripting
 {
-    // AwaitDialogBlockCommand
+    /// <summary>
+    /// AwaitDialogBlockCommand
+    /// </summary>
     [ForceAwait]
     public sealed class AwaitDialogBlockCommand : AwaitableCommand
     {

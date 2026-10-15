@@ -91,7 +91,7 @@ namespace Remizione
                 if (GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item item)
                 {
                     Sound.Play(SoundNames.Interact);
-                    ItemContainer.Session.ShowItemInfo(item);
+                    ItemContainer.Session.Overlays.ShowItemInfo(item);
                 }
                 else
                 {

@@ -68,7 +68,7 @@ namespace Remizione
 
             if (InputBindings.Map.IsPressed(0))
             {
-                Owner.Session.ShowMiniMap();
+                Owner.Session.Overlays.ShowMiniMap();
                 return HandleInputResult.Handled;
             }
 

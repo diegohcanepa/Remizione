@@ -536,6 +536,9 @@ namespace Remizione
         public ReadOnlyCollection<IHoleArea> ObstacleAreas { get; }
 
         // RandomWalkablePoint
+        public Vector2 RandomWalkablePoint(float margin = 0) => RandomWalkablePoint(Random.Shared, margin);
+
+        // RandomWalkablePoint
         public Vector2 RandomWalkablePoint(Random rng, float margin = 0)
         {
             var result = GetWalkablePoint(Polygon.RandomPoint(rng));

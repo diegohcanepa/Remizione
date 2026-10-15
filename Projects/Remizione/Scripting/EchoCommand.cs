@@ -21,7 +21,7 @@ namespace Remizione.Scripting
         protected override void OnExecute()
         {
             if (Session is GameSession session)
-                session.Echo(GetDisplayText());
+                session.Overlays.ShowEcho(GetDisplayText());
         }
 
         // TextClauseIndex

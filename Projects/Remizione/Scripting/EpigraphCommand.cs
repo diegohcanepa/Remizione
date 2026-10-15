@@ -20,7 +20,7 @@ namespace Remizione.Scripting
         protected override void OnExecute()
         {
             if (Session is GameSession session)
-                session.Epigrah(GetDisplayText());
+                session.Overlays.ShowEpigraph(GetDisplayText());
         }
 
         // TextClauseIndex

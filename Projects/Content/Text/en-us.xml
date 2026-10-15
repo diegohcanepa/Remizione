@@ -4,6 +4,9 @@
   <String Key="Actor.Hopeless">Hopeless</String>
   <String Key="Actor.Monk">Warden</String>
   <String Key="Actor.Penitent">Penitent</String>
+  <String Key="BonfireAction.Craft">Craft</String>
+  <String Key="BonfireAction.Journey">Journey</String>
+  <String Key="BonfireAction.Rise">Rise</String>
   <String Key="DamageType.Physical">Physical</String>
   <String Key="EffectTemplate.AotHeart" />
   <String Key="EffectTemplate.Damage" />
@@ -199,6 +202,7 @@ Bla bla bla</String>
   <String Key="Misc.Recovering">Recovering</String>
   <String Key="Misc.SelectSlot">Select slot</String>
   <String Key="Misc.Stamina">Stamina</String>
+  <String Key="Misc.StandUp" />
   <String Key="Misc.Threshold">Threshold</String>
   <String Key="Misc.Unknown">???</String>
   <String Key="Misc.UseWith">Use with</String>
@@ -227,6 +231,7 @@ Bla bla bla</String>
   <String Key="Prop.CrucifiedMan">Crucified man</String>
   <String Key="Prop.Door">Door</String>
   <String Key="Prop.Fleshiness">Fleshiness</String>
+  <String Key="Prop.GraceLight">Grace light</String>
   <String Key="Prop.Lever">Lever</String>
   <String Key="Prop.Pottery">Clay pot</String>
   <String Key="Prop.Sack">Sack</String>

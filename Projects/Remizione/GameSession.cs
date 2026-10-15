@@ -25,12 +25,7 @@ namespace Remizione
 
         private readonly ScriptConsole? console;
         private readonly List<(ItemDefinition itemDef, int amount, GameRoom room, Vector2 position)> droppedKeyItems = [];
-        private readonly EchoScene echoScene;
-        private readonly InventoryScene inventoryScene;
-        private readonly ItemInfoScene itemInfoScene;
         private string? lastBonfireName;
-        private readonly MiniMapScene miniMapScene;
-        private readonly NarrationScene narrationScene;
         private Vector2? playerPosition;
         private FrozenDictionary<string, GameThing>? proceduralCatalog;
         private readonly RoomEditor? roomEditor;
@@ -59,13 +54,9 @@ namespace Remizione
             this.Environment = new Environment();
             this.InteractionContext = new(this);
             this.InteractionData = new();
-            this.echoScene = new EchoScene(this);
-            this.narrationScene = new NarrationScene(this);
             this.PlayerData = new(this);
-            this.inventoryScene = new(PlayerData.Inventory);
-            this.miniMapScene = new(this);
-            this.itemInfoScene = new(this);
             this.HUD = new(this);
+            this.Overlays = new(this);
             this.LootGenerator = new(this);
             this.PersistenceModel = new RemizionePersistenceModel();
             this.RenewSeed();
@@ -135,6 +126,7 @@ namespace Remizione
             AotTypeRegistry.Register("animate-actor", typeof(AnimateActorCommand));
             AotTypeRegistry.Register("attach-light", typeof(AttachLightCommand), CodingContext.EntityDeclaration);
             AotTypeRegistry.Register("await-approach", typeof(AwaitApproachCommand));
+            AotTypeRegistry.Register("await-bonfire-scene", typeof(AwaitBonfireSceneCommand));
             AotTypeRegistry.Register("await-credits", typeof(AwaitCreditsCommand));
             AotTypeRegistry.Register("await-dialog-block", typeof(AwaitDialogBlockCommand));
             AotTypeRegistry.Register("await-input", typeof(AwaitInputCommand));
@@ -183,8 +175,7 @@ namespace Remizione
         protected override void OnAwait()
         {
             MouseCursor.Icon = MouseCursorIcon.Wait;
-
-            if (inventoryScene.IsCurrentScene)
+            if (Game.SceneManager.CurrentScene is InventoryScene)
                 Game.SceneManager.Pop();
         }
 
@@ -475,7 +466,7 @@ namespace Remizione
                     if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
                     {
                         InteractionContext.HeldItem = null;
-                        ShowInventory();
+                        Overlays.ShowInventory();
                         return;
                     }
                 }
@@ -535,9 +526,9 @@ namespace Remizione
 
         #endregion
 
-        // ApplyDeath
+        // ApplyPlayerDeath
         [ScriptMethod]
-        public void ApplyDeath()
+        public void ApplyPlayerDeath()
         {
             var allRooms = new List<GameRoom>(Entities.OfType<GameRoom>());
             foreach (var room in allRooms)
@@ -546,8 +537,13 @@ namespace Remizione
             }
 
             PlayerData.Grace = 0;
-
             Player?.HP = Player.MaxHP / 2;
+
+            for (var i = PlayerData.Inventory.Count - 1; i >= 0 ; i--)
+            {
+                if (!PlayerData.Inventory[i].Definition.IsKeyItem)
+                    PlayerData.Inventory.RemoveAt(i);
+            }
 
             Save();
         }
@@ -563,26 +559,6 @@ namespace Remizione
         // DisplayHPMeter
         [ScriptProperty]
         public bool DisplayHPMeter { get; set; } = true;
-
-        // Echo
-        public void Echo(string text)
-        {
-            if (Game.SceneManager.CurrentScene is not EchoScene)
-                Game.SceneManager.Push(echoScene);
-
-            echoScene.Show(text);
-        }
-
-        // Epigrah
-        public void Epigrah(string text)
-        {
-            if (Game.SceneManager.CurrentScene is not EpigrahScene)
-            {
-                var scene = new EpigrahScene();
-                Game.SceneManager.Push(scene);
-                scene.Show(text);
-            }
-        }
 
         // Environment
         public Environment Environment { get; }
@@ -694,15 +670,6 @@ namespace Remizione
         // MasterRunRng (RNG supremo de la partida entera. Solo se usa para generar pisos.)
         public Random MasterRunRng { get; } = new();
 
-        // Narrate
-        public void Narrate(string text, string soundName)
-        {
-            if (Game.SceneManager.CurrentScene is not NarrationScene)
-                Game.SceneManager.Push(narrationScene);
-
-            narrationScene.Show(text, soundName);
-        }
-
         // NextRoom
         [ScriptProperty]
         public new GameRoom? NextRoom => (GameRoom?)base.NextRoom;
@@ -713,6 +680,9 @@ namespace Remizione
         // OutcomeTarget
         [ScriptProperty]
         public override GameThing? OutcomeTarget => base.OutcomeTarget as GameThing;
+
+        // Overlays
+        public SessionOverlays Overlays { get; }
 
         // Player
         [ScriptProperty]
@@ -759,8 +729,8 @@ namespace Remizione
         {
             if (LastBonfire != null)
             {
-                LastBonfire.BeginRest(true);
-                LastBonfire.EndRest();
+                LastBonfire.BeginUse(true);
+                LastBonfire.EndUse();
 
                 if (Room != null)
                 {
@@ -822,27 +792,6 @@ namespace Remizione
             DialogOptionId = -1;
             var scene = new DialogBlockScene(this, dialogBlock);
             Game.SceneManager.Push(scene);
-        }
-
-        // ShowInventory
-        public void ShowInventory()
-        {
-            Game.SceneManager.Push(inventoryScene);
-        }
-
-        // ShowItemInfo
-        public void ShowItemInfo(Item item)
-        {
-            itemInfoScene.Show(item);
-            Game.SceneManager.Push(itemInfoScene);
-        }
-
-        // ShowMiniMap
-        public void ShowMiniMap()
-        {
-            Player?.StopMoving();
-            Camera.FocusTarget();
-            Game.SceneManager.Push(miniMapScene);
         }
 
         // Unlock
