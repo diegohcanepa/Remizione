@@ -209,7 +209,7 @@ namespace Remizione
                 {
                     float newWidth = GetScaledWidth(value);
 
-                    if (value < field)
+                    if (value < field && value < MaximumValue)
                     {
                         float prevWidth = fore.ScaleX;
                         diff.ScaleX = tween.IsRunning ? tween.CurrentValue : prevWidth;

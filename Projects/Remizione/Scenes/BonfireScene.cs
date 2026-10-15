@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Input;
 using Microsoft.Xna.Framework;
 
 namespace Remizione
@@ -29,7 +30,7 @@ namespace Remizione
                 buttons[i] = new()
                 {
                     PivotOrigin = RectanglePoint.Top,
-                    Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, -40, y),
+                    Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, y),
                     Text = TextRepository.GetValue($"{prefix}.{labels[i]}"),
                 };
 
@@ -72,13 +73,24 @@ namespace Remizione
         // OnHandleInput
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
-            for (var i = 0; i < buttons.Length; i++)
+            var shouldClose = InputManager.DefaultPlayer.Mouse.IsRightButtonPressed();
+
+            if (!shouldClose)
             {
-                if (buttons[i].TestPressed())
+                for (var i = 0; i < buttons.Length; i++)
                 {
-                    Game.SceneManager.Pop();
-                    return HandleInputResult.Handled;
+                    if (buttons[i].TestPressed())
+                    {
+                        shouldClose = true;
+                        break;
+                    }
                 }
+            }
+
+            if (shouldClose)
+            {
+                Game.SceneManager.Pop();
+                return HandleInputResult.Handled;
             }
 
             return base.OnHandleInput(gameTime);

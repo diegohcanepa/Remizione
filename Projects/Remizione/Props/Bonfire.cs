@@ -112,15 +112,15 @@ namespace Remizione
 
         #endregion
 
-        // BeginUse
+        // Enter
         [ScriptMethod]
-        public void BeginUse()
+        public void Enter()
         {
-            BeginUse(false);
+            Enter(false);
         }
 
-        // BeginUse
-        public void BeginUse(bool immediate)
+        // Enter
+        public void Enter(bool immediate)
         {
             if (Room == null)
                 return;
@@ -128,11 +128,11 @@ namespace Remizione
             if (immediate)
             {
                 Light.GlobalOpacity = 0;
-                Room.Cleanup();
+                Session.CleanupWorld();
             }
             else
             {
-                globalOpacityTween.Start(TweenStyle.CubicIn, 1, 0, 2000, Room.Cleanup);
+                globalOpacityTween.Start(TweenStyle.CubicIn, 1, 0, 2000, Session.CleanupWorld);
 
                 if (Session.Room != null)
                 {
@@ -150,8 +150,9 @@ namespace Remizione
             }
         }
 
-        // EndUse
-        public void EndUse()
+        // Exit
+        [ScriptMethod]
+        public void Exit()
         {
             Session.RenewSeed();
             (Parent as ProceduralRoom)?.Populate();

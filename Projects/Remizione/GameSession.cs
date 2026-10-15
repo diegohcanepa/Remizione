@@ -25,7 +25,7 @@ namespace Remizione
 
         private readonly ScriptConsole? console;
         private readonly List<(ItemDefinition itemDef, int amount, GameRoom room, Vector2 position)> droppedKeyItems = [];
-        private string? lastBonfireName;
+        private string? lastBonfireNameInSaveFile;
         private Vector2? playerPosition;
         private FrozenDictionary<string, GameThing>? proceduralCatalog;
         private readonly RoomEditor? roomEditor;
@@ -151,6 +151,23 @@ namespace Remizione
             AotTypeRegistry.Register("y-tween", typeof(YTweenCommand));
         }
 
+        // RemoveAnnonymousChildren
+        private void RemoveAnnonymousChildren(Entity entity)
+        {
+            var annonymousList = new List<Entity>();
+
+            for (var i = 0; i < entity.Children.Count; i++)
+            {
+                if (entity.Children[i].InstanceKind == EntityInstanceKind.Anonymous)
+                    annonymousList.Add(entity.Children[i]);
+            }
+
+            for (var i = 0; i < annonymousList.Count; i++)
+            {
+                annonymousList[i].Unparent();
+            }
+        }
+
         // SyncProceduralMusic
         private void SyncProceduralMusic()
         {
@@ -222,11 +239,11 @@ namespace Remizione
             MouseCursor.Reset();
             SyncProceduralMusic();
 
-            if (lastBonfireName != null)
+            if (lastBonfireNameInSaveFile != null)
             {
                 TransitionManager.DefaultTransition.In(0);
-                LastBonfire = FindEntity<Bonfire>(lastBonfireName);
-                RespawnWorld();
+                LastBonfire = FindEntity<Bonfire>(lastBonfireNameInSaveFile);
+                RestartFromLastBonfire();
                 TransitionManager.DefaultTransition.Out(3000);
             }
 
@@ -293,7 +310,7 @@ namespace Remizione
                 throw new InvalidOperationException("Session node attributes not found.");
 
             // LastBonfire
-            lastBonfireName = sessionNode.Attributes[nameof(LastBonfire)]?.Value;
+            lastBonfireNameInSaveFile = sessionNode.Attributes[nameof(LastBonfire)]?.Value;
 
             // DisplayHPMeter
             if (sessionNode.Attributes[nameof(DisplayHPMeter)]?.Value is string displayHPMeterValue)
@@ -510,7 +527,6 @@ namespace Remizione
             var keyItems = new List<string>();
             foreach (var room in Entities.OfType<GameRoom>())
             {
-                // Orbs
                 foreach (var orb in room.Children.OfType<ItemOrb>())
                 {
                     if (orb.ItemReward is { IsKeyItem: true } itemDef)
@@ -530,22 +546,34 @@ namespace Remizione
         [ScriptMethod]
         public void ApplyPlayerDeath()
         {
-            var allRooms = new List<GameRoom>(Entities.OfType<GameRoom>());
-            foreach (var room in allRooms)
-            {
-                room.Cleanup();
-            }
-
+            CleanupWorld();
             PlayerData.Grace = 0;
-            Player?.HP = Player.MaxHP / 2;
+            Player?.HP = Player.MaxHP;
 
-            for (var i = PlayerData.Inventory.Count - 1; i >= 0 ; i--)
+            for (var i = PlayerData.Inventory.Count - 1; i >= 0; i--)
             {
                 if (!PlayerData.Inventory[i].Definition.IsKeyItem)
                     PlayerData.Inventory.RemoveAt(i);
             }
 
             Save();
+        }
+
+        // CleanupWorld
+        public void CleanupWorld()
+        {
+            static bool CanCleanup(Entity entity)
+            {
+                return entity is not ItemOrb itemOrb || itemOrb.AllowCleanup;
+            }
+
+            var allRooms = new List<GameRoom>(Entities.OfType<GameRoom>());
+            foreach (var room in allRooms)
+            {
+                RemoveAnnonymousChildren(room);
+            }
+
+            CleanUpVolatileRuntimeClones(CanCleanup);
         }
 
         // DangerousTarget
@@ -727,10 +755,18 @@ namespace Remizione
         [ScriptMethod]
         public void RespawnWorld()
         {
+            RenewSeed();
+            CleanupWorld();
+        }
+
+        // RestartFromLastBonfire
+        [ScriptMethod]
+        public void RestartFromLastBonfire()
+        {
             if (LastBonfire != null)
             {
-                LastBonfire.BeginUse(true);
-                LastBonfire.EndUse();
+                LastBonfire.Enter(true);
+                LastBonfire.Exit();
 
                 if (Room != null)
                 {

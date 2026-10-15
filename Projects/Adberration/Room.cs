@@ -85,6 +85,30 @@ namespace Adberration
         // GetAtlasPath
         protected abstract string GetAtlasPath();
 
+        // InvalidateCulledThings
+        protected void InvalidateCulledThings()
+        {
+            var count = 0;
+
+            for (int i = 0; i < Children.Count; i++)
+            {
+                if (Children[i].IsActiveInGameLoop)
+                {
+                    if (count < culledThings.Count)
+                        culledThings[count] = Children[i];
+                    else
+                        culledThings.Add(Children[i]);
+
+                    count++;
+                }
+            }
+
+            if (count < culledThings.Count)
+                culledThings.RemoveRange(count, culledThings.Count - count);
+
+            culledThings.Sort(EntityDepthComparer.Instance);
+        }
+
         // OnActivate
         protected virtual void OnActivate()
         {
@@ -177,30 +201,6 @@ namespace Adberration
             }
         }
 
-        // InvalidateCulledThings
-        protected void InvalidateCulledThings()
-        {
-            var count = 0;
-
-            for (int i = 0; i < Children.Count; i++)
-            {
-                if (Children[i].IsActiveInGameLoop)
-                {
-                    if (count < culledThings.Count)
-                        culledThings[count] = Children[i];
-                    else
-                        culledThings.Add(Children[i]);
-
-                    count++;
-                }
-            }
-
-            if (count < culledThings.Count)
-                culledThings.RemoveRange(count, culledThings.Count - count);
-
-            culledThings.Sort(EntityDepthComparer.Instance);
-        }
-
         #endregion
 
         #region Internal members
@@ -268,24 +268,6 @@ namespace Adberration
 
         // CanSave
         public bool CanSave => Persistent && AllowSaving;
-
-        // CleanupAnnonymousThings
-        [ScriptMethod]
-        public void CleanupAnnonymousThings()
-        {
-            var annonymousEntities = new List<Entity>();
-
-            for (var i = 0; i < Children.Count; i++)
-            {
-                if (Children[i].InstanceKind == EntityInstanceKind.Anonymous)
-                    annonymousEntities.Add(Children[i]);
-            }
-
-            for (var i = 0; i < annonymousEntities.Count; i++)
-            {
-                annonymousEntities[i].Unparent();
-            }
-        }
 
         // CulledThings
         public ReadOnlyCollection<Thing> CulledThings { get; }

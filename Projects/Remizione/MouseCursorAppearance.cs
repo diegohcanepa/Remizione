@@ -1,4 +1,5 @@
-﻿using Engendro;
+﻿using Adberration;
+using Engendro;
 using Remizione.Scripting;
 
 namespace Remizione
@@ -17,6 +18,12 @@ namespace Remizione
         // RefreshIcon
         private void RefreshIcon()
         {
+            if (context.Session.Player?.IsDead == true)
+            {
+                MouseCursor.Icon = MouseCursorIcon.Wait;
+                return;
+            }
+
             if (context.Session.Player?.IsFatigued == true || context.Session.Player?.IsLockedByAttacker == true)
             {
                 MouseCursor.Icon = MouseCursorIcon.Wait;
