@@ -13,13 +13,13 @@ namespace Remizione
         private readonly FloatTween fadeTween = new();
         private readonly Sprite icon = new() { PivotOrigin = RectanglePoint.Right };
         private readonly TextSprite messageText;
-        private readonly Vector2 scale = ScaleInfo.Text.VeryLarge;
+        private readonly Vector2 scale = ScaleInfo.Text.ExtraLarge;
         private readonly Vector2Tween scaleTween = new();
 
         // Constructor
         public UIMessage(RectanglePoint pivotOrigin, Vector2 position)
         {
-            this.messageText = new(Fonts.Common)
+            this.messageText = new(Fonts.CommonOutline)
             {
                 MaximumWidth = (int)(Screen.HUDArea.Width * .7f),
                 PivotOrigin = pivotOrigin,
@@ -80,10 +80,6 @@ namespace Remizione
             if (message is MessageKind.InventoryFull or MessageKind.StackFull)
             {
                 icon.RenderImage = Atlases.UI.Sack;
-            }
-            else
-            {
-                Sound.Play(SoundNames.Error);
             }
 
             Show(text, color, duration);

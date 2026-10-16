@@ -47,7 +47,7 @@ namespace Remizione
                 IgnoreGlobalOpacity = true,
                 PivotOrigin = RectanglePoint.Center,
                 Position = new(9),
-                Scale = new(11, 8)
+                Scale = new(9, 6)
             };
 
             AttachedLight.Unlit(true);
@@ -122,41 +122,33 @@ namespace Remizione
         // Enter
         public void Enter(bool immediate)
         {
-            if (Room == null)
+            if (Session.BonfireMode || Session.Room == null)
                 return;
 
             if (immediate)
             {
                 Light.GlobalOpacity = 0;
-                Session.CleanupWorld();
             }
             else
             {
-                globalOpacityTween.Start(TweenStyle.CubicIn, 1, 0, 2000, Session.CleanupWorld);
-
-                if (Session.Room != null)
-                {
-                    foreach (var thing in Session.Room.CulledThings)
-                    {
-                        if (thing.InstanceKind == EntityInstanceKind.RuntimeClone)
-                            thing.Tweens.OpacityTween = FloatTween.Create(TweenStyle.Linear, thing.Opacity, 0, 1500);
-                    }
-                }
-
+                globalOpacityTween.Start(TweenStyle.CubicIn, 1, 0, 2000);
                 Session.Camera.StopFollowing();
                 Session.Camera.FlyTo(TweenStyle.CubicInOut, new Vector2(X - 50, Y - 10), 1.2f, 2000);
 
                 Session.Save(true);
             }
+
+            Session.BonfireMode = true;
         }
 
         // Exit
         [ScriptMethod]
         public void Exit()
         {
-            Session.RenewSeed();
-            (Parent as ProceduralRoom)?.Populate();
+            //Session.RenewSeed();
+            //(Parent as ProceduralRoom)?.Populate();
             globalOpacityTween.Start(TweenStyle.CubicIn, 0, 1, 2000);
+            Session.BonfireMode = false;
         }
 
         // IsLit
@@ -183,6 +175,36 @@ namespace Remizione
                         }
                     }
                 }
+            }
+        }
+
+        // IsSafe
+        [ScriptProperty]
+        public bool IsSafe
+        {
+            get
+            {
+                if (Session.Room == null || Session.Player == null)
+                    return true;
+
+                var safeArea = RectangleF.ScaleCentered(Session.Camera.VisibleBox, .7f);
+
+                for (var i = 0; i < Session.Room.CulledThings.Count; i++)
+                {
+                    if (Session.Room.CulledThings[i] is Actor actor)
+                    {
+                        if (actor.IsPlayer)
+                            continue;
+
+                        if (FactionMatrix.IsHostile(actor, Session.Player))
+                        {
+                            if (safeArea.Intersects(actor.RuntimeHotspot.BoundingRectangleF))
+                                return false;
+                        }
+                    }
+                }
+
+                return true;
             }
         }
     }

@@ -107,6 +107,11 @@ namespace Remizione
         {
             lastSelectedItem = null;
 
+            for (var i = 0; i < slots.Length; i++)
+            {
+                slots[i].Item = null;
+            }
+
             float screenWidth = Screen.NativeWidth;
             int slotCount = ItemContainer.Count;
             float spacing = 2;
@@ -123,10 +128,6 @@ namespace Remizione
                     float x = startingX + (i * (slotSize + spacing)) + (slotSize / 2);
                     slots[i].Position = new Vector2(x, y);
                     slots[i].Item = ItemContainer[i];
-                }
-                else
-                {
-                    slots[i].Item = null;
                 }
             }
 

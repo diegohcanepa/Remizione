@@ -59,7 +59,7 @@ namespace Remizione
         // Intent
         public CombatIntent? Intent { get; set; }
 
-        // Target dinámico
+        // Target
         public Actor? Target { get; set; }
 
         // Update

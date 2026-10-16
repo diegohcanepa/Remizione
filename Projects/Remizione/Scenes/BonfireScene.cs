@@ -24,7 +24,7 @@ namespace Remizione
         {
             buttons = new UIButton[3];
             float maxWidth = 0;
-            float y = 30;
+            float y = 35;
             for (var i = 0; i < buttons.Length; i++)
             {
                 buttons[i] = new()
@@ -73,24 +73,13 @@ namespace Remizione
         // OnHandleInput
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
-            var shouldClose = InputManager.DefaultPlayer.Mouse.IsRightButtonPressed();
-
-            if (!shouldClose)
+            for (var i = 0; i < buttons.Length; i++)
             {
-                for (var i = 0; i < buttons.Length; i++)
+                if (buttons[i].TestPressed())
                 {
-                    if (buttons[i].TestPressed())
-                    {
-                        shouldClose = true;
-                        break;
-                    }
+                    Game.SceneManager.Pop();
+                    return HandleInputResult.Handled;
                 }
-            }
-
-            if (shouldClose)
-            {
-                Game.SceneManager.Pop();
-                return HandleInputResult.Handled;
             }
 
             return base.OnHandleInput(gameTime);

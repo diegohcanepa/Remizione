@@ -535,6 +535,9 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            if (Session.BonfireMode && !IsPlayer)
+                return;
+
             base.OnUpdate(gameTime);
 
             if (BodyMachine.CurrentState is BodyDeathState && !AnimationPlayer.IsPlaying)
@@ -1162,6 +1165,9 @@ namespace Remizione
             }
         }
         */
+
+        // Target
+        public Actor? Target => (combatMachine?.CurrentState as CombatAttackState)?.Target;
 
         // Vibrate
         public void Vibrate(float progress)

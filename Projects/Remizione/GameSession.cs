@@ -559,6 +559,10 @@ namespace Remizione
             Save();
         }
 
+        // BonfireMode
+        [ScriptProperty]
+        public bool BonfireMode { get; set; }
+
         // CleanupWorld
         public void CleanupWorld()
         {

@@ -312,6 +312,18 @@ namespace Engendro
         // Right
         public readonly float Right => X + Width;
 
+        // ScaleCentered
+        public static RectangleF ScaleCentered(RectangleF rectangle, float scaleFactor)
+        {
+            var newWidth = rectangle.Width * scaleFactor;
+            var newHeight = rectangle.Height * scaleFactor;
+
+            var deltaX = (rectangle.Width - newWidth) / 2;
+            var deltaY = (rectangle.Height - newHeight) / 2;
+
+            return new RectangleF(rectangle.X + deltaX, rectangle.Y + deltaY, newWidth, newHeight);
+        }
+
         // Size
         public Vector2 Size
         {
