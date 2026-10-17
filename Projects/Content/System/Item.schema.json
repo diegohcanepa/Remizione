@@ -44,6 +44,18 @@
               "type": "integer",
               "default": 0
             },
+            "breakBaseChance": {
+              "type": "number",
+              "default": 0
+            },
+            "breakBaseChanceIncrement": {
+              "type": "number",
+              "default": 0
+            },
+            "breakSafeUses": {
+              "type": "integer",
+              "default": 0
+            },            
             "deselectOnUse": {
               "type": "boolean"
             },

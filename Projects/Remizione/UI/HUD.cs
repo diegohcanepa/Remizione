@@ -14,8 +14,11 @@ namespace Remizione
         #region Private fields
 
         private readonly UIGraceMeter graceScore;
+        private readonly UIMaterialMeter gutMeter;
         private readonly UIHPMeter hpMeter;
         //private readonly UIRunModifiers runModifiers;
+        private readonly UIMaterialMeter stoneMeter;
+        private readonly UIMaterialMeter woodMeter;
 
         #endregion
 
@@ -26,7 +29,12 @@ namespace Remizione
             : base(session)
         {
             this.hpMeter = new(session);
+            
             this.InventoryMeter = new(session.PlayerData.Inventory);
+            this.woodMeter = new(session, Material.Wood, new(25, 131));
+            this.stoneMeter = new(session, Material.Stone, new(37, 131));
+            this.gutMeter = new(session, Material.Gut, new(49, 131));
+
             this.DestinationMark = new(session);
             //this.runModifiers = new(run);
             this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 10));
@@ -52,6 +60,11 @@ namespace Remizione
             if (Session.InventoryEnabled)
                 InventoryMeter.Draw(gameTime);
 
+            // Materials
+            woodMeter.Draw(gameTime);
+            stoneMeter.Draw(gameTime);
+            gutMeter.Draw(gameTime);
+
             RoomTitle.Draw(gameTime);
             Message.Draw(gameTime);
         }
@@ -64,6 +77,9 @@ namespace Remizione
             hpMeter.Update(gameTime);
             Message.Update(gameTime);
             graceScore.Update(gameTime);
+            woodMeter.Update(gameTime);
+            stoneMeter.Update(gameTime);
+            gutMeter.Update(gameTime);
             DestinationMark.Update(gameTime);
             RoomTitle.Update(gameTime);
         }

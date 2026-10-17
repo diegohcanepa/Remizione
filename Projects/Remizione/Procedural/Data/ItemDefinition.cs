@@ -36,6 +36,15 @@ namespace Remizione
             // AttackRange
             AttackRange = element.GetEnum("attackRange", AttackRange.None);
 
+            // BreakBaseChance
+            BreakBaseChance = element.GetFloat("breakBaseChance", 0);
+
+            // BreakSafeUses
+            BreakSafeUses = Math.Max(0, element.GetInt32("breakSafeUses", 0));
+
+            // BreakChanceIncrement
+            BreakChanceIncrement = element.GetFloat("breakChanceIncrement", 0);
+
             // Category
             Category = element.GetEnum("category", ItemCategory.Misc);
 
@@ -147,6 +156,15 @@ namespace Remizione
         // AttackRange
         public AttackRange AttackRange { get; }
 
+        // BreakBaseChance
+        public Ratio BreakBaseChance { get; }
+
+        // BreakSafeUses
+        public int BreakSafeUses { get; }
+
+        // BreakChanceIncrement
+        public Ratio BreakChanceIncrement { get; }
+
         // Category
         public ItemCategory Category { get; }
 
@@ -164,6 +182,9 @@ namespace Remizione
         {
             return amount == 1 ? Label : Label + $" (x{amount})";
         }
+
+        // HasBreakChance
+        public bool HasBreakChance => BreakChanceIncrement > 0 || BreakBaseChance > 0;
 
         // HPCost
         public int HPCost { get; }

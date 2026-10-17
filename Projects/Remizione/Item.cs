@@ -1,6 +1,7 @@
 ﻿using Adberration.Scripting;
 using Engendro;
 using Engendro.Audio;
+using System;
 using System.Collections.ObjectModel;
 
 namespace Remizione
@@ -10,6 +11,9 @@ namespace Remizione
     /// </summary>
     public sealed class Item : IAction
     {
+        private int currentUses;
+        private Ratio currentBreakChance;
+
         #region Constructor
 
         // Constructor
@@ -19,6 +23,7 @@ namespace Remizione
             this.Definition = definition;
             this.Script = inventory.Session.ScriptLibrary.FindRoutine($"{Definition.Name}Outcome");
             this.Amount = definition.InitialAmount;
+            ResetBreakState();
         }
 
         #endregion
@@ -39,6 +44,35 @@ namespace Remizione
 
         ActionKind IAction.ActionKind => Definition.ActionKind;
 
+
+        #endregion
+
+        #region Private members
+
+        // TryDegrade
+        public bool TryDegrade()
+        {
+            if (!Definition.HasBreakChance)
+                return false;
+
+            currentUses++;
+
+            // Protegemos durante la ventana de usos seguros
+            if (currentUses <= Definition.BreakSafeUses)
+                return false;
+
+            // Evaluamos rotura contra el Ratio acumulado
+            if (currentBreakChance.Roll())
+            {
+                Amount--;
+                ResetBreakState();
+                return true;
+            }
+
+            // Sobrevivió: incrementamos la probabilidad de rotura para el próximo uso
+            currentBreakChance = currentBreakChance + Definition.BreakChanceIncrement;
+            return false;
+        }
 
         #endregion
 
@@ -63,11 +97,15 @@ namespace Remizione
         {
             actor.ApplyAction(this);
 
-            if (Definition.IsDepletable)
+            // 1. Si el ítem tiene mecánica de desgaste/rotura, evaluamos degradación
+            if (Definition.HasBreakChance)
+            {
+                TryDegrade();
+            }
+            // 2. Si no tiene probabilidad de rotura pero es un consumible estándar (ej. poción)
+            else if (Definition.IsDepletable)
             {
                 Amount--;
-                if (Amount <= 0)
-                    Inventory.Remove(this);
             }
         }
 
@@ -99,6 +137,13 @@ namespace Remizione
         public void Remove()
         {
             Inventory.Remove(this);
+        }
+
+        // ResetBreakState
+        public void ResetBreakState()
+        {
+            currentUses = 0;
+            currentBreakChance = Definition.BreakBaseChance;
         }
 
         // Script

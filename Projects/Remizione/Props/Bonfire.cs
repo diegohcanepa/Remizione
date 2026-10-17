@@ -1,6 +1,7 @@
 ﻿using Adberration;
 using Adberration.Scripting;
 using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 
 namespace Remizione
@@ -131,10 +132,10 @@ namespace Remizione
             }
             else
             {
+                Sound.Play(SoundNames.BonfireMenu);
                 globalOpacityTween.Start(TweenStyle.CubicIn, 1, 0, 2000);
                 Session.Camera.StopFollowing();
                 Session.Camera.FlyTo(TweenStyle.CubicInOut, new Vector2(X - 50, Y - 10), 1.2f, 2000);
-
                 Session.Save(true);
             }
 
@@ -145,8 +146,10 @@ namespace Remizione
         [ScriptMethod]
         public void Exit()
         {
-            //Session.RenewSeed();
-            //(Parent as ProceduralRoom)?.Populate();
+            Sound.Play(SoundNames.BonfireMenu);
+            Session.Camera.ZoomTo(TweenStyle.CubicInOut, GameSettings.DefaultZoom, 3000);
+            if (Session.Player != null)
+                Session.Camera.Follow(Session.Player);
             globalOpacityTween.Start(TweenStyle.CubicIn, 0, 1, 2000);
             Session.BonfireMode = false;
         }

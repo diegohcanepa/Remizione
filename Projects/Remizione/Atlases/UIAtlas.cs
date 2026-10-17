@@ -22,6 +22,7 @@ namespace Remizione
             FakeItem = this[nameof(FakeItem)];
             FleshinessHearts = CreateReadOnlyCollection(nameof(FleshinessHearts), 1, 3);
             GoBackIcon = this[nameof(GoBackIcon)];
+            GutIcon = this[nameof(GutIcon)];
             InspectItem = this[nameof(InspectItem)];
             InventoryItemSlots = CreateReadOnlyCollection("InventoryItemSlot", 1, 3);
             MiniMapMarker = this[nameof(MiniMapMarker)];
@@ -34,8 +35,10 @@ namespace Remizione
             ShieldHeart = this[nameof(ShieldHeart)];
             SpeechTextArrow = this[nameof(SpeechTextArrow)];
             SpeechTextPipe = this[nameof(SpeechTextPipe)];
+            StoneIcon = this[nameof(StoneIcon)];
             UIButtonContainerEdge = this[nameof(UIButtonContainerEdge)];
             UIButtonContainerPattern = this[nameof(UIButtonContainerPattern)];
+            WoodIcon = this[nameof(WoodIcon)];
         }
 
         // CheckMark
@@ -67,6 +70,9 @@ namespace Remizione
 
         // GoBackIcon
         public AtlasImage GoBackIcon { get; }
+
+        // GutIcon
+        public AtlasImage GutIcon { get; }
 
         // InspectItem
         public AtlasImage InspectItem { get; }
@@ -104,10 +110,16 @@ namespace Remizione
         // SpeechTextPipe
         public AtlasImage SpeechTextPipe { get; }
 
+        // StoneIcon
+        public AtlasImage StoneIcon { get; }
+
         // UIButtonContainerEdge
         public AtlasImage UIButtonContainerEdge { get; }
 
         // UIButtonContainerPattern
         public AtlasImage UIButtonContainerPattern { get; }
+
+        // WoodIcon
+        public AtlasImage WoodIcon { get; }
     }
 }

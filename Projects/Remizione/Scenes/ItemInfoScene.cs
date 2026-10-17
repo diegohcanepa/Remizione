@@ -77,7 +77,7 @@ namespace Remizione
             this.descriptionText = new(Fonts.Common)
             {
                 Color = ColorPalette.Inventory.EffectDescription,
-                MaximumWidth = 180,
+                MaximumWidth = 150,
                 PivotOrigin = RectanglePoint.Top,
                 Position = nameText.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 1),
                 Scale = ScaleInfo.Text.VeryLarge

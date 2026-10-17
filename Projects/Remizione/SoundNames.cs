@@ -7,6 +7,7 @@
     {
         internal const string Bones = nameof(Bones);
         internal const string Bonfire = nameof(Bonfire);
+        internal const string BonfireMenu = nameof(BonfireMenu);
         internal const string Break = nameof(Break);
         internal const string DoorGateClose = nameof(DoorGateClose);
         internal const string DoorGateOpen = nameof(DoorGateOpen);
