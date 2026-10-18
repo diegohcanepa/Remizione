@@ -11,14 +11,26 @@
             Inventory = new(session);
         }
 
+        // IncrementMaterialCount
+        public int IncrementMaterialCount(Material material, int amount = 1)
+        {
+            return material switch
+            {
+                Material.Gut => GutCount += amount,
+                Material.Stone => StoneCount += amount,
+                Material.Wood => WoodCount += amount,
+                _ => throw new System.NotImplementedException()
+            };
+        }
+
         // GetMaterialCount
         public int GetMaterialCount(Material material)
         {
             return material switch
             {
-                Material.Gut => Gut,
-                Material.Stone => Stone,
-                Material.Wood => Wood,
+                Material.Gut => GutCount,
+                Material.Stone => StoneCount,
+                Material.Wood => WoodCount,
                 _ => throw new System.NotImplementedException()
             };
         }
@@ -26,16 +38,16 @@
         // Grace
         public int Grace { get; set; }
 
-        // Gut
-        public int Gut { get; set; }
+        // GutCount
+        public int GutCount { get; set; }
 
         // Inventory
         public ItemContainer Inventory { get; }
 
-        // Stone
-        public int Stone { get; set; }
+        // StoneCount
+        public int StoneCount { get; set; }
 
-        // Wood
-        public int Wood { get; set; }
+        // WoodCount
+        public int WoodCount { get; set; }
     }
 }

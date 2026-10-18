@@ -32,10 +32,10 @@ namespace Remizione
             this.Verb = Verb.Use;
 
             // Shadow
-            this.Shadow = new Sprite()
+            this.Shadow = new()
             {
                 Opacity = ColorPalette.ShadowOpacity,
-                PivotOrigin = RectanglePoint.Bottom,
+                PivotOrigin = RectanglePoint.Top,
             };
 
             if (Definition?.HP > 0)
@@ -45,6 +45,12 @@ namespace Remizione
         #endregion
 
         #region Private members
+
+        // InvalidateShadowPosition
+        private void InvalidateShadowPosition()
+        {
+            Shadow?.Position = BoundingBox.GetPoint(RectanglePoint.Bottom, ShadowOffset);
+        }
 
         // InvalidateShadowImage
         private void InvalidateShadowImage()
@@ -114,9 +120,6 @@ namespace Remizione
         // BlocksLineOfSight
         protected override bool BlocksLineOfSight => !RevealArea.IsEmpty;
 
-        // MatchShadowTransform
-        protected bool MatchShadowTransform { get; set; } = true;
-
         // OnAtlasChanged
         protected override void OnAtlasChanged()
         {
@@ -157,7 +160,7 @@ namespace Remizione
         // OnDrawShadow
         protected override void OnDrawShadow(GameTime gameTime)
         {
-            if (Shadow.IsEmpty)
+            if (Shadow.IsEmpty || IsDead)
                 base.OnDrawShadow(gameTime);
             else
                 Shadow.Draw(gameTime);
@@ -174,10 +177,7 @@ namespace Remizione
         protected override void OnTransform(TransformChange change)
         {
             base.OnTransform(change);
-
-            if (MatchShadowTransform)
-                Shadow?.MatchTransform(Sprite);
-
+            InvalidateShadowPosition();
             isRevealBoxDirty = true;
         }
 
@@ -224,6 +224,21 @@ namespace Remizione
                     field = value;
                     isRevealBoxDirty = true;
                     revealTween ??= new();
+                }
+            }
+        }
+
+        // ShadowOffset
+        [ScriptProperty]
+        public Vector2 ShadowOffset
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    InvalidateShadowPosition();
                 }
             }
         }

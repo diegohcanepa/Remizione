@@ -10,7 +10,8 @@
           "effectType": "Damage",
           "amount": "6"
         }
-      ],      
+      ],
+      "hp": 1,
       "tags": [
         "Pottery"
       ],
@@ -19,6 +20,14 @@
           "item": "BarrenFig",
           "weight": 10
         }
+      ]
+    },
+    {
+      "name": "TreeA",
+      "hp": 3,
+      "materialReward": "Wood",
+      "tags": [
+        "Tree"
       ]
     }
   ]

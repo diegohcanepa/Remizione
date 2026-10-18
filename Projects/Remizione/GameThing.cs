@@ -363,7 +363,8 @@ namespace Remizione
         // OnDrawShadow
         protected virtual void OnDrawShadow(GameTime gameTime)
         {
-            shadowSpot.Draw(gameTime);
+            if (!IsDead)
+                shadowSpot.Draw(gameTime);
         }
 
         // OnFactionChanged
@@ -604,12 +605,22 @@ namespace Remizione
 
             if (!IsPlayer)
             {
-                if (killedByPlayer && Definition?.GraceReward > 0)
+                if (killedByPlayer)
                 {
-                    Sound.Play(SoundNames.GraceGain);
-                    Session.PlayerData.Grace += Definition.GraceReward;
-                    var text = $"+{Definition.GraceReward} {Localization.GetValue(PlayerStat.Grace)}";
-                    Session.ObjectPools.FlyOffs.Get()?.ShowText(GetOverheadPosition(), text, ColorPalette.Text.Grace, ScaleInfo.Text.Medium.X);
+                    if (Definition?.GraceReward > 0)
+                    {
+                        Sound.Play(SoundNames.GraceGain);
+                        Session.PlayerData.Grace += Definition.GraceReward;
+                        var text = $"+{Definition.GraceReward} {Localization.GetValue(PlayerStat.Grace)}";
+                        Session.ObjectPools.FlyOffs.Get()?.ShowText(GetOverheadPosition(), text, ColorPalette.Text.Grace, ScaleInfo.Text.Medium.X);
+                    }
+
+                    if (Definition?.MaterialReward != null)
+                    {
+                        Session.PlayerData.IncrementMaterialCount(Definition.MaterialReward.Value, 1);
+                        var text = $"+{Localization.GetValue(Definition.MaterialReward.Value)}";
+                        Session.ObjectPools.FlyOffs.Get()?.ShowText(BoundingBox.Center, text, ColorPalette.Text.Terra, ScaleInfo.Text.Medium.X);
+                    }
                 }
 
                 DropLoot();

@@ -629,6 +629,54 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">TreeA-assets/TreeA.png</key>
+            <key type="filename">TreeA-assets/TreeAShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,10,12,21</rect>
+                <key>scale9Paddings</key>
+                <rect>6,10,12,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">TreeB-assets/TreeB.png</key>
+            <key type="filename">TreeB-assets/TreeBShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,11,15,21</rect>
+                <key>scale9Paddings</key>
+                <rect>7,11,15,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">TreeC-assets/TreeC.png</key>
+            <key type="filename">TreeC-assets/TreeCShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,11,11,21</rect>
+                <key>scale9Paddings</key>
+                <rect>6,11,11,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Trunk-assets/Trunk01.png</key>
             <key type="filename">Trunk-assets/Trunk02.png</key>
             <key type="filename">Trunk-assets/TrunkLoot.png</key>
@@ -736,6 +784,9 @@
                     <filename>Chest-assets</filename>
                     <filename>Trunk-assets</filename>
                     <filename>LargeRockC-assets</filename>
+                    <filename>TreeA-assets</filename>
+                    <filename>TreeB-assets</filename>
+                    <filename>TreeC-assets</filename>
                 </array>
             </struct>
         </map>

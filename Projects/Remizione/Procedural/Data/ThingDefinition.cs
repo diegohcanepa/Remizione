@@ -17,7 +17,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        protected ThingDefinition(JsonElement element, bool defaultRequiresPlaceholder)
+        protected ThingDefinition(JsonElement element, bool defaultForRequiresPlaceholder)
             : base(element)
         {
             // BaseDropChance
@@ -51,6 +51,9 @@ namespace Remizione
 
             LootPool = tempPool.AsReadOnly();
 
+            // MaterialReward
+            MaterialReward = element.GetEnum<Material>("materialReward");
+
             // MaxPerRoom
             MaxPerRoom = element.GetInt32("maxPerRoom", -1);
 
@@ -67,7 +70,7 @@ namespace Remizione
             Effects = effects.AsReadOnly();
 
             // RequiresPlaceholder
-            RequiresPlaceholder = element.GetBool("requiresPlaceholder", defaultRequiresPlaceholder);
+            RequiresPlaceholder = element.GetBool("requiresPlaceholder", defaultForRequiresPlaceholder);
         }
 
         #endregion
@@ -93,6 +96,9 @@ namespace Remizione
 
         // LootPool
         public ReadOnlyChanceTable LootPool { get; }
+
+        // MaterialReward
+        public Material? MaterialReward { get; }
 
         // MaxPerRoom
         public int MaxPerRoom { get; }

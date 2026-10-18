@@ -197,7 +197,7 @@ namespace Remizione
     public enum StatusType { Poison }
 
     // Tag
-    public enum Tag { Bonfire, Ceiling, Floor, GateLever, Grate, Obstacle, Poison, Pottery, Torch, Trap, Trapdoor, Trunk, WallDecoration, Window }
+    public enum Tag { Bonfire, Ceiling, Floor, GateLever, Grate, Obstacle, Poison, Pottery, Torch, Trap, Trapdoor, Tree, Trunk, WallDecoration, Window }
 
     // TestPolygon
     public enum TestPolygon { Hotspot, Collider }

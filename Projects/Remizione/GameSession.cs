@@ -320,6 +320,18 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(PlayerData.Grace)]?.Value is string graceValue)
                 PlayerData.Grace = XmlConvert.ToInt32(graceValue);
 
+            // GutCount
+            if (sessionNode.Attributes[nameof(PlayerData.GutCount)]?.Value is string gutCountValue)
+                PlayerData.GutCount = XmlConvert.ToInt32(gutCountValue);
+
+            // StoneCount
+            if (sessionNode.Attributes[nameof(PlayerData.StoneCount)]?.Value is string stoneCountValue)
+                PlayerData.StoneCount = XmlConvert.ToInt32(stoneCountValue);
+
+            // WoodCount
+            if (sessionNode.Attributes[nameof(PlayerData.WoodCount)]?.Value is string woodCountValue)
+                PlayerData.WoodCount = XmlConvert.ToInt32(woodCountValue);
+
             // Inventory
             if (sessionNode.Attributes[nameof(PlayerData.Inventory)]?.Value is string inventoryValue)
                 PlayerData.Inventory.Deserialize(inventoryValue);
@@ -502,6 +514,15 @@ namespace Remizione
 
             // Grace
             output.WriteAttributeString(nameof(PlayerData.Grace), XmlConvert.ToString(PlayerData.Grace));
+
+            // GutCount
+            output.WriteAttributeString(nameof(PlayerData.GutCount), XmlConvert.ToString(PlayerData.GutCount));
+
+            // StoneCount
+            output.WriteAttributeString(nameof(PlayerData.StoneCount), XmlConvert.ToString(PlayerData.StoneCount));
+
+            // WoodCount
+            output.WriteAttributeString(nameof(PlayerData.WoodCount), XmlConvert.ToString(PlayerData.WoodCount));
 
             // InventoryEnabled
             output.WriteAttributeString(nameof(InventoryEnabled), XmlConvert.ToString(InventoryEnabled));

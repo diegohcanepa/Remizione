@@ -866,7 +866,7 @@ namespace Remizione
         // IsInAttackLane
         public bool IsInAttackLane(GameThing target, int attackLaneThickness = 3)
         {
-            float dy = Math.Abs(Position.Y - target.Y);
+            float dy = Math.Abs(Y - target.Y);
             return dy <= attackLaneThickness;
         }
 

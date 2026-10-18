@@ -40,7 +40,7 @@
   <String Key="Item.FulguriteCrystal.Description">Una concreción áspera de sílice y escoria, nacida en el instante en que la rabia del cielo calcinó la tierra muerta. En su cara más llana lleva grabado a punzón el glifo de la fijación alquímica, sellado con cera rancia. Al romper el sello sobre un condenado, la piedra clama a las alturas y descarga un rayo fulminante que consume su carne.</String>
   <String Key="Item.FulguriteCrystal.Name">Fulgurite crystal</String>
   <String Key="Item.GadlingKnuckle.Description">Una placa de hierro tosco, martillada a golpes sobre el cuero podrido de un guante de verdugo. De la articulación sobresale una púa piramidal, mellada y negra de mugre seca.</String>
-  <String Key="Item.GadlingKnuckle.Effect"></String>
+  <String Key="Item.GadlingKnuckle.Effect" />
   <String Key="Item.GadlingKnuckle.Name">Puño de púa</String>
   <String Key="Item.Lift.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Lift.Name">Alzar</String>
@@ -64,6 +64,9 @@ Los penitentes la usan para encender las Hogueras, cuyo calor no cura la carne s
   <String Key="Languages.es-es">Español (España)</String>
   <String Key="Languages.fr-fr">Français</String>
   <String Key="Languages.ru-ru">Русский</String>
+  <String Key="Material.Gut">Tripa</String>
+  <String Key="Material.Stone">Piedra</String>
+  <String Key="Material.Wood">Madera</String>
   <String Key="Menu.Controls.Keyboard.Interact">Interactuar</String>
   <String Key="Menu.Controls.Keyboard.Inventory">Inventario</String>
   <String Key="Menu.Controls.Keyboard.Kick">Patear (cuando esté disponible)</String>
@@ -204,7 +207,7 @@ Bla bla bla</String>
   <String Key="Misc.Recovering">Recuperando</String>
   <String Key="Misc.SelectSlot">Seleccionar ranura</String>
   <String Key="Misc.Stamina">Resistencia</String>
-  <String Key="Misc.StandUp"></String>
+  <String Key="Misc.StandUp" />
   <String Key="Misc.Threshold">Umbral</String>
   <String Key="Misc.Unknown">???</String>
   <String Key="Misc.UseWith">Usar {0} con {1}</String>
@@ -241,6 +244,7 @@ Bla bla bla</String>
   <String Key="Prop.Torch">Antorcha</String>
   <String Key="Prop.Tower">Torre</String>
   <String Key="Prop.TrapDoor">Trampilla</String>
+  <String Key="Prop.Tree">Árbol desollado</String>
   <String Key="Prop.Trunk">Baúl</String>
   <String Key="Prop.Tunnel">Túnel</String>
   <String Key="Room.Threshold">El Umbral</String>

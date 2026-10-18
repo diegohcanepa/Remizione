@@ -154,6 +154,14 @@
         "TrapDoorKey"
       ]
     },
+    "Material": {
+      "type": "string",
+      "enum": [
+        "Gut",
+        "Stone",
+        "Wood"
+      ]
+    },    
     "PlaceholderContentType": {
       "type": "string",
       "enum": [
@@ -202,6 +210,7 @@
         "Torch",
         "Trap",
         "Trapdoor",
+        "Tree",
         "Trunk",
         "WallDecoration",
         "Window"

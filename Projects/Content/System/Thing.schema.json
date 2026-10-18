@@ -40,6 +40,9 @@
             }
           }
         },
+        "materialReward": {
+          "$ref": "enums.schema.json#/$defs/Material"
+        },
         "maxPerRoom": {
           "type": "integer",
           "default": -1
