@@ -6,35 +6,40 @@ using System.Collections.ObjectModel;
 
 namespace Remizione
 {
-    public sealed class UIHPMeter : SessionGameObject<GameSession>
+    /// <summary>
+    /// UIHeartMeter
+    /// </summary>
+    public sealed class UIHeartMeter : SessionGameObject<GameSession>
     {
         #region Private fields
+
+        private const int PointsPerHeart = 10;
+        private const int PointsPerHalfHeart = 5;
 
         private Actor? actor;
         private readonly List<Sprite> displaySprites = [];
 
         private readonly ReadOnlyCollection<AtlasImage> redHeartImages;
-        private readonly AtlasImage shieldHeartImage;
 
         private int lastHp = int.MinValue;
         private int lastMaxHp = int.MinValue;
-        private int lastShields = int.MinValue;
 
         #endregion
 
         #region Constructor
 
-        public UIHPMeter(GameSession session)
+        // Constructor
+        public UIHeartMeter(GameSession session)
             : base(session)
         {
             redHeartImages = Atlases.UI.FleshinessHearts;
-            shieldHeartImage = Atlases.UI.ShieldHeart;
         }
 
         #endregion
 
         #region Private members
 
+        // Refresh
         private void Refresh()
         {
             if (actor == null)
@@ -46,19 +51,24 @@ namespace Remizione
             Vector2 currentPos = startPos;
             float spacing = 0.5f;
 
-            // 1. CORAZONES (Fleshiness)
+            // 1. Fleshiness
             int hp = actor.HP;
             int maxHp = actor.MaxHP;
-            int redContainers = maxHp / 2;
+            int redContainers = (maxHp + PointsPerHeart - 1) / PointsPerHeart;
+            BoundingBox = RectangleF.Empty;
 
             for (int i = 0; i < redContainers; i++)
             {
-                int p1 = (i * 2) + 1;
-                int p2 = (i * 2) + 2;
+                int baseHp = i * PointsPerHeart;
+                int halfThreshold = baseHp + PointsPerHalfHeart;
 
-                AtlasImage img = redHeartImages[0];
-                if (hp >= p2) img = redHeartImages[2];
-                else if (hp == p1) img = redHeartImages[1];
+                AtlasImage img;
+                if (hp > halfThreshold)
+                    img = redHeartImages[2]; // Lleno (11 a 20 puntos dentro del contenedor)
+                else if (hp > baseHp)
+                    img = redHeartImages[1]; // Mitad (1 a 10 puntos dentro del contenedor)
+                else
+                    img = redHeartImages[0]; // Vacío (0 puntos o menos)
 
                 var sprite = new Sprite(img)
                 {
@@ -68,31 +78,12 @@ namespace Remizione
 
                 displaySprites.Add(sprite);
                 currentPos.X += sprite.BoundingBox.Width + spacing;
-            }
 
-            // 2. CORAZONES (Escudo)
-            for (int i = 0; i < actor.ShieldHearts; i++)
-            {
-                var sprite = new Sprite(shieldHeartImage)
-                {
-                    PivotOrigin = RectanglePoint.Center,
-                    Position = currentPos,
-                    Scale = new(.8f)
-                };
-
-                displaySprites.Add(sprite);
-                currentPos.X += sprite.BoundingBox.Width + spacing;
+                BoundingBox = RectangleF.Union(BoundingBox, sprite.BoundingBox);
             }
 
             lastHp = hp;
             lastMaxHp = maxHp;
-            lastShields = actor.ShieldHearts;
-
-            if (displaySprites.Count > 0)
-            {
-                float totalWidth = currentPos.X - startPos.X;
-                BoundingBox = new RectangleF(startPos.X, startPos.Y, totalWidth, displaySprites[0].BoundingBox.Height);
-            }
         }
 
         #endregion
@@ -123,7 +114,7 @@ namespace Remizione
             if (actor == null)
                 return;
 
-            if (lastHp != actor.HP || lastMaxHp != actor.MaxHP || lastShields != actor.ShieldHearts)
+            if (lastHp != actor.HP || lastMaxHp != actor.MaxHP)
                 Refresh();
         }
 

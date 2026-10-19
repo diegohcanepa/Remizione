@@ -28,11 +28,12 @@ namespace Remizione
             MiniMapMarker = this[nameof(MiniMapMarker)];
             MouseLeftButtonIcon = this[nameof(MouseLeftButtonIcon)];
             MouseRightButtonIcon = this[nameof(MouseRightButtonIcon)];
+            PainHeartEmpty = this[nameof(PainHeartEmpty)];
+            PainHeartFull = this[nameof(PainHeartFull)];
             Pixel = this[nameof(Pixel)];
             QuickInventoryBackground = this[nameof(QuickInventoryBackground)];
             Sack = this[nameof(Sack)];
             SavingIcon = this[nameof(SavingIcon)];
-            ShieldHeart = this[nameof(ShieldHeart)];
             SpeechTextArrow = this[nameof(SpeechTextArrow)];
             SpeechTextPipe = this[nameof(SpeechTextPipe)];
             StoneIcon = this[nameof(StoneIcon)];
@@ -89,6 +90,12 @@ namespace Remizione
         // MouseRightButtonIcon
         public AtlasImage MouseRightButtonIcon { get; }
 
+        // PainHeartEmpty
+        public AtlasImage PainHeartEmpty { get; }
+
+        // PainHeartFull
+        public AtlasImage PainHeartFull { get; }
+
         // Pixel
         public AtlasImage Pixel { get; }
 
@@ -100,9 +107,6 @@ namespace Remizione
 
         // SavingIcon
         public AtlasImage SavingIcon { get; }
-
-        // ShieldHeart
-        public AtlasImage ShieldHeart { get; }
 
         // SpeechTextArrow
         public AtlasImage SpeechTextArrow { get; }

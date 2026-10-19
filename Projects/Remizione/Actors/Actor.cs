@@ -5,6 +5,7 @@ using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Xml;
 
 namespace Remizione
 {
@@ -447,6 +448,16 @@ namespace Remizione
             }
         }
 
+        // OnRead
+        protected override void OnRead(XmlAttributeCollection attributes)
+        {
+            base.OnRead(attributes);
+
+            // MaxHP
+            if (attributes[nameof(MaxHP)]?.Value is string maxHPValue)
+                MaxHP = XmlConvert.ToInt32(maxHPValue);
+        }
+
         // OnStartMoving
         protected override void OnStartMoving()
         {
@@ -476,12 +487,6 @@ namespace Remizione
         // OnTakeDamage
         protected override void OnTakeDamage(GameThing attacker, int amount, DamageType damageType)
         {
-            if (ShieldHearts > 0)
-            {
-                ShieldHearts--;
-                HP += amount; // Restituye la vida roja que resta GameThing.TakeDamage
-            }
-
             // 2. Flujo nativo de reacción al impacto en Actor
             IsDealingContactDamage = false;
 
@@ -572,6 +577,16 @@ namespace Remizione
             */
 
             CheckContactDamage();
+        }
+
+        // OnWrite
+        protected override void OnWrite(XmlWriter output)
+        {
+            base.OnWrite(output);
+
+            // MaxHP
+            if (Faction == Faction.Player)
+                output.WriteAttributeString(nameof(MaxHP), XmlConvert.ToString(MaxHP));
         }
 
         #endregion
@@ -1141,10 +1156,6 @@ namespace Remizione
             speechText ??= new SpeechText(this);
             speechText.Show(text, awaitInput, soundName);
         }
-
-        // ShieldHearts
-        [ScriptProperty]
-        public int ShieldHearts { get; set; }
 
         // ShowStatusReaction
         /*

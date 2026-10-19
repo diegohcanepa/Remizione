@@ -87,7 +87,6 @@
         "MaxEnergyLoss",
         "MaxHPGain",
         "MaxHPLoss",
-        "ShieldHeart",
         "Status"
       ]
     },

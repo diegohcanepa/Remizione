@@ -26,8 +26,8 @@
 			"effects": [
 				{
 					"context": "Use",
-					"effectType": "ShieldHeart",
-					"amount": "1",
+					"effectType": "HPGain",
+					"amount": "5",
 					"target": "Self",
 					"sound": "ConsumeBite"
 				}

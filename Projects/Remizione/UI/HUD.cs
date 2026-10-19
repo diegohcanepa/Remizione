@@ -14,8 +14,6 @@ namespace Remizione
         #region Private fields
 
         private readonly UIGraceMeter graceScore;
-        private readonly UIHPMeter hpMeter;
-        //private readonly UIRunModifiers runModifiers;
 
         #endregion
 
@@ -25,7 +23,8 @@ namespace Remizione
         public HUD(GameSession session)
             : base(session)
         {
-            this.hpMeter = new(session);
+            this.HeartMeter = new(session);
+            this.PainMeter = new(session);
             
             this.InventoryMeter = new(session.PlayerData.Inventory);
             this.WoodMeter = new(session, Material.Wood, new(25, 131));
@@ -33,10 +32,8 @@ namespace Remizione
             this.GutMeter = new(session, Material.Gut, new(49, 131));
 
             this.DestinationMark = new(session);
-            //this.runModifiers = new(run);
             this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 10));
 
-            // Grace
             this.graceScore = new(session);
         }
 
@@ -49,8 +46,10 @@ namespace Remizione
         {
             Game.SpriteBatch.Begin(Game.Camera);
             if (Session.DisplayHPMeter)
-                hpMeter.Draw(gameTime);
-            //runModifiers.Draw(gameTime);
+            {
+                HeartMeter.Draw(gameTime);
+                PainMeter.Draw(gameTime);
+            }
             graceScore.Draw(gameTime);
             Game.SpriteBatch.End();
 
@@ -69,9 +68,9 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            //runModifiers.Update(gameTime);
             InventoryMeter.Update(gameTime);
-            hpMeter.Update(gameTime);
+            HeartMeter.Update(gameTime);
+            PainMeter.Update(gameTime);
             Message.Update(gameTime);
             graceScore.Update(gameTime);
             WoodMeter.Update(gameTime);
@@ -114,16 +113,21 @@ namespace Remizione
             return HandleInputResult.Unhandled;
         }
 
+        // HeartMeter
+        public UIHeartMeter HeartMeter { get; }
+
         // InventoryMeter
         public UIInventoryMeter InventoryMeter { get; }
 
         // Message
         public UIMessage Message { get; }
 
+        // PainMeter
+        public UIPainMeter PainMeter { get; }
+
         // Reset
         public void Reset()
         {
-            //Statuses.Actor = Session.Player;
             Message.Hide();
         }
 

@@ -274,7 +274,19 @@ namespace Remizione
                     if (pendingDamageAmount.HasValue)
                     {
                         var color = ColorPalette.Damage.GetColor(pendingDamageType);
-                        Session.ObjectPools.FlyOffs.Get()?.ShowAmount(this, color, Math.Abs(pendingDamageAmount.Value));
+                        var damageAmount = Math.Abs(pendingDamageAmount.Value);
+                        if (IsPlayer)
+                        {
+                            for (var i = 0; i < damageAmount; i++)
+                            {
+                                ShowFlyOff(Atlases.UI.PainHeartFull);
+                            }
+                        }
+                        else
+                        {
+                            Session.ObjectPools.FlyOffs.Get()?.ShowAmount(this, color, damageAmount);
+                        }
+                        
                         pendingDamageAmount = null;
                         pendingDamageType = DamageType.None;
                     }

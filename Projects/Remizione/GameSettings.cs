@@ -35,6 +35,9 @@
         // MaxItemAmount
         public const int MaxItemAmount = 5;
 
+        // PointsPerHeart
+        public const int PointsPerHeart = 5;
+
         // SteamAppID
         public const int SteamAppID = 480;
 
