@@ -11,8 +11,8 @@
             Inventory = new(session);
         }
 
-        // IncrementMaterialCount
-        public int IncrementMaterialCount(Material material, int amount = 1)
+        // AddMaterial
+        public int AddMaterial(Material material, int amount = 1)
         {
             return material switch
             {

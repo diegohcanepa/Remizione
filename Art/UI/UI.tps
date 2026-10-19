@@ -391,7 +391,9 @@
             <key type="filename">UIIcons-assets/FleshinessHearts1.png</key>
             <key type="filename">UIIcons-assets/FleshinessHearts2.png</key>
             <key type="filename">UIIcons-assets/FleshinessHearts3.png</key>
+            <key type="filename">UIIcons-assets/GutIcon.png</key>
             <key type="filename">UIIcons-assets/StatusPoisonIcon.png</key>
+            <key type="filename">UIIcons-assets/StoneIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -438,7 +440,6 @@
             </struct>
             <key type="filename">MouseCursors-assets/MouseCursorSackIcon.png</key>
             <key type="filename">UIIcons-assets/Sack.png</key>
-            <key type="filename">UIIcons-assets/SackIcon.png</key>
             <key type="filename">UIIcons-assets/SavingIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -728,6 +729,21 @@
                 <rect>2,3,4,6</rect>
                 <key>scale9Paddings</key>
                 <rect>2,3,4,6</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">UIIcons-assets/WoodIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,3,5</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,3,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

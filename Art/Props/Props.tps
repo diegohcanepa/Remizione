@@ -368,6 +368,7 @@
             </struct>
             <key type="filename">PotteryA-assets/PotteryARemains2.png</key>
             <key type="filename">PotteryC-assets/PotteryCPiece2.png</key>
+            <key type="filename">TreeA-assets/TreeARemains1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -418,6 +419,7 @@
                 <false/>
             </struct>
             <key type="filename">PotteryB-assets/PotteryBRemains1.png</key>
+            <key type="filename">TreeA-assets/TreeARemains3.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -642,6 +644,21 @@
                 <rect>6,10,12,21</rect>
                 <key>scale9Paddings</key>
                 <rect>6,10,12,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">TreeA-assets/TreeARemains2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,2,1</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,2,1</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

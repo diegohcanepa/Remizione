@@ -12,6 +12,7 @@ namespace Remizione
         #region Private fields
 
         private readonly TextSprite amountText;
+        private readonly Sprite flyingIcon = new() { PivotOrigin = RectanglePoint.Center };
         private readonly Sprite icon;
         private int lastKnownCount = -1;
         private readonly Material material;
@@ -48,12 +49,31 @@ namespace Remizione
 
         #endregion
 
+        #region Private members
+
+        // AddCore
+        private void AddCore()
+        {
+            rotationTween.Start(TweenStyle.QuadraticInOut, 0, 15, 50, 6);
+            scaleTween.Start(TweenStyle.QuadraticInOut, Vector2.One, Vector2.One * 1.3f, 150, 2);
+
+            icon.Tweens.RotationTween = rotationTween;
+            icon.Tweens.ScaleTween = scaleTween;
+
+            Session.PlayerData.AddMaterial(material);
+
+            //Sound.Play(SoundNames.ItemAdd);
+        }
+
+        #endregion
+
         #region Protected members
 
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera);
+            flyingIcon.Draw(gameTime);
             icon.Draw(gameTime);
             if (lastKnownCount > 0)
                 amountText.Draw(gameTime);
@@ -63,6 +83,7 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            flyingIcon.Update(gameTime);
             icon.Update(gameTime);
 
             if (lastKnownCount != Session.PlayerData.GetMaterialCount(material))
@@ -76,16 +97,18 @@ namespace Remizione
 
         #endregion
 
-        // Animate
-        public void Animate()
+        // Add
+        public void Add(Vector2 worldPosition)
         {
-            rotationTween.Start(TweenStyle.QuadraticInOut, 0, 15, 50, 6);
-            scaleTween.Start(TweenStyle.QuadraticInOut, Vector2.One, Vector2.One * 1.3f, 150, 2);
+            //Sound.Play(SoundNames.MoveToSack);
 
-            icon.Tweens.RotationTween = rotationTween;
-            icon.Tweens.ScaleTween = scaleTween;
+            var startPos = ((worldPosition - Session.Camera.Position) * Session.Camera.Zoom) + (new Vector2(Screen.NativeWidth, Screen.NativeHeight) * .5f);
 
-            //Sound.Play(SoundNames.ItemAdd);
+            flyingIcon.RenderImage = icon.RenderImage;
+            flyingIcon.Position = startPos;
+            flyingIcon.Scale = ScaleInfo.UIElement.Large;
+            flyingIcon.Tweens.PositionTween = Vector2Tween.Create(TweenStyle.CubicInOut, flyingIcon.Position, icon.BoundingBox.Center, 1400);
+            flyingIcon.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicInOut, flyingIcon.Scale, ScaleInfo.UIElement.Large, 600, 2, AddCore);
         }
     }
 }

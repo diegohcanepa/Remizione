@@ -190,6 +190,10 @@ namespace Remizione
             // Opacity
             DrawText(gameTime, text, $"Opacity: {SelectedThing.Opacity}");
 
+            // ShadowOffset
+            if (SelectedThing is Prop prop)
+                DrawText(gameTime, text, $"Shadow Offset: {prop.ShadowOffset}");
+
             DrawRoomData(gameTime, room);
             DrawCameraData(gameTime);
             DrawMouseData(gameTime);
@@ -199,8 +203,8 @@ namespace Remizione
             Game.SpriteBatch.End();
         }
 
-        // HandleInputForThingsMode
-        private bool HandleInputForThingsMode()
+        // HandleThingInput
+        private bool HandleThingInput()
         {
             var handled = false;
 
@@ -261,32 +265,47 @@ namespace Remizione
             else if (SelectedThing != null)
             {
                 var control = InputManager.DefaultPlayer.Keyboard.IsKeyDown(Keys.LeftControl);
+                var alt = InputManager.DefaultPlayer.Keyboard.IsKeyDown(Keys.LeftAlt);
 
                 // Up
                 if (InputManager.DefaultPlayer.Keyboard.IsKeyPressed(Keys.Up) || (control && InputManager.DefaultPlayer.Keyboard.IsKeyDown(Keys.Up)))
                 {
-                    SelectedThing.Y--;
+                    if (alt && SelectedThing is Prop prop)
+                        prop.ShadowOffset = new(prop.ShadowOffset.X, prop.ShadowOffset.Y - 1);
+                    else
+                        SelectedThing.Y--;
                     handled = true;
                 }
 
                 // Down
                 else if (InputManager.DefaultPlayer.Keyboard.IsKeyPressed(Keys.Down) || (control && InputManager.DefaultPlayer.Keyboard.IsKeyDown(Keys.Down)))
                 {
-                    SelectedThing.Y++;
+                    if (alt && SelectedThing is Prop prop)
+                        prop.ShadowOffset = new(prop.ShadowOffset.X, prop.ShadowOffset.Y + 1);
+                    else
+                        SelectedThing.Y++;
                     handled = true;
                 }
 
                 // Left
                 else if (InputManager.DefaultPlayer.Keyboard.IsKeyPressed(Keys.Left) || (control && InputManager.DefaultPlayer.Keyboard.IsKeyDown(Keys.Left)))
                 {
-                    SelectedThing.X--;
+                    if (alt && SelectedThing is Prop prop)
+                        prop.ShadowOffset = new(prop.ShadowOffset.X - 1, prop.ShadowOffset.Y);
+                    else
+                        SelectedThing.X--;
+
                     handled = true;
                 }
 
                 // Right
                 else if (InputManager.DefaultPlayer.Keyboard.IsKeyPressed(Keys.Right) || (control && InputManager.DefaultPlayer.Keyboard.IsKeyDown(Keys.Right)))
                 {
-                    SelectedThing.X++;
+                    if (alt && SelectedThing is Prop prop)
+                        prop.ShadowOffset = new(prop.ShadowOffset.X + 1, prop.ShadowOffset.Y);
+                    else
+                        SelectedThing.X++;
+
                     handled = true;
                 }
 
@@ -429,7 +448,7 @@ namespace Remizione
 
             else
             {
-                handled = HandleInputForThingsMode();
+                handled = HandleThingInput();
             }
 
             return handled ? HandleInputResult.Handled : HandleInputResult.Unhandled;

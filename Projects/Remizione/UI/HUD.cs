@@ -14,11 +14,8 @@ namespace Remizione
         #region Private fields
 
         private readonly UIGraceMeter graceScore;
-        private readonly UIMaterialMeter gutMeter;
         private readonly UIHPMeter hpMeter;
         //private readonly UIRunModifiers runModifiers;
-        private readonly UIMaterialMeter stoneMeter;
-        private readonly UIMaterialMeter woodMeter;
 
         #endregion
 
@@ -31,9 +28,9 @@ namespace Remizione
             this.hpMeter = new(session);
             
             this.InventoryMeter = new(session.PlayerData.Inventory);
-            this.woodMeter = new(session, Material.Wood, new(25, 131));
-            this.stoneMeter = new(session, Material.Stone, new(37, 131));
-            this.gutMeter = new(session, Material.Gut, new(49, 131));
+            this.WoodMeter = new(session, Material.Wood, new(25, 131));
+            this.StoneMeter = new(session, Material.Stone, new(37, 131));
+            this.GutMeter = new(session, Material.Gut, new(49, 131));
 
             this.DestinationMark = new(session);
             //this.runModifiers = new(run);
@@ -61,9 +58,9 @@ namespace Remizione
                 InventoryMeter.Draw(gameTime);
 
             // Materials
-            woodMeter.Draw(gameTime);
-            stoneMeter.Draw(gameTime);
-            gutMeter.Draw(gameTime);
+            WoodMeter.Draw(gameTime);
+            StoneMeter.Draw(gameTime);
+            GutMeter.Draw(gameTime);
 
             RoomTitle.Draw(gameTime);
             Message.Draw(gameTime);
@@ -77,17 +74,33 @@ namespace Remizione
             hpMeter.Update(gameTime);
             Message.Update(gameTime);
             graceScore.Update(gameTime);
-            woodMeter.Update(gameTime);
-            stoneMeter.Update(gameTime);
-            gutMeter.Update(gameTime);
+            WoodMeter.Update(gameTime);
+            StoneMeter.Update(gameTime);
+            GutMeter.Update(gameTime);
             DestinationMark.Update(gameTime);
             RoomTitle.Update(gameTime);
         }
 
         #endregion
 
+        // AddMaterial
+        public void AddMaterial(Material material, Vector2 worldPosition)
+        {
+            if (material == Material.Gut)
+                GutMeter.Add(worldPosition);
+
+            else if (material == Material.Stone)
+                StoneMeter.Add(worldPosition);
+
+            else if (material == Material.Wood)
+                WoodMeter.Add(worldPosition);
+        }
+
         // DestinationMark
         public DestinationMark DestinationMark { get; }
+
+        // GutMeter
+        public UIMaterialMeter GutMeter { get; }
 
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
@@ -116,5 +129,11 @@ namespace Remizione
 
         // RoomTitle
         public UIRoomTitle RoomTitle { get; } = new();
+
+        // StoneMeter
+        private UIMaterialMeter StoneMeter { get; }
+
+        // WoodMeter
+        private UIMaterialMeter WoodMeter { get; }
     }
 }

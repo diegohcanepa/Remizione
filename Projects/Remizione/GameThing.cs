@@ -617,9 +617,10 @@ namespace Remizione
 
                     if (Definition?.MaterialReward != null)
                     {
-                        Session.PlayerData.IncrementMaterialCount(Definition.MaterialReward.Value, 1);
-                        var text = $"+{Localization.GetValue(Definition.MaterialReward.Value)}";
-                        Session.ObjectPools.FlyOffs.Get()?.ShowText(BoundingBox.Center, text, ColorPalette.Text.Terra, ScaleInfo.Text.Medium.X);
+                        //Session.PlayerData.IncrementMaterialCount(Definition.MaterialReward.Value, 1);
+                        //var text = $"+{Localization.GetValue(Definition.MaterialReward.Value)}";
+                        //Session.ObjectPools.FlyOffs.Get()?.ShowText(BoundingBox.Center, text, ColorPalette.Text.Terra, ScaleInfo.Text.Medium.X);
+                        Session.HUD.AddMaterial(Definition.MaterialReward.Value, Position);
                     }
                 }
 
