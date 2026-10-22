@@ -13,7 +13,7 @@ namespace Remizione
         #region Private fields
 
         private readonly InputBinding[] bindings;
-        private readonly UIButton[] buttons;
+        private readonly UITextButton[] buttons;
         private readonly Sprite container;
         private readonly Sprite shadow;
         private readonly TextSprite text;
@@ -32,10 +32,10 @@ namespace Remizione
             this.titleSprite = new TextSprite(Fonts.Common) { Color = ColorPalette.PopupTitle, PivotOrigin = RectanglePoint.Top, Position = container.BoundingBox.GetPoint(0), Scale = ScaleInfo.PopupTitle, Text = title };
             this.text = new TextSprite(Fonts.Common) { Color = ColorPalette.TextWhite, MaximumWidth = 220, PivotOrigin = RectanglePoint.Top, Position = titleSprite.BoundingBox.GetPoint(RectanglePoint.Bottom), Scale = ScaleInfo.PopupText, Text = text };
 
-            buttons = new UIButton[inputBindings.Length];
+            buttons = new UITextButton[inputBindings.Length];
             for (var i = 0; i < inputBindings.Length; i++)
             {
-                buttons[i] = new UIButton();
+                buttons[i] = new UITextButton();
             }
         }
 

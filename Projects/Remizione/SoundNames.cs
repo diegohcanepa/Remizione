@@ -9,6 +9,8 @@
         internal const string Bonfire = nameof(Bonfire);
         internal const string BonfireMenu = nameof(BonfireMenu);
         internal const string Break = nameof(Break);
+        internal const string ButtonHover = nameof(ButtonHover);
+        internal const string ButtonPress = nameof(ButtonPress);
         internal const string DoorGateClose = nameof(DoorGateClose);
         internal const string DoorGateOpen = nameof(DoorGateOpen);
         internal const string DoorGenericClose = nameof(DoorGenericClose);

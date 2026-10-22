@@ -208,6 +208,34 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/Break.wav;Audio/FX/Break
 
+#begin Audio/FX/ButtonHover1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/ButtonHover1.wav;Audio/FX/ButtonHover1
+
+#begin Audio/FX/ButtonHover2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/ButtonHover2.wav;Audio/FX/ButtonHover2
+
+#begin Audio/FX/ButtonPress1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/ButtonPress1.wav;Audio/FX/ButtonPress1
+
+#begin Audio/FX/ButtonPress2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/ButtonPress2.wav;Audio/FX/ButtonPress2
+
 #begin Audio/FX/ConsumeBite.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

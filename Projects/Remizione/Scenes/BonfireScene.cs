@@ -10,7 +10,7 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly UIButton[] buttons;
+        private readonly UITextButton[] buttons;
         private static readonly string[] labels = { "Rise", "Craft", "Journey" };
         private const string prefix = "BonfireAction";
 
@@ -21,7 +21,7 @@ namespace Remizione
         // Constructor
         public BonfireScene()
         {
-            buttons = new UIButton[3];
+            buttons = new UITextButton[3];
             float maxWidth = 0;
             float y = 35;
             for (var i = 0; i < buttons.Length; i++)

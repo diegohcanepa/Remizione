@@ -94,7 +94,7 @@ namespace Remizione
         }
 
         // LayoutControlsHorizontally
-        internal static void LayoutControlsHorizontally(UIButton[] controlList, float spacing)
+        internal static void LayoutControlsHorizontally(UITextButton[] controlList, float spacing)
         {
             float width = 0;
 
@@ -120,7 +120,7 @@ namespace Remizione
         }
 
         // LayoutControlsVertically
-        internal static void LayoutControlsVertically(UIButton[] controlList, float spacing)
+        internal static void LayoutControlsVertically(UITextButton[] controlList, float spacing)
         {
             var pos = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom);
 

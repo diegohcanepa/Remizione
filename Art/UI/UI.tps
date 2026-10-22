@@ -261,6 +261,9 @@
             <key type="filename">Items-assets/PrayerBonfire.png</key>
             <key type="filename">Items-assets/PyritePebble.png</key>
             <key type="filename">Items-assets/SulfurStone.png</key>
+            <key type="filename">UI-assets/BackButton.png</key>
+            <key type="filename">UI-assets/BackButtonHot.png</key>
+            <key type="filename">UI-assets/CloseButtonHot.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -350,6 +353,7 @@
             <key type="filename">Modifiers-assets/TraitLuckIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorCrossIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorInspectIcon.png</key>
+            <key type="filename">UIIcons-assets/HeartIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -388,9 +392,6 @@
             <key type="filename">MouseCursors-assets/MouseCursorTargetIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorUpIcon.png</key>
             <key type="filename">UI-assets/ProhibitionIcon.png</key>
-            <key type="filename">UIIcons-assets/FleshinessHearts1.png</key>
-            <key type="filename">UIIcons-assets/FleshinessHearts2.png</key>
-            <key type="filename">UIIcons-assets/FleshinessHearts3.png</key>
             <key type="filename">UIIcons-assets/GutIcon.png</key>
             <key type="filename">UIIcons-assets/StatusPoisonIcon.png</key>
             <key type="filename">UIIcons-assets/StoneIcon.png</key>
@@ -485,7 +486,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UI-assets/CloseWindowButton.png</key>
+            <key type="filename">UI-assets/CloseButton.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -494,9 +495,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>3,3,7,7</rect>
+                <rect>4,4,8,7</rect>
                 <key>scale9Paddings</key>
-                <rect>3,3,7,7</rect>
+                <rect>4,4,8,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

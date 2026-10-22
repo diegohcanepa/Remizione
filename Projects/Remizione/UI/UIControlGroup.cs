@@ -11,12 +11,12 @@ namespace Remizione
     /// </summary>
     public sealed class UIControlGroup : GameObject
     {
-        private readonly List<UIButton> controlList = [];
+        private readonly List<UITextButton> controlList = [];
 
         // Constructor
         public UIControlGroup()
         {
-            this.Controls = new ReadOnlyCollection<UIButton>(controlList);
+            this.Controls = new ReadOnlyCollection<UITextButton>(controlList);
         }
 
         #region Protected members
@@ -62,9 +62,9 @@ namespace Remizione
         #endregion
 
         // Add
-        public UIButton Add(InputBinding inputBinding)
+        public UITextButton Add(InputBinding inputBinding)
         {
-            UIButton control = new()
+            UITextButton control = new()
             {
                 PivotOrigin = RectanglePoint.RightBottom,
             };
@@ -77,10 +77,10 @@ namespace Remizione
         }
 
         // Controls
-        public ReadOnlyCollection<UIButton> Controls { get; }
+        public ReadOnlyCollection<UITextButton> Controls { get; }
 
         // FirstControl
-        public UIButton? FirstControl => controlList.Count == 0 ? null : controlList[0];
+        public UITextButton? FirstControl => controlList.Count == 0 ? null : controlList[0];
 
         // IsVisible
         public bool IsVisible { get; set; } = true;

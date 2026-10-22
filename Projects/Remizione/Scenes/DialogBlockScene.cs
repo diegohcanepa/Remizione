@@ -112,7 +112,7 @@ namespace Remizione
 
             if (dialogBlock.AllowQuit)
             {
-                var buttons = new List<UIButton>();
+                var buttons = new List<UITextButton>();
 
                 //if (dialogBlock.AllowQuit)
                 //  buttons.Add(buttonQuit);

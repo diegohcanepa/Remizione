@@ -12,8 +12,11 @@ namespace Remizione
         public UIAtlas()
             : base(EngendroGame.Instance.Content, "UI", ContentManagerExtension.EncodePath(ContentFolder.Atlases, "UI"), false)
         {
+            BackButton = this[nameof(BackButton)];
+            BackButtonHot = this[nameof(BackButtonHot)];
             CheckMark = this[nameof(CheckMark)];
-            CloseWindowButton = this[nameof(CloseWindowButton)];
+            CloseButton = this[nameof(CloseButton)];
+            CloseButtonHot = this[nameof(CloseButtonHot)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CreditsBar = this[nameof(CreditsBar)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
@@ -42,14 +45,23 @@ namespace Remizione
             WoodIcon = this[nameof(WoodIcon)];
         }
 
+        // BackButton
+        public AtlasImage BackButton { get; }
+
+        // BackButtonHot
+        public AtlasImage BackButtonHot { get; }
+
         // CheckMark
         public AtlasImage CheckMark { get; }
 
         // ContextMenuOptionSelector
         public AtlasImage ContextMenuOptionSelector { get; }
 
-        // CloseWindowButton
-        public AtlasImage CloseWindowButton { get; }
+        // CloseButton
+        public AtlasImage CloseButton { get; }
+
+        // CloseButtonHot
+        public AtlasImage CloseButtonHot { get; }
 
         // CreditsBar
         public AtlasImage CreditsBar { get; }

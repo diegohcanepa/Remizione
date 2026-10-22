@@ -12,12 +12,9 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly UIButton button;
+        private readonly UIImageButton backButton = UIImageButton.CreateBackButton();
+        private readonly UITextButton button;
         private readonly TextSprite descriptionText;
-        private readonly Sprite goBackimage = new(Atlases.UI.GoBackIcon)
-        {
-            Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop)
-        };
         private readonly Sprite image;
         private readonly Sprite imageSlot;
         private Item? item;
@@ -37,6 +34,8 @@ namespace Remizione
 
             PausePreviousScenes = true;
             IsOpaque = true;
+
+            backButton.Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop);
 
             // Image slot
             this.imageSlot = new()
@@ -96,26 +95,6 @@ namespace Remizione
 
         #endregion
 
-        #region Private members
-
-        // HandleMouseInput
-        private bool HandleMouseInput()
-        {
-            if (InputManager.DefaultPlayer.LastInputMethod != InputMethod.Mouse)
-                return false;
-
-            if (InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
-            {
-                Sound.Play(SoundNames.Interact);
-                Game.SceneManager.Pop();
-                return true;
-            }
-
-            return false;
-        }
-
-        #endregion
-
         #region Protected members
 
         // OnDraw
@@ -129,13 +108,19 @@ namespace Remizione
             descriptionText.Draw(gameTime);
             if (button.IsEnabled)
                 button.Draw(gameTime);
-            goBackimage.Draw(gameTime);
+            backButton.Draw(gameTime);
             Game.SpriteBatch.End();
         }
 
         // OnHandleInput
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
+            if (backButton.TestPressed())
+            {
+                Game.SceneManager.Pop();
+                return HandleInputResult.Handled;
+            }
+
             if (button.TestPressed())
             {
                 if (item != null && session.Room is { } room && session.Player is { } player)
@@ -149,9 +134,6 @@ namespace Remizione
                 return HandleInputResult.Handled;
             }
 
-            if (HandleMouseInput())
-                return HandleInputResult.Handled;
-
             return base.OnHandleInput(gameTime);
         }
 
@@ -161,6 +143,7 @@ namespace Remizione
             button.Update(gameTime);
             nameText.Update(gameTime);
             descriptionText.Update(gameTime);
+            backButton.Update(gameTime);
         }
 
         #endregion

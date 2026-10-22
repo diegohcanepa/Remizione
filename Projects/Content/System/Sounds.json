@@ -18,6 +18,8 @@
     { "name": "BonfireMenu" },
     { "name": "Break" },
     { "name": "BulletRicochet", "soundCount": 3 },
+    { "name": "ButtonHover", "soundCount": 2 },
+    { "name": "ButtonPress", "soundCount": 2, "scope": "Global" },
     { "name": "CardWhoosh", "soundCount": 6 },
     { "name": "ConsumeBite" },
     { "name": "ConsumeDrink" },
