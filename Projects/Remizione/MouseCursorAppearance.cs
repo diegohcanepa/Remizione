@@ -14,171 +14,133 @@ namespace Remizione
 
         #region Private members
 
-        // RefreshIcon
-        private void RefreshIcon()
+        // DetermineIcon
+        private MouseCursorIcon? DetermineIcon()
         {
-            if (context.Session.Player?.IsDead == true)
-            {
-                MouseCursor.Icon = MouseCursorIcon.Wait;
-                return;
-            }
+            var player = context.Session.Player;
+            var target = context.Target;
+            var heldItem = context.HeldItem;
 
-            if (context.Session.Player?.IsFatigued == true || context.Session.Player?.IsLockedByAttacker == true)
-            {
-                MouseCursor.Icon = MouseCursorIcon.Wait;
-                return;
-            }
+            if (target != null && !target.CanInteract())
+                return null;
 
-            if (context.HeldItem?.Definition.Image != MouseCursor.CustomImage)
-                MouseCursor.CustomImage = context.HeldItem?.Definition.Image;
-
-            if (context.Target != null && !context.Target.CanInteract())
-                return;
-
-            if (context.Session.Player?.HeldProp != null && context.Target != null)
-            {
-                SyncIcon(context.Target.IsPlayer ? Verb.None : Verb.Attack);
-                return;
-            }
+            if (player?.HeldProp != null && target != null)
+                return target.IsPlayer ? MouseCursorIcon.Cross : MouseCursorIcon.Target;
 
             // Modal speech text active
             if (SpeechText.ModalInstance != null)
-            {
-                MouseCursor.Icon = MouseCursorIcon.Talk;
-                return;
-            }
-
-            if (context.Session.Player?.IsLockedByAttacker == true)
-            {
-                MouseCursor.Icon = MouseCursorIcon.Cross;
-                return;
-            }
+                return MouseCursorIcon.Talk;
 
             // Session is awaiting script
             if (context.Session.IsAwaiting)
             {
                 if (context.Session.AwaitingScript?.CurrentStatement is SayCommand)
-                {
-                    MouseCursor.Icon = MouseCursorIcon.Talk;
-                    return;
-                }
+                    return MouseCursorIcon.Talk;
 
                 if (EngendroGame.Instance.SceneManager.CurrentScene is DialogBlockScene)
-                {
-                    MouseCursor.Icon = MouseCursorIcon.Cross;
-                    return;
-                }
+                    return MouseCursorIcon.Cross;
 
                 if (context.Session.IsCurrentScene)
-                    MouseCursor.Icon = MouseCursorIcon.Wait;
+                    return MouseCursorIcon.Wait;
 
+                return null;
+            }
+
+            if (heldItem != null && (target == null || !Utils.IsGoToVerb(target.Verb)))
+                return null;
+
+            if (target != null)
+            {
+                if (target.Verb == Verb.PickUp && target.ItemReward != null)
+                    return MouseCursorIcon.Sack;
+
+                return MapVerbToIcon(target.Verb);
+            }
+
+            return MouseCursorIcon.Cross;
+        }
+
+        // RefreshIcon
+        private void RefreshIcon()
+        {
+            var player = context.Session.Player;
+            var target = context.Target;
+            var heldItem = context.HeldItem;
+
+            // 1. Estados críticos: Congelan cualquier actualización visual inmediatamente
+            if (player?.IsDead == true || player?.IsFatigued == true || player?.IsLockedByAttacker == true)
+            {
+                MouseCursor.Icon = MouseCursorIcon.Wait;
                 return;
             }
 
-            if (context.HeldItem != null && (context.Target == null || !Utils.IsGoToVerb(context.Target.Verb)))
+            // 2. Custom Image
+            var desiredCustomImage = heldItem?.Definition.Image;
+            if (MouseCursor.CustomImage != desiredCustomImage)
             {
-                MouseCursor.CustomImage = context.HeldItem.Definition.Image;
-                MouseCursor.HightlightColor = context.Target == null ? null : ColorPalette.MouseCursor.Highlight;
+                MouseCursor.CustomImage = desiredCustomImage;
+            }
+
+            // 3. Highlight Color: Limpia la memoria si no aplica
+            if (heldItem != null && (target == null || !Utils.IsGoToVerb(target.Verb)))
+            {
+                MouseCursor.HightlightColor = target == null ? null : ColorPalette.MouseCursor.Highlight;
             }
             else
             {
-                if (context.Target != null)
-                {
-                    if (context.Target.Verb == Verb.PickUp && context.Target.ItemReward != null)
-                        MouseCursor.Icon = MouseCursorIcon.Sack;
-                    else
-                        SyncIcon(context.Target.Verb);
-                }
-                else
-                {
-                    MouseCursor.Icon = MouseCursorIcon.Cross;
-                }
+                MouseCursor.HightlightColor = null;
+            }
+
+            // 4. Determinar y aplicar el Icono
+            var targetIcon = DetermineIcon();
+            if (targetIcon.HasValue)
+            {
+                MouseCursor.Icon = targetIcon.Value;
             }
         }
 
-        // SyncIcon
-        private static void SyncIcon(Verb verb)
+        // MapVerbToIcon (Reemplaza a SyncIcon)
+        private static MouseCursorIcon MapVerbToIcon(Verb verb)
         {
-            switch (verb)
+            return verb switch
             {
-                // Attack
-                case Verb.Attack:
-                    MouseCursor.Icon = MouseCursorIcon.Target;
-                    break;
-
-                // LookAt
-                case Verb.LookAt:
-                    MouseCursor.Icon = MouseCursorIcon.Eye;
-                    break;
-
-                // GoDown
-                case Verb.GoDown:
-                    MouseCursor.Icon = MouseCursorIcon.Down;
-                    break;
-
-                // GoLeft
-                case Verb.GoLeft:
-                    MouseCursor.Icon = MouseCursorIcon.Left;
-                    break;
-
-                // GoRight
-                case Verb.GoRight:
-                    MouseCursor.Icon = MouseCursorIcon.Right;
-                    break;
-
-                // GoUp
-                case Verb.GoUp:
-                    MouseCursor.Icon = MouseCursorIcon.Up;
-                    break;
-
-                // Lift
-                case Verb.Lift:
-                    MouseCursor.Icon = MouseCursorIcon.Lift;
-                    break;
-
-                // Pickup
-                case Verb.PickUp:
-                    MouseCursor.Icon = MouseCursorIcon.Sack;
-                    break;
-
-                // Inspect
-                case Verb.Inspect:
-                    MouseCursor.Icon = MouseCursorIcon.Inspect;
-                    break;
-
-                // Talk
-                case Verb.Talk:
-                    MouseCursor.Icon = MouseCursorIcon.Talk;
-                    break;
-
-                // Use
-                case Verb.Use:
-                    MouseCursor.Icon = MouseCursorIcon.Hand;
-                    break;
-
-                default:
-                    break;
-            }
+                Verb.Attack => MouseCursorIcon.Target,
+                Verb.LookAt => MouseCursorIcon.Eye,
+                Verb.GoDown => MouseCursorIcon.Down,
+                Verb.GoLeft => MouseCursorIcon.Left,
+                Verb.GoRight => MouseCursorIcon.Right,
+                Verb.GoUp => MouseCursorIcon.Up,
+                Verb.Lift => MouseCursorIcon.Lift,
+                Verb.PickUp => MouseCursorIcon.Sack,
+                Verb.Inspect => MouseCursorIcon.Inspect,
+                Verb.Talk => MouseCursorIcon.Talk,
+                Verb.Use => MouseCursorIcon.Hand,
+                Verb.None => MouseCursorIcon.Cross,
+                _ => MouseCursorIcon.Cross
+            };
         }
 
         // SyncText
         private void SyncText()
         {
+            var target = context.Target;
+            var heldItem = context.HeldItem;
+
             MouseCursor.TooltipColor = ColorPalette.Text.Default;
             MouseCursor.SubTextColor = ColorPalette.Text.YellowDark;
 
-            if (context.Target != null && context.HeldItem == null)
+            if (target != null && heldItem == null)
             {
-                MouseCursor.Tooltip = context.Target.Label;
+                MouseCursor.Tooltip = target.Label;
                 MouseCursor.SubText = null;
 
-                if (context.Target.ItemRewardAmount > 1)
-                    MouseCursor.Tooltip += $" (x{context.Target.ItemRewardAmount})";
+                if (target.ItemRewardAmount > 1)
+                    MouseCursor.Tooltip += $" (x{target.ItemRewardAmount})";
             }
-            else if (context.HeldItem != null)
+            else if (heldItem != null)
             {
-                MouseCursor.Tooltip = context.HeldItem.Definition.Label;
-                MouseCursor.SubText = context.Target?.Label;
+                MouseCursor.Tooltip = heldItem.Definition.Label;
+                MouseCursor.SubText = target?.Label;
             }
             else
             {
@@ -194,12 +156,16 @@ namespace Remizione
         {
             RefreshIcon();
 
-            if (context.Target != lastKnownTarget || context.Target?.Verb != lastKnownVerb || context.HeldItem != lastKnownHeldItem)
+            var target = context.Target;
+            var heldItem = context.HeldItem;
+            var verb = target?.Verb;
+
+            if (target != lastKnownTarget || verb != lastKnownVerb || heldItem != lastKnownHeldItem)
             {
                 SyncText();
-                lastKnownTarget = context.Target;
-                lastKnownHeldItem = context.HeldItem;
-                lastKnownVerb = context.Target?.Verb;
+                lastKnownTarget = target;
+                lastKnownHeldItem = heldItem;
+                lastKnownVerb = verb;
             }
         }
     }
