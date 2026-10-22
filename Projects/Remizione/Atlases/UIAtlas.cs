@@ -23,7 +23,6 @@ namespace Remizione
             DialogOptionBullet = this[nameof(DialogOptionBullet)];
             EchoBackground = this[nameof(EchoBackground)];
             FakeItem = this[nameof(FakeItem)];
-            GoBackIcon = this[nameof(GoBackIcon)];
             GutIcon = this[nameof(GutIcon)];
             HeartIcon = this[nameof(HeartIcon)];
             InspectItem = this[nameof(InspectItem)];
@@ -77,9 +76,6 @@ namespace Remizione
 
         // FakeItem
         public AtlasImage FakeItem { get; }
-
-        // GoBackIcon
-        public AtlasImage GoBackIcon { get; }
 
         // GutIcon
         public AtlasImage GutIcon { get; }

@@ -85,8 +85,6 @@ namespace Remizione
             // Button
             this.button = new()
             {
-                HoverColor = ColorPalette.Text.TerraLight,
-                TextColor = ColorPalette.MouseCursor.Tooltip,
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -10, -5),
                 Text = Localization.GetValue(UserAction.Drop)

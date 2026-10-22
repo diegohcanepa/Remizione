@@ -41,7 +41,7 @@ namespace Remizione
         public bool IsMouseOver
         {
             get;
-            set
+            private set
             {
                 if (value != field)
                 {
@@ -66,6 +66,9 @@ namespace Remizione
 
         // Tag
         public object? Tag { get; set; }
+
+        // Tip
+        public string Tip { get; set; } = string.Empty;
 
         // TestPressed
         public bool TestPressed()

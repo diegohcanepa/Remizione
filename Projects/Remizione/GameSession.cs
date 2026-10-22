@@ -283,8 +283,9 @@ namespace Remizione
             if (HUD.HandleInput(gameTime) == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
-            if (PlayerInputHandler.Owner != null && !PlayerInputHandler.Owner.IsLockedByAttacker)
-                return PlayerInputHandler.HandleInput(gameTime);
+            // Player
+            if (PlayerInputHandler.HandleInput(gameTime) == HandleInputResult.Handled)
+                return HandleInputResult.Handled;
 
             return base.OnHandleInput(gameTime);
         }

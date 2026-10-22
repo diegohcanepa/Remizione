@@ -1,20 +1,22 @@
 ﻿using Engendro;
-using Engendro.Audio;
-using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 
 namespace Remizione
 {
     /// <summary>
     /// UITextButton
     /// </summary>
-    public sealed class UITextButton : GameObject, IBoundingBox
+    public sealed class UITextButton : UIButton
     {
+        #region Private members
+
+        private RectangleF boundingBox;
         private readonly Color disabledColor = Color.Gray;
         private readonly TextSprite label;
         private readonly Sprite[] strips;
+
+        #endregion
 
         #region Constructor
 
@@ -46,7 +48,7 @@ namespace Remizione
         private void Refresh()
         {
             if (label.IsEmpty)
-                BoundingBox = RectangleF.Empty;
+                boundingBox = RectangleF.Empty;
 
             strips[1].ScaleX = float.Max(label.BoundingBox.Width, MinimumWidth - strips[0].BoundingBox.Width - strips[2].BoundingBox.Width) / 2;
 
@@ -55,7 +57,7 @@ namespace Remizione
             strips[0].Position = strips[1].BoundingBox.GetPoint(RectanglePoint.LeftTop);
             strips[2].Position = strips[1].BoundingBox.GetPoint(RectanglePoint.RightTop);
 
-            BoundingBox = RectangleF.Union(strips[0].BoundingBox, strips[1].BoundingBox, strips[2].BoundingBox);
+            boundingBox = RectangleF.Union(strips[0].BoundingBox, strips[1].BoundingBox, strips[2].BoundingBox);
         }
 
         #endregion
@@ -77,13 +79,7 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            IsMouseOver = false;
-
-            if (IsEnabled)
-            {
-                if (InputManager.DefaultPlayer.LastInputMethod == InputMethod.Mouse)
-                    IsMouseOver = BoundingBox.Contains(InputManager.DefaultPlayer.Mouse.VirtualPosition);
-            }
+            base.OnUpdate(gameTime);
 
             label.Update(gameTime);
 
@@ -95,14 +91,8 @@ namespace Remizione
 
         #endregion
 
-        // Action
-        public Action? Action { get; set; }
-
-        // AllowSound
-        public bool AllowSound { get; set; } = true;
-
         // BoundingBox
-        public RectangleF BoundingBox { get; private set; }
+        public override RectangleF BoundingBox => boundingBox;
 
         // Font
         public Font Font
@@ -112,13 +102,7 @@ namespace Remizione
         }
 
         // HoverColor
-        public Color HoverColor { get; set; } = ColorPalette.Text.TerraLight;
-
-        // IsEnabled
-        public bool IsEnabled { get; set; } = true;
-
-        // IsMouseOver
-        public bool IsMouseOver { get; private set; }
+        public Color HoverColor { get; set; } = ColorPalette.Text.Default;
 
         // MinimumWidth
         public float MinimumWidth
@@ -138,7 +122,7 @@ namespace Remizione
         }
 
         // PivotOrigin
-        public RectanglePoint PivotOrigin
+        public override RectanglePoint PivotOrigin
         {
             get => label.PivotOrigin;
             set
@@ -152,7 +136,7 @@ namespace Remizione
         }
 
         // Position
-        public Vector2 Position
+        public override Vector2 Position
         {
             get => label.Position;
             set
@@ -166,7 +150,7 @@ namespace Remizione
         }
 
         // Scale
-        public Vector2 Scale
+        public override Vector2 Scale
         {
             get => label.Scale;
             set
@@ -177,37 +161,6 @@ namespace Remizione
                     Refresh();
                 }
             }
-        }
-
-        // Sound
-        public Sound? Sound { get; set; }
-
-        // Tag
-        public object? Tag { get; set; }
-
-        // TestPressed
-        public bool TestPressed()
-        {
-            if (!IsEnabled)
-                return false;
-
-            var result = false;
-
-            if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed() && IsMouseOver)
-                result = true;
-
-            if (result && AllowSound)
-            {
-                if (Sound != null)
-                    Sound.Play();
-                else
-                    Sound.Play(SoundNames.Interact);
-            }
-
-            if (result)
-                Action?.Invoke();
-
-            return result;
         }
 
         // Text
@@ -225,13 +178,10 @@ namespace Remizione
         }
 
         // TextColor
-        public Color TextColor { get; set; } = ColorPalette.Text.Default;
-
-        // Tip
-        public string Tip { get; set; } = string.Empty;
+        public Color TextColor { get; set; } = ColorPalette.Text.TerraLight;
 
         // X
-        public float X
+        public override float X
         {
             get => label.X;
             set
@@ -245,7 +195,7 @@ namespace Remizione
         }
 
         // Y
-        public float Y
+        public override float Y
         {
             get => label.Y;
             set
