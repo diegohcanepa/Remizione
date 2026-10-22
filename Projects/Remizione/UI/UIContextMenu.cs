@@ -229,7 +229,7 @@ namespace Remizione
         public ReadOnlyCollection<UIContextMenuOption<T>> Options { get; }
 
         // OptionSelectedColor
-        public Color OptionSelectedColor { get; set; } = ColorPalette.Text.Highlight;
+        public Color OptionSelectedColor { get; set; } = ColorPalette.Text.Default;
 
         // OptionSelectorImage
         public AtlasImage? OptionSelectorImage

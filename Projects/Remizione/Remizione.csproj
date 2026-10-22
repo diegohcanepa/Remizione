@@ -19,8 +19,8 @@
     <None Remove="Procedural\Rooms\**" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.5.1" />
-    <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.5.1" />
+    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.6" />
+    <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.6" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Adberration\Adberration.csproj" />

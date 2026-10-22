@@ -1,7 +1,6 @@
 ﻿using Adberration.Scripting;
 using Engendro;
 using Engendro.Audio;
-using System;
 using System.Collections.ObjectModel;
 
 namespace Remizione

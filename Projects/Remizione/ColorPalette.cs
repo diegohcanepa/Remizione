@@ -143,14 +143,13 @@ namespace Remizione
         internal static class Text
         {
             internal static Color Dark { get; } = new(163, 122, 123);
-            internal static Color Default { get; } = new(163, 167, 194);
+            internal static Color Default { get; } = new(172, 167, 144);
             internal static Color Disabled { get; } = new(80, 76, 76);
             internal static Color Fill { get; } = new(15, 42, 63);
             internal static Color Gold { get; } = new(240, 181, 65);
             internal static Color Grace { get; } = new Color(172, 167, 144) * .7f;
             internal static Color Green { get; } = new(59, 125, 79);
             internal static Color GreenLight { get; } = new(99, 171, 63);
-            internal static Color Highlight { get; } = new(172, 167, 144);
             internal static Color Light { get; } = new(200, 165, 138);
             internal static Color Orange { get; } = new(171, 81, 48);
             internal static Color OrangeLight { get; } = new(207, 117, 43);

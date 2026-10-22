@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -75,7 +74,7 @@ namespace Remizione
             var text = Localization.GetValue(message);
             icon.RenderImage = null;
 
-            var color = ColorPalette.Text.Highlight;
+            var color = ColorPalette.Text.Default;
 
             if (message is MessageKind.InventoryFull or MessageKind.StackFull)
             {
@@ -88,7 +87,7 @@ namespace Remizione
         // Show
         public void Show(string text, int duration = 3000)
         {
-            Show(text, ColorPalette.Text.Highlight, duration);
+            Show(text, ColorPalette.Text.Default, duration);
         }
 
         // Show

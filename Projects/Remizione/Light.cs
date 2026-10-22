@@ -82,8 +82,8 @@ namespace Remizione
             switch (LightKind)
             {
                 case LightKind.Fire:
-                    litTweenDuration = 2000;
-                    unlitTweenDuration = 2000;
+                    litTweenDuration = 1000;
+                    unlitTweenDuration = 300;
                     break;
 
                 case LightKind.Global:

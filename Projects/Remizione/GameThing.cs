@@ -286,7 +286,7 @@ namespace Remizione
                         {
                             Session.ObjectPools.FlyOffs.Get()?.ShowAmount(this, color, damageAmount);
                         }
-                        
+
                         pendingDamageAmount = null;
                         pendingDamageType = DamageType.None;
                     }
@@ -905,6 +905,10 @@ namespace Remizione
             return walkArea.GetWalkablePoint(candidatePosition);
         }
 
+        // GraceCost
+        [ScriptProperty]
+        public int GraceCost { get; set; }
+
         // HasLineOfSightTo
         public bool HasLineOfSightTo(GameThing target)
         {
@@ -1348,15 +1352,16 @@ namespace Remizione
 
                 Vector2 pushDirection = Position - attacker.Position;
                 if (pushDirection != Vector2.Zero)
-                {
                     pushDirection.Normalize();
-                }
                 else
-                {
                     pushDirection = new Vector2(1, 0);
-                }
 
-                knockbackVelocity = pushDirection * knockbackForce.Length() * 5f;
+                // Definir un umbral de velocidad mínima para garantizar la salida del collider
+                float minImpulse = 60;
+                float calculatedSpeed = knockbackForce.Length() * 5f;
+                float finalSpeed = Math.Max(calculatedSpeed, minImpulse);
+
+                knockbackVelocity = pushDirection * finalSpeed;
             }
 
             return amount;

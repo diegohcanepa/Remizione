@@ -1,8 +1,6 @@
 ﻿using Adberration;
 using Engendro;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Remizione
 {
@@ -13,16 +11,13 @@ namespace Remizione
     {
         #region Private fields
 
-        private const int PointsPerHeart = 10;
-        private const int PointsPerHalfHeart = 5;
-
         private Actor? actor;
-        private readonly List<Sprite> displaySprites = [];
-
-        private readonly ReadOnlyCollection<AtlasImage> redHeartImages;
-
+        private readonly TextSprite amountText;
+        private readonly Sprite icon = new(Atlases.UI.HeartIcon) { PivotOrigin = RectanglePoint.Center, Position = new(8, 6) };
         private int lastHp = int.MinValue;
         private int lastMaxHp = int.MinValue;
+        private readonly FloatTween rotationTween = new();
+        private readonly Vector2Tween scaleTween = new();
 
         #endregion
 
@@ -32,12 +27,28 @@ namespace Remizione
         public UIHeartMeter(GameSession session)
             : base(session)
         {
-            redHeartImages = Atlases.UI.FleshinessHearts;
+            this.amountText = new(Fonts.CommonOutline)
+            {
+                Color = ColorPalette.Text.Terra,
+                PivotOrigin = RectanglePoint.Left,
+                Position = icon.BoundingBox.GetPoint(RectanglePoint.Right, 1, 0),
+                Scale = ScaleInfo.Text.Large
+            };
         }
 
         #endregion
 
         #region Private members
+
+        // Animate
+        private void Animate()
+        {
+            rotationTween.Start(TweenStyle.QuadraticInOut, 0, 15, 50, 10);
+            scaleTween.Start(TweenStyle.QuadraticInOut, Vector2.One, Vector2.One * 1.3f, 150, 2);
+
+            icon.Tweens.RotationTween = rotationTween;
+            icon.Tweens.ScaleTween = scaleTween;
+        }
 
         // Refresh
         private void Refresh()
@@ -45,45 +56,12 @@ namespace Remizione
             if (actor == null)
                 return;
 
-            displaySprites.Clear();
+            if (lastHp != int.MinValue)
+                Animate();
 
-            var startPos = Screen.HUDArea.GetPoint(RectanglePoint.LeftTop, 5, 2);
-            Vector2 currentPos = startPos;
-            float spacing = 0.5f;
-
-            // 1. Fleshiness
-            int hp = actor.HP;
-            int maxHp = actor.MaxHP;
-            int redContainers = (maxHp + PointsPerHeart - 1) / PointsPerHeart;
-            BoundingBox = RectangleF.Empty;
-
-            for (int i = 0; i < redContainers; i++)
-            {
-                int baseHp = i * PointsPerHeart;
-                int halfThreshold = baseHp + PointsPerHalfHeart;
-
-                AtlasImage img;
-                if (hp > halfThreshold)
-                    img = redHeartImages[2]; // Lleno (11 a 20 puntos dentro del contenedor)
-                else if (hp > baseHp)
-                    img = redHeartImages[1]; // Mitad (1 a 10 puntos dentro del contenedor)
-                else
-                    img = redHeartImages[0]; // Vacío (0 puntos o menos)
-
-                var sprite = new Sprite(img)
-                {
-                    PivotOrigin = RectanglePoint.Center,
-                    Position = currentPos
-                };
-
-                displaySprites.Add(sprite);
-                currentPos.X += sprite.BoundingBox.Width + spacing;
-
-                BoundingBox = RectangleF.Union(BoundingBox, sprite.BoundingBox);
-            }
-
-            lastHp = hp;
-            lastMaxHp = maxHp;
+            amountText.Text = $"{actor.HP}/{actor.MaxHP}";
+            lastHp = actor.HP;
+            lastMaxHp = actor.MaxHP;
         }
 
         #endregion
@@ -96,10 +74,8 @@ namespace Remizione
             if (actor == null)
                 return;
 
-            for (int i = 0; i < displaySprites.Count; i++)
-            {
-                displaySprites[i].Draw(gameTime);
-            }
+            icon.Draw(gameTime);
+            amountText.Draw(gameTime);
         }
 
         // OnUpdate
@@ -116,11 +92,10 @@ namespace Remizione
 
             if (lastHp != actor.HP || lastMaxHp != actor.MaxHP)
                 Refresh();
+
+            icon.Update(gameTime);
         }
 
         #endregion
-
-        // BoundingBox
-        public RectangleF BoundingBox { get; private set; }
     }
 }

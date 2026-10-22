@@ -21,6 +21,8 @@ namespace Remizione
         private readonly FloatTween tween = new();
         private readonly TextSprite valueText;
 
+        #region Constructor
+
         // Constructor
         public UIGraceMeter(GameSession session)
             : base(session)
@@ -46,6 +48,8 @@ namespace Remizione
 
             isInitializing = true;
         }
+
+        #endregion
 
         #region Protected members
 

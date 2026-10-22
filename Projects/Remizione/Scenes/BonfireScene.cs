@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using Engendro.Input;
 using Microsoft.Xna.Framework;
 
 namespace Remizione
@@ -66,7 +65,7 @@ namespace Remizione
             {
                 buttons[i].Draw(gameTime);
             }
-            
+
             Game.SpriteBatch.End();
         }
 

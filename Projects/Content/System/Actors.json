@@ -12,7 +12,7 @@
           "context": "Contact",
           "effectType": "Damage",
           "sound": "RatAttack",
-          "amount": "1"
+          "amount": "3"
         }
       ],
       "lootPool": [
@@ -24,7 +24,7 @@
     },
     {
       "name": "Penitent",
-      "hp": 2
+      "hp": 10
     },
     {
       "name": "PenitentA",

@@ -1,5 +1,4 @@
 ﻿using Engendro;
-using Microsoft.Xna.Framework;
 
 namespace Remizione
 {
@@ -8,45 +7,16 @@ namespace Remizione
     /// </summary>
     public sealed class Fleshiness : Prop
     {
-        private readonly FloatTween fadeTween = new();
-
         // Constructor
         public Fleshiness(GameSession session, string name)
             : base(session, name)
         {
             Atlas = Atlases.Environment;
-            DepthOffset = -2;
             LabelKey = "Prop.Fleshiness";
-            Hotspot = new Polygon("0,0;9,0;9,7;0,7");
-            OpacityFactor = .5f;
-            RenderLayer = RenderLayer.Default;
+            Hotspot = new Polygon("8,1;22,4;22,7;0,7;0,1");
+            Opacity = .5f;
+            RenderLayer = RenderLayer.Background;
         }
-
-        #region Protected members
-
-        // OnLoad
-        protected override void OnLoad()
-        {
-            base.OnLoad();
-
-            fadeTween.Start(TweenStyle.CubicIn, 0, 1, 1000);
-            Tweens.OpacityTween = FloatTween.Create(TweenStyle.Linear, .5f, .6f, 90, -1);
-            Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicIn, .1f, .75f, 400);
-        }
-
-        // OnUpdate
-        protected override void OnUpdate(GameTime gameTime)
-        {
-            base.OnUpdate(gameTime);
-
-            if (fadeTween.IsRunning)
-            {
-                fadeTween.Update(gameTime);
-                OpacityFactor = fadeTween.CurrentValue;
-            }
-        }
-
-        #endregion
 
         // CanInteract
         public override bool CanInteract()

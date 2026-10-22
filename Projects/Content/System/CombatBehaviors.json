@@ -6,11 +6,11 @@
         "archetype":
         {
           "awarenessRange": 50,
-          "cooldownDuration": 1.5,
-          "exposedPauseDuration": 2,
+          "cooldownDuration": 1,
+          "exposedPauseDuration": 1,
           "fallbackMovement": "None",
           "loseSightRange": 100,
-          "maxStepPerTurn": 10
+          "maxStepPerTurn": 15
         },
         "intents": [
           {

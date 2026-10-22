@@ -390,6 +390,13 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/GraceGain.wav;Audio/FX/GraceGain
 
+#begin Audio/FX/GravestoneRaise.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/GravestoneRaise.wav;Audio/FX/GravestoneRaise
+
 #begin Audio/FX/GutsLarge.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

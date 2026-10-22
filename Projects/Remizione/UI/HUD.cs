@@ -24,8 +24,6 @@ namespace Remizione
             : base(session)
         {
             this.HeartMeter = new(session);
-            this.PainMeter = new(session);
-            
             this.InventoryMeter = new(session.PlayerData.Inventory);
             this.WoodMeter = new(session, Material.Wood, new(25, 131));
             this.StoneMeter = new(session, Material.Stone, new(37, 131));
@@ -46,20 +44,19 @@ namespace Remizione
         {
             Game.SpriteBatch.Begin(Game.Camera);
             if (Session.DisplayHPMeter)
-            {
                 HeartMeter.Draw(gameTime);
-                PainMeter.Draw(gameTime);
-            }
             graceScore.Draw(gameTime);
             Game.SpriteBatch.End();
 
             if (Session.InventoryEnabled)
                 InventoryMeter.Draw(gameTime);
 
-            // Materials
-            WoodMeter.Draw(gameTime);
-            StoneMeter.Draw(gameTime);
-            GutMeter.Draw(gameTime);
+            if (Session.MaterialsEnabled)
+            {
+                WoodMeter.Draw(gameTime);
+                StoneMeter.Draw(gameTime);
+                GutMeter.Draw(gameTime);
+            }
 
             RoomTitle.Draw(gameTime);
             Message.Draw(gameTime);
@@ -70,7 +67,6 @@ namespace Remizione
         {
             InventoryMeter.Update(gameTime);
             HeartMeter.Update(gameTime);
-            PainMeter.Update(gameTime);
             Message.Update(gameTime);
             graceScore.Update(gameTime);
             WoodMeter.Update(gameTime);
@@ -93,6 +89,8 @@ namespace Remizione
 
             else if (material == Material.Wood)
                 WoodMeter.Add(worldPosition);
+
+            Session.MaterialsEnabled = true;
         }
 
         // DestinationMark
@@ -121,9 +119,6 @@ namespace Remizione
 
         // Message
         public UIMessage Message { get; }
-
-        // PainMeter
-        public UIPainMeter PainMeter { get; }
 
         // Reset
         public void Reset()

@@ -222,7 +222,9 @@ namespace Remizione
                     if (effect.Amount != null)
                     {
                         value = GetTemplate(effect.EffectType).Replace("{amount}", effect.Amount.ToString());
-                        value += $" ({Localization.GetValue(effect.DamageType)})";
+
+                        if (effect.DamageType != DamageType.Physical)
+                            value += $" ({Localization.GetValue(effect.DamageType)})";
                     }
                 }
 

@@ -18,10 +18,10 @@ namespace Remizione
         private readonly Sprite icon = new() { PivotOrigin = RectanglePoint.Bottom, Scale = ScaleInfo.UIElement.Medium };
         private static readonly Vector2[] LaunchOffsets =
         [
-            new(-3f, -5f), // Izquierda, subida media
-            new( 3f, -8f), // Derecha, subida máxima
-            new(-5f, -2f), // Izquierda apertura, subida corta
-            new( 5f, -5f), // Derecha apertura, subida media
+            new(-5f, -5f), // Izquierda, subida media
+            new( 5f, -8f), // Derecha, subida máxima
+            new(-7f, -2f), // Izquierda apertura, subida corta
+            new( 7f, -5f), // Derecha apertura, subida media
             new(-1f, -8f), // Centro-izquierda, subida máxima
             new( 1f, -2f)  // Centro-derecha, subida corta
         ];
@@ -59,13 +59,13 @@ namespace Remizione
 
             if (distance.Y != 0)
             {
-                yTween.Start(TweenStyle.Linear, origin.Y, origin.Y + distance.Y, duration);
+                yTween.Start(TweenStyle.CubicOut, origin.Y, origin.Y + distance.Y, duration);
                 sprite.Tweens.YTween = yTween;
             }
 
             if (distance.X != 0)
             {
-                xTween.Start(TweenStyle.Linear, origin.X, origin.X + distance.X, duration);
+                xTween.Start(TweenStyle.CubicOut, origin.X, origin.X + distance.X, duration);
                 sprite.Tweens.XTween = xTween;
             }
 

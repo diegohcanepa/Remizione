@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:8e48b27717abf6b3f36d9d5a6130471e:8b03381315be882bb3120033218c58eb:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:4f886c919512c3eee5524672357eb5b7:6f63b715a2cd5ab2f278e293c72b49c3:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -56,6 +56,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="GadlingKnuckle.png" x="466" y="130" w="14" h="14"/>
     <sprite n="GoBackIcon.png" x="376" y="130" w="18" h="11"/>
     <sprite n="GutIcon.png" x="277" y="164" w="9" h="9"/>
+    <sprite n="HeartIcon.png" x="266" y="164" w="9" h="9"/>
     <sprite n="InspectItem.png" x="484" y="2" w="20" h="11"/>
     <sprite n="InventoryItemSlot1.png" x="396" y="130" w="17" h="17"/>
     <sprite n="InventoryItemSlot2.png" x="376" y="143" w="17" h="17"/>

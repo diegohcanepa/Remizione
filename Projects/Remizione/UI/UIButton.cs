@@ -225,7 +225,7 @@ namespace Remizione
         }
 
         // TextColor
-        public Color TextColor { get; set; } = ColorPalette.Text.Highlight;
+        public Color TextColor { get; set; } = ColorPalette.Text.Default;
 
         // Tip
         public string Tip { get; set; } = string.Empty;

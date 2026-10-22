@@ -264,6 +264,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">GravestoneA-assets/GravestoneAShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,1,7,3</rect>
+                <key>scale9Paddings</key>
+                <rect>4,1,7,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">GroundTorch-assets/GroundTorch01.png</key>
             <key type="filename">GroundTorch-assets/GroundTorch02.png</key>
             <key type="filename">GroundTorch-assets/GroundTorch03.png</key>
@@ -804,6 +819,7 @@
                     <filename>TreeA-assets</filename>
                     <filename>TreeB-assets</filename>
                     <filename>TreeC-assets</filename>
+                    <filename>GravestoneA-assets</filename>
                 </array>
             </struct>
         </map>

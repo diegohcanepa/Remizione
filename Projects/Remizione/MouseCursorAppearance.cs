@@ -1,5 +1,4 @@
-﻿using Adberration;
-using Engendro;
+﻿using Engendro;
 using Remizione.Scripting;
 
 namespace Remizione
@@ -165,6 +164,9 @@ namespace Remizione
         // SyncText
         private void SyncText()
         {
+            MouseCursor.TooltipColor = ColorPalette.Text.Default;
+            MouseCursor.SubTextColor = ColorPalette.Text.YellowDark;
+
             if (context.Target != null && context.HeldItem == null)
             {
                 MouseCursor.Tooltip = context.Target.Label;

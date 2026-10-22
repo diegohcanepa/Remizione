@@ -16,7 +16,7 @@ namespace Engendro
             Vector2 result = Vector2.Lerp(startValue, endValue, progress);
 
             if (Decimals >= 0)
-                result = result.Round(Decimals);
+                result.Round(Decimals);
 
             return result;
         }

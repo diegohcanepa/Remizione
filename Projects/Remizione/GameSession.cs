@@ -340,6 +340,10 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(InventoryEnabled)]?.Value is string inventoryEnabledValue)
                 InventoryEnabled = XmlConvert.ToBoolean(inventoryEnabledValue);
 
+            // MaterialsEnabled
+            if (sessionNode.Attributes[nameof(MaterialsEnabled)]?.Value is string materialsEnabledValue)
+                MaterialsEnabled = XmlConvert.ToBoolean(materialsEnabledValue);
+
             // Player
             if (sessionNode.Attributes[nameof(Player)]?.Value is string player)
                 Player = FindEntity<Actor>(player);
@@ -524,11 +528,14 @@ namespace Remizione
             // WoodCount
             output.WriteAttributeString(nameof(PlayerData.WoodCount), XmlConvert.ToString(PlayerData.WoodCount));
 
+            // Inventory
+            output.WriteAttributeString(nameof(PlayerData.Inventory), PlayerData.Inventory.Serialize());
+
             // InventoryEnabled
             output.WriteAttributeString(nameof(InventoryEnabled), XmlConvert.ToString(InventoryEnabled));
 
-            // Inventory
-            output.WriteAttributeString(nameof(PlayerData.Inventory), PlayerData.Inventory.Serialize());
+            // MaterialsEnabled
+            output.WriteAttributeString(nameof(MaterialsEnabled), XmlConvert.ToString(MaterialsEnabled));
 
             // Player
             if (Player != null)
@@ -722,6 +729,10 @@ namespace Remizione
 
         // MasterRunRng (RNG supremo de la partida entera. Solo se usa para generar pisos.)
         public Random MasterRunRng { get; } = new();
+
+        // MaterialsEnabled
+        [ScriptProperty]
+        public bool MaterialsEnabled { get; set; }
 
         // NextRoom
         [ScriptProperty]

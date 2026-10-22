@@ -23,6 +23,7 @@ namespace Remizione
             FleshinessHearts = CreateReadOnlyCollection(nameof(FleshinessHearts), 1, 3);
             GoBackIcon = this[nameof(GoBackIcon)];
             GutIcon = this[nameof(GutIcon)];
+            HeartIcon = this[nameof(HeartIcon)];
             InspectItem = this[nameof(InspectItem)];
             InventoryItemSlots = CreateReadOnlyCollection("InventoryItemSlot", 1, 3);
             MiniMapMarker = this[nameof(MiniMapMarker)];
@@ -74,6 +75,9 @@ namespace Remizione
 
         // GutIcon
         public AtlasImage GutIcon { get; }
+
+        // HeartIcon
+        public AtlasImage HeartIcon { get; }
 
         // InspectItem
         public AtlasImage InspectItem { get; }

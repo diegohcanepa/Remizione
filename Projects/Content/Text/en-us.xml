@@ -194,6 +194,7 @@ Bla bla bla</String>
   <String Key="Misc.DollarSign">$</String>
   <String Key="Misc.Enter">Enter</String>
   <String Key="Misc.EnterTunnel">Go to tunnel</String>
+  <String Key="Misc.GraceSign">g</String>
   <String Key="Misc.Here">Here</String>
   <String Key="Misc.Inscription">Inscription</String>
   <String Key="Misc.Level">Level</String>
@@ -236,6 +237,7 @@ Bla bla bla</String>
   <String Key="Prop.Door">Door</String>
   <String Key="Prop.Fleshiness">Fleshiness</String>
   <String Key="Prop.GraceLight">Grace light</String>
+  <String Key="Prop.Gravestone">Gravestone</String>
   <String Key="Prop.Lever">Lever</String>
   <String Key="Prop.Pottery">Clay pot</String>
   <String Key="Prop.Sack">Sack</String>

@@ -36,6 +36,7 @@
     { "name": "GateOpen" },
     { "name": "GateStuck" },
     { "name": "GraceGain" },
+    { "name": "GravestoneRaise" },
     { "name": "GutsLarge" },
     { "name": "GutsMedium" },
     { "name": "GutsSmall", "soundCount": 3 },
