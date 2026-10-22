@@ -23,7 +23,7 @@ namespace Remizione
         // HandleInput
         public override HandleInputResult HandleInput(GameTime gameTime)
         {
-            if (Owner == null || !Owner.IsInCurrentRoom || Owner.IsDead || Owner.IsFatigued)
+            if (Owner == null || !Owner.IsInCurrentRoom || Owner.IsDead || Owner.IsFatigued || Owner.Session.IsAwaiting)
                 return HandleInputResult.Unhandled;
 
             if (actionWindowTimer > 0)

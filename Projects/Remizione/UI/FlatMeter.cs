@@ -25,7 +25,7 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public FlatMeter(Color backColor, Color foreColor, Color diffColor, Vector2 size, float borderSize)
+        public FlatMeter(Color borderColor, Color backColor, Color foreColor, Color diffColor, Vector2 size, float borderSize)
         {
             this.BorderSize = new(borderSize);
             this.width = size.X;
@@ -33,7 +33,7 @@ namespace Remizione
             // Container
             this.container = new Sprite(Atlases.UI.Pixel)
             {
-                Color = Color.Black,
+                Color = borderColor,
                 ScaleY = size.Y,
                 ScaleX = size.X + (BorderSize.X * 2) // ancho fijo para el container
             };
@@ -142,7 +142,7 @@ namespace Remizione
         // CreateHPMeter
         public static FlatMeter CreateHPMeter()
         {
-            return new(ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore, ColorPalette.HPMeter.Diff, new(10, 2.5f), .5f);
+            return new(ColorPalette.HPMeter.Border, ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore, ColorPalette.HPMeter.Diff, new(10, 2.5f), .5f);
         }
 
         // DiffColor

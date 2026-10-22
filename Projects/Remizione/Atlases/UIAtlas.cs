@@ -20,7 +20,6 @@ namespace Remizione
             DialogOptionBullet = this[nameof(DialogOptionBullet)];
             EchoBackground = this[nameof(EchoBackground)];
             FakeItem = this[nameof(FakeItem)];
-            FleshinessHearts = CreateReadOnlyCollection(nameof(FleshinessHearts), 1, 3);
             GoBackIcon = this[nameof(GoBackIcon)];
             GutIcon = this[nameof(GutIcon)];
             HeartIcon = this[nameof(HeartIcon)];
@@ -66,9 +65,6 @@ namespace Remizione
 
         // FakeItem
         public AtlasImage FakeItem { get; }
-
-        // FleshinessHearts
-        public ReadOnlyCollection<AtlasImage> FleshinessHearts { get; }
 
         // GoBackIcon
         public AtlasImage GoBackIcon { get; }
