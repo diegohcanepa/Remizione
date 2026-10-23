@@ -6,11 +6,12 @@
 			"animationName": "Consume",
 			"category": "Food",
 			"actionKind": "Self",
+			"isPerishable": true,
 			"effects": [
 				{
 					"context": "Use",
 					"effectType": "HPGain",
-					"amount": "2",
+					"amount": "5",
 					"target": "Self",
 					"sound": "ConsumeBite"
 				}
@@ -21,11 +22,12 @@
 			"animationName": "Consume",
 			"category": "Food",
 			"actionKind": "Self",
+			"isPerishable": true,
 			"effects": [
 				{
 					"context": "Use",
 					"effectType": "HPGain",
-					"amount": "5",
+					"amount": "2",
 					"target": "Self",
 					"sound": "ConsumeBite"
 				}

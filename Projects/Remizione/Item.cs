@@ -108,9 +108,6 @@ namespace Remizione
             }
         }
 
-        // DecayState
-        public ItemDecayState DecayState { get; set; }
-
         // Definition
         public ItemDefinition Definition { get; }
 
@@ -131,6 +128,21 @@ namespace Remizione
 
         // Name
         public string Name => Definition.Name;
+
+        // Perish
+        public bool Perish()
+        {
+            // Si no es perecedero o ya llegó al estado límite (Rotten), no hace nada[cite: 5]
+            if (!Definition.IsPerishable || PerishState == ItemPerishState.Rotten)
+                return false;
+
+            PerishState++;
+
+            return true;
+        }
+
+        // PerishState
+        public ItemPerishState PerishState { get; set; }
 
         // ProjectileImageName
         public string ProjectileImageName => Definition.ProjectileImageName;

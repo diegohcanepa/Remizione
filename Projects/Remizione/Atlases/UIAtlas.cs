@@ -27,6 +27,7 @@ namespace Remizione
             HeartIcon = this[nameof(HeartIcon)];
             InspectItem = this[nameof(InspectItem)];
             InventoryItemSlots = CreateReadOnlyCollection("InventoryItemSlot", 1, 3);
+            ItemPerishStates = CreateReadOnlyCollection("ItemPerishState", 1, 3);
             MiniMapMarker = this[nameof(MiniMapMarker)];
             MouseLeftButtonIcon = this[nameof(MouseLeftButtonIcon)];
             MouseRightButtonIcon = this[nameof(MouseRightButtonIcon)];
@@ -88,6 +89,9 @@ namespace Remizione
 
         // InventoryItemSlots
         public ReadOnlyCollection<AtlasImage> InventoryItemSlots { get; }
+
+        // ItemPerishStates
+        public ReadOnlyCollection<AtlasImage> ItemPerishStates { get; }
 
         // MiniMapMarker
         public AtlasImage MiniMapMarker { get; }

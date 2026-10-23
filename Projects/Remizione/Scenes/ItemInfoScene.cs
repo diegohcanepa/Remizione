@@ -12,12 +12,16 @@ namespace Remizione
     {
         #region Private fields
 
+        private readonly TextSprite amountText;
         private readonly UIImageButton backButton = UIImageButton.CreateBackButton();
         private readonly UITextButton button;
+        private readonly TextSprite effectText;
         private readonly TextSprite descriptionText;
         private readonly Sprite image;
         private readonly Sprite imageSlot;
         private Item? item;
+        private readonly Sprite perishStateIcon;
+        private readonly TextSprite perishStateText;
         private readonly GameSession session;
         private readonly Sprite shadow;
         private readonly TextSprite nameText;
@@ -41,7 +45,7 @@ namespace Remizione
             this.imageSlot = new()
             {
                 PivotOrigin = RectanglePoint.Top,
-                Position = Screen.Area.GetPoint(RectanglePoint.Top, 0, 20),
+                Position = Screen.Area.GetPoint(RectanglePoint.Top, 0, 10),
                 RenderImage = Atlases.UI.InventoryItemSlots[0]
             };
 
@@ -72,13 +76,51 @@ namespace Remizione
                 Text = "Text"
             };
 
+            // Effect
+            this.effectText = new(Fonts.Common)
+            {
+                Color = ColorPalette.Inventory.EffectDescription,
+                MaximumWidth = 150,
+                PivotOrigin = RectanglePoint.Top,
+                Position = nameText.BoundingBox.GetPoint(RectanglePoint.Bottom),
+                Scale = ScaleInfo.Text.VeryLarge,
+                Text = "Text"
+            };
+
             // Description
             this.descriptionText = new(Fonts.Common)
             {
                 Color = ColorPalette.Inventory.EffectDescription,
                 MaximumWidth = 150,
+                Opacity = .7f,
                 PivotOrigin = RectanglePoint.Top,
-                Position = nameText.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 1),
+                Position = effectText.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 4),
+                Scale = ScaleInfo.Text.VeryLarge
+            };
+
+            // Perish state icon
+            this.perishStateIcon = new(Atlases.UI.ItemPerishStates[0])
+            {
+                PivotOrigin = RectanglePoint.Left,
+                Position = imageSlot.BoundingBox.GetPoint(RectanglePoint.Right, 3, 0),
+                Scale = ScaleInfo.UIElement.Medium
+            };
+
+            // Perish state text
+            this.perishStateText = new(Fonts.Common)
+            {
+                Color = ColorPalette.Text.Default,
+                PivotOrigin = RectanglePoint.Left,
+                Position = perishStateIcon.BoundingBox.GetPoint(RectanglePoint.Right, 2, .5f),
+                Scale = ScaleInfo.Text.Large
+            };
+
+            // Amount text
+            this.amountText = new(Fonts.Common)
+            {
+                Color = ColorPalette.Text.Terra,
+                PivotOrigin = RectanglePoint.Left,
+                Position = imageSlot.BoundingBox.GetPoint(RectanglePoint.Right, 3, 0),
                 Scale = ScaleInfo.Text.VeryLarge
             };
 
@@ -103,7 +145,18 @@ namespace Remizione
             shadow.Draw(gameTime);
             image.Draw(gameTime);
             nameText.Draw(gameTime);
+            effectText.Draw(gameTime);
             descriptionText.Draw(gameTime);
+
+            if (item?.Definition.IsPerishable == true)
+            {
+                perishStateIcon.Draw(gameTime);
+                perishStateText.Draw(gameTime);
+            }
+
+            if (item?.Definition.IsStackable == true)
+                amountText.Draw(gameTime);
+
             if (button.IsEnabled)
                 button.Draw(gameTime);
             backButton.Draw(gameTime);
@@ -152,8 +205,13 @@ namespace Remizione
             this.item = item;
             this.nameText.Color = item.Definition.IsKeyItem ? ColorPalette.Inventory.KeyItem : ColorPalette.Inventory.Item;
             this.nameText.Text = item.Definition.GetLabel(item.Amount);
+            this.effectText.Text = item.Definition.EffectDescription;
             this.descriptionText.Text = item.Definition.Description;
             this.image.RenderImage = item.Definition.Image;
+            this.perishStateText.Text = Localization.GetValue(item.PerishState);
+            this.perishStateText.Color = item.PerishState == ItemPerishState.Rotten ? ColorPalette.Text.Red : ColorPalette.Text.Default;
+            this.perishStateIcon.RenderImage = Atlases.UI.ItemPerishStates[(int)item.PerishState];
+            this.amountText.Text = item.Definition.IsStackable ? $"x{item.Amount}" : string.Empty;
             this.shadow.RenderImage = item.Definition.Image;
             this.button.IsEnabled = item.Definition.AllowDrop;
         }

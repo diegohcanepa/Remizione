@@ -16,7 +16,7 @@ namespace Remizione
         private readonly Sprite background = new(Atlases.UI.QuickInventoryBackground) { PivotOrigin = RectanglePoint.LeftBottom, Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom) };
         private readonly Sprite inspectItem = new(Atlases.UI.InspectItem) { PivotOrigin = RectanglePoint.RightBottom, Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -2, -2) };
         private readonly TextSprite itemLabel;
-        private readonly TextSprite itemDescription;
+        private readonly TextSprite itemEffect;
         private Item? lastSelectedItem;
         private int lastSeenContainerVersion = -1;
         private readonly InventorySlot[] slots = new InventorySlot[ItemContainer.MaximumCapacity];
@@ -46,14 +46,14 @@ namespace Remizione
                 Scale = ScaleInfo.Text.VeryLarge
             };
 
-            // Item description
-            itemDescription = new(Fonts.CommonOutline)
+            // Item effect
+            itemEffect = new(Fonts.CommonOutline)
             {
                 Color = ColorPalette.Inventory.EffectDescription,
                 MaximumWidth = 200,
                 Multiline = false,
                 PivotOrigin = RectanglePoint.Bottom,
-                Scale = ScaleInfo.Text.Large,
+                Scale = ScaleInfo.Text.Medium,
             };
         }
 
@@ -135,7 +135,7 @@ namespace Remizione
             if (ItemContainer.Count > 0)
             {
                 itemLabel.Y = slots[0].BoundingBox.Top - 8;
-                itemDescription.Y = slots[0].BoundingBox.Top - 2;
+                itemEffect.Y = slots[0].BoundingBox.Top - 2;
             }
         }
 
@@ -143,7 +143,7 @@ namespace Remizione
         private void Reset()
         {
             itemLabel.Clear();
-            itemDescription.Clear();
+            itemEffect.Clear();
 
             MouseCursor.Tooltip = null;
 
@@ -179,7 +179,7 @@ namespace Remizione
         {
             base.OnDeactivate();
             itemLabel.Clear();
-            itemDescription.Clear();
+            itemEffect.Clear();
         }
 
         // OnDraw
@@ -194,14 +194,13 @@ namespace Remizione
 
             for (var i = 0; i < ItemContainer.Count; i++)
             {
-                bool isHeld = ItemContainer.Session.InteractionContext.HeldItem?.Index == i;
-                slots[i].Draw(gameTime, isHeld);
+                slots[i].Draw(gameTime);
             }
 
             if (lastSelectedItem != null)
             {
                 itemLabel.Draw(gameTime);
-                itemDescription.Draw(gameTime);
+                itemEffect.Draw(gameTime);
             }
 
             inspectItem.Draw(gameTime);
@@ -252,6 +251,11 @@ namespace Remizione
                 autoHide = InputManager.DefaultPlayer.Mouse.VirtualPosition.Y >= AutoHideThreshold;
             }
 
+            for (var i = 0; i < ItemContainer.Count; i++)
+            {
+                slots[i].Update(gameTime);
+            }
+
             if (GetSelectedItem() is Item item)
             {
                 if (item != lastSelectedItem)
@@ -268,8 +272,8 @@ namespace Remizione
                     itemLabel.Color = item.Definition.IsKeyItem ? ColorPalette.Inventory.KeyItem : ColorPalette.Inventory.Item;
                     itemLabel.Text = item.Definition.Label;
 
-                    itemDescription.X = slotCenterX;
-                    itemDescription.Text = item.Definition.EffectDescription;
+                    itemEffect.X = slotCenterX;
+                    itemEffect.Text = item.Definition.EffectDescription;
 
                     MouseCursor.Tooltip = item.Definition.Label;
 
@@ -287,7 +291,7 @@ namespace Remizione
                 }
 
                 itemLabel.Clear();
-                itemDescription.Clear();
+                itemEffect.Clear();
                 MouseCursor.Tooltip = null;
 
                 lastSelectedItem = null;

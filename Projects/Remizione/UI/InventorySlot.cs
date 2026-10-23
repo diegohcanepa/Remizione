@@ -6,12 +6,14 @@ namespace Remizione
     /// <summary>
     /// InventorySlot
     /// </summary>
-    public sealed class InventorySlot
+    public sealed class InventorySlot : GameObject
     {
         #region Private fields
 
         private readonly TextSprite amount;
+        private readonly FloatTween blinkTween = new();
         private readonly Sprite icon;
+        private readonly Sprite perishStateIcon;
         private readonly Sprite shadow;
         private readonly Sprite slot;
 
@@ -32,6 +34,9 @@ namespace Remizione
 
             // Icon
             this.icon = new() { PivotOrigin = RectanglePoint.Center };
+
+            // Perish state
+            this.perishStateIcon = new() { PivotOrigin = RectanglePoint.Top, Scale = ScaleInfo.UIElement.Medium };
 
             // Shadow
             this.shadow = new()
@@ -67,6 +72,37 @@ namespace Remizione
 
             amount.X = center.X;
             amount.Y = slot.BoundingBox.Bottom - 1;
+
+            perishStateIcon.Position = amount.Position;
+        }
+
+        #endregion
+
+        #region Protected members
+
+        // OnDraw
+        protected override void OnDraw(GameTime gameTime)
+        {
+            slot.Draw(gameTime);
+
+            if (Item == null)
+                return;
+
+            shadow.Draw(gameTime);
+            icon.Draw(gameTime);
+
+            if (Item.Definition.IsStackable)
+                amount.Draw(gameTime);
+
+            if (Item.Definition.IsPerishable)
+                perishStateIcon.Draw(gameTime);
+        }
+
+        // OnUpdate
+        protected override void OnUpdate(GameTime gameTime)
+        {
+            base.OnUpdate(gameTime);
+            perishStateIcon.Update(gameTime);
         }
 
         #endregion
@@ -78,25 +114,6 @@ namespace Remizione
         public bool Contains(Vector2 position)
         {
             return slot.BoundingBox.Contains(position);
-        }
-
-        // Draw
-        public void Draw(GameTime gameTime, bool isItemHeld)
-        {
-            slot.Draw(gameTime);
-
-            if (Item == null)
-                return;
-
-            // Si el item no es apilable y lo tenemos agarrado, no dibujamos la sombra/icono en el slot
-            if (isItemHeld && !Item.Definition.IsStackable)
-                return;
-
-            shadow.Draw(gameTime);
-            icon.Draw(gameTime);
-            
-            if (Item.Definition.IsStackable)
-                amount.Draw(gameTime);
         }
 
         // Item
@@ -118,6 +135,17 @@ namespace Remizione
                             amount.Text = $"x{field.Amount}";
                         else
                             amount.Clear();
+
+                        if (field.Definition.IsPerishable)
+                        {
+                            perishStateIcon.RenderImage = Atlases.UI.ItemPerishStates[(int)field.PerishState];
+
+                            if (field.PerishState == ItemPerishState.Rotten)
+                            {
+                                blinkTween.Start(TweenStyle.Linear, 1, .6f, 600, -1);
+                                perishStateIcon.Tweens.OpacityTween = blinkTween;
+                            }
+                        }
                     }
                     else
                     {
