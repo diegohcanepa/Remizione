@@ -21,7 +21,7 @@ namespace Remizione
 
         #endregion
 
-        #region Serialization methods
+        #region Serialization
 
         // Deserialize
         public string Deserialize(string content)
@@ -36,8 +36,19 @@ namespace Remizione
             foreach (var value in values)
             {
                 var data = value.Split("|");
-                if (Add(data[0]) is Item item)
-                    item.Amount = XmlConvert.ToInt32(data[1]);
+
+                var definition = GameData.Items.Get(data[0]);
+                var amount = XmlConvert.ToInt32(data[1]);
+
+                var item = new Item(this, definition)
+                {
+                    Amount = amount,
+                    PerishState = Enum.TryParse<ItemPerishState>(data[2], out ItemPerishState perishState) ? perishState : ItemPerishState.Fresh,
+                    Uses = XmlConvert.ToInt32(data[3]),
+                    BreakChance = XmlConvert.ToSingle(data[4])
+                };
+
+                Add(item);
             }
 
             return string.Join(";", values);
@@ -48,9 +59,10 @@ namespace Remizione
         {
             var values = new List<string>();
 
+            // Name | Amount | PerishState | Uses | BreakChance
             foreach (var item in this)
             {
-                values.Add($"{item.Name}|{XmlConvert.ToString(item.Amount)}");
+                values.Add($"{item.Name}|{XmlConvert.ToString(item.Amount)}|{(int)item.PerishState}|{item.Uses}|{XmlConvert.ToString(item.BreakChance)}");
             }
 
             return string.Join(";", values);
@@ -67,29 +79,21 @@ namespace Remizione
         // Add
         public Item Add(ItemDefinition definition, int amount = 1)
         {
-            if (amount < 1)
-                amount = 1;
-
-            if (!CanAddItem(definition))
-                throw new InvalidOperationException("Item container is full.");
-
-            if (Find(definition.Name) is Item item)
-            {
-                item.Amount += amount;
-            }
-            else
-            {
-                item = new Item(this, definition) { Amount = amount };
-                Add(item);
-            }
-
-            return item;
+            return TryAdd(definition, amount) ?? throw new InvalidOperationException($"Cannot add item '{definition.Name}' to container.");
         }
 
         // CanAddItem
         public bool CanAddItem(ItemDefinition definition)
         {
-            return Find(definition.Name) is Item item ? !item.IsStackFull : !IsFull;
+            if (definition.IsStackable)
+            {
+                if (Find(definition.Name) is Item existingItem)
+                    return existingItem.Amount < ItemDefinition.MaxStack;
+                else
+                    return !IsFull;
+            }
+
+            return !IsFull;
         }
 
         // Capacity
@@ -150,43 +154,48 @@ namespace Remizione
         // MinimumCapacity
         public const int MinimumCapacity = 3;
 
-        // Remove
-        public bool Remove(string name)
-        {
-            return Find(name) is Item item && Remove(item);
-        }
-
         // Session
         public GameSession Session { get; }
 
         // TryAdd
         public Item? TryAdd(ItemDefinition definition, int amount = 1)
         {
+            if (amount < 1)
+                amount = 1;
+
             if (!CanAddItem(definition))
                 return null;
 
-            if (Find(definition.Name) is Item item)
+            if (definition.IsStackable)
             {
-                item.Amount += amount;
+                if (Find(definition.Name) is Item existingItem)
+                {
+                    var spaceLeft = ItemDefinition.MaxStack - existingItem.Amount;
+                    var toAdd = Math.Min(amount, spaceLeft);
+
+                    existingItem.Amount += toAdd;
+                    return existingItem;
+                }
+
+                var initialAmount = Math.Min(amount, ItemDefinition.MaxStack);
+                var newItem = new Item(this, definition) { Amount = initialAmount };
+
+                Add(newItem);
+                return newItem;
             }
-            else
+
+            var spaceAvailable = Capacity - Count;
+            var slotsToAdd = Math.Min(amount, spaceAvailable);
+            Item? lastCreated = null;
+
+            for (var i = 0; i < slotsToAdd; i++)
             {
-                item = new Item(this, definition) { Amount = amount };
-                Add(item);
+                var newItem = new Item(this, definition) { Amount = 1 };
+                Add(newItem);
+                lastCreated = newItem;
             }
 
-            return item;
-        }
-
-        // TryMove
-        public Item? TryMove(Item item, ItemContainer destination)
-        {
-            var result = destination.TryAdd(item.Definition, item.Amount);
-
-            if (result != null)
-                Remove(item.Name);
-
-            return result;
+            return lastCreated;
         }
     }
 }

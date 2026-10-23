@@ -231,6 +231,9 @@ namespace Remizione
         // LuckModifier
         public float LuckModifier { get; }
 
+        // MaxStack
+        public const int MaxStack = 5;
+
         // PickupSound
         public Sound PickupSound { get; }
 

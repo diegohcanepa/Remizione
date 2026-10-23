@@ -10,9 +10,6 @@ namespace Remizione
     /// </summary>
     public sealed class Item : IAction
     {
-        private int currentUses;
-        private Ratio currentBreakChance;
-
         #region Constructor
 
         // Constructor
@@ -54,14 +51,14 @@ namespace Remizione
             if (!Definition.HasBreakChance)
                 return false;
 
-            currentUses++;
+            Uses++;
 
             // Protegemos durante la ventana de usos seguros
-            if (currentUses <= Definition.BreakSafeUses)
+            if (Uses <= Definition.BreakSafeUses)
                 return false;
 
             // Evaluamos rotura contra el Ratio acumulado
-            if (currentBreakChance.Roll())
+            if (BreakChance.Roll())
             {
                 Amount--;
                 ResetBreakState();
@@ -69,7 +66,7 @@ namespace Remizione
             }
 
             // Sobrevivió: incrementamos la probabilidad de rotura para el próximo uso
-            currentBreakChance = currentBreakChance + Definition.BreakChanceIncrement;
+            BreakChance = BreakChance + Definition.BreakChanceIncrement;
             return false;
         }
 
@@ -108,6 +105,9 @@ namespace Remizione
             }
         }
 
+        // BreakChance
+        public Ratio BreakChance { get; set; }
+
         // Definition
         public ItemDefinition Definition { get; }
 
@@ -132,7 +132,6 @@ namespace Remizione
         // Perish
         public bool Perish()
         {
-            // Si no es perecedero o ya llegó al estado límite (Rotten), no hace nada[cite: 5]
             if (!Definition.IsPerishable || PerishState == ItemPerishState.Rotten)
                 return false;
 
@@ -156,8 +155,8 @@ namespace Remizione
         // ResetBreakState
         public void ResetBreakState()
         {
-            currentUses = 0;
-            currentBreakChance = Definition.BreakBaseChance;
+            Uses = 0;
+            BreakChance = Definition.BreakBaseChance;
         }
 
         // Script
@@ -168,5 +167,8 @@ namespace Remizione
         {
             return Definition.Label;
         }
+
+        // Uses
+        public int Uses { get; set; }
     }
 }
