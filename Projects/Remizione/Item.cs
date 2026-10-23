@@ -108,6 +108,9 @@ namespace Remizione
             }
         }
 
+        // DecayState
+        public ItemDecayState DecayState { get; set; }
+
         // Definition
         public ItemDefinition Definition { get; }
 

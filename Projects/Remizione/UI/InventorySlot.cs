@@ -94,7 +94,9 @@ namespace Remizione
 
             shadow.Draw(gameTime);
             icon.Draw(gameTime);
-            amount.Draw(gameTime);
+            
+            if (Item.Definition.IsStackable)
+                amount.Draw(gameTime);
         }
 
         // Item

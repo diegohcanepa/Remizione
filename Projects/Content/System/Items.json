@@ -6,7 +6,6 @@
 			"animationName": "Consume",
 			"category": "Food",
 			"actionKind": "Self",
-			"isStackable": true,
 			"effects": [
 				{
 					"context": "Use",
@@ -22,7 +21,6 @@
 			"animationName": "Consume",
 			"category": "Food",
 			"actionKind": "Self",
-			"isStackable": true,
 			"effects": [
 				{
 					"context": "Use",

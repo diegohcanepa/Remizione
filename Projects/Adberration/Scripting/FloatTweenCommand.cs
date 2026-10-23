@@ -34,9 +34,7 @@ namespace Adberration.Scripting
         {
             var entity = AssertEntity<Entity>(0);
             if (entity == null)
-            {
                 return;
-            }
 
             var style = Parser.ParseEnum<TweenStyle>(this, 1);
 

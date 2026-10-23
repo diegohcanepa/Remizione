@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:6992c842698e5ba2c2e434167772e29d:34826a1778adf5f272c73bed0a17bca4:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:a441d8c0c2ee2417a8c2e6ca2606ecca:6ec96b1fec4ebe4bf03ccf58cc75766e:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -79,13 +79,13 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="MouseCursorCrossIcon.png" x="501" y="204" w="9" h="11"/>
     <sprite n="MouseCursorDownIcon.png" x="244" y="71" w="9" h="6"/>
     <sprite n="MouseCursorEyeIcon.png" x="255" y="164" w="9" h="9"/>
-    <sprite n="MouseCursorHandIcon.png" x="309" y="151" w="9" h="11"/>
+    <sprite n="MouseCursorHandIcon.png" x="309" y="151" w="10" h="12"/>
     <sprite n="MouseCursorInspectIcon.png" x="488" y="192" w="11" h="11"/>
     <sprite n="MouseCursorLeftIcon.png" x="504" y="53" w="6" h="9"/>
     <sprite n="MouseCursorLiftIcon.png" x="503" y="95" w="7" h="8"/>
     <sprite n="MouseCursorRightIcon.png" x="504" y="64" w="6" h="9"/>
-    <sprite n="MouseCursorSackIcon.png" x="342" y="161" w="8" h="8"/>
-    <sprite n="MouseCursorTalkIcon.png" x="342" y="151" w="9" h="8"/>
+    <sprite n="MouseCursorSackIcon.png" x="343" y="161" w="8" h="8"/>
+    <sprite n="MouseCursorTalkIcon.png" x="343" y="151" w="9" h="8"/>
     <sprite n="MouseCursorTargetIcon.png" x="266" y="164" w="9" h="9"/>
     <sprite n="MouseCursorUpIcon.png" x="255" y="71" w="9" h="6"/>
     <sprite n="MouseCursorWaitIcon.png" x="503" y="83" w="7" h="10"/>
@@ -102,12 +102,12 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="RunModifierDarknessIcon.png" x="244" y="151" w="11" h="11"/>
     <sprite n="RunModifierToxicIcon.png" x="257" y="151" w="11" h="11"/>
     <sprite n="Sack.png" x="296" y="151" w="11" h="10"/>
-    <sprite n="SavingIcon.png" x="363" y="151" w="8" h="8"/>
+    <sprite n="SavingIcon.png" x="364" y="151" w="8" h="8"/>
     <sprite n="Scroll.png" x="244" y="130" w="130" h="19"/>
     <sprite n="SpeechTextArrow.png" x="319" y="71" w="5" h="4"/>
     <sprite n="SpeechTextPipe.png" x="503" y="117" w="5" h="3"/>
-    <sprite n="StatusPoisonIcon.png" x="320" y="151" w="9" h="9"/>
-    <sprite n="StoneIcon.png" x="331" y="151" w="9" h="9"/>
+    <sprite n="StatusPoisonIcon.png" x="321" y="151" w="9" h="9"/>
+    <sprite n="StoneIcon.png" x="332" y="151" w="9" h="9"/>
     <sprite n="SulfurStone.png" x="472" y="178" w="14" h="14"/>
     <sprite n="TipBalloon.png" x="498" y="135" w="12" h="13"/>
     <sprite n="TraitLockpickingIcon.png" x="270" y="151" w="11" h="11"/>
@@ -118,5 +118,5 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="UIControlContainerEdgeLeftSmall.png" x="505" y="41" w="5" h="10"/>
     <sprite n="UIControlContainerEdgeRightLarge.png" x="505" y="28" w="5" h="11"/>
     <sprite n="UIControlContainerEdgeRightSmall.png" x="503" y="105" w="5" h="10"/>
-    <sprite n="WoodIcon.png" x="353" y="151" w="8" h="9"/>
+    <sprite n="WoodIcon.png" x="354" y="151" w="8" h="9"/>
 </TextureAtlas>

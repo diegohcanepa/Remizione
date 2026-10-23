@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.IO;
 
 namespace Engendro
 {
@@ -9,9 +10,10 @@ namespace Engendro
     public abstract class ShaderEffect
     {
         // Constructor
-        public ShaderEffect(string assetName)
+        public ShaderEffect(string shaderName)
         {
-            Effect = EngendroGame.Instance.Content.Load<Effect>(assetName) ?? throw new InvalidOperationException($"Asset not found: {assetName}.");
+            shaderName = Path.Combine("Shaders", shaderName);
+            Effect = EngendroGame.Instance.Content.Load<Effect>(shaderName) ?? throw new InvalidOperationException($"Asset not found: {shaderName}.");
         }
 
         // Effect

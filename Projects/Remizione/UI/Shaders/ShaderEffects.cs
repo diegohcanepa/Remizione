@@ -21,5 +21,8 @@ namespace Remizione
 
         // Outline
         public OutlineEffect Outline { get; } = new();
+
+        // Sepia
+        public SepiaEffect Sepia { get; } = new();
     }
 }

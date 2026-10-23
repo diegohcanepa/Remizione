@@ -68,6 +68,9 @@
             "isKeyItem": {
               "type": "boolean"
             },            
+            "isPerishable": {
+              "type": "boolean"
+            },            
             "isStackable": {
               "type": "boolean"
             },

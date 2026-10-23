@@ -11,7 +11,7 @@ namespace Remizione.Effects
     {
         // Constrcutor
         public LightingEffect()
-            : base("Shaders/Lighting")
+            : base("Lighting")
         {
             LightMask = Effect.Parameters["lightMask"] ?? throw new InvalidOperationException();
         }

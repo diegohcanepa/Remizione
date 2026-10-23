@@ -66,6 +66,9 @@ namespace Remizione
             // IsKeyItem
             IsKeyItem = element.GetBool("isKeyItem", false);
 
+            // IsPerishable
+            IsPerishable = element.GetBool("isPerishable", false);
+
             // IsStackable
             IsStackable = element.GetBool("isStackable", false);
 
@@ -101,6 +104,9 @@ namespace Remizione
 
             if (ActionKind == ActionKind.Projectile && string.IsNullOrWhiteSpace(ProjectileImageName))
                 ProjectileImageName = Name;
+
+            if (IsPerishable && IsStackable)
+                RaiseValidationError(this, "A perishable item cannot be stackable.", nameof(LightModifier));
 
             RefreshLocalizedValues();
         }
@@ -206,6 +212,9 @@ namespace Remizione
 
         // IsPassive
         public bool IsPassive { get; }
+
+        // IsPerishable
+        public bool IsPerishable { get; }
 
         // IsStackable
         public bool IsStackable { get; }

@@ -17,7 +17,7 @@ namespace Remizione.Effects
 
         // Constrcutor
         public ColorSaturationEffect()
-            : base("Shaders/ColorSaturation")
+            : base("ColorSaturation")
         {
             rParameter = Effect.Parameters["r"] ?? throw new InvalidOperationException();
             gParameter = Effect.Parameters["g"] ?? throw new InvalidOperationException();

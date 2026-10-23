@@ -386,11 +386,24 @@
                 <false/>
             </struct>
             <key type="filename">MouseCursors-assets/MouseCursorDownIcon.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorUpIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,5,3</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,5,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">MouseCursors-assets/MouseCursorEyeIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorLeftIcon.png</key>
-            <key type="filename">MouseCursors-assets/MouseCursorRightIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorTargetIcon.png</key>
-            <key type="filename">MouseCursors-assets/MouseCursorUpIcon.png</key>
             <key type="filename">UI-assets/ProhibitionIcon.png</key>
             <key type="filename">UIIcons-assets/GutIcon.png</key>
             <key type="filename">UIIcons-assets/StatusPoisonIcon.png</key>
@@ -418,9 +431,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>2,3,5,6</rect>
+                <rect>2,3,5,5</rect>
                 <key>scale9Paddings</key>
-                <rect>2,3,5,6</rect>
+                <rect>2,3,5,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -433,9 +446,25 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>2,2,4,5</rect>
+                <rect>2,2,3,4</rect>
                 <key>scale9Paddings</key>
-                <rect>2,2,4,5</rect>
+                <rect>2,2,3,4</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">MouseCursors-assets/MouseCursorRightIcon.png</key>
+            <key type="filename">UIIcons-assets/WoodIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,3,5</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,3,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -480,9 +509,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>2,3,5,5</rect>
+                <rect>2,3,3,5</rect>
                 <key>scale9Paddings</key>
-                <rect>2,3,5,5</rect>
+                <rect>2,3,3,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -686,21 +715,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UIIcons-assets/GoBackIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>5,3,9,5</rect>
-                <key>scale9Paddings</key>
-                <rect>5,3,9,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">UIIcons-assets/InspectItem.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -745,21 +759,6 @@
                 <rect>1,1,3,3</rect>
                 <key>scale9Paddings</key>
                 <rect>1,1,3,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">UIIcons-assets/WoodIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,3,5</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,3,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

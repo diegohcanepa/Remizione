@@ -14,7 +14,7 @@ namespace Remizione.Effects
 
         // Constructor
         public CRTEffect()
-            : base("Shaders/CRT")
+            : base("CRT")
         {
             Effect.Parameters[param_curvature].SetValue(0);
             Effect.Parameters[param_scanlineCount].SetValue(80);

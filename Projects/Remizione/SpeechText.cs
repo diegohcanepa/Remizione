@@ -18,7 +18,7 @@ namespace Remizione
         private const string exclamationLow = "!";
         private const string exclamationMedium = "!!";
         private const string exclamationHigh = "!!!";
-        private const int maxWidth = 80;
+        private const int maxWidth = 120;
 
         #endregion
 
@@ -172,8 +172,8 @@ namespace Remizione
             shakeTween.Update(gameTime);
             text.Update(gameTime);
 
-            if (!text.IsTyping)
-                speakerSoundInstance?.Stop(400);
+            if (!text.IsTyping && speakerSoundInstance?.Looped == true)
+                speakerSoundInstance.Stop(400);
 
             if (State == SpeechTextState.Typing)
                 Layout();
@@ -220,7 +220,7 @@ namespace Remizione
         public static SpeechText? ModalInstance { get; private set; }
 
         // Show
-        public void Show(string text, bool awaitInput, string? soundName)
+        public void Show(string text, bool awaitInput, string? soundName, bool loopSound)
         {
             if (string.IsNullOrWhiteSpace(text))
                 return;
@@ -259,7 +259,7 @@ namespace Remizione
                 speakerSoundInstance = Sound.Find(soundName)?.PopInstance();
                 if (speakerSoundInstance != null)
                 {
-                    speakerSoundInstance.Looped = true;
+                    speakerSoundInstance.Looped = loopSound;
                     speakerSoundInstance.Play();
                 }
             }

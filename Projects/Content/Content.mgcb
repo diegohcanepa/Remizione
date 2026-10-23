@@ -635,6 +635,27 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/Miracle2.wav;Audio/FX/Miracle2
 
+#begin Audio/FX/Monk1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/Monk1.wav;Audio/FX/Monk1
+
+#begin Audio/FX/Monk2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/Monk2.wav;Audio/FX/Monk2
+
+#begin Audio/FX/Monk3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/Monk3.wav;Audio/FX/Monk3
+
 #begin Audio/FX/MoveToSack.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -1048,27 +1069,6 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/Music/Main.wav;Audio/Music/Main
 
-#begin Audio/Voice/en-US/Intro1.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/Voice/en-US/Intro1.wav;Audio/Voice/en-US/Intro1
-
-#begin Audio/Voice/en-US/Intro2.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/Voice/en-US/Intro2.wav;Audio/Voice/en-US/Intro2
-
-#begin Audio/Voice/en-US/Intro3.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/Voice/en-US/Intro3.wav;Audio/Voice/en-US/Intro3
-
 #begin Audio/Voice/es-419/Fleshiness1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -1082,27 +1082,6 @@
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
 /build:Audio/Voice/es-419/Fleshiness2.wav;Audio/Voice/es-419/Fleshiness2
-
-#begin Audio/Voice/es-419/Intro1.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/Voice/es-419/Intro1.wav;Audio/Voice/es-419/Intro1
-
-#begin Audio/Voice/es-419/Intro2.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/Voice/es-419/Intro2.wav;Audio/Voice/es-419/Intro2
-
-#begin Audio/Voice/es-419/Intro3.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:Audio/Voice/es-419/Intro3.wav;Audio/Voice/es-419/Intro3
 
 #begin Audio/Voice/es-419/Threshold_Intro1.wav
 /importer:WavImporter

@@ -30,6 +30,7 @@ namespace Remizione
         private FrozenDictionary<string, GameThing>? proceduralCatalog;
         private readonly RoomEditor? roomEditor;
         private readonly Sprite savingIcon;
+        private readonly FloatTween sepiaTween = new();
         private readonly HashSet<string> unlockedDefinitions = [];
 
         #endregion
@@ -217,6 +218,17 @@ namespace Remizione
             }
             */
 
+            if (sepiaTween.IsRunning)
+                RemizioneGame.Effects.Sepia.Intensity = sepiaTween.CurrentValue;
+
+            if (RemizioneGame.Effects.Sepia.Intensity > 0)
+            {
+                Game.RenderTargets.Swap();
+                Game.SpriteBatch.Begin(effect: RemizioneGame.Effects.Sepia.Effect);
+                Game.SpriteBatch.Draw(Game.RenderTargets.PreviousTarget, Vector2.Zero, Color.White);
+                Game.SpriteBatch.End();
+            }
+            
             Game.RenderTargets.Swap();
             Game.SpriteBatch.Begin(effect: RemizioneGame.Effects.CRT.Effect);
             Game.SpriteBatch.Draw(Game.RenderTargets.PreviousTarget, Vector2.Zero, Color.White);
@@ -420,6 +432,9 @@ namespace Remizione
         // OnStarted
         protected override void OnStarted()
         {
+            if (IsNewSession)
+                RemizioneGame.Effects.Sepia.Intensity = 1;
+
             foreach (var definition in Definition.All)
             {
                 if (definition.IsUnlockedByDefault)
@@ -465,6 +480,8 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
+
+            sepiaTween.Update(gameTime);
 
             savingIcon.Update(gameTime);
 
@@ -619,7 +636,7 @@ namespace Remizione
 
         // DisplayHPMeter
         [ScriptProperty]
-        public bool DisplayHPMeter { get; set; } = true;
+        public bool DisplayHPMeter { get; set; }
 
         // Environment
         public Environment Environment { get; }
@@ -781,6 +798,13 @@ namespace Remizione
 
         // Random
         public Random Random { get; private set; } = new(0);
+
+        // RemoveSepia
+        [ScriptMethod]
+        public void RemoveSepia()
+        {
+            sepiaTween.Start(TweenStyle.CubicIn, RemizioneGame.Effects.Sepia.Intensity, 0, 5000);
+        }
 
         // RenewSeed
         public void RenewSeed()

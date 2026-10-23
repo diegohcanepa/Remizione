@@ -17,7 +17,7 @@ namespace Remizione.Effects
 
         // Constrcutor
         public ColorReductionEffect()
-            : base("Shaders/ColorReduction")
+            : base("ColorReduction")
         {
             rParameter = Effect.Parameters["r"] ?? throw new InvalidOperationException();
             gParameter = Effect.Parameters["g"] ?? throw new InvalidOperationException();

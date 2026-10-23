@@ -1153,8 +1153,8 @@ namespace Remizione
         // Say
         public void Say(string text, bool awaitInput, string? soundName)
         {
-            speechText ??= new SpeechText(this);
-            speechText.Show(text, awaitInput, soundName);
+            speechText ??= new(this);
+            speechText.Show(text, awaitInput, soundName, SpeechSoundIsLooped);
         }
 
         // ShowStatusReaction
@@ -1196,6 +1196,10 @@ namespace Remizione
         // SpeechSound
         [ScriptProperty(CodingContext.EntityDeclaration)]
         public Sound? SpeechSound { get; set; }
+
+        // SpeechSoundIsLooped
+        [ScriptProperty(CodingContext.EntityDeclaration)]
+        public bool SpeechSoundIsLooped { get; set; }
 
         // Stand
         [ScriptMethod()]

@@ -10,7 +10,7 @@ namespace Remizione.Effects
     {
         // Constrcutor
         public OutlineEffect()
-            : base("Shaders/Outline")
+            : base("Outline")
         {
             Color = Effect.Parameters["outlineColor"];
             TextureSize = Effect.Parameters["textureSize"];

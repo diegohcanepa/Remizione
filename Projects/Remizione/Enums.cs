@@ -93,6 +93,9 @@ namespace Remizione
     // ItemCategory
     public enum ItemCategory { Access, Food, Luck, Medicine, Misc, Sacred, Weapon }
 
+    // ItemDecayState
+    public enum ItemDecayState { Fresh, Withered, Rotten }
+
     // ItemKind
     public enum ItemKind { Common, Key, Fleshiness }
 

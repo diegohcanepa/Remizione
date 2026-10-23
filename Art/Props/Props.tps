@@ -264,6 +264,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">GravestoneA-assets/GravestoneA.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,4,7,7</rect>
+                <key>scale9Paddings</key>
+                <rect>4,4,7,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">GravestoneA-assets/GravestoneAShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -276,6 +291,36 @@
                 <rect>4,1,7,3</rect>
                 <key>scale9Paddings</key>
                 <rect>4,1,7,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">GravestoneB-assets/GravestoneB.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,4,8,8</rect>
+                <key>scale9Paddings</key>
+                <rect>4,4,8,8</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">GravestoneB-assets/GravestoneBShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,1,7,3</rect>
+                <key>scale9Paddings</key>
+                <rect>3,1,7,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -820,6 +865,7 @@
                     <filename>TreeB-assets</filename>
                     <filename>TreeC-assets</filename>
                     <filename>GravestoneA-assets</filename>
+                    <filename>GravestoneB-assets</filename>
                 </array>
             </struct>
         </map>
