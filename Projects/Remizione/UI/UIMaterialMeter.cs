@@ -43,7 +43,7 @@ namespace Remizione
             this.icon = new(Atlases.UI.GetImage($"{material}Icon"))
             {
                 PivotOrigin = RectanglePoint.Center,
-                Position = amountText.BoundingBox.GetPoint(RectanglePoint.Top, 0, -5)
+                Position = amountText.BoundingBox.GetPoint(RectanglePoint.Top, 0, -6)
             };
         }
 
@@ -90,7 +90,7 @@ namespace Remizione
             {
                 lastKnownCount = Session.PlayerData.GetMaterialCount(material);
                 icon.Opacity = lastKnownCount > 0 ? 1 : .5f;
-                amountText.Text = $"{lastKnownCount}";
+                amountText.Text = $"{lastKnownCount}/5";
                 amountText.Color = ColorPalette.Text.Terra;
             }
         }

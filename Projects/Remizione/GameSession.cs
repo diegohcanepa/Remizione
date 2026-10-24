@@ -108,6 +108,7 @@ namespace Remizione
             AotTypeRegistry.Register(typeof(Bonfire));
             AotTypeRegistry.Register(typeof(Creature));
             AotTypeRegistry.Register(typeof(CreditsRoom));
+            AotTypeRegistry.Register(typeof(FigTree));
             AotTypeRegistry.Register(typeof(Fleshiness));
             AotTypeRegistry.Register(typeof(GameRoom));
             AotTypeRegistry.Register(typeof(ItemOrb));
@@ -732,7 +733,7 @@ namespace Remizione
 
             for (int i = Room.Children.Count - 1; i >= 0; i--)
             {
-                if (Room.Children[i] is Actor actor && !actor.IsDead && actor != Player)
+                if (Room.Children[i] is Actor actor && !actor.IsDead && actor.Faction == Faction.Creature)
                     actor.Die();
             }
         }

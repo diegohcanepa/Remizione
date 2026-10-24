@@ -2,6 +2,14 @@
   "$schema": "./Prop.schema.json",
   "data": [
     {
+      "name": "PetrifiedTreeA",
+      "hp": 6,
+      "materialReward": "Wood",
+      "tags": [
+        "PetrifiedTree"
+      ]
+    },
+    {
       "name": "PotteryA",
       "baseDropChance": 0.5,
       "effects": [

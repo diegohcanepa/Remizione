@@ -12,10 +12,12 @@ namespace Remizione
         #region Private fields
 
         private Actor? actor;
-        private readonly TextSprite amountText;
+        private readonly UICapacity capacityMeter;
+        private readonly Sprite container = new(Atlases.UI.HeartMeterContainer) { PivotOrigin = RectanglePoint.Left };
         private readonly Sprite icon = new(Atlases.UI.HeartIcon) { PivotOrigin = RectanglePoint.Center, Position = new(8, 6) };
         private int lastHp = int.MinValue;
         private int lastMaxHp = int.MinValue;
+        private readonly FlatMeter meter;
         private readonly FloatTween rotationTween = new();
         private readonly Vector2Tween scaleTween = new();
 
@@ -27,12 +29,17 @@ namespace Remizione
         public UIHeartMeter(GameSession session)
             : base(session)
         {
-            this.amountText = new(Fonts.CommonOutline)
+            this.meter = new(new Color(25, 25, 25), ColorPalette.Text.TerraDark, ColorPalette.Text.Terra, ColorPalette.Text.TerraLight, new(22, 3), 0)
             {
-                Color = ColorPalette.Text.Terra,
+                Position =  icon.BoundingBox.GetPoint(RectanglePoint.Right, 12, -2),
+            };
+
+            container.Position = icon.BoundingBox.GetPoint(RectanglePoint.Right, 1, -1);
+
+            this.capacityMeter = new()
+            {
                 PivotOrigin = RectanglePoint.Left,
-                Position = icon.BoundingBox.GetPoint(RectanglePoint.Right, 1, 0),
-                Scale = ScaleInfo.Text.Large
+                Position = container.BoundingBox.GetPoint(RectanglePoint.Right, 1, 1),
             };
         }
 
@@ -59,9 +66,13 @@ namespace Remizione
             if (lastHp != int.MinValue)
                 Animate();
 
-            amountText.Text = $"{actor.HP}/{actor.MaxHP}";
             lastHp = actor.HP;
             lastMaxHp = actor.MaxHP;
+            meter.MaximumValue = lastMaxHp;
+            meter.Value = lastHp;
+
+            capacityMeter.CurrentAmount = lastHp;
+            capacityMeter.MaximumAmount = lastMaxHp;
         }
 
         #endregion
@@ -74,8 +85,10 @@ namespace Remizione
             if (actor == null)
                 return;
 
+            meter.Draw(gameTime);
+            container.Draw(gameTime);
             icon.Draw(gameTime);
-            amountText.Draw(gameTime);
+            capacityMeter.Draw(gameTime);
         }
 
         // OnUpdate
@@ -94,6 +107,7 @@ namespace Remizione
                 Refresh();
 
             icon.Update(gameTime);
+            meter.Update(gameTime);
         }
 
         #endregion

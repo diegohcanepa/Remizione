@@ -25,9 +25,9 @@ namespace Remizione
         {
             this.HeartMeter = new(session);
             this.InventoryMeter = new(session.PlayerData.Inventory);
-            this.WoodMeter = new(session, Material.Wood, new(25, 131));
-            this.StoneMeter = new(session, Material.Stone, new(37, 131));
-            this.GutMeter = new(session, Material.Gut, new(49, 131));
+            this.WoodMeter = new(session, Material.Wood, new(25, 132));
+            this.StoneMeter = new(session, Material.Stone, new(37, 132));
+            this.GutMeter = new(session, Material.Gut, new(49, 132));
 
             this.DestinationMark = new(session);
             this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 10));

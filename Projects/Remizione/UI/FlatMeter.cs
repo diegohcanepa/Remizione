@@ -171,8 +171,8 @@ namespace Remizione
                 if (value != field)
                 {
                     field = value;
-                    this.Value = field; // setea al maximo
-                    back.ScaleX = width;  // back siempre ancho fijo
+                    this.Value = field;
+                    back.ScaleX = width;
                     container.ScaleX = width + (BorderSize.X * 2);
                     Invalidate();
                 }

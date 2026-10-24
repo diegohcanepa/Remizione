@@ -25,6 +25,7 @@ namespace Remizione
             FakeItem = this[nameof(FakeItem)];
             GutIcon = this[nameof(GutIcon)];
             HeartIcon = this[nameof(HeartIcon)];
+            HeartMeterContainer = this[nameof(HeartMeterContainer)];
             InspectItem = this[nameof(InspectItem)];
             InventoryItemSlots = CreateReadOnlyCollection("InventoryItemSlot", 1, 3);
             ItemPerishStates = CreateReadOnlyCollection("ItemPerishState", 1, 3);
@@ -83,6 +84,9 @@ namespace Remizione
 
         // HeartIcon
         public AtlasImage HeartIcon { get; }
+
+        // HeartMeterContainer
+        public AtlasImage HeartMeterContainer { get; }
 
         // InspectItem
         public AtlasImage InspectItem { get; }

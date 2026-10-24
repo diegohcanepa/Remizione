@@ -119,7 +119,7 @@ namespace Remizione
         }
 
         // IsActive
-        bool IHoleArea.IsActive => !Collider.IsEmpty && AffectsPathfinding;
+        bool IHoleArea.IsActive => !Collider.IsEmpty && AffectsPathfinding && IsInCurrentRoom;
 
         // Polygon
         IReadOnlyPolygon IHoleArea.Polygon => holePoly;
@@ -660,7 +660,7 @@ namespace Remizione
                 Game.Shapes.DrawFrame(BoundingBox, Color.Yellow * .2f, .2f);
 
             if (RoomEditor.SelectedThing == this)
-                Game.Shapes.DrawFrame(BoundingBox, Color.Green * .6f, .5f);
+                Game.Shapes.DrawFrame(BoundingBox, Color.Green * .3f, .25f);
         }
 
         // ShowBoundingBoxes
