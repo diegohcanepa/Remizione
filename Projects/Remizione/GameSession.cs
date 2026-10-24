@@ -299,6 +299,9 @@ namespace Remizione
             if (PlayerInputHandler.HandleInput(gameTime) == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
+            if (InputBindings.Back.IsPressed(PlayerIndex.One))
+                Game.Exit();
+
             return base.OnHandleInput(gameTime);
         }
 

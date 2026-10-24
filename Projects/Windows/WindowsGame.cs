@@ -91,14 +91,6 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
 
-#if DEBUG
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-            {
-                Exit();
-                return;
-            }
-#endif
-
             /*
             if (IsSteamRunning)
                 SteamAPI.RunCallbacks();

@@ -109,10 +109,10 @@ namespace Remizione
             internal static Vector4 Highlight { get; } = (Color.WhiteSmoke * .3f).ToVector4();
 
             // SubText
-            internal static Color SubText { get; } = new Color(172, 167, 144) * .8f;
+            internal static Color SubText { get; } = Text.YellowDark;
 
             // Tooltip
-            internal static Color Tooltip { get; } = new(172, 167, 144);
+            internal static Color Tooltip { get; } = Text.Default;
         }
 
         // OutdoorLight

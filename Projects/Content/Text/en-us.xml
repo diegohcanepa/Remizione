@@ -30,8 +30,6 @@
   <String Key="InputBinding.Inspect">Inspect</String>
   <String Key="InputBinding.NextDialog">Next</String>
   <String Key="InputBinding.Select">Select</String>
-  <String Key="InputBinding.UseFriendlyItem">Use</String>
-  <String Key="InputBinding.UseItem">Use</String>
   <String Key="Item.BarrenFig.Name">Barren fig</String>
   <String Key="Item.BronzeKey.Name">Bronze key</String>
   <String Key="Item.CrudeKey.Description" />
@@ -213,8 +211,6 @@ Bla bla bla</String>
   <String Key="Misc.StandUp" />
   <String Key="Misc.Threshold">Threshold</String>
   <String Key="Misc.Unknown">???</String>
-  <String Key="Misc.UseWith">Use with</String>
-  <String Key="Misc.Will">WILL</String>
   <String Key="Misc.WithPreposition">with</String>
   <String Key="Misc.Yes">Yes</String>
   <String Key="Misc.YouAreDead">YOU'RE DEAD.</String>
@@ -256,4 +252,5 @@ Bla bla bla</String>
   <String Key="UserAction.Drop">Drop</String>
   <String Key="Verb.Attack">Hit</String>
   <String Key="Verb.Lift">Lift</String>
+  <String Key="Verb.Use">Use</String>
 </Strings>

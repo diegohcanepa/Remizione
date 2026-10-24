@@ -218,6 +218,12 @@ namespace Remizione
                     return HandleInputResult.Handled;
             }
 
+            if (InputBindings.Back.IsPressed(PlayerIndex.One))
+            {
+                Game.SceneManager.Pop();
+                return HandleInputResult.Handled;
+            }
+
             return HandleInputResult.Unhandled;
         }
 

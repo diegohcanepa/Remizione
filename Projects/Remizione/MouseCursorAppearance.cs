@@ -126,8 +126,8 @@ namespace Remizione
             var target = context.Target;
             var heldItem = context.HeldItem;
 
-            MouseCursor.TooltipColor = ColorPalette.Text.Default;
-            MouseCursor.SubTextColor = ColorPalette.Text.YellowDark;
+            MouseCursor.TooltipColor = ColorPalette.MouseCursor.Tooltip;
+            MouseCursor.SubTextColor = ColorPalette.MouseCursor.SubText;
 
             if (target != null && heldItem == null)
             {

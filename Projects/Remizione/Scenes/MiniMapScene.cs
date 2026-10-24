@@ -121,7 +121,7 @@ namespace Remizione
                         markers.Add(new(thing, groundTorch.IsLit ? ColorPalette.MiniMap.Torch : ColorPalette.MiniMap.Default, false));
 
                     // KeyItem
-                    else if (thing.ItemReward?.IsKeyItem == true)
+                    else if (thing is ItemOrb && thing.ItemReward?.IsKeyItem == true)
                         markers.Add(new(thing, ColorPalette.MiniMap.KeyItem, false));
                 }
             }

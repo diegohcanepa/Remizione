@@ -27,9 +27,9 @@ namespace Remizione
         internal static readonly InputBinding ClickMenuItem = InputManager.AddBinding(nameof(ClickMenuItem), GetButtonA(), Keys.E, Keys.Enter);
 
         // Misc
-        internal static readonly InputBinding Back = InputManager.AddBinding(nameof(Back), GetButtonB(), Keys.X);
+        internal static readonly InputBinding Back = InputManager.AddBinding(nameof(Back), GetButtonB(), Keys.Escape);
         internal static readonly InputBinding Continue = InputManager.AddBinding(nameof(Continue), GetButtonA(), Keys.E);
-        internal static readonly InputBinding Inventory = InputManager.AddBinding(nameof(Inventory), Buttons.Y, Keys.I);
+        internal static readonly InputBinding Inventory = InputManager.AddBinding(nameof(Inventory), null, Keys.I);
         internal static readonly InputBinding Map = InputManager.AddBinding(nameof(Map), null, Keys.M);
         internal static readonly InputBinding Select = InputManager.AddBinding(nameof(Select), GetButtonA(), Keys.E, Keys.Enter);
         internal static readonly InputBinding SelectDialogOption = InputManager.AddBinding(nameof(SelectDialogOption), Buttons.A, Keys.E, Keys.Enter);

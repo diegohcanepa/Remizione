@@ -30,8 +30,6 @@
   <String Key="InputBinding.Inspect">Examinar</String>
   <String Key="InputBinding.NextDialog">Siguiente</String>
   <String Key="InputBinding.Select">Seleccionar</String>
-  <String Key="InputBinding.UseFriendlyItem">Usar</String>
-  <String Key="InputBinding.UseItem">Usar</String>
   <String Key="Item.BarrenFig.Name">Higo estéril</String>
   <String Key="Item.BronzeKey.Name">Llave de bronce</String>
   <String Key="Item.CrudeKey.Description">Un pedazo de hierro deforme, limado a mano. Diseñada para ceder herrajes de cofres.</String>
@@ -214,8 +212,6 @@ Bla bla bla</String>
   <String Key="Misc.StandUp" />
   <String Key="Misc.Threshold">Umbral</String>
   <String Key="Misc.Unknown">???</String>
-  <String Key="Misc.UseWith">Usar {0} con {1}</String>
-  <String Key="Misc.Will">VOLUNTAD</String>
   <String Key="Misc.WithPreposition">con</String>
   <String Key="Misc.Yes">Sí</String>
   <String Key="Misc.YouAreDead">ESTÁS MUERTO.</String>
@@ -257,4 +253,5 @@ Bla bla bla</String>
   <String Key="UserAction.Drop">Soltar</String>
   <String Key="Verb.Attack">Golpear</String>
   <String Key="Verb.Lift">Alzar</String>
+  <String Key="Verb.Use">Usar</String>
 </Strings>

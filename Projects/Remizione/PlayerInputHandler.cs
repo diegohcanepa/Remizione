@@ -69,6 +69,12 @@ namespace Remizione
                 return HandleInputResult.Handled;
             }
 
+            if (InputBindings.Inventory.IsPressed(0))
+            {
+                Owner.Session.Overlays.ShowInventory();
+                return HandleInputResult.Handled;
+            }
+
             if (InputBindings.Map.IsPressed(0))
             {
                 Owner.Session.Overlays.ShowMiniMap();

@@ -27,7 +27,7 @@ namespace Remizione
             // Amount
             this.amount = new(Fonts.Common)
             {
-                Color = ColorPalette.Text.Terra,
+                Color = ColorPalette.Text.Default,
                 PivotOrigin = RectanglePoint.Top,
                 Scale = ScaleInfo.Text.ExtraLarge
             };
@@ -71,7 +71,7 @@ namespace Remizione
             shadow.Y = center.Y + 0.5f;
 
             amount.X = center.X;
-            amount.Y = slot.BoundingBox.Bottom - 1;
+            amount.Y = slot.BoundingBox.Bottom;
 
             perishStateIcon.Position = amount.Position;
         }
