@@ -26,9 +26,6 @@ namespace Remizione
             if (Owner == null || !Owner.IsInCurrentRoom || Owner.IsDead || Owner.IsFatigued || Owner.Session.IsAwaiting)
                 return HandleInputResult.Unhandled;
 
-            if (Owner.IsLockedByAttacker && !Owner.IsInvulnerable)
-                return HandleInputResult.Unhandled;
-
             if (actionWindowTimer > 0)
             {
                 actionWindowTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;

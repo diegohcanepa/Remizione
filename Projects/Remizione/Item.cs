@@ -66,7 +66,7 @@ namespace Remizione
             }
 
             // Sobrevivió: incrementamos la probabilidad de rotura para el próximo uso
-            BreakChance = BreakChance + Definition.BreakChanceIncrement;
+            BreakChance += Definition.BreakChanceIncrement;
             return false;
         }
 

@@ -15,7 +15,6 @@ namespace Remizione
         private bool isRevealBoxDirty;
         private List<AtlasImage>? remainsPieces;
         private FloatTween? revealTween;
-        private readonly FloatTween xTween = new();
 
         #endregion
 
@@ -161,9 +160,19 @@ namespace Remizione
         protected override void OnDrawShadow(GameTime gameTime)
         {
             if (Shadow.IsEmpty || IsDead)
+            {
                 base.OnDrawShadow(gameTime);
+            }
             else
+            {
+                if (GetHurtShakeOffset() != Vector2.Zero)
+                    Position += GetHurtShakeOffset() * .3f;
+
                 Shadow.Draw(gameTime);
+
+                if (GetHurtShakeOffset() != Vector2.Zero)
+                    Position -= GetHurtShakeOffset() * .3f;
+            }
         }
 
         // OnLoad
@@ -187,12 +196,6 @@ namespace Remizione
             base.OnUpdate(gameTime);
 
             Shadow.Update(gameTime);
-
-            if (xTween.IsRunning)
-            {
-                xTween.Update(gameTime);
-                X = xTween.CurrentValue;
-            }
 
             if (!RevealArea.IsEmpty)
                 UpdateOpacityFactor(gameTime);

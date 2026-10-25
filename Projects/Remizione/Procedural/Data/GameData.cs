@@ -70,8 +70,6 @@ namespace Remizione
 
             RunModifiers = Load("RunModifiers.json", e => new RunModifierDefinition(e));
             CombatBehaviors = Load("CombatBehaviors.json", e => new CombatBehavior(e));
-            Statuses = Load("Statuses.json", e => new StatusDefinition(e));
-            Traits = Load("Traits.json", e => new TraitDefinition(e));
 
             Items = Load("Items.json", e => new ItemDefinition(e));
             Actors = Load("Actors.json", e => new ActorDefinition(e));
@@ -91,11 +89,5 @@ namespace Remizione
 
         // RunModifiers
         public static FrozenNamedCollection<RunModifierDefinition> RunModifiers { get; private set; } = null!;
-
-        // Statuses
-        public static FrozenNamedCollection<StatusDefinition> Statuses { get; private set; } = null!;
-
-        // Traits
-        public static FrozenNamedCollection<TraitDefinition> Traits { get; private set; } = null!;
     }
 }

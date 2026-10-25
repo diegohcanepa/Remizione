@@ -438,7 +438,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">PetrifiedTree-assets/PetrifiedTreeA.pngRemains1.png</key>
+            <key type="filename">PetrifiedTree-assets/PetrifiedTreeARemains1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -453,8 +453,9 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">PetrifiedTree-assets/PetrifiedTreeA.pngRemains2.png</key>
-            <key type="filename">PetrifiedTree-assets/PetrifiedTreeA.pngRemains3.png</key>
+            <key type="filename">PetrifiedTree-assets/PetrifiedTreeARemains2.png</key>
+            <key type="filename">PetrifiedTree-assets/PetrifiedTreeARemains3.png</key>
+            <key type="filename">PetrifiedTree-assets/PetrifiedTreeARemains4.png</key>
             <key type="filename">PotteryB-assets/PotteryBRemains4.png</key>
             <key type="filename">PotteryE-assets/PotteryEPiece1.png</key>
             <key type="filename">PotteryE-assets/PotteryEPiece3.png</key>

@@ -18,7 +18,7 @@ namespace Remizione
 
         private Blinker<float>? blinkTimer;
         private BloodSplash? bloodSplash;
-        private StateMachine<Actor>? combatMachine { get; }
+        private readonly StateMachine<Actor>? combatMachine;
         private ParticlePopEffect? footstepEffect;
         private SpriteFrame? footstepLastUsedFrame;
         private Sprite? heldPropSprite;
@@ -347,8 +347,6 @@ namespace Remizione
         // OnDeath
         protected override void OnDeath()
         {
-            IsLockedByAttacker = false;
-
             blinkTimer?.Stop();
 
             speechText?.Hide();
@@ -530,18 +528,17 @@ namespace Remizione
             }
         }
 
-        // OnUnload
-        protected override void OnUnload()
-        {
-            base.OnUnload();
-            IsLockedByAttacker = false;
-        }
-
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             if (Session.BonfireMode && !IsPlayer)
                 return;
+
+            if (IsPlayer && GetStatusValue(StatusType.Laceration) == 0)
+                ApplyStatus(StatusType.Laceration, 1);
+
+            if (IsPlayer && GetStatusValue(StatusType.Putrefaction) == 0)
+                ApplyStatus(StatusType.Putrefaction, 1);
 
             base.OnUpdate(gameTime);
 
@@ -887,9 +884,6 @@ namespace Remizione
 
         // IsInvulnerable
         public bool IsInvulnerable => blinkTimer?.IsRunning == true;
-
-        // IsLockedByAttacker
-        public bool IsLockedByAttacker { get; set; }
 
         // Label
         public override string Label

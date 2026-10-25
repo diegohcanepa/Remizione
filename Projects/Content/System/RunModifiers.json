@@ -11,7 +11,7 @@
 				{
 					"context": "RunModifier",
 					"effectType": "Status",
-					"statusType": "Poison",
+					"statusType": "Putrefaction",
 					"amount": "1"
 				}
 			]

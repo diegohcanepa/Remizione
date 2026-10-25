@@ -154,7 +154,7 @@ namespace Remizione
         }
 
         // RemoveAnnonymousChildren
-        private void RemoveAnnonymousChildren(Entity entity)
+        private static void RemoveAnnonymousChildren(Entity entity)
         {
             var annonymousList = new List<Entity>();
 
@@ -229,7 +229,7 @@ namespace Remizione
                 Game.SpriteBatch.Draw(Game.RenderTargets.PreviousTarget, Vector2.Zero, Color.White);
                 Game.SpriteBatch.End();
             }
-            
+
             Game.RenderTargets.Swap();
             Game.SpriteBatch.Begin(effect: RemizioneGame.Effects.CRT.Effect);
             Game.SpriteBatch.Draw(Game.RenderTargets.PreviousTarget, Vector2.Zero, Color.White);

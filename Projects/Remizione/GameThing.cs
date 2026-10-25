@@ -38,7 +38,7 @@ namespace Remizione
         private int renderLayerDepth;
         private readonly ShadowSpot shadowSpot;
         private bool shouldClampToWalkablePosition;
-        private readonly StatusManager statusManager = new();
+        private StatusSet? statuses;
 
         #endregion
 
@@ -183,6 +183,12 @@ namespace Remizione
             }
         }
 
+        // GetPassiveStatusModifier
+        private int GetPassiveStatusModifier(StatusType statusType)
+        {
+            return 0;
+        }
+
         // GetPivotBasedPolyOffset
         private Vector2 GetPivotBasedPolyOffset()
         {
@@ -323,19 +329,16 @@ namespace Remizione
             ItemReward = null;
         }
 
+        // GetHurtShakeOffset
+        protected Vector2 GetHurtShakeOffset()
+        {
+            return hurtShakeTween?.IsRunning == true ? hurtShakeTween.CurrentValue : Vector2.Zero;
+        }
+
         // GetKnockbackMultiplier
         protected virtual float GetKnockbackMultiplier(GameThing target)
         {
             return 1;
-        }
-
-        // GetShakeOffset
-        protected Vector2 GetShakeOffset()
-        {
-            if (hurtShakeTween?.IsRunning == true)
-                return hurtShakeTween.CurrentValue;
-            else
-                return Vector2.Zero;
         }
 
         // OnCollision
@@ -494,6 +497,26 @@ namespace Remizione
         // AllowInteraction
         [ScriptProperty]
         public bool AllowInteraction { get; set; } = true;
+
+        // ApplyStatus
+        public void ApplyStatus(StatusType statusType, int amount)
+        {
+            if (IsDead)
+                return;
+
+            var passiveMod = GetPassiveStatusModifier(statusType);
+            var finalAmount = amount - passiveMod;
+
+            if (finalAmount <= 0)
+                return;
+
+            statuses ??= new StatusSet();
+            //if (Atlases.UI.FindImage($"{statusType}Icon") is { } statusIcon)
+              //  ShowFlyOff(statusIcon);
+            StatusVersion++;
+            if (statuses.ApplyAmount(statusType, finalAmount))
+                TakeDamage(this, DamageType.Physical, 1, Vector2.Zero);
+        }
 
         // ApproachBehavior
         [ScriptProperty]
@@ -889,10 +912,10 @@ namespace Remizione
                 targetX = targetPos.X + (directionX * minDistanceX);
             }
 
-            Vector2 candidatePosition = new Vector2(targetX, targetY);
+            var candidatePosition = new Vector2(targetX, targetY);
 
             // 4. Validar si la posición candidata es navegable en el mapa.
-            var gameRoom = actor.Room as GameRoom;
+            var gameRoom = actor.Room;
             var walkArea = gameRoom?.WalkArea;
 
             if (walkArea == null)
@@ -903,6 +926,12 @@ namespace Remizione
 
             // Fallback: si el punto exacto no es caminable (ej. hay una pared detrás al retroceder), busca el punto libre más próximo.
             return walkArea.GetWalkablePoint(candidatePosition);
+        }
+
+        // GetStatusValue
+        public int GetStatusValue(StatusType statusType)
+        {
+            return statuses?.GetValue(statusType) ?? 0;
         }
 
         // GraceCost
@@ -1273,6 +1302,9 @@ namespace Remizione
         // StandPoint
         [ScriptProperty]
         public Vector2 StandPoint { get; set; }
+
+        // StatusVersion
+        public int StatusVersion { get; set; }
 
         // TakeDamage
         public int TakeDamage(GameThing attacker, DamageType damageType, int amount, Vector2 knockbackForce)

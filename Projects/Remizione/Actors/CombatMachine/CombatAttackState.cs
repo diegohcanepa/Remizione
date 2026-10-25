@@ -10,7 +10,6 @@ namespace Remizione
     {
         private enum AttackPhase { Aligning, Striking }
         private AttackPhase currentPhase;
-        private const float lockCommitDistance = 15f; // Valor de diseño establecido
 
         // Enter
         public override void Enter()
@@ -36,11 +35,13 @@ namespace Remizione
             }
 
             // Zona de no-retorno: Aplica a CUALQUIER Target (Player o NPC)
+            /*
             if (currentDistance <= lockCommitDistance)
             {
                 Target.StopMoving();
                 Target.IsLockedByAttacker = true;
             }
+            */
 
             if (isCharge && Intent.SoundStart != null)
                 Owner.PlaySound(Intent.SoundStart);
@@ -53,7 +54,6 @@ namespace Remizione
         public override void Exit()
         {
             Owner.IsDealingContactDamage = false;
-            Target?.IsLockedByAttacker = false;
         }
 
         // Intent
@@ -68,6 +68,7 @@ namespace Remizione
             switch (currentPhase)
             {
                 case AttackPhase.Aligning:
+                    /*
                     // Mantiene la verificación de compromiso para cualquier target
                     if (Target != null && !Target.IsLockedByAttacker)
                     {
@@ -77,6 +78,7 @@ namespace Remizione
                             Target.IsLockedByAttacker = true;
                         }
                     }
+                    */
 
                     if (!Owner.IsMoving && Intent != null)
                     {
@@ -89,7 +91,7 @@ namespace Remizione
                             currentPhase = AttackPhase.Striking;
 
                             float currentDistance = Target != null ? Owner.DistanceToTarget(Target) : float.MaxValue;
-                            bool isLockedByInitiative = Target != null && Target.IsLockedByAttacker;
+                            bool isLockedByInitiative = Target != null;
 
                             // Si el objetivo quedó bloqueado por iniciativa O está dentro del MaxRange, el golpe conecta
                             if (isLockedByInitiative || currentDistance <= Intent.MaxRange)

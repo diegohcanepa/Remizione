@@ -192,7 +192,8 @@
     "StatusType": {
       "type": "string",
       "enum": [
-        "Poison"
+        "Laceration",
+        "Putrefaction"
       ]
     },
     "Tag": {

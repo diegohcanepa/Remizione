@@ -14,6 +14,7 @@ namespace Remizione
         #region Private fields
 
         private readonly UIGraceMeter graceScore;
+        private readonly UIStatuses statuses;
 
         #endregion
 
@@ -25,14 +26,15 @@ namespace Remizione
         {
             this.HeartMeter = new(session);
             this.InventoryMeter = new(session.PlayerData.Inventory);
-            this.WoodMeter = new(session, Material.Wood, new(25, 132));
-            this.StoneMeter = new(session, Material.Stone, new(37, 132));
-            this.GutMeter = new(session, Material.Gut, new(49, 132));
+            this.WoodMeter = new(session, Material.Wood, new(25, 131));
+            this.StoneMeter = new(session, Material.Stone, new(37, 131));
+            this.GutMeter = new(session, Material.Gut, new(49, 131));
 
             this.DestinationMark = new(session);
             this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 10));
 
             this.graceScore = new(session);
+            this.statuses = new(session);
         }
 
         #endregion
@@ -46,6 +48,7 @@ namespace Remizione
             if (Session.DisplayHPMeter)
                 HeartMeter.Draw(gameTime);
             graceScore.Draw(gameTime);
+            statuses.Draw(gameTime);
             Game.SpriteBatch.End();
 
             if (Session.InventoryEnabled)
@@ -69,6 +72,7 @@ namespace Remizione
             HeartMeter.Update(gameTime);
             Message.Update(gameTime);
             graceScore.Update(gameTime);
+            statuses.Update(gameTime);
             WoodMeter.Update(gameTime);
             StoneMeter.Update(gameTime);
             GutMeter.Update(gameTime);
@@ -124,6 +128,7 @@ namespace Remizione
         public void Reset()
         {
             Message.Hide();
+            statuses.Actor = Session.Player;
         }
 
         // RoomTitle

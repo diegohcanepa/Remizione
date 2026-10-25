@@ -197,16 +197,13 @@ namespace Remizione
     public enum SpeechTextState { Hidden, Typing, Idle }
 
     // StatusType
-    public enum StatusType { Poison }
+    public enum StatusType { Laceration, Putrefaction }
 
     // Tag
     public enum Tag { Bonfire, Ceiling, Floor, GateLever, Grate, Obstacle, PetrifiedTree, Poison, Pottery, Torch, Trap, Trapdoor, Tree, Trunk, WallDecoration, Window }
 
     // TestPolygon
     public enum TestPolygon { Hotspot, Collider }
-
-    // TraitType
-    public enum TraitType { Lockpicking, Luck }
 
     // TrapState
     public enum TrapState { None, Idle, Warning, Activating, Active, Cooldown, Disabled }

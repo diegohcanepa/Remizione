@@ -40,6 +40,8 @@ namespace Remizione
             SavingIcon = this[nameof(SavingIcon)];
             SpeechTextArrow = this[nameof(SpeechTextArrow)];
             SpeechTextPipe = this[nameof(SpeechTextPipe)];
+            StatusLaceration = CreateReadOnlyCollection(nameof(StatusLaceration), 1, 3);
+            StatusPutrefaction = CreateReadOnlyCollection(nameof(StatusPutrefaction), 1, 3);
             StoneIcon = this[nameof(StoneIcon)];
             UIButtonContainerEdge = this[nameof(UIButtonContainerEdge)];
             UIButtonContainerPattern = this[nameof(UIButtonContainerPattern)];
@@ -129,6 +131,12 @@ namespace Remizione
 
         // SpeechTextPipe
         public AtlasImage SpeechTextPipe { get; }
+
+        // StatusLaceration
+        public ReadOnlyCollection<AtlasImage> StatusLaceration { get; }
+
+        // StatusPutrefaction
+        public ReadOnlyCollection<AtlasImage> StatusPutrefaction { get; }
 
         // StoneIcon
         public AtlasImage StoneIcon { get; }

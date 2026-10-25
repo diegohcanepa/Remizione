@@ -34,8 +34,7 @@ namespace Remizione
             // Maximum amount
             this.maximumAmount = new(Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Terra,
-                Opacity = .6f,
+                Color = ColorPalette.Text.TerraDark,
                 PivotOrigin = RectanglePoint.Left,
                 Scale = ScaleInfo.Text.Medium
             };
@@ -50,8 +49,6 @@ namespace Remizione
         // Refresh
         private void Refresh()
         {
-            var animate = lastCurrentAmount != int.MinValue;
-
             currentAmount.Tweens.Reset();
 
             currentAmount.Text = $"{CurrentAmount}";

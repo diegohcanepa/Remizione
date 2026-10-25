@@ -406,7 +406,6 @@
             <key type="filename">MouseCursors-assets/MouseCursorTargetIcon.png</key>
             <key type="filename">UI-assets/ProhibitionIcon.png</key>
             <key type="filename">UIIcons-assets/GutIcon.png</key>
-            <key type="filename">UIIcons-assets/StatusPoisonIcon.png</key>
             <key type="filename">UIIcons-assets/StoneIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -423,6 +422,7 @@
                 <false/>
             </struct>
             <key type="filename">MouseCursors-assets/MouseCursorHandIcon.png</key>
+            <key type="filename">UIIcons-assets/StatusLacerationIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -515,6 +515,40 @@
                 <rect>2,3,3,5</rect>
                 <key>scale9Paddings</key>
                 <rect>2,3,3,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Statuses-assets/StatusLaceration1.png</key>
+            <key type="filename">Statuses-assets/StatusLaceration2.png</key>
+            <key type="filename">Statuses-assets/StatusLaceration3.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,4,5,9</rect>
+                <key>scale9Paddings</key>
+                <rect>3,4,5,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Statuses-assets/StatusPutrefaction1.png</key>
+            <key type="filename">Statuses-assets/StatusPutrefaction2.png</key>
+            <key type="filename">Statuses-assets/StatusPutrefaction3.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,4,6,9</rect>
+                <key>scale9Paddings</key>
+                <rect>3,4,6,9</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -718,7 +752,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">UIIcons-assets/HeartMeter.png</key>
+            <key type="filename">UIIcons-assets/HeartMeterContainer.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -727,9 +761,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>8,2,15,5</rect>
+                <rect>6,2,11,3</rect>
                 <key>scale9Paddings</key>
-                <rect>8,2,15,5</rect>
+                <rect>6,2,11,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -780,6 +814,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">UIIcons-assets/StatusPutrefactionIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,3,6,5</rect>
+                <key>scale9Paddings</key>
+                <rect>3,3,6,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileLists</key>
         <map type="SpriteSheetMap">
@@ -795,6 +844,7 @@
                     <filename>Inventory-assets</filename>
                     <filename>DialogBox-assets</filename>
                     <filename>Modifiers-assets</filename>
+                    <filename>Statuses-assets</filename>
                 </array>
             </struct>
         </map>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:30412deac6a63a874f36693ae098fef4:8a19fe4d5bda5b8a9363d33502f1c68d:124b3bd0ff56be329062dd178e80040a$ -->
+<!-- $TexturePacker:SmartUpdate:99d3089510e8969c76835d1914838ada:086b4e351c6c369abed98f561bd1f6c7:124b3bd0ff56be329062dd178e80040a$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -64,6 +64,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="PetrifiedTreeARemains1.png" x="206" y="26" w="8" h="9"/>
     <sprite n="PetrifiedTreeARemains2.png" x="125" y="21" w="7" h="6"/>
     <sprite n="PetrifiedTreeARemains3.png" x="248" y="13" w="6" h="7"/>
+    <sprite n="PetrifiedTreeARemains4.png" x="125" y="21" w="7" h="6"/>
     <sprite n="PetrifiedTreeAShadow.png" x="146" y="93" w="21" h="12"/>
     <sprite n="PotteryA.png" x="247" y="22" w="7" h="12"/>
     <sprite n="PotteryARemains1.png" x="133" y="78" w="5" h="4"/>

@@ -68,7 +68,7 @@ namespace Remizione
             var heldItem = context.HeldItem;
 
             // 1. Estados críticos: Congelan cualquier actualización visual inmediatamente
-            if (player?.IsDead == true || player?.IsFatigued == true || player?.IsLockedByAttacker == true)
+            if (player?.IsDead == true || player?.IsFatigued == true)
             {
                 MouseCursor.Icon = MouseCursorIcon.Wait;
                 return;

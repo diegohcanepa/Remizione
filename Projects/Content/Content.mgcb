@@ -1205,12 +1205,6 @@
 #begin System/Sounds.json
 /copy:System/Sounds.json
 
-#begin System/Statuses.json
-/copy:System/Statuses.json
-
-#begin System/Traits.json
-/copy:System/Traits.json
-
 #begin Text/en-us.lpkg
 /copy:Text/en-us.lpkg
 
