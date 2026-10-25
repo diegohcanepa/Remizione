@@ -534,12 +534,6 @@ namespace Remizione
             if (Session.BonfireMode && !IsPlayer)
                 return;
 
-            if (IsPlayer && GetStatusValue(StatusType.Laceration) == 0)
-                ApplyStatus(StatusType.Laceration, 1);
-
-            if (IsPlayer && GetStatusValue(StatusType.Putrefaction) == 0)
-                ApplyStatus(StatusType.Putrefaction, 1);
-
             base.OnUpdate(gameTime);
 
             if (BodyMachine.CurrentState is BodyDeathState && !AnimationPlayer.IsPlaying)

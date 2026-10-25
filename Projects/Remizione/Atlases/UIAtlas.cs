@@ -32,8 +32,6 @@ namespace Remizione
             MiniMapMarker = this[nameof(MiniMapMarker)];
             MouseLeftButtonIcon = this[nameof(MouseLeftButtonIcon)];
             MouseRightButtonIcon = this[nameof(MouseRightButtonIcon)];
-            PainHeartEmpty = this[nameof(PainHeartEmpty)];
-            PainHeartFull = this[nameof(PainHeartFull)];
             Pixel = this[nameof(Pixel)];
             QuickInventoryBackground = this[nameof(QuickInventoryBackground)];
             Sack = this[nameof(Sack)];
@@ -107,13 +105,7 @@ namespace Remizione
 
         // MouseRightButtonIcon
         public AtlasImage MouseRightButtonIcon { get; }
-
-        // PainHeartEmpty
-        public AtlasImage PainHeartEmpty { get; }
-
-        // PainHeartFull
-        public AtlasImage PainHeartFull { get; }
-
+        
         // Pixel
         public AtlasImage Pixel { get; }
 

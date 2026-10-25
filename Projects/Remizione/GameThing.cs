@@ -285,7 +285,7 @@ namespace Remizione
                         {
                             for (var i = 0; i < damageAmount; i++)
                             {
-                                ShowFlyOff(Atlases.UI.PainHeartFull);
+                                ShowFlyOff(Atlases.UI.HeartIcon, ScaleInfo.UIElement.Tiny.X);
                             }
                         }
                         else
@@ -511,8 +511,15 @@ namespace Remizione
                 return;
 
             statuses ??= new StatusSet();
-            //if (Atlases.UI.FindImage($"{statusType}Icon") is { } statusIcon)
-              //  ShowFlyOff(statusIcon);
+
+            if (Atlases.UI.FindImage($"{statusType}Icon") is { } statusIcon)
+            {
+                for (int i = 0; i < amount; i++)
+                {
+                    ShowFlyOff(statusIcon, ScaleInfo.UIElement.Tiny.X);
+                }
+            }
+
             StatusVersion++;
             if (statuses.ApplyAmount(statusType, finalAmount))
                 TakeDamage(this, DamageType.Physical, 1, Vector2.Zero);
@@ -1276,11 +1283,11 @@ namespace Remizione
         }
 
         // ShowFlyOff
-        public FlyOff? ShowFlyOff(AtlasImage image)
+        public FlyOff? ShowFlyOff(AtlasImage image, float scale = 1)
         {
             if (Session.ObjectPools.FlyOffs.Get() is FlyOff flyOff)
             {
-                flyOff.ShowIcon(GetOverheadPosition(), image);
+                flyOff.ShowIcon(GetOverheadPosition(), image, scale);
                 return flyOff;
             }
 
