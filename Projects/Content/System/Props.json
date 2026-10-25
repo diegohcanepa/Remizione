@@ -3,8 +3,17 @@
   "data": [
     {
       "name": "PetrifiedTreeA",
+      "hardSurface": true,
       "hp": 6,
       "materialReward": "Wood",
+      "effects": [
+        {
+          "context": "HitHardTarget",
+          "effectType": "Status",
+          "statusType": "Laceration",
+          "amount": "1"
+        }
+      ],
       "tags": [
         "PetrifiedTree"
       ]

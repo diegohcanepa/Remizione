@@ -74,6 +74,7 @@
 			"actionKind": "Proximity",
 			"allowDrop": false,
 			"deselectOnUse": false,
+			"hardSurfacePenalty": true,
 			"isDepletable": false,
 			"isKeyItem": true,
 			"effects": [

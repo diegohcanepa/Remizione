@@ -33,8 +33,6 @@ namespace Remizione
         private const float KnockbackFriction = 0.90f; // Ajustá este valor (0.8 - 0.95)
         private Vector2 lastCheckedPosition;
         private PathNode[]? pathNodes;
-        private int? pendingDamageAmount;
-        private DamageType pendingDamageType;
         private int renderLayerDepth;
         private readonly ShadowSpot shadowSpot;
         private bool shouldClampToWalkablePosition;
@@ -245,6 +243,25 @@ namespace Remizione
             isCollisionDirty = true;
         }
 
+        // ProcessDamageFlyOff
+        private void ProcessDamageFlyOff(int amount, DamageType damageType)
+        {
+            var color = ColorPalette.Damage.GetColor(damageType);
+            var damageAmount = Math.Abs(amount);
+
+            if (IsPlayer)
+            {
+                for (var i = 0; i < damageAmount; i++)
+                {
+                    ShowFlyOff(Atlases.UI.HeartIcon, ScaleInfo.UIElement.Tiny.X);
+                }
+            }
+            else
+            {
+                Session.ObjectPools.FlyOffs.Get()?.ShowAmount(this, color, damageAmount);
+            }
+        }
+
         // SyncHPMeter
         private void SyncHPMeter()
         {
@@ -256,6 +273,9 @@ namespace Remizione
         // UpdateKnockback
         private void UpdateKnockback(GameTime gameTime)
         {
+            if (knockbackVelocity == Vector2.Zero)
+                return;
+
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             // 1. Aplicar movimiento basado en dt
@@ -272,33 +292,9 @@ namespace Remizione
             if (knockbackVelocity == Vector2.Zero)
             {
                 if (IsDead)
-                {
                     Die();
-                }
                 else
-                {
-                    if (pendingDamageAmount.HasValue)
-                    {
-                        var color = ColorPalette.Damage.GetColor(pendingDamageType);
-                        var damageAmount = Math.Abs(pendingDamageAmount.Value);
-                        if (IsPlayer)
-                        {
-                            for (var i = 0; i < damageAmount; i++)
-                            {
-                                ShowFlyOff(Atlases.UI.HeartIcon, ScaleInfo.UIElement.Tiny.X);
-                            }
-                        }
-                        else
-                        {
-                            Session.ObjectPools.FlyOffs.Get()?.ShowAmount(this, color, damageAmount);
-                        }
-
-                        pendingDamageAmount = null;
-                        pendingDamageType = DamageType.None;
-                    }
-
                     OnKnockbackCompleted();
-                }
             }
         }
 
@@ -950,7 +946,6 @@ namespace Remizione
         {
             return Room?.WalkArea == null || Room.WalkArea.HasLineOfSight(Position, target.Position, RaycastContext.LineOfSight, this, out _);
         }
-
         // HideHPMeter
         [ScriptProperty]
         public bool HideHPMeter { get; set; }
@@ -1367,11 +1362,8 @@ namespace Remizione
 
                     OnTakeDamage(attacker, amount, damageType);
 
-                    if (!IsDead)
-                    {
-                        pendingDamageAmount = -amount;
-                        pendingDamageType = damageType;
-                    }
+                    if (amount > 0)
+                        ProcessDamageFlyOff(amount, damageType);
                 }
             }
             else

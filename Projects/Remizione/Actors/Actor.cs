@@ -85,7 +85,7 @@ namespace Remizione
                 if (Room.CulledThings[i] is not GameThing candidate)
                     continue;
 
-                if (candidate == this || candidate.IsDead)
+                if (candidate == this || candidate.IsDead || (candidate is Prop && !IsPlayer))
                     continue;
 
                 if (Altitude > candidate.CollisionHeight)
@@ -1144,26 +1144,6 @@ namespace Remizione
             speechText ??= new(this);
             speechText.Show(text, awaitInput, soundName, SpeechSoundIsLooped);
         }
-
-        // ShowStatusReaction
-        /*
-        public void ShowStatusReaction(Status status, bool showIcon)
-        {
-            switch (status.StatusType)
-            {
-                // Poison
-                case StatusType.Poison:
-                    if (showIcon)
-                        ShowFlyOff(status.Definition.Image);
-                    tintTween.Start(TweenStyle.QuadraticInOut, Color.White, Color.Green, 150, 2);
-                    PlaySound(SoundNames.StatusPoison);
-                    break;
-
-                default:
-                    break;
-            }
-        }
-        */
 
         // Target
         public Actor? Target => (combatMachine?.CurrentState as CombatAttackState)?.Target;

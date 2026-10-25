@@ -33,6 +33,9 @@
         "energyCost": {
           "type": "integer"
         },
+        "hardSurfacePenalty": {
+          "type": "boolean"
+        },
         "isCharge": {
           "type": "boolean"
         },

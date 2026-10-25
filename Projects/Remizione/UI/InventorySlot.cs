@@ -16,6 +16,7 @@ namespace Remizione
         private readonly Sprite perishStateIcon;
         private readonly Sprite shadow;
         private readonly Sprite slot;
+        private static int slotImageIndex;
 
         #endregion
 
@@ -51,8 +52,12 @@ namespace Remizione
             this.slot = new()
             {
                 PivotOrigin = RectanglePoint.Center,
-                RenderImage = Atlases.UI.InventoryItemSlots.GetRandomItem()
+                RenderImage = Atlases.UI.InventoryItemSlots[slotImageIndex]
             };
+
+            slotImageIndex++;
+            if (slotImageIndex == Atlases.UI.InventoryItemSlots.Count)
+                slotImageIndex = 0;
         }
 
         #endregion

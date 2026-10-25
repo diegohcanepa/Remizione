@@ -16,6 +16,7 @@ namespace Remizione
         {
             Atlas = Atlases.Props;
             ApproachBehavior = ApproachBehavior.ClosestSide;
+            HideHPMeter = true;
             Verb = Verb.Lift;
             IsHittable = true;
             DeathSound = Sound.Find(SoundNames.PotteryBreak);

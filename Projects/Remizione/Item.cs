@@ -40,7 +40,6 @@ namespace Remizione
 
         ActionKind IAction.ActionKind => Definition.ActionKind;
 
-
         #endregion
 
         #region Private members
@@ -110,6 +109,9 @@ namespace Remizione
 
         // Definition
         public ItemDefinition Definition { get; }
+
+        // HardSurfacePenalty
+        public bool HardSurfacePenalty => Definition.HardSurfacePenalty;
 
         // HPCost
         public int HPCost => Definition.HPCost;

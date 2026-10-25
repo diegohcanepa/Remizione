@@ -26,8 +26,6 @@ namespace Remizione
         {
             this.Definition = GameData.Props.Find(DeclaredName);
             this.IgnoreKnockback = true;
-            this.HideHPMeter = true;
-            //this.IsHittable = false;
             this.Verb = Verb.Use;
 
             // Shadow
@@ -255,7 +253,7 @@ namespace Remizione
         {
             if (remainsPieces?.Count > 0)
             {
-                var remains = new Remains(Session, string.Empty, new(.7f), remainsPieces, remainsPieces.Count * 2, true, false)
+                var remains = new Remains(Session, string.Empty, new(.85f), remainsPieces, remainsPieces.Count * 2, true, false)
                 {
                     Position = Position
                 };

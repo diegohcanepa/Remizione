@@ -51,7 +51,12 @@ namespace Remizione
                 if (action.MissChance.Roll())
                     Owner.ShowFlyOff(missText, ColorPalette.MouseCursor.Tooltip);
                 else
+                {
                     EffectDescriptor.Apply(action.EffectDescriptors, Owner, Target, EffectContext.Attack);
+
+                    if (Target.Definition?.HardSurface == true && action.HardSurfacePenalty)
+                        EffectDescriptor.Apply(Target.Definition.Effects, Target, Owner, EffectContext.HitHardTarget);
+                }
 
                 //Owner.Session.InterruptAwaitingScript();
             }

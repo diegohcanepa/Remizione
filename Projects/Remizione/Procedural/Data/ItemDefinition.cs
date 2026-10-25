@@ -51,6 +51,9 @@ namespace Remizione
             // DeselectOnUse
             DeselectOnUse = element.GetBool("deselectOnUse", false);
 
+            // HardSurfacePenalty
+            HardSurfacePenalty = element.GetBool("hardSurfacePenalty", false);
+
             // HPCost
             HPCost = Math.Max(0, element.GetInt32("hpCost", 0));
 
@@ -188,6 +191,9 @@ namespace Remizione
         {
             return amount == 1 ? Label : Label + $" (x{amount})";
         }
+
+        // HardSurfacePenalty
+        public bool HardSurfacePenalty { get; }
 
         // HasBreakChance
         public bool HasBreakChance => BreakChanceIncrement > 0 || BreakBaseChance > 0;

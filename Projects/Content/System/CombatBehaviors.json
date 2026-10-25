@@ -30,6 +30,7 @@
             "name": "GadlingKnuckle",
             "animationName": "Punch",
             "actionKind": "Proximity",
+            "hardSurfacePenalty": true,
             "maxRange": 5,
             "effects": [
               {

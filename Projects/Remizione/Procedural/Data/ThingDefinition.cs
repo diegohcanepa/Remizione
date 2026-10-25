@@ -26,6 +26,9 @@ namespace Remizione
             // GraceReward
             GraceReward = element.GetInt32("graceReward", 0);
 
+            // HardSurface
+            HardSurface = element.GetBool("hardSurface", false);
+
             // HP
             HP = element.GetInt32("hp", 0);
 
@@ -90,6 +93,9 @@ namespace Remizione
 
         // GraceReward
         public int GraceReward { get; }
+
+        // HardSurface
+        public bool HardSurface { get; }
 
         // HP
         public int HP { get; }

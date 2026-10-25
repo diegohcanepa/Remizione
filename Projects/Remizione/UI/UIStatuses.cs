@@ -95,7 +95,12 @@ namespace Remizione
             for (var i = 0; i < meters.Length; i++)
             {
                 var value = Actor.GetStatusValue(statuses[i]);
-                if (value > 0 && Atlases.UI.FindImage($"Status{statuses[i]}{i + 1}") is { } icon)
+
+                if (value <= 0)
+                {
+                    meters[i].RenderImage = null;
+                }
+                else if (Atlases.UI.FindImage($"Status{statuses[i]}{value}") is { } icon)
                 {
                     meters[i].RenderImage = icon;
                     meters[i].Position = startPos;

@@ -138,13 +138,8 @@ namespace Remizione
 
                     // Status
                     case EffectType.Status:
-                        /*
                         if (effect.StatusType is StatusType statusType && targetActor != null && !targetActor.IsDead)
-                        {
-                            var status = targetActor.StatusManager.Apply(statusType, amount);
-                            targetActor.ShowStatusReaction(status, true);
-                        }
-                        */
+                            targetActor.ApplyStatus(statusType, amount);
                         break;
                 }
             }

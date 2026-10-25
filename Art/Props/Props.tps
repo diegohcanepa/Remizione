@@ -455,7 +455,6 @@
             </struct>
             <key type="filename">PetrifiedTree-assets/PetrifiedTreeARemains2.png</key>
             <key type="filename">PetrifiedTree-assets/PetrifiedTreeARemains3.png</key>
-            <key type="filename">PetrifiedTree-assets/PetrifiedTreeARemains4.png</key>
             <key type="filename">PotteryB-assets/PotteryBRemains4.png</key>
             <key type="filename">PotteryE-assets/PotteryEPiece1.png</key>
             <key type="filename">PotteryE-assets/PotteryEPiece3.png</key>

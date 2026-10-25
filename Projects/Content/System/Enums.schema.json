@@ -61,7 +61,8 @@
         "ProjectileHit",
         "RunModifier",
         "Status",
-        "ApplyStatus"
+        "ApplyStatus",
+        "HitHardTarget"
       ]
     },
     "EffectTarget": {

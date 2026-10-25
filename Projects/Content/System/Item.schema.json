@@ -59,6 +59,9 @@
             "deselectOnUse": {
               "type": "boolean"
             },
+            "hardSurfacePenalty": {
+              "type": "boolean"
+            },
             "hpCost": {
               "type": "integer"
             },
