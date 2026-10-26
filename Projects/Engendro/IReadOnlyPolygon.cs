@@ -25,6 +25,7 @@ namespace Engendro
         void GetVertices(Span<Vector2> destination, Vector2 offset);
         bool InLineOfSight(Vector2 origin, Vector2 destination);
         bool Intersects(Vector2 from, Vector2 to);
+        bool IsConcave { get; }
         bool IsVertexConcave(int vertex);
         PolygonOrientation Orientation { get; }
         Vector2 RandomPoint(Random rng);

@@ -118,6 +118,17 @@ namespace Remizione
         // BlocksLineOfSight
         protected override bool BlocksLineOfSight => !RevealArea.IsEmpty;
 
+        // CreateHPMeter
+        protected override FlatMeter CreateHPMeter()
+        {
+            var back = Colors.HPMeterProp.Back;
+            var border = Colors.HPMeterProp.Border;
+            var fore = Colors.HPMeterProp.Fore;
+            var diff = Colors.HPMeterProp.Diff;
+
+            return new(border, back, fore, diff, new(10, 3), .75f);
+        }
+
         // OnAtlasChanged
         protected override void OnAtlasChanged()
         {

@@ -139,17 +139,6 @@ namespace Remizione
         // BorderSize
         public Vector2 BorderSize { get; }
 
-        // CreateHPMeter
-        public static FlatMeter CreateHPMeter(bool isProp)
-        {
-            var back = isProp ? Colors.HPMeterProp.Back : Colors.HPMeterActor.Back;
-            var border = isProp ? Colors.HPMeterProp.Border : Colors.HPMeterActor.Border;
-            var fore = isProp ? Colors.HPMeterProp.Fore : Colors.HPMeterActor.Fore;
-            var diff = isProp ? Colors.HPMeterProp.Diff : Colors.HPMeterActor.Diff;
-
-            return new(border, back, fore, diff, new(10, 3), .75f);
-        }
-
         // DiffColor
         public Color DiffColor
         {

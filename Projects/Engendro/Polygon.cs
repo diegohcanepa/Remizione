@@ -201,10 +201,13 @@ namespace Engendro
 
             InvalidateCachesOnly();
 
+            IsConcave = false;
             vertexTypes = new VertexType[this.vertices.Count];
             for (var i = 0; i < vertexTypes.Length; i++)
             {
                 vertexTypes[i] = IsVertexConcaveCore(i) ? VertexType.Concave : VertexType.Convex;
+                if (vertexTypes[i] == VertexType.Concave)
+                    IsConcave = true;
             }
         }
 
@@ -522,6 +525,9 @@ namespace Engendro
 
             return false;
         }
+
+        // IsConcave
+        public bool IsConcave { get; private set; }
 
         // IsEmpty
         public bool IsEmpty => vertices.Count < 3;

@@ -269,7 +269,7 @@ namespace Remizione
             if (MaxHP < 2)
                 return;
 
-            hpMeter ??= FlatMeter.CreateHPMeter(HideHPMeter);
+            hpMeter ??= CreateHPMeter();
             hpMeter.MaximumValue = MaxHP;
             hpMeter.Value = HP;
         }
@@ -313,6 +313,17 @@ namespace Remizione
         protected virtual bool CanCheckCollisions()
         {
             return CollisionDetection;
+        }
+
+        // CreateHPMeter
+        protected virtual FlatMeter CreateHPMeter()
+        {
+            var back = Colors.HPMeterActor.Back;
+            var border = Colors.HPMeterActor.Border;
+            var fore = Colors.HPMeterActor.Fore;
+            var diff = Colors.HPMeterActor.Diff;
+
+            return new(border, back, fore, diff, new(10, 3), .75f);
         }
 
         // DropLoot
@@ -950,6 +961,7 @@ namespace Remizione
         {
             return Room?.WalkArea == null || Room.WalkArea.HasLineOfSight(Position, target.Position, RaycastContext.LineOfSight, this, out _);
         }
+        
         // HideHPMeter
         [ScriptProperty]
         public bool HideHPMeter { get; set; }
