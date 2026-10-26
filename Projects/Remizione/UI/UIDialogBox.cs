@@ -23,7 +23,7 @@ namespace Remizione
             // MessageText
             this.message = new(Fonts.Common)
             {
-                Color = ColorPalette.Text.Default,
+                Color = Colors.Palette.Text,
                 PivotOrigin = RectanglePoint.Center,
                 MaximumWidth = 140,
                 Multiline = true,

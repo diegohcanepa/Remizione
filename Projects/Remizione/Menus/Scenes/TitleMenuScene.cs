@@ -79,7 +79,7 @@ namespace Remizione.Menus
             // Experience advice
             experienceAdviceText = new(Fonts.Common)
             {
-                Color = ColorPalette.TextWhite,
+                Color = Colors.Palette.Text,
                 MaximumWidth = 260,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom),

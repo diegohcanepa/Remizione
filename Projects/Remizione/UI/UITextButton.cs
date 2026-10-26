@@ -25,7 +25,7 @@ namespace Remizione
         {
             this.label = new TextSprite(Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Default,
+                Color = Colors.Palette.Text,
                 Scale = ScaleInfo.Text.Huge
             };
 
@@ -102,7 +102,7 @@ namespace Remizione
         }
 
         // HoverColor
-        public Color HoverColor { get; set; } = ColorPalette.Text.Default;
+        public Color HoverColor { get; set; } = Colors.Palette.Text;
 
         // MinimumWidth
         public float MinimumWidth
@@ -178,7 +178,7 @@ namespace Remizione
         }
 
         // TextColor
-        public Color TextColor { get; set; } = ColorPalette.Text.TerraLight;
+        public Color TextColor { get; set; } = Colors.Palette.TerraLight;
 
         // X
         public override float X

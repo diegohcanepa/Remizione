@@ -84,7 +84,7 @@ namespace Remizione
             // 3. Highlight Color: Limpia la memoria si no aplica
             if (heldItem != null && (target == null || !Utils.IsGoToVerb(target.Verb)))
             {
-                MouseCursor.HightlightColor = target == null ? null : ColorPalette.MouseCursor.Highlight;
+                MouseCursor.HightlightColor = target == null ? null : Colors.MouseCursor.Highlight;
             }
             else
             {
@@ -126,8 +126,8 @@ namespace Remizione
             var target = context.Target;
             var heldItem = context.HeldItem;
 
-            MouseCursor.TooltipColor = ColorPalette.MouseCursor.Tooltip;
-            MouseCursor.SubTextColor = ColorPalette.MouseCursor.SubText;
+            MouseCursor.TooltipColor = Colors.MouseCursor.Tooltip;
+            MouseCursor.SubTextColor = Colors.MouseCursor.SubText;
 
             if (target != null && heldItem == null)
             {
@@ -167,6 +167,10 @@ namespace Remizione
                 lastKnownHeldItem = heldItem;
                 lastKnownVerb = verb;
             }
+
+            MouseCursor.IsVisible = true;
+            if (context.Session.Player?.IsExecutingAction == true)
+                MouseCursor.IsVisible = false;
         }
     }
 }

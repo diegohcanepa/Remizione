@@ -32,7 +32,7 @@ namespace Remizione
         // UpdateColor
         private void UpdateColor()
         {
-            textSprite.Color = IsSelected ? ColorPalette.Text.TerraLight : ColorPalette.Text.Default;
+            textSprite.Color = IsSelected ? Colors.Palette.TerraLight : Colors.Palette.Text;
         }
 
         #endregion

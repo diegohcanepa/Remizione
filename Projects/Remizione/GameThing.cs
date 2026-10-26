@@ -7,6 +7,7 @@ using Engendro.PathFinding;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Remizione
 {
@@ -246,7 +247,7 @@ namespace Remizione
         // ProcessDamageFlyOff
         private void ProcessDamageFlyOff(int amount, DamageType damageType)
         {
-            var color = ColorPalette.Damage.GetColor(damageType);
+            var color = Colors.Palette.Red;
             var damageAmount = Math.Abs(amount);
 
             if (IsPlayer)
@@ -258,14 +259,17 @@ namespace Remizione
             }
             else
             {
-                Session.ObjectPools.FlyOffs.Get()?.ShowAmount(this, color, damageAmount);
+                ShowFlyOff(damageAmount.ToString(CultureInfo.InvariantCulture), color);
             }
         }
 
         // SyncHPMeter
         private void SyncHPMeter()
         {
-            hpMeter ??= FlatMeter.CreateHPMeter();
+            if (MaxHP < 2)
+                return;
+
+            hpMeter ??= FlatMeter.CreateHPMeter(HideHPMeter);
             hpMeter.MaximumValue = MaxHP;
             hpMeter.Value = HP;
         }
@@ -650,7 +654,7 @@ namespace Remizione
                         Sound.Play(SoundNames.GraceGain);
                         Session.PlayerData.Grace += Definition.GraceReward;
                         var text = $"+{Definition.GraceReward} {Localization.GetValue(PlayerStat.Grace)}";
-                        Session.ObjectPools.FlyOffs.Get()?.ShowText(GetOverheadPosition(), text, ColorPalette.Text.Grace, ScaleInfo.Text.Medium.X);
+                        Session.ObjectPools.FlyOffs.Get()?.ShowText(GetOverheadPosition(), text, Colors.Palette.Grace, ScaleInfo.Text.Medium.X);
                     }
 
                     if (Definition?.MaterialReward != null)
@@ -712,10 +716,10 @@ namespace Remizione
                 return Vector2.Distance(target.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.LeftBottom), RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.RightBottom));
         }
 
-        // DrawMeter
-        public void DrawMeter(GameTime gameTime)
+        // DrawHPMeter
+        public void DrawHPMeter(GameTime gameTime)
         {
-            if (hpMeter == null || HideHPMeter)
+            if (hpMeter == null || (HideHPMeter && !hpMeter.IsAnimating))
                 return;
 
             if (!IsPlayer && !IsDead)
@@ -1294,7 +1298,7 @@ namespace Remizione
         {
             if (Session.ObjectPools.FlyOffs.Get() is FlyOff flyOff)
             {
-                flyOff.ShowText(GetOverheadPosition(), text, color);
+                flyOff.ShowText(GetOverheadPosition(new(0, -3)), text, color);
                 return flyOff;
             }
 
@@ -1362,7 +1366,7 @@ namespace Remizione
 
                     OnTakeDamage(attacker, amount, damageType);
 
-                    if (amount > 0)
+                    if (amount > 0 && MaxHP > 1)
                         ProcessDamageFlyOff(amount, damageType);
                 }
             }

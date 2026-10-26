@@ -32,7 +32,7 @@ namespace Remizione
             // Amount
             this.amountText = new TextSprite(Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.TerraDark,
+                Color = Colors.Palette.TerraDark,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = position,
                 Scale = ScaleInfo.Text.Large,
@@ -91,7 +91,7 @@ namespace Remizione
                 lastKnownCount = Session.PlayerData.GetMaterialCount(material);
                 icon.Opacity = lastKnownCount > 0 ? 1 : .5f;
                 amountText.Text = $"{lastKnownCount}/5";
-                amountText.Color = ColorPalette.Text.Terra;
+                amountText.Color = Colors.Palette.Terra;
             }
         }
 

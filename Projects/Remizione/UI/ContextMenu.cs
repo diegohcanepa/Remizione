@@ -77,7 +77,7 @@ namespace Remizione
             for (var i = 0; i < optionList.Count; i++)
             {
                 if (optionList[i] == SelectedOption)
-                    Game.Shapes.DrawRectangle(boundingBoxes[i], ColorPalette.ContextMenu.OptionBack);
+                    Game.Shapes.DrawRectangle(boundingBoxes[i], Colors.ContextMenu.OptionBack);
 
                 optionList[i].Draw(gameTime);
             }

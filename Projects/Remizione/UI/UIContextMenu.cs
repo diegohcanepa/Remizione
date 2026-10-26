@@ -223,13 +223,13 @@ namespace Remizione
         }
 
         // OptionColor
-        public Color OptionColor { get; set; } = ColorPalette.Text.Default;
+        public Color OptionColor { get; set; } = Colors.Palette.Text;
 
         // Options
         public ReadOnlyCollection<UIContextMenuOption<T>> Options { get; }
 
         // OptionSelectedColor
-        public Color OptionSelectedColor { get; set; } = ColorPalette.Text.Default;
+        public Color OptionSelectedColor { get; set; } = Colors.Palette.Text;
 
         // OptionSelectorImage
         public AtlasImage? OptionSelectorImage

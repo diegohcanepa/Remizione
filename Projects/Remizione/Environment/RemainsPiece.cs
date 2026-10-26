@@ -91,7 +91,7 @@ namespace Remizione
 
             if (Shadow)
             {
-                image.Color = ColorPalette.Shadow;
+                image.Color = Colors.Shadow;
                 image.Y += 1f;
                 image.Draw(gameTime);
                 image.Y -= 1f;

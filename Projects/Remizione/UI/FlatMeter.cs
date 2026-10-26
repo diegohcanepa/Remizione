@@ -63,7 +63,7 @@ namespace Remizione
             // AmountText
             this.amountText = new(Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Terra,
+                Color = Colors.Palette.Terra,
                 PivotOrigin = RectanglePoint.Bottom,
                 Scale = ScaleInfo.Text.Medium
             };
@@ -140,9 +140,14 @@ namespace Remizione
         public Vector2 BorderSize { get; }
 
         // CreateHPMeter
-        public static FlatMeter CreateHPMeter()
+        public static FlatMeter CreateHPMeter(bool isProp)
         {
-            return new(ColorPalette.HPMeter.Border, ColorPalette.HPMeter.Back, ColorPalette.HPMeter.Fore, ColorPalette.HPMeter.Diff, new(10, 2.5f), .5f);
+            var back = isProp ? Colors.HPMeterProp.Back : Colors.HPMeterActor.Back;
+            var border = isProp ? Colors.HPMeterProp.Border : Colors.HPMeterActor.Border;
+            var fore = isProp ? Colors.HPMeterProp.Fore : Colors.HPMeterActor.Fore;
+            var diff = isProp ? Colors.HPMeterProp.Diff : Colors.HPMeterActor.Diff;
+
+            return new(border, back, fore, diff, new(10, 3), .75f);
         }
 
         // DiffColor

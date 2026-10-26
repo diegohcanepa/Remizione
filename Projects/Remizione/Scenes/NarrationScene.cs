@@ -40,7 +40,7 @@ namespace Remizione
             // Text sprite
             this.textSprite = new(Fonts.Common)
             {
-                Color = ColorPalette.Text.Yellow * .8f,
+                Color = Colors.Palette.Yellow * .8f,
                 MaximumWidth = (int)(Screen.NativeWidth * .7f),
                 PivotOrigin = RectanglePoint.Top,
                 Position = background.BoundingBox.GetPoint(RectanglePoint.Top, 0, 20),
@@ -130,7 +130,7 @@ namespace Remizione
             this.textSprite.Text = text;
             if (!string.IsNullOrWhiteSpace(soundName))
             {
-                this.textSprite.Color = ColorPalette.MouseCursor.Tooltip;
+                this.textSprite.Color = Colors.MouseCursor.Tooltip;
                 MouseCursor.Icon = MouseCursorIcon.Wait;
             }
 

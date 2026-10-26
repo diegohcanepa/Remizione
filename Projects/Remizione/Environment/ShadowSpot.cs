@@ -23,7 +23,7 @@ namespace Remizione
             this.thing = thing;
             this.spotImage = new Sprite()
             {
-                Color = ColorPalette.ShadowSpot,
+                Color = Colors.ShadowSpot,
                 PivotOrigin = RectanglePoint.Center
             };
         }
@@ -36,7 +36,7 @@ namespace Remizione
         private float GetCurrentOpacity()
         {
             if (spotImage.Tweens.OpacityTween == null)
-                return ColorPalette.ShadowOpacity;
+                return Colors.ShadowOpacity;
             else
                 return spotImage.Tweens.OpacityTween.CurrentValue;
         }

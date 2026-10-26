@@ -47,14 +47,14 @@ namespace Remizione
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp);
 
             editorInfoText.Position = Screen.Area.GetPoint(RectanglePoint.RightTop, -4, 0);
-            DrawText(gameTime, editorInfoText, Utils.GetVersion(), ColorPalette.TextWhite);
-            DrawText(gameTime, editorInfoText, $"Entities: {session.Entities.Count}", ColorPalette.TextWhite);
-            DrawText(gameTime, editorInfoText, $"Play time: {session.PlayTime:hh\\:mm\\:ss}", ColorPalette.TextWhite);
-            DrawText(gameTime, editorInfoText, $"FPS: {EngendroGame.FPS}", ColorPalette.TextWhite);
+            DrawText(gameTime, editorInfoText, Utils.GetVersion(), Colors.Palette.Text);
+            DrawText(gameTime, editorInfoText, $"Entities: {session.Entities.Count}", Colors.Palette.Text);
+            DrawText(gameTime, editorInfoText, $"Play time: {session.PlayTime:hh\\:mm\\:ss}", Colors.Palette.Text);
+            DrawText(gameTime, editorInfoText, $"FPS: {EngendroGame.FPS}", Colors.Palette.Text);
 
             NewLine(editorInfoText);
-            DrawText(gameTime, editorInfoText, $"Editor Mode (F3): {editMode}", ColorPalette.HighlightedText);
-            DrawText(gameTime, editorInfoText, "Save Game (F10)", ColorPalette.HighlightedText);
+            DrawText(gameTime, editorInfoText, $"Editor Mode (F3): {editMode}", Colors.Palette.Text);
+            DrawText(gameTime, editorInfoText, "Save Game (F10)", Colors.Palette.Text);
 
             Game.SpriteBatch.End();
         }
@@ -64,7 +64,7 @@ namespace Remizione
         {
             // Camera Position
             NewLine(text);
-            DrawText(gameTime, text, "CAMERA", ColorPalette.HighlightedText);
+            DrawText(gameTime, text, "CAMERA", Colors.Palette.Text);
             DrawText(gameTime, text, $"Offset: {session.Camera.Offset}");
             DrawText(gameTime, text, $"Position: {session.Camera.Position}");
 
@@ -79,7 +79,7 @@ namespace Remizione
         {
             // Mouse Position
             NewLine(text);
-            DrawText(gameTime, text, "MOUSE", ColorPalette.HighlightedText);
+            DrawText(gameTime, text, "MOUSE", Colors.Palette.Text);
             DrawText(gameTime, text, $"Position: {InputManager.DefaultPlayer.Mouse.Position}");
             DrawText(gameTime, text, $"Virtual position: {InputManager.DefaultPlayer.Mouse.VirtualPosition}");
             DrawText(gameTime, text, $"World position: {InputManager.DefaultPlayer.Mouse.WorldPosition(session.Camera)}");
@@ -89,7 +89,7 @@ namespace Remizione
         private void DrawRoomData(GameTime gameTime, GameRoom room)
         {
             NewLine(text);
-            DrawText(gameTime, text, $"ROOM ({room})", ColorPalette.HighlightedText);
+            DrawText(gameTime, text, $"ROOM ({room})", Colors.Palette.Text);
             DrawText(gameTime, text, $"Culled things: {room.CulledThings.Count} ({room.Children.Count})");
             DrawText(gameTime, text, $"Custom size: {room.CustomWidth}x{room.CustomHeight}");
         }
@@ -98,7 +98,7 @@ namespace Remizione
         private void DrawSessionData(GameTime gameTime)
         {
             NewLine(text);
-            DrawText(gameTime, text, "SESSION", ColorPalette.HighlightedText);
+            DrawText(gameTime, text, "SESSION", Colors.Palette.Text);
 
             string awaitingScript;
             if (session.AwaitingScript != null)
@@ -121,7 +121,7 @@ namespace Remizione
         private void DrawSoundData(GameTime gameTime)
         {
             NewLine(text);
-            DrawText(gameTime, text, "AUDIO MANAGER", ColorPalette.HighlightedText);
+            DrawText(gameTime, text, "AUDIO MANAGER", Colors.Palette.Text);
             DrawText(gameTime, text, $"Music: {AudioManager.Music.CurrentSoundName}");
             DrawText(gameTime, text, $"Music tag: {AudioManager.Music.CurrentTag}");
             DrawText(gameTime, text, $"Sound instances: {SoundInstance.RunningInstances.Count}");
@@ -130,7 +130,7 @@ namespace Remizione
         // DrawText
         private static void DrawText(GameTime gameTime, TextSprite text, string value)
         {
-            DrawText(gameTime, text, value, ColorPalette.TextWhite);
+            DrawText(gameTime, text, value, Colors.Palette.Text);
         }
 
         // DrawText
@@ -159,7 +159,7 @@ namespace Remizione
 
             // Name
             var value = SelectedThing.Name + " (" + SelectedThing.GetType().Name + ")" + (SelectedThing.Persistent ? " [persistent]" : string.Empty);
-            DrawText(gameTime, text, value, ColorPalette.HighlightedText, ScaleInfo.Text.Tiny);
+            DrawText(gameTime, text, value, Colors.Palette.Text, ScaleInfo.Text.Tiny);
 
             // Animation Name
             var animationName = SelectedThing.AnimationPlayer.Animation?.Name ?? string.Empty;
@@ -377,7 +377,7 @@ namespace Remizione
 
             DrawGeneralInfo(gameTime);
 
-            text.Color = ColorPalette.HighlightedText;
+            text.Color = Colors.Palette.Text;
             text.PivotOrigin = RectanglePoint.LeftTop;
             text.Position = new Vector2(5, 0);
 

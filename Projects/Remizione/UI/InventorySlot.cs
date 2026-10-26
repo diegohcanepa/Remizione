@@ -28,7 +28,7 @@ namespace Remizione
             // Amount
             this.amount = new(Fonts.Common)
             {
-                Color = ColorPalette.Text.Default,
+                Color = Colors.Palette.Text,
                 PivotOrigin = RectanglePoint.Top,
                 Scale = ScaleInfo.Text.ExtraLarge
             };

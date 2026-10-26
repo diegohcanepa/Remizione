@@ -11,7 +11,7 @@ namespace Remizione
     /// </summary>
     public sealed class FlyOff : SessionGameObject<GameSession>
     {
-        private const int fadeDuration = 200;
+        private const int fadeDuration = 100;
         private static readonly float defaultScale = ScaleInfo.Text.Small.X;
 
         private Sprite? activeSprite;
@@ -45,7 +45,7 @@ namespace Remizione
         // Launch
         private void Launch(Vector2 origin, Sprite sprite, int duration)
         {
-            var distance = LaunchOffsets[spawnIndex];
+            var distance = sprite is TextSprite ? new(0, -5) : LaunchOffsets[spawnIndex];
             spawnIndex = (spawnIndex + 1) % LaunchOffsets.Length;
 
             activeSprite = sprite;
@@ -73,7 +73,7 @@ namespace Remizione
             opacityTween.Start(TweenStyle.QuadraticIn, 1, 0, fadeDuration);
 
             sprite.Tweens.OpacityTween = opacityTween;
-            //sprite.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.Linear, Vector2.Zero, sprite.Scale, 200);
+            sprite.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.Linear, Vector2.Zero, sprite.Scale, 200);
 
             if (shake)
             {
@@ -88,7 +88,7 @@ namespace Remizione
             text.Color = color;
             text.Scale = new(scale);
             text.Text = value;
-            Launch(origin, text, 2000);
+            Launch(origin, text, 1000);
         }
 
         #endregion
@@ -137,7 +137,7 @@ namespace Remizione
                 return;
 
             var origin = source.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, -4);
-            ShowTextCore(origin, amount.ToString(CultureInfo.InvariantCulture), color, ScaleInfo.Text.Medium.X);
+            ShowTextCore(origin, amount.ToString(CultureInfo.InvariantCulture), color, ScaleInfo.Text.Small.X);
         }
 
         // ShowIcon

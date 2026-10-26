@@ -56,10 +56,9 @@ namespace Remizione
             return lightKind switch
             {
                 LightKind.Fire => new Color(255, 160, 160),
-                LightKind.KeyItemOrb => ColorPalette.Text.SkyBlue,
-                LightKind.CommonItemOrb => ColorPalette.Text.TerraLight,
+                LightKind.KeyItemOrb => Colors.Palette.SkyBlue,
+                LightKind.CommonItemOrb => Colors.Palette.TerraLight,
                 LightKind.SulfurBonfire => new(184, 196, 81),
-                LightKind.Outdoor => ColorPalette.OutdoorLight,
                 LightKind.Player => Color.White * .7f,
                 _ => Color.White
             };
@@ -104,7 +103,6 @@ namespace Remizione
                     break;
 
                 case LightKind.MuzzleFlash:
-                case LightKind.Outdoor:
                 case LightKind.Player:
                 default:
                     break;

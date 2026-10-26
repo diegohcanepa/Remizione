@@ -110,7 +110,7 @@ namespace Remizione
     }
 
     // LightKind
-    public enum LightKind { Default, Lantern, Fire, KeyItemOrb, SulfurBonfire, Global, MuzzleFlash, Outdoor, Player, CommonItemOrb, FleshinessItemOrb }
+    public enum LightKind { Default, Lantern, Fire, KeyItemOrb, SulfurBonfire, Global, MuzzleFlash, Player, CommonItemOrb, FleshinessItemOrb }
 
     // LightState
     public enum LightState { Off, On, TurningOn, TurningOff }

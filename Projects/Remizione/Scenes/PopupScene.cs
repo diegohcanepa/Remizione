@@ -29,8 +29,8 @@ namespace Remizione
             this.container = new Sprite() { PivotOrigin = RectanglePoint.Center, Position = Screen.Area.Center.ToVector2() };
             this.shadow = new Sprite() { Position = container.BoundingBox.GetPoint(RectanglePoint.LeftTop, 7, 7) };
 
-            this.titleSprite = new TextSprite(Fonts.Common) { Color = ColorPalette.PopupTitle, PivotOrigin = RectanglePoint.Top, Position = container.BoundingBox.GetPoint(0), Scale = ScaleInfo.PopupTitle, Text = title };
-            this.text = new TextSprite(Fonts.Common) { Color = ColorPalette.TextWhite, MaximumWidth = 220, PivotOrigin = RectanglePoint.Top, Position = titleSprite.BoundingBox.GetPoint(RectanglePoint.Bottom), Scale = ScaleInfo.PopupText, Text = text };
+            this.titleSprite = new TextSprite(Fonts.Common) { Color = Colors.Palette.Text, PivotOrigin = RectanglePoint.Top, Position = container.BoundingBox.GetPoint(0), Scale = ScaleInfo.PopupTitle, Text = title };
+            this.text = new TextSprite(Fonts.Common) { Color = Colors.Palette.Text, MaximumWidth = 220, PivotOrigin = RectanglePoint.Top, Position = titleSprite.BoundingBox.GetPoint(RectanglePoint.Bottom), Scale = ScaleInfo.PopupText, Text = text };
 
             buttons = new UITextButton[inputBindings.Length];
             for (var i = 0; i < inputBindings.Length; i++)

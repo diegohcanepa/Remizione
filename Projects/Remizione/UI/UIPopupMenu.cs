@@ -225,7 +225,7 @@ namespace Remizione
         // ResetColors
         public void ResetColors()
         {
-            titleText.Color = ColorPalette.Text.Default;
+            titleText.Color = Colors.Palette.Text;
         }
 
         // Select

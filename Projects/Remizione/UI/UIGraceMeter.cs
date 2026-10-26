@@ -16,7 +16,7 @@ namespace Remizione
         private int deltaScore;
         private bool isInitializing = true;
         private int lastKnownValue;
-        private readonly Color titleColor = ColorPalette.Text.TerraDark;
+        private readonly Color titleColor = Colors.Palette.TerraDark;
         private readonly TextSprite titleText;
         private readonly FloatTween tween = new();
         private readonly TextSprite valueText;
@@ -40,7 +40,7 @@ namespace Remizione
             // Value text
             this.valueText = new(Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.Terra,
+                Color = Colors.Palette.Terra,
                 PivotOrigin = RectanglePoint.RightTop,
                 Scale = ScaleInfo.Text.Huge,
                 Position = titleText.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -1)
@@ -81,7 +81,7 @@ namespace Remizione
             {
                 if (!isInitializing)
                 {
-                    colorTween.Start(TweenStyle.CubicInOut, titleColor, ColorPalette.Text.SkyBlue, 1000, 2);
+                    colorTween.Start(TweenStyle.CubicInOut, titleColor, Colors.Palette.SkyBlue, 1000, 2);
                     titleText.Tweens.ColorTween = colorTween;
                     tween.Start(TweenStyle.Linear, lastKnownValue, Session.PlayerData.Grace, duration);
                 }

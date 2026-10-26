@@ -31,7 +31,7 @@ namespace Remizione
             // Amount
             this.amountText = new TextSprite(Fonts.CommonOutline)
             {
-                Color = ColorPalette.Text.TerraDark,
+                Color = Colors.Palette.TerraDark,
                 PivotOrigin = RectanglePoint.Bottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 7, 0),
                 Scale = ScaleInfo.Text.Large,
@@ -70,7 +70,7 @@ namespace Remizione
             {
                 lastKnownCount = inventory.Count;
                 amountText.Text = $"{inventory.Count}/{inventory.Capacity}";
-                amountText.Color = inventory.IsFull ? ColorPalette.Text.Red : ColorPalette.Text.Terra;
+                amountText.Color = inventory.IsFull ? Colors.Palette.Red : Colors.Palette.Terra;
             }
         }
 

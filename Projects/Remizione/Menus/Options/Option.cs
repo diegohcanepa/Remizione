@@ -43,7 +43,7 @@ namespace Remizione.Menus
             // Label
             this.textSprites[0] = new TextSprite(Fonts.Common)
             {
-                Color = ColorPalette.MenuOptionLabel * (isEnabled ? 1 : disableColorFactor),
+                Color = Colors.MenuOptionLabel * (isEnabled ? 1 : disableColorFactor),
                 PivotOrigin = RectanglePoint.Right,
                 Scale = ScaleInfo.MenuOption,
                 Text = label
@@ -52,7 +52,7 @@ namespace Remizione.Menus
             // Value
             this.textSprites[1] = new TextSprite(Fonts.Common)
             {
-                Color = ColorPalette.TextWhite * (isEnabled ? 1 : disableColorFactor),
+                Color = Colors.Palette.Text * (isEnabled ? 1 : disableColorFactor),
                 PivotOrigin = RectanglePoint.Center,
                 Scale = ScaleInfo.MenuOption,
             };
@@ -91,7 +91,7 @@ namespace Remizione.Menus
             // Icon
             this.icon = new()
             {
-                Color = ColorPalette.MenuOptionLabel,
+                Color = Colors.MenuOptionLabel,
                 PivotOrigin = RectanglePoint.Right,
                 Scale = new Vector2(.25f)
             };

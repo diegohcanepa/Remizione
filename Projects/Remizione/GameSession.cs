@@ -64,14 +64,14 @@ namespace Remizione
 
             ObjectPools = new ObjectPools(this);
 
-            BackgroundColor = ColorPalette.BackgroundColor;
+            BackgroundColor = Colors.BackgroundColor;
             Camera.SmoothSpeed = GameSettings.CameraSmoothSpeed;
 
             if (EngendroGame.DebugMode)
             {
                 TextSprite consoleText = new(Fonts.CommonOutline)
                 {
-                    Color = ColorPalette.HighlightedText,
+                    Color = Colors.Palette.Text,
                     MaximumWidth = Screen.NativeWidth - 20,
                     PivotOrigin = RectanglePoint.LeftBottom,
                     Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom),
@@ -80,7 +80,7 @@ namespace Remizione
 
                 console = new(this, InputBindings.Console, consoleText, new RectangleF(0, 115, 240, 20))
                 {
-                    TextErrorColor = ColorPalette.Text.Terra
+                    TextErrorColor = Colors.Palette.Terra
                 };
                 console.CommandList.Add("put PotteryA into $Room #at:260,130");
 

@@ -40,7 +40,7 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             sprite.Update(gameTime);
-            sprite.Color = Session.PlayerInputHandler.WillFatigueOnNextAction || Session.Player?.IsFatigued == true ? ColorPalette.Text.Red : ColorPalette.DestinationMark;
+            sprite.Color = Session.PlayerInputHandler.WillFatigueOnNextAction || Session.Player?.IsFatigued == true ? Colors.Palette.Red : Colors.DestinationMark;
         }
 
         #endregion

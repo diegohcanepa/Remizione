@@ -69,7 +69,7 @@ namespace Remizione
             // Name text
             this.nameText = new(Fonts.Common)
             {
-                Color = ColorPalette.MouseCursor.Tooltip,
+                Color = Colors.MouseCursor.Tooltip,
                 PivotOrigin = RectanglePoint.Top,
                 Position = imageSlot.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 3),
                 Scale = ScaleInfo.Text.Giant,
@@ -79,7 +79,7 @@ namespace Remizione
             // Effect
             this.effectText = new(Fonts.Common)
             {
-                Color = ColorPalette.Inventory.EffectDescription,
+                Color = Colors.Inventory.EffectDescription,
                 MaximumWidth = 150,
                 PivotOrigin = RectanglePoint.Top,
                 Position = nameText.BoundingBox.GetPoint(RectanglePoint.Bottom),
@@ -90,7 +90,7 @@ namespace Remizione
             // Description
             this.descriptionText = new(Fonts.Common)
             {
-                Color = ColorPalette.Inventory.EffectDescription,
+                Color = Colors.Inventory.EffectDescription,
                 MaximumWidth = 150,
                 Opacity = .7f,
                 PivotOrigin = RectanglePoint.Top,
@@ -109,7 +109,7 @@ namespace Remizione
             // Perish state text
             this.perishStateText = new(Fonts.Common)
             {
-                Color = ColorPalette.Text.Default,
+                Color = Colors.Palette.Text,
                 PivotOrigin = RectanglePoint.Left,
                 Position = perishStateIcon.BoundingBox.GetPoint(RectanglePoint.Right, 2, .5f),
                 Scale = ScaleInfo.Text.Large
@@ -118,7 +118,7 @@ namespace Remizione
             // Amount text
             this.amountText = new(Fonts.Common)
             {
-                Color = ColorPalette.Text.Terra,
+                Color = Colors.Palette.Terra,
                 PivotOrigin = RectanglePoint.Left,
                 Position = imageSlot.BoundingBox.GetPoint(RectanglePoint.Right, 3, 0),
                 Scale = ScaleInfo.Text.VeryLarge
@@ -203,13 +203,13 @@ namespace Remizione
         public void Show(Item item)
         {
             this.item = item;
-            this.nameText.Color = item.Definition.IsKeyItem ? ColorPalette.Inventory.KeyItem : ColorPalette.Inventory.Item;
+            this.nameText.Color = item.Definition.IsKeyItem ? Colors.Inventory.KeyItem : Colors.Inventory.Item;
             this.nameText.Text = item.Definition.GetLabel(item.Amount);
             this.effectText.Text = item.Definition.EffectDescription;
             this.descriptionText.Text = item.Definition.Description;
             this.image.RenderImage = item.Definition.Image;
             this.perishStateText.Text = Localization.GetValue(item.PerishState);
-            this.perishStateText.Color = item.PerishState == ItemPerishState.Rotten ? ColorPalette.Text.Red : ColorPalette.Text.Default;
+            this.perishStateText.Color = item.PerishState == ItemPerishState.Rotten ? Colors.Palette.Red : Colors.Palette.Text;
             this.perishStateIcon.RenderImage = Atlases.UI.ItemPerishStates[(int)item.PerishState];
             this.amountText.Text = item.Definition.IsStackable ? $"x{item.Amount}" : string.Empty;
             this.shadow.RenderImage = item.Definition.Image;

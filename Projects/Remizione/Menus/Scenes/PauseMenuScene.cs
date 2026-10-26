@@ -62,7 +62,7 @@ namespace Remizione.Menus
 
             if (!Game.CurrentSession.CanSave())
             {
-                messageBox.SubMessageColor = ColorPalette.MessageBoxRedText;
+                messageBox.SubMessageColor = Colors.MessageBoxRedText;
             }
 
             Game.SceneManager.Push(messageBox);

@@ -41,7 +41,7 @@ namespace Remizione
             // Item label
             itemLabel = new(Fonts.CommonOutline)
             {
-                Color = ColorPalette.MouseCursor.Tooltip,
+                Color = Colors.MouseCursor.Tooltip,
                 PivotOrigin = RectanglePoint.Bottom,
                 Scale = ScaleInfo.Text.VeryLarge
             };
@@ -49,7 +49,7 @@ namespace Remizione
             // Item effect
             itemEffect = new(Fonts.CommonOutline)
             {
-                Color = ColorPalette.Inventory.EffectDescription,
+                Color = Colors.Inventory.EffectDescription,
                 MaximumWidth = 200,
                 Multiline = false,
                 PivotOrigin = RectanglePoint.Bottom,
@@ -275,7 +275,7 @@ namespace Remizione
                     float slotCenterX = slots[currentSlotIndex].BoundingBox.Center.X;
 
                     itemLabel.X = slotCenterX;
-                    itemLabel.Color = item.Definition.IsKeyItem ? ColorPalette.Inventory.KeyItem : ColorPalette.Inventory.Item;
+                    itemLabel.Color = item.Definition.IsKeyItem ? Colors.Inventory.KeyItem : Colors.Inventory.Item;
                     itemLabel.Text = item.Definition.Label;
 
                     itemEffect.X = slotCenterX;

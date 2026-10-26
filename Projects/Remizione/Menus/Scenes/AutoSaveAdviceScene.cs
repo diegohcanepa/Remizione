@@ -30,7 +30,7 @@ namespace Remizione.Menus
 
             text = new(Fonts.Common)
             {
-                Color = ColorPalette.TextWhite,
+                Color = Colors.Palette.Text,
                 MaximumWidth = 250,
                 PivotOrigin = RectanglePoint.Center,
                 Position = new Vector2(Screen.Center.X, 100),

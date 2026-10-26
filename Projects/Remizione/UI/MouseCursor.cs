@@ -164,7 +164,7 @@ namespace Remizione
         // Draw
         public static void Draw(GameTime gameTime)
         {
-            if (cursorSprite.Position.X < 0 || cursorSprite.Position.Y < 0)
+            if (!IsVisible || cursorSprite.Position.X < 0 || cursorSprite.Position.Y < 0)
                 return;
 
             EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera, SamplerState.PointClamp, effect?.Effect);
@@ -199,6 +199,9 @@ namespace Remizione
             }
         }
 
+        // IsVisible
+        public static bool IsVisible { get; set; } = true;
+
         // Reset
         public static void Reset()
         {
@@ -208,8 +211,8 @@ namespace Remizione
             cursorSprite.Scale = defaultScale;
             CustomImage = null;
             HightlightColor = null;
-            tooltipSprite.Color = ColorPalette.MouseCursor.Tooltip;
-            subTextSprite.Color = ColorPalette.MouseCursor.SubText;
+            tooltipSprite.Color = Colors.MouseCursor.Tooltip;
+            subTextSprite.Color = Colors.MouseCursor.SubText;
             Icon = MouseCursorIcon.Cross;
         }
 

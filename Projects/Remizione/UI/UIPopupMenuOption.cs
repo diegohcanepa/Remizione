@@ -56,16 +56,16 @@ namespace Remizione
         private void UpdateColor()
         {
             if (menu.HideSelectedOption)
-                nameText.Color = ColorPalette.Text.Default;
+                nameText.Color = Colors.Palette.Text;
 
             else if (IsSelected)
-                nameText.Color = ColorPalette.Text.Default;
+                nameText.Color = Colors.Palette.Text;
 
             else if (IsHovered)
-                nameText.Color = ColorPalette.Text.Purple;
+                nameText.Color = Colors.Palette.Terra;
 
             else
-                nameText.Color = ColorPalette.Text.Default;
+                nameText.Color = Colors.Palette.Text;
         }
 
         #endregion

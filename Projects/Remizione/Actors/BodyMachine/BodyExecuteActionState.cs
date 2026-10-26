@@ -49,7 +49,9 @@ namespace Remizione
             if (Target != null && CanInflictDamage(Target))
             {
                 if (action.MissChance.Roll())
-                    Owner.ShowFlyOff(missText, ColorPalette.MouseCursor.Tooltip);
+                {
+                    Owner.ShowFlyOff(missText, Colors.MouseCursor.Tooltip);
+                }
                 else
                 {
                     EffectDescriptor.Apply(action.EffectDescriptors, Owner, Target, EffectContext.Attack);

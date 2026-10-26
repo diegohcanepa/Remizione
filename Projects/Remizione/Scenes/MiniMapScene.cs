@@ -34,7 +34,7 @@ namespace Remizione
             // Title text
             titleText = new(Fonts.CommonOutline)
             {
-                Color = ColorPalette.MouseCursor.Tooltip,
+                Color = Colors.MouseCursor.Tooltip,
                 PivotOrigin = RectanglePoint.Bottom,
                 Scale = ScaleInfo.Text.Huge
             };
@@ -110,19 +110,19 @@ namespace Remizione
                 {
                     // Player
                     if (thing.IsPlayer)
-                        markers.Add(new(thing, ColorPalette.MiniMap.Player, true));
+                        markers.Add(new(thing, Colors.MiniMap.Player, true));
 
                     // Bonfire
                     else if (thing is Bonfire bonfire)
-                        markers.Add(new(thing, bonfire.IsLit ? ColorPalette.MiniMap.Bonfire : ColorPalette.MiniMap.Default, false));
+                        markers.Add(new(thing, bonfire.IsLit ? Colors.MiniMap.Bonfire : Colors.MiniMap.Default, false));
 
                     // Ground torch
                     else if (thing is GroundTorch groundTorch)
-                        markers.Add(new(thing, groundTorch.IsLit ? ColorPalette.MiniMap.Torch : ColorPalette.MiniMap.Default, false));
+                        markers.Add(new(thing, groundTorch.IsLit ? Colors.MiniMap.Torch : Colors.MiniMap.Default, false));
 
                     // KeyItem
                     else if (thing is ItemOrb && thing.ItemReward?.IsKeyItem == true)
-                        markers.Add(new(thing, ColorPalette.MiniMap.KeyItem, false));
+                        markers.Add(new(thing, Colors.MiniMap.KeyItem, false));
                 }
             }
         }

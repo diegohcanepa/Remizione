@@ -30,7 +30,7 @@ namespace Remizione.Menus
 
             this.textSprite = new TextSprite(Fonts.Common)
             {
-                Color = ColorPalette.TextWhite,
+                Color = Colors.Palette.Text,
                 PivotOrigin = RectanglePoint.Center,
                 Scale = ScaleInfo.MenuOption,
                 Text = label

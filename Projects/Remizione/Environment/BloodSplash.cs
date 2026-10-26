@@ -28,8 +28,8 @@ namespace Remizione
 
             sprite.Color = actor.RemainsKind switch
             {
-                RemainsKind.ToxicGuts => ColorPalette.BloodColor.ToxicGuts,
-                _ => ColorPalette.BloodColor.Guts
+                RemainsKind.ToxicGuts => Colors.BloodColor.ToxicGuts,
+                _ => Colors.BloodColor.Guts
             };
         }
 

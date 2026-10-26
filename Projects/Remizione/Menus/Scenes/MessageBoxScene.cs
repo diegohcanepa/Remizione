@@ -47,7 +47,7 @@ namespace Remizione.Menus
             // Message
             message = new(Fonts.Common)
             {
-                Color = ColorPalette.TextWhite,
+                Color = Colors.Palette.Text,
                 MaximumWidth = 250,
                 PivotOrigin = RectanglePoint.Top,
                 Scale = ScaleInfo.MessageBoxMessage,
@@ -57,7 +57,7 @@ namespace Remizione.Menus
             // SubMessage
             subMessage = new(Fonts.Common)
             {
-                Color = ColorPalette.TextWhite,
+                Color = Colors.Palette.Text,
                 MaximumWidth = 200,
                 PivotOrigin = RectanglePoint.Top,
                 Scale = ScaleInfo.MessageBoxSubMessage
@@ -66,7 +66,7 @@ namespace Remizione.Menus
             // Title
             title = new(Fonts.Common)
             {
-                Color = ColorPalette.TextWhite,
+                Color = Colors.Palette.Text,
                 PivotOrigin = RectanglePoint.Bottom,
                 Scale = ScaleInfo.MessageBoxTitle
             };

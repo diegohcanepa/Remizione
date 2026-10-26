@@ -35,7 +35,7 @@ namespace Remizione
             // Text sprite
             this.textSprite = new(Fonts.Common)
             {
-                Color = ColorPalette.Text.Terra,
+                Color = Colors.Palette.Terra,
                 MaximumWidth = (int)(Screen.NativeWidth * .7f),
                 PivotOrigin = RectanglePoint.Top,
                 Position = background.BoundingBox.GetPoint(RectanglePoint.Top, 0, 20),
@@ -134,7 +134,7 @@ namespace Remizione
         public void Show(string text)
         {
             this.textSprite.Text = text;
-            this.textSprite.Color = ColorPalette.MouseCursor.Tooltip;
+            this.textSprite.Color = Colors.MouseCursor.Tooltip;
 
             CanClose = false;
 

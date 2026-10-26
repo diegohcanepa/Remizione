@@ -24,7 +24,7 @@ namespace Remizione
             // Text sprite
             this.textSprite = new(Fonts.Common)
             {
-                Color = ColorPalette.Text.Default * .8f,
+                Color = Colors.Palette.Text * .8f,
                 MaximumWidth = (int)(Screen.NativeWidth * .6f),
                 PivotOrigin = RectanglePoint.Center,
                 Position = Screen.Center,

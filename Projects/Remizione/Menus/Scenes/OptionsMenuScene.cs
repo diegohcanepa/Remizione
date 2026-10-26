@@ -48,7 +48,7 @@ namespace Remizione.Menus
             // Option description
             this.optionDescription = new(Fonts.Common)
             {
-                Color = ColorPalette.TextWhite,
+                Color = Colors.Palette.Text,
                 MaximumWidth = 100,
                 Scale = ScaleInfo.Text.Small
             };

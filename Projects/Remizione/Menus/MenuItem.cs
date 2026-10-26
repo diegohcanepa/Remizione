@@ -98,7 +98,7 @@ namespace Remizione.Menus
         {
             textSprite.Tweens.ColorTween = null;
 
-            textSprite.Color = IsSelected ? ColorPalette.MenuItemTextActive : ColorPalette.MenuItemTextInactive;
+            textSprite.Color = IsSelected ? Colors.MenuItemTextActive : Colors.MenuItemTextInactive;
             textSprite.Scale = IsSelected ? ScaleInfo.MenuItemTextActive : ScaleInfo.MenuItemTextInactive;
             icon.Color = textSprite.Color;
         }

@@ -50,7 +50,7 @@ namespace Remizione
                 for (int i = 0; i < group.Length; i++)
                 {
                     var isGroupHeading = lines.Count > 0 && group.Length > 1 && i == 0;
-                    var color = isGroupHeading ? ColorPalette.CreditHeading : ColorPalette.CreditLine;
+                    var color = isGroupHeading ? Colors.CreditHeading : Colors.CreditLine;
 
                     Vector2 scale;
                     if (group.Length == 1)

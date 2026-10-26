@@ -30,7 +30,7 @@ namespace Remizione.Menus
             {
                 labels[i] = new(Fonts.Common)
                 {
-                    Color = ColorPalette.TextWhite,
+                    Color = Colors.Palette.Text,
                     Scale = ScaleInfo.ControlLabel,
                     Text = isKeyboard ? $"@Menu.Controls.Keyboard.{labelNames[i]}" : $"@Menu.Controls.{platform}.{labelNames[i]}"
                 };

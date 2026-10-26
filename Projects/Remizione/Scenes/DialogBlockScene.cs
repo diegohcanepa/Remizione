@@ -34,8 +34,8 @@ namespace Remizione
 
             this.menu = new UIContextMenu<string>(Fonts.CommonOutline)
             {
-                OptionColor = ColorPalette.Text.Default,
-                OptionSelectedColor = ColorPalette.Text.Yellow,
+                OptionColor = Colors.Palette.Text,
+                OptionSelectedColor = Colors.Palette.Yellow,
                 OptionTextScale = ScaleInfo.Text.ExtraLarge,
                 SelectInputBinding = InputBindings.SelectDialogOption
             };

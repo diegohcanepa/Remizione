@@ -25,13 +25,14 @@ namespace Remizione
             : base(session, name)
         {
             this.Definition = GameData.Props.Find(DeclaredName);
+            this.HideHPMeter = true;
             this.IgnoreKnockback = true;
             this.Verb = Verb.Use;
 
             // Shadow
             this.Shadow = new()
             {
-                Opacity = ColorPalette.ShadowOpacity,
+                Opacity = Colors.ShadowOpacity,
                 PivotOrigin = RectanglePoint.Top,
             };
 
@@ -273,7 +274,7 @@ namespace Remizione
 
             var text = success ? Localization.GetValue(FloatingMessage.Success) : Localization.GetValue(FloatingMessage.Failed);
 
-            actor.ShowFlyOff(text, success ? ColorPalette.Text.Green : ColorPalette.Text.Terra);
+            actor.ShowFlyOff(text, success ? Colors.Palette.Green : Colors.Palette.Terra);
 
             /*
             if (!success)
