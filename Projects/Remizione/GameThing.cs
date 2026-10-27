@@ -121,7 +121,7 @@ namespace Remizione
         bool IHoleArea.IsActive => !Collider.IsEmpty && AffectsPathfinding && IsInCurrentRoom;
 
         // Polygon
-        IReadOnlyPolygon IHoleArea.Polygon => holePoly;
+        IPolygon IHoleArea.Polygon => holePoly;
 
         #endregion
 
@@ -145,39 +145,57 @@ namespace Remizione
 
         #region Private members
 
-        // CheckCollisions
-        private void CheckCollisions()
+        // ApplySoftSeparation
+        private void ApplySoftSeparation()
         {
-            if (Room == null)
+            // Si YO tengo Collider rígido o estoy en knockback, no aplico separación suave
+            if (IsDead || !Collider.IsEmpty || knockbackVelocity != Vector2.Zero || Room == null)
                 return;
+
+            // Leemos la masa de esta entidad
+            float myMass = Mass;
 
             for (int i = 0; i < Room.CulledThings.Count; i++)
             {
-                // Skip if it is the same thing
-                if (Room.CulledThings[i] == this)
+                if (Room.CulledThings[i] is not GameThing other || other == this)
                     continue;
 
-                if (Room.CulledThings[i] is GameThing thing)
+                // Solo nos separamos de cosas dinámicas sin Collider rígido
+                if (other.IsDead || !other.Collider.IsEmpty || other.knockbackVelocity != Vector2.Zero)
+                    continue;
+
+                // Leemos la masa de la otra entidad
+                float otherMass = other.Mass;
+
+                // Semiejes
+                float myRadiusX = CollisionSize.X * 0.5f;
+                float myRadiusY = CollisionSize.Y * 0.5f;
+                float aspectY = myRadiusX / MathF.Max(0.1f, myRadiusY);
+
+                // Escalamos delta Y
+                Vector2 diff = Position - other.Position;
+                diff.Y *= aspectY;
+
+                float distSq = diff.LengthSquared();
+                float minDistX = myRadiusX + (other.CollisionSize.X * 0.5f);
+
+                if (distSq > 0 && distSq < (minDistX * minDistX))
                 {
-                    if (thing.IsDead || !thing.CollisionDetection)
-                        continue;
+                    float dist = MathF.Sqrt(distSq);
 
-                    if (Altitude > thing.CollisionHeight)
-                        continue;
+                    Vector2 pushDir = diff / dist;
+                    pushDir.Y /= aspectY;
 
-                    // If thing is an obstacle (walk area hole)
-                    if (thing.RuntimeCollider.Contains(Position))
-                    {
-                        if (thing is IHoleArea holeArea && holeArea.Contains(Position))
-                        {
-                            OnCollisioning(thing, out var handled);
-                            if (!handled)
-                            {
-                                Position = holeArea.ClampOutside(Position);
-                                OnCollision(thing);
-                            }
-                        }
-                    }
+                    float overlap = minDistX - dist;
+
+                    // --- CÁLCULO DE MASA APLICADO ---
+                    float totalMass = myMass + otherMass;
+
+                    // Cuanto más masa tiene el otro respecto al total, más me empuja a mí.
+                    float myMoveRatio = totalMass > 0f ? (otherMass / totalMass) : 0.5f;
+
+                    // Aplicamos separación (multiplicador base de ~0.4f para un tacto elástico)
+                    Position += pushDir * (overlap * myMoveRatio * 0.4f);
                 }
             }
         }
@@ -260,6 +278,58 @@ namespace Remizione
             else
             {
                 ShowFlyOff(damageAmount.ToString(CultureInfo.InvariantCulture), color);
+            }
+        }
+
+        // ResolveStaticCollisions
+        private void ResolveStaticCollisions()
+        {
+            if (Room == null || !CollisionDetection)
+                return;
+
+            for (int i = 0; i < Room.CulledThings.Count; i++)
+            {
+                if (Room.CulledThings[i] is not GameThing thing || thing == this)
+                    continue;
+
+                // Si la otra entidad TIENE un Collider (polígono), es un obstáculo rígido
+                if (!thing.CollisionDetection || thing.Collider.IsEmpty)
+                    continue;
+
+                if (Altitude > thing.CollisionHeight)
+                    continue;
+
+                // Semiejes a partir del diámetro
+                float radiusX = CollisionSize.X * .5f;
+                float radiusY = CollisionSize.Y * .5f;
+
+                // Ratio de deformación 2.5D
+                float aspectY = radiusX / MathF.Max(0.1f, radiusY);
+
+                Vector2 scaledPosition = new(Position.X, Position.Y * aspectY);
+                Vector2 closestPoint = thing.RuntimeCollider.GetClosestPointOnEdge(Position);
+                Vector2 scaledClosestPoint = new(closestPoint.X, closestPoint.Y * aspectY);
+
+                Vector2 delta = scaledPosition - scaledClosestPoint;
+                float distSq = delta.LengthSquared();
+
+                if (distSq > 0 && distSq < (radiusX * radiusX))
+                {
+                    float dist = MathF.Sqrt(distSq);
+                    Vector2 pushDir = delta / dist;
+
+                    // Revertimos el aplanado en Y
+                    pushDir.Y /= aspectY;
+
+                    float overlap = radiusX - dist;
+                    Position += pushDir * overlap;
+
+                    // Failsafe por si penetró el centro
+                    if (thing.RuntimeCollider.Contains(Position))
+                        Position += pushDir * radiusX;
+
+                    OnCollision(thing);
+                }
             }
         }
 
@@ -472,6 +542,7 @@ namespace Remizione
                 hpMeter.Position = GetOverheadPosition(new(0, -3));
             }
 
+            // 1. Físicas de knockback y estados de muerte (fuerzas mayores)
             if (knockbackVelocity != Vector2.Zero)
             {
                 UpdateKnockback(gameTime);
@@ -483,10 +554,22 @@ namespace Remizione
 
             base.OnUpdate(gameTime);
 
-            if (shouldClampToWalkablePosition || Position != lastCheckedPosition)
+            // 2. Lógica de Colisiones y Navegación (Solo para entidades dinámicas)
+            if (!IsStatic)
             {
-                ClampToWalkablePosition();
-                shouldClampToWalkablePosition = false;
+                if (shouldClampToWalkablePosition || Position != lastCheckedPosition)
+                {
+                    ClampToWalkablePosition(); // WalkArea boundaries
+                    shouldClampToWalkablePosition = false;
+                }
+
+                // 3. Resolución de escenario estático (Círculo vs Polígono)
+                if (CanCheckCollisions())
+                    ResolveStaticCollisions();
+
+                // 4. Separación de entidades (Círculo vs Círculo)
+                ApplySoftSeparation();
+
                 lastCheckedPosition = Position;
             }
 
@@ -546,6 +629,28 @@ namespace Remizione
         // AttachedLightPosition
         public Vector2 AttachedLightPosition { get; set; }
 
+        // BodySize
+        [ScriptProperty]
+        public BodySize BodySize
+        { 
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+
+                    this.Mass = field switch
+                    {
+                        BodySize.Small => 10,
+                        BodySize.Medium => 30,
+                        BodySize.Large => 100,
+                        _ => 30
+                    };
+                }
+            }
+        } = BodySize.Medium;
+
         // CanBeHit
         public virtual bool CanBeHit()
         {
@@ -576,6 +681,24 @@ namespace Remizione
             return !IsDead;
         }
 
+        // ClampToWalkablePosition
+        public void ClampToWalkablePosition()
+        {
+            if (IgnoreWalkArea)
+                return;
+
+            if (WalkArea != null)
+            {
+                Position = WalkArea.ClampInside(Position, out _);
+
+                for (int i = 0; i < WalkArea.Holes.Count; i++)
+                {
+                    if (WalkArea.Holes[i].Test())
+                        Position = WalkArea.Holes[i].ClampOutside(Position);
+                }
+            }
+        }
+
         // Collider
         [ScriptProperty]
         public Polygon Collider
@@ -604,27 +727,9 @@ namespace Remizione
             }
         } = PlacementMode.Relative;
 
-        // ClampToWalkablePosition
-        public void ClampToWalkablePosition()
-        {
-            if (IgnoreWalkArea)
-                return;
-
-            // Clamp to a walkable position
-            if (WalkArea != null)
-            {
-                Position = WalkArea.ClampInside(Position, out _);
-
-                for (int i = 0; i < WalkArea.Holes.Count; i++)
-                {
-                    if (WalkArea.Holes[i].Test())
-                        Position = WalkArea.Holes[i].ClampOutside(Position);
-                }
-            }
-
-            if (CanCheckCollisions())
-                CheckCollisions();
-        }
+        // CollisionSize
+        [ScriptProperty]
+        public Vector2 CollisionSize { get; set; } = new(4, 2);
 
         // CollisionDetection
         [ScriptProperty]
@@ -1174,6 +1279,9 @@ namespace Remizione
             }
         } = string.Empty;
 
+        // Mass
+        public float Mass { get; private set; } = 30f;
+
         // MaxHP
         [ScriptProperty]
         public int MaxHP
@@ -1378,7 +1486,7 @@ namespace Remizione
 
                     OnTakeDamage(attacker, amount, damageType);
 
-                    if (amount > 0 && MaxHP > 1)
+                    if (amount > 0 && MaxHP > 1 && !IsDead)
                         ProcessDamageFlyOff(amount, damageType);
                 }
             }

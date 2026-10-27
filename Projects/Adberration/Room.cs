@@ -406,7 +406,7 @@ namespace Adberration
             public string Name { get; }
 
             // Polygon
-            public IReadOnlyPolygon Polygon { get; }
+            public IPolygon Polygon { get; }
 
             // Reset
             public void Reset()

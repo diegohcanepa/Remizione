@@ -6,9 +6,9 @@ using System.Collections.ObjectModel;
 namespace Engendro
 {
     /// <summary>
-    /// Define las operaciones de solo lectura seguras para cualquier polígono.
+    /// IPolygon
     /// </summary>
-    public interface IReadOnlyPolygon
+    public interface IPolygon
     {
         bool IsEmpty { get; }
         Rectangle BoundingRectangle { get; }
@@ -16,7 +16,7 @@ namespace Engendro
         Vector2 Clamp(Vector2 point);
         bool Contains(Vector2 point);
         bool ContainsVertex(RectangleF rect);
-        bool ContainsVertex(IReadOnlyPolygon polygon);
+        bool ContainsVertex(IPolygon polygon);
         bool ContainsVertex(IList<Vector2> vertices);
         bool GetClosestIntersection(Vector2 from, Vector2 to, out Vector2 intersectionPoint);
         Vector2 GetClosestPointOnEdge(Vector2 point);

@@ -17,8 +17,8 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly IReadOnlyPolygon deflatedPolygon;
-        private readonly IReadOnlyPolygon inflatedPolygon;
+        private readonly IPolygon deflatedPolygon;
+        private readonly IPolygon inflatedPolygon;
 
         // Grafo estático precalculado (Nunca cambia a menos que cambie la topología del Room)
         private readonly List<PathNode> staticNodes = [];

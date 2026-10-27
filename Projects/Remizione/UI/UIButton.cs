@@ -35,7 +35,7 @@ namespace Remizione
         public Sound? HoverSound { get; set; } = Sound.Find(SoundNames.ButtonHover);
 
         // IsEnabled
-        public bool IsEnabled { get; set; }
+        public bool IsEnabled { get; set; } = true;
 
         // IsMouseOver
         public bool IsMouseOver

@@ -8,7 +8,7 @@ namespace Engendro
     /// <summary>
     /// Polygon
     /// </summary>
-    public sealed class Polygon : IReadOnlyPolygon
+    public sealed class Polygon : IPolygon
     {
         #region Private fields
 
@@ -295,7 +295,7 @@ namespace Engendro
         }
 
         // ContainsVertex
-        public bool ContainsVertex(IReadOnlyPolygon polygon)
+        public bool ContainsVertex(IPolygon polygon)
         {
             return ContainsVertex(polygon.Vertices);
         }

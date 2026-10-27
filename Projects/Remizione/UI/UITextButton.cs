@@ -13,6 +13,7 @@ namespace Remizione
 
         private RectangleF boundingBox;
         private readonly Color disabledColor = Color.Gray;
+        private Vector2 hoverScale;
         private readonly TextSprite label;
         private readonly Sprite[] strips;
 
@@ -23,12 +24,6 @@ namespace Remizione
         // Constructor
         public UITextButton()
         {
-            this.label = new TextSprite(Fonts.CommonOutline)
-            {
-                Color = Colors.Palette.Text,
-                Scale = ScaleInfo.Text.Huge
-            };
-
             strips = new Sprite[3];
 
             strips[0] = new(Atlases.UI.UIButtonContainerEdge) { PivotOrigin = RectanglePoint.RightTop };
@@ -38,6 +33,13 @@ namespace Remizione
                 PivotOrigin = RectanglePoint.LeftTop,
                 Effects = SpriteEffects.FlipHorizontally
             };
+
+            this.label = new TextSprite(Fonts.CommonOutline)
+            {
+                Color = Colors.Palette.Text,
+            };
+
+            this.Scale = ScaleInfo.Text.Huge;
         }
 
         #endregion
@@ -84,9 +86,15 @@ namespace Remizione
             label.Update(gameTime);
 
             if (IsMouseOver && IsEnabled)
+            {
                 label.Color = HoverColor;
+                label.Scale = hoverScale;
+            }
             else
+            {
                 label.Color = IsEnabled ? TextColor : disabledColor;
+                label.Scale = Scale;
+            }
         }
 
         #endregion
@@ -102,7 +110,7 @@ namespace Remizione
         }
 
         // HoverColor
-        public Color HoverColor { get; set; } = Colors.Palette.Text;
+        public Color HoverColor { get; set; } = Colors.Palette.Terra;
 
         // MinimumWidth
         public float MinimumWidth
@@ -152,12 +160,14 @@ namespace Remizione
         // Scale
         public override Vector2 Scale
         {
-            get => label.Scale;
+            get;
             set
             {
-                if (value != label.Scale)
+                if (value != field)
                 {
-                    label.Scale = value;
+                    field = value;
+                    label.Scale = field;
+                    hoverScale = value * 1.05f;
                     Refresh();
                 }
             }
@@ -178,7 +188,7 @@ namespace Remizione
         }
 
         // TextColor
-        public Color TextColor { get; set; } = Colors.Palette.TerraLight;
+        public Color TextColor { get; set; } = Colors.Palette.Text;
 
         // X
         public override float X

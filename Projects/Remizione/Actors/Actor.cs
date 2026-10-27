@@ -621,10 +621,6 @@ namespace Remizione
         [ScriptProperty]
         public Vector2 BloodSplashOrigin { get; set; }
 
-        // BodySize
-        [ScriptProperty]
-        public BodySize BodySize { get; set; } = BodySize.Medium;
-
         // CanInteract
         public override bool CanInteract()
         {

@@ -33,7 +33,7 @@ namespace Remizione
         };
         private readonly List<TriggerArea> triggerAreas = [];
         private readonly List<WalkArea> walkAreas = [];
-        private readonly List<IReadOnlyPolygon> walls = [];
+        private readonly List<IPolygon> walls = [];
 
         #endregion
 
@@ -542,7 +542,7 @@ namespace Remizione
         public RoomAreaReadOnlyCollection<TriggerArea> TriggerAreas { get; }
 
         // Walls
-        public ReadOnlyCollection<IReadOnlyPolygon> Walls { get; }
+        public ReadOnlyCollection<IPolygon> Walls { get; }
 
         // WalkArea
         public WalkArea? WalkArea { get; private set; }

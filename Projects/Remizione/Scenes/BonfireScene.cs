@@ -11,7 +11,7 @@ namespace Remizione
         #region Private fields
 
         private readonly UITextButton[] buttons;
-        private static readonly string[] labels = { "Rise", "Craft", "Journey" };
+        private static readonly string[] labels = { "Rise", "Craft", "Journey", "Vigil" };
         private const string prefix = "BonfireAction";
 
         #endregion
@@ -21,7 +21,7 @@ namespace Remizione
         // Constructor
         public BonfireScene()
         {
-            buttons = new UITextButton[3];
+            buttons = new UITextButton[labels.Length];
             float maxWidth = 0;
             float y = 35;
             for (var i = 0; i < buttons.Length; i++)
@@ -72,6 +72,12 @@ namespace Remizione
         // OnHandleInput
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
+            if (InputBindings.Back.IsPressed(PlayerIndex.One))
+            {
+                Game.SceneManager.Pop();
+                return HandleInputResult.Handled;
+            }
+
             for (var i = 0; i < buttons.Length; i++)
             {
                 if (buttons[i].TestPressed())

@@ -12,7 +12,7 @@ namespace Remizione
     /// </summary>
     public class HoleArea : Room.Area, IHoleArea
     {
-        private readonly IReadOnlyPolygon inflatedPolygon;
+        private readonly IPolygon inflatedPolygon;
         private readonly List<PathNode> nodes = [];
 
         #region Constructor

@@ -38,6 +38,6 @@ namespace Remizione
         string Name { get; }
 
         // Polygon
-        IReadOnlyPolygon Polygon { get; }
+        IPolygon Polygon { get; }
     }
 }
