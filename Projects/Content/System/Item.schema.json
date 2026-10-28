@@ -55,7 +55,29 @@
             "breakSafeUses": {
               "type": "integer",
               "default": 0
-            },            
+            },
+            "craftingRecipe": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "object",
+                "required": [
+                  "material",
+                  "amount"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "material": {
+                    "$ref": "enums.schema.json#/$defs/Material"
+                  },
+                  "amount": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 3
+                  }
+                }
+              }
+            },
             "deselectOnUse": {
               "type": "boolean"
             },
@@ -70,10 +92,10 @@
             },
             "isKeyItem": {
               "type": "boolean"
-            },            
+            },
             "isPerishable": {
               "type": "boolean"
-            },            
+            },
             "isStackable": {
               "type": "boolean"
             },

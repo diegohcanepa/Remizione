@@ -39,6 +39,21 @@ namespace Engendro
             return MathF.Sqrt(DistanceToSegmentSquared(p, v, w));
         }
 
+        // GetClosestPointOnSegment
+        public static Vector2 GetClosestPointOnSegment(Vector2 p, Vector2 a, Vector2 b)
+        {
+            Vector2 ab = b - a;
+            float lengthSq = ab.LengthSquared();
+
+            if (lengthSq == 0)
+                return a;
+
+            float t = Vector2.Dot(p - a, ab) / lengthSq;
+            t = Math.Clamp(t, 0f, 1f);
+
+            return a + (t * ab);
+        }
+
         // GetLineSegmentIntersection
         public static bool GetLineSegmentIntersection(Vector2 startA, Vector2 endA, Vector2 startB, Vector2 endB, out Vector2 intersection, out float t)
         {

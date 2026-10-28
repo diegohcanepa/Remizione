@@ -21,8 +21,8 @@ namespace Remizione
         #region Private fields
 
         private float depth;
+        private bool isDescending;
         private readonly Actor owner;
-        private GameThing? target;
         private readonly FloatTween xTween = new();
         private readonly FloatTween yTween = new();
 
@@ -30,7 +30,6 @@ namespace Remizione
 
         #region Constructor
 
-        // Constructor
         public ThrownProp(Actor owner, Prop prop)
             : base(prop.Session, string.Empty)
         {
@@ -51,6 +50,7 @@ namespace Remizione
         // Break
         public void Break()
         {
+            isDescending = false;
             Tweens.Reset();
 
             if (Prop.DeathSound != null)
@@ -71,53 +71,59 @@ namespace Remizione
         // CheckCollision
         private void CheckCollision()
         {
-            if (Prop.Definition == null || target == null)
+            if (Prop.Definition == null || Room == null)
                 return;
 
-            if (target.CanBeHit() && !target.IsDead)
+            for (int i = 0; i < Room.Children.Count; i++)
             {
-                if (target.RuntimeHotspot.BoundingRectangleF.Intersects(BoundingBox))
+                var child = Room.Children[i] as GameThing;
+
+                if (child == null || child == owner || child == this)
+                    continue;
+
+                if (child.CanBeHit() && !child.IsDead)
                 {
-                    EffectDescriptor.Apply(Prop.Definition.EffectDescriptors, owner, target, EffectContext.Contact);
-                    Break();
+                    if (child.RuntimeHotspot.BoundingRectangleF.Intersects(BoundingBox))
+                    {
+                        EffectDescriptor.Apply(Prop.Definition.EffectDescriptors, owner, child, EffectContext.Contact);
+                        Break();
+                        break;
+                    }
                 }
             }
         }
 
         // Launch
-        private void Launch(GameThing? target, Vector2 targetPosition)
+        private void Launch(Vector2 targetPosition)
         {
             var startPos = owner.GetHeldPropPosition();
             if (owner.Room == null || startPos == null)
                 return;
 
-            this.target = target;
             this.RenderLayer = RenderLayer.Default;
+            this.isDescending = false;
 
             depth = owner.Depth + .01f;
             this.Position = startPos.Value;
 
-            // Calculamos la duración proporcional a la distancia real de vuelo
             float distance = Vector2.Distance(startPos.Value, targetPosition);
             int throwDuration = Math.Clamp((int)(distance / ThrowSpeed), MinThrowDuration, MaxThrowDuration);
 
-            // Parábola sutil: sube un 15% de la distancia recorrida, con un piso de 6px y un techo suave de 24px
             float arcHeight = MathHelper.Clamp(distance * 0.15f, 6f, MaxArcHeight);
 
             // 1. Movimiento en X: Directo y lineal hasta el destino
             xTween.Start(TweenStyle.Linear, X, targetPosition.X, throwDuration);
 
-            // 2. Movimiento en Y: Dividido en 2 fases para crear la parábola del arco
+            // 2. Movimiento en Y: Dividido en 2 fases
             int halfDuration = throwDuration / 2;
-
-            // Calculamos el pico del arco (punto medio entre el origen y el destino, subiendo 'arcHeight')
             float peakY = Math.Min(Y, targetPosition.Y) - arcHeight;
 
-            // Fase 1: Subida con desaceleración
+            // Fase 1: Subida (desaceleración) - Sin detección de impacto
             yTween.Start(TweenStyle.QuadraticOut, Y, peakY, halfDuration,
                 () =>
                 {
-                    // Fase 2: Caída con aceleración
+                    // Fase 2: Caída (aceleración) - Se activa la ventana de impacto
+                    isDescending = true;
                     yTween.Start(TweenStyle.QuadraticIn, Y, targetPosition.Y, halfDuration, Break);
                 }
             );
@@ -132,37 +138,35 @@ namespace Remizione
 
         #region Protected members
 
-        // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
-            CheckCollision();
+
+            if (isDescending)
+                CheckCollision();
         }
 
         #endregion
 
-        // Depth
         public override float Depth => depth;
 
         // Drop
         public void Drop()
         {
             var startPos = owner.GetHeldPropPosition() ?? owner.Position;
-            Launch(null, new Vector2(startPos.X, owner.Y + 1));
+            Launch(new Vector2(startPos.X, owner.Y + 1));
         }
 
-        // Prop
         public Prop Prop { get; }
 
         // Throw
-        public void Throw(GameThing target)
+        public void Throw(Vector2 targetPosition)
         {
-            var targetPos = Projectile.ClampToEffectiveRange(owner.Position, target.Position, GameSettings.ThrownDistanceShortRange);
+            var clampedPos = Projectile.ClampToEffectiveRange(owner.Position, targetPosition, GameSettings.ThrownDistanceShortRange);
 
-            Launch(target, targetPos);
+            Launch(clampedPos);
         }
 
-        // YPerspectiveFactor
         public const float YPerspectiveFactor = 0.75f;
     }
 }

@@ -29,7 +29,7 @@ namespace Remizione
             this.Context = element.GetEnum("context", EffectContext.Contact);
             this.DamageType = element.GetEnum("damageType", DamageType.Physical);
             this.EffectType = element.GetEnum("effectType", EffectType.None);
-            this.KnockbackIntensity = element.GetEnum("knockback", KnockbackIntensity.Low);
+            this.KnockbackIntensity = element.GetEnum("knockbackIntensity", KnockbackIntensity.Low);
             this.Sound = element.GetObject("sound", Sound.Get);
             this.StatusType = element.GetEnum<StatusType>("statusType");
             this.Target = element.GetEnum("target", EffectTarget.Target);

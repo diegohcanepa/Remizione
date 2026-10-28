@@ -161,7 +161,7 @@
   <String Key="MessageKind.CannotPlaceItem">There is not enough space on the ground.</String>
   <String Key="MessageKind.ExtraHeart">You feel stronger!</String>
   <String Key="MessageKind.InventoryFull">Out of space.</String>
-  <String Key="MessageKind.NotEnoughDrool">Not enough Holy Drool</String>
+  <String Key="MessageKind.NotEnoughGrace">Not enough Grace</String>
   <String Key="MessageKind.OutOfReach">Out of reach.</String>
   <String Key="MessageKind.OutOfSight">Out of sight.</String>
   <String Key="MessageKind.StackFull">Stack limit reached.</String>

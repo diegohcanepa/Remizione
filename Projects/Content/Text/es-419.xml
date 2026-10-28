@@ -162,7 +162,7 @@ Los penitentes la usan para encender las Hogueras, cuyo calor no cura la carne s
   <String Key="MessageKind.CannotPlaceItem">No hay suficiente espacio en el terreno.</String>
   <String Key="MessageKind.ExtraHeart">¡Te sientes más fuerte!</String>
   <String Key="MessageKind.InventoryFull">No te queda espacio.</String>
-  <String Key="MessageKind.NotEnoughDrool">No tienes suficiente Baba Bendita</String>
+  <String Key="MessageKind.NotEnoughGrace">Sin Gracia suficiente</String>
   <String Key="MessageKind.OutOfReach">Fuera de alcance.</String>
   <String Key="MessageKind.OutOfSight">Vista obstruida.</String>
   <String Key="MessageKind.StackFull">Límite de apilado alcanzado.</String>

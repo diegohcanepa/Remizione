@@ -2,7 +2,6 @@
 using Engendro;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using Steamworks;
 using System;
 using System.IO;

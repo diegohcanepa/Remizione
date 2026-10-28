@@ -281,53 +281,110 @@ namespace Remizione
             }
         }
 
+        // RefreshLabel
+        private void RefreshLabel()
+        {
+            Label = TextRepository.GetValue(LabelKey);
+            if (GraceCost > 0)
+                Label += $"({GraceCost})";
+        }
+
         // ResolveStaticCollisions
         private void ResolveStaticCollisions()
         {
             if (Room == null || !CollisionDetection)
                 return;
 
+            float radiusX = CollisionSize.X * .5f;
+            float radiusY = CollisionSize.Y * .5f;
+            float aspectY = radiusX / MathF.Max(.1f, radiusY);
+            float radiusSq = radiusX * radiusX;
+
             for (int i = 0; i < Room.CulledThings.Count; i++)
             {
                 if (Room.CulledThings[i] is not GameThing thing || thing == this)
                     continue;
 
-                // Si la otra entidad TIENE un Collider (polígono), es un obstáculo rígido
                 if (!thing.CollisionDetection || thing.Collider.IsEmpty)
                     continue;
 
                 if (Altitude > thing.CollisionHeight)
                     continue;
 
-                // Semiejes a partir del diámetro
-                float radiusX = CollisionSize.X * .5f;
-                float radiusY = CollisionSize.Y * .5f;
+                var poly = thing.RuntimeCollider;
 
-                // Ratio de deformación 2.5D
-                float aspectY = radiusX / MathF.Max(0.1f, radiusY);
-
-                Vector2 scaledPosition = new(Position.X, Position.Y * aspectY);
-                Vector2 closestPoint = thing.RuntimeCollider.GetClosestPointOnEdge(Position);
-                Vector2 scaledClosestPoint = new(closestPoint.X, closestPoint.Y * aspectY);
-
-                Vector2 delta = scaledPosition - scaledClosestPoint;
-                float distSq = delta.LengthSquared();
-
-                if (distSq > 0 && distSq < (radiusX * radiusX))
+                // --- BROAD-PHASE: Descarte AABB $O(1)$ ---
+                // Ampliamos el BoundingBox del polígono por el radio de la entidad
+                var bounds = poly.BoundingRectangleF;
+                if (Position.X < bounds.Left - radiusX || Position.X > bounds.Right + radiusX ||
+                    Position.Y < bounds.Top - radiusY || Position.Y > bounds.Bottom + radiusY)
                 {
-                    float dist = MathF.Sqrt(distSq);
-                    Vector2 pushDir = delta / dist;
+                    continue; // Está fuera del área de influencia: omitimos Raycasts y pases de aristas
+                }
 
-                    // Revertimos el aplanado en Y
-                    pushDir.Y /= aspectY;
+                int vertexCount = poly.Vertices.Count;
+                if (vertexCount < 2)
+                    continue;
 
-                    float overlap = radiusX - dist;
-                    Position += pushDir * overlap;
+                Vector2 initialScaledPos = new(Position.X, Position.Y * aspectY);
+                Vector2 scaledPos = initialScaledPos;
 
-                    // Failsafe por si penetró el centro
-                    if (thing.RuntimeCollider.Contains(Position))
-                        Position += pushDir * radiusX;
+                // 1. Failsafe: Solo se ejecuta si el AABB confirmó proximidad
+                if (poly.Contains(Position))
+                {
+                    Vector2 closestReal = poly.GetClosestPointOnEdge(Position);
+                    Vector2 scaledClosest = new(closestReal.X, closestReal.Y * aspectY);
 
+                    Vector2 escapeDir = scaledClosest - scaledPos;
+                    float dist = escapeDir.Length();
+
+                    if (dist > 0.0001f)
+                    {
+                        escapeDir /= dist;
+                        scaledPos = scaledClosest + (escapeDir * radiusX);
+                    }
+                    else
+                    {
+                        scaledPos.Y -= radiusX;
+                    }
+                }
+
+                // 2. Resolución de aristas (Narrow-Phase)
+                for (int iter = 0; iter < 2; iter++)
+                {
+                    bool movedThisIter = false;
+
+                    for (int v = 0; v < vertexCount; v++)
+                    {
+                        Vector2 p1 = poly.Vertices[v];
+                        Vector2 p2 = poly.Vertices[(v + 1) % vertexCount];
+
+                        Vector2 sp1 = new(p1.X, p1.Y * aspectY);
+                        Vector2 sp2 = new(p2.X, p2.Y * aspectY);
+
+                        Vector2 closestOnSegment = Geometry.GetClosestPointOnSegment(scaledPos, sp1, sp2);
+                        Vector2 delta = scaledPos - closestOnSegment;
+                        float dSq = delta.LengthSquared();
+
+                        if (dSq > 0f && dSq < radiusSq)
+                        {
+                            float dist = MathF.Sqrt(dSq);
+                            Vector2 pushDir = delta / dist;
+                            float overlap = radiusX - dist;
+
+                            scaledPos += pushDir * overlap;
+                            movedThisIter = true;
+                        }
+                    }
+
+                    if (!movedThisIter)
+                        break;
+                }
+
+                // 3. Aplicación final de posición
+                if (scaledPos != initialScaledPos)
+                {
+                    Position = new Vector2(scaledPos.X, scaledPos.Y / aspectY);
                     OnCollision(thing);
                 }
             }
@@ -350,25 +407,15 @@ namespace Remizione
             if (knockbackVelocity == Vector2.Zero)
                 return;
 
-            float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            var dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            // 1. Aplicar movimiento basado en dt
             Position += knockbackVelocity * dt;
-
-            // 2. Aplicar fricción independiente de FPS (basada en target de 60Hz)
             knockbackVelocity *= MathF.Pow(KnockbackFriction, dt * 60f);
-
-            // 3. Limpiar valores residuales muy chicos
             if (knockbackVelocity.LengthSquared() < 100f)
-                knockbackVelocity = Vector2.Zero;
-
-            // Si terminó el knockback, resolver muertes o daños pendientes
-            if (knockbackVelocity == Vector2.Zero)
             {
+                knockbackVelocity = Vector2.Zero;
                 if (IsDead)
                     Die();
-                else
-                    OnKnockbackCompleted();
             }
         }
 
@@ -480,11 +527,6 @@ namespace Remizione
 
         // OnItemRewardChanged
         protected virtual void OnItemRewardChanged()
-        {
-        }
-
-        // OnKnockbackCompleted
-        protected virtual void OnKnockbackCompleted()
         {
         }
 
@@ -632,7 +674,7 @@ namespace Remizione
         // BodySize
         [ScriptProperty]
         public BodySize BodySize
-        { 
+        {
             get;
             set
             {
@@ -774,12 +816,7 @@ namespace Remizione
                     }
 
                     if (Definition?.MaterialReward != null)
-                    {
-                        //Session.PlayerData.IncrementMaterialCount(Definition.MaterialReward.Value, 1);
-                        //var text = $"+{Localization.GetValue(Definition.MaterialReward.Value)}";
-                        //Session.ObjectPools.FlyOffs.Get()?.ShowText(BoundingBox.Center, text, ColorPalette.Text.Terra, ScaleInfo.Text.Medium.X);
                         Session.HUD.AddMaterial(Definition.MaterialReward.Value, Position);
-                    }
                 }
 
                 DropLoot();
@@ -992,10 +1029,6 @@ namespace Remizione
 
         /// <summary>
         /// Calcula la posición navegable más cercana para realizar un ataque de rango/lanzamiento,
-        /// respetando la tolerancia vertical en Y y el límite de alcance en X.
-        /// </summary>
-        /// <summary>
-        /// Calcula la posición navegable más cercana para realizar un ataque de rango/lanzamiento,
         /// respetando la tolerancia vertical en Y y asegurando que el personaje quede dentro del 
         /// rango permitido en X (ni demasiado lejos ni demasiado cerca).
         /// </summary>
@@ -1066,7 +1099,7 @@ namespace Remizione
         {
             return Room?.WalkArea == null || Room.WalkArea.HasLineOfSight(Position, target.Position, RaycastContext.LineOfSight, this, out _);
         }
-        
+
         // HideHPMeter
         [ScriptProperty]
         public bool HideHPMeter { get; set; }
@@ -1275,6 +1308,8 @@ namespace Remizione
                 {
                     field = value;
                     Label = TextRepository.GetValue(LabelKey);
+                    if (GraceCost > 0)
+                        Label += $"({GraceCost})";
                 }
             }
         } = string.Empty;
@@ -1475,7 +1510,6 @@ namespace Remizione
 
                     if (IsDead)
                     {
-                        knockbackForce = Vector2.Zero;
                         killedByPlayer = attacker.IsPlayer;
                     }
                     else
@@ -1497,26 +1531,22 @@ namespace Remizione
             }
 
             // ---------------------------------------------------------
-            // 3. FÍSICAS (Knockback)
+            // 3. Knockback
             // ---------------------------------------------------------
-            // El empuje se aplica independientemente de la vida. 
-            // Una caja de metal indestructible (MaxHP=0) debería poder ser empujada.
             if (MaxHP > 0 && knockbackForce != Vector2.Zero && !IgnoreKnockback)
             {
                 knockbackForce *= attacker.GetKnockbackMultiplier(this);
 
                 Vector2 pushDirection = Position - attacker.Position;
-                if (pushDirection != Vector2.Zero)
-                    pushDirection.Normalize();
-                else
-                    pushDirection = new Vector2(1, 0);
+                pushDirection = pushDirection != Vector2.Zero
+                    ? Vector2.Normalize(pushDirection)
+                    : new Vector2(1, 0);
 
-                // Definir un umbral de velocidad mínima para garantizar la salida del collider
-                float minImpulse = 60;
                 float calculatedSpeed = knockbackForce.Length() * 5f;
-                float finalSpeed = Math.Max(calculatedSpeed, minImpulse);
 
-                knockbackVelocity = pushDirection * finalSpeed;
+                // Descartar impulsos insignificantes (deadzone) en lugar de inflarlos
+                if (calculatedSpeed >= 2)
+                    knockbackVelocity = pushDirection * calculatedSpeed;
             }
 
             return amount;

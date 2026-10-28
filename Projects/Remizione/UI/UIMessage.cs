@@ -12,7 +12,7 @@ namespace Remizione
         private readonly FloatTween fadeTween = new();
         private readonly Sprite icon = new() { PivotOrigin = RectanglePoint.Right };
         private readonly TextSprite messageText;
-        private readonly Vector2 scale = ScaleInfo.Text.ExtraLarge;
+        private readonly Vector2 scale = ScaleInfo.Text.Large;
         private readonly Vector2Tween scaleTween = new();
 
         // Constructor

@@ -1,4 +1,5 @@
 ﻿using Adberration.Scripting;
+using Engendro;
 
 namespace Remizione.InteractionCommands
 {
@@ -43,6 +44,18 @@ namespace Remizione.InteractionCommands
 
             player.StopMoving();
 
+            if (player.Session.InteractionContext.HeldItem != null || verb == Verb.Use)
+            {
+                if (target.GraceCost > player.Session.PlayerData.Grace)
+                {
+                    if (target.ApproachBehavior != ApproachBehavior.Over)
+                        player.FaceTo(target);
+
+                    target.Session.HUD.Message.Show($"{Localization.GetValue(MessageKind.NotEnoughGrace)} ({target.GraceCost}{TextRepository.GetValue("Misc.GraceSign")}).");
+                    return;
+                }
+            }
+
             if (target.Verb == Verb.PickUp && !player.Session.InventoryEnabled)
             {
                 MouseCursor.CustomImage = null;
@@ -50,14 +63,6 @@ namespace Remizione.InteractionCommands
                 player.Session.AwaitRoutine(RoutineNames.NoSack);
                 return;
             }
-
-            /*
-            if (Vector2.Distance(target.Position, data.TargetPosition) > 1)
-            {
-                data.Session.HUD?.Message.Show(MessageKind.OutOfReach);
-                return false;
-            }
-            */
 
             if (player.Session.InteractionContext.HeldItem?.Definition.DeselectOnUse == true)
                 player.Session.InteractionContext.HeldItem = null;

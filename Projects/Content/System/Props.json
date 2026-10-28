@@ -25,7 +25,8 @@
         {
           "context": "Contact",
           "effectType": "Damage",
-          "amount": "6"
+          "amount": "6",
+          "knockbackIntensity": "None"
         }
       ],
       "hp": 1,

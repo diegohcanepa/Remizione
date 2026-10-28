@@ -1,6 +1,5 @@
 ﻿using Engendro;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Text.Json;
 
 namespace Remizione
@@ -49,24 +48,10 @@ namespace Remizione
                 }
             }
 
-            // RunModifiers
-            if (element.GetString("runModifiers") is string runModifiersData && !string.IsNullOrWhiteSpace(runModifiersData))
-            {
-                RunModifiers = new(runModifiersData.Split(','));
-                foreach (var value in RunModifiers)
-                {
-                    if (GameData.RunModifiers.Find(value) is null)
-                        RaiseValidationError(this, $"The name '{value}' is not a valid run modifier.");
-                }
-            }
-            else
-            {
-                RunModifiers = [];
-            }
-
             // Scope
             this.Scope = TagScope.FromJson(element);
 
+            // Placeholders
             Placeholders = new(placeholders);
         }
 
@@ -100,9 +85,6 @@ namespace Remizione
 
         // Placeholders
         public ReadOnlyPlaceholderCollection Placeholders { get; }
-
-        // RunModifiers
-        public ReadOnlyCollection<string> RunModifiers { get; }
 
         // Scope
         public TagScope Scope { get; }

@@ -7,6 +7,7 @@ namespace Remizione
     /// </summary>
     public sealed class ActorThrowObjectState : BodyAnimatedState
     {
+        private Vector2? targetPos;
         private ThrownProp? thrownObject;
 
         // Constructor
@@ -19,7 +20,18 @@ namespace Remizione
         public Prop? Prop { get; set; }
 
         // Target
-        public GameThing? Target { get; set; }
+        public GameThing? Target
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    targetPos = field?.Position;
+                }
+            }
+        }
 
         // Enter
         public override void Enter()
@@ -39,12 +51,12 @@ namespace Remizione
         // Update
         public override void Update(GameTime gameTime)
         {
-            if (Prop != null && Target != null)
+            if (Prop != null && Target != null && targetPos != null)
             {
                 if (thrownObject == null && Owner.AnimationPlayer.Frame?.IsTrigger == true)
                 {
                     thrownObject = new ThrownProp(Owner, Prop);
-                    thrownObject.Throw(Target);
+                    thrownObject.Throw(targetPos.Value);
                 }
             }
 

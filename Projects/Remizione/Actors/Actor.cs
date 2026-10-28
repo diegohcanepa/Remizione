@@ -434,18 +434,6 @@ namespace Remizione
             }
         }
 
-        // OnKnockbackCompleted
-        protected override void OnKnockbackCompleted()
-        {
-            base.OnKnockbackCompleted();
-
-            if (BloodSplashOrigin != Vector2.Zero)
-            {
-                bloodSplash ??= new(this);
-                bloodSplash.Show(GetBloodSplashPosition());
-            }
-        }
-
         // OnRead
         protected override void OnRead(XmlAttributeCollection attributes)
         {
@@ -525,6 +513,12 @@ namespace Remizione
             {
                 blinkTimer ??= new(.4f, 0);
                 blinkTimer.Start(.1f, 10);
+            }
+
+            if (BloodSplashOrigin != Vector2.Zero)
+            {
+                bloodSplash ??= new(this);
+                bloodSplash.Show(GetBloodSplashPosition());
             }
         }
 

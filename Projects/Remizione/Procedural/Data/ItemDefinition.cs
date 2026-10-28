@@ -2,6 +2,7 @@
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Remizione
@@ -47,6 +48,23 @@ namespace Remizione
 
             // Category
             Category = element.GetEnum("category", ItemCategory.Misc);
+
+            // CraftingRecipe
+            var recipe = new Dictionary<Material, int>();
+            if (element.TryGetProperty("craftingRecipe", out JsonElement recipeArray) && recipeArray.ValueKind == JsonValueKind.Array)
+            {
+                foreach (var entry in recipeArray.EnumerateArray())
+                {
+                    if (entry.TryGetProperty("material", out JsonElement matElem) &&
+                        entry.TryGetProperty("amount", out JsonElement amtElem))
+                    {
+                        if (Enum.TryParse<Material>(matElem.GetString(), true, out var matType))
+                            recipe[matType] = Math.Clamp(amtElem.GetInt32(), 1, 3);
+                    }
+                }
+            }
+
+            CraftingRecipe = recipe.AsReadOnly();
 
             // DeselectOnUse
             DeselectOnUse = element.GetBool("deselectOnUse", false);
@@ -177,6 +195,9 @@ namespace Remizione
         // Category
         public ItemCategory Category { get; }
 
+        // CraftingRecipe
+        public IReadOnlyDictionary<Material, int> CraftingRecipe { get; }
+
         // Description
         public string Description { get; private set; } = string.Empty;
 
@@ -209,6 +230,9 @@ namespace Remizione
 
         // ImpactEffectType
         public ImpactEffectType ImpactEffectType { get; }
+
+        // IsCraftable
+        public bool IsCraftable => CraftingRecipe.Count > 0;
 
         // IsDepletable
         public bool IsDepletable { get; }

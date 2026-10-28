@@ -68,9 +68,7 @@ namespace Remizione
             if (IsLoaded)
                 throw new InvalidOperationException("Data already loaded.");
 
-            RunModifiers = Load("RunModifiers.json", e => new RunModifierDefinition(e));
             CombatBehaviors = Load("CombatBehaviors.json", e => new CombatBehavior(e));
-
             Items = Load("Items.json", e => new ItemDefinition(e));
             Actors = Load("Actors.json", e => new ActorDefinition(e));
             Props = Load("Props.json", e => new PropDefinition(e));
@@ -86,8 +84,5 @@ namespace Remizione
 
         // Rooms
         public static FrozenNamedCollection<RoomDefinition> Rooms { get; private set; } = null!;
-
-        // RunModifiers
-        public static FrozenNamedCollection<RunModifierDefinition> RunModifiers { get; private set; } = null!;
     }
 }

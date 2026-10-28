@@ -105,7 +105,7 @@ namespace Remizione
 
         // MouseRightButtonIcon
         public AtlasImage MouseRightButtonIcon { get; }
-        
+
         // Pixel
         public AtlasImage Pixel { get; }
 

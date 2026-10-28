@@ -19,6 +19,8 @@ namespace Remizione
             : base(session, string.Empty)
         {
             this.Atlas = Atlases.Environment;
+            this.AffectsPathfinding = false;
+            this.CollisionDetection = false;
             this.DefaultImageName = defaultImageName;
             this.PivotOrigin = RectanglePoint.Center;
             this.Opacity = .4f;
