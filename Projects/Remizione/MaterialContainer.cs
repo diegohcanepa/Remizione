@@ -31,8 +31,8 @@ namespace Remizione
             else
                 materials[material] = amount;
 
-            if (materials[material] > 3)
-                materials[material] = 3;
+            if (materials[material] > GameSettings.MinMaterialsToCraft)
+                materials[material] = GameSettings.MinMaterialsToCraft;
 
             Refresh();
             Version++;

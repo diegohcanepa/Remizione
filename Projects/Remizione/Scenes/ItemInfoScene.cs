@@ -168,6 +168,7 @@ namespace Remizione
             if (backButton.TestPressed() || InputBindings.Back.IsPressed(PlayerIndex.One))
             {
                 Game.SceneManager.Pop();
+                Sound.Play(SoundNames.ButtonPress);
                 return HandleInputResult.Handled;
             }
 
@@ -212,7 +213,6 @@ namespace Remizione
             this.perishStateIcon.RenderImage = Atlases.UI.ItemPerishStates[(int)item.PerishState];
             this.amountText.Text = item.Definition.IsStackable ? $"x{item.Amount}" : string.Empty;
             this.shadow.RenderImage = item.Definition.Image;
-            this.button.IsEnabled = item.Definition.AllowDrop;
         }
     }
 }

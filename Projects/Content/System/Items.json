@@ -18,6 +18,15 @@
 			]
 		},
 		{
+			"name": "CobaltPebble",
+			"category": "Misc",
+			"actionKind": "ScriptOutcome",
+			"deselectOnUse": true,
+			"isDepletable": true,
+			"isKeyItem": true,
+			"isStackable": true
+		},
+		{
 			"name": "Loquat",
 			"animationName": "Consume",
 			"category": "Food",
@@ -39,7 +48,6 @@
 			"actionKind": "ScriptOutcome",
 			"deselectOnUse": true,
 			"isDepletable": true,
-			"isKeyItem": true,
 			"isStackable": true
 		},
 		{
@@ -72,7 +80,6 @@
 			"name": "GadlingKnuckle",
 			"category": "Weapon",
 			"actionKind": "Proximity",
-			"allowDrop": false,
 			"deselectOnUse": false,
 			"hardSurfacePenalty": true,
 			"isDepletable": false,

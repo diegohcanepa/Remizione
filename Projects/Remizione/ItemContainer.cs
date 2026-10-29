@@ -37,7 +37,9 @@ namespace Remizione
             {
                 var data = value.Split("|");
 
-                var definition = GameData.Items.Get(data[0]);
+                if (GameData.Items.Find(data[0]) is not ItemDefinition definition)
+                    continue;
+
                 var amount = XmlConvert.ToInt32(data[1]);
 
                 var item = new Item(this, definition)

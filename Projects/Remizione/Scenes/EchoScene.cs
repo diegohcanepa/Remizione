@@ -53,27 +53,22 @@ namespace Remizione
             if (InputManager.DefaultPlayer.LastInputMethod != InputMethod.Mouse)
                 return false;
 
-            if (!textSprite.IsTyping)
-                speakerSoundInstance?.Stop(400);
-
             if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed() ||
                 InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
             {
-                if (textSprite.IsTyping)
-                {
-                    textSprite.StopTyping();
-                }
-                else
-                {
-                    CanClose = true;
-                    if (session.AwaitingScript?.NextStatement is not EchoCommand and not AwaitCommand)
-                        Game.SceneManager.Pop();
-                }
-
+                Step();
                 return true;
             }
 
             return false;
+        }
+
+        // Step
+        private void Step()
+        {
+            CanClose = true;
+            if (session.AwaitingScript?.NextStatement is not EchoCommand and not AwaitCommand)
+                Game.SceneManager.Pop();
         }
 
         #endregion
@@ -112,6 +107,12 @@ namespace Remizione
         // OnHandleInput
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
+            if (InputBindings.Back.IsPressed(PlayerIndex.One))
+            {
+                Step();
+                return HandleInputResult.Handled;
+            }
+
             if (HandleMouseInput())
                 return HandleInputResult.Handled;
 
@@ -137,8 +138,6 @@ namespace Remizione
             this.textSprite.Color = Colors.MouseCursor.Tooltip;
 
             CanClose = false;
-
-            //textSprite.StartTyping();
 
             textOpacityTween.Start(TweenStyle.CubicIn, 0, 1, 500);
             textSprite.Tweens.OpacityTween = textOpacityTween;

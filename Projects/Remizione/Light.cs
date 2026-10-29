@@ -43,6 +43,7 @@ namespace Remizione
         {
             return lightKind switch
             {
+                LightKind.Beacon => Vector2Tween.Create(TweenStyle.Linear, scale, scale * 1.1f, 1200, -1),
                 LightKind.Fire => Vector2Tween.Create(TweenStyle.Linear, scale, scale * 1.1f, 1200, -1),
                 LightKind.SulfurBonfire => Vector2Tween.Create(TweenStyle.Linear, scale, scale * 1.01f, 1200, -1),
                 LightKind.Lantern => Vector2Tween.Create(TweenStyle.Linear, scale, scale * 1.1f, Random.Shared.Next(1100, 1400), -1),
@@ -55,6 +56,7 @@ namespace Remizione
         {
             return lightKind switch
             {
+                LightKind.Beacon => new Color(235, 170, 170),
                 LightKind.Fire => new Color(255, 160, 160),
                 LightKind.KeyItemOrb => Colors.Palette.SkyBlue,
                 LightKind.CommonItemOrb => Colors.Palette.TerraLight,
@@ -80,6 +82,11 @@ namespace Remizione
 
             switch (LightKind)
             {
+                case LightKind.Beacon:
+                    litTweenDuration = 1000;
+                    unlitTweenDuration = 300;
+                    break;
+
                 case LightKind.Fire:
                     litTweenDuration = 1000;
                     unlitTweenDuration = 300;

@@ -91,7 +91,7 @@ namespace Remizione
             amountText.Position = container.BoundingBox.GetPoint(RectanglePoint.Top);
         }
 
-        // Convierte un valor lógico (0..MaximumValue) a ancho proporcional (0..fixedWidth)
+        // GetScaledWidth
         private float GetScaledWidth(float val)
         {
             return MaximumValue <= 0 ? 0 : val / MaximumValue * width;

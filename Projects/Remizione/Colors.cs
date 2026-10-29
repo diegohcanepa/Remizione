@@ -38,8 +38,8 @@ namespace Remizione
         // HPMeterActor
         internal static class HPMeterActor
         {
-            internal static Color Back { get; } = Palette.TerraDark;
-            internal static Color Border { get; } = Palette.TerraDarkest;
+            internal static Color Back { get; } = Palette.TerraDarker;
+            internal static Color Border { get; } = Palette.AlmostBlack;
             internal static Color Diff { get; } = Palette.Orange;
             internal static Color Fore { get; } = new(164, 60, 60);
         }
@@ -47,8 +47,8 @@ namespace Remizione
         // HPMeterProp
         internal static class HPMeterProp
         {
-            internal static Color Back { get; } = Palette.TerraDark;
-            internal static Color Border { get; } = Palette.TerraDarkest;
+            internal static Color Back { get; } = Palette.TerraDarker;
+            internal static Color Border { get; } = Palette.AlmostBlack;
             internal static Color Diff { get; } = Palette.TerraLight;
             internal static Color Fore { get; } = Palette.Terra;
         }
@@ -113,13 +113,16 @@ namespace Remizione
             internal static Color Green { get; } = new(59, 125, 79);
             internal static Color Orange { get; } = new(171, 81, 48);
             internal static Color Red { get; } = new(164, 60, 60);
+            internal static Color RedBloody { get; } = new(155, 56, 50);
             internal static Color SkyBlue { get; } = new(79, 164, 184);
+            internal static Color SkyBlueLight { get; } = new(76, 104, 133);
             internal static Color TerraLight { get; } = new(189, 106, 98);
             internal static Color Terra { get; } = new(143, 77, 87);
             internal static Color TerraDark { get; } = new(82, 51, 63);
             internal static Color TerraDarker { get; } = new(61, 41, 54);
             internal static Color TerraDarkest { get; } = new(41, 29, 43);
             internal static Color Text { get; } = new(172, 167, 144);
+            internal static Color TextDark { get; } = new(124, 120, 104);
             internal static Color Yellow { get; } = new(255, 238, 131);
             internal static Color YellowDark { get; } = new(240, 181, 65);
         }

@@ -1,6 +1,5 @@
 ﻿using Adberration;
 using Engendro;
-using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Remizione.UI;
@@ -14,10 +13,8 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly Sprite craftIcon = new(Atlases.UI.CraftIcon) { Position = new(6, 102) };
         private readonly UIGraceMeter graceScore;
         private readonly UIMaterials materials;
-        private bool craftActive;
         private readonly UIStatuses statuses;
 
         #endregion
@@ -30,10 +27,9 @@ namespace Remizione
         {
             this.HeartMeter = new(session);
             this.InventoryMeter = new(session.PlayerData.Inventory);
-            this.materials = new(session, new(26, 129.5f));
+            this.materials = new(session, new(25, 129.5f));
             this.DestinationMark = new(session);
             this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 10));
-
             this.graceScore = new(session);
             this.statuses = new(session);
         }
@@ -51,10 +47,6 @@ namespace Remizione
             graceScore.Draw(gameTime);
             statuses.Draw(gameTime);
             materials.Draw(gameTime);
-            
-            if (craftActive)
-                craftIcon.Draw(gameTime);
-
             Game.SpriteBatch.End();
 
             if (Session.InventoryEnabled)
@@ -74,22 +66,7 @@ namespace Remizione
             statuses.Update(gameTime);
             materials.Update(gameTime);
             DestinationMark.Update(gameTime);
-            craftIcon.Update(gameTime);
             RoomTitle.Update(gameTime);
-
-            if (Session.PlayerData.Materials.Total >= 1)
-            {
-                if (!craftActive)
-                {
-                    craftActive = true;
-                    Sound.Play(SoundNames.CraftActive);
-                    craftIcon.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.Linear, Vector2.One, Vector2.One * .7f, 100, 8);
-                }
-            }
-            else
-            {
-                craftActive = false;
-            }
         }
 
         #endregion

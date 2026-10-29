@@ -26,14 +26,14 @@
         // GameFolder
         public const string GameFolder = "Remizione";
 
-        // HeavyMoveThreshold
-        public const int HeavyMoveThreshold = 150;
-
         // LogFileName
         public const string LogFileName = "ErrorLog.txt";
 
         // MaxItemAmount
         public const int MaxItemAmount = 5;
+
+        // MinMaterialsToCraft
+        public const int MinMaterialsToCraft = 3;
 
         // PaintPoints
         public const int PaintPoints = 5;

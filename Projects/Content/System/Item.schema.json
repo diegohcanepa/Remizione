@@ -27,10 +27,6 @@
             "actionKind": {
               "$ref": "enums.schema.json#/$defs/ActionKind"
             },
-            "allowDrop": {
-              "type": "boolean",
-              "default": true
-            },
             "animationName": {
               "type": "string"
             },

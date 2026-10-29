@@ -13,7 +13,6 @@ namespace Remizione
 
         private RectangleF boundingBox;
         private readonly Color disabledColor = Color.Gray;
-        private Vector2 hoverScale;
         private readonly TextSprite label;
         private readonly Sprite[] strips;
 
@@ -88,7 +87,6 @@ namespace Remizione
             if (IsMouseOver && IsEnabled)
             {
                 label.Color = HoverColor;
-                label.Scale = hoverScale;
             }
             else
             {
@@ -110,7 +108,7 @@ namespace Remizione
         }
 
         // HoverColor
-        public Color HoverColor { get; set; } = Colors.Palette.Terra;
+        public Color HoverColor { get; set; } = Colors.Palette.TerraLight;
 
         // MinimumWidth
         public float MinimumWidth
@@ -167,7 +165,6 @@ namespace Remizione
                 {
                     field = value;
                     label.Scale = field;
-                    hoverScale = value * 1.05f;
                     Refresh();
                 }
             }

@@ -220,7 +220,7 @@ namespace Remizione
         public static SpeechText? ModalInstance { get; private set; }
 
         // Show
-        public void Show(string text, bool awaitInput, string? soundName, bool loopSound)
+        public void Show(string text, bool awaitInput, string? soundName)
         {
             if (string.IsNullOrWhiteSpace(text))
                 return;
@@ -257,11 +257,7 @@ namespace Remizione
             if (!string.IsNullOrWhiteSpace(soundName))
             {
                 speakerSoundInstance = Sound.Find(soundName)?.PopInstance();
-                if (speakerSoundInstance != null)
-                {
-                    speakerSoundInstance.Looped = loopSound;
-                    speakerSoundInstance.Play();
-                }
+                speakerSoundInstance?.Play();
             }
 
             Layout();

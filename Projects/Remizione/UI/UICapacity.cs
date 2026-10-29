@@ -26,17 +26,17 @@ namespace Remizione
             // Current amount
             this.currentAmount = new(Fonts.CommonOutline)
             {
-                Color = Colors.Palette.Terra,
+                Color = Colors.Palette.Text,
                 PivotOrigin = RectanglePoint.Left,
-                Scale = ScaleInfo.Text.Large
+                Scale = ScaleInfo.Text.VeryLarge
             };
 
             // Maximum amount
             this.maximumAmount = new(Fonts.CommonOutline)
             {
-                Color = Colors.Palette.TerraDark,
+                Color = Colors.Palette.TextDark,
                 PivotOrigin = RectanglePoint.Left,
-                Scale = ScaleInfo.Text.Medium
+                Scale = ScaleInfo.Text.Large
             };
 
             Refresh();

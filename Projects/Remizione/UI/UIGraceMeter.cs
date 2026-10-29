@@ -16,7 +16,7 @@ namespace Remizione
         private int deltaScore;
         private bool isInitializing = true;
         private int lastKnownValue;
-        private readonly Color titleColor = Colors.Palette.TerraDark;
+        private readonly Color titleColor = Colors.Palette.TextDark;
         private readonly TextSprite titleText;
         private readonly FloatTween tween = new();
         private readonly TextSprite valueText;
@@ -40,7 +40,7 @@ namespace Remizione
             // Value text
             this.valueText = new(Fonts.CommonOutline)
             {
-                Color = Colors.Palette.Terra,
+                Color = Colors.Palette.TextDark,
                 PivotOrigin = RectanglePoint.RightTop,
                 Scale = ScaleInfo.Text.Huge,
                 Position = titleText.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -1)

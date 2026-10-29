@@ -70,6 +70,8 @@ namespace Remizione.InteractionCommands
             if (target.ApproachBehavior != ApproachBehavior.Over)
                 player.FaceTo(target);
 
+            player.Session.PlayerData.Grace -= target.GraceCost;
+
             player.Session.BeginOutcome(resolvedScript, target);
         }
     }

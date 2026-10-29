@@ -811,7 +811,10 @@ namespace Remizione
                     }
 
                     if (Definition?.MaterialReward != null)
+                    {
                         Session.PlayerData.Materials.Add(Definition.MaterialReward.Value, 1);
+                        ShowFlyOff("+" + Localization.GetValue(Definition.MaterialReward.Value), Colors.Palette.SkyBlueLight, ScaleInfo.Text.Medium.X, Position);
+                    }
                 }
 
                 DropLoot();
@@ -1448,11 +1451,11 @@ namespace Remizione
         }
 
         // ShowFlyOff
-        public FlyOff? ShowFlyOff(string text, Color color, float scale)
+        public FlyOff? ShowFlyOff(string text, Color color, float scale, Vector2? origin = null)
         {
             if (Session.ObjectPools.FlyOffs.Get() is FlyOff flyOff)
             {
-                flyOff.ShowText(GetOverheadPosition(new(0, -3)), text, color, scale, 2500);
+                flyOff.ShowText(origin ?? GetOverheadPosition(new(0, -3)), text, color, scale, 2500);
                 return flyOff;
             }
 

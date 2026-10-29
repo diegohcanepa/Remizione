@@ -29,17 +29,17 @@ namespace Remizione
         public UIHeartMeter(GameSession session)
             : base(session)
         {
-            this.meter = new(Colors.Palette.AlmostBlack, Colors.Palette.TerraDark, Colors.Palette.Terra, Colors.Palette.TerraLight, new(21, 5), 0)
+            this.meter = new(Colors.Palette.AlmostBlack, Colors.Palette.TerraDarker, Colors.Palette.RedBloody, Colors.Palette.Terra, new(21, 5), 0)
             {
-                Position = icon.BoundingBox.GetPoint(RectanglePoint.Right, 13, -3),
+                Position = icon.BoundingBox.GetPoint(RectanglePoint.Right, 10.5f, -3),
             };
 
-            container.Position = icon.BoundingBox.GetPoint(RectanglePoint.Right, 1, -1);
+            container.Position = icon.BoundingBox.GetPoint(RectanglePoint.Right, -1, -1);
 
             this.capacityMeter = new()
             {
                 PivotOrigin = RectanglePoint.Left,
-                Position = container.BoundingBox.GetPoint(RectanglePoint.Right, 1, 1),
+                Position = container.BoundingBox.GetPoint(RectanglePoint.Right, 1.5f, .5f),
             };
         }
 

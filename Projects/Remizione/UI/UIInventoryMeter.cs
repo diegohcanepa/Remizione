@@ -70,7 +70,7 @@ namespace Remizione
             {
                 lastKnownCount = inventory.Count;
                 amountText.Text = $"{inventory.Count}/{inventory.Capacity}";
-                amountText.Color = inventory.IsFull ? Colors.Palette.Red : Colors.Palette.Terra;
+                amountText.Color = inventory.IsFull ? Colors.Palette.Red : Colors.Palette.TextDark;
             }
         }
 

@@ -26,9 +26,6 @@ namespace Remizione
             if (string.IsNullOrWhiteSpace(AnimationName))
                 AnimationName = $"Use{Name}";
 
-            // AllowDrop
-            AllowDrop = element.GetBool("allowDrop", true);
-
             // AreaOfEffect
             AreaOfEffect = element.GetInt32("areaOfEffect", 0);
             if (AreaOfEffect < 0)
@@ -170,9 +167,6 @@ namespace Remizione
 
         // ActionKind
         public ActionKind ActionKind { get; }
-
-        // AllowDrop
-        public bool AllowDrop { get; }
 
         // AnimationName
         public string AnimationName { get; }
