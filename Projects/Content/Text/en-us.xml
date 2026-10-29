@@ -251,6 +251,8 @@ Bla bla bla</String>
   <String Key="Prop.Trunk">Trunk</String>
   <String Key="Prop.Tunnel">Tunnel</String>
   <String Key="Room.Threshold">The Threshold</String>
+  <String Key="StatusType.Laceration">LACERATION!</String>
+  <String Key="StatusType.Putrefaction">Putrefaction</String>
   <String Key="UserAction.Discard">Discard</String>
   <String Key="UserAction.Drop">Drop</String>
   <String Key="Verb.Attack">Hit</String>

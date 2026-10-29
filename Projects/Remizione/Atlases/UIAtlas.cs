@@ -18,6 +18,7 @@ namespace Remizione
             CloseButton = this[nameof(CloseButton)];
             CloseButtonHot = this[nameof(CloseButtonHot)];
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
+            CraftIcon = this[nameof(CraftIcon)];
             CreditsBar = this[nameof(CreditsBar)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
             DialogOptionBullet = this[nameof(DialogOptionBullet)];
@@ -29,6 +30,9 @@ namespace Remizione
             InspectItem = this[nameof(InspectItem)];
             InventoryItemSlots = CreateReadOnlyCollection("InventoryItemSlot", 1, 3);
             ItemPerishStates = CreateReadOnlyCollection("ItemPerishState", 1, 3);
+            MaterialGut = CreateReadOnlyCollection("MaterialGut", 1, 3);
+            MaterialStone = CreateReadOnlyCollection("MaterialStone", 1, 3);
+            MaterialWood = CreateReadOnlyCollection("MaterialWood", 1, 3);
             MiniMapMarker = this[nameof(MiniMapMarker)];
             MouseLeftButtonIcon = this[nameof(MouseLeftButtonIcon)];
             MouseRightButtonIcon = this[nameof(MouseRightButtonIcon)];
@@ -64,6 +68,9 @@ namespace Remizione
         // CloseButtonHot
         public AtlasImage CloseButtonHot { get; }
 
+        // CraftIcon
+        public AtlasImage CraftIcon { get; }
+
         // CreditsBar
         public AtlasImage CreditsBar { get; }
 
@@ -96,6 +103,15 @@ namespace Remizione
 
         // ItemPerishStates
         public ReadOnlyCollection<AtlasImage> ItemPerishStates { get; }
+
+        // MaterialGut
+        public ReadOnlyCollection<AtlasImage> MaterialGut { get; }
+
+        // MaterialStone
+        public ReadOnlyCollection<AtlasImage> MaterialStone { get; }
+
+        // MaterialWood
+        public ReadOnlyCollection<AtlasImage> MaterialWood { get; }
 
         // MiniMapMarker
         public AtlasImage MiniMapMarker { get; }

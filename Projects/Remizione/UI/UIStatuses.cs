@@ -27,7 +27,7 @@ namespace Remizione
             meters = new Sprite[Enum.GetValues<StatusType>().Length];
             for (var i = 0; i < meters.Length; i++)
             {
-                meters[i] = new() { PivotOrigin = RectanglePoint.Top, Scale = ScaleInfo.UIElement.Medium };
+                meters[i] = new() { PivotOrigin = RectanglePoint.Top };
             }
         }
 

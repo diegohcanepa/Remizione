@@ -45,7 +45,7 @@ namespace Remizione
         // Launch
         private void Launch(Vector2 origin, Sprite sprite, int duration)
         {
-            var distance = sprite is TextSprite ? new(0, -5) : LaunchOffsets[spawnIndex];
+            var distance = sprite is TextSprite ? new(0, -1) : LaunchOffsets[spawnIndex];
             spawnIndex = (spawnIndex + 1) % LaunchOffsets.Length;
 
             activeSprite = sprite;
@@ -83,12 +83,12 @@ namespace Remizione
         }
 
         // ShowTextCore
-        private void ShowTextCore(Vector2 origin, string value, Color color, float scale)
+        private void ShowTextCore(Vector2 origin, string value, Color color, float scale, int duration)
         {
             text.Color = color;
             text.Scale = new(scale);
             text.Text = value;
-            Launch(origin, text, 1000);
+            Launch(origin, text, duration);
         }
 
         #endregion
@@ -130,34 +130,24 @@ namespace Remizione
         // IsVisible
         public bool IsVisible => xTween.IsRunning || yTween.IsRunning || opacityTween.IsRunning;
 
-        // ShowAmount
-        public void ShowAmount(GameThing source, Color color, int amount)
-        {
-            if (amount == 0)
-                return;
-
-            var origin = source.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.Top, 0, -4);
-            ShowTextCore(origin, amount.ToString(CultureInfo.InvariantCulture), color, ScaleInfo.Text.Small.X);
-        }
-
         // ShowIcon
         public void ShowIcon(Vector2 origin, AtlasImage image, float scale = 1)
         {
             icon.RenderImage = image;
             icon.Scale = new(scale);
-            Launch(origin, icon, 2000);
+            Launch(origin, icon, 1000);
         }
 
         // ShowText
-        public void ShowText(Vector2 origin, string value, Color color)
+        public void ShowText(Vector2 origin, string value, Color color, int duration)
         {
-            ShowText(origin, value, color, defaultScale);
+            ShowText(origin, value, color, defaultScale, duration);
         }
 
         // ShowText
-        public void ShowText(Vector2 origin, string value, Color color, float scale)
+        public void ShowText(Vector2 origin, string value, Color color, float scale, int duration)
         {
-            ShowTextCore(origin, value, color, scale);
+            ShowTextCore(origin, value, color, scale, duration);
         }
     }
 }

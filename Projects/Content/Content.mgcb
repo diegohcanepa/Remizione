@@ -250,6 +250,13 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/ConsumeDrink.wav;Audio/FX/ConsumeDrink
 
+#begin Audio/FX/CraftActive.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/CraftActive.wav;Audio/FX/CraftActive
+
 #begin Audio/FX/DoorGateClose.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

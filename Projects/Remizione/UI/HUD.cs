@@ -1,5 +1,6 @@
 ﻿using Adberration;
 using Engendro;
+using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Remizione.UI;
@@ -13,7 +14,10 @@ namespace Remizione
     {
         #region Private fields
 
+        private readonly Sprite craftIcon = new(Atlases.UI.CraftIcon) { Position = new(6, 102) };
         private readonly UIGraceMeter graceScore;
+        private readonly UIMaterials materials;
+        private bool craftActive;
         private readonly UIStatuses statuses;
 
         #endregion
@@ -26,10 +30,7 @@ namespace Remizione
         {
             this.HeartMeter = new(session);
             this.InventoryMeter = new(session.PlayerData.Inventory);
-            this.WoodMeter = new(session, Material.Wood, new(25, 131));
-            this.StoneMeter = new(session, Material.Stone, new(37, 131));
-            this.GutMeter = new(session, Material.Gut, new(49, 131));
-
+            this.materials = new(session, new(26, 129.5f));
             this.DestinationMark = new(session);
             this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 10));
 
@@ -49,17 +50,15 @@ namespace Remizione
                 HeartMeter.Draw(gameTime);
             graceScore.Draw(gameTime);
             statuses.Draw(gameTime);
+            materials.Draw(gameTime);
+            
+            if (craftActive)
+                craftIcon.Draw(gameTime);
+
             Game.SpriteBatch.End();
 
             if (Session.InventoryEnabled)
                 InventoryMeter.Draw(gameTime);
-
-            if (Session.MaterialsEnabled)
-            {
-                WoodMeter.Draw(gameTime);
-                StoneMeter.Draw(gameTime);
-                GutMeter.Draw(gameTime);
-            }
 
             RoomTitle.Draw(gameTime);
             Message.Draw(gameTime);
@@ -73,35 +72,30 @@ namespace Remizione
             Message.Update(gameTime);
             graceScore.Update(gameTime);
             statuses.Update(gameTime);
-            WoodMeter.Update(gameTime);
-            StoneMeter.Update(gameTime);
-            GutMeter.Update(gameTime);
+            materials.Update(gameTime);
             DestinationMark.Update(gameTime);
+            craftIcon.Update(gameTime);
             RoomTitle.Update(gameTime);
+
+            if (Session.PlayerData.Materials.Total >= 1)
+            {
+                if (!craftActive)
+                {
+                    craftActive = true;
+                    Sound.Play(SoundNames.CraftActive);
+                    craftIcon.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.Linear, Vector2.One, Vector2.One * .7f, 100, 8);
+                }
+            }
+            else
+            {
+                craftActive = false;
+            }
         }
 
         #endregion
 
-        // AddMaterial
-        public void AddMaterial(Material material, Vector2 worldPosition)
-        {
-            if (material == Material.Gut)
-                GutMeter.Add(worldPosition);
-
-            else if (material == Material.Stone)
-                StoneMeter.Add(worldPosition);
-
-            else if (material == Material.Wood)
-                WoodMeter.Add(worldPosition);
-
-            Session.MaterialsEnabled = true;
-        }
-
         // DestinationMark
         public DestinationMark DestinationMark { get; }
-
-        // GutMeter
-        public UIMaterialMeter GutMeter { get; }
 
         // HandleInput
         public HandleInputResult HandleInput(GameTime gameTime)
@@ -133,11 +127,5 @@ namespace Remizione
 
         // RoomTitle
         public UIRoomTitle RoomTitle { get; } = new();
-
-        // StoneMeter
-        private UIMaterialMeter StoneMeter { get; }
-
-        // WoodMeter
-        private UIMaterialMeter WoodMeter { get; }
     }
 }

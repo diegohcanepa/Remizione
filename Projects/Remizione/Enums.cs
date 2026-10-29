@@ -46,7 +46,7 @@ namespace Remizione
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Video, Voice, System, Text }
 
     // DamageType
-    public enum DamageType { None, Physical, Acid, Explosive, Fire, Ice, Lightning, Poison }
+    public enum DamageType { None, Physical, Acid, Explosive, Fire, Ice, Lightning, Poison, Status }
 
     // Difficulty
     public enum Difficulty { Easy, Normal, Hard }

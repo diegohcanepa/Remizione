@@ -337,6 +337,7 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(PlayerData.Grace)]?.Value is string graceValue)
                 PlayerData.Grace = XmlConvert.ToInt32(graceValue);
 
+            /*
             // GutCount
             if (sessionNode.Attributes[nameof(PlayerData.GutCount)]?.Value is string gutCountValue)
                 PlayerData.GutCount = XmlConvert.ToInt32(gutCountValue);
@@ -348,6 +349,7 @@ namespace Remizione
             // WoodCount
             if (sessionNode.Attributes[nameof(PlayerData.WoodCount)]?.Value is string woodCountValue)
                 PlayerData.WoodCount = XmlConvert.ToInt32(woodCountValue);
+            */
 
             // Inventory
             if (sessionNode.Attributes[nameof(PlayerData.Inventory)]?.Value is string inventoryValue)
@@ -356,10 +358,6 @@ namespace Remizione
             // InventoryEnabled
             if (sessionNode.Attributes[nameof(InventoryEnabled)]?.Value is string inventoryEnabledValue)
                 InventoryEnabled = XmlConvert.ToBoolean(inventoryEnabledValue);
-
-            // MaterialsEnabled
-            if (sessionNode.Attributes[nameof(MaterialsEnabled)]?.Value is string materialsEnabledValue)
-                MaterialsEnabled = XmlConvert.ToBoolean(materialsEnabledValue);
 
             // Player
             if (sessionNode.Attributes[nameof(Player)]?.Value is string player)
@@ -541,6 +539,7 @@ namespace Remizione
             // Grace
             output.WriteAttributeString(nameof(PlayerData.Grace), XmlConvert.ToString(PlayerData.Grace));
 
+            /*
             // GutCount
             output.WriteAttributeString(nameof(PlayerData.GutCount), XmlConvert.ToString(PlayerData.GutCount));
 
@@ -549,15 +548,13 @@ namespace Remizione
 
             // WoodCount
             output.WriteAttributeString(nameof(PlayerData.WoodCount), XmlConvert.ToString(PlayerData.WoodCount));
+            */
 
             // Inventory
             output.WriteAttributeString(nameof(PlayerData.Inventory), PlayerData.Inventory.Serialize());
 
             // InventoryEnabled
             output.WriteAttributeString(nameof(InventoryEnabled), XmlConvert.ToString(InventoryEnabled));
-
-            // MaterialsEnabled
-            output.WriteAttributeString(nameof(MaterialsEnabled), XmlConvert.ToString(MaterialsEnabled));
 
             // Player
             if (Player != null)
@@ -751,10 +748,6 @@ namespace Remizione
 
         // MasterRunRng (RNG supremo de la partida entera. Solo se usa para generar pisos.)
         public Random MasterRunRng { get; } = new();
-
-        // MaterialsEnabled
-        [ScriptProperty]
-        public bool MaterialsEnabled { get; set; }
 
         // NextRoom
         [ScriptProperty]

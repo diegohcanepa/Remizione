@@ -7,12 +7,12 @@ namespace Engendro
     /// <summary>
     /// VersionedCollection
     /// </summary>
-    public abstract class VersionedCollection<T> : Collection<T>
+    public class VersionedCollection<T> : Collection<T>
     {
         private readonly HashSet<T> hashSet;
 
         // Constructor
-        protected VersionedCollection()
+        public VersionedCollection()
             : base()
         {
             hashSet = [];

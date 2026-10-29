@@ -265,7 +265,7 @@ namespace Remizione
         // ProcessDamageFlyOff
         private void ProcessDamageFlyOff(int amount, DamageType damageType)
         {
-            var color = Colors.Palette.Red;
+            var color = Colors.Palette.Text;
             var damageAmount = Math.Abs(amount);
 
             if (IsPlayer)
@@ -277,16 +277,8 @@ namespace Remizione
             }
             else
             {
-                ShowFlyOff(damageAmount.ToString(CultureInfo.InvariantCulture), color);
+                //ShowFlyOff(damageAmount.ToString(CultureInfo.InvariantCulture), color, ScaleInfo.Text.Tiny.X);
             }
-        }
-
-        // RefreshLabel
-        private void RefreshLabel()
-        {
-            Label = TextRepository.GetValue(LabelKey);
-            if (GraceCost > 0)
-                Label += $"({GraceCost})";
         }
 
         // ResolveStaticCollisions
@@ -648,17 +640,20 @@ namespace Remizione
 
             statuses ??= new StatusSet();
 
-            if (Atlases.UI.FindImage($"{statusType}Icon") is { } statusIcon)
+            StatusVersion++;
+
+            if (statuses.ApplyAmount(statusType, finalAmount))
+            {
+                TakeDamage(this, DamageType.Status, 1, Vector2.Zero);
+                ShowFlyOff(Localization.GetValue(statusType), Colors.Palette.Red, ScaleInfo.Text.Medium.X);
+            }
+            else if (Atlases.UI.FindImage($"{statusType}Icon") is { } statusIcon)
             {
                 for (int i = 0; i < amount; i++)
                 {
                     ShowFlyOff(statusIcon, ScaleInfo.UIElement.Tiny.X);
                 }
             }
-
-            StatusVersion++;
-            if (statuses.ApplyAmount(statusType, finalAmount))
-                TakeDamage(this, DamageType.Physical, 1, Vector2.Zero);
         }
 
         // ApproachBehavior
@@ -812,11 +807,11 @@ namespace Remizione
                         Sound.Play(SoundNames.GraceGain);
                         Session.PlayerData.Grace += Definition.GraceReward;
                         var text = $"+{Definition.GraceReward} {Localization.GetValue(PlayerStat.Grace)}";
-                        Session.ObjectPools.FlyOffs.Get()?.ShowText(GetOverheadPosition(), text, Colors.Palette.Grace, ScaleInfo.Text.Medium.X);
+                        Session.ObjectPools.FlyOffs.Get()?.ShowText(GetOverheadPosition(), text, Colors.Palette.Grace, ScaleInfo.Text.Medium.X, 1000);
                     }
 
                     if (Definition?.MaterialReward != null)
-                        Session.HUD.AddMaterial(Definition.MaterialReward.Value, Position);
+                        Session.PlayerData.Materials.Add(Definition.MaterialReward.Value, 1);
                 }
 
                 DropLoot();
@@ -1308,8 +1303,6 @@ namespace Remizione
                 {
                     field = value;
                     Label = TextRepository.GetValue(LabelKey);
-                    if (GraceCost > 0)
-                        Label += $"({GraceCost})";
                 }
             }
         } = string.Empty;
@@ -1451,9 +1444,15 @@ namespace Remizione
         // ShowFlyOff
         public FlyOff? ShowFlyOff(string text, Color color)
         {
+            return ShowFlyOff(text, color, ScaleInfo.Text.Small.X);
+        }
+
+        // ShowFlyOff
+        public FlyOff? ShowFlyOff(string text, Color color, float scale)
+        {
             if (Session.ObjectPools.FlyOffs.Get() is FlyOff flyOff)
             {
-                flyOff.ShowText(GetOverheadPosition(new(0, -3)), text, color);
+                flyOff.ShowText(GetOverheadPosition(new(0, -3)), text, color, scale, 2500);
                 return flyOff;
             }
 
@@ -1520,7 +1519,7 @@ namespace Remizione
 
                     OnTakeDamage(attacker, amount, damageType);
 
-                    if (amount > 0 && MaxHP > 1 && !IsDead)
+                    if (amount > 0 && MaxHP > 1 && !IsDead && damageType != DamageType.Status)
                         ProcessDamageFlyOff(amount, damageType);
                 }
             }

@@ -120,16 +120,31 @@ namespace Remizione
         }
 
         // Hurt
-        private void Hurt()
+        private void Hurt(GameThing attacker)
         {
             if (HurtVoice != null)
                 PlaySound(HurtVoice);
+
+            if (attacker == this)
+                return;
 
             if (Sprite.Animations.Contains(ActorStateNames.Hurt))
             {
                 Stand();
                 var state = BodyMachine.FindOrCreateState<BodyHurtState>();
                 BodyMachine.ChangeState(state.GetType());
+            }
+
+            if (IsPlayer)
+            {
+                blinkTimer ??= new(.4f, 0);
+                blinkTimer.Start(.1f, 10);
+            }
+
+            if (BloodSplashOrigin != Vector2.Zero)
+            {
+                bloodSplash ??= new(this);
+                bloodSplash.Show(GetBloodSplashPosition());
             }
         }
 
@@ -507,19 +522,7 @@ namespace Remizione
                 Session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);
             }
 
-            Hurt();
-
-            if (IsPlayer)
-            {
-                blinkTimer ??= new(.4f, 0);
-                blinkTimer.Start(.1f, 10);
-            }
-
-            if (BloodSplashOrigin != Vector2.Zero)
-            {
-                bloodSplash ??= new(this);
-                bloodSplash.Show(GetBloodSplashPosition());
-            }
+            Hurt(attacker);
         }
 
         // OnUpdate

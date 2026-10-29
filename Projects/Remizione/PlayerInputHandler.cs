@@ -57,7 +57,7 @@ namespace Remizione
                     Owner.Session.InteractionData.ProcessSecondaryAction(Owner);
                 }
 
-                if (isPrimary && Owner.IsMoving)
+                if (isPrimary && Owner.IsMoving && Owner.FastMove)
                 {
                     consecutiveActionCount++;
                     actionWindowTimer = ActionWindowDuration;

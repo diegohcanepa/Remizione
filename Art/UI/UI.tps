@@ -347,12 +347,36 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Materials-assets/MaterialGut1.png</key>
+            <key type="filename">Materials-assets/MaterialGut2.png</key>
+            <key type="filename">Materials-assets/MaterialGut3.png</key>
+            <key type="filename">Materials-assets/MaterialStone1.png</key>
+            <key type="filename">Materials-assets/MaterialStone2.png</key>
+            <key type="filename">Materials-assets/MaterialStone3.png</key>
+            <key type="filename">Materials-assets/MaterialWood1.png</key>
+            <key type="filename">Materials-assets/MaterialWood2.png</key>
+            <key type="filename">Materials-assets/MaterialWood3.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,4,5,7</rect>
+                <key>scale9Paddings</key>
+                <rect>3,4,5,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Modifiers-assets/RunModifierDarknessIcon.png</key>
             <key type="filename">Modifiers-assets/RunModifierToxicIcon.png</key>
             <key type="filename">Modifiers-assets/TraitLockpickingIcon.png</key>
             <key type="filename">Modifiers-assets/TraitLuckIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorCrossIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorInspectIcon.png</key>
+            <key type="filename">UIIcons-assets/CraftIcon.png</key>
             <key type="filename">UIIcons-assets/HeartIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -829,6 +853,7 @@
                     <filename>DialogBox-assets</filename>
                     <filename>Modifiers-assets</filename>
                     <filename>Statuses-assets</filename>
+                    <filename>Materials-assets</filename>
                 </array>
             </struct>
         </map>
