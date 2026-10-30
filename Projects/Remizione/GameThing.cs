@@ -7,7 +7,6 @@ using Engendro.PathFinding;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 
 namespace Remizione
 {
@@ -37,7 +36,6 @@ namespace Remizione
         private int renderLayerDepth;
         private readonly ShadowSpot shadowSpot;
         private bool shouldClampToWalkablePosition;
-        private StatusSet? statuses;
 
         #endregion
 
@@ -198,12 +196,6 @@ namespace Remizione
                     Position += pushDir * (overlap * myMoveRatio * 0.4f);
                 }
             }
-        }
-
-        // GetPassiveStatusModifier
-        private int GetPassiveStatusModifier(StatusType statusType)
-        {
-            return 0;
         }
 
         // GetPivotBasedPolyOffset
@@ -627,32 +619,20 @@ namespace Remizione
         public bool AllowInteraction { get; set; } = true;
 
         // ApplyStatus
-        public void ApplyStatus(StatusType statusType, int amount)
+        public void ApplyStatus(StatusType statusType)
         {
             if (IsDead)
                 return;
 
-            var passiveMod = GetPassiveStatusModifier(statusType);
-            var finalAmount = amount - passiveMod;
-
-            if (finalAmount <= 0)
-                return;
-
-            statuses ??= new StatusSet();
-
-            StatusVersion++;
-
-            if (statuses.ApplyAmount(statusType, finalAmount))
+            Statuses ??= new StatusContainer();
+            if (Statuses.Apply(statusType))
             {
                 TakeDamage(this, DamageType.Status, 1, Vector2.Zero);
                 ShowFlyOff(Localization.GetValue(statusType), Colors.Palette.Red, ScaleInfo.Text.Medium.X);
             }
             else if (Atlases.UI.FindImage($"{statusType}Icon") is { } statusIcon)
             {
-                for (int i = 0; i < amount; i++)
-                {
-                    ShowFlyOff(statusIcon, ScaleInfo.UIElement.Tiny.X);
-                }
+                ShowFlyOff(statusIcon, ScaleInfo.UIElement.Tiny.X);
             }
         }
 
@@ -810,10 +790,12 @@ namespace Remizione
                         Session.ObjectPools.FlyOffs.Get()?.ShowText(GetOverheadPosition(), text, Colors.Palette.Grace, ScaleInfo.Text.Medium.X, 1000);
                     }
 
-                    if (Definition?.MaterialReward != null)
+                    if (Definition?.MaterialRewardChance > 0)
                     {
-                        Session.PlayerData.Materials.Add(Definition.MaterialReward.Value, 1);
-                        ShowFlyOff("+" + Localization.GetValue(Definition.MaterialReward.Value), Colors.Palette.SkyBlueLight, ScaleInfo.Text.Medium.X, Position);
+                        Session.PlayerData.Materials += 1;
+                        var pos = ((Position - Session.Camera.Position) * Session.Camera.Zoom) + (new Vector2(240, 135) * .5f);
+                        Session.HUD.MaterialMeter.AnimateAdd(pos);
+                        //?ShowFlyOff("+" + Localization.GetValue(amount), Colors.Palette.SkyBlueLight, ScaleInfo.Text.Medium.X, Position);
                     }
                 }
 
@@ -1080,12 +1062,6 @@ namespace Remizione
 
             // Fallback: si el punto exacto no es caminable (ej. hay una pared detrás al retroceder), busca el punto libre más próximo.
             return walkArea.GetWalkablePoint(candidatePosition);
-        }
-
-        // GetStatusValue
-        public int GetStatusValue(StatusType statusType)
-        {
-            return statuses?.GetValue(statusType) ?? 0;
         }
 
         // GraceCost
@@ -1466,8 +1442,8 @@ namespace Remizione
         [ScriptProperty]
         public Vector2 StandPoint { get; set; }
 
-        // StatusVersion
-        public int StatusVersion { get; set; }
+        // Statuses
+        public StatusContainer? Statuses { get; private set; }
 
         // TakeDamage
         public int TakeDamage(GameThing attacker, DamageType damageType, int amount, Vector2 knockbackForce)
@@ -1524,6 +1500,9 @@ namespace Remizione
 
                     if (amount > 0 && MaxHP > 1 && !IsDead && damageType != DamageType.Status)
                         ProcessDamageFlyOff(amount, damageType);
+
+                    if (attacker.IsPlayer)
+                        Session.Camera.ShakeHorizontally(TweenStyle.Linear, 2f, 40, 6);
                 }
             }
             else

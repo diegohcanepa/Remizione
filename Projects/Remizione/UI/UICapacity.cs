@@ -26,7 +26,7 @@ namespace Remizione
             // Current amount
             this.currentAmount = new(Fonts.CommonOutline)
             {
-                Color = Colors.Palette.Text,
+                Color = Colors.Palette.Terra,
                 PivotOrigin = RectanglePoint.Left,
                 Scale = ScaleInfo.Text.VeryLarge
             };
@@ -34,9 +34,9 @@ namespace Remizione
             // Maximum amount
             this.maximumAmount = new(Fonts.CommonOutline)
             {
-                Color = Colors.Palette.TextDark,
+                Color = Colors.Palette.TerraDark,
                 PivotOrigin = RectanglePoint.Left,
-                Scale = ScaleInfo.Text.Large
+                Scale = ScaleInfo.Text.Medium
             };
 
             Refresh();

@@ -34,7 +34,6 @@ namespace Remizione
 
         #endregion
 
-
         // RollForLoot
         public ItemDefinition? RollForLoot(ThingDefinition def)
         {

@@ -4,9 +4,6 @@ using System;
 
 namespace Remizione
 {
-    /// <summary>
-    /// RemainsPiece
-    /// </summary>
     public class RemainsPiece : GameObject, IPoolable
     {
         #region Private fields
@@ -15,9 +12,9 @@ namespace Remizione
         private Vector2 direction;
         private float duration;
         private float elapsed;
+        private Vector2 groundPos;
         private readonly Sprite image = new() { PivotOrigin = RectanglePoint.Center };
         private bool isActive;
-        private bool isFirstBounce;
         private bool isLaunched;
         private bool isOutOfWalkArea;
         private float launchDelay;
@@ -35,11 +32,10 @@ namespace Remizione
         private void CalculateNextArc(float minHeight, float maxHeight)
         {
             elapsed = 0;
-            arcHeight = Random.Shared.Next((int)minHeight, (int)maxHeight);
+            arcHeight = Random.Shared.NextSingle() * (maxHeight - minHeight) + minHeight;
 
-            // 5. Duración aleatoria: esto es lo que evita que todas aterricen a la vez
-            float baseDuration = isFirstBounce ? 0.3f : 0.15f;
-            duration = baseDuration + ((float)Random.Shared.NextDouble() * 0.25f);
+            // Duración adaptada a distancias más cortas
+            duration = MathF.Max(0.08f, (arcHeight * 0.035f) + (speed * 0.004f) + (Random.Shared.NextSingle() * 0.04f));
 
             Vector2 tentativeTarget = startPos + (direction * speed * duration);
 
@@ -52,7 +48,6 @@ namespace Remizione
 
                 if (!walkArea.Contains(tentativeTarget))
                 {
-                    // Lógica de rebote simple contra bordes del WalkArea
                     if (tentativeTarget.Y < bounds.Top + 15)
                     {
                         direction.Y = Math.Abs(direction.Y);
@@ -91,10 +86,13 @@ namespace Remizione
 
             if (Shadow)
             {
+                Vector2 originalPos = image.Position;
+
+                image.Position = new Vector2(groundPos.X, groundPos.Y + 1f);
                 image.Color = Colors.Shadow;
-                image.Y += 1f;
                 image.Draw(gameTime);
-                image.Y -= 1f;
+
+                image.Position = originalPos;
                 image.Color = Color.White;
             }
 
@@ -119,35 +117,25 @@ namespace Remizione
             elapsed += dt;
             float t = MathHelper.Clamp(elapsed / duration, 0, 1);
 
-            // Interpolación de posición en "suelo"
-            Vector2 groundPos = Vector2.Lerp(startPos, targetPos, t);
-
-            // Parábola de altura
+            groundPos = Vector2.Lerp(startPos, targetPos, t);
             float height = 4 * arcHeight * t * (1 - t);
 
             image.Position = new Vector2(groundPos.X, groundPos.Y - height);
-
-            // Usamos la velocidad de rotación calculada en Launch
             image.Rotation += dt * rotationSpeed;
 
             if (t >= 1)
             {
-                if (isFirstBounce)
-                {
-                    isFirstBounce = false;
-                    startPos = targetPos;
+                startPos = targetPos;
 
-                    // Mayor fricción (pierde entre el 80% y 90% de su velocidad)
-                    float friction = 0.08f + ((float)Random.Shared.NextDouble() * 0.10f);
-                    speed *= friction;
+                float speedRestitution = 0.30f + (Random.Shared.NextSingle() * 0.15f);
+                float heightRestitution = 0.30f + (Random.Shared.NextSingle() * 0.15f);
 
-                    // Disminuir drásticamente la velocidad de giro tras el impacto
-                    rotationSpeed *= 0.3f;
+                speed *= speedRestitution;
+                arcHeight *= heightRestitution;
+                rotationSpeed *= 0.5f;
 
-                    // Rebote secundario apenas perceptible (1 a 3 px)
-                    CalculateNextArc(1, 3);
-                }
-                else
+                // Umbrales reducidos acorde a la baja velocidad
+                if (arcHeight < 0.5f || speed < 2.5f)
                 {
                     isActive = false;
 
@@ -162,6 +150,10 @@ namespace Remizione
                             }
                         }
                     }
+                }
+                else
+                {
+                    CalculateNextArc(arcHeight * 0.75f, arcHeight);
                 }
             }
         }
@@ -183,27 +175,24 @@ namespace Remizione
                 return;
 
             startPos = new Vector2(owner.X, owner.Y);
+            groundPos = startPos;
 
-            // 1. Variación de ángulo y deformación de perspectiva (Y)
-            float angle = (float)(Random.Shared.NextDouble() * Math.PI * 2);
-            float flattenFactor = 0.35f + ((float)Random.Shared.NextDouble() * 0.25f);
-            direction = new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle) * flattenFactor);
+            float angle = Random.Shared.NextSingle() * MathF.Tau;
+            float flattenFactor = 0.35f + (Random.Shared.NextSingle() * 0.25f);
+            direction = new Vector2(MathF.Cos(angle), MathF.Sin(angle) * flattenFactor);
 
-            // 2. Velocidad con rango más amplio
-            speed = Random.Shared.Next(35, 65);
+            // Velocidad reducida ~50% (rango previo 50-90, ahora 22-42)
+            speed = Random.Shared.NextSingle() * 20f + 22f;
+            rotationSpeed = (Random.Shared.NextSingle() * 10f) - 5f;
 
-            // 3. Rotación única (algunas giran hacia atrás, otras rápido, otras lento)
-            rotationSpeed = (float)((Random.Shared.NextDouble() * 12) - 6);
-
-            isFirstBounce = true;
             isActive = true;
             isLaunched = false;
             isOutOfWalkArea = false;
 
-            // 4. Delay de salida más generoso para romper el "bloque" inicial
-            launchDelay = (float)Random.Shared.NextDouble() * 0.2f;
+            launchDelay = Random.Shared.NextSingle() * 0.12f;
 
-            CalculateNextArc(3, 7);
+            // Altura inicial ligeramente recortada para no perder proporción visual en 135p
+            CalculateNextArc(4, 9);
         }
 
         // Opacity

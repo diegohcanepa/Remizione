@@ -108,7 +108,7 @@ namespace Remizione
         }
 
         // HoverColor
-        public Color HoverColor { get; set; } = Colors.Palette.TerraLight;
+        public Color HoverColor { get; set; } = Colors.Palette.Terra;
 
         // MinimumWidth
         public float MinimumWidth

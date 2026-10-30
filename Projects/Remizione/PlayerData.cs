@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Remizione
+﻿namespace Remizione
 {
     /// <summary>
     /// PlayerData
@@ -20,6 +18,6 @@ namespace Remizione
         public ItemContainer Inventory { get; }
 
         // Materials
-        public MaterialContainer Materials { get; } = new();
+        public int Materials { get; set; }
     }
 }

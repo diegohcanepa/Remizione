@@ -53,10 +53,9 @@ namespace Engendro.Collections
                 totalWeight += this[i].Weight;
             }
 
-            if (totalWeight <= 0f)
+            if (totalWeight <= 0)
                 return null;
 
-            // Tirada en float
             float roll = (float)random.NextDouble() * totalWeight;
 
             for (var i = 0; i < Count; i++)
@@ -67,7 +66,7 @@ namespace Engendro.Collections
                 roll -= this[i].Weight;
             }
 
-            // Fallback defensivo imprescindible con float por redondeos decimales
+            // Fallback
             return this[Count - 1];
         }
 

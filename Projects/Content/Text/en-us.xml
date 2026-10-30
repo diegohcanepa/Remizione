@@ -9,12 +9,12 @@
   <String Key="BonfireAction.Rise">Rise</String>
   <String Key="BonfireAction.Vigil">Vigil</String>
   <String Key="DamageType.Physical">Physical</String>
-  <String Key="EffectTemplate.AotHeart"></String>
-  <String Key="EffectTemplate.Damage"></String>
-  <String Key="EffectTemplate.EnergyRestore"></String>
+  <String Key="EffectTemplate.AotHeart" />
+  <String Key="EffectTemplate.Damage" />
+  <String Key="EffectTemplate.EnergyRestore" />
   <String Key="EffectTemplate.HPGain">+{amount} Fleshiness</String>
   <String Key="EffectTemplate.HPLoss">-{amount} Fleshiness</String>
-  <String Key="EffectTemplate.ShieldHeart"></String>
+  <String Key="EffectTemplate.ShieldHeart" />
   <String Key="FloatingMessage.Failed">Failed!</String>
   <String Key="FloatingMessage.Success">Success!</String>
   <String Key="HitType.Critical">Critical!</String>
@@ -36,13 +36,13 @@
   <String Key="Item.CobaltPebble.Description">A rough wooden structure. Its tip holds an extinguished piece of cobalt, dark and flameless.</String>
   <String Key="Item.CobaltPebble.Effect">Strikes cold blue spark</String>
   <String Key="Item.CobaltPebble.Name">Cobal pebble</String>
-  <String Key="Item.CrudeKey.Description"></String>
-  <String Key="Item.CrudeKey.Effect" />
+  <String Key="Item.CrudeKey.Description" />
+  <String Key="Item.CrudeKey.Effect"></String>
   <String Key="Item.CrudeKey.Name">Crude key</String>
-  <String Key="Item.FulguriteCrystal.Description" />
+  <String Key="Item.FulguriteCrystal.Description"></String>
   <String Key="Item.FulguriteCrystal.Name">Cristal de Fulgur</String>
-  <String Key="Item.GadlingKnuckle.Description" />
-  <String Key="Item.GadlingKnuckle.Effect" />
+  <String Key="Item.GadlingKnuckle.Description"></String>
+  <String Key="Item.GadlingKnuckle.Effect"></String>
   <String Key="Item.GadlingKnuckle.Name">Gadling knuckle</String>
   <String Key="Item.Lift.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Lift.Name">Lift</String>
@@ -52,7 +52,7 @@
   <String Key="Item.PyritePebble.Effect">Strikes warm red spark</String>
   <String Key="Item.PyritePebble.Name">Pyrite pebble</String>
   <String Key="Item.ServantCross.Name">Servant's Cross</String>
-  <String Key="Item.SulfurStone.Description"></String>
+  <String Key="Item.SulfurStone.Description" />
   <String Key="Item.SulfurStone.Effect">Light bonfires</String>
   <String Key="Item.SulfurStone.Name">Sulfur stone</String>
   <String Key="Item.TrapdoorKey.Name">Trapdoor key</String>
@@ -68,9 +68,6 @@
   <String Key="Languages.es-es">Español (España)</String>
   <String Key="Languages.fr-fr">Français</String>
   <String Key="Languages.ru-ru">Русский</String>
-  <String Key="Material.Gut">Gut</String>
-  <String Key="Material.Stone">Stone</String>
-  <String Key="Material.Wood">Wood</String>
   <String Key="Menu.Controls.Keyboard.Interact">Interact</String>
   <String Key="Menu.Controls.Keyboard.Inventory">Inventory</String>
   <String Key="Menu.Controls.Keyboard.Kick">Kick (when available)</String>
@@ -170,7 +167,7 @@
   <String Key="MessageKind.StackFull">Stack limit reached.</String>
   <String Key="Misc.All">All</String>
   <String Key="Misc.And">and</String>
-  <String Key="Misc.Chance"></String>
+  <String Key="Misc.Chance" />
   <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=—áéíóúÁÉÍÓÚ</String>
   <String Key="Misc.CopyrightDeveloper">© 2024 Indiesruption</String>
   <String Key="Misc.Credits">Remizione
@@ -212,7 +209,7 @@ Bla bla bla</String>
   <String Key="Misc.Recovering">Recovering</String>
   <String Key="Misc.SelectSlot">Select slot</String>
   <String Key="Misc.Stamina">Stamina</String>
-  <String Key="Misc.StandUp"></String>
+  <String Key="Misc.StandUp" />
   <String Key="Misc.Threshold">Threshold</String>
   <String Key="Misc.Unknown">???</String>
   <String Key="Misc.WithPreposition">with</String>

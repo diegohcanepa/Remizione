@@ -1,6 +1,7 @@
 ﻿using Adberration;
 using Adberration.Scripting;
 using Engendro;
+using Engendro.Collections;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Remizione.Scripting;
@@ -222,6 +223,7 @@ namespace Remizione
             if (sepiaTween.IsRunning)
                 RemizioneGame.Effects.Sepia.Intensity = sepiaTween.CurrentValue;
 
+            RemizioneGame.Effects.Sepia.Intensity = .5f;
             if (RemizioneGame.Effects.Sepia.Intensity > 0)
             {
                 Game.RenderTargets.Swap();
@@ -230,10 +232,12 @@ namespace Remizione
                 Game.SpriteBatch.End();
             }
 
+            /*
             Game.RenderTargets.Swap();
             Game.SpriteBatch.Begin(effect: RemizioneGame.Effects.CRT.Effect);
             Game.SpriteBatch.Draw(Game.RenderTargets.PreviousTarget, Vector2.Zero, Color.White);
             Game.SpriteBatch.End();
+            */
 
             if (Player != null && !Player.IsDead)
                 HUD?.Draw(gameTime);
@@ -839,7 +843,7 @@ namespace Remizione
                         Camera.FocusTarget();
                     }
 
-                    HUD.RoomTitle.Show(Room);
+                    //HUD.RoomTitle.Show(Room);
                 }
             }
         }
@@ -886,6 +890,37 @@ namespace Remizione
             DialogOptionId = -1;
             var scene = new DialogBlockScene(this, dialogBlock);
             Game.SceneManager.Push(scene);
+        }
+
+        // TryCraft
+        public ItemDefinition? TryCraft()
+        {
+            var table = new ChanceTable();
+
+            for (int i = 0; i < GameData.Items.Count; i++)
+            {
+                var itemDef = GameData.Items[i];
+
+                // 1. Excluir ítems no crafteables o sin peso
+                if (itemDef.SpawnWeight <= 0)
+                    continue;
+
+                // 2. Excluir ítems que el jugador aún no ha desbloqueado
+                if (!IsUnlocked(itemDef))
+                    continue;
+
+                // 3. Opcional: Evitar duplicados de ítems únicos no apilables
+                if (!itemDef.IsStackable && PlayerData.Inventory.Find(itemDef.Name) != null)
+                    continue;
+
+                // Agrega el ítem a la ruleta usando su SpawnWeight
+                table.Add(itemDef.Name, itemDef.SpawnWeight, itemDef);
+            }
+
+            if (table.Count == 0)
+                return null;
+
+            return table.GetItem()?.Context as ItemDefinition;
         }
 
         // Unlock

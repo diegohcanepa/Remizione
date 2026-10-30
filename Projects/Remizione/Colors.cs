@@ -99,7 +99,7 @@ namespace Remizione
             internal static Vector4 Highlight { get; } = (Color.WhiteSmoke * .3f).ToVector4();
 
             // SubText
-            internal static Color SubText { get; } = Palette.YellowDark;
+            internal static Color SubText { get; } = Palette.Terra;
 
             // Tooltip
             internal static Color Tooltip { get; } = Palette.Text;

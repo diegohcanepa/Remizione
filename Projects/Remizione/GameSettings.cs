@@ -32,9 +32,6 @@
         // MaxItemAmount
         public const int MaxItemAmount = 5;
 
-        // MinMaterialsToCraft
-        public const int MinMaterialsToCraft = 3;
-
         // PaintPoints
         public const int PaintPoints = 5;
 

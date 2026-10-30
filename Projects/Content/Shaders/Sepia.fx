@@ -1,48 +1,51 @@
 // =========================================================================
-// SepiaWithBloodExclusion.fx
-// Shader de sepia global con exclusión de paleta de sangre (#511212, etc.)
+// BlackAndWhiteWithExclusions.fx
+// Shader de B&W con exclusión de sangre y verdes amarillentos
 // =========================================================================
 
 sampler TextureSampler : register(s0);
 
-// 1.0 = Sepia completo | 0.0 = Color original de la escena
+// 1.0 = B&W completo | 0.0 = Color original de la escena
 float intensity = 1.0;
 
-// Convierte un color a tono sepia
-float4 Sepia(float4 color, float sepiaIntensity)
+// Convierte un color a escala de grises
+float4 BlackAndWhite(float4 color, float bwIntensity)
 {
-    float3 sepiaColor = float3(1.2, 0.85, 0.55);
     float grey = dot(color.rgb, float3(0.299, 0.587, 0.114));
-    
-    // Interpolación: de color original a escala sepia según sepiaIntensity
-    float3 finalColor = lerp(color.rgb, grey * sepiaColor, sepiaIntensity);
+    float3 finalColor = lerp(color.rgb, float3(grey, grey, grey), bwIntensity);
     return float4(finalColor, color.a);
 }
 
 float4 PixelShaderFunction(float4 pos : SV_POSITION, float4 color : COLOR0, float2 texCoord : TEXCOORD0) : SV_TARGET0
 {
-    // Lectura de la textura combinada con el color del vértice de SpriteBatch
     float4 texColor = tex2D(TextureSampler, texCoord) * color;
 
-    // Detección de paleta de sangre (#511212, #3f0e0e, #260909, #330b0b)
-    // - El canal R domina fuertemente sobre G y B (al menos 2.5 veces mayor).
-    // - El canal R está acotado en el rango [0.10, 0.45] en float saturado (equivalente a 25.5 - 114.75 en byte).
+    // 1. Detección de paleta de sangre
     bool isBlood = (texColor.r > texColor.g * 2.5) &&
                    (texColor.r > texColor.b * 2.5) &&
                    (texColor.r >= 0.10 && texColor.r <= 0.45);
 
-    // Si es un pixel de sangre, se devuelve intacto ignorando el sepia
-    if (isBlood)
+    // 2. Detección de verde amarillento (Yellow-Green)
+    // - El canal G es el más alto (o muy cercano al R).
+    // - El canal R tiene al menos el 50% de la fuerza de G (aporta la componente amarilla).
+    // - El canal B es significativamente más bajo que G (evita cianes o blancos).
+    bool isYellowGreen = (texColor.g > 0.15) &&
+                         (texColor.g >= texColor.r * 0.8) &&
+                         (texColor.r >= texColor.g * 0.4) &&
+                         (texColor.g > texColor.b * 1.8);
+
+    // Si es un pixel de sangre o verde amarillento, se preserva su color
+    if (isBlood || isYellowGreen)
     {
         return texColor;
     }
 
-    // Calcula y aplica el efecto sepia
-    float sepiaIntensity = saturate(intensity);
-    return Sepia(texColor, sepiaIntensity);
+    // Aplica el efecto Blanco y Negro
+    float bwIntensity = saturate(intensity);
+    return BlackAndWhite(texColor, bwIntensity);
 }
 
-technique colorReduction
+technique BlackAndWhiteTechnique
 {
     pass P0
     {

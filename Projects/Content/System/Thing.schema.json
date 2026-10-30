@@ -43,8 +43,8 @@
             }
           }
         },
-        "materialReward": {
-          "$ref": "enums.schema.json#/$defs/Material"
+        "materialRewardChance": {
+          "type": "number"
         },
         "maxPerRoom": {
           "type": "integer",

@@ -14,7 +14,6 @@ namespace Remizione
         #region Private fields
 
         private readonly UIGraceMeter graceScore;
-        private readonly UIMaterials materials;
         private readonly UIStatuses statuses;
 
         #endregion
@@ -27,7 +26,7 @@ namespace Remizione
         {
             this.HeartMeter = new(session);
             this.InventoryMeter = new(session.PlayerData.Inventory);
-            this.materials = new(session, new(25, 129.5f));
+            this.MaterialMeter = new(session);
             this.DestinationMark = new(session);
             this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 10));
             this.graceScore = new(session);
@@ -46,11 +45,12 @@ namespace Remizione
                 HeartMeter.Draw(gameTime);
             graceScore.Draw(gameTime);
             statuses.Draw(gameTime);
-            materials.Draw(gameTime);
             Game.SpriteBatch.End();
 
             if (Session.InventoryEnabled)
                 InventoryMeter.Draw(gameTime);
+
+            MaterialMeter.Draw(gameTime);
 
             RoomTitle.Draw(gameTime);
             Message.Draw(gameTime);
@@ -60,11 +60,11 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             InventoryMeter.Update(gameTime);
+            MaterialMeter.Update(gameTime);
             HeartMeter.Update(gameTime);
             Message.Update(gameTime);
             graceScore.Update(gameTime);
             statuses.Update(gameTime);
-            materials.Update(gameTime);
             DestinationMark.Update(gameTime);
             RoomTitle.Update(gameTime);
         }
@@ -91,6 +91,9 @@ namespace Remizione
 
         // InventoryMeter
         public UIInventoryMeter InventoryMeter { get; }
+
+        // MaterialMeter
+        public UIMaterialMeter MaterialMeter { get; }
 
         // Message
         public UIMessage Message { get; }

@@ -2,9 +2,13 @@
   "$schema": "./Prop.schema.json",
   "data": [
     {
+      "name": "CrossA",
+      "hp": 1,
+      "materialRewardChance": 1
+    },
+    {
       "name": "PetrifiedTreeA",
       "hp": 6,
-      "materialReward": "Wood",
       "effects": [
         {
           "context": "HitHardTarget",

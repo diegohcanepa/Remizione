@@ -121,9 +121,6 @@ namespace Remizione
     // MapNodeState
     public enum MapNodeState { Current, Start, Visited, NotVisited, End };
 
-    // Material
-    public enum Material { Gut, Stone, Wood }
-
     // MenuItemName
     public enum MenuItemName { Options, Resume, Start, Exit, ExitToMainMenu, Yes, No, Cancel, Accept, Credits, WishlistNow, Memoirs }
 

@@ -11,7 +11,7 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly TextSprite amountText;
+        private readonly UICapacity capacity = new() { PivotOrigin = RectanglePoint.Bottom, Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 4, 0) };
         private readonly Sprite flyingIcon = new() { PivotOrigin = RectanglePoint.Center };
         private readonly Sprite icon;
         private readonly ItemContainer inventory;
@@ -28,21 +28,11 @@ namespace Remizione
         {
             this.inventory = inventory;
 
-            // Amount
-            this.amountText = new TextSprite(Fonts.CommonOutline)
-            {
-                Color = Colors.Palette.TerraDark,
-                PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 7, 0),
-                Scale = ScaleInfo.Text.Large,
-                Text = "00"
-            };
-
             // Icon
             this.icon = new(Atlases.UI.Sack)
             {
                 PivotOrigin = RectanglePoint.Center,
-                Position = amountText.BoundingBox.GetPoint(RectanglePoint.Top, 0, -5)
+                Position = capacity.BoundingBox.GetPoint(RectanglePoint.Top, 0, -6)
             };
         }
 
@@ -56,7 +46,7 @@ namespace Remizione
             Game.SpriteBatch.Begin(Game.Camera);
             flyingIcon.Draw(gameTime);
             icon.Draw(gameTime);
-            amountText.Draw(gameTime);
+            capacity.Draw(gameTime);
             Game.SpriteBatch.End();
         }
 
@@ -69,8 +59,8 @@ namespace Remizione
             if (lastKnownCount != inventory.Count)
             {
                 lastKnownCount = inventory.Count;
-                amountText.Text = $"{inventory.Count}/{inventory.Capacity}";
-                amountText.Color = inventory.IsFull ? Colors.Palette.Red : Colors.Palette.TextDark;
+                capacity.CurrentAmount = inventory.Count;
+                capacity.MaximumAmount = inventory.Capacity;
             }
         }
 

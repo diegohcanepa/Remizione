@@ -51,13 +51,13 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (Actor == null)
+            if (Actor?.Statuses == null)
                 return;
 
-            if (lastKnownVersion != Actor.StatusVersion)
+            if (lastKnownVersion != Actor.Statuses.Version)
             {
                 Refresh();
-                lastKnownVersion = Actor.StatusVersion;
+                lastKnownVersion = Actor.Statuses.Version;
             }
 
             for (var i = 0; i < meters.Length; i++)
@@ -86,14 +86,14 @@ namespace Remizione
         // Refresh
         public void Refresh()
         {
-            if (Actor == null)
+            if (Actor?.Statuses == null)
                 return;
 
             var startPos = new Vector2(9, 12);
 
             for (var i = 0; i < meters.Length; i++)
             {
-                var value = Actor.GetStatusValue(statuses[i]);
+                var value = Actor.Statuses.GetCount(statuses[i]);
 
                 if (value <= 0)
                 {
