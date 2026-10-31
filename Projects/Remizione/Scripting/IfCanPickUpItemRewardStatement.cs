@@ -28,7 +28,7 @@ namespace Remizione.Scripting
                 {
                     if (item.IsStackFull)
                     {
-                        session.HUD?.Message.Show(MessageKind.StackFull);
+                        session.HUD?.Message.StackFull(item);
                         return false;
                     }
                 }
@@ -36,7 +36,7 @@ namespace Remizione.Scripting
                 // Check for free inventory slot
                 else if (session.PlayerData.Inventory.IsFull)
                 {
-                    session.HUD?.Message.Show(MessageKind.InventoryFull);
+                    session.HUD?.Message.InventoryFull();
                     return false;
                 }
             }

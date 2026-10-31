@@ -74,10 +74,11 @@ namespace Remizione
 
         #region IAction interface
 
-        // Consume
-        void IAction.Consume(Actor actor)
+        // ApplyUsage
+        ApplyUsageOutcome IAction.ApplyUsage(Actor actor)
         {
             actor.ApplyAction(this);
+            return ApplyUsageOutcome.None;
         }
 
         // ProjectileImageName

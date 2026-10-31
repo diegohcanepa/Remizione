@@ -23,7 +23,7 @@ namespace Remizione.Scripting
                 return;
 
             if (session.PlayerData.Inventory.Find(definition.Name) is Item item)
-                item.Consume(session.Player);
+                item.ApplyUsage(session.Player);
         }
     }
 }

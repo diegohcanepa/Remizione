@@ -265,7 +265,7 @@ namespace Remizione
         {
             if (remainsPieces?.Count > 0)
             {
-                var remains = new Remains(Session, string.Empty, new(.85f), remainsPieces, remainsPieces.Count * 2, true, false)
+                var remains = new Remains(Session, string.Empty, new(.7f), remainsPieces, remainsPieces.Count * 2, true, false)
                 {
                     Position = Position
                 };
@@ -281,7 +281,7 @@ namespace Remizione
             var successChance = item.Definition.SkillChance - SkillChancePenalty;
             var success = roll <= successChance;
 
-            item.Consume(actor);
+            item.ApplyUsage(actor);
 
             var text = success ? Localization.GetValue(FloatingMessage.Success) : Localization.GetValue(FloatingMessage.Failed);
 

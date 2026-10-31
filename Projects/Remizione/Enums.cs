@@ -5,6 +5,9 @@ namespace Remizione
     // ActionKind
     public enum ActionKind { ScriptOutcome, Proximity, Projectile, Self }
 
+    // ApplyUsageOutcome
+    public enum ApplyUsageOutcome { None, Broken, Consumed }
+
     // ApproachBehavior
     public enum ApproachBehavior
     {
@@ -135,7 +138,7 @@ namespace Remizione
     }
 
     // MessageKind
-    public enum MessageKind { AreaNotSafe, CannotPlaceItem, InventoryFull, OutOfReach, OutOfSight, StackFull, NotEnoughGrace }
+    public enum MessageKind { AreaNotSafe, CannotPlaceItem, InventoryFull, ItemBroken, OutOfReach, OutOfSight, StackFull, NotEnoughGrace }
 
     // MeterColor
     public enum MeterColor { Green, Orange, Purple, SkyBlue, White }

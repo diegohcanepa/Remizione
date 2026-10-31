@@ -43,6 +43,25 @@ namespace Remizione
             {
                 buttons[i].MinimumWidth = maxWidth;
             }
+
+            buttons[0].Action = Rise;
+            buttons[1].Action = Craft;
+        }
+
+        #endregion
+
+        #region Private members
+
+        // Craft
+        private void Craft()
+        {
+            Game.SceneManager.Push(new CraftingScene());
+        }
+
+        // Rise
+        private void Rise()
+        {
+            Game.SceneManager.Pop();
         }
 
         #endregion
@@ -81,10 +100,7 @@ namespace Remizione
             for (var i = 0; i < buttons.Length; i++)
             {
                 if (buttons[i].TestPressed())
-                {
-                    Game.SceneManager.Pop();
                     return HandleInputResult.Handled;
-                }
             }
 
             return base.OnHandleInput(gameTime);

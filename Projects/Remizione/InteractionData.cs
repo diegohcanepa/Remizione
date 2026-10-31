@@ -240,9 +240,14 @@ namespace Remizione
                                   (isRangedAction && IsInThrowZone(player, Target));
 
             if (executeInPlace)
+            {
                 ExecutePending(player);
+            }
             else
+            {
+                Sound.Play(SoundNames.Interact);
                 ApproachAndExecute(player, Target);
+            }
         }
 
         // ProcessSecondaryAction

@@ -4,6 +4,9 @@ using System;
 
 namespace Remizione
 {
+    /// <summary>
+    /// RemainsPiece
+    /// </summary>
     public class RemainsPiece : GameObject, IPoolable
     {
         #region Private fields

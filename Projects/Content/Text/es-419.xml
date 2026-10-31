@@ -51,6 +51,9 @@
   <String Key="Item.PyritePebble.Description">Mineral rojo de ignición. Al frotarse contra otra superficie del mismo mineral, la fricción genera chispas de fuego cálido.</String>
   <String Key="Item.PyritePebble.Effect">Enciende fuego</String>
   <String Key="Item.PyritePebble.Name">Guijarro de Pirita</String>
+  <String Key="Item.RusticAxe.Description">Un hacha primitiva de piedra caliza.</String>
+  <String Key="Item.RusticAxe.Effect" />
+  <String Key="Item.RusticAxe.Name">Hacha rústica</String>
   <String Key="Item.ServantCross.Name">Cruz del Siervo</String>
   <String Key="Item.SulfurStone.Description">Un trozo de azufre cristalizado que arde con memoria propia: no necesita chispa, se enciende porque "recuerda" haber sido fuego alguna vez.
 Los penitentes la usan para encender las Hogueras, cuyo calor no cura la carne sino que ayuda al cuerpo a recomponer la forma que casi pierde. Se dice que sabe a lo último que quemó.</String>
@@ -162,6 +165,7 @@ Los penitentes la usan para encender las Hogueras, cuyo calor no cura la carne s
   <String Key="MessageKind.CannotPlaceItem">No hay suficiente espacio en el terreno.</String>
   <String Key="MessageKind.ExtraHeart">¡Te sientes más fuerte!</String>
   <String Key="MessageKind.InventoryFull">No te queda espacio.</String>
+  <String Key="MessageKind.ItemBroken">Ítem roto:</String>
   <String Key="MessageKind.NotEnoughGrace">Sin Gracia suficiente</String>
   <String Key="MessageKind.OutOfReach">Fuera de alcance.</String>
   <String Key="MessageKind.OutOfSight">Vista obstruida.</String>

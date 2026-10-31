@@ -45,18 +45,18 @@ namespace Remizione
         #region Private members
 
         // TryDegrade
-        public bool TryDegrade()
+        private bool TryDegrade()
         {
             if (!Definition.HasBreakChance)
                 return false;
 
             Uses++;
 
-            // Protegemos durante la ventana de usos seguros
+            // Safe uses
             if (Uses <= Definition.BreakSafeUses)
                 return false;
 
-            // Evaluamos rotura contra el Ratio acumulado
+            // Break chances
             if (BreakChance.Roll())
             {
                 Amount--;
@@ -64,8 +64,9 @@ namespace Remizione
                 return true;
             }
 
-            // Sobrevivió: incrementamos la probabilidad de rotura para el próximo uso
+            // Incremente break chances
             BreakChance += Definition.BreakChanceIncrement;
+
             return false;
         }
 
@@ -87,21 +88,26 @@ namespace Remizione
             }
         }
 
-        // Consume
-        public void Consume(Actor actor)
+        // ApplyUsage
+        public ApplyUsageOutcome ApplyUsage(Actor actor)
         {
             actor.ApplyAction(this);
 
             // 1. Si el ítem tiene mecánica de desgaste/rotura, evaluamos degradación
             if (Definition.HasBreakChance)
             {
-                TryDegrade();
+                if (TryDegrade())
+                    return ApplyUsageOutcome.Broken;
             }
+            
             // 2. Si no tiene probabilidad de rotura pero es un consumible estándar (ej. poción)
             else if (Definition.IsDepletable)
             {
                 Amount--;
+                return ApplyUsageOutcome.Consumed;
             }
+
+            return ApplyUsageOutcome.None;
         }
 
         // BreakChance

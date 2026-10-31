@@ -51,6 +51,9 @@
   <String Key="Item.PyritePebble.Description">A warm-ignition red mineral. Friction against another surface of the same mineral generates sparks of common flame.</String>
   <String Key="Item.PyritePebble.Effect">Strikes warm red spark</String>
   <String Key="Item.PyritePebble.Name">Pyrite pebble</String>
+  <String Key="Item.RusticAxe.Description"></String>
+  <String Key="Item.RusticAxe.Effect"></String>
+  <String Key="Item.RusticAxe.Name">Rustic axe</String>
   <String Key="Item.ServantCross.Name">Servant's Cross</String>
   <String Key="Item.SulfurStone.Description" />
   <String Key="Item.SulfurStone.Effect">Light bonfires</String>
@@ -161,6 +164,7 @@
   <String Key="MessageKind.CannotPlaceItem">There is not enough space on the ground.</String>
   <String Key="MessageKind.ExtraHeart">You feel stronger!</String>
   <String Key="MessageKind.InventoryFull">Out of space.</String>
+  <String Key="MessageKind.ItemBroken">Broken:</String>
   <String Key="MessageKind.NotEnoughGrace">Not enough Grace</String>
   <String Key="MessageKind.OutOfReach">Out of reach.</String>
   <String Key="MessageKind.OutOfSight">Out of sight.</String>

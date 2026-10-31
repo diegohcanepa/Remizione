@@ -28,7 +28,6 @@ namespace Remizione
         private FloatTween? hurtTween;
         private bool isCollisionDirty;
         private bool isHotspotDirty = true;
-        private bool killedByPlayer;
         private Vector2 knockbackVelocity;
         private const float KnockbackFriction = 0.90f; // Ajustá este valor (0.8 - 0.95)
         private Vector2 lastCheckedPosition;
@@ -147,7 +146,7 @@ namespace Remizione
         private void ApplySoftSeparation()
         {
             // Si YO tengo Collider rígido o estoy en knockback, no aplico separación suave
-            if (IsDead || !Collider.IsEmpty || knockbackVelocity != Vector2.Zero || Room == null)
+            if (IsDead || !Collider.IsEmpty || knockbackVelocity != Vector2.Zero || Room == null || CollisionSize == Vector2.Zero)
                 return;
 
             // Leemos la masa de esta entidad
@@ -396,11 +395,7 @@ namespace Remizione
             Position += knockbackVelocity * dt;
             knockbackVelocity *= MathF.Pow(KnockbackFriction, dt * 60f);
             if (knockbackVelocity.LengthSquared() < 100f)
-            {
                 knockbackVelocity = Vector2.Zero;
-                if (IsDead)
-                    Die();
-            }
         }
 
         #endregion
@@ -569,14 +564,10 @@ namespace Remizione
             }
 
             // 1. Físicas de knockback y estados de muerte (fuerzas mayores)
-            if (knockbackVelocity != Vector2.Zero)
-            {
-                UpdateKnockback(gameTime);
-            }
-            else if (IsDead && !dieCalled)
-            {
+            if (IsDead && !dieCalled)
                 Die();
-            }
+
+            UpdateKnockback(gameTime);
 
             base.OnUpdate(gameTime);
 
@@ -746,7 +737,7 @@ namespace Remizione
 
         // CollisionSize
         [ScriptProperty]
-        public Vector2 CollisionSize { get; set; } = new(4, 2);
+        public Vector2 CollisionSize { get; set; }
 
         // CollisionDetection
         [ScriptProperty]
@@ -780,23 +771,20 @@ namespace Remizione
 
             if (!IsPlayer)
             {
-                if (killedByPlayer)
+                if (Definition?.GraceReward > 0)
                 {
-                    if (Definition?.GraceReward > 0)
-                    {
-                        Sound.Play(SoundNames.GraceGain);
-                        Session.PlayerData.Grace += Definition.GraceReward;
-                        var text = $"+{Definition.GraceReward} {Localization.GetValue(PlayerStat.Grace)}";
-                        Session.ObjectPools.FlyOffs.Get()?.ShowText(GetOverheadPosition(), text, Colors.Palette.Grace, ScaleInfo.Text.Medium.X, 1000);
-                    }
+                    Sound.Play(SoundNames.GraceGain);
+                    Session.PlayerData.Grace += Definition.GraceReward;
+                    var text = $"+{Definition.GraceReward} {Localization.GetValue(PlayerStat.Grace)}";
+                    Session.ObjectPools.FlyOffs.Get()?.ShowText(GetOverheadPosition(), text, Colors.Palette.Grace, ScaleInfo.Text.Medium.X, 2000);
+                }
 
-                    if (Definition?.MaterialRewardChance > 0)
-                    {
-                        Session.PlayerData.Materials += 1;
-                        var pos = ((Position - Session.Camera.Position) * Session.Camera.Zoom) + (new Vector2(240, 135) * .5f);
-                        Session.HUD.MaterialMeter.AnimateAdd(pos);
-                        //?ShowFlyOff("+" + Localization.GetValue(amount), Colors.Palette.SkyBlueLight, ScaleInfo.Text.Medium.X, Position);
-                    }
+                if (Definition?.MaterialRewardChance > 0)
+                {
+                    Session.PlayerData.Materials += 1;
+                    var pos = ((Position - Session.Camera.Position) * Session.Camera.Zoom) + (new Vector2(240, 135) * .5f);
+                    Session.HUD.MaterialMeter.AnimateAdd(pos);
+                    //?ShowFlyOff("+" + Localization.GetValue(amount), Colors.Palette.SkyBlueLight, ScaleInfo.Text.Medium.X, Position);
                 }
 
                 DropLoot();
@@ -1486,14 +1474,14 @@ namespace Remizione
                 {
                     HP -= amount;
 
-                    if (IsDead)
-                    {
-                        killedByPlayer = attacker.IsPlayer;
-                    }
-                    else
+                    if (!IsDead)
                     {
                         hurtTween ??= new();
                         hurtTween.Start(TweenStyle.Linear, 0, 1, 150, 2);
+                    }
+                    else
+                    {
+                        Die();
                     }
 
                     OnTakeDamage(attacker, amount, damageType);
@@ -1502,7 +1490,7 @@ namespace Remizione
                         ProcessDamageFlyOff(amount, damageType);
 
                     if (attacker.IsPlayer)
-                        Session.Camera.ShakeHorizontally(TweenStyle.Linear, 2f, 40, 6);
+                        Session.Camera.ShakeHorizontally(TweenStyle.Linear, 1.5f, 40, 6);
                 }
             }
             else

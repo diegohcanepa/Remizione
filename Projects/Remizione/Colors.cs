@@ -99,7 +99,7 @@ namespace Remizione
             internal static Vector4 Highlight { get; } = (Color.WhiteSmoke * .3f).ToVector4();
 
             // SubText
-            internal static Color SubText { get; } = Palette.Terra;
+            internal static Color SubText { get; } = Palette.YellowDark;
 
             // Tooltip
             internal static Color Tooltip { get; } = Palette.Text;
@@ -109,7 +109,7 @@ namespace Remizione
         internal static class Palette
         {
             internal static Color AlmostBlack { get; } = new(25, 25, 25);
-            internal static Color Grace { get; } = new Color(172, 167, 144) * .7f;
+            internal static Color Grace { get; } = new(79, 164, 184);
             internal static Color Green { get; } = new(59, 125, 79);
             internal static Color Orange { get; } = new(171, 81, 48);
             internal static Color Red { get; } = new(164, 60, 60);

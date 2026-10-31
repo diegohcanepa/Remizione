@@ -21,7 +21,7 @@ namespace Remizione.Scripting
             if (Session is GameSession session)
             {
                 var value = Parser.ParseEnum<MessageKind>(this, 0);
-                session.HUD?.Message.Show(value);
+                session.HUD?.Message.Show(value, null);
             }
         }
 

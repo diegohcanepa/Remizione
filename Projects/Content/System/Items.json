@@ -78,6 +78,7 @@
 		},		
 		{
 			"name": "GadlingKnuckle",
+			"animationName": "Punch",
 			"category": "Weapon",
 			"actionKind": "Proximity",
 			"deselectOnUse": false,
@@ -88,10 +89,36 @@
 				{
 					"context": "Attack",
 					"effectType": "Damage",
-					"amount": "1"
+					"amount": "1",
+					"sound": "BareFist"
 				}
 			]			
 		},
+		{
+			"name": "Material",
+			"category": "Misc",
+			"actionKind": "ScriptOutcome",
+			"deselectOnUse": true,
+			"isDepletable": true,
+			"isStackable": true
+		},		
+		{
+			"name": "RusticAxe",
+			"animationName": "Punch",
+			"breakBaseChance": 0.5,
+			"breakBaseChanceIncrement": 0.2,
+			"category": "Weapon",
+			"actionKind": "Proximity",
+			"deselectOnUse": false,
+			"isDepletable": false,
+			"effects": [
+				{
+					"context": "Attack",
+					"effectType": "Damage",
+					"amount": "2"
+				}
+			]			
+		},		
 		{
 			"name": "SulfurStone",
 			"category": "Misc",

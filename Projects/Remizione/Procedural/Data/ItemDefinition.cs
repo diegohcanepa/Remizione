@@ -105,8 +105,14 @@ namespace Remizione
             if (ActionKind == ActionKind.Projectile && string.IsNullOrWhiteSpace(ProjectileImageName))
                 ProjectileImageName = Name;
 
-            if (IsPerishable && IsStackable)
-                RaiseValidationError(this, "A perishable item cannot be stackable.", nameof(LightModifier));
+            if (IsStackable)
+            {
+                if (IsPerishable)
+                    RaiseValidationError(this, "A perishable item cannot be stackable.", nameof(IsStackable));
+
+                if (BreakBaseChance > 0 || BreakChanceIncrement > 0)
+                    RaiseValidationError(this, "A breakable item cannot be stackable.", nameof(IsStackable));
+            }
 
             RefreshLocalizedValues();
         }

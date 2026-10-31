@@ -18,8 +18,8 @@ namespace Remizione
         // AreaOfEffect
         int AreaOfEffect { get; }
 
-        // Consume
-        void Consume(Actor actor);
+        // ApplyUsage
+        ApplyUsageOutcome ApplyUsage(Actor actor);
 
         // EffectDescriptors
         ReadOnlyCollection<EffectDescriptor> EffectDescriptors { get; }

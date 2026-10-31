@@ -24,26 +24,6 @@
         ]
       },
       {
-        "name": "Penitent",
-        "intents": [
-          {
-            "name": "GadlingKnuckle",
-            "animationName": "Punch",
-            "actionKind": "Proximity",
-            "hardSurfacePenalty": true,
-            "maxRange": 5,
-            "effects": [
-              {
-                "context": "Attack",
-                "effectType": "Damage",
-                "amount": "1",
-                "sound": "BareFist"
-              }
-            ]
-          }
-        ]
-      },
-      {
         "name": "PenitentA",
         "archetype":
         {

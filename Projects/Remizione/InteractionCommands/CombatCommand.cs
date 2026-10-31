@@ -5,29 +5,30 @@
     /// </summary>
     public sealed class CombatCommand : InteractionCommand
     {
-        private CombatIntent? resolvedIntent;
+        private IAction? resolvedAction;
 
         // CanExecute
         public override bool CanExecute(InteractionData data, Actor player, GameThing target, Verb verb)
         {
-            var heldItem = player.Session.InteractionContext.HeldItem;
+            resolvedAction = null;
 
-            resolvedIntent = null;
-
-            if (heldItem != null)
+            if (!Utils.IsGoToVerb(verb))
             {
-                if (!Utils.IsGoToVerb(verb) && heldItem.Definition.ActionKind != ActionKind.ScriptOutcome)
-                    resolvedIntent = player.CombatBehavior?.Intents.Find(heldItem.Name);
+                if (player.Session.InteractionContext.HeldItem is { } heldItem)
+                {
+                    if (heldItem.Definition.ActionKind != ActionKind.ScriptOutcome)
+                        resolvedAction = heldItem;
+                }
             }
 
-            return resolvedIntent != null;
+            return resolvedAction != null;
         }
 
         // Execute
         public override void Execute(InteractionData data, Actor player, GameThing target, Verb verb)
         {
-            if (resolvedIntent != null)
-                player.ExecuteAction(resolvedIntent, target);
+            if (resolvedAction != null)
+                player.ExecuteAction(resolvedAction, target);
         }
     }
 }

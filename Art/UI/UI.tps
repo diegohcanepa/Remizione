@@ -259,8 +259,9 @@
             <key type="filename">Items-assets/FulguriteCrystal.png</key>
             <key type="filename">Items-assets/GadlingKnuckle.png</key>
             <key type="filename">Items-assets/Loquat.png</key>
-            <key type="filename">Items-assets/PrayerBonfire.png</key>
+            <key type="filename">Items-assets/Material.png</key>
             <key type="filename">Items-assets/PyritePebble.png</key>
+            <key type="filename">Items-assets/RusticAxe.png</key>
             <key type="filename">Items-assets/SulfurStone.png</key>
             <key type="filename">UI-assets/BackButton.png</key>
             <key type="filename">UI-assets/BackButtonHot.png</key>

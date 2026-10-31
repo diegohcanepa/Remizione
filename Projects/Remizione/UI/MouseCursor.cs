@@ -21,7 +21,7 @@ namespace Remizione
         private static readonly Vector2 defaultScale = ScaleInfo.UIElement.Large;
         private static OutlineEffect? effect;
         private static readonly FloatTween shakeTween = new();
-        private static readonly TextSprite subTextSprite = new(Fonts.CommonOutline) { Scale = ScaleInfo.Text.Large };
+        private static readonly TextSprite subTextSprite = new(Fonts.CommonOutline) { Scale = ScaleInfo.Text.VeryLarge };
         private static readonly TextSprite tooltipSprite;
 
         #endregion

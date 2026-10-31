@@ -1,6 +1,7 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Globalization;
 
 namespace Remizione
 {
@@ -12,7 +13,7 @@ namespace Remizione
         private readonly FloatTween fadeTween = new();
         private readonly Sprite icon = new() { PivotOrigin = RectanglePoint.Right };
         private readonly TextSprite messageText;
-        private readonly Vector2 scale = ScaleInfo.Text.Large;
+        private readonly Vector2 scale = ScaleInfo.Text.VeryLarge;
         private readonly Vector2Tween scaleTween = new();
 
         // Constructor
@@ -65,41 +66,55 @@ namespace Remizione
             IsVisible = false;
         }
 
+        // InventoryFull
+        public void InventoryFull()
+        {
+            var text = Localization.GetValue(MessageKind.InventoryFull);
+            Show(text, Colors.Palette.Yellow, Atlases.UI.Sack, 3000);
+        }
+
         // IsVisible
         public bool IsVisible { get; private set; }
 
+        // ItemBroken
+        public void ItemBroken(Item item)
+        {
+            var text = Localization.GetValue(MessageKind.ItemBroken) + " " + item.Definition.Label;
+            Show(text, Colors.Palette.Orange, item.Definition.Image, 5000, true);
+        }
+
         // Show
-        public void Show(MessageKind message, int duration = 3000)
+        public void Show(MessageKind message, AtlasImage? image)
         {
             var text = Localization.GetValue(message);
-            icon.RenderImage = null;
-
             var color = Colors.Palette.Text;
-
-            if (message is MessageKind.InventoryFull or MessageKind.StackFull)
-            {
-                icon.RenderImage = Atlases.UI.Sack;
-            }
-
-            Show(text, color, duration);
+            Show(text, color, image, 3000);
         }
 
         // Show
-        public void Show(string text, int duration = 3000)
+        public void Show(string text)
         {
-            Show(text, Colors.Palette.Text, duration);
+            Show(text, Colors.Palette.Text, null, 3000);
         }
 
         // Show
-        public void Show(string text, Color color, int duration = 3000)
+        public void Show(string text, Color color, AtlasImage? image, int duration, bool isItem = false)
         {
             messageText.Color = color;
             messageText.Text = text;
+            icon.RenderImage = image;
             fadeTween.StartDelay = duration;
             fadeTween.Start(TweenStyle.CubicIn, 1, 0, 200);
             scaleTween.Start(TweenStyle.CubicIn, scale * .8f, scale, 50);
             messageText.Tweens.ScaleTween = scaleTween;
             IsVisible = true;
+        }
+
+        // StackFull
+        public void StackFull(Item item)
+        {
+            var text = Localization.GetValue(MessageKind.StackFull) + " " + item.Definition.Label;
+            Show(text, Colors.Palette.Orange, item.Definition.Image, 5000, true);
         }
     }
 }

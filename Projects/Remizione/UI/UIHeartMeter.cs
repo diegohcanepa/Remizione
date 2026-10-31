@@ -39,7 +39,7 @@ namespace Remizione
             this.capacityMeter = new()
             {
                 PivotOrigin = RectanglePoint.Left,
-                Position = container.BoundingBox.GetPoint(RectanglePoint.Right, 1.5f, .5f),
+                Position = container.BoundingBox.GetPoint(RectanglePoint.Right, 1, .5f),
             };
         }
 

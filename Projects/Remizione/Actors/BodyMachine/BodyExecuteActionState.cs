@@ -139,7 +139,11 @@ namespace Remizione
                         break;
                 }
 
-                action.Consume(Owner);
+                if (action.ApplyUsage(Owner) == ApplyUsageOutcome.Broken)
+                {
+                    if (action is Item item)
+                        Owner.Session.HUD.Message.ItemBroken(item);
+                }
 
                 return;
             }
