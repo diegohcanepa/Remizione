@@ -15,10 +15,11 @@ namespace Remizione
     {
         #region Private fields
 
+        private static readonly Vector2 clickScale = new(.75f);
+        private static readonly Vector2Tween clickScaleTween = new();
         private static readonly ColorTween customImageColorTween = ColorTween.Create(TweenStyle.CubicInOut, Color.White, new(210, 210, 210), 500, -1);
         private static readonly AtlasImage?[] cursorImages;
         private static readonly Sprite cursorSprite;
-        private static readonly Vector2 defaultScale = ScaleInfo.UIElement.Large;
         private static OutlineEffect? effect;
         private static readonly FloatTween shakeTween = new();
         private static readonly TextSprite subTextSprite = new(Fonts.CommonOutline) { Scale = ScaleInfo.Text.VeryLarge };
@@ -35,7 +36,7 @@ namespace Remizione
             cursorSprite = new Sprite()
             {
                 PivotOrigin = RectanglePoint.Center,
-                Scale = defaultScale
+                Scale = ScaleInfo.UIElement.Large
             };
 
             const string prefix = "MouseCursor";
@@ -122,7 +123,7 @@ namespace Remizione
         private static void InvalidateCursorImage()
         {
             cursorSprite.RenderImage = CustomImage ?? cursorImages[(int)Icon];
-            cursorSprite.Scale = defaultScale;
+            clickScaleTween.Stop();
 
             if (Icon == MouseCursorIcon.Hand && CustomImage == null)
             {
@@ -135,6 +136,13 @@ namespace Remizione
         }
 
         #endregion
+
+        // Click
+        public static void Click()
+        {
+            clickScaleTween.Start(TweenStyle.Linear, Vector2.One, clickScale, 60, 2);
+            Sound.Play(SoundNames.Interact);
+        }
 
         // Color
         public static Color Color
@@ -208,12 +216,12 @@ namespace Remizione
             tooltipSprite.Text = null;
             subTextSprite.Text = null;
             cursorSprite.Color = Color.White;
-            cursorSprite.Scale = defaultScale;
             CustomImage = null;
             HightlightColor = null;
             tooltipSprite.Color = Colors.MouseCursor.Tooltip;
             subTextSprite.Color = Colors.MouseCursor.SubText;
             Icon = MouseCursorIcon.Cross;
+            clickScaleTween.Stop();
         }
 
         // Shake
@@ -254,6 +262,8 @@ namespace Remizione
         // Update
         public static void Update(GameTime gameTime)
         {
+            clickScaleTween.Update(gameTime);
+            cursorSprite.ScaleFactor = clickScaleTween.IsRunning ? clickScaleTween.CurrentValue : Vector2.One;
             customImageColorTween.Update(gameTime);
             cursorSprite.Position = InputManager.DefaultPlayer.Mouse.VirtualPosition;
             cursorSprite.Update(gameTime);

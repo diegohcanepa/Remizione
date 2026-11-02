@@ -40,6 +40,8 @@ namespace Remizione
 
             if (isPrimary || isSecondary)
             {
+                MouseCursor.Click();
+
                 if (isPrimary)
                 {
                     if (consecutiveActionCount >= MaxConsecutiveActions)
