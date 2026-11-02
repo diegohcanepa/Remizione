@@ -26,9 +26,9 @@ namespace Remizione
         {
             this.HeartMeter = new(session);
             this.InventoryMeter = new(session.PlayerData.Inventory);
-            this.MaterialMeter = new(session);
             this.DestinationMark = new(session);
             this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 10));
+            this.BottomMessage = new(RectanglePoint.Bottom, Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -5));
             this.graceScore = new(session);
             this.statuses = new(session);
         }
@@ -50,19 +50,18 @@ namespace Remizione
             if (Session.InventoryEnabled)
                 InventoryMeter.Draw(gameTime);
 
-            MaterialMeter.Draw(gameTime);
-
             RoomTitle.Draw(gameTime);
             Message.Draw(gameTime);
+            BottomMessage.Draw(gameTime);
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             InventoryMeter.Update(gameTime);
-            MaterialMeter.Update(gameTime);
             HeartMeter.Update(gameTime);
             Message.Update(gameTime);
+            BottomMessage.Update(gameTime);
             graceScore.Update(gameTime);
             statuses.Update(gameTime);
             DestinationMark.Update(gameTime);
@@ -70,6 +69,9 @@ namespace Remizione
         }
 
         #endregion
+
+        // BottomMessage
+        public UIMessage BottomMessage { get; }
 
         // DestinationMark
         public DestinationMark DestinationMark { get; }
@@ -91,9 +93,6 @@ namespace Remizione
 
         // InventoryMeter
         public UIInventoryMeter InventoryMeter { get; }
-
-        // MaterialMeter
-        public UIMaterialMeter MaterialMeter { get; }
 
         // Message
         public UIMessage Message { get; }

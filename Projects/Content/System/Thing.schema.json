@@ -43,9 +43,6 @@
             }
           }
         },
-        "materialRewardChance": {
-          "type": "number"
-        },
         "maxPerRoom": {
           "type": "integer",
           "default": -1

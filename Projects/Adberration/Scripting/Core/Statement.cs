@@ -65,6 +65,7 @@ namespace Adberration.Scripting
         protected static readonly string RelativeArg = "#relative";
         protected static readonly string RelativePositionArg = "#relative-position";
         protected static readonly string RelativeZoomArg = "#relative-zoom";
+        protected static readonly string RemoveArg = "#remove";
         protected static readonly string RepeatArg = "#repeat";
         protected static readonly string ReverseArg = "#reverse";
         protected static readonly string RightArg = "#right";

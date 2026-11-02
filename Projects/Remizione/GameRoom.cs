@@ -121,15 +121,6 @@ namespace Remizione
             }
         }
 
-        // DrawFlyOffs
-        private void DrawFlyOffs(GameTime gameTime)
-        {
-            for (var i = Session.ObjectPools.FlyOffs.InUse.Count - 1; i >= 0; i--)
-            {
-                Session.ObjectPools.FlyOffs.InUse[i].Draw(gameTime);
-            }
-        }
-
         // DrawMeters
         private void DrawMeters(GameTime gameTime)
         {
@@ -360,9 +351,6 @@ namespace Remizione
 
             // Foreround (layer)
             DrawThings(gameTime, RenderLayer.ForegroundNoLight);
-
-            // Draw texts (hit numbers, etc)
-            DrawFlyOffs(gameTime);
 
 #if DEBUG
             DrawDebugBoxes();

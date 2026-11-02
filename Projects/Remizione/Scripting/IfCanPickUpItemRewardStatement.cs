@@ -28,7 +28,7 @@ namespace Remizione.Scripting
                 {
                     if (item.IsStackFull)
                     {
-                        session.HUD?.Message.StackFull(item);
+                        session.HUD?.Message.StackFull();
                         return false;
                     }
                 }

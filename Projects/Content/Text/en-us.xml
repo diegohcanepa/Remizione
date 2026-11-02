@@ -4,7 +4,6 @@
   <String Key="Actor.Hopeless">Hopeless</String>
   <String Key="Actor.Monk">Warden</String>
   <String Key="Actor.Penitent">Penitent</String>
-  <String Key="BonfireAction.Craft">Craft</String>
   <String Key="BonfireAction.Journey">Journey</String>
   <String Key="BonfireAction.Rise">Rise</String>
   <String Key="BonfireAction.Vigil">Vigil</String>
@@ -32,7 +31,6 @@
   <String Key="InputBinding.NextDialog">Next</String>
   <String Key="InputBinding.Select">Select</String>
   <String Key="Item.BarrenFig.Name">Barren fig</String>
-  <String Key="Item.BronzeKey.Name">Bronze key</String>
   <String Key="Item.CobaltPebble.Description">A rough wooden structure. Its tip holds an extinguished piece of cobalt, dark and flameless.</String>
   <String Key="Item.CobaltPebble.Effect">Strikes cold blue spark</String>
   <String Key="Item.CobaltPebble.Name">Cobal pebble</String>
@@ -47,6 +45,9 @@
   <String Key="Item.Lift.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Lift.Name">Lift</String>
   <String Key="Item.Loquat.Name">Loquat</String>
+  <String Key="Item.Material.Description" />
+  <String Key="Item.Material.Effect">Craft an item</String>
+  <String Key="Item.Material.Name">Material</String>
   <String Key="Item.PrayerBonfire.Name">Bonfire prayer</String>
   <String Key="Item.PyritePebble.Description">A warm-ignition red mineral. Friction against another surface of the same mineral generates sparks of common flame.</String>
   <String Key="Item.PyritePebble.Effect">Strikes warm red spark</String>
@@ -164,11 +165,12 @@
   <String Key="MessageKind.CannotPlaceItem">There is not enough space on the ground.</String>
   <String Key="MessageKind.ExtraHeart">You feel stronger!</String>
   <String Key="MessageKind.InventoryFull">Out of space.</String>
-  <String Key="MessageKind.ItemBroken">Broken:</String>
+  <String Key="MessageKind.ItemBroken">Item broken!</String>
+  <String Key="MessageKind.ItemCrafted">Item crafted!</String>
   <String Key="MessageKind.NotEnoughGrace">Not enough Grace</String>
   <String Key="MessageKind.OutOfReach">Out of reach.</String>
   <String Key="MessageKind.OutOfSight">Out of sight.</String>
-  <String Key="MessageKind.StackFull">Stack limit reached.</String>
+  <String Key="MessageKind.StackFull">Cannot stack more.</String>
   <String Key="Misc.All">All</String>
   <String Key="Misc.And">and</String>
   <String Key="Misc.Chance" />

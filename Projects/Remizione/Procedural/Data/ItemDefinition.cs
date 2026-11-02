@@ -149,6 +149,9 @@ namespace Remizione
             {
                 this.EffectDescription = string.Empty;
             }
+
+            if (string.IsNullOrWhiteSpace(Label))
+                RaiseValidationError(this, "Missing localized label.");
         }
 
         #endregion

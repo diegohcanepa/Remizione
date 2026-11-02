@@ -4,7 +4,6 @@
   <String Key="Actor.Hopeless">Desahuciado</String>
   <String Key="Actor.Monk">Celador</String>
   <String Key="Actor.Penitent">Penitente</String>
-  <String Key="BonfireAction.Craft">Labrar</String>
   <String Key="BonfireAction.Journey">Viajar</String>
   <String Key="BonfireAction.Rise">Levantarse</String>
   <String Key="BonfireAction.Vigil">Vigilia</String>
@@ -32,7 +31,6 @@
   <String Key="InputBinding.NextDialog">Siguiente</String>
   <String Key="InputBinding.Select">Seleccionar</String>
   <String Key="Item.BarrenFig.Name">Higo estéril</String>
-  <String Key="Item.BronzeKey.Name">Llave de bronce</String>
   <String Key="Item.CobaltPebble.Description">Un guijarro azulado de superficie rugosa. Al frotarse contra otra superficie del mismo mineral, la fricción produce chispas de llama fría.</String>
   <String Key="Item.CobaltPebble.Effect">Enciende llama frías</String>
   <String Key="Item.CobaltPebble.Name">Guijarro de Cobalto</String>
@@ -47,6 +45,9 @@
   <String Key="Item.Lift.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Lift.Name">Alzar</String>
   <String Key="Item.Loquat.Name">Níspero</String>
+  <String Key="Item.Material.Description">Acumulación de restos inertes de piedra, vegetal y hueso. Debe llevarse al descanso de la fogata para labrarse en herramientas y útiles de supervivencia.</String>
+  <String Key="Item.Material.Effect">Construye un item</String>
+  <String Key="Item.Material.Name">Material</String>
   <String Key="Item.PrayerBonfire.Name">Plegaria de la hoguera</String>
   <String Key="Item.PyritePebble.Description">Mineral rojo de ignición. Al frotarse contra otra superficie del mismo mineral, la fricción genera chispas de fuego cálido.</String>
   <String Key="Item.PyritePebble.Effect">Enciende fuego</String>
@@ -165,11 +166,12 @@ Los penitentes la usan para encender las Hogueras, cuyo calor no cura la carne s
   <String Key="MessageKind.CannotPlaceItem">No hay suficiente espacio en el terreno.</String>
   <String Key="MessageKind.ExtraHeart">¡Te sientes más fuerte!</String>
   <String Key="MessageKind.InventoryFull">No te queda espacio.</String>
-  <String Key="MessageKind.ItemBroken">Ítem roto:</String>
+  <String Key="MessageKind.ItemBroken">¡El ítem se rompió!</String>
+  <String Key="MessageKind.ItemCrafted">¡Ítem labrado!</String>
   <String Key="MessageKind.NotEnoughGrace">Sin Gracia suficiente</String>
   <String Key="MessageKind.OutOfReach">Fuera de alcance.</String>
   <String Key="MessageKind.OutOfSight">Vista obstruida.</String>
-  <String Key="MessageKind.StackFull">Límite de apilado alcanzado.</String>
+  <String Key="MessageKind.StackFull">No se puede acumular más.</String>
   <String Key="Misc.All">Todo</String>
   <String Key="Misc.And">y</String>
   <String Key="Misc.Chance">Chances</String>

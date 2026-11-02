@@ -111,6 +111,8 @@
 			"actionKind": "Proximity",
 			"deselectOnUse": false,
 			"isDepletable": false,
+			"isUnlockedByDefault": true,
+			"spawnWeight": 1,
 			"effects": [
 				{
 					"context": "Attack",

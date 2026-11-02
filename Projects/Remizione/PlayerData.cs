@@ -16,8 +16,5 @@
 
         // Inventory
         public ItemContainer Inventory { get; }
-
-        // Materials
-        public int Materials { get; set; }
     }
 }

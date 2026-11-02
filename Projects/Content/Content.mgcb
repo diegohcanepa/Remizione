@@ -250,12 +250,26 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/ConsumeDrink.wav;Audio/FX/ConsumeDrink
 
-#begin Audio/FX/CraftActive.wav
+#begin Audio/FX/Craft1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
-/build:Audio/FX/CraftActive.wav;Audio/FX/CraftActive
+/build:Audio/FX/Craft1.wav;Audio/FX/Craft1
+
+#begin Audio/FX/Craft2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/Craft2.wav;Audio/FX/Craft2
+
+#begin Audio/FX/CraftSuccess.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/CraftSuccess.wav;Audio/FX/CraftSuccess
 
 #begin Audio/FX/DoorGateClose.wav
 /importer:WavImporter
@@ -543,6 +557,13 @@
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/ItemAdd.wav;Audio/FX/ItemAdd
+
+#begin Audio/FX/ItemBreak.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/ItemBreak.wav;Audio/FX/ItemBreak
 
 #begin Audio/FX/ItemDiscard.wav
 /importer:WavImporter

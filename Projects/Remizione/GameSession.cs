@@ -102,6 +102,38 @@ namespace Remizione
 
         #region Private members
 
+        // ApplyCRTEffect
+        private void ApplyCRTEffect()
+        {
+            Game.RenderTargets.Swap();
+            Game.SpriteBatch.Begin(effect: RemizioneGame.Effects.CRT.Effect);
+            Game.SpriteBatch.Draw(Game.RenderTargets.PreviousTarget, Vector2.Zero, Color.White);
+            Game.SpriteBatch.End();
+        }
+
+        // ApplySepiaEffect
+        private void ApplySepiaEffect()
+        {
+            RemizioneGame.Effects.Sepia.Intensity = sepiaTween.IsRunning ? sepiaTween.CurrentValue : .5f;
+
+            if (RemizioneGame.Effects.Sepia.Intensity > 0)
+            {
+                Game.RenderTargets.Swap();
+                Game.SpriteBatch.Begin(effect: RemizioneGame.Effects.Sepia.Effect);
+                Game.SpriteBatch.Draw(Game.RenderTargets.PreviousTarget, Vector2.Zero, Color.White);
+                Game.SpriteBatch.End();
+            }
+        }
+
+        // DrawFlyOffs
+        private void DrawFlyOffs(GameTime gameTime)
+        {
+            for (var i = ObjectPools.FlyOffs.InUse.Count - 1; i >= 0; i--)
+            {
+                ObjectPools.FlyOffs.InUse[i].Draw(gameTime);
+            }
+        }
+
         // RegisterAotTypes
         private static void RegisterAotTypes()
         {
@@ -127,13 +159,14 @@ namespace Remizione
             AotTypeRegistry.Register("add-trigger-area", typeof(AddTriggerAreaCommand), CodingContext.EntityDeclaration);
             AotTypeRegistry.Register("add-walk-area", typeof(AddWalkAreaCommand), CodingContext.EntityDeclaration);
             AotTypeRegistry.Register("animate-actor", typeof(AnimateActorCommand));
+            AotTypeRegistry.Register("apply-usage", typeof(ApplyUsageCommand));
             AotTypeRegistry.Register("attach-light", typeof(AttachLightCommand), CodingContext.EntityDeclaration);
             AotTypeRegistry.Register("await-approach", typeof(AwaitApproachCommand));
             AotTypeRegistry.Register("await-bonfire-scene", typeof(AwaitBonfireSceneCommand));
             AotTypeRegistry.Register("await-credits", typeof(AwaitCreditsCommand));
             AotTypeRegistry.Register("await-dialog-block", typeof(AwaitDialogBlockCommand));
             AotTypeRegistry.Register("await-input", typeof(AwaitInputCommand));
-            AotTypeRegistry.Register("consume-item", typeof(ConsumeItemCommand));
+            AotTypeRegistry.Register("craft-item", typeof(CraftItemCommand));
             AotTypeRegistry.Register("create-dialog-block", typeof(CreateDialogBlockCommand));
             AotTypeRegistry.Register("echo", typeof(EchoCommand));
             AotTypeRegistry.Register("ensure-session-scene", typeof(EnsureSessionSceneCommand));
@@ -220,22 +253,9 @@ namespace Remizione
             }
             */
 
-            if (sepiaTween.IsRunning)
-                RemizioneGame.Effects.Sepia.Intensity = sepiaTween.CurrentValue;
-
-            RemizioneGame.Effects.Sepia.Intensity = .5f;
-            if (RemizioneGame.Effects.Sepia.Intensity > 0)
-            {
-                Game.RenderTargets.Swap();
-                Game.SpriteBatch.Begin(effect: RemizioneGame.Effects.Sepia.Effect);
-                Game.SpriteBatch.Draw(Game.RenderTargets.PreviousTarget, Vector2.Zero, Color.White);
-                Game.SpriteBatch.End();
-            }
-
-            Game.RenderTargets.Swap();
-            Game.SpriteBatch.Begin(effect: RemizioneGame.Effects.CRT.Effect);
-            Game.SpriteBatch.Draw(Game.RenderTargets.PreviousTarget, Vector2.Zero, Color.White);
-            Game.SpriteBatch.End();
+            ApplySepiaEffect();
+            ApplyCRTEffect();
+            DrawFlyOffs(gameTime);
 
             if (Player != null && !Player.IsDead)
                 HUD?.Draw(gameTime);
@@ -338,20 +358,6 @@ namespace Remizione
             // Grace
             if (sessionNode.Attributes[nameof(PlayerData.Grace)]?.Value is string graceValue)
                 PlayerData.Grace = XmlConvert.ToInt32(graceValue);
-
-            /*
-            // GutCount
-            if (sessionNode.Attributes[nameof(PlayerData.GutCount)]?.Value is string gutCountValue)
-                PlayerData.GutCount = XmlConvert.ToInt32(gutCountValue);
-
-            // StoneCount
-            if (sessionNode.Attributes[nameof(PlayerData.StoneCount)]?.Value is string stoneCountValue)
-                PlayerData.StoneCount = XmlConvert.ToInt32(stoneCountValue);
-
-            // WoodCount
-            if (sessionNode.Attributes[nameof(PlayerData.WoodCount)]?.Value is string woodCountValue)
-                PlayerData.WoodCount = XmlConvert.ToInt32(woodCountValue);
-            */
 
             // Inventory
             if (sessionNode.Attributes[nameof(PlayerData.Inventory)]?.Value is string inventoryValue)
@@ -541,17 +547,6 @@ namespace Remizione
             // Grace
             output.WriteAttributeString(nameof(PlayerData.Grace), XmlConvert.ToString(PlayerData.Grace));
 
-            /*
-            // GutCount
-            output.WriteAttributeString(nameof(PlayerData.GutCount), XmlConvert.ToString(PlayerData.GutCount));
-
-            // StoneCount
-            output.WriteAttributeString(nameof(PlayerData.StoneCount), XmlConvert.ToString(PlayerData.StoneCount));
-
-            // WoodCount
-            output.WriteAttributeString(nameof(PlayerData.WoodCount), XmlConvert.ToString(PlayerData.WoodCount));
-            */
-
             // Inventory
             output.WriteAttributeString(nameof(PlayerData.Inventory), PlayerData.Inventory.Serialize());
 
@@ -640,6 +635,16 @@ namespace Remizione
         // DisplayHPMeter
         [ScriptProperty]
         public bool DisplayHPMeter { get; set; }
+
+        // EnoughMaterials
+        [ScriptProperty]
+        public bool EnoughMaterials
+        {
+            get
+            {
+                return PlayerData.Inventory.Find(ItemNames.Material) is Item item && item.Amount >= 5;
+            }
+        }
 
         // Environment
         public Environment Environment { get; }

@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 
 namespace Remizione
@@ -142,7 +143,11 @@ namespace Remizione
                 if (action.ApplyUsage(Owner) == ApplyUsageOutcome.Broken)
                 {
                     if (action is Item item)
-                        Owner.Session.HUD.Message.ItemBroken(item);
+                    {
+                        Owner.ShowFlyOff(Localization.GetValue(MessageKind.ItemBroken), Colors.Palette.Red);
+                        Sound.Play(SoundNames.ItemBreak);
+                        Owner.Session.HUD.BottomMessage.ShowItem(item, Colors.Palette.Red);
+                    }
                 }
 
                 return;

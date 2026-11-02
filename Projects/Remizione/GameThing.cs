@@ -779,14 +779,6 @@ namespace Remizione
                     Session.ObjectPools.FlyOffs.Get()?.ShowText(GetOverheadPosition(), text, Colors.Palette.Grace, ScaleInfo.Text.Medium.X, 2000);
                 }
 
-                if (Definition?.MaterialRewardChance > 0)
-                {
-                    Session.PlayerData.Materials += 1;
-                    var pos = ((Position - Session.Camera.Position) * Session.Camera.Zoom) + (new Vector2(240, 135) * .5f);
-                    Session.HUD.MaterialMeter.AnimateAdd(pos);
-                    //?ShowFlyOff("+" + Localization.GetValue(amount), Colors.Palette.SkyBlueLight, ScaleInfo.Text.Medium.X, Position);
-                }
-
                 DropLoot();
             }
         }
@@ -1502,7 +1494,7 @@ namespace Remizione
             // ---------------------------------------------------------
             // 3. Knockback
             // ---------------------------------------------------------
-            if (MaxHP > 0 && knockbackForce != Vector2.Zero && !IgnoreKnockback)
+            if (!IsDead && MaxHP > 0 && knockbackForce != Vector2.Zero && !IgnoreKnockback)
             {
                 knockbackForce *= attacker.GetKnockbackMultiplier(this);
 

@@ -117,10 +117,10 @@ namespace Remizione
             // Amount text
             this.amountText = new(Fonts.Common)
             {
-                Color = Colors.Palette.Terra,
+                Color = Colors.Palette.Text,
                 PivotOrigin = RectanglePoint.Left,
                 Position = imageSlot.BoundingBox.GetPoint(RectanglePoint.Right, 3, 0),
-                Scale = ScaleInfo.Text.VeryLarge
+                Scale = ScaleInfo.Text.ExtraLarge
             };
 
             // Button
@@ -204,7 +204,7 @@ namespace Remizione
         {
             this.item = item;
             this.nameText.Color = item.Definition.IsKeyItem ? Colors.Inventory.KeyItem : Colors.Inventory.Item;
-            this.nameText.Text = item.Definition.GetLabel(item.Amount);
+            this.nameText.Text = item.Definition.Label;
             this.effectText.Text = item.Definition.EffectDescription;
             this.descriptionText.Text = item.Definition.Description;
             this.image.RenderImage = item.Definition.Image;

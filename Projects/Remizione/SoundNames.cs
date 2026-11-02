@@ -25,6 +25,7 @@
         internal const string GraceGain = nameof(GraceGain);
         internal const string Interact = nameof(Interact);
         internal const string ItemAdd = nameof(ItemAdd);
+        internal const string ItemBreak = nameof(ItemBreak);
         internal const string ItemDiscard = nameof(ItemDiscard);
         internal const string Lightning = nameof(Lightning);
         internal const string LockOpen = nameof(LockOpen);

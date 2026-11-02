@@ -35,6 +35,7 @@ namespace Remizione
             MouseRightButtonIcon = this[nameof(MouseRightButtonIcon)];
             Pixel = this[nameof(Pixel)];
             QuickInventoryBackground = this[nameof(QuickInventoryBackground)];
+            RemoveIcon = this[nameof(RemoveIcon)];
             Sack = this[nameof(Sack)];
             SavingIcon = this[nameof(SavingIcon)];
             SpeechTextArrow = this[nameof(SpeechTextArrow)];
@@ -115,6 +116,9 @@ namespace Remizione
 
         // QuickInventoryBackground
         public AtlasImage QuickInventoryBackground { get; }
+
+        // RemoveIcon
+        public AtlasImage RemoveIcon { get; }
 
         // Sack
         public AtlasImage Sack { get; }

@@ -54,9 +54,6 @@ namespace Remizione
 
             LootPool = tempPool.AsReadOnly();
 
-            // MaterialRewardChance
-            MaterialRewardChance = element.GetFloat("materialRewardChance", 0);
-
             // MaxPerRoom
             MaxPerRoom = element.GetInt32("maxPerRoom", -1);
 
@@ -102,9 +99,6 @@ namespace Remizione
 
         // LootPool
         public ReadOnlyChanceTable LootPool { get; }
-
-        // MaterialRewardChance
-        public Ratio MaterialRewardChance { get; }
 
         // MaxPerRoom
         public int MaxPerRoom { get; }

@@ -508,7 +508,10 @@ namespace Remizione
             DiscardHeldProp();
 
             if (!IsDead)
+            {
                 FaceTo(attacker);
+                Hurt(attacker);
+            }
 
             if (IsPlayer)
             {
@@ -521,8 +524,6 @@ namespace Remizione
 
                 Session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);
             }
-
-            Hurt(attacker);
         }
 
         // OnUpdate

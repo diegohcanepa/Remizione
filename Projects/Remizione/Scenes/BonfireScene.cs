@@ -11,7 +11,7 @@ namespace Remizione
         #region Private fields
 
         private readonly UITextButton[] buttons;
-        private static readonly string[] labels = { "Rise", "Craft", "Journey", "Vigil" };
+        private static readonly string[] labels = { "Rise", "Journey", "Vigil" };
         private const string prefix = "BonfireAction";
 
         #endregion
@@ -45,18 +45,11 @@ namespace Remizione
             }
 
             buttons[0].Action = Rise;
-            buttons[1].Action = Craft;
         }
 
         #endregion
 
         #region Private members
-
-        // Craft
-        private void Craft()
-        {
-            Game.SceneManager.Push(new CraftingScene());
-        }
 
         // Rise
         private void Rise()

@@ -2,14 +2,14 @@
 
 namespace Remizione.Scripting
 {
-    // ConsumeItemCommand
+    // ApplyUsageCommand
     // Syntax: {Item}
-    internal sealed class ConsumeItemCommand : NonAwaitableCommand
+    internal sealed class ApplyUsageCommand : NonAwaitableCommand
     {
         private readonly ItemDefinition definition;
 
         // Constructor
-        internal ConsumeItemCommand(Script script, string source, StatementBody body)
+        internal ApplyUsageCommand(Script script, string source, StatementBody body)
             : base(script, source, body, 1)
         {
             var itemName = Parser.ParseName(this, 0);

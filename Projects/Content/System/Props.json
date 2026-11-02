@@ -4,7 +4,12 @@
     {
       "name": "CrossA",
       "hp": 1,
-      "materialRewardChance": 1
+      "lootPool": [
+        {
+          "item": "Material",
+          "weight": 10
+        }
+      ]      
     },
     {
       "name": "PetrifiedTreeA",
@@ -38,15 +43,14 @@
       ],
       "lootPool": [
         {
-          "item": "BarrenFig",
+          "item": "Material",
           "weight": 10
         }
-      ]
+      ]    
     },
     {
       "name": "TreeA",
       "hp": 3,
-      "materialReward": "Wood",
       "tags": [
         "Tree"
       ]

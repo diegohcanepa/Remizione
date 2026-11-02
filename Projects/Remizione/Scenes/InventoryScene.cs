@@ -163,6 +163,9 @@ namespace Remizione
         protected override void OnActivate()
         {
             base.OnActivate();
+
+            ItemContainer.Session.HUD.BottomMessage.Hide();
+
             ItemContainer.Session.InteractionContext.HeldItem = null;
             ItemContainer.Session.InteractionContext.Refresh();
             Reset();
