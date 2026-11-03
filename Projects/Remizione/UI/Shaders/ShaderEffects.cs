@@ -23,6 +23,6 @@ namespace Remizione
         public OutlineEffect Outline { get; } = new();
 
         // Sepia
-        public SepiaEffect Sepia { get; } = new();
+        public SepiaShaderEffect Sepia { get; } = new();
     }
 }

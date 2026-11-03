@@ -17,9 +17,6 @@
         "graceReward": {
           "type": "integer"
         },
-        "hardSurface": {
-          "type": "boolean"
-        },
         "hp": {
           "type": "integer"
         },

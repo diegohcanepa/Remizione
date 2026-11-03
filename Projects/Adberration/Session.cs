@@ -922,6 +922,9 @@ namespace Adberration
         // CanSave
         public virtual bool CanSave(bool immediate = false)
         {
+            if (!IsRunning)
+                return false;
+
             if (IsAwaiting && !immediate)
                 return false;
 

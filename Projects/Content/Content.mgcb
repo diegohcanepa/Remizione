@@ -481,6 +481,13 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/GutsSmall3.wav;Audio/FX/GutsSmall3
 
+#begin Audio/FX/HitStone.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/HitStone.wav;Audio/FX/HitStone
+
 #begin Audio/FX/HopelessDeath.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

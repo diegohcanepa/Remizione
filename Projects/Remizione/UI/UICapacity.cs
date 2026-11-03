@@ -11,6 +11,7 @@ namespace Remizione
         #region Private fields
 
         private readonly TextSprite currentAmount;
+        private static readonly Color defaultColor = Colors.Palette.Terra;
         private int lastCurrentAmount = int.MinValue;
         private int lastMaximumAmount = int.MinValue;
         private readonly TextSprite maximumAmount;
@@ -26,7 +27,6 @@ namespace Remizione
             // Current amount
             this.currentAmount = new(Fonts.CommonOutline)
             {
-                Color = Colors.Palette.Terra,
                 PivotOrigin = RectanglePoint.Left,
                 Scale = ScaleInfo.Text.VeryLarge
             };
@@ -51,6 +51,7 @@ namespace Remizione
         {
             currentAmount.Tweens.Reset();
 
+            currentAmount.Color = CurrentAmount >= MaximumAmount ? MaximumReachedColor : defaultColor;
             currentAmount.Text = $"{CurrentAmount}";
             lastCurrentAmount = CurrentAmount;
             lastMaximumAmount = MaximumAmount;
@@ -112,6 +113,20 @@ namespace Remizione
                 }
             }
         }
+
+        // MaximumReachedColor
+        public Color MaximumReachedColor
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    Refresh();
+                }
+            }
+        } = defaultColor;
 
         // PivotOrigin
         public RectanglePoint PivotOrigin

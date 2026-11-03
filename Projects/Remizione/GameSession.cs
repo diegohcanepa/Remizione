@@ -20,19 +20,19 @@ namespace Remizione
     /// GameSession
     /// </summary>
     [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
-    public sealed partial class GameSession : Session
+    public sealed class GameSession : Session
     {
         #region Private fields
 
         private readonly ScriptConsole? console;
+        private readonly Sprite interactionTargetMarker;
         private readonly List<(ItemDefinition itemDef, int amount, GameRoom room, Vector2 position)> droppedKeyItems = [];
         private string? lastBonfireNameInSaveFile;
         private Vector2? playerPosition;
         private FrozenDictionary<string, GameThing>? proceduralCatalog;
         private readonly RoomEditor? roomEditor;
-        private readonly Sprite savingIcon;
-        private readonly FloatTween sepiaTween = new();
-        private readonly HashSet<string> unlockedDefinitions = [];
+        private readonly TextSprite gameSavedText;
+        private readonly UnlockManager unlockManager;
 
         #endregion
 
@@ -62,6 +62,7 @@ namespace Remizione
             this.LootGenerator = new(this);
             this.PersistenceModel = new RemizionePersistenceModel();
             this.RenewSeed();
+            this.unlockManager = new(this.PlayerData);
 
             ObjectPools = new ObjectPools(this);
 
@@ -88,14 +89,25 @@ namespace Remizione
                 roomEditor = new RoomEditor(this);
             }
 
-            // Saving icon
-            this.savingIcon = new Sprite(Atlases.UI.SavingIcon)
+            // Game saved text
+            this.gameSavedText = new TextSprite(Fonts.CommonOutline)
             {
-                PivotOrigin = RectanglePoint.Center,
-                Position = Screen.Area.GetPoint(RectanglePoint.RightTop, -9, 7)
+                Color = Colors.Palette.Green,
+                PivotOrigin = RectanglePoint.RightTop,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightTop),
+                Scale = ScaleInfo.Text.Large,
+                Text = TextRepository.GetValue("Misc.GameSaved"),
             };
 
             LocalizationSource = LocalizationSource.Script;
+
+            this.interactionTargetMarker = new(Atlases.UI.InteractionTarget)
+            {
+                PivotOrigin = RectanglePoint.Bottom,
+                Scale = ScaleInfo.UIElement.Medium,
+            };
+
+            interactionTargetMarker.Tweens.OpacityTween = FloatTween.Create(TweenStyle.Linear, .7f, 1, 200, -1);
         }
 
         #endregion
@@ -111,16 +123,13 @@ namespace Remizione
             Game.SpriteBatch.End();
         }
 
-        // ApplySepiaEffect
-        private void ApplySepiaEffect()
+        // DrawInteractionTargetMarker
+        private void DrawInteractionTargetMarker(GameTime gameTime)
         {
-            RemizioneGame.Effects.Sepia.Intensity = sepiaTween.IsRunning ? sepiaTween.CurrentValue : .5f;
-
-            if (RemizioneGame.Effects.Sepia.Intensity > 0)
+            if (InteractionData.Target?.IsHPMeterVisible == false)
             {
-                Game.RenderTargets.Swap();
-                Game.SpriteBatch.Begin(effect: RemizioneGame.Effects.Sepia.Effect);
-                Game.SpriteBatch.Draw(Game.RenderTargets.PreviousTarget, Vector2.Zero, Color.White);
+                Game.SpriteBatch.Begin(Camera);
+                interactionTargetMarker.Draw(gameTime);
                 Game.SpriteBatch.End();
             }
         }
@@ -179,6 +188,7 @@ namespace Remizione
             AotTypeRegistry.Register("place-item", typeof(PlaceItemCommand));
             AotTypeRegistry.Register("say", typeof(SayCommand));
             AotTypeRegistry.Register("select-walk-area", typeof(SelectWalkAreaCommand));
+            AotTypeRegistry.Register("sepia-effect", typeof(SepiaEffectCommand));
             AotTypeRegistry.Register("set-item-reward", typeof(SetItemRewardCommand), CodingContext.Any);
             AotTypeRegistry.Register("set-light", typeof(SetLightCommand));
             AotTypeRegistry.Register("show-message", typeof(ShowMessageCommand));
@@ -202,6 +212,12 @@ namespace Remizione
             {
                 annonymousList[i].Unparent();
             }
+        }
+
+        // RenewSeed
+        private void RenewSeed()
+        {
+            Seed = RandomNumberGenerator.GetInt32(int.MaxValue);
         }
 
         // SyncProceduralMusic
@@ -237,10 +253,10 @@ namespace Remizione
         {
             base.OnDraw(gameTime);
 
-            if (savingIcon.Tweens.IsTweening)
+            if (gameSavedText.Tweens.IsTweening)
             {
                 Game.SpriteBatch.Begin(Game.Camera);
-                savingIcon.Draw(gameTime);
+                gameSavedText.Draw(gameTime);
                 Game.SpriteBatch.End();
             }
 
@@ -253,8 +269,10 @@ namespace Remizione
             }
             */
 
-            ApplySepiaEffect();
+            SepiaEffect.Draw(gameTime);
+
             ApplyCRTEffect();
+            DrawInteractionTargetMarker(gameTime);
             DrawFlyOffs(gameTime);
 
             if (Player != null && !Player.IsDead)
@@ -348,6 +366,10 @@ namespace Remizione
             if (sessionNode == null || sessionNode.Attributes == null)
                 throw new InvalidOperationException("Session node attributes not found.");
 
+            // BonfireLevel
+            if (sessionNode.Attributes[nameof(PlayerData.Bonfires)]?.Value is string bonfireLevelValue)
+                PlayerData.Bonfires = XmlConvert.ToInt32(bonfireLevelValue);
+
             // LastBonfire
             lastBonfireNameInSaveFile = sessionNode.Attributes[nameof(LastBonfire)]?.Value;
 
@@ -367,6 +389,10 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(InventoryEnabled)]?.Value is string inventoryEnabledValue)
                 InventoryEnabled = XmlConvert.ToBoolean(inventoryEnabledValue);
 
+            // IsSafe
+            if (sessionNode.Attributes[nameof(PlayerData.IsSafe)]?.Value is string isSafeValue)
+                PlayerData.IsSafe = XmlConvert.ToBoolean(isSafeValue);
+
             // Player
             if (sessionNode.Attributes[nameof(Player)]?.Value is string player)
                 Player = FindEntity<Actor>(player);
@@ -379,15 +405,13 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(RunIndex)]?.Value is string runCountValue)
                 RunIndex = XmlConvert.ToInt32(runCountValue);
 
+            // SepiaIntensity
+            if (sessionNode.Attributes["SepiaIntensity"]?.Value is string sepiaIntensityValue)
+                SepiaEffect.Intensity = XmlConvert.ToSingle(sepiaIntensityValue);
+
             // UnlockedDefinitions
             if (sessionNode.Attributes["UnlockedDefinitions"]?.Value is string UnlockedDefinitionsValue)
-            {
-                foreach (var name in UnlockedDefinitionsValue.Split(","))
-                {
-                    if (Definition.IsDefined(name))
-                        unlockedDefinitions.Add(name);
-                }
-            }
+                unlockManager.Deserialize(UnlockedDefinitionsValue);
 
             // Dropped key items
             droppedKeyItems.Clear();
@@ -429,8 +453,7 @@ namespace Remizione
         protected override void OnSave()
         {
             base.OnSave();
-            savingIcon.Tweens.OpacityTween = FloatTween.Create(TweenStyle.QuadraticInOut, 1, .8f, 300, 10);
-            savingIcon.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.QuadraticInOut, 1, 1.05f, 150, 20);
+            gameSavedText.Tweens.OpacityTween = FloatTween.Create(TweenStyle.QuadraticInOut, 1, .8f, 300, 10);
         }
 
         // OnScriptLibraryLoaded
@@ -442,13 +465,10 @@ namespace Remizione
         // OnStarted
         protected override void OnStarted()
         {
-            if (IsNewSession)
-                RemizioneGame.Effects.Sepia.Intensity = 1;
-
-            foreach (var definition in Definition.All)
+            if (!IsNewSession && !PlayerData.IsSafe)
             {
-                if (definition.IsUnlockedByDefault)
-                    Unlock(definition);
+                ApplyDeathPenalty();
+                PlayerData.IsSafe = true;
             }
 
             Dictionary<string, GameThing> dict = [];
@@ -491,9 +511,9 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
 
-            sepiaTween.Update(gameTime);
+            SepiaEffect.Update(gameTime);
 
-            savingIcon.Update(gameTime);
+            gameSavedText.Update(gameTime);
 
             if (console != null)
             {
@@ -532,11 +552,20 @@ namespace Remizione
                     }
                 }
             }
+
+            if (InteractionData.Target != null && !InteractionData.Target.IsPlayer)
+            {
+                interactionTargetMarker.Update(gameTime);
+                interactionTargetMarker.Position = InteractionData.Target.GetOverheadPosition(new(0, -3));
+            }
         }
 
         // OnWrite
         protected override void OnWrite(XmlWriter output)
         {
+            // BonfireLevel
+            output.WriteAttributeString(nameof(PlayerData.Bonfires), XmlConvert.ToString(PlayerData.Bonfires));
+
             // LastBonfire
             if (LastBonfire != null)
                 output.WriteAttributeString(nameof(LastBonfire), LastBonfire.Name);
@@ -553,6 +582,9 @@ namespace Remizione
             // InventoryEnabled
             output.WriteAttributeString(nameof(InventoryEnabled), XmlConvert.ToString(InventoryEnabled));
 
+            // IsSafe
+            output.WriteAttributeString(nameof(PlayerData.IsSafe), XmlConvert.ToString(PlayerData.IsSafe));
+
             // Player
             if (Player != null)
                 output.WriteAttributeString(nameof(Player), Player.Name);
@@ -564,8 +596,11 @@ namespace Remizione
             // RunCount
             output.WriteAttributeString(nameof(RunIndex), XmlConvert.ToString(RunIndex));
 
+            // SepiaIntensity
+            output.WriteAttributeString("SepiaIntensity", XmlConvert.ToString(SepiaEffect.Intensity));
+
             // UnlockedDefinitions
-            output.WriteAttributeString("UnlockedDefinitions", string.Join(",", unlockedDefinitions));
+            output.WriteAttributeString("UnlockedDefinitions", unlockManager.Serialize());
 
             // Dropped key items
             var keyItems = new List<string>();
@@ -586,28 +621,51 @@ namespace Remizione
 
         #endregion
 
-        // ApplyPlayerDeath
+        // ApplyDeathPenalty
         [ScriptMethod]
-        public void ApplyPlayerDeath()
+        public void ApplyDeathPenalty()
         {
-            CleanupWorld();
             PlayerData.Grace = 0;
-            Player?.HP = Player.MaxHP;
+            Player?.HP = Player.MaxHP / 2;
 
             for (var i = PlayerData.Inventory.Count - 1; i >= 0; i--)
             {
-                if (!PlayerData.Inventory[i].Definition.IsKeyItem)
+                var item = PlayerData.Inventory[i];
+
+                if (item.Definition.IsKeyItem)
+                    continue;
+
+                if (item.Definition.LostOnDeath)
+                {
                     PlayerData.Inventory.RemoveAt(i);
+                    continue;
+                }
+
+                if (item.Definition.IsPerishable)
+                    item.ApplyUsage(null);
+            }
+
+            if (CanSave())
+                Save();
+        }
+
+        // ApplyTimePenalty
+        [ScriptMethod]
+        public void ApplyTimePenalty()
+        {
+            for (var i = PlayerData.Inventory.Count - 1; i >= 0; i--)
+            {
+                var item = PlayerData.Inventory[i];
+
+                if (item.Definition.IsPerishable)
+                    item.ApplyUsage(null);
             }
 
             Save();
         }
 
-        // BonfireMode
-        [ScriptProperty]
-        public bool BonfireMode { get; set; }
-
         // CleanupWorld
+        // TODO: MUST call this 
         public void CleanupWorld()
         {
             static bool CanCleanup(Entity entity)
@@ -682,6 +740,13 @@ namespace Remizione
         // HUD
         public HUD HUD { get; }
 
+        // IncrementBonfireCounter
+        [ScriptMethod]
+        public void IncrementBonfireCounter()
+        {
+            PlayerData.Bonfires++;
+        }
+
         // InteractionContext
         public InteractionContext InteractionContext { get; }
 
@@ -723,9 +788,9 @@ namespace Remizione
         }
 
         // IsUnlocked
-        public bool IsUnlocked(Definition definition)
+        public bool IsUnlocked(string definitionName)
         {
-            return unlockedDefinitions.Contains(definition.Name);
+            return unlockManager.IsUnlocked(definitionName);
         }
 
         // KillEnemies
@@ -803,25 +868,15 @@ namespace Remizione
         // Random
         public Random Random { get; private set; } = new(0);
 
-        // RemoveSepia
-        [ScriptMethod]
-        public void RemoveSepia()
-        {
-            sepiaTween.Start(TweenStyle.CubicIn, RemizioneGame.Effects.Sepia.Intensity, 0, 5000);
-        }
-
-        // RenewSeed
-        public void RenewSeed()
-        {
-            Seed = RandomNumberGenerator.GetInt32(int.MaxValue);
-        }
-
         // RespawnWorld
         [ScriptMethod]
         public void RespawnWorld()
         {
+            unlockManager.Refresh();
             RenewSeed();
             CleanupWorld();
+            if (Room is ProceduralRoom proceduralRoom)
+                proceduralRoom.Populate();
         }
 
         // RestartFromLastBonfire
@@ -873,6 +928,9 @@ namespace Remizione
             }
         }
 
+        // SepiaEffect
+        public SepiaEffect SepiaEffect { get; } = new();
+
         // ShakeCamera
         public void ShakeCamera(ImpactType impactType)
         {
@@ -909,11 +967,7 @@ namespace Remizione
                     continue;
 
                 // 2. Excluir ítems que el jugador aún no ha desbloqueado
-                if (!IsUnlocked(itemDef))
-                    continue;
-
-                // 3. Opcional: Evitar duplicados de ítems únicos no apilables
-                if (!itemDef.IsStackable && PlayerData.Inventory.Find(itemDef.Name) != null)
+                if (!unlockManager.IsUnlocked(itemDef.Name))
                     continue;
 
                 // Agrega el ítem a la ruleta usando su SpawnWeight
@@ -924,12 +978,6 @@ namespace Remizione
                 return null;
 
             return table.GetItem()?.Context as ItemDefinition;
-        }
-
-        // Unlock
-        public void Unlock(Definition defintion)
-        {
-            unlockedDefinitions.Add(defintion.Name);
         }
     }
 }

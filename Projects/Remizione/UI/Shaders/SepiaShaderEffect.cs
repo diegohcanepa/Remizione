@@ -5,14 +5,14 @@ using System;
 namespace Remizione.Effects
 {
     /// <summary>
-    /// SepiaEffect
+    /// SepiaShaderEffect
     /// </summary>
-    public sealed class SepiaEffect : ShaderEffect
+    public sealed class SepiaShaderEffect : ShaderEffect
     {
         private readonly EffectParameter intensity;
 
         // Constrcutor
-        public SepiaEffect()
+        public SepiaShaderEffect()
             : base("Sepia")
         {
             intensity = Effect.Parameters[nameof(intensity)] ?? throw new InvalidOperationException();

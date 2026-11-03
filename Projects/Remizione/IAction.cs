@@ -24,9 +24,6 @@ namespace Remizione
         // EffectDescriptors
         ReadOnlyCollection<EffectDescriptor> EffectDescriptors { get; }
 
-        // HardSurfacePenalty
-        bool HardSurfacePenalty { get; }
-
         // HPCost
         int HPCost { get; }
 

@@ -89,9 +89,9 @@ namespace Remizione
         }
 
         // ApplyUsage
-        public ApplyUsageOutcome ApplyUsage(Actor actor)
+        public ApplyUsageOutcome ApplyUsage(Actor? actor)
         {
-            actor.ApplyAction(this);
+            actor?.ApplyAction(this);
 
             // 1. Si el ítem tiene mecánica de desgaste/rotura, evaluamos degradación
             if (Definition.HasBreakChance)
@@ -115,9 +115,6 @@ namespace Remizione
 
         // Definition
         public ItemDefinition Definition { get; }
-
-        // HardSurfacePenalty
-        public bool HardSurfacePenalty => Definition.HardSurfacePenalty;
 
         // HPCost
         public int HPCost => Definition.HPCost;

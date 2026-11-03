@@ -30,9 +30,6 @@ namespace Remizione
             // Category
             this.Category = element.GetEnum("category", CombatIntentCategory.Basic);
 
-            // HardSurfacePenalty
-            HardSurfacePenalty = element.GetBool("hardSurfacePenalty", false);
-
             // HPCost
             HPCost = Math.Max(0, element.GetInt32("hpCost", 0));
 
@@ -97,9 +94,6 @@ namespace Remizione
 
         // Category
         public CombatIntentCategory Category { get; }
-
-        // HardSurfacePenalty
-        public bool HardSurfacePenalty { get; }
 
         // HPCost
         public int HPCost { get; }

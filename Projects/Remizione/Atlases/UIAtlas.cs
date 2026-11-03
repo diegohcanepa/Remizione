@@ -28,6 +28,7 @@ namespace Remizione
             HeartIcon = this[nameof(HeartIcon)];
             HeartMeterContainer = this[nameof(HeartMeterContainer)];
             InspectItem = this[nameof(InspectItem)];
+            InteractionTarget = this[nameof(InteractionTarget)];
             InventoryItemSlots = CreateReadOnlyCollection("InventoryItemSlot", 1, 3);
             ItemPerishStates = CreateReadOnlyCollection("ItemPerishState", 1, 3);
             MiniMapMarker = this[nameof(MiniMapMarker)];
@@ -95,6 +96,9 @@ namespace Remizione
 
         // InspectItem
         public AtlasImage InspectItem { get; }
+
+        // InteractionTarget
+        public AtlasImage InteractionTarget { get; }
 
         // InventoryItemSlots
         public ReadOnlyCollection<AtlasImage> InventoryItemSlots { get; }

@@ -50,6 +50,13 @@ namespace Remizione
                 session.Game.SceneManager.Push(scene);
         }
 
+        // StopPlayer
+        private void StopPlayer()
+        {
+            session.Player?.StopMoving();
+            session.Camera.FocusTarget();
+        }
+
         #endregion
 
         // ShowBonfire
@@ -65,7 +72,6 @@ namespace Remizione
             var scene = new DialogBlockScene(session, dialogBlock);
             session.Game.SceneManager.Push(scene);
         }
-
 
         // ShowEcho
         public void ShowEcho(string text)
@@ -96,12 +102,14 @@ namespace Remizione
         {
             itemInfoScene.Show(item);
             PushScene<ItemInfoScene>(itemInfoScene);
+            StopPlayer();
         }
 
         // ShowMiniMap
         public void ShowMiniMap()
         {
             PushScene<MiniMapScene>(miniMapScene, true);
+            StopPlayer();
         }
 
         // ShowNarration

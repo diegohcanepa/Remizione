@@ -4,9 +4,12 @@
   <String Key="Actor.Hopeless">Hopeless</String>
   <String Key="Actor.Monk">Warden</String>
   <String Key="Actor.Penitent">Penitent</String>
-  <String Key="BonfireAction.Journey">Journey</String>
-  <String Key="BonfireAction.Rise">Rise</String>
-  <String Key="BonfireAction.Vigil">Vigil</String>
+  <String Key="BonfireAction.March.Description">Resume the march.</String>
+  <String Key="BonfireAction.March.Name">March</String>
+  <String Key="BonfireAction.Travel.Description">Travel to another Land. Corrupts organic matter.</String>
+  <String Key="BonfireAction.Travel.Name">Crossing</String>
+  <String Key="BonfireAction.Vigil.Description">Rest by the sulphur while the world sprouts anew. Corrupts organic matter.</String>
+  <String Key="BonfireAction.Vigil.Name">Vigil</String>
   <String Key="DamageType.Physical">Physical</String>
   <String Key="EffectTemplate.AotHeart" />
   <String Key="EffectTemplate.Damage" />
@@ -173,6 +176,7 @@
   <String Key="MessageKind.StackFull">Cannot stack more.</String>
   <String Key="Misc.All">All</String>
   <String Key="Misc.And">and</String>
+  <String Key="Misc.BreakChance">Break chance</String>
   <String Key="Misc.Chance" />
   <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=—áéíóúÁÉÍÓÚ</String>
   <String Key="Misc.CopyrightDeveloper">© 2024 Indiesruption</String>
@@ -202,6 +206,7 @@ Bla bla bla</String>
   <String Key="Misc.DollarSign">$</String>
   <String Key="Misc.Enter">Enter</String>
   <String Key="Misc.EnterTunnel">Go to tunnel</String>
+  <String Key="Misc.GameSaved">Game saved</String>
   <String Key="Misc.GraceSign">g</String>
   <String Key="Misc.Here">Here</String>
   <String Key="Misc.Inscription">Inscription</String>

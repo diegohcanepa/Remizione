@@ -39,11 +39,17 @@ namespace Remizione
                     usedNames.Add(Name);
             }
 
-            // IsUnlockedByDefault
-            this.IsUnlockedByDefault = element.GetBool("isUnlockedByDefault", false);
+            // RequiredBonfires
+            RequiredBonfires = Math.Max(0, element.GetInt32("requiredBonfires", 0));
+
+            // RequiredLand
+            RequiredLand = element.GetString("requiredLand", string.Empty);
 
             // SpawnWeight
             SpawnWeight = element.GetFloat("spawnWeight", 1);
+
+            // UnlockMode
+            UnlockMode = element.GetEnum("unlockMode", UnlockMode.Manual);
 
             // Effects
             if (element.TryGetProperty("effects", out JsonElement effectsArray))
@@ -101,9 +107,6 @@ namespace Remizione
             return usedNames.Contains(name);
         }
 
-        // IsUnlockedByDefault
-        public bool IsUnlockedByDefault { get; }
-
         // Name
         public string Name { get; }
 
@@ -113,6 +116,12 @@ namespace Remizione
             OnRefreshLocalizedValues();
         }
 
+        // RequiredBonfires
+        public int RequiredBonfires { get; }
+
+        // RequiredLand
+        public string RequiredLand { get; }
+
         // SpawnWeight
         public Ratio SpawnWeight { get; }
 
@@ -121,5 +130,8 @@ namespace Remizione
         {
             return Name;
         }
+
+        // UnlockMode
+        public UnlockMode UnlockMode { get; }
     }
 }

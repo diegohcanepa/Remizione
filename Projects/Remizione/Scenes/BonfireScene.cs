@@ -10,8 +10,10 @@ namespace Remizione
     {
         #region Private fields
 
+        private UIButton? activeButton;
         private readonly UITextButton[] buttons;
-        private static readonly string[] labels = { "Rise", "Journey", "Vigil" };
+        private readonly TextSprite descriptionText;
+        private static readonly string[] labels = { "Vigil", "Travel", "March" };
         private const string prefix = "BonfireAction";
 
         #endregion
@@ -30,7 +32,8 @@ namespace Remizione
                 {
                     PivotOrigin = RectanglePoint.Top,
                     Position = Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, y),
-                    Text = TextRepository.GetValue($"{prefix}.{labels[i]}"),
+                    Text = TextRepository.GetValue($"{prefix}.{labels[i]}.Name"),
+                    Tip = TextRepository.GetValue($"{prefix}.{labels[i]}.Description"),
                 };
 
                 y += buttons[i].BoundingBox.Height + 4;
@@ -44,7 +47,17 @@ namespace Remizione
                 buttons[i].MinimumWidth = maxWidth;
             }
 
-            buttons[0].Action = Rise;
+            buttons[2].Action = Rise;
+
+            // Description text
+            this.descriptionText = new TextSprite(Fonts.CommonOutline)
+            {
+                Color = Colors.Palette.Text,
+                MaximumWidth = 150,
+                PivotOrigin = RectanglePoint.Bottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -5),
+                Scale = ScaleInfo.Text.Large
+            };
         }
 
         #endregion
@@ -78,6 +91,8 @@ namespace Remizione
                 buttons[i].Draw(gameTime);
             }
 
+            descriptionText.Draw(gameTime);
+
             Game.SpriteBatch.End();
         }
 
@@ -102,9 +117,19 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            UIButton? hoveredButton = null;
             for (var i = 0; i < buttons.Length; i++)
             {
                 buttons[i].Update(gameTime);
+
+                if (buttons[i].IsMouseOver && hoveredButton == null)
+                    hoveredButton = buttons[i];
+            }
+
+            if (hoveredButton != activeButton)
+            {
+                activeButton = hoveredButton;
+                descriptionText.Text = activeButton?.Tip ?? string.Empty;
             }
         }
 

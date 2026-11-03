@@ -1,5 +1,6 @@
 ﻿using Engendro;
 using Engendro.Audio;
+using Engendro.Input;
 using Microsoft.Xna.Framework;
 
 namespace Remizione
@@ -13,6 +14,7 @@ namespace Remizione
 
         private readonly TextSprite amountText;
         private readonly UIImageButton backButton = UIImageButton.CreateBackButton();
+        private readonly TextSprite breakChancesText;
         private readonly UITextButton button;
         private readonly TextSprite effectText;
         private readonly TextSprite descriptionText;
@@ -123,6 +125,15 @@ namespace Remizione
                 Scale = ScaleInfo.Text.ExtraLarge
             };
 
+            // Break chances text
+            this.breakChancesText = new(Fonts.Common)
+            {
+                Color = Colors.Palette.Text,
+                PivotOrigin = RectanglePoint.Left,
+                Position = imageSlot.BoundingBox.GetPoint(RectanglePoint.Right, 3, 0),
+                Scale = ScaleInfo.Text.Medium
+            };
+
             // Button
             this.button = new()
             {
@@ -147,14 +158,22 @@ namespace Remizione
             effectText.Draw(gameTime);
             descriptionText.Draw(gameTime);
 
-            if (item?.Definition.IsPerishable == true)
+            if (item != null)
             {
-                perishStateIcon.Draw(gameTime);
-                perishStateText.Draw(gameTime);
-            }
+                if (item.Definition.IsPerishable)
+                {
+                    perishStateIcon.Draw(gameTime);
+                    perishStateText.Draw(gameTime);
+                }
 
-            if (item?.Definition.IsStackable == true)
-                amountText.Draw(gameTime);
+                if (item.Definition.IsStackable)
+                {
+                    amountText.Draw(gameTime);
+                }
+
+                //if (item.BreakChance > 0)
+                //    breakChancesText.Draw(gameTime);
+            }
 
             if (button.IsEnabled)
                 button.Draw(gameTime);
@@ -212,7 +231,9 @@ namespace Remizione
             this.perishStateText.Color = item.PerishState == ItemPerishState.Rotten ? Colors.Palette.Red : Colors.Palette.Text;
             this.perishStateIcon.RenderImage = Atlases.UI.ItemPerishStates[(int)item.PerishState];
             this.amountText.Text = item.Definition.IsStackable ? $"x{item.Amount}" : string.Empty;
-            this.shadow.RenderImage = item.Definition.Image;
+            this.breakChancesText.Text = item.Definition.HasBreakChance ? $"{TextRepository.GetValue("Misc.BreakChance")}{System.Environment.NewLine}{(item.BreakChance * 100).Round()}%" : null;
+            this.breakChancesText.Color = item.BreakChance > .65f ? Colors.Palette.Red : Colors.Palette.Orange;
+            this.shadow.RenderImage = item.Definition.Image;    
         }
     }
 }

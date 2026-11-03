@@ -123,7 +123,7 @@ namespace Remizione
         // Enter
         public void Enter(bool immediate)
         {
-            if (Session.BonfireMode || Session.Room == null)
+            if (Session.PlayerData.IsSafe || Session.Room == null)
                 return;
 
             if (immediate)
@@ -139,19 +139,20 @@ namespace Remizione
                 Session.Save(true);
             }
 
-            Session.BonfireMode = true;
+            Session.PlayerData.IsSafe = true;
         }
 
         // Exit
         [ScriptMethod]
         public void Exit()
         {
+            Session.RespawnWorld();
             Sound.Play(SoundNames.BonfireMenu);
             Session.Camera.ZoomTo(TweenStyle.CubicInOut, GameSettings.DefaultZoom, 3000);
             if (Session.Player != null)
                 Session.Camera.Follow(Session.Player);
             globalOpacityTween.Start(TweenStyle.CubicIn, 0, 1, 2000);
-            Session.BonfireMode = false;
+            Session.PlayerData.IsSafe = false;
         }
 
         // IsLit
@@ -181,9 +182,9 @@ namespace Remizione
             }
         }
 
-        // IsSafe
+        // SafeToRest
         [ScriptProperty]
-        public bool IsSafe
+        public bool SafeToRest
         {
             get
             {

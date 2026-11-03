@@ -61,8 +61,7 @@
         "ProjectileHit",
         "RunModifier",
         "Status",
-        "ApplyStatus",
-        "HitHardTarget"
+        "ApplyStatus"
       ]
     },
     "EffectTarget": {
@@ -209,6 +208,14 @@
         "WallDecoration",
         "Window"
       ]
-    }
+    },
+    "UnlockMode": {
+      "type": "string",
+      "enum": [
+        "Manual",
+        "BonfiresLit",
+        "Land"
+      ]
+    }    
   }
 }

@@ -29,7 +29,7 @@ namespace Remizione
         private bool isCollisionDirty;
         private bool isHotspotDirty = true;
         private Vector2 knockbackVelocity;
-        private const float KnockbackFriction = 0.90f; // Ajustá este valor (0.8 - 0.95)
+        private const float KnockbackFriction = .90f;
         private Vector2 lastCheckedPosition;
         private PathNode[]? pathNodes;
         private int renderLayerDepth;
@@ -832,14 +832,8 @@ namespace Remizione
         // DrawHPMeter
         public void DrawHPMeter(GameTime gameTime)
         {
-            if (hpMeter == null || (HideHPMeter && !hpMeter.IsAnimating))
-                return;
-
-            if (!IsPlayer && !IsDead)
-            {
-                if (Session.InteractionContext.Target == this || hpMeter.IsAnimating)
-                    hpMeter.Draw(gameTime);
-            }
+            if (IsHPMeterVisible)
+                hpMeter?.Draw(gameTime);
         }
 
         // DrawShadow
@@ -1184,6 +1178,9 @@ namespace Remizione
         // IsHittable
         [ScriptProperty]
         public bool IsHittable { get; set; }
+
+        // IsHPMeterVisible
+        public bool IsHPMeterVisible => !IsPlayer && hpMeter != null && !HideHPMeter && (Session.InteractionContext.Target == this || hpMeter.IsAnimating);
 
         // IsKnockbackInProgress
         public bool IsKnockbackInProgress => knockbackVelocity != Vector2.Zero;

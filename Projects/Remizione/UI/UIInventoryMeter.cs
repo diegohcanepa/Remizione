@@ -11,7 +11,7 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly UICapacity capacity = new() { PivotOrigin = RectanglePoint.Bottom, Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 4, 0) };
+        private readonly UICapacity capacity = new() { MaximumReachedColor = Colors.Palette.Red, PivotOrigin = RectanglePoint.Bottom, Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 4, 0) };
         private readonly Sprite flyingIcon = new() { PivotOrigin = RectanglePoint.Center };
         private readonly Sprite icon;
         private readonly ItemContainer inventory;

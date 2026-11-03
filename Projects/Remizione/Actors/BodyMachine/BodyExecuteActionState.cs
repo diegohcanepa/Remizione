@@ -56,9 +56,6 @@ namespace Remizione
                 else
                 {
                     EffectDescriptor.Apply(action.EffectDescriptors, Owner, Target, EffectContext.Attack);
-
-                    if (Target.Definition?.HardSurface == true && action.HardSurfacePenalty)
-                        EffectDescriptor.Apply(Target.Definition.Effects, Target, Owner, EffectContext.HitHardTarget);
                 }
 
                 //Owner.Session.InterruptAwaitingScript();
@@ -140,7 +137,7 @@ namespace Remizione
                         break;
                 }
 
-                if (action.ApplyUsage(Owner) == ApplyUsageOutcome.Broken)
+                if (Target?.MaxHP > 0 && action.ApplyUsage(Owner) == ApplyUsageOutcome.Broken)
                 {
                     if (action is Item item)
                     {

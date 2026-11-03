@@ -100,7 +100,8 @@
 			"actionKind": "ScriptOutcome",
 			"deselectOnUse": true,
 			"isDepletable": true,
-			"isStackable": true
+			"isStackable": true,
+			"lostOnDeath": true
 		},		
 		{
 			"name": "RusticAxe",

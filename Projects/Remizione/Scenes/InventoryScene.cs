@@ -12,6 +12,7 @@ namespace Remizione
     {
         #region Private fields
 
+        private const float SelectionHysteresisDuration = 0.08f;
         private bool autoHide;
         private readonly Sprite background = new(Atlases.UI.QuickInventoryBackground) { PivotOrigin = RectanglePoint.LeftBottom, Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom) };
         private readonly Sprite inspectItem = new(Atlases.UI.InspectItem) { PivotOrigin = RectanglePoint.RightBottom, Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -2, -2) };
@@ -19,6 +20,7 @@ namespace Remizione
         private readonly TextSprite itemEffect;
         private Item? lastSelectedItem;
         private int lastSeenContainerVersion = -1;
+        private float selectionHysteresisTimer;
         private readonly InventorySlot[] slots = new InventorySlot[ItemContainer.MaximumCapacity];
 
         #endregion
@@ -106,6 +108,7 @@ namespace Remizione
         private void Refresh()
         {
             lastSelectedItem = null;
+            selectionHysteresisTimer = 0f;
 
             for (var i = 0; i < slots.Length; i++)
             {
@@ -153,6 +156,7 @@ namespace Remizione
             }
 
             lastSelectedItem = null;
+            selectionHysteresisTimer = 0f;
         }
 
         #endregion
@@ -206,7 +210,8 @@ namespace Remizione
                 itemEffect.Draw(gameTime);
             }
 
-            inspectItem.Draw(gameTime);
+            if (lastSelectedItem != null)
+                inspectItem.Draw(gameTime);
 
             Game.SpriteBatch.End();
         }
@@ -259,45 +264,55 @@ namespace Remizione
                 slots[i].Update(gameTime);
             }
 
-            if (GetSelectedItem() is Item item)
+            Item? rawSelectedItem = GetSelectedItem();
+
+            if (rawSelectedItem != null)
             {
-                if (item != lastSelectedItem)
+                selectionHysteresisTimer = 0f;
+
+                if (rawSelectedItem != lastSelectedItem)
                 {
                     if (lastSelectedItem?.Index >= 0 && lastSelectedItem.Index < ItemContainer.Count)
                     {
                         slots[lastSelectedItem.Index].SetSelected(false);
                     }
 
-                    int currentSlotIndex = item.Index;
+                    int currentSlotIndex = rawSelectedItem.Index;
                     float slotCenterX = slots[currentSlotIndex].BoundingBox.Center.X;
 
                     itemLabel.X = slotCenterX;
-                    itemLabel.Color = item.Definition.IsKeyItem ? Colors.Inventory.KeyItem : Colors.Inventory.Item;
-                    itemLabel.Text = item.Definition.Label;
+                    itemLabel.Color = rawSelectedItem.Definition.IsKeyItem ? Colors.Inventory.KeyItem : Colors.Inventory.Item;
+                    itemLabel.Text = rawSelectedItem.Definition.Label;
 
                     itemEffect.X = slotCenterX;
-                    itemEffect.Text = item.Definition.EffectDescription;
+                    itemEffect.Text = rawSelectedItem.Definition.EffectDescription;
 
-                    MouseCursor.Tooltip = item.Definition.Label;
+                    MouseCursor.Tooltip = rawSelectedItem.Definition.Label;
 
                     slots[currentSlotIndex].SetSelected(true);
 
-                    itemLabel.Tag = item;
-                    lastSelectedItem = item;
+                    itemLabel.Tag = rawSelectedItem;
+                    lastSelectedItem = rawSelectedItem;
                 }
             }
             else if (lastSelectedItem != null)
             {
-                if (lastSelectedItem.Index >= 0 && lastSelectedItem.Index < ItemContainer.Count)
+                selectionHysteresisTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                if (selectionHysteresisTimer >= SelectionHysteresisDuration)
                 {
-                    slots[lastSelectedItem.Index].SetSelected(false);
+                    if (lastSelectedItem.Index >= 0 && lastSelectedItem.Index < ItemContainer.Count)
+                    {
+                        slots[lastSelectedItem.Index].SetSelected(false);
+                    }
+
+                    itemLabel.Clear();
+                    itemEffect.Clear();
+                    MouseCursor.Tooltip = null;
+
+                    lastSelectedItem = null;
+                    selectionHysteresisTimer = 0f;
                 }
-
-                itemLabel.Clear();
-                itemEffect.Clear();
-                MouseCursor.Tooltip = null;
-
-                lastSelectedItem = null;
             }
         }
 

@@ -48,9 +48,6 @@ namespace Remizione
             // DeselectOnUse
             DeselectOnUse = element.GetBool("deselectOnUse", false);
 
-            // HardSurfacePenalty
-            HardSurfacePenalty = element.GetBool("hardSurfacePenalty", false);
-
             // HPCost
             HPCost = Math.Max(0, element.GetInt32("hpCost", 0));
 
@@ -79,6 +76,9 @@ namespace Remizione
             LightModifier = element.GetFloat("lightModifier", 0);
             if (LightModifier < 0)
                 RaiseValidationError(this, "Light modifier must be equal or greater that zero.", nameof(LightModifier));
+
+            // LostOnDeath
+            LostOnDeath = element.GetBool("lostOnDeath", false);
 
             // LuckModifier
             LuckModifier = element.GetFloat("luckModifier", 0);
@@ -113,6 +113,9 @@ namespace Remizione
                 if (BreakBaseChance > 0 || BreakChanceIncrement > 0)
                     RaiseValidationError(this, "A breakable item cannot be stackable.", nameof(IsStackable));
             }
+
+            if (IsKeyItem && LostOnDeath)
+                RaiseValidationError(this, "A key item cannot be lost on death.", nameof(LostOnDeath));
 
             RefreshLocalizedValues();
         }
@@ -195,9 +198,6 @@ namespace Remizione
             return amount == 1 ? Label : Label + $" (x{amount})";
         }
 
-        // HardSurfacePenalty
-        public bool HardSurfacePenalty { get; }
-
         // HasBreakChance
         public bool HasBreakChance => BreakChanceIncrement > 0 || BreakBaseChance > 0;
 
@@ -236,6 +236,9 @@ namespace Remizione
 
         // LightModifier
         public float LightModifier { get; }
+
+        // LostOnDeath
+        public bool LostOnDeath { get; }
 
         // LuckModifier
         public float LuckModifier { get; }

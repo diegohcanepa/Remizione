@@ -50,7 +50,7 @@ namespace Remizione
                 if (definition.SpawnWeight == 0)
                     continue;
 
-                if (!Session.IsUnlocked(definition))
+                if (!Session.IsUnlocked(definition.Name))
                     continue;
 
                 if (Session.GetProceduralThing(definition.Name) == null)

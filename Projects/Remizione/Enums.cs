@@ -58,7 +58,7 @@ namespace Remizione
     public enum DustParticleKind { None, Dust, Ash }
 
     // EffectContext
-    public enum EffectContext { Collect, Contact, Attack, RemainsContact, RunModifier, Update, Use, ProjectileHit, Status, ApplyStatus, HitHardTarget }
+    public enum EffectContext { Collect, Contact, Attack, RemainsContact, RunModifier, Update, Use, ProjectileHit, Status, ApplyStatus }
 
     // EffectType
     public enum EffectType { None, Damage, Death, EnergyGain, EnergyLoss, EnergyRestore, HPGain, HPLoss, HPRestore, MaxEnergyGain, MaxEnergyLoss, MaxHPGain, MaxHPLoss, Status }
@@ -207,6 +207,9 @@ namespace Remizione
 
     // TrapState
     public enum TrapState { None, Idle, Warning, Activating, Active, Cooldown, Disabled }
+
+    // UnlockMode
+    public enum UnlockMode { Manual, BonfiresLit, Land }
 
     // UIControlGroupLayoutStyle
     public enum UIControlGroupLayoutStyle { Vertically, Horizontally }

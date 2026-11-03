@@ -16,7 +16,7 @@ namespace Remizione.Scripting
         {
             if (Session is not GameSession session || session.Player == null)
                 return;
-            
+
             if (session.TryCraft() is ItemDefinition itemDefinition)
             {
                 if (session.PlayerData.Inventory.Find(ItemNames.Material) is Item item)

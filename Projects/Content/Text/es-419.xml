@@ -4,9 +4,12 @@
   <String Key="Actor.Hopeless">Desahuciado</String>
   <String Key="Actor.Monk">Celador</String>
   <String Key="Actor.Penitent">Penitente</String>
-  <String Key="BonfireAction.Journey">Viajar</String>
-  <String Key="BonfireAction.Rise">Levantarse</String>
-  <String Key="BonfireAction.Vigil">Vigilia</String>
+  <String Key="BonfireAction.March.Description">Reanudar la marcha.</String>
+  <String Key="BonfireAction.March.Name">Marchar</String>
+  <String Key="BonfireAction.Travel.Description">Viajar a otra Tierra. Corrompe la materia orgánica.</String>
+  <String Key="BonfireAction.Travel.Name">Travesía</String>
+  <String Key="BonfireAction.Vigil.Description">Reposar junto al azufre mientras el mundo vuelve a brotar. Corrompe la materia orgánica.</String>
+  <String Key="BonfireAction.Vigil.Name">Vigilia</String>
   <String Key="DamageType.Physical">Físico</String>
   <String Key="EffectTemplate.AotHeart">+{amount} Carnadura convulsa</String>
   <String Key="EffectTemplate.Damage">{amount} daño</String>
@@ -174,6 +177,7 @@ Los penitentes la usan para encender las Hogueras, cuyo calor no cura la carne s
   <String Key="MessageKind.StackFull">No se puede acumular más.</String>
   <String Key="Misc.All">Todo</String>
   <String Key="Misc.And">y</String>
+  <String Key="Misc.BreakChance">Chance de rotura</String>
   <String Key="Misc.Chance">Chances</String>
   <String Key="Misc.CharacterSet">0123456789@&amp;$%*[]_#abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ¡!¿?*.;:,-(){}+=—áéíóúÁÉÍÓÚ</String>
   <String Key="Misc.CopyrightDeveloper">© 2024 Indiesruption</String>
@@ -203,6 +207,7 @@ Bla bla bla</String>
   <String Key="Misc.DollarSign">$</String>
   <String Key="Misc.Enter">Entrar</String>
   <String Key="Misc.EnterTunnel">Ir al túnel</String>
+  <String Key="Misc.GameSaved">Partida guardada</String>
   <String Key="Misc.GraceSign">g</String>
   <String Key="Misc.Here">Aquí</String>
   <String Key="Misc.Inscription">Leyenda</String>

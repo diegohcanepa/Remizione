@@ -90,6 +90,9 @@
               "default": 0.0,
               "minimum": 0.0
             },
+            "lostOnDeath": {
+              "type": "boolean"
+            },
             "luckModifier": {
               "type": "number",
               "default": 0.0

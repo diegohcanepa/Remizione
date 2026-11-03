@@ -11,10 +11,16 @@
             Inventory = new(session);
         }
 
+        // Bonfires
+        public int Bonfires { get; set; }
+
         // Grace
         public int Grace { get; set; }
 
         // Inventory
         public ItemContainer Inventory { get; }
+
+        // IsSafe
+        public bool IsSafe { get; set; } = true;
     }
 }

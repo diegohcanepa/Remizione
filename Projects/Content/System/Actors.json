@@ -5,8 +5,9 @@
       "name": "EnviousEye",
       "baseDropChance": 0.3,
       "graceReward": 5,
+      "requiredBonfires": 1,
+      "unlockMode": "BonfiresLit",
       "hp": 2,
-      "isUnlockedByDefault": true,
       "effects": [
         {
           "context": "Contact",
