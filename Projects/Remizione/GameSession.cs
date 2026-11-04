@@ -467,11 +467,9 @@ namespace Remizione
         // OnStarted
         protected override void OnStarted()
         {
-            if (IsNewSession)
-            {
-                unlockManager.Refresh();
-            }
-            else if (!PlayerData.IsSafe)
+            unlockManager.Refresh();
+            
+            if (!PlayerData.IsSafe)
             {
                 ApplyDeathPenalty();
                 PlayerData.IsSafe = true;

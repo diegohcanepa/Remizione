@@ -85,6 +85,9 @@
             "impactEffectType": {
               "$ref": "enums.schema.json#/$defs/ImpactEffectType"
             },
+            "kind": {
+              "$ref": "enums.schema.json#/$defs/ItemKind"
+            },
             "lightColor": {
               "type": "string"
             },

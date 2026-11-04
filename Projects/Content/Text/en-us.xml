@@ -6,9 +6,9 @@
   <String Key="Actor.Penitent">Penitent</String>
   <String Key="BonfireAction.March.Description">Resume the march.</String>
   <String Key="BonfireAction.March.Name">March</String>
-  <String Key="BonfireAction.Travel.Description">Travel to another Land. Corrupts organic matter.</String>
+  <String Key="BonfireAction.Travel.Description">March toward another Land. Organic matter degrades.</String>
   <String Key="BonfireAction.Travel.Name">Crossing</String>
-  <String Key="BonfireAction.Vigil.Description">Rest by the sulphur while the world sprouts anew. Corrupts organic matter.</String>
+  <String Key="BonfireAction.Vigil.Description">The soil sprouts anew. Organic matter degrades.</String>
   <String Key="BonfireAction.Vigil.Name">Vigil</String>
   <String Key="DamageType.Physical">Physical</String>
   <String Key="EffectTemplate.AotHeart"></String>

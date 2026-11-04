@@ -69,6 +69,9 @@ namespace Remizione
             // IsStackable
             IsStackable = element.GetBool("isStackable", false);
 
+            // ItemKind
+            ItemKind = element.GetEnum("kind", ItemKind.Common);
+
             // LightColor
             LightColor = element.GetColor("lightColor");
 
@@ -244,6 +247,9 @@ namespace Remizione
 
         // IsStackable
         public bool IsStackable { get; }
+
+        // ItemKind
+        public ItemKind ItemKind { get; }
 
         // Label
         public string Label { get; private set; } = string.Empty;

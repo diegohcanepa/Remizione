@@ -134,6 +134,14 @@
         "Weapon"
       ]
     },
+    "ItemKind": {
+      "type": "string",
+      "enum": [
+        "Common",
+        "Key",
+        "Organic"
+      ]
+    },
     "KnockbackIntensity": {
       "type": "string",
       "enum": [

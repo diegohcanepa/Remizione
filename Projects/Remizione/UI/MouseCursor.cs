@@ -76,8 +76,8 @@ namespace Remizione
                     return true;
                 }
                 else if (Icon is MouseCursorIcon.Up or MouseCursorIcon.Down or
-                            MouseCursorIcon.Right or MouseCursorIcon.Left or
-                            MouseCursorIcon.Cross or MouseCursorIcon.Wait)
+                                 MouseCursorIcon.Right or MouseCursorIcon.Left or
+                                 MouseCursorIcon.Cross or MouseCursorIcon.Wait)
                 {
                     return false;
                 }

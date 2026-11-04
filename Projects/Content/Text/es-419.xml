@@ -6,9 +6,9 @@
   <String Key="Actor.Penitent">Penitente</String>
   <String Key="BonfireAction.March.Description">Reanudar la marcha.</String>
   <String Key="BonfireAction.March.Name">Marchar</String>
-  <String Key="BonfireAction.Travel.Description">Viajar a otra Tierra. Corrompe la materia orgánica.</String>
+  <String Key="BonfireAction.Travel.Description">Marchar hacia otra Tierra.  La materia orgánica se degrada.</String>
   <String Key="BonfireAction.Travel.Name">Travesía</String>
-  <String Key="BonfireAction.Vigil.Description">El mundo vuelva a brotar. La materia orgánica se degrada.</String>
+  <String Key="BonfireAction.Vigil.Description">La tierra vuelva a brotar. La materia orgánica se degrada.</String>
   <String Key="BonfireAction.Vigil.Name">Vigilia</String>
   <String Key="DamageType.Physical">Físico</String>
   <String Key="EffectTemplate.AotHeart">+{amount} Carnadura convulsa</String>

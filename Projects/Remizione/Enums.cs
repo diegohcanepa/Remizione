@@ -100,7 +100,7 @@ namespace Remizione
     public enum ItemPerishState { Fresh, Withered, Rotten }
 
     // ItemKind
-    public enum ItemKind { Common, Key, Fleshiness }
+    public enum ItemKind { Common, Key, Organic }
 
     // KnockbackIntensity
     public enum KnockbackIntensity { None, Low, Medium, High }
