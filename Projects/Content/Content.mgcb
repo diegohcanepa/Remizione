@@ -1176,13 +1176,13 @@
 /processorParam:Version=3.8.5.0
 /build:Shaders/ColorSaturation.fx
 
-#begin Shaders/CRT.fx
+#begin Shaders/Grain.fx
 /importer:EffectImporter
 /processor:EffectProcessor
 /processorParam:DebugMode=Auto
 /processorParam:Defines=
 /processorParam:Version=3.8.5.0
-/build:Shaders/CRT.fx
+/build:Shaders/Grain.fx
 
 #begin Shaders/Lighting.fx
 /importer:EffectImporter

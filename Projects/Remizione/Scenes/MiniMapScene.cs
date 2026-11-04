@@ -147,7 +147,7 @@ namespace Remizione
             Game.SpriteBatch.End();
 
             Game.RenderTargets.Swap();
-            Game.SpriteBatch.Begin(effect: RemizioneGame.Effects.CRT.Effect);
+            Game.SpriteBatch.Begin(effect: RemizioneGame.Effects.Grain.Effect);
             Game.SpriteBatch.Draw(Game.RenderTargets.PreviousTarget, Vector2.Zero, Color.White);
             Game.SpriteBatch.End();
 

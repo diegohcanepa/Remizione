@@ -529,7 +529,7 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (Session.PlayerData.IsSafe && !IsPlayer)
+            if (Session.BonfireMode && !IsPlayer)
                 return;
 
             base.OnUpdate(gameTime);

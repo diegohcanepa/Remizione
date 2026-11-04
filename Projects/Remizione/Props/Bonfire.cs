@@ -123,7 +123,7 @@ namespace Remizione
         // Enter
         public void Enter(bool immediate)
         {
-            if (Session.PlayerData.IsSafe || Session.Room == null)
+            if (Session.BonfireMode || Session.Room == null)
                 return;
 
             if (immediate)
@@ -140,6 +140,7 @@ namespace Remizione
             }
 
             Session.PlayerData.IsSafe = true;
+            Session.BonfireMode = true;
         }
 
         // Exit
@@ -153,6 +154,7 @@ namespace Remizione
                 Session.Camera.Follow(Session.Player);
             globalOpacityTween.Start(TweenStyle.CubicIn, 0, 1, 2000);
             Session.PlayerData.IsSafe = false;
+            Session.BonfireMode = false;
         }
 
         // IsLit

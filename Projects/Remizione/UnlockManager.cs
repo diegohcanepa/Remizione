@@ -1,14 +1,12 @@
-﻿using Engendro.Collections;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Remizione
 {
     /// <summary>
     /// UnlockManager
     /// </summary>
-    internal class UnlockManager
+    internal sealed class UnlockManager
     {
         private readonly PlayerData playerData;
         private readonly HashSet<string> unlockedDefinitions = [];
@@ -25,7 +23,7 @@ namespace Remizione
         internal void Deserialize(string data)
         {
             unlockedDefinitions.Clear();
-         
+
             if (string.IsNullOrWhiteSpace(data))
                 return;
 

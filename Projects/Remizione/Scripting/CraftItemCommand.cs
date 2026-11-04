@@ -23,7 +23,7 @@ namespace Remizione.Scripting
                 {
                     item.Remove();
                     var craftedItem = session.PlayerData.Inventory.Add(itemDefinition);
-                    session.Player.ShowFlyOff(Localization.GetValue(MessageKind.ItemCrafted), Colors.Palette.Green);
+                    session.Player.ShowFlyOff(Localization.GetValue(MessageKind.ItemCrafted), Colors.Palette.Text);
                     session.HUD.BottomMessage.ShowItem(craftedItem, Colors.Palette.Green);
                 }
             }

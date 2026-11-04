@@ -114,11 +114,13 @@ namespace Remizione
 
         #region Private members
 
-        // ApplyCRTEffect
-        private void ApplyCRTEffect()
+        // ApplyGrainEffect
+        private void ApplyGrainEffect()
         {
+            RemizioneGame.Effects.Grain.CameraOffset.SetValue(Camera.Position);
+
             Game.RenderTargets.Swap();
-            Game.SpriteBatch.Begin(effect: RemizioneGame.Effects.CRT.Effect);
+            Game.SpriteBatch.Begin(effect: RemizioneGame.Effects.Grain.Effect);
             Game.SpriteBatch.Draw(Game.RenderTargets.PreviousTarget, Vector2.Zero, Color.White);
             Game.SpriteBatch.End();
         }
@@ -271,7 +273,7 @@ namespace Remizione
 
             SepiaEffect.Draw(gameTime);
 
-            ApplyCRTEffect();
+            ApplyGrainEffect();
             DrawInteractionTargetMarker(gameTime);
             DrawFlyOffs(gameTime);
 
@@ -663,6 +665,10 @@ namespace Remizione
 
             Save();
         }
+
+        // BonfireMode
+        [ScriptProperty]
+        public bool BonfireMode { get; set; }
 
         // CleanupWorld
         // TODO: MUST call this 

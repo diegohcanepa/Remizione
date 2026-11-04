@@ -1,6 +1,5 @@
 ﻿using Engendro;
 using Engendro.Audio;
-using Engendro.Input;
 using Microsoft.Xna.Framework;
 
 namespace Remizione
@@ -233,7 +232,7 @@ namespace Remizione
             this.amountText.Text = item.Definition.IsStackable ? $"x{item.Amount}" : string.Empty;
             this.breakChancesText.Text = item.Definition.HasBreakChance ? $"{TextRepository.GetValue("Misc.BreakChance")}{System.Environment.NewLine}{(item.BreakChance * 100).Round()}%" : null;
             this.breakChancesText.Color = item.BreakChance > .65f ? Colors.Palette.Red : Colors.Palette.Orange;
-            this.shadow.RenderImage = item.Definition.Image;    
+            this.shadow.RenderImage = item.Definition.Image;
         }
     }
 }

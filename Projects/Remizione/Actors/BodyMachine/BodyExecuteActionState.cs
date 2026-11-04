@@ -141,7 +141,7 @@ namespace Remizione
                 {
                     if (action is Item item)
                     {
-                        Owner.ShowFlyOff(Localization.GetValue(MessageKind.ItemBroken), Colors.Palette.Red);
+                        Owner.ShowFlyOff(Localization.GetValue(MessageKind.ItemBroken), Colors.Palette.Orange);
                         Sound.Play(SoundNames.ItemBreak);
                         Owner.Session.HUD.BottomMessage.ShowItem(item, Colors.Palette.Red);
                     }

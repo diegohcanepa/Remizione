@@ -13,8 +13,8 @@ namespace Remizione
         // ColorSaturation
         public ColorSaturationEffect ColorSaturation { get; } = new();
 
-        // CRT
-        public CRTEffect CRT { get; } = new();
+        // Grain
+        public GrainEffect Grain { get; } = new();
 
         // Lighting
         public LightingEffect Lighting { get; } = new();

@@ -99,7 +99,7 @@ namespace Remizione
                 if (TryDegrade())
                     return ApplyUsageOutcome.Broken;
             }
-            
+
             // 2. Si no tiene probabilidad de rotura pero es un consumible estándar (ej. poción)
             else if (Definition.IsDepletable)
             {
