@@ -7,7 +7,7 @@ SamplerState SpriteTextureSampler
     AddressV = Clamp;
 };
 
-float GrainAmount = 0.08f;
+float GrainAmount = 0.09f;
 float2 CameraOffset = float2(0.0f, 0.0f); // Posición X,Y de la cámara en el mundo
 float2 Scale = float2(8.0f, 8.0f); // Escala/zoom de pantalla (ej: si 320x180 escala a 1280x720, Scale es 4)
 

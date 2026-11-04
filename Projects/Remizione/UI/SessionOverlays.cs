@@ -30,7 +30,7 @@ namespace Remizione
             this.inventoryScene = new InventoryScene(session.PlayerData.Inventory);
             this.miniMapScene = new MiniMapScene(session);
             this.itemInfoScene = new ItemInfoScene(session);
-            this.bonfireScene = new BonfireScene();
+            this.bonfireScene = new BonfireScene(session);
         }
 
         #endregion

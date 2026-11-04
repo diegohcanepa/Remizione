@@ -129,6 +129,10 @@ namespace Remizione
             {
                 cursorSprite.PivotOrigin = RectanglePoint.Top;
             }
+            else if (Icon == MouseCursorIcon.Sack && CustomImage == null)
+            {
+                cursorSprite.PivotOrigin = RectanglePoint.LeftTop;
+            }
             else
             {
                 cursorSprite.PivotOrigin = RectanglePoint.Center;

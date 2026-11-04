@@ -13,14 +13,13 @@ namespace Remizione
     /// <summary>
     /// NarrationScene
     /// </summary>
-    public sealed class NarrationScene : Scene
+    public sealed class NarrationScene : SessionOverlayScene
     {
         #region Private fields
 
         private readonly ContentManager content;
         private readonly Sprite background = new(Atlases.UI.EchoBackground) { PivotOrigin = RectanglePoint.LeftBottom, Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom) };
         private readonly FloatTween opacityTween = new();
-        private readonly GameSession session;
         private SoundEffect? soundEffect;
         private SoundEffectInstance? soundEffectInstance;
         private readonly TextSprite textSprite;
@@ -31,9 +30,8 @@ namespace Remizione
 
         // Constructor
         public NarrationScene(GameSession session)
-            : base()
+            : base(session)
         {
-            this.session = session;
             this.PausePreviousScenes = false;
             this.content = new(Game.Services, Game.Content.RootDirectory);
 
@@ -111,7 +109,7 @@ namespace Remizione
                 DisposeSound();
 
                 Action? action = null;
-                if (session.AwaitingScript?.NextStatement is not NarrateCommand and not AwaitCommand)
+                if (Session.AwaitingScript?.NextStatement is not NarrateCommand and not AwaitCommand)
                     action = () => Game.SceneManager.Pop();
 
                 opacityTween.Start(TweenStyle.CubicIn, 1, 0, 500, action);

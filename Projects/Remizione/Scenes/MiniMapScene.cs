@@ -9,13 +9,12 @@ namespace Remizione
     /// <summary>
     /// MiniMapScene
     /// </summary>
-    public sealed class MiniMapScene : Scene, IInputHandler
+    public sealed class MiniMapScene : SessionOverlayScene, IInputHandler
     {
         #region Private fields
 
         private readonly Sprite map = new() { PivotOrigin = RectanglePoint.Center, Position = Screen.Area.GetPoint(RectanglePoint.Center), Scale = new(.75f) };
         private readonly List<Marker> markers = [];
-        private readonly GameSession session;
         private readonly TextSprite titleText;
 
         #endregion
@@ -24,9 +23,8 @@ namespace Remizione
 
         // Constructor
         public MiniMapScene(GameSession session)
-            : base()
+            : base(session)
         {
-            this.session = session;
             this.PausePreviousScenes = true;
             this.IsOpaque = true;
             this.BackgroundColor = Color.Black;
@@ -96,11 +94,11 @@ namespace Remizione
 
             markers.Clear();
 
-            map.RenderImage = session.Room?.MiniMapImage;
+            map.RenderImage = Session.Room?.MiniMapImage;
             titleText.Position = map.BoundingBox.GetPoint(RectanglePoint.Top, 0, -1);
-            titleText.Text = session.Room?.Label;
+            titleText.Text = Session.Room?.Label;
 
-            if (session.Room is not GameRoom room)
+            if (Session.Room is not GameRoom room)
                 return;
 
             // Markers

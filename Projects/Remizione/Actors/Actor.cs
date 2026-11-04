@@ -529,8 +529,16 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (Session.BonfireMode && !IsPlayer)
-                return;
+            if (IsPlayer)
+            {
+                OpacityFactor2 = 1;
+            }
+            else
+            {
+                OpacityFactor2 = Bonfire.GlobalOpacity;
+                if (OpacityFactor2 == 0)
+                    return;
+            }
 
             base.OnUpdate(gameTime);
 
@@ -556,14 +564,6 @@ namespace Remizione
                 float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
                 moveAccelerationMultiplier = float.Min(1f, moveAccelerationMultiplier + (dt / MoveAccelerationTime));
             }
-
-            /*
-            if (!Session.IsAwaiting && !IsMoving && !IsPlayer && Faction == FactionOld.Evil)
-            {
-                if (IsHostile && Session.Player != null)
-                    FaceTo(Session.Player);
-            }
-            */
 
             CheckContactDamage();
         }

@@ -11,12 +11,11 @@ namespace Remizione
     /// <summary>
     /// EchoScene
     /// </summary>
-    public sealed class EchoScene : Scene
+    public sealed class EchoScene : SessionOverlayScene
     {
         #region Private fields
 
         private readonly Sprite background = new(Atlases.UI.EchoBackground) { PivotOrigin = RectanglePoint.LeftBottom, Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom) };
-        private readonly GameSession session;
         private SoundInstance? speakerSoundInstance;
         private readonly FloatTween textOpacityTween = new();
         private readonly TextSprite textSprite;
@@ -27,9 +26,8 @@ namespace Remizione
 
         // Constructor
         public EchoScene(GameSession session)
-            : base()
+            : base(session)
         {
-            this.session = session;
             this.PausePreviousScenes = false;
 
             // Text sprite
@@ -67,7 +65,7 @@ namespace Remizione
         private void Step()
         {
             CanClose = true;
-            if (session.AwaitingScript?.NextStatement is not EchoCommand and not AwaitCommand)
+            if (Session.AwaitingScript?.NextStatement is not EchoCommand and not AwaitCommand)
                 Game.SceneManager.Pop();
         }
 

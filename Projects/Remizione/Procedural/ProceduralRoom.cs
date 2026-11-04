@@ -242,7 +242,7 @@ namespace Remizione
                     continue;
 
                 // Tirada de peso para selección
-                if (Session.Random.NextSingle() > float.Clamp(chosen.SpawnWeight, 0f, 1f))
+                if (Session.Random.NextSingle() > MathHelper.Clamp(chosen.SpawnWeight, 0f, 1f))
                     continue;
 
                 // Instanciación exitosa: se descuenta de la meta de enemigos restantes
@@ -288,7 +288,7 @@ namespace Remizione
                     continue;
 
                 // Tirada de peso para selección de candidato
-                if (Session.Random.NextSingle() > float.Clamp(chosen.SpawnWeight, 0f, 1f))
+                if (Session.Random.NextSingle() > MathHelper.Clamp(chosen.SpawnWeight, 0f, 1f))
                     continue;
 
                 Vector2 spawnPosition = WalkArea.RandomWalkablePoint(Session.Random);
@@ -347,9 +347,7 @@ namespace Remizione
             spawnCounter.Clear();
             occupiedPositions.Clear();
             SpawnProps();
-
-            if (Session.Player?.MaxHP > 0)
-                SpawnActors();
+            SpawnActors();
         }
     }
 }

@@ -130,7 +130,7 @@ namespace Remizione
             float originalSpriteOpacity = lightSprite.Opacity;
 
             // Aplicamos la opacidad combinada (Flicker * Fade de encendido)
-            lightSprite.Opacity = originalSpriteOpacity * currentFade * (IgnoreGlobalOpacity ? 1 : GlobalOpacity);
+            lightSprite.Opacity = originalSpriteOpacity * currentFade * (IgnoreGlobalOpacity ? 1 : Bonfire.GlobalOpacity);
 
             lightSprite.Draw(gameTime);
 
@@ -180,9 +180,6 @@ namespace Remizione
                 }
             }
         }
-
-        // GlobalOpacity
-        public static Ratio GlobalOpacity { get; set; } = 1;
 
         // IgnoreGlobalOpacity
         public bool IgnoreGlobalOpacity { get; set; }

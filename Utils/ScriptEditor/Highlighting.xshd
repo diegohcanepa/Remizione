@@ -81,7 +81,6 @@
 			<Word>clone</Word>
 			<Word>=>></Word>
 			<Word>=></Word>
-			<Word>apply-item-effects</Word>
 			<Word>await-animation</Word>
 			<Word>await-animation-trigger</Word>
 			<Word>await-answer</Word>
@@ -130,8 +129,6 @@
 			<Word>const</Word>
 			<Word>ensure-session-scene</Word>
 			<Word>exit-session</Word>
-			<Word>friendly-items</Word>
-			<Word>meta-item</Word>
 			<Word>pause-routine</Word>
 			<Word>placement-data</Word>
 			<Word>pop-scene</Word>
@@ -225,6 +222,7 @@
 			<Word>add-terrain-area</Word>
 			<Word>add-trigger-area</Word>
 			<Word>add-walk-area</Word>
+			<Word>apply-usage</Word>
 			<Word>atlas</Word>
 			<Word>attach-light</Word>
 			<Word>consume-item</Word>
@@ -244,6 +242,7 @@
 			<Word>random-position</Word>
 			<Word>reset-camera</Word>
 			<Word>select-walk-area</Word>
+			<Word>sepia-effect</Word>
 			<Word>set-brightness</Word>
 			<Word>set-chapter</Word>
 			<Word>set-color-reduction</Word>

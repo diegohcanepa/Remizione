@@ -107,7 +107,7 @@ namespace Remizione
             if (globalOpacityTween.IsRunning)
             {
                 globalOpacityTween.Update(gameTime);
-                Light.GlobalOpacity = globalOpacityTween.CurrentValue;
+                GlobalOpacity = globalOpacityTween.CurrentValue;
             }
         }
 
@@ -128,7 +128,7 @@ namespace Remizione
 
             if (immediate)
             {
-                Light.GlobalOpacity = 0;
+                GlobalOpacity = 0;
             }
             else
             {
@@ -144,10 +144,11 @@ namespace Remizione
         }
 
         // Exit
-        [ScriptMethod]
-        public void Exit()
+        public void Exit(bool respawn)
         {
-            Session.RespawnWorld();
+            if (respawn)
+                Session.RespawnWorld();
+
             Sound.Play(SoundNames.BonfireMenu);
             Session.Camera.ZoomTo(TweenStyle.CubicInOut, GameSettings.DefaultZoom, 3000);
             if (Session.Player != null)
@@ -156,6 +157,9 @@ namespace Remizione
             Session.PlayerData.IsSafe = false;
             Session.BonfireMode = false;
         }
+
+        // GlobalOpacity
+        public static Ratio GlobalOpacity { get; private set; } = 1;
 
         // IsLit
         [ScriptProperty]

@@ -295,6 +295,13 @@ namespace Adberration
             set => Sprite.OpacityFactor = value;
         }
 
+        // OpacityFactor2
+        protected float OpacityFactor2
+        {
+            get => Sprite.OpacityFactor2;
+            set => Sprite.OpacityFactor2 = value;
+        }
+        
         // RunScript
         protected void RunScript(Script script)
         {

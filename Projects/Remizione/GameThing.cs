@@ -256,7 +256,6 @@ namespace Remizione
         // ProcessDamageFlyOff
         private void ProcessDamageFlyOff(int amount, DamageType damageType)
         {
-            var color = Colors.Palette.Text;
             var damageAmount = Math.Abs(amount);
 
             if (IsPlayer)
@@ -265,10 +264,6 @@ namespace Remizione
                 {
                     ShowFlyOff(Atlases.UI.HeartIcon, ScaleInfo.UIElement.Tiny.X);
                 }
-            }
-            else
-            {
-                //ShowFlyOff(damageAmount.ToString(CultureInfo.InvariantCulture), color, ScaleInfo.Text.Tiny.X);
             }
         }
 

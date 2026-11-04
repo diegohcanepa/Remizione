@@ -6,14 +6,14 @@ namespace Remizione
     /// <summary>
     /// BonfireScene
     /// </summary>
-    public sealed class BonfireScene : Scene
+    public sealed class BonfireScene : SessionOverlayScene
     {
         #region Private fields
 
         private UIButton? activeButton;
         private readonly UITextButton[] buttons;
         private readonly TextSprite descriptionText;
-        private static readonly string[] labels = { "Vigil", "Travel", "March" };
+        private static readonly string[] labels = [nameof(Vigil), "Travel", nameof(March)];
         private const string prefix = "BonfireAction";
 
         #endregion
@@ -21,7 +21,8 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public BonfireScene()
+        public BonfireScene(GameSession session)
+            : base(session)
         {
             buttons = new UITextButton[labels.Length];
             float maxWidth = 0;
@@ -47,7 +48,8 @@ namespace Remizione
                 buttons[i].MinimumWidth = maxWidth;
             }
 
-            buttons[2].Action = Rise;
+            buttons[0].Action = Vigil;
+            buttons[2].Action = March;
 
             // Description text
             this.descriptionText = new TextSprite(Fonts.CommonOutline)
@@ -55,7 +57,7 @@ namespace Remizione
                 Color = Colors.Palette.Text,
                 MaximumWidth = 150,
                 PivotOrigin = RectanglePoint.Bottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -5),
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -30),
                 Scale = ScaleInfo.Text.Large
             };
         }
@@ -64,10 +66,18 @@ namespace Remizione
 
         #region Private members
 
-        // Rise
-        private void Rise()
+        // March
+        private void March()
         {
             Game.SceneManager.Pop();
+            Session.LastBonfire?.Exit(false);
+        }
+
+        // Vigil
+        private void Vigil()
+        {
+            Game.SceneManager.Pop();
+            Session.LastBonfire?.Exit(true);
         }
 
         #endregion

@@ -36,7 +36,7 @@ namespace Remizione
             {
                 Color = Colors.Palette.TerraDark,
                 PivotOrigin = RectanglePoint.Left,
-                Scale = ScaleInfo.Text.Medium
+                Scale = ScaleInfo.Text.Large
             };
 
             Refresh();

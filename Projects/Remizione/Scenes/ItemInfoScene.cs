@@ -7,7 +7,7 @@ namespace Remizione
     /// <summary>
     /// ItemInfoScene
     /// </summary>
-    public sealed class ItemInfoScene : Scene
+    public sealed class ItemInfoScene : SessionOverlayScene
     {
         #region Private fields
 
@@ -22,7 +22,6 @@ namespace Remizione
         private Item? item;
         private readonly Sprite perishStateIcon;
         private readonly TextSprite perishStateText;
-        private readonly GameSession session;
         private readonly Sprite shadow;
         private readonly TextSprite nameText;
 
@@ -32,8 +31,8 @@ namespace Remizione
 
         // Constructor
         public ItemInfoScene(GameSession session)
+            : base(session)
         {
-            this.session = session;
             this.BackgroundColor = Color.Black;
 
             PausePreviousScenes = true;
@@ -192,7 +191,7 @@ namespace Remizione
 
             if (button.TestPressed())
             {
-                if (item != null && session.Room is { } room && session.Player is { } player)
+                if (item != null && Session.Room is { } room && Session.Player is { } player)
                 {
                     item.Remove();
                     Sound.Play(SoundNames.ItemDiscard);

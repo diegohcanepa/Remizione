@@ -467,7 +467,11 @@ namespace Remizione
         // OnStarted
         protected override void OnStarted()
         {
-            if (!IsNewSession && !PlayerData.IsSafe)
+            if (IsNewSession)
+            {
+                unlockManager.Refresh();
+            }
+            else if (!PlayerData.IsSafe)
             {
                 ApplyDeathPenalty();
                 PlayerData.IsSafe = true;
@@ -702,13 +706,7 @@ namespace Remizione
 
         // EnoughMaterials
         [ScriptProperty]
-        public bool EnoughMaterials
-        {
-            get
-            {
-                return PlayerData.Inventory.Find(ItemNames.Material) is Item item && item.Amount >= 5;
-            }
-        }
+        public bool EnoughMaterials => PlayerData.Inventory.Find(ItemNames.Material) is Item item && item.Amount >= 5;
 
         // Environment
         public Environment Environment { get; }
@@ -892,7 +890,7 @@ namespace Remizione
             if (LastBonfire != null)
             {
                 LastBonfire.Enter(true);
-                LastBonfire.Exit();
+                LastBonfire.Exit(true);
 
                 if (Room != null)
                 {
