@@ -6,7 +6,7 @@
 			"animationName": "Consume",
 			"category": "Food",
 			"actionKind": "Self",
-			"isPerishable": true,
+			"itemKind": "Organic",
 			"unlockMode": "None",
 			"effects": [
 				{
@@ -23,7 +23,7 @@
 			"category": "Misc",
 			"actionKind": "ScriptOutcome",
 			"isDepletable": true,
-			"isKeyItem": true,
+			"itemKind": "Key",
 			"isStackable": true,
 			"unlockMode": "None"
 		},
@@ -32,7 +32,7 @@
 			"animationName": "Consume",
 			"category": "Food",
 			"actionKind": "Self",
-			"isPerishable": true,
+			"itemKind": "Organic",
 			"unlockMode": "None",
 			"effects": [
 				{
@@ -57,7 +57,7 @@
 			"category": "Access",
 			"actionKind": "ScriptOutcome",
 			"isDepletable": true,
-			"isKeyItem": true,
+			"itemKind": "Key",
 			"isStackable": true,
 			"unlockMode": "None"
 		},
@@ -85,7 +85,7 @@
 			"actionKind": "Proximity",
 			"hardSurfacePenalty": true,
 			"isDepletable": false,
-			"isKeyItem": true,
+			"itemKind": "Key",
 			"unlockMode": "None",
 			"effects": [
 				{
@@ -129,7 +129,7 @@
 			"category": "Misc",
 			"actionKind": "ScriptOutcome",
 			"isDepletable": true,
-			"isKeyItem": true,
+			"itemKind": "Key",
 			"isStackable": true,
 			"unlockMode": "None"
 		}

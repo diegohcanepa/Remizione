@@ -119,7 +119,7 @@ namespace Remizione
                         markers.Add(new(thing, groundTorch.IsLit ? Colors.MiniMap.Torch : Colors.MiniMap.Default, false));
 
                     // KeyItem
-                    else if (thing is ItemOrb && thing.ItemReward?.IsKeyItem == true)
+                    else if (thing is ItemOrb && thing.ItemReward?.ItemKind == ItemKind.Key)
                         markers.Add(new(thing, Colors.MiniMap.KeyItem, false));
                 }
             }

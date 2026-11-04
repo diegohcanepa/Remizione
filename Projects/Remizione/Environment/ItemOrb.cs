@@ -76,7 +76,7 @@ namespace Remizione
 
             if (Session.OutcomeTarget != this)
             {
-                if (expirationTimer >= 0 && ItemReward != null && !ItemReward.IsKeyItem)
+                if (expirationTimer >= 0 && ItemReward != null && ItemReward.ItemKind != ItemKind.Key)
                 {
                     expirationTimer -= gameTime.ElapsedGameTime.Milliseconds;
                     if (expirationTimer < 0)
@@ -91,7 +91,7 @@ namespace Remizione
         #endregion
 
         // AllowCleanup
-        public bool AllowCleanup => ItemReward == null || !ItemReward.IsKeyItem;
+        public bool AllowCleanup => ItemReward == null || ItemReward.ItemKind != ItemKind.Key;
 
         // Drop
         public static ItemOrb? Drop(ItemDefinition itemDefinition, int amount, GameRoom room, Vector2 position)

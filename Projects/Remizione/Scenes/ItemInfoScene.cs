@@ -158,7 +158,7 @@ namespace Remizione
 
             if (item != null)
             {
-                if (item.Definition.IsPerishable)
+                if (item.Definition.ItemKind == ItemKind.Organic)
                 {
                     perishStateIcon.Draw(gameTime);
                     perishStateText.Draw(gameTime);

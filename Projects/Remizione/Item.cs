@@ -137,7 +137,7 @@ namespace Remizione
         // Perish
         public bool Perish()
         {
-            if (!Definition.IsPerishable || PerishState == ItemPerishState.Rotten)
+            if (Definition.ItemKind != ItemKind.Organic || PerishState == ItemPerishState.Rotten)
                 return false;
 
             PerishState++;

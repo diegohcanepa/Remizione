@@ -612,7 +612,7 @@ namespace Remizione
             {
                 foreach (var orb in room.Children.OfType<ItemOrb>())
                 {
-                    if (orb.ItemReward is { IsKeyItem: true } itemDef)
+                    if (orb.ItemReward is { ItemKind: ItemKind.Key } itemDef)
                     {
                         var value = $"{itemDef.Name}|{XmlConvert.ToString(orb.ItemRewardAmount)}|{room.Name}|{DataConvert.ToString(orb.Position)}";
                         keyItems.Add(value);
@@ -636,7 +636,7 @@ namespace Remizione
             {
                 var item = PlayerData.Inventory[i];
 
-                if (item.Definition.IsKeyItem)
+                if (item.Definition.ItemKind == ItemKind.Key)
                     continue;
 
                 if (item.Definition.LostOnDeath)
@@ -645,7 +645,7 @@ namespace Remizione
                     continue;
                 }
 
-                if (item.Definition.IsPerishable)
+                if (item.Definition.ItemKind == ItemKind.Organic)
                     item.ApplyUsage(null);
             }
 
@@ -661,7 +661,7 @@ namespace Remizione
             {
                 var item = PlayerData.Inventory[i];
 
-                if (item.Definition.IsPerishable)
+                if (item.Definition.ItemKind == ItemKind.Organic)
                     item.ApplyUsage(null);
             }
 

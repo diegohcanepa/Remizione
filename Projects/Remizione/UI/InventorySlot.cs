@@ -99,7 +99,7 @@ namespace Remizione
             if (Item.Definition.IsStackable)
                 amount.Draw(gameTime);
 
-            if (Item.Definition.IsPerishable)
+            if (Item.Definition.ItemKind == ItemKind.Organic)
                 perishStateIcon.Draw(gameTime);
         }
 
@@ -141,7 +141,7 @@ namespace Remizione
                         else
                             amount.Clear();
 
-                        if (field.Definition.IsPerishable)
+                        if (field.Definition.ItemKind == ItemKind.Organic)
                         {
                             perishStateIcon.RenderImage = Atlases.UI.ItemPerishStates[(int)field.PerishState];
 

@@ -60,17 +60,11 @@ namespace Remizione
             // IsDepletable
             IsDepletable = element.GetBool("isDepletable", true);
 
-            // IsKeyItem
-            IsKeyItem = element.GetBool("isKeyItem", false);
-
-            // IsPerishable
-            IsPerishable = element.GetBool("isPerishable", false);
-
             // IsStackable
             IsStackable = element.GetBool("isStackable", false);
 
             // ItemKind
-            ItemKind = element.GetEnum("kind", ItemKind.Common);
+            ItemKind = element.GetEnum("itemKind", ItemKind.Common);
 
             // LightColor
             LightColor = element.GetColor("lightColor");
@@ -110,26 +104,26 @@ namespace Remizione
 
             if (IsStackable)
             {
-                if (IsPerishable)
-                    RaiseValidationError(this, "A perishable item cannot be stackable.", nameof(IsStackable));
+                if (ItemKind == ItemKind.Organic)
+                    RaiseValidationError(this, "An organic item cannot be stackable.", nameof(IsStackable));
 
                 if (BreakBaseChance > 0 || BreakChanceIncrement > 0)
                     RaiseValidationError(this, "A breakable item cannot be stackable.", nameof(IsStackable));
             }
 
-            if (IsKeyItem && LostOnDeath)
-                RaiseValidationError(this, "A key item cannot be lost on death.", nameof(LostOnDeath));
+            if (ItemKind == ItemKind.Key && LostOnDeath)
+                RaiseValidationError(this, "Key items cannot be lost.", nameof(LostOnDeath));
 
             // LabelColor / OrbLightKind
-            if (IsKeyItem)
+            if (ItemKind == ItemKind.Key)
             {
                 LabelColor = Colors.Inventory.KeyItem;
                 OrbLightKind = LightKind.KeyItemOrb;
             }
-            else if (IsPerishable)
+            else if (ItemKind == ItemKind.Organic)
             {
-                LabelColor = Colors.Inventory.PerishableItem;
-                OrbLightKind = LightKind.PerishableItemOrb;
+                LabelColor = Colors.Inventory.OrganicItem;
+                OrbLightKind = LightKind.OrganicItemOrb;
             }
             else
             {
@@ -236,14 +230,8 @@ namespace Remizione
         // IsDepletable
         public bool IsDepletable { get; }
 
-        // IsKeyItem
-        public bool IsKeyItem { get; }
-
         // IsPassive
         public bool IsPassive { get; }
-
-        // IsPerishable
-        public bool IsPerishable { get; }
 
         // IsStackable
         public bool IsStackable { get; }

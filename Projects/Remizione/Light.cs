@@ -60,7 +60,7 @@ namespace Remizione
                 LightKind.Fire => new Color(255, 160, 160),
                 LightKind.KeyItemOrb => Colors.Palette.SkyBlue,
                 LightKind.CommonItemOrb => Colors.Palette.TerraLight,
-                LightKind.PerishableItemOrb => Colors.Palette.Green,
+                LightKind.OrganicItemOrb => Colors.Palette.Green,
                 LightKind.SulfurBonfire => new(184, 196, 81),
                 LightKind.Player => Color.White * .7f,
                 _ => Color.White
@@ -106,7 +106,7 @@ namespace Remizione
 
                 case LightKind.KeyItemOrb:
                 case LightKind.CommonItemOrb:
-                case LightKind.PerishableItemOrb:
+                case LightKind.OrganicItemOrb:
                     litTweenDuration = 1000;
                     unlitTweenDuration = 1000;
                     break;
