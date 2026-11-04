@@ -208,11 +208,11 @@ namespace Remizione
     // TrapState
     public enum TrapState { None, Idle, Warning, Activating, Active, Cooldown, Disabled }
 
-    // UnlockMode
-    public enum UnlockMode { Manual, BonfiresLit, Land }
-
     // UIControlGroupLayoutStyle
     public enum UIControlGroupLayoutStyle { Vertically, Horizontally }
+
+    // UnlockMode
+    public enum UnlockMode { None, Manual, BonfiresLit, Land }
 
     // UserAction
     public enum UserAction { Discard, Drop }

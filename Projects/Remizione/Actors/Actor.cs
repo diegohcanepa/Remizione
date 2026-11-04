@@ -873,6 +873,9 @@ namespace Remizione
         // IsInvulnerable
         public bool IsInvulnerable => blinkTimer?.IsRunning == true;
 
+        // IsLockedByPlayer
+        public bool IsLockedByPlayer { get; set; }
+
         // Label
         public override string Label
         {

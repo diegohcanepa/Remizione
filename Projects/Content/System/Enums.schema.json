@@ -212,6 +212,7 @@
     "UnlockMode": {
       "type": "string",
       "enum": [
+        "None",
         "Manual",
         "BonfiresLit",
         "Land"

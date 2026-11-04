@@ -969,15 +969,15 @@ namespace Remizione
                 var itemDef = GameData.Items[i];
 
                 // 1. Excluir ítems no crafteables o sin peso
-                if (itemDef.SpawnWeight <= 0)
+                if (itemDef.CraftWeight <= 0)
                     continue;
 
                 // 2. Excluir ítems que el jugador aún no ha desbloqueado
                 if (!unlockManager.IsUnlocked(itemDef.Name))
                     continue;
 
-                // Agrega el ítem a la ruleta usando su SpawnWeight
-                table.Add(itemDef.Name, itemDef.SpawnWeight, itemDef);
+                // Agrega el ítem a la ruleta usando su CraftWeight
+                table.Add(itemDef.Name, itemDef.CraftWeight, itemDef);
             }
 
             if (table.Count == 0)

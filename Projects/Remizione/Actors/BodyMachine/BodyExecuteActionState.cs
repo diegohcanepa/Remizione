@@ -88,6 +88,12 @@ namespace Remizione
         {
             base.Enter();
 
+            if (Target is Actor targetActor)
+            {
+                targetActor.StopMoving();
+                targetActor.IsLockedByPlayer = true;
+            }
+
             animationFound = Owner.ContainsAnimation(GetAnimationName());
             eventDone = !animationFound;
 
@@ -100,6 +106,10 @@ namespace Remizione
         {
             base.Exit();
             Action = null;
+
+            if (Target is Actor targetActor)
+                targetActor.IsLockedByPlayer = false;
+
             Target = null;
         }
 

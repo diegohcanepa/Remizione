@@ -45,6 +45,9 @@ namespace Remizione
             // Category
             Category = element.GetEnum("category", ItemCategory.Misc);
 
+            // CraftWeight
+            CraftWeight = element.GetFloat("craftWeight", 0);
+
             // DeselectOnUse
             DeselectOnUse = element.GetBool("deselectOnUse", false);
 
@@ -182,6 +185,9 @@ namespace Remizione
 
         // Category
         public ItemCategory Category { get; }
+
+        // CraftWeight
+        public Ratio CraftWeight { get; }
 
         // Description
         public string Description { get; private set; } = string.Empty;

@@ -7,6 +7,7 @@
 			"category": "Food",
 			"actionKind": "Self",
 			"isPerishable": true,
+			"unlockMode": "None",
 			"effects": [
 				{
 					"context": "Use",
@@ -24,7 +25,8 @@
 			"deselectOnUse": true,
 			"isDepletable": true,
 			"isKeyItem": true,
-			"isStackable": true
+			"isStackable": true,
+			"unlockMode": "None"
 		},
 		{
 			"name": "Loquat",
@@ -32,6 +34,7 @@
 			"category": "Food",
 			"actionKind": "Self",
 			"isPerishable": true,
+			"unlockMode": "None",
 			"effects": [
 				{
 					"context": "Use",
@@ -48,7 +51,8 @@
 			"actionKind": "ScriptOutcome",
 			"deselectOnUse": true,
 			"isDepletable": true,
-			"isStackable": true
+			"isStackable": true,
+			"unlockMode": "None"
 		},
 		{
 			"name": "CrudeKey",
@@ -57,7 +61,8 @@
 			"deselectOnUse": true,
 			"isDepletable": true,
 			"isKeyItem": true,
-			"isStackable": true
+			"isStackable": true,
+			"unlockMode": "None"
 		},
 		{
 			"name": "FulguriteCrystal",
@@ -68,6 +73,7 @@
 			"deselectOnUse": false,
 			"isDepletable": true,
 			"impactEffectType": "Lightning",
+			"unlockMode": "None",
 			"effects": [
 				{
 					"context": "Attack",
@@ -85,6 +91,7 @@
 			"hardSurfacePenalty": true,
 			"isDepletable": false,
 			"isKeyItem": true,
+			"unlockMode": "None",
 			"effects": [
 				{
 					"context": "Attack",
@@ -101,7 +108,8 @@
 			"deselectOnUse": true,
 			"isDepletable": true,
 			"isStackable": true,
-			"lostOnDeath": true
+			"lostOnDeath": true,
+			"unlockMode": "None"
 		},		
 		{
 			"name": "RusticAxe",
@@ -112,8 +120,9 @@
 			"actionKind": "Proximity",
 			"deselectOnUse": false,
 			"isDepletable": false,
-			"isUnlockedByDefault": true,
+			"requiredBonfires": 1,
 			"spawnWeight": 1,
+			"unlockMode": "None",
 			"effects": [
 				{
 					"context": "Attack",
@@ -129,7 +138,8 @@
 			"deselectOnUse": true,
 			"isDepletable": true,
 			"isKeyItem": true,
-			"isStackable": true
+			"isStackable": true,
+			"unlockMode": "None"
 		}
 	]
 }

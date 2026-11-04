@@ -50,6 +50,7 @@ namespace Remizione
         {
             return def.UnlockMode switch
             {
+                UnlockMode.None => true,
                 UnlockMode.Manual => false,
                 UnlockMode.BonfiresLit => playerData.Bonfires >= def.RequiredBonfires,
                 UnlockMode.Land => !string.IsNullOrEmpty(def.RequiredLand) && IsUnlocked(def.RequiredLand),

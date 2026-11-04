@@ -54,6 +54,12 @@ namespace Remizione
         // Update
         public override void Update(GameTime gameTime)
         {
+            if (Owner.IsLockedByPlayer)
+            {
+                Owner.StopMoving();
+                return;
+            }
+
             if (Owner.CombatBehavior?.Archetype is not { } arch)
                 return;
 

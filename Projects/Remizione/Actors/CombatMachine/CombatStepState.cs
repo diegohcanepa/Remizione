@@ -20,6 +20,12 @@ namespace Remizione
                 return;
             }
 
+            if (Owner.IsLockedByPlayer)
+            {
+                Owner.StopMoving();
+                return;
+            }
+
             float distance = Owner.DistanceToTarget(Target);
 
             // Usamos MaxStepPerTurn como la magnitud del paso
@@ -39,6 +45,13 @@ namespace Remizione
             if (Target == null || Target.IsDead)
             {
                 Machine.ChangeState<CombatIdleState>();
+                return;
+            }
+
+            // Si el jugador lo fijó a mitad de caminata, interrumpe el movimiento
+            if (Owner.IsLockedByPlayer)
+            {
+                Owner.StopMoving();
                 return;
             }
 

@@ -178,8 +178,8 @@ namespace Remizione
                         continue;
 
                     // El SpawnWeight entra directo como peso relativo para competir
-                    if (def.SpawnWeight > 0f)
-                        phTable.Add(def.Name, (int)(def.SpawnWeight * 100f), def);
+                    if (def.SpawnWeight > 0)
+                        phTable.Add(def.Name, def.SpawnWeight, def);
                 }
 
                 if (phTable.Count == 0)

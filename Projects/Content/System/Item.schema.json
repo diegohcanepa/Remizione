@@ -52,6 +52,12 @@
               "type": "integer",
               "default": 0
             },
+            "craftWeight": {
+              "type": "number",
+              "default": 0,
+              "minimum": 0,
+              "maximum": 1.0
+            },
             "deselectOnUse": {
               "type": "boolean"
             },
