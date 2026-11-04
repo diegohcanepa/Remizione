@@ -47,8 +47,7 @@ namespace Remizione
                 Scale = new(1, .5f)
             };
 
-            var lightKind = ItemReward.IsKeyItem ? LightKind.KeyItemOrb : LightKind.CommonItemOrb;
-            this.AttachedLight.LightKind = lightKind;
+            this.AttachedLight.LightKind = ItemReward.OrbLightKind;
             this.Color = AttachedLight.Color;
 
             LabelKey = ItemReward != null ? $"Item.{ItemReward.Name}.Name" : string.Empty;

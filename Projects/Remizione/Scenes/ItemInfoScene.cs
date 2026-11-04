@@ -220,7 +220,7 @@ namespace Remizione
         public void Show(Item item)
         {
             this.item = item;
-            this.nameText.Color = item.Definition.IsKeyItem ? Colors.Inventory.KeyItem : Colors.Inventory.Item;
+            this.nameText.Color = item.Definition.LabelColor;
             this.nameText.Text = item.Definition.Label;
             this.effectText.Text = item.Definition.EffectDescription;
             this.descriptionText.Text = item.Definition.Description;

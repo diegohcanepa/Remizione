@@ -117,6 +117,23 @@ namespace Remizione
             if (IsKeyItem && LostOnDeath)
                 RaiseValidationError(this, "A key item cannot be lost on death.", nameof(LostOnDeath));
 
+            // LabelColor / OrbLightKind
+            if (IsKeyItem)
+            {
+                LabelColor = Colors.Inventory.KeyItem;
+                OrbLightKind = LightKind.KeyItemOrb;
+            }
+            else if (IsPerishable)
+            {
+                LabelColor = Colors.Inventory.PerishableItem;
+                OrbLightKind = LightKind.PerishableItemOrb;
+            }
+            else
+            {
+                LabelColor = Colors.Inventory.CommonItem;
+                OrbLightKind = LightKind.CommonItemOrb;
+            }
+            
             RefreshLocalizedValues();
         }
 
@@ -231,6 +248,9 @@ namespace Remizione
         // Label
         public string Label { get; private set; } = string.Empty;
 
+        // LabelColor
+        public Color LabelColor { get; }
+
         // LightColor
         public Color? LightColor { get; }
 
@@ -245,6 +265,9 @@ namespace Remizione
 
         // MaxStack
         public const int MaxStack = 5;
+
+        // OrbLightKind
+        public LightKind OrbLightKind { get; }
 
         // PickupSound
         public Sound PickupSound { get; }

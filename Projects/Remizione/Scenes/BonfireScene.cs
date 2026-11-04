@@ -111,7 +111,7 @@ namespace Remizione
         {
             if (InputBindings.Back.IsPressed(PlayerIndex.One))
             {
-                Game.SceneManager.Pop();
+                March();
                 return HandleInputResult.Handled;
             }
 

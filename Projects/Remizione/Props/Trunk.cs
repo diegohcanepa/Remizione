@@ -40,24 +40,6 @@ namespace Remizione
                 LabelKey = "Prop.Trunk";
         }
 
-        // SyncLight
-        private void SyncLight()
-        {
-            if (ItemReward == null)
-            {
-                AttachedLight = null;
-            }
-            else
-            {
-                var lightKind = ItemReward.IsKeyItem ? LightKind.KeyItemOrb : LightKind.CommonItemOrb;
-                this.AttachedLight ??= new("Light", lightKind)
-                {
-                    PivotOrigin = RectanglePoint.Center,
-                };
-                this.lootImage.Color = AttachedLight.Color;
-            }
-        }
-
         #endregion
 
         #region Protected members
@@ -83,8 +65,7 @@ namespace Remizione
                     PivotOrigin = RectanglePoint.Center,
                 };
 
-                var lightKind = ItemReward.IsKeyItem ? LightKind.KeyItemOrb : LightKind.CommonItemOrb;
-                this.AttachedLight.LightKind = lightKind;
+                this.AttachedLight.LightKind = ItemReward.OrbLightKind;
                 this.lootImage.Color = AttachedLight.Color;
             }
 

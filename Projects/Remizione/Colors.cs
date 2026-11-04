@@ -56,9 +56,10 @@ namespace Remizione
         // Inventory
         internal static class Inventory
         {
+            internal static Color CommonItem { get; } = Palette.Terra;
             internal static Color EffectDescription { get; } = MouseCursor.Tooltip;
             internal static Color KeyItem { get; } = Palette.SkyBlue * .7f;
-            internal static Color Item { get; } = Palette.Terra;
+            internal static Color PerishableItem { get; } = new(47, 87, 83);
         }
 
         // MenuItemTextActive

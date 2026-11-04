@@ -8,7 +8,7 @@ namespace Remizione
     /// <summary>
     /// InventoryScene
     /// </summary>
-    public sealed class InventoryScene : Scene, IInputHandler
+    public sealed class InventoryScene : SessionOverlayScene, IInputHandler
     {
         #region Private fields
 
@@ -16,8 +16,9 @@ namespace Remizione
         private bool autoHide;
         private readonly Sprite background = new(Atlases.UI.QuickInventoryBackground) { PivotOrigin = RectanglePoint.LeftBottom, Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom) };
         private readonly Sprite inspectItem = new(Atlases.UI.InspectItem) { PivotOrigin = RectanglePoint.RightBottom, Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -2, -2) };
-        private readonly TextSprite itemLabel;
+        private readonly ItemContainer itemContainer;
         private readonly TextSprite itemEffect;
+        private readonly TextSprite itemLabel;
         private Item? lastSelectedItem;
         private int lastSeenContainerVersion = -1;
         private float selectionHysteresisTimer;
@@ -28,17 +29,16 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public InventoryScene(ItemContainer itemContainer)
-            : base()
+        public InventoryScene(GameSession session)
+            : base(session)
         {
             this.PausePreviousScenes = false;
+            this.itemContainer = session.PlayerData.Inventory;
 
             for (var i = 0; i < slots.Length; i++)
             {
                 slots[i] = new InventorySlot();
             }
-
-            this.ItemContainer = itemContainer;
 
             // Item label
             itemLabel = new(Fonts.CommonOutline)
@@ -57,6 +57,8 @@ namespace Remizione
                 PivotOrigin = RectanglePoint.Bottom,
                 Scale = ScaleInfo.Text.Medium,
             };
+
+            Refresh();
         }
 
         #endregion
@@ -72,11 +74,11 @@ namespace Remizione
                 {
                     Game.SceneManager.Pop();
                 }
-                else if (ItemContainer.Session.InteractionContext.HeldItem == null && GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item grabbedItem)
+                else if (Session.InteractionContext.HeldItem == null && GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item grabbedItem)
                 {
                     if (grabbedItem.Definition.Image != null)
                     {
-                        ItemContainer.Session.InteractionContext.HeldItem = grabbedItem;
+                        Session.InteractionContext.HeldItem = grabbedItem;
                         Sound.Play(SoundNames.Interact);
                         Game.SceneManager.Pop();
                         return true;
@@ -93,7 +95,7 @@ namespace Remizione
                 if (GetItemAt(InputManager.DefaultPlayer.Mouse.VirtualPosition) is Item item)
                 {
                     Sound.Play(SoundNames.Interact);
-                    ItemContainer.Session.Overlays.ShowItemInfo(item);
+                    Session.Overlays.ShowItemInfo(item);
                 }
                 else
                 {
@@ -116,7 +118,7 @@ namespace Remizione
             }
 
             float screenWidth = Screen.NativeWidth;
-            int slotCount = ItemContainer.Count;
+            int slotCount = itemContainer.Count;
             float spacing = 2;
             float slotSize = slots[0].BoundingBox.Width;
 
@@ -126,16 +128,16 @@ namespace Remizione
 
             for (int i = 0; i < ItemContainer.MaximumCapacity; i++)
             {
-                if (i < ItemContainer.Count)
+                if (i < itemContainer.Count)
                 {
                     float x = startingX + (i * (slotSize + spacing)) + (slotSize / 2);
                     slots[i].Position = new Vector2(x, y);
-                    slots[i].Item = ItemContainer[i];
+                    slots[i].Item = itemContainer[i];
                 }
             }
 
             // Actualizar la posición Y del label y descripción basándonos en la posición real fijada para los slots
-            if (ItemContainer.Count > 0)
+            if (itemContainer.Count > 0)
             {
                 itemLabel.Y = slots[0].BoundingBox.Top - 8;
                 itemEffect.Y = slots[0].BoundingBox.Top - 2;
@@ -150,7 +152,7 @@ namespace Remizione
 
             MouseCursor.Tooltip = null;
 
-            for (var i = 0; i < ItemContainer.Count; i++)
+            for (var i = 0; i < itemContainer.Count; i++)
             {
                 slots[i].ResetVisualState();
             }
@@ -168,15 +170,14 @@ namespace Remizione
         {
             base.OnActivate();
 
-            ItemContainer.Session.HUD.BottomMessage.Hide();
-
-            ItemContainer.Session.InteractionContext.HeldItem = null;
-            ItemContainer.Session.InteractionContext.Refresh();
+            Session.HUD.BottomMessage.Hide();
+            Session.InteractionContext.HeldItem = null;
+            Session.InteractionContext.Refresh();
             Reset();
 
-            if (lastSeenContainerVersion != ItemContainer.Version)
+            if (lastSeenContainerVersion != itemContainer.Version)
             {
-                lastSeenContainerVersion = ItemContainer.Version;
+                lastSeenContainerVersion = itemContainer.Version;
                 Refresh();
             }
         }
@@ -199,7 +200,7 @@ namespace Remizione
 
             background.Draw(gameTime);
 
-            for (var i = 0; i < ItemContainer.Count; i++)
+            for (var i = 0; i < itemContainer.Count; i++)
             {
                 slots[i].Draw(gameTime);
             }
@@ -259,7 +260,7 @@ namespace Remizione
                 autoHide = InputManager.DefaultPlayer.Mouse.VirtualPosition.Y >= AutoHideThreshold;
             }
 
-            for (var i = 0; i < ItemContainer.Count; i++)
+            for (var i = 0; i < itemContainer.Count; i++)
             {
                 slots[i].Update(gameTime);
             }
@@ -272,7 +273,7 @@ namespace Remizione
 
                 if (rawSelectedItem != lastSelectedItem)
                 {
-                    if (lastSelectedItem?.Index >= 0 && lastSelectedItem.Index < ItemContainer.Count)
+                    if (lastSelectedItem?.Index >= 0 && lastSelectedItem.Index < itemContainer.Count)
                     {
                         slots[lastSelectedItem.Index].SetSelected(false);
                     }
@@ -281,7 +282,7 @@ namespace Remizione
                     float slotCenterX = slots[currentSlotIndex].BoundingBox.Center.X;
 
                     itemLabel.X = slotCenterX;
-                    itemLabel.Color = rawSelectedItem.Definition.IsKeyItem ? Colors.Inventory.KeyItem : Colors.Inventory.Item;
+                    itemLabel.Color = rawSelectedItem.Definition.LabelColor;
                     itemLabel.Text = rawSelectedItem.Definition.Label;
 
                     itemEffect.X = slotCenterX;
@@ -301,7 +302,7 @@ namespace Remizione
 
                 if (selectionHysteresisTimer >= SelectionHysteresisDuration)
                 {
-                    if (lastSelectedItem.Index >= 0 && lastSelectedItem.Index < ItemContainer.Count)
+                    if (lastSelectedItem.Index >= 0 && lastSelectedItem.Index < itemContainer.Count)
                     {
                         slots[lastSelectedItem.Index].SetSelected(false);
                     }
@@ -321,24 +322,10 @@ namespace Remizione
         // AutoHideThreshold
         public const int AutoHideThreshold = 98;
 
-        // ItemContainer
-        public ItemContainer ItemContainer
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    Refresh();
-                }
-            }
-        }
-
         // GetItemAt
         public Item? GetItemAt(Vector2 position)
         {
-            for (int i = 0; i < ItemContainer.Count; i++)
+            for (int i = 0; i < itemContainer.Count; i++)
             {
                 if (slots[i].Contains(position))
                     return slots[i].Item;

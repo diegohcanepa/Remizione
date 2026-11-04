@@ -27,7 +27,7 @@ namespace Remizione
             this.session = session;
             this.echoScene = new EchoScene(session);
             this.narrationScene = new NarrationScene(session);
-            this.inventoryScene = new InventoryScene(session.PlayerData.Inventory);
+            this.inventoryScene = new InventoryScene(session);
             this.miniMapScene = new MiniMapScene(session);
             this.itemInfoScene = new ItemInfoScene(session);
             this.bonfireScene = new BonfireScene(session);
