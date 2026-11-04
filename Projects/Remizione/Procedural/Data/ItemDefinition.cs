@@ -48,9 +48,6 @@ namespace Remizione
             // CraftWeight
             CraftWeight = element.GetFloat("craftWeight", 0);
 
-            // DeselectOnUse
-            DeselectOnUse = element.GetBool("deselectOnUse", false);
-
             // HPCost
             HPCost = Math.Max(0, element.GetInt32("hpCost", 0));
 
@@ -191,9 +188,6 @@ namespace Remizione
 
         // Description
         public string Description { get; private set; } = string.Empty;
-
-        // DeselectOnUse
-        public bool DeselectOnUse { get; }
 
         // EffectDescription
         public string EffectDescription { get; private set; } = string.Empty;

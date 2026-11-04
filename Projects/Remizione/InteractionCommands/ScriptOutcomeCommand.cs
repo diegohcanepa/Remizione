@@ -64,8 +64,7 @@ namespace Remizione.InteractionCommands
                 return;
             }
 
-            if (player.Session.InteractionContext.HeldItem?.Definition.DeselectOnUse == true)
-                player.Session.InteractionContext.HeldItem = null;
+            player.Session.InteractionContext.HeldItem = null;
 
             if (target.ApproachBehavior != ApproachBehavior.Over)
                 player.FaceTo(target);

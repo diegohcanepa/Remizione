@@ -58,9 +58,6 @@
               "minimum": 0,
               "maximum": 1.0
             },
-            "deselectOnUse": {
-              "type": "boolean"
-            },
             "hardSurfacePenalty": {
               "type": "boolean"
             },
