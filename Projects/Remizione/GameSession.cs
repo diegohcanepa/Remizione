@@ -92,9 +92,9 @@ namespace Remizione
             // Game saved text
             this.gameSavedText = new TextSprite(Fonts.CommonOutline)
             {
-                Color = Colors.Palette.Green,
+                Color = Colors.Palette.Text,
                 PivotOrigin = RectanglePoint.RightTop,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightTop),
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightTop, -2, 0),
                 Scale = ScaleInfo.Text.Large,
                 Text = TextRepository.GetValue("Misc.GameSaved"),
             };
@@ -871,7 +871,6 @@ namespace Remizione
         public Random Random { get; private set; } = new(0);
 
         // RespawnWorld
-        [ScriptMethod]
         public void RespawnWorld()
         {
             unlockManager.Refresh();

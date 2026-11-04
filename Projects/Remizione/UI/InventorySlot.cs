@@ -147,7 +147,7 @@ namespace Remizione
 
                             if (field.PerishState == ItemPerishState.Rotten)
                             {
-                                blinkTween.Start(TweenStyle.Linear, 1, .6f, 600, -1);
+                                blinkTween.Start(TweenStyle.Linear, 1, .8f, 600, -1);
                                 perishStateIcon.Tweens.OpacityTween = blinkTween;
                             }
                         }
