@@ -69,10 +69,10 @@ namespace Remizione
                 throw new InvalidOperationException("Data already loaded.");
 
             CombatBehaviors = Load("CombatBehaviors.json", e => new CombatBehavior(e));
+            Rooms = Load("Rooms.json", e => new RoomDefinition(e));
             Items = Load("Items.json", e => new ItemDefinition(e));
             Actors = Load("Actors.json", e => new ActorDefinition(e));
             Props = Load("Props.json", e => new PropDefinition(e));
-            Rooms = Load("Rooms.json", e => new RoomDefinition(e));
 
             TextRepository.Loaded += TextRepository_Loaded;
 

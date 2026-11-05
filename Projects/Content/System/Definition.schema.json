@@ -11,7 +11,7 @@
     "requiredBonfires": {
       "type": "integer"
     },   
-    "requiredLand": {
+    "requiredRoom": {
       "type": "string"
     },   
     "spawnWeight": {

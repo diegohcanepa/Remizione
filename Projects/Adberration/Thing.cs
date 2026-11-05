@@ -197,7 +197,7 @@ namespace Adberration
         public bool IgnoreCulling { get; set; }
 
         // IsActiveInGameLoop
-        public bool IsActiveInGameLoop => IgnoreCulling || IsInCullingBox || Tweens.IsTweeningPosition || IsMoving;
+        public bool IsActiveInGameLoop => IsMoving || Tweens.IsTweeningPosition || IgnoreCulling || IsInCullingBox;
 
         // IsInCullingBox
         public virtual bool IsInCullingBox

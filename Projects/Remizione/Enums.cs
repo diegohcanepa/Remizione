@@ -212,7 +212,7 @@ namespace Remizione
     public enum UIControlGroupLayoutStyle { Vertically, Horizontally }
 
     // UnlockMode
-    public enum UnlockMode { None, Manual, BonfiresLit, Land }
+    public enum UnlockMode { None, Manual, BonfiresLit, Room }
 
     // UserAction
     public enum UserAction { Discard, Drop }

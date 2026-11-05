@@ -53,7 +53,7 @@ namespace Remizione
                 UnlockMode.None => true,
                 UnlockMode.Manual => false,
                 UnlockMode.BonfiresLit => playerData.Bonfires >= def.RequiredBonfires,
-                UnlockMode.Land => !string.IsNullOrEmpty(def.RequiredLand) && IsUnlocked(def.RequiredLand),
+                UnlockMode.Room => !string.IsNullOrEmpty(def.RequiredRoom) && IsUnlocked(def.RequiredRoom),
                 _ => false
             };
         }

@@ -42,8 +42,10 @@ namespace Remizione
             // RequiredBonfires
             RequiredBonfires = Math.Max(0, element.GetInt32("requiredBonfires", 0));
 
-            // RequiredLand
-            RequiredLand = element.GetString("requiredLand", string.Empty);
+            // RequiredRoom
+            RequiredRoom = element.GetString("requiredRoom", string.Empty);
+            if (!string.IsNullOrWhiteSpace(RequiredRoom) && !GameData.Rooms.Contains(RequiredRoom))
+                RaiseValidationError(this, $"The required room '{RequiredRoom}' is not defined.");
 
             // SpawnWeight
             SpawnWeight = element.GetFloat("spawnWeight", 1);
@@ -119,8 +121,8 @@ namespace Remizione
         // RequiredBonfires
         public int RequiredBonfires { get; }
 
-        // RequiredLand
-        public string RequiredLand { get; }
+        // RequiredRoom
+        public string RequiredRoom { get; }
 
         // SpawnWeight
         public Ratio SpawnWeight { get; }
