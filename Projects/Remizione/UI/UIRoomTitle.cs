@@ -18,7 +18,7 @@ namespace Remizione.UI
         {
             this.labelText = new(Fonts.CommonOutline)
             {
-                Color = Colors.MouseCursor.Tooltip,
+                Color = Colors.Palette.Text,
                 PivotOrigin = RectanglePoint.Top
             };
         }

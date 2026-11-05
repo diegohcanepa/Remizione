@@ -128,7 +128,7 @@ namespace Remizione
             for (int i = 0; i < CulledThings.Count; i++)
             {
                 if (CulledThings[i] is GameThing thing)
-                    thing.DrawHPMeter(gameTime);
+                    thing.DrawMeter(gameTime);
             }
             Game.SpriteBatch.End();
         }

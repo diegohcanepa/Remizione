@@ -44,6 +44,15 @@ namespace Remizione
             internal static Color Fore { get; } = new(164, 60, 60);
         }
 
+        // HPMeterGrace
+        internal static class HPMeterGrace
+        {
+            internal static Color Back { get; } = Palette.SkyBlue;
+            internal static Color Border { get; } = Palette.AlmostBlack;
+            internal static Color Diff { get; } = Palette.SkyBlueLight;
+            internal static Color Fore { get; } = Palette.SkyBlue;
+        }
+
         // HPMeterProp
         internal static class HPMeterProp
         {
@@ -57,7 +66,7 @@ namespace Remizione
         internal static class Inventory
         {
             internal static Color CommonItem { get; } = Palette.Terra;
-            internal static Color EffectDescription { get; } = MouseCursor.Tooltip;
+            internal static Color EffectDescription { get; } = Palette.Text;
             internal static Color KeyItem { get; } = Palette.SkyBlue * .7f;
             internal static Color OrganicItem { get; } = new(47, 87, 83);
         }

@@ -32,7 +32,7 @@ namespace Remizione
             // Title text
             titleText = new(Fonts.CommonOutline)
             {
-                Color = Colors.MouseCursor.Tooltip,
+                Color = Colors.Palette.Text,
                 PivotOrigin = RectanglePoint.Bottom,
                 Scale = ScaleInfo.Text.Huge
             };

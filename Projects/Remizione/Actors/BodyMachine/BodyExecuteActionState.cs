@@ -51,7 +51,7 @@ namespace Remizione
             {
                 if (action.MissChance.Roll())
                 {
-                    Owner.ShowFlyOff(missText, Colors.MouseCursor.Tooltip);
+                    Owner.ShowFlyOff(missText, Colors.Palette.Text);
                 }
                 else
                 {

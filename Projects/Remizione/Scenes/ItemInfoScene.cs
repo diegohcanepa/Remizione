@@ -68,7 +68,7 @@ namespace Remizione
             // Name text
             this.nameText = new(Fonts.Common)
             {
-                Color = Colors.MouseCursor.Tooltip,
+                Color = Colors.Palette.Text,
                 PivotOrigin = RectanglePoint.Top,
                 Position = imageSlot.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 3),
                 Scale = ScaleInfo.Text.Giant,
@@ -89,9 +89,8 @@ namespace Remizione
             // Description
             this.descriptionText = new(Fonts.Common)
             {
-                Color = Colors.Inventory.EffectDescription,
+                Color = Colors.Palette.TextDark,
                 MaximumWidth = 150,
-                Opacity = .7f,
                 PivotOrigin = RectanglePoint.Top,
                 Position = effectText.BoundingBox.GetPoint(RectanglePoint.Bottom, 0, 4),
                 Scale = ScaleInfo.Text.VeryLarge

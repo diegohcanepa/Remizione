@@ -63,9 +63,9 @@ namespace Remizione
             // AmountText
             this.amountText = new(Fonts.CommonOutline)
             {
-                Color = Colors.Palette.Terra,
+                Color = Colors.Palette.Text,
                 PivotOrigin = RectanglePoint.Bottom,
-                Scale = ScaleInfo.Text.Medium
+                Scale = ScaleInfo.Text.Tiny
             };
         }
 

@@ -12,14 +12,15 @@ namespace Remizione
     {
         private const int duration = 2000;
 
+        private readonly TextSprite amountText;
         private readonly ColorTween colorTween = new();
         private int deltaScore;
+        private readonly Sprite icon;
         private bool isInitializing = true;
         private int lastKnownValue;
         private readonly Color titleColor = Colors.Palette.Terra;
         private readonly TextSprite titleText;
         private readonly FloatTween tween = new();
-        private readonly TextSprite valueText;
 
         #region Constructor
 
@@ -32,18 +33,25 @@ namespace Remizione
             {
                 Color = titleColor,
                 PivotOrigin = RectanglePoint.RightTop,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -3, -13),
-                Scale = ScaleInfo.Text.Large,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -3, -15),
+                Scale = ScaleInfo.Text.Medium,
                 Text = Localization.GetValue(PlayerStat.Grace)
             };
 
-            // Value text
-            this.valueText = new(Fonts.CommonOutline)
+            // Icon
+            this.icon = new(Atlases.UI.GraceIcon)
+            {
+                PivotOrigin = RectanglePoint.RightTop,
+                Position = titleText.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -1),
+            };
+
+            // Amount text
+            this.amountText = new(Fonts.CommonOutline)
             {
                 Color = Colors.Palette.Terra,
-                PivotOrigin = RectanglePoint.RightTop,
-                Scale = ScaleInfo.Text.Huge,
-                Position = titleText.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -1)
+                PivotOrigin = RectanglePoint.Right,
+                Scale = ScaleInfo.Text.VeryLarge,
+                Position = icon.BoundingBox.GetPoint(RectanglePoint.Left, -1, 1)
             };
 
             isInitializing = true;
@@ -59,8 +67,9 @@ namespace Remizione
             if (lastKnownValue == 0)
                 return;
 
-            valueText.Draw(gameTime);
+            amountText.Draw(gameTime);
             titleText.Draw(gameTime);
+            icon.Draw(gameTime);
         }
 
         // OnUpdate
@@ -73,7 +82,7 @@ namespace Remizione
                 if (newDeltaScore != deltaScore)
                 {
                     deltaScore = newDeltaScore;
-                    valueText.Text = deltaScore.ToString(CultureInfo.InvariantCulture);
+                    amountText.Text = deltaScore.ToString(CultureInfo.InvariantCulture);
                 }
             }
 
@@ -81,17 +90,23 @@ namespace Remizione
             {
                 if (!isInitializing)
                 {
-                    colorTween.Start(TweenStyle.CubicInOut, titleColor, Colors.Palette.SkyBlue, 1000, 2);
-                    titleText.Tweens.ColorTween = colorTween;
+                    if (Session.PlayerData.Grace > lastKnownValue)
+                    {
+                        colorTween.Start(TweenStyle.CubicInOut, titleColor, Colors.Palette.SkyBlue, 1000, 2);
+                        titleText.Tweens.ColorTween = colorTween;
+                    }
+
                     tween.Start(TweenStyle.Linear, lastKnownValue, Session.PlayerData.Grace, duration);
                 }
 
                 lastKnownValue = Session.PlayerData.Grace;
-                valueText.Text = lastKnownValue.ToString(CultureInfo.InvariantCulture);
+                amountText.Text = lastKnownValue.ToString(CultureInfo.InvariantCulture);
                 isInitializing = false;
             }
 
             titleText.Update(gameTime);
+
+            amountText.Color = titleText.Color;
         }
 
         #endregion
@@ -99,8 +114,8 @@ namespace Remizione
         // Color
         public Color Color
         {
-            get => valueText.Color;
-            set => valueText.Color = value;
+            get => amountText.Color;
+            set => amountText.Color = value;
         }
     }
 }

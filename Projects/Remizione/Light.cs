@@ -84,7 +84,7 @@ namespace Remizione
             switch (LightKind)
             {
                 case LightKind.Beacon:
-                    litTweenDuration = 1000;
+                    litTweenDuration = 2000;
                     unlitTweenDuration = 300;
                     break;
 

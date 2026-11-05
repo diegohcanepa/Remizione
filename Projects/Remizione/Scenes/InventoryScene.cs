@@ -43,7 +43,7 @@ namespace Remizione
             // Item label
             itemLabel = new(Fonts.CommonOutline)
             {
-                Color = Colors.MouseCursor.Tooltip,
+                Color = Colors.Palette.Text,
                 PivotOrigin = RectanglePoint.Bottom,
                 Scale = ScaleInfo.Text.VeryLarge
             };

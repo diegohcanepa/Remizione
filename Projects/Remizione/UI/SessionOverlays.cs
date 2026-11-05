@@ -74,10 +74,10 @@ namespace Remizione
         }
 
         // ShowEcho
-        public void ShowEcho(string text)
+        public void ShowEcho(string text, string? title = null)
         {
             PushScene<EchoScene>(echoScene);
-            echoScene.Show(text);
+            echoScene.Show(text, title);
         }
 
         // ShowEpigraph

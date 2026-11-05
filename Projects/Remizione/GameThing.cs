@@ -22,7 +22,6 @@ namespace Remizione
         private FloatTween? floatingTween;
         private readonly Polygon holePoly = new();
         private Vector2[] hotspotVerticesBuffer = [];
-        private FlatMeter? hpMeter;
         private static readonly Vector2 hurtShakeForce = new(1.5f, 0);
         private Vector2Tween? hurtShakeTween;
         private FloatTween? hurtTween;
@@ -31,6 +30,7 @@ namespace Remizione
         private Vector2 knockbackVelocity;
         private const float KnockbackFriction = .90f;
         private Vector2 lastCheckedPosition;
+        private FlatMeter? hpMeter;
         private PathNode[]? pathNodes;
         private int renderLayerDepth;
         private readonly ShadowSpot shadowSpot;
@@ -375,6 +375,7 @@ namespace Remizione
                 return;
 
             hpMeter ??= CreateHPMeter();
+            hpMeter.ShowAmount = true;
             hpMeter.MaximumValue = MaxHP;
             hpMeter.Value = HP;
         }
@@ -404,6 +405,17 @@ namespace Remizione
         protected virtual bool CanCheckCollisions()
         {
             return CollisionDetection;
+        }
+
+        // CreateGraceMeter
+        protected virtual FlatMeter CreateGraceMeter()
+        {
+            var back = Colors.HPMeterGrace.Back;
+            var border = Colors.HPMeterGrace.Border;
+            var fore = Colors.HPMeterGrace.Fore;
+            var diff = Colors.HPMeterGrace.Diff;
+
+            return new(border, back, fore, diff, new(10, 3), .75f);
         }
 
         // CreateHPMeter
@@ -824,8 +836,8 @@ namespace Remizione
                 return Vector2.Distance(target.RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.LeftBottom), RuntimeHotspot.BoundingRectangleF.GetPoint(RectanglePoint.RightBottom));
         }
 
-        // DrawHPMeter
-        public void DrawHPMeter(GameTime gameTime)
+        // DrawMeter
+        public void DrawMeter(GameTime gameTime)
         {
             if (IsHPMeterVisible)
                 hpMeter?.Draw(gameTime);
@@ -1035,7 +1047,15 @@ namespace Remizione
 
         // GraceCost
         [ScriptProperty]
-        public int GraceCost { get; set; }
+        public int GraceCost
+        {
+            get;
+            set
+            {
+                if (value != field)
+                    field = Math.Max(0, value);
+            }
+        }
 
         // HasLineOfSightTo
         public bool HasLineOfSightTo(GameThing target)

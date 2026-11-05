@@ -1,9 +1,10 @@
 ﻿using Adberration.Scripting;
+using Engendro;
 
 namespace Remizione.Scripting
 {
     // EchoCommand
-    // Arguments: {"Text"} [#lid:Integer] [#literal] [#speaker:GameThing]
+    // Arguments: {"Text"} [#lid:Integer] [#literal] [#sound:Name]
     [ForceAwait]
     internal sealed class EchoCommand : LocalizableCommand
     {
@@ -21,7 +22,17 @@ namespace Remizione.Scripting
         protected override void OnExecute()
         {
             if (Session is GameSession session)
-                session.Overlays.ShowEcho(GetDisplayText());
+            {
+                string? title = null;
+                if (session.InteractionData.Target is { } target)
+                {
+                    title = target.Label;
+                    if (target.GraceCost > 0)
+                        title += $" ({target.GraceCost}{TextRepository.GetValue("Misc.GraceSign")})";
+                }
+
+                session.Overlays.ShowEcho(GetDisplayText(), title);
+            }
         }
 
         // TextClauseIndex

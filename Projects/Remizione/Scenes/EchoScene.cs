@@ -19,6 +19,7 @@ namespace Remizione
         private SoundInstance? speakerSoundInstance;
         private readonly FloatTween textOpacityTween = new();
         private readonly TextSprite textSprite;
+        private readonly TextSprite titleSprite;
 
         #endregion
 
@@ -30,10 +31,18 @@ namespace Remizione
         {
             this.PausePreviousScenes = false;
 
+            // Title
+            this.titleSprite = new(Fonts.Common)
+            {
+                Color = Colors.Palette.Text,
+                PivotOrigin = RectanglePoint.Bottom,
+                Scale = ScaleInfo.Text.ExtraLarge
+            };
+
             // Text sprite
             this.textSprite = new(Fonts.Common)
             {
-                Color = Colors.Palette.Terra,
+                Color = Colors.Palette.TextDark,
                 MaximumWidth = (int)(Screen.NativeWidth * .7f),
                 PivotOrigin = RectanglePoint.Top,
                 Position = background.BoundingBox.GetPoint(RectanglePoint.Top, 0, 20),
@@ -98,6 +107,7 @@ namespace Remizione
             Game.SpriteBatch.End();
 
             Game.SpriteBatch.Begin(Game.Camera);
+            titleSprite.Draw(gameTime);
             textSprite.Draw(gameTime);
             Game.SpriteBatch.End();
         }
@@ -121,6 +131,7 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             textSprite.Update(gameTime);
+            titleSprite.Opacity = textSprite.Opacity;
             background.Update(gameTime);
         }
 
@@ -130,10 +141,12 @@ namespace Remizione
         public bool CanClose { get; private set; }
 
         // Show
-        public void Show(string text)
+        public void Show(string text, string? title = null)
         {
             this.textSprite.Text = text;
-            this.textSprite.Color = Colors.MouseCursor.Tooltip;
+            this.titleSprite.Opacity = 0;
+            this.titleSprite.Text = title;
+            this.titleSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.Top);
 
             CanClose = false;
 

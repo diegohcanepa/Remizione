@@ -45,7 +45,7 @@ namespace Remizione
             // Text
             this.text = new TextSprite(Fonts.CommonOutline)
             {
-                Color = Colors.MouseCursor.Tooltip,
+                Color = Colors.Palette.Text,
                 MaximumWidth = maxWidth,
                 PivotOrigin = RectanglePoint.LeftTop,
             };
