@@ -646,7 +646,7 @@ namespace Remizione
                 }
 
                 if (item.Definition.ItemKind == ItemKind.Organic)
-                    item.ApplyUsage(null);
+                    item.Perish();
             }
 
             if (CanSave())
@@ -662,7 +662,7 @@ namespace Remizione
                 var item = PlayerData.Inventory[i];
 
                 if (item.Definition.ItemKind == ItemKind.Organic)
-                    item.ApplyUsage(null);
+                    item.Perish();
             }
 
             Save();
@@ -871,6 +871,7 @@ namespace Remizione
         public Random Random { get; private set; } = new(0);
 
         // RespawnWorld
+        [ScriptMethod]
         public void RespawnWorld()
         {
             unlockManager.Refresh();

@@ -103,7 +103,7 @@ namespace Remizione
             // 2. Si no tiene probabilidad de rotura pero es un consumible estándar (ej. poción)
             else if (Definition.IsDepletable)
             {
-                Perish();
+                Amount--;
                 return ApplyUsageOutcome.Consumed;
             }
 

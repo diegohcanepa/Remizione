@@ -9,7 +9,7 @@ namespace Remizione
     /// <summary>
     /// Bonfire
     /// </summary>
-    public class Bonfire : Prop, ISafeZone
+    public class Bonfire : Prop
     {
         private readonly AnimatedSprite flame;
         private readonly FloatTween globalOpacityTween = new();
@@ -55,19 +55,6 @@ namespace Remizione
 
             AttachedLightPosition = new(10, 4);
         }
-
-        #endregion
-
-        #region ISafeZone interface
-
-        // Center
-        Vector2 ISafeZone.Center => BoundingBox.Center;
-
-        // IsEnabled
-        bool ISafeZone.IsEnabled => IsLit;
-
-        // Radius
-        float ISafeZone.Radius => 50;
 
         #endregion
 

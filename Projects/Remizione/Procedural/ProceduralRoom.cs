@@ -16,7 +16,6 @@ namespace Remizione
         #region Private fields
 
         private readonly List<Vector2> occupiedPositions = [];
-        private readonly List<(Vector2 Center, float Radius)> safeZones = [];
         private readonly CounterBank spawnCounter = new();
 
         #endregion
@@ -123,13 +122,11 @@ namespace Remizione
         // IsPositionOccupied
         private bool IsPositionOccupied(Vector2 position, float minDistance = 20)
         {
-            // 1. Validar si cae dentro de alguna Zona Segura (Ej: área de la fogata)
-            for (int i = 0; i < safeZones.Count; i++)
-            {
-                var zone = safeZones[i];
-                if (Geometry.IsPointInEllipse(position, zone.Center, zone.Radius, zone.Radius))
-                    return true;
-            }
+            // 1. Validar si cae dentro del viewport
+            var rect = Session.Camera.VisibleBox;
+            rect.Inflate(15, 15);
+            if (rect.Contains(position))
+                return true;
 
             // 2. Validar ocupación normal de otros Actores/Props
             float minDistanceSq = minDistance * minDistance;
@@ -338,12 +335,6 @@ namespace Remizione
         // Populate
         public void Populate()
         {
-            safeZones.Clear();
-            foreach (var safeZone in Children.OfType<ISafeZone>())
-            {
-                safeZones.Add((safeZone.Center, safeZone.Radius));
-            }
-
             spawnCounter.Clear();
             occupiedPositions.Clear();
             SpawnProps();

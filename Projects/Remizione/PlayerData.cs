@@ -1,4 +1,6 @@
-﻿namespace Remizione
+﻿using System;
+
+namespace Remizione
 {
     /// <summary>
     /// PlayerData
@@ -15,7 +17,15 @@
         public int Bonfires { get; set; }
 
         // Grace
-        public int Grace { get; set; }
+        public int Grace
+        {
+            get;
+            set
+            {
+                if (value != field)
+                    field = Math.Max(0, value);
+            }
+        }
 
         // Inventory
         public ItemContainer Inventory { get; }
