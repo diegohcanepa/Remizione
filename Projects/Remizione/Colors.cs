@@ -44,15 +44,6 @@ namespace Remizione
             internal static Color Fore { get; } = new(164, 60, 60);
         }
 
-        // HPMeterGrace
-        internal static class HPMeterGrace
-        {
-            internal static Color Back { get; } = Palette.SkyBlue;
-            internal static Color Border { get; } = Palette.AlmostBlack;
-            internal static Color Diff { get; } = Palette.SkyBlueLight;
-            internal static Color Fore { get; } = Palette.SkyBlue;
-        }
-
         // HPMeterProp
         internal static class HPMeterProp
         {
@@ -126,6 +117,7 @@ namespace Remizione
             internal static Color RedBloody { get; } = new(155, 56, 50);
             internal static Color SkyBlue { get; } = new(79, 164, 184);
             internal static Color SkyBlueLight { get; } = new(76, 104, 133);
+            internal static Color SteelBlue { get; } = new(58, 63, 94);
             internal static Color TerraLight { get; } = new(189, 106, 98);
             internal static Color Terra { get; } = new(143, 77, 87);
             internal static Color TerraDark { get; } = new(82, 51, 63);

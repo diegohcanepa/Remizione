@@ -74,10 +74,10 @@ namespace Remizione
         }
 
         // ShowEcho
-        public void ShowEcho(string text, string? title = null)
+        public void ShowEcho(GameThing target, string displayText)
         {
             PushScene<EchoScene>(echoScene);
-            echoScene.Show(text, title);
+            echoScene.Show(target, displayText);
         }
 
         // ShowEpigraph

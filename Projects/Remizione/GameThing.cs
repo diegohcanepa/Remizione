@@ -407,17 +407,6 @@ namespace Remizione
             return CollisionDetection;
         }
 
-        // CreateGraceMeter
-        protected virtual FlatMeter CreateGraceMeter()
-        {
-            var back = Colors.HPMeterGrace.Back;
-            var border = Colors.HPMeterGrace.Border;
-            var fore = Colors.HPMeterGrace.Fore;
-            var diff = Colors.HPMeterGrace.Diff;
-
-            return new(border, back, fore, diff, new(10, 3), .75f);
-        }
-
         // CreateHPMeter
         protected virtual FlatMeter CreateHPMeter()
         {

@@ -21,18 +21,8 @@ namespace Remizione.Scripting
         // OnExecute
         protected override void OnExecute()
         {
-            if (Session is GameSession session)
-            {
-                string? title = null;
-                if (session.InteractionData.Target is { } target)
-                {
-                    title = target.Label;
-                    if (target.GraceCost > 0)
-                        title += $" ({target.GraceCost}{TextRepository.GetValue("Misc.GraceSign")})";
-                }
-
-                session.Overlays.ShowEcho(GetDisplayText(), title);
-            }
+            if (Session is GameSession session && session.InteractionData.Target is { } target)
+                session.Overlays.ShowEcho(target, GetDisplayText());
         }
 
         // TextClauseIndex

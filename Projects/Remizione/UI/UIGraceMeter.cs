@@ -18,7 +18,7 @@ namespace Remizione
         private readonly Sprite icon;
         private bool isInitializing = true;
         private int lastKnownValue;
-        private readonly Color titleColor = Colors.Palette.Terra;
+        private readonly Color titleColor = Colors.Palette.SteelBlue;
         private readonly TextSprite titleText;
         private readonly FloatTween tween = new();
 
@@ -48,7 +48,7 @@ namespace Remizione
             // Amount text
             this.amountText = new(Fonts.CommonOutline)
             {
-                Color = Colors.Palette.Terra,
+                Color = Colors.Palette.SteelBlue,
                 PivotOrigin = RectanglePoint.Right,
                 Scale = ScaleInfo.Text.VeryLarge,
                 Position = icon.BoundingBox.GetPoint(RectanglePoint.Left, -1, 1)
@@ -64,11 +64,14 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (lastKnownValue == 0)
-                return;
+            //if (lastKnownValue == 0)
+              //  return;
 
             amountText.Draw(gameTime);
-            titleText.Draw(gameTime);
+
+            if (tween.IsRunning)
+                titleText.Draw(gameTime);
+
             icon.Draw(gameTime);
         }
 

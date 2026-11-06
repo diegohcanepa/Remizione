@@ -625,6 +625,14 @@ namespace Remizione
 
         #endregion
 
+        // ApplyGraceCost
+        [ScriptMethod]
+        public void ApplyGraceCost()
+        {
+            if (OutcomeTarget?.GraceCost > 0)
+                PlayerData.Grace -= OutcomeTarget.GraceCost;
+        }
+
         // ApplyDeathPenalty
         [ScriptMethod]
         public void ApplyDeathPenalty()

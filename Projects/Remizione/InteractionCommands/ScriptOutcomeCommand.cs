@@ -51,7 +51,10 @@ namespace Remizione.InteractionCommands
                     if (target.ApproachBehavior != ApproachBehavior.Over)
                         player.FaceTo(target);
 
-                    target.Session.HUD.Message.Show($"{Localization.GetValue(MessageKind.NotEnoughGrace)} ({target.GraceCost}{TextRepository.GetValue("Misc.GraceSign")}).");
+                    target.Session.HUD.Message.Show(MessageKind.NotEnoughGrace, null);
+
+                    player.Session.InteractionContext.HeldItem = null;
+
                     return;
                 }
             }
@@ -68,8 +71,6 @@ namespace Remizione.InteractionCommands
 
             if (target.ApproachBehavior != ApproachBehavior.Over)
                 player.FaceTo(target);
-
-            player.Session.PlayerData.Grace -= target.GraceCost;
 
             player.Session.BeginOutcome(resolvedScript, target);
         }

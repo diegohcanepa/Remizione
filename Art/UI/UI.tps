@@ -408,6 +408,7 @@
             <key type="filename">MouseCursors-assets/MouseCursorLeftIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorTargetIcon.png</key>
             <key type="filename">UI-assets/ProhibitionIcon.png</key>
+            <key type="filename">UIIcons-assets/GraceIcon.png</key>
             <key type="filename">UIIcons-assets/GutIcon.png</key>
             <key type="filename">UIIcons-assets/StoneIcon.png</key>
             <struct type="IndividualSpriteSettings">
