@@ -53,7 +53,7 @@ namespace Remizione
             : base(game, Path.Combine("Content", ContentFolder.System.ToString(), "ScriptLibrary.esl"), slotNumber)
         {
             this.Game = game;
-            this.Environment = new Environment();
+            this.Environment = new RoomEnvironment(this);
             this.InteractionContext = new(this);
             this.InteractionData = new();
             this.PlayerData = new(this);
@@ -379,9 +379,9 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(DisplayHPMeter)]?.Value is string displayHPMeterValue)
                 DisplayHPMeter = XmlConvert.ToBoolean(displayHPMeterValue);
 
-            // Grace
-            if (sessionNode.Attributes[nameof(PlayerData.Grace)]?.Value is string graceValue)
-                PlayerData.Grace = XmlConvert.ToInt32(graceValue);
+            // Ashes
+            if (sessionNode.Attributes[nameof(PlayerData.Ashes)]?.Value is string ashesValue)
+                PlayerData.Ashes = XmlConvert.ToInt32(ashesValue);
 
             // Inventory
             if (sessionNode.Attributes[nameof(PlayerData.Inventory)]?.Value is string inventoryValue)
@@ -468,7 +468,7 @@ namespace Remizione
         protected override void OnStarted()
         {
             unlockManager.Refresh();
-            
+
             if (!PlayerData.IsSafe)
             {
                 ApplyDeathPenalty();
@@ -577,8 +577,8 @@ namespace Remizione
             // DisplayHPMeter
             output.WriteAttributeString(nameof(DisplayHPMeter), XmlConvert.ToString(DisplayHPMeter));
 
-            // Grace
-            output.WriteAttributeString(nameof(PlayerData.Grace), XmlConvert.ToString(PlayerData.Grace));
+            // Ashes
+            output.WriteAttributeString(nameof(PlayerData.Ashes), XmlConvert.ToString(PlayerData.Ashes));
 
             // Inventory
             output.WriteAttributeString(nameof(PlayerData.Inventory), PlayerData.Inventory.Serialize());
@@ -625,19 +625,19 @@ namespace Remizione
 
         #endregion
 
-        // ApplyGraceCost
+        // ApplyAshCost
         [ScriptMethod]
-        public void ApplyGraceCost()
+        public void ApplyAshCost()
         {
-            if (OutcomeTarget?.GraceCost > 0)
-                PlayerData.Grace -= OutcomeTarget.GraceCost;
+            if (OutcomeTarget?.AshCost > 0)
+                PlayerData.Ashes -= OutcomeTarget.AshCost;
         }
 
         // ApplyDeathPenalty
         [ScriptMethod]
         public void ApplyDeathPenalty()
         {
-            PlayerData.Grace = 0;
+            PlayerData.Ashes = 0;
             Player?.HP = Player.MaxHP / 2;
 
             for (var i = PlayerData.Inventory.Count - 1; i >= 0; i--)
@@ -715,7 +715,7 @@ namespace Remizione
         public bool EnoughMaterials => PlayerData.Inventory.Find(ItemNames.Material) is Item item && item.Amount >= 5;
 
         // Environment
-        public Environment Environment { get; }
+        public RoomEnvironment Environment { get; }
 
         // FindProceduralThing
         public GameThing? FindProceduralThing(string name)

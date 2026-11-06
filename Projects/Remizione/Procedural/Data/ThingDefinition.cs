@@ -23,8 +23,8 @@ namespace Remizione
             // BaseDropChance
             BaseDropChance = MathF.Max(0, element.GetFloat("baseDropChance", .5f));
 
-            // GraceReward
-            GraceReward = element.GetInt32("graceReward", 0);
+            // AshReward
+            AshReward = element.GetInt32("ashReward", 0);
 
             // HP
             HP = element.GetInt32("hp", 0);
@@ -72,6 +72,9 @@ namespace Remizione
 
         #endregion
 
+        // AshReward
+        public int AshReward { get; }
+
         // AssertScriptDeclaration
         public void AssertScriptDeclaration(GameSession session)
         {
@@ -84,9 +87,6 @@ namespace Remizione
 
         // Effects
         public ReadOnlyCollection<EffectDescriptor> Effects { get; }
-
-        // GraceReward
-        public int GraceReward { get; }
 
         // HP
         public int HP { get; }

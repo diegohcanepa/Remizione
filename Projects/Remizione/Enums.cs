@@ -54,9 +54,6 @@ namespace Remizione
     // Difficulty
     public enum Difficulty { Easy, Normal, Hard }
 
-    // DustParticleKind
-    public enum DustParticleKind { None, Dust, Ash }
-
     // EffectContext
     public enum EffectContext { Collect, Contact, Attack, RemainsContact, RunModifier, Update, Use, ProjectileHit, Status, ApplyStatus }
 
@@ -138,7 +135,7 @@ namespace Remizione
     }
 
     // MessageKind
-    public enum MessageKind { AreaNotSafe, CannotPlaceItem, InventoryFull, ItemBroken, ItemCrafted, OutOfReach, OutOfSight, StackFull, NotEnoughGrace }
+    public enum MessageKind { AreaNotSafe, CannotPlaceItem, InventoryFull, ItemBroken, ItemCrafted, OutOfReach, OutOfSight, StackFull, NotEnoughAshes }
 
     // MeterColor
     public enum MeterColor { Green, Orange, Purple, SkyBlue, White }
@@ -161,7 +158,7 @@ namespace Remizione
     public enum PlayerNumber { None = -1, One = 0, Two = 1, Three = 2, Four = 3 }
 
     // PlayerStat
-    public enum PlayerStat { Grace }
+    public enum PlayerStat { Ashes }
 
     // PositioningMode
     public enum PositioningMode

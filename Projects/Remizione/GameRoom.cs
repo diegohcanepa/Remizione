@@ -19,8 +19,6 @@ namespace Remizione
 
         private Color brightnessColor;
         private int currentDrawIndex;
-        private static DustEmitter dustEmitter = null!;
-        private static FireflyEmitter fireflyEmitter = null!;
         private RenderTarget2D? lightMapTarget;
         private readonly List<Light> lights = [];
         private readonly List<ILightSource> lightSources = [];
@@ -49,10 +47,6 @@ namespace Remizione
             this.TriggerAreas = new RoomAreaReadOnlyCollection<TriggerArea>(triggerAreas);
             this.WalkAreas = new RoomAreaReadOnlyCollection<WalkArea>(walkAreas);
             this.Walls = new(walls);
-
-            dustEmitter ??= new DustEmitter(session, 6, 1000, 35);
-            fireflyEmitter ??= new FireflyEmitter(session, 1, 500, 20);
-
             this.Label = TextRepository.GetValue($"Room.{Name}");
         }
 
@@ -89,36 +83,14 @@ namespace Remizione
 
 #endif
 
-        // DrawDustParticles
-        private void DrawDustParticles(GameTime gameTime)
-        {
-            if (dustEmitter != null)
-            {
-                Game.SpriteBatch.Begin(Session.Camera, SamplerState.PointClamp, BlendState.AlphaBlend, null);
-                dustEmitter.Draw(gameTime);
-                Game.SpriteBatch.End();
-            }
-        }
-
         // DrawEnvironmentParticles
         private void DrawEnvironmentParticles(GameTime gameTime)
         {
-            if (DustParticleKind != DustParticleKind.None)
-                DrawDustParticles(gameTime);
+            if (AllowAshParticles)
+                Session.Environment.DrawAshParticles(gameTime);
 
             if (AllowFireflyParticles)
-                DrawFireflyParticles(gameTime);
-        }
-
-        // DrawFireflyParticles
-        private void DrawFireflyParticles(GameTime gameTime)
-        {
-            if (fireflyEmitter != null)
-            {
-                Game.SpriteBatch.Begin(Session.Camera, SamplerState.PointClamp, BlendState.AlphaBlend, null);
-                fireflyEmitter.Draw(gameTime);
-                Game.SpriteBatch.End();
-            }
+                Session.Environment.DrawFireflyParticles(gameTime);
         }
 
         // DrawMeters
@@ -207,7 +179,7 @@ namespace Remizione
             }
 
             if (AllowFireflyParticles)
-                DrawFireflyParticles(gameTime);
+                Session.Environment.DrawFireflyParticles(gameTime);
 
             Game.GraphicsDevice.SetRenderTarget(previousRenderTarget);
         }
@@ -275,20 +247,6 @@ namespace Remizione
             // Follow player
             if (Session.Player != null && Session.Player.IsInCurrentRoom && FollowPlayer)
                 Session.Camera.Follow(Session.Player, true);
-
-            if (DustParticleKind != DustParticleKind.None)
-                dustEmitter?.Activate();
-
-            if (AllowFireflyParticles)
-                fireflyEmitter?.Activate();
-        }
-
-        // OnDeactivate
-        protected override void OnDeactivate()
-        {
-            base.OnDeactivate();
-            dustEmitter?.Deactivate();
-            fireflyEmitter?.Deactivate();
         }
 
         // OnDraw
@@ -396,12 +354,12 @@ namespace Remizione
                 playerLight.Update(gameTime);
 
             // Dust particles
-            if (DustParticleKind != DustParticleKind.None)
-                dustEmitter?.Update(gameTime);
+            if (AllowAshParticles)
+                Session.Environment.UpdateAshParticles(gameTime);
 
             // Firefly particles
             if (AllowFireflyParticles)
-                fireflyEmitter?.Update(gameTime);
+                Session.Environment.UpdateFireflyParticles(gameTime);
 
             // FlOffs
             for (var i = 0; i < Session.ObjectPools.FlyOffs.InUse.Count; i++)
@@ -451,6 +409,10 @@ namespace Remizione
             return result;
         }
 
+        // AllowAshParticles
+        [ScriptProperty]
+        public bool AllowAshParticles { get; set; } = true;
+
         // AllowFireflyParticles
         [ScriptProperty]
         public bool AllowFireflyParticles { get; set; }
@@ -479,10 +441,6 @@ namespace Remizione
 
         // ControlMouseCursor
         public virtual bool ControlMouseCursor => false;
-
-        // DustParticleKind
-        [ScriptProperty]
-        public DustParticleKind DustParticleKind { get; set; }
 
         // FollowPlayer
         public bool FollowPlayer { get; set; } = true;

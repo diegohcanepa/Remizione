@@ -4,7 +4,7 @@
     {
       "name": "EnviousEye",
       "baseDropChance": 0.3,
-      "graceReward": 5,
+      "ashReward": 5,
       "hp": 2,
       "unlockMode": "BonfiresLit",
       "requiredBonfires": 1,
@@ -29,7 +29,7 @@
     },
     {
       "name": "PenitentA",
-      "graceReward": 5,
+      "ashReward": 5,
       "hp": 6
     }    
   ]

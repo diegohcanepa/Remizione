@@ -46,12 +46,12 @@ namespace Remizione.InteractionCommands
 
             if (player.Session.InteractionContext.HeldItem != null || verb == Verb.Use)
             {
-                if (target.GraceCost > player.Session.PlayerData.Grace)
+                if (target.AshCost > player.Session.PlayerData.Ashes)
                 {
                     if (target.ApproachBehavior != ApproachBehavior.Over)
                         player.FaceTo(target);
 
-                    target.Session.HUD.Message.Show(MessageKind.NotEnoughGrace, null);
+                    target.Session.HUD.Message.Show(MessageKind.NotEnoughAshes, null);
 
                     player.Session.InteractionContext.HeldItem = null;
 

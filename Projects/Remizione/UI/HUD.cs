@@ -13,7 +13,7 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly UIGraceMeter graceScore;
+        private readonly UIAshMeter ashMeter;
         private readonly UIStatuses statuses;
 
         #endregion
@@ -29,7 +29,7 @@ namespace Remizione
             this.DestinationMark = new(session);
             this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 10));
             this.BottomMessage = new(RectanglePoint.Bottom, Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -5));
-            this.graceScore = new(session);
+            this.ashMeter = new(session);
             this.statuses = new(session);
         }
 
@@ -43,7 +43,7 @@ namespace Remizione
             Game.SpriteBatch.Begin(Game.Camera);
             if (Session.DisplayHPMeter)
                 HeartMeter.Draw(gameTime);
-            graceScore.Draw(gameTime);
+            ashMeter.Draw(gameTime);
             statuses.Draw(gameTime);
             Game.SpriteBatch.End();
 
@@ -62,7 +62,7 @@ namespace Remizione
             HeartMeter.Update(gameTime);
             Message.Update(gameTime);
             BottomMessage.Update(gameTime);
-            graceScore.Update(gameTime);
+            ashMeter.Update(gameTime);
             statuses.Update(gameTime);
             DestinationMark.Update(gameTime);
             RoomTitle.Update(gameTime);

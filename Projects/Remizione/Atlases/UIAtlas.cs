@@ -24,7 +24,6 @@ namespace Remizione
             DialogOptionBullet = this[nameof(DialogOptionBullet)];
             EchoBackground = this[nameof(EchoBackground)];
             FakeItem = this[nameof(FakeItem)];
-            GraceIcon = this[nameof(GraceIcon)];
             GutIcon = this[nameof(GutIcon)];
             HeartIcon = this[nameof(HeartIcon)];
             HeartMeterContainer = this[nameof(HeartMeterContainer)];
@@ -85,9 +84,6 @@ namespace Remizione
 
         // FakeItem
         public AtlasImage FakeItem { get; }
-
-        // GraceIcon
-        public AtlasImage GraceIcon { get; }
 
         // GutIcon
         public AtlasImage GutIcon { get; }

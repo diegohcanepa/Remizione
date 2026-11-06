@@ -28,7 +28,7 @@ namespace Remizione
         #endregion
 
         // DefaultBurstAmount
-        public const int DefaultBurstAmount = 15;
+        public const int DefaultBurstAmount = 35;
 
         // DefaultBurstInterval
         public const int DefaultBurstInterval = 1000;

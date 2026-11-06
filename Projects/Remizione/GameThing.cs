@@ -627,6 +627,18 @@ namespace Remizione
         [ScriptProperty]
         public ApproachBehavior ApproachBehavior { get; set; }
 
+        // AshCost
+        [ScriptProperty]
+        public int AshCost
+        {
+            get;
+            set
+            {
+                if (value != field)
+                    field = Math.Max(0, value);
+            }
+        }
+
         // AttachedLight
         public Light? AttachedLight { get; set; }
 
@@ -767,12 +779,11 @@ namespace Remizione
 
             if (!IsPlayer)
             {
-                if (Definition?.GraceReward > 0)
+                if (Definition?.AshReward > 0)
                 {
-                    Sound.Play(SoundNames.GraceGain);
-                    Session.PlayerData.Grace += Definition.GraceReward;
-                    var text = $"+{Definition.GraceReward} {Localization.GetValue(PlayerStat.Grace)}";
-                    Session.ObjectPools.FlyOffs.Get()?.ShowText(GetOverheadPosition(), text, Colors.Palette.Grace, ScaleInfo.Text.Medium.X, 2000);
+                    Session.PlayerData.Ashes += Definition.AshReward;
+                    var text = $"+{Definition.AshReward} {Localization.GetValue(PlayerStat.Ashes)}";
+                    Session.ObjectPools.FlyOffs.Get()?.ShowText(GetOverheadPosition(), text, Colors.Palette.Text, ScaleInfo.Text.Medium.X, 2000);
                 }
 
                 DropLoot();
@@ -1032,18 +1043,6 @@ namespace Remizione
 
             // Fallback: si el punto exacto no es caminable (ej. hay una pared detrás al retroceder), busca el punto libre más próximo.
             return walkArea.GetWalkablePoint(candidatePosition);
-        }
-
-        // GraceCost
-        [ScriptProperty]
-        public int GraceCost
-        {
-            get;
-            set
-            {
-                if (value != field)
-                    field = Math.Max(0, value);
-            }
         }
 
         // HasLineOfSightTo

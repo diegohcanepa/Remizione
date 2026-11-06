@@ -13,11 +13,8 @@ namespace Remizione
             Inventory = new(session);
         }
 
-        // Bonfires
-        public int Bonfires { get; set; }
-
-        // Grace
-        public int Grace
+        // Ashes
+        public int Ashes
         {
             get;
             set
@@ -26,6 +23,9 @@ namespace Remizione
                     field = Math.Max(0, value);
             }
         }
+
+        // Bonfires
+        public int Bonfires { get; set; }
 
         // Inventory
         public ItemContainer Inventory { get; }

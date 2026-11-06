@@ -22,7 +22,6 @@
         internal const string GutsLarge = nameof(GutsLarge);
         internal const string GutsMedium = nameof(GutsMedium);
         internal const string GutsSmall = nameof(GutsSmall);
-        internal const string GraceGain = nameof(GraceGain);
         internal const string Interact = nameof(Interact);
         internal const string ItemAdd = nameof(ItemAdd);
         internal const string ItemBreak = nameof(ItemBreak);

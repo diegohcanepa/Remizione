@@ -30,7 +30,6 @@ namespace Remizione
 
             this.LightingSystem = true;
             this.UnloadMode = UnloadMode.Manual;
-            this.DustParticleKind = DustParticleKind.Ash;
             //this.Zoom = 1.1f;
         }
 

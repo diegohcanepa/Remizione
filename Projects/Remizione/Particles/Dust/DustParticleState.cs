@@ -9,14 +9,10 @@ namespace Remizione
     /// </summary>
     public sealed class DustParticleState : ParticleState
     {
-        private readonly GameSession session;
-
         // Constructor
-        public DustParticleState(GameSession session)
+        public DustParticleState()
             : base()
         {
-            this.session = session;
-
             AddImages(Atlases.Environment.DustParticles);
         }
 
@@ -24,19 +20,7 @@ namespace Remizione
         public override Vector2 Acceleration => Vector2.One;
 
         // Color
-        public override Color Color
-        {
-            get
-            {
-                if (session.Room != null)
-                {
-                    if (session.Room.DustParticleKind == DustParticleKind.Ash)
-                        return Color.Black;
-                }
-
-                return base.Color;
-            }
-        }
+        public override Color Color => Color.Black;
 
         // Gravity
         public override Vector2 Gravity => Vector2.Zero;

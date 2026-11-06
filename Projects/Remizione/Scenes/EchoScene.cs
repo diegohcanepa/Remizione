@@ -5,7 +5,6 @@ using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Remizione.Scripting;
-using System.Globalization;
 
 namespace Remizione
 {
@@ -17,8 +16,6 @@ namespace Remizione
         #region Private fields
 
         private readonly Sprite background = new(Atlases.UI.EchoBackground) { PivotOrigin = RectanglePoint.LeftBottom, Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom) };
-        private readonly TextSprite graceAmountText;
-        private readonly Sprite graceIcon;
         private SoundInstance? speakerSoundInstance;
         private readonly FloatTween textOpacityTween = new();
         private readonly TextSprite textSprite;
@@ -49,21 +46,6 @@ namespace Remizione
                 MaximumWidth = (int)(Screen.NativeWidth * .7f),
                 PivotOrigin = RectanglePoint.Top,
                 Position = background.BoundingBox.GetPoint(RectanglePoint.Top, 0, 20),
-                Scale = ScaleInfo.Text.ExtraLarge
-            };
-
-            // Grace icon
-            this.graceIcon = new(Atlases.UI.GraceIcon)
-            {
-                PivotOrigin = RectanglePoint.Left,
-                Scale = ScaleInfo.UIElement.Medium
-            };
-
-            // Grace amount text
-            this.graceAmountText = new(Fonts.Common)
-            {
-                Color = Colors.Palette.SteelBlue,
-                PivotOrigin = RectanglePoint.Bottom,
                 Scale = ScaleInfo.Text.ExtraLarge
             };
         }
@@ -126,13 +108,6 @@ namespace Remizione
 
             Game.SpriteBatch.Begin(Game.Camera);
             titleSprite.Draw(gameTime);
-
-            if (!graceAmountText.IsEmpty)
-            {
-                graceIcon.Draw(gameTime);
-                graceAmountText.Draw(gameTime);
-            }
-
             textSprite.Draw(gameTime);
             Game.SpriteBatch.End();
         }
@@ -157,8 +132,6 @@ namespace Remizione
         {
             textSprite.Update(gameTime);
             titleSprite.Opacity = textSprite.Opacity;
-            graceAmountText.Opacity = textSprite.Opacity;
-            graceIcon.Opacity = textSprite.Opacity;
             background.Update(gameTime);
         }
 
@@ -177,17 +150,6 @@ namespace Remizione
 
             textOpacityTween.Start(TweenStyle.CubicIn, 0, 1, 500);
             textSprite.Tweens.OpacityTween = textOpacityTween;
-
-            if (target.GraceCost > 0)
-            {
-                graceIcon.Position = titleSprite.BoundingBox.GetPoint(RectanglePoint.Right, 5, -1);
-                graceAmountText.Position = titleSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom, 8 + graceIcon.BoundingBox.Width, 0);
-                graceAmountText.Text = target.GraceCost.ToString(CultureInfo.InvariantCulture);
-            }
-            else
-            {
-                graceAmountText.Clear();
-            }
 
             CanClose = false;
         }
