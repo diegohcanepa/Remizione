@@ -23,7 +23,7 @@
           "type": "object",
           "properties": {
             "faction": {
-              "$ref": "enums.schema.json#/$defs/Faction"
+              "$ref": "./enums.schema.json#/$defs/Faction"
             },
             "minPackSize": {
               "type": "integer",

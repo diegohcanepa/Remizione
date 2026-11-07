@@ -17,7 +17,7 @@ namespace Remizione
         public RoomEnvironment(GameSession session)
         {
             this.session = session;
-            this.ashEmitter = new DustEmitter(session, 6, 1000, 35);
+            this.ashEmitter = new DustEmitter(session.Camera, 6, 1000, 35);
             this.fireflyEmitter = new FireflyEmitter(session, 1, 500, 20);
 
             ashEmitter.Activate();

@@ -1,9 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "Entity.schema.json",
+  "type": "object",
   "allOf": [
     {
-      "$ref": "Definition.schema.json"
+      "$ref": "./Definition.schema.json"
     },
     {
       "type": "object",
@@ -12,14 +13,14 @@
           "type": "array",
           "uniqueItems": true,
           "items": {
-            "$ref": "enums.schema.json#/$defs/Tag"
+            "$ref": "./enums.schema.json#/$defs/Tag"
           }
         },
         "tags": {
           "type": "array",
           "uniqueItems": true,
           "items": {
-            "$ref": "enums.schema.json#/$defs/Tag"
+            "$ref": "./enums.schema.json#/$defs/Tag"
           }
         }
       }

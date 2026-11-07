@@ -42,7 +42,7 @@ namespace Remizione
             {
                 Color = Colors.Palette.Terra,
                 PivotOrigin = RectanglePoint.RightTop,
-                Scale = ScaleInfo.Text.Huge,
+                Scale = ScaleInfo.Text.VeryLarge,
                 Position = titleText.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -1)
             };
 

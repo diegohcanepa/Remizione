@@ -14,14 +14,6 @@
     {
       "name": "PetrifiedTreeA",
       "hp": 6,
-      "effects": [
-        {
-          "context": "HitHardTarget",
-          "effectType": "Status",
-          "statusType": "Laceration",
-          "amount": "1"
-        }
-      ],
       "tags": [
         "PetrifiedTree"
       ]

@@ -10,8 +10,8 @@ namespace Remizione
         #region Constructors
 
         // Constructor
-        public DustEmitter(GameSession session, int burstAmount, int burstInterval, int maxParticles)
-            : base(new DustParticleState(session), new DustEmitterType(session.Camera), burstAmount, burstInterval, maxParticles)
+        public DustEmitter(Camera camera, int burstAmount, int burstInterval, int maxParticles)
+            : base(new DustParticleState(), new DustEmitterType(camera), burstAmount, burstInterval, maxParticles)
         {
         }
 

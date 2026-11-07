@@ -3,13 +3,18 @@
   "$id": "Definition.schema.json",
   "type": "object",
   "properties": {
-    "name": { "type": "string" },
+    "name": { 
+      "type": "string" 
+    },
     "effects": {
       "type": "array",
-      "items": { "$ref": "./EffectDescriptor.schema.json" }
+      "items": { 
+        "$ref": "./EffectDescriptor.schema.json" 
+      }
     },
     "requiredBonfires": {
-      "type": "integer"
+      "type": "integer",
+      "minimum": 0
     },   
     "requiredRoom": {
       "type": "string"
@@ -17,12 +22,14 @@
     "spawnWeight": {
       "type": "number",
       "default": 1.0,
-      "minimum": 0,
+      "minimum": 0.0,
       "maximum": 1.0
     },
     "unlockMode": {
-      "$ref": "enums.schema.json#/$defs/UnlockMode"
+      "$ref": "./enums.schema.json#/$defs/UnlockMode"
     }
   },
-  "required": ["name"]
+  "required": [
+    "name"
+  ]
 }
