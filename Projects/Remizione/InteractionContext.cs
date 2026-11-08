@@ -35,7 +35,12 @@ namespace Remizione
                 if (Session.Room.CulledThings[i] is GameThing target)
                 {
                     if (target.CanInteract() && target.RuntimeHotspot.Contains(mousePos))
-                        return target;
+                    {
+                        if (Session.CurrentCycle == Cycle.Dark)
+                            return Session.Room?.IsIlluminated(target.Position) == true ? target : null;
+                        else
+                            return target;
+                    }
                 }
             }
 

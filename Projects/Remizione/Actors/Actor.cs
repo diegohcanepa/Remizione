@@ -529,17 +529,6 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (IsPlayer)
-            {
-                OpacityFactor2 = 1;
-            }
-            else
-            {
-                OpacityFactor2 = Bonfire.GlobalOpacity;
-                if (OpacityFactor2 == 0)
-                    return;
-            }
-
             base.OnUpdate(gameTime);
 
             if (BodyMachine.CurrentState is BodyDeathState && !AnimationPlayer.IsPlaying)

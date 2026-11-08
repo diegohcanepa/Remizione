@@ -128,6 +128,15 @@ namespace Remizione
             internal static Color YellowDark { get; } = new(240, 181, 65);
         }
 
+        // PlayerHPMeter
+        internal static class PlayerHPMeter
+        {
+            internal static Color Back { get; } = Palette.TerraDarker;
+            internal static Color Border { get; } = Color.Transparent;
+            internal static Color Diff { get; } = Palette.Terra;
+            internal static Color Fore { get; } = new(129, 34, 29);
+        }
+
         // Shadow
         internal static Color Shadow { get; } = Color.Black * .3f;
 

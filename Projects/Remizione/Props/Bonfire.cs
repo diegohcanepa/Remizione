@@ -12,7 +12,6 @@ namespace Remizione
     public class Bonfire : Prop
     {
         private readonly AnimatedSprite flame;
-        private readonly FloatTween globalOpacityTween = new();
         private readonly Sprite patch;
 
         #region Constructor
@@ -45,7 +44,6 @@ namespace Remizione
             this.AttachedLight = new("Light", LightKind.SulfurBonfire)
             {
                 BlendMode = LightBlendMode.Additive,
-                IgnoreGlobalOpacity = true,
                 PivotOrigin = RectanglePoint.Center,
                 Position = new(9),
                 Scale = new(9, 6)
@@ -87,66 +85,11 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
-
             if (IsLit)
                 flame.Update(gameTime);
-
-            if (globalOpacityTween.IsRunning)
-            {
-                globalOpacityTween.Update(gameTime);
-                GlobalOpacity = globalOpacityTween.CurrentValue;
-            }
         }
 
         #endregion
-
-        // Enter
-        [ScriptMethod]
-        public void Enter()
-        {
-            Enter(false);
-        }
-
-        // Enter
-        public void Enter(bool immediate)
-        {
-            if (Session.BonfireMode || Session.Room == null)
-                return;
-
-            if (immediate)
-            {
-                GlobalOpacity = 0;
-            }
-            else
-            {
-                Sound.Play(SoundNames.BonfireMenu);
-                globalOpacityTween.Start(TweenStyle.CubicIn, 1, 0, 2000);
-                Session.Camera.StopFollowing();
-                Session.Camera.FlyTo(TweenStyle.CubicInOut, new Vector2(X - 50, Y - 10), 1.2f, 2000);
-                Session.Save(true);
-            }
-
-            Session.PlayerData.IsSafe = true;
-            Session.BonfireMode = true;
-        }
-
-        // Exit
-        public void Exit(bool respawn)
-        {
-            if (respawn)
-                Session.RespawnWorld();
-
-            Sound.Play(SoundNames.BonfireMenu);
-            Session.Camera.ZoomTo(TweenStyle.CubicInOut, GameSettings.DefaultZoom, 3000);
-            if (Session.Player != null)
-                Session.Camera.Follow(Session.Player);
-            globalOpacityTween.Start(TweenStyle.CubicIn, 0, 1, 2000);
-            Session.PlayerData.IsSafe = false;
-            Session.BonfireMode = false;
-        }
-
-        // GlobalOpacity
-        public static Ratio GlobalOpacity { get; private set; } = 1;
 
         // IsLit
         [ScriptProperty]
@@ -172,36 +115,6 @@ namespace Remizione
                         }
                     }
                 }
-            }
-        }
-
-        // SafeToRest
-        [ScriptProperty]
-        public bool SafeToRest
-        {
-            get
-            {
-                if (Session.Room == null || Session.Player == null)
-                    return true;
-
-                var safeArea = RectangleF.ScaleCentered(Session.Camera.VisibleBox, .7f);
-
-                for (var i = 0; i < Session.Room.CulledThings.Count; i++)
-                {
-                    if (Session.Room.CulledThings[i] is Actor actor)
-                    {
-                        if (actor.IsPlayer)
-                            continue;
-
-                        if (FactionMatrix.IsHostile(actor, Session.Player))
-                        {
-                            if (safeArea.Intersects(actor.RuntimeHotspot.BoundingRectangleF))
-                                return false;
-                        }
-                    }
-                }
-
-                return true;
             }
         }
     }

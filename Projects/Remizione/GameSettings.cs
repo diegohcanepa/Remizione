@@ -14,6 +14,9 @@
         // ContentRootDirectory
         public const string ContentRootDirectory = "Content";
 
+        // DarkCycleDuration
+        public const int DarkCycleDuration = 180;
+
         // DefaultInventoryCapacity
         public const int DefaultInventoryCapacity = 5;
 
@@ -25,6 +28,9 @@
 
         // GameFolder
         public const string GameFolder = "Remizione";
+
+        // LightCycleDuration
+        public const int LightCycleDuration = 400;
 
         // LogFileName
         public const string LogFileName = "ErrorLog.txt";

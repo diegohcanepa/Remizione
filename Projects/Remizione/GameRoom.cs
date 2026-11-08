@@ -24,10 +24,10 @@ namespace Remizione
         private readonly List<ILightSource> lightSources = [];
         private static readonly Light playerLight = new("PlayerLight", LightKind.Player)
         {
-            Color = new(230, 230, 195),
+            Color = new Color(235, 170, 170) * .5f,
             PivotOrigin = RectanglePoint.Center,
             Position = Screen.Center,
-            Scale = new(4)
+            Scale = new(3, 2)
         };
         private readonly List<TriggerArea> triggerAreas = [];
         private readonly List<WalkArea> walkAreas = [];
@@ -148,7 +148,14 @@ namespace Remizione
             var previousRenderTarget = Game.RenderTargets.CurrentTarget;
 
             Game.GraphicsDevice.SetRenderTarget(renderTarget);
-            Game.GraphicsDevice.Clear(LightMapColor);
+            Game.GraphicsDevice.Clear(Session.Environment.LightMapColor);
+
+//            if (AllowGlobalLight)
+            {
+                Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
+                Session.Environment.GlobalLight.Draw(gameTime);
+                Game.SpriteBatch.End();
+            }
 
             // PASADA 1: Luces ambientales (BlendState Max)
             // Evita que las luces suaves saturen entre sí.
@@ -170,11 +177,11 @@ namespace Remizione
             Game.SpriteBatch.End();
 
             // PASADA 3: Luces sustractivas (Player)
-            if (Session.Player?.MaxHP == 0)
+            if (Session.CurrentCycle == Cycle.Dark && Session.Player != null)
             {
                 Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, CustomBlendState.SubtractivePlayer, null);
                 playerLight.Position = Session.Player.BoundingBox.Center;
-                //playerLight.Draw(gameTime); // Mantenido comentado tal como lo tenías
+                playerLight.Draw(gameTime);
                 Game.SpriteBatch.End();
             }
 
@@ -353,13 +360,7 @@ namespace Remizione
             if (Session.Player != null)
                 playerLight.Update(gameTime);
 
-            // Dust particles
-            if (AllowAshParticles)
-                Session.Environment.UpdateAshParticles(gameTime);
-
-            // Firefly particles
-            if (AllowFireflyParticles)
-                Session.Environment.UpdateFireflyParticles(gameTime);
+            Session.Environment.Update(gameTime);
 
             // FlOffs
             for (var i = 0; i < Session.ObjectPools.FlyOffs.InUse.Count; i++)
@@ -451,6 +452,37 @@ namespace Remizione
             return WalkArea == null || WalkArea.HasLineOfSight(value1, value2, RaycastContext.LineOfSight, out _);
         }
 
+        // IsIlluminated
+        public bool IsIlluminated(Vector2 position)
+        {
+            if (!CanUseLightingSystem || Session.CurrentCycle == Cycle.Light)
+                return true;
+
+            if (Session.Environment.GlobalLight.IsEmitting && Session.Environment.GlobalLight.BoundingBox.Contains(position))
+                return true;
+
+            if (playerLight.IsEmitting && playerLight.BoundingBox.Contains(position))
+                return true;
+
+            for (int i = 0; i < lights.Count; i++)
+            {
+                Light light = lights[i];
+                if (light.IsEmitting && light.BoundingBox.Contains(position))
+                {
+                    return true;
+                }
+            }
+
+            for (int i = 0; i < CulledThings.Count; i++)
+            {
+                if (CulledThings[i] is ILightSource { IsEmittingLight: true } lightSource
+                    && CulledThings[i].BoundingBox.Contains(position))
+                    return true;
+            }
+
+            return false;
+        }
+
         // IsProcedural
         [ScriptProperty]
         public virtual bool IsProcedural => false;
@@ -464,10 +496,6 @@ namespace Remizione
         // LightingSystem
         [ScriptProperty]
         public bool LightingSystem { get; set; }
-
-        // LightMapColor
-        [ScriptProperty]
-        public Color LightMapColor { get; set; } = new(45, 45, 45);
 
         // Lights
         public NamedReadOnlyCollection<Light> Lights { get; }

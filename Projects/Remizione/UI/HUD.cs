@@ -25,7 +25,7 @@ namespace Remizione
             : base(session)
         {
             this.CycleMeter = new(session);
-            this.HeartMeter = new(session);
+            this.PlayerHPMeter = new(session);
             this.InventoryMeter = new(session.PlayerData.Inventory);
             this.DestinationMark = new(session);
             this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 10));
@@ -43,10 +43,13 @@ namespace Remizione
         {
             Game.SpriteBatch.Begin(Game.Camera);
             if (Session.DisplayHPMeter)
-                HeartMeter.Draw(gameTime);
+            {
+                PlayerHPMeter.Draw(gameTime);
+                CycleMeter.Draw(gameTime);
+            }
+
             ashMeter.Draw(gameTime);
             statuses.Draw(gameTime);
-            CycleMeter.Draw(gameTime);
             Game.SpriteBatch.End();
 
             if (Session.InventoryEnabled)
@@ -61,7 +64,7 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             InventoryMeter.Update(gameTime);
-            HeartMeter.Update(gameTime);
+            PlayerHPMeter.Update(gameTime);
             Message.Update(gameTime);
             BottomMessage.Update(gameTime);
             ashMeter.Update(gameTime);
@@ -94,14 +97,14 @@ namespace Remizione
             return HandleInputResult.Unhandled;
         }
 
-        // HeartMeter
-        public UIHeartMeter HeartMeter { get; }
-
         // InventoryMeter
         public UIInventoryMeter InventoryMeter { get; }
 
         // Message
         public UIMessage Message { get; }
+
+        // PlayerHPMeter
+        public UIPlayerHPMeter PlayerHPMeter { get; }
 
         // Reset
         public void Reset()

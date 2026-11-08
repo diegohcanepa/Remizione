@@ -7,7 +7,7 @@ namespace Remizione
     /// <summary>
     /// UIHeartMeter
     /// </summary>
-    public sealed class UIHeartMeter : SessionGameObject<GameSession>
+    public sealed class UIPlayerHPMeter : SessionGameObject<GameSession>
     {
         #region Private fields
 
@@ -26,12 +26,12 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public UIHeartMeter(GameSession session)
+        public UIPlayerHPMeter(GameSession session)
             : base(session)
         {
-            this.meter = new(Colors.Palette.AlmostBlack, Colors.Palette.TerraDarker, Colors.Palette.Terra, Colors.Palette.TerraLight, new(21, 5), 0)
+            this.meter = new(Colors.PlayerHPMeter.Border, Colors.PlayerHPMeter.Back, Colors.PlayerHPMeter.Fore, Colors.PlayerHPMeter.Diff, new(21, 3), 0)
             {
-                Position = icon.BoundingBox.GetPoint(RectanglePoint.Right, 10.5f, -3),
+                Position = icon.BoundingBox.GetPoint(RectanglePoint.Right, 10.5f, -2),
             };
 
             container.Position = icon.BoundingBox.GetPoint(RectanglePoint.Right, -1, -1);

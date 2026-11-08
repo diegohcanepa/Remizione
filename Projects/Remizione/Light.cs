@@ -58,6 +58,7 @@ namespace Remizione
             {
                 LightKind.Beacon => new Color(235, 170, 170),
                 LightKind.Fire => new Color(255, 160, 160),
+                LightKind.Global => new Color(235, 170, 170),
                 LightKind.KeyItemOrb => Colors.Palette.SkyBlue,
                 LightKind.CommonItemOrb => Colors.Palette.TerraLight,
                 LightKind.OrganicItemOrb => Colors.Palette.Green,
@@ -94,8 +95,8 @@ namespace Remizione
                     break;
 
                 case LightKind.Global:
-                    litTweenDuration = 3000;
-                    unlitTweenDuration = 3000;
+                    litTweenDuration = RoomEnvironment.CycleTransitionDuration;
+                    unlitTweenDuration = RoomEnvironment.CycleTransitionDuration;
                     break;
 
                 case LightKind.SulfurBonfire:
@@ -132,7 +133,7 @@ namespace Remizione
             float originalSpriteOpacity = lightSprite.Opacity;
 
             // Aplicamos la opacidad combinada (Flicker * Fade de encendido)
-            lightSprite.Opacity = originalSpriteOpacity * currentFade * (IgnoreGlobalOpacity ? 1 : Bonfire.GlobalOpacity);
+            lightSprite.Opacity = originalSpriteOpacity * currentFade;
 
             lightSprite.Draw(gameTime);
 
@@ -182,9 +183,6 @@ namespace Remizione
                 }
             }
         }
-
-        // IgnoreGlobalOpacity
-        public bool IgnoreGlobalOpacity { get; set; }
 
         // IsEmitting
         public bool IsEmitting => currentFade > 0;
@@ -278,17 +276,17 @@ namespace Remizione
             if (immediate)
             {
                 fadeTween.Stop();
-                currentFade = 0f;
+                currentFade = 0;
                 return;
             }
 
-            if (currentFade == 0f || (fadeTween.IsRunning && fadeTween.EndValue == 0f))
+            if (currentFade == 0 || (fadeTween.IsRunning && fadeTween.EndValue == 0))
                 return;
 
             if (unlitTweenDuration == 0)
-                currentFade = 0f;
+                currentFade = 0;
             else
-                fadeTween.Start(TweenStyle.CubicIn, currentFade, 0f, unlitTweenDuration);
+                fadeTween.Start(TweenStyle.CubicIn, currentFade, 0, unlitTweenDuration);
         }
 
         // X

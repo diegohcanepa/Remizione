@@ -145,7 +145,6 @@ namespace Remizione
         public static void Click()
         {
             clickScaleTween.Start(TweenStyle.Linear, Vector2.One, clickScale, 60, 2);
-            Sound.Play(SoundNames.Interact);
         }
 
         // Color

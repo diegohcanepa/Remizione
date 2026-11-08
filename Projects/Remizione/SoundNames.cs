@@ -12,6 +12,7 @@
         internal const string ButtonHover = nameof(ButtonHover);
         internal const string ButtonPress = nameof(ButtonPress);
         internal const string CraftActive = nameof(CraftActive);
+        internal const string CycleHorn = nameof(CycleHorn);
         internal const string DoorGateClose = nameof(DoorGateClose);
         internal const string DoorGateOpen = nameof(DoorGateOpen);
         internal const string DoorGenericClose = nameof(DoorGenericClose);

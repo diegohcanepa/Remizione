@@ -356,6 +356,7 @@
             <key type="filename">MouseCursors-assets/MouseCursorCrossIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorInspectIcon.png</key>
             <key type="filename">UIIcons-assets/CraftIcon.png</key>
+            <key type="filename">UIIcons-assets/CycleMeter01.png</key>
             <key type="filename">UIIcons-assets/HeartIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>

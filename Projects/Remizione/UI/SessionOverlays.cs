@@ -9,7 +9,6 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly BonfireScene bonfireScene;
         private readonly EchoScene echoScene;
         private readonly InventoryScene inventoryScene;
         private readonly ItemInfoScene itemInfoScene;
@@ -30,7 +29,6 @@ namespace Remizione
             this.inventoryScene = new InventoryScene(session);
             this.miniMapScene = new MiniMapScene(session);
             this.itemInfoScene = new ItemInfoScene(session);
-            this.bonfireScene = new BonfireScene(session);
         }
 
         #endregion
@@ -58,12 +56,6 @@ namespace Remizione
         }
 
         #endregion
-
-        // ShowBonfire
-        public void ShowBonfire()
-        {
-            PushScene<BonfireScene>(bonfireScene);
-        }
 
         // ShowDialogMenu
         public void ShowDialogMenu(DialogBlock dialogBlock)

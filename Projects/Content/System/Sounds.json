@@ -25,6 +25,7 @@
     { "name": "ConsumeDrink" },
     { "name": "Craft", "soundCount": 2 },
     { "name": "CraftSuccess" },
+    { "name": "CycleHorn" },
     { "name": "DoorGateClose" },
     { "name": "DoorGateOpen" },
     { "name": "DoorGenericClose", "soundCount": 2 },

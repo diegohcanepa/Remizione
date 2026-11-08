@@ -45,7 +45,7 @@ namespace Engendro
         // CalculateOpacity
         protected virtual float CalculateOpacity()
         {
-            return Opacity * OpacityFactor * OpacityFactor2;
+            return Opacity * OpacityFactor;
         }
 
         // GetAbsolutePosition
@@ -314,17 +314,6 @@ namespace Engendro
 
         // OpacityFactor
         public float OpacityFactor
-        {
-            get;
-            set
-            {
-                if (value != field)
-                    field = MathHelper.Clamp(value, 0, 1);
-            }
-        } = 1;
-
-        // OpacityFactor2
-        public float OpacityFactor2
         {
             get;
             set

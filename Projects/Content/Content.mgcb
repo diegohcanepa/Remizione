@@ -271,6 +271,13 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/FX/CraftSuccess.wav;Audio/FX/CraftSuccess
 
+#begin Audio/FX/CycleHorn.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/FX/CycleHorn.wav;Audio/FX/CycleHorn
+
 #begin Audio/FX/DoorGateClose.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

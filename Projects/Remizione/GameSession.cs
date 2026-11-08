@@ -173,7 +173,6 @@ namespace Remizione
             AotTypeRegistry.Register("apply-usage", typeof(ApplyUsageCommand));
             AotTypeRegistry.Register("attach-light", typeof(AttachLightCommand), CodingContext.EntityDeclaration);
             AotTypeRegistry.Register("await-approach", typeof(AwaitApproachCommand));
-            AotTypeRegistry.Register("await-bonfire-scene", typeof(AwaitBonfireSceneCommand));
             AotTypeRegistry.Register("await-credits", typeof(AwaitCreditsCommand));
             AotTypeRegistry.Register("await-dialog-block", typeof(AwaitDialogBlockCommand));
             AotTypeRegistry.Register("await-input", typeof(AwaitInputCommand));
@@ -676,6 +675,14 @@ namespace Remizione
             Save();
         }
 
+        // BeginDarkCycle
+        [ScriptMethod]
+        public void BeginDarkCycle()
+        {
+            CurrentCycle = Cycle.Dark;
+            Environment.BeginDarkCycle();
+        }
+
         // BonfireMode
         [ScriptProperty]
         public bool BonfireMode { get; set; }
@@ -698,9 +705,8 @@ namespace Remizione
             CleanUpVolatileRuntimeClones(CanCleanup);
         }
 
-        // DangerousTarget
-        [ScriptProperty]
-        public GameThing? DangerousTarget { get; set; }
+        // CurrentCycle
+        public Cycle CurrentCycle { get; private set; } = Cycle.Light;
 
         // DialogOptionId
         [ScriptProperty]
@@ -709,6 +715,14 @@ namespace Remizione
         // DisplayHPMeter
         [ScriptProperty]
         public bool DisplayHPMeter { get; set; }
+
+        // EndDarkCycle
+        [ScriptMethod]
+        public void EndDarkCycle()
+        {
+            CurrentCycle = Cycle.Light;
+            Environment.EndDarkCycle();
+        }
 
         // EnoughMaterials
         [ScriptProperty]
@@ -895,9 +909,6 @@ namespace Remizione
         {
             if (LastBonfire != null)
             {
-                LastBonfire.Enter(true);
-                LastBonfire.Exit(true);
-
                 if (Room != null)
                 {
                     if (Player != null)

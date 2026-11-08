@@ -31,7 +31,7 @@ namespace Remizione
             if (!eventDone && Owner.AnimationPlayer.Frame?.IsTrigger == true)
             {
                 eventDone = true;
-                Owner.PlaySound(SoundNames.PenitentEffort);
+                //Owner.PlaySound(SoundNames.PenitentEffort);
                 Owner.HeldProp = Target;
                 return;
             }
