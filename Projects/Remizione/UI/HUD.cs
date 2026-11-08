@@ -24,6 +24,7 @@ namespace Remizione
         public HUD(GameSession session)
             : base(session)
         {
+            this.CycleMeter = new(session);
             this.HeartMeter = new(session);
             this.InventoryMeter = new(session.PlayerData.Inventory);
             this.DestinationMark = new(session);
@@ -45,6 +46,7 @@ namespace Remizione
                 HeartMeter.Draw(gameTime);
             ashMeter.Draw(gameTime);
             statuses.Draw(gameTime);
+            CycleMeter.Draw(gameTime);
             Game.SpriteBatch.End();
 
             if (Session.InventoryEnabled)
@@ -66,12 +68,16 @@ namespace Remizione
             statuses.Update(gameTime);
             DestinationMark.Update(gameTime);
             RoomTitle.Update(gameTime);
+            CycleMeter.Update(gameTime);
         }
 
         #endregion
 
         // BottomMessage
         public UIMessage BottomMessage { get; }
+
+        // CycleMeter
+        public UICycleMeter CycleMeter { get; }
 
         // DestinationMark
         public DestinationMark DestinationMark { get; }

@@ -49,6 +49,14 @@
         "Hard"
       ]
     },
+    "CycleFilter": {
+      "type": "string",
+      "enum": [
+        "None",
+        "Light",
+        "Dark"
+      ]
+    },    
     "EffectContext": {
       "type": "string",
       "enum": [

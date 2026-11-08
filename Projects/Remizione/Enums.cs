@@ -48,6 +48,12 @@ namespace Remizione
     // ContentFolder
     public enum ContentFolder { Ambience, Atlases, Effects, Music, Fonts, FX, Video, Voice, System, Text }
 
+    // Cycle
+    public enum Cycle { Light, Dark }
+
+    // CycleFilter
+    public enum CycleFilter { None, LightOnly, DarkOnly }
+
     // DamageType
     public enum DamageType { None, Physical, Acid, Explosive, Fire, Ice, Lightning, Poison, Status }
 

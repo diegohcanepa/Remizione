@@ -39,6 +39,9 @@ namespace Remizione
                     usedNames.Add(Name);
             }
 
+            // CycleFilter
+            CycleFilter = element.GetEnum("cycleFilter", CycleFilter.None);
+
             // RequiredBonfires
             RequiredBonfires = Math.Max(0, element.GetInt32("requiredBonfires", 0));
 
@@ -96,6 +99,9 @@ namespace Remizione
 
         // All
         public static ReadOnlyCollection<Definition> All { get; } = all.AsReadOnly();
+
+        // CycleFilter
+        public CycleFilter CycleFilter { get; }
 
         // EffectDescriptors
         public ReadOnlyCollection<EffectDescriptor> EffectDescriptors { get; }
