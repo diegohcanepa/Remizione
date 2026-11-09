@@ -353,6 +353,15 @@ namespace Remizione
             }
         }
 
+        // OnCalculateOpacity
+        protected override float OnCalculateOpacity(float currentValue)
+        {
+            if (IsPlayer)
+                return currentValue;
+            else
+                return base.OnCalculateOpacity(currentValue) * Session.Environment.GlobalOpacity;
+        }
+
         // OnCollisioning
         protected override void OnCollisioning(GameThing thing, out bool handled)
         {

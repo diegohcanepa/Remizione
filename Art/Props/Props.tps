@@ -173,7 +173,9 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">AshBowl-assets/AshBowl.png</key>
+            <key type="filename">AshVessel-assets/AshVesselDark.png</key>
+            <key type="filename">AshVessel-assets/AshVesselLight.png</key>
+            <key type="filename">GravestoneA-assets/GravestoneA.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -182,13 +184,13 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>2,4,5,7</rect>
+                <rect>4,4,7,7</rect>
                 <key>scale9Paddings</key>
-                <rect>2,4,5,7</rect>
+                <rect>4,4,7,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">AshBowl-assets/AshBowlShadow.png</key>
+            <key type="filename">AshVessel-assets/AshVesselShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -371,21 +373,6 @@
                 <rect>11,7,22,13</rect>
                 <key>scale9Paddings</key>
                 <rect>11,7,22,13</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">GravestoneA-assets/GravestoneA.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>4,4,7,7</rect>
-                <key>scale9Paddings</key>
-                <rect>4,4,7,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -994,7 +981,7 @@
                     <filename>GravestoneB-assets</filename>
                     <filename>FigTree-assets</filename>
                     <filename>PetrifiedTree-assets</filename>
-                    <filename>AshBowl-assets</filename>
+                    <filename>AshVessel-assets</filename>
                 </array>
             </struct>
         </map>

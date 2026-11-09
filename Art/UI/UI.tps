@@ -356,8 +356,9 @@
             <key type="filename">MouseCursors-assets/MouseCursorCrossIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorInspectIcon.png</key>
             <key type="filename">UIIcons-assets/CraftIcon.png</key>
-            <key type="filename">UIIcons-assets/CycleMeter01.png</key>
+            <key type="filename">UIIcons-assets/CycleDark.png</key>
             <key type="filename">UIIcons-assets/HeartIcon.png</key>
+            <key type="filename">UIIcons-assets/WorldIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -409,7 +410,6 @@
             <key type="filename">MouseCursors-assets/MouseCursorLeftIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorTargetIcon.png</key>
             <key type="filename">UI-assets/ProhibitionIcon.png</key>
-            <key type="filename">UIIcons-assets/GutIcon.png</key>
             <key type="filename">UIIcons-assets/StoneIcon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -680,6 +680,7 @@
             </struct>
             <key type="filename">UI-assets/MiniMapMarker.png</key>
             <key type="filename">UI-assets/Pixel.png</key>
+            <key type="filename">UIIcons-assets/CycleMeterMarker.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

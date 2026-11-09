@@ -6,7 +6,7 @@
     public static class GameSettings
     {
         // Build
-        public const int Build = 1330;
+        public const int Build = 168;
 
         // CameraFollowSpeed
         public const float CameraSmoothSpeed = 2;
@@ -15,7 +15,7 @@
         public const string ContentRootDirectory = "Content";
 
         // DarkCycleDuration
-        public const int DarkCycleDuration = 180;
+        public const int DarkCycleDuration = 18;
 
         // DefaultInventoryCapacity
         public const int DefaultInventoryCapacity = 5;
@@ -30,16 +30,13 @@
         public const string GameFolder = "Remizione";
 
         // LightCycleDuration
-        public const int LightCycleDuration = 400;
+        public const int LightCycleDuration = 15;
 
         // LogFileName
         public const string LogFileName = "ErrorLog.txt";
 
         // MaxItemAmount
         public const int MaxItemAmount = 5;
-
-        // PaintPoints
-        public const int PaintPoints = 5;
 
         // SteamAppID
         public const int SteamAppID = 480;

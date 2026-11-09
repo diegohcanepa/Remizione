@@ -1104,6 +1104,13 @@
 /processorParam:Version=3.8.5.0
 /build:Audio/Music/Anger1.wav;Audio/Music/Anger1
 
+#begin Audio/Music/Dark1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.0
+/build:Audio/Music/Dark1.wav;Audio/Music/Dark1
+
 #begin Audio/Music/Main.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

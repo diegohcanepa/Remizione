@@ -5,7 +5,8 @@
   ],
   "Music": [
     { "name": "Anger1", "tags": "Anger" },
-    { "name": "Main", "tags": "Idle" }
+    { "name": "Main", "tags": "Light" },
+    { "name": "Dark1", "tags": "Dark" }
   ],
   "FX": [
     { "name": "BareFist", "soundCount": 3 },

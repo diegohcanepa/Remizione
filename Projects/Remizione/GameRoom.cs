@@ -22,13 +22,6 @@ namespace Remizione
         private RenderTarget2D? lightMapTarget;
         private readonly List<Light> lights = [];
         private readonly List<ILightSource> lightSources = [];
-        private static readonly Light playerLight = new("PlayerLight", LightKind.Player)
-        {
-            Color = new Color(235, 170, 170) * .5f,
-            PivotOrigin = RectanglePoint.Center,
-            Position = Screen.Center,
-            Scale = new(3, 2)
-        };
         private readonly List<TriggerArea> triggerAreas = [];
         private readonly List<WalkArea> walkAreas = [];
         private readonly List<IPolygon> walls = [];
@@ -177,11 +170,10 @@ namespace Remizione
             Game.SpriteBatch.End();
 
             // PASADA 3: Luces sustractivas (Player)
-            if (Session.CurrentCycle == Cycle.Dark && Session.Player != null)
+            if (Session.Player != null)
             {
                 Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, CustomBlendState.SubtractivePlayer, null);
-                playerLight.Position = Session.Player.BoundingBox.Center;
-                playerLight.Draw(gameTime);
+                Session.Environment.PlayerLight.Draw(gameTime);
                 Game.SpriteBatch.End();
             }
 
@@ -357,9 +349,6 @@ namespace Remizione
                 lights[i].Update(gameTime);
             }
 
-            if (Session.Player != null)
-                playerLight.Update(gameTime);
-
             Session.Environment.Update(gameTime);
 
             // FlOffs
@@ -461,7 +450,7 @@ namespace Remizione
             if (Session.Environment.GlobalLight.IsEmitting && Session.Environment.GlobalLight.BoundingBox.Contains(position))
                 return true;
 
-            if (playerLight.IsEmitting && playerLight.BoundingBox.Contains(position))
+            if (Session.Environment.PlayerLight.IsEmitting && Session.Environment.PlayerLight.BoundingBox.Contains(position))
                 return true;
 
             for (int i = 0; i < lights.Count; i++)

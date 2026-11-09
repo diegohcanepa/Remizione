@@ -42,8 +42,8 @@ namespace Remizione
             // CycleFilter
             CycleFilter = element.GetEnum("cycleFilter", CycleFilter.None);
 
-            // RequiredBonfires
-            RequiredBonfires = Math.Max(0, element.GetInt32("requiredBonfires", 0));
+            // RequiredCycles
+            RequiredCycles = Math.Max(0, element.GetInt32("requiredCycles", 0));
 
             // RequiredRoom
             RequiredRoom = element.GetString("requiredRoom", string.Empty);
@@ -124,8 +124,8 @@ namespace Remizione
             OnRefreshLocalizedValues();
         }
 
-        // RequiredBonfires
-        public int RequiredBonfires { get; }
+        // RequiredCycles
+        public int RequiredCycles { get; }
 
         // RequiredRoom
         public string RequiredRoom { get; }

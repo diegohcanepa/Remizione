@@ -62,7 +62,7 @@ namespace Remizione
             this.LootGenerator = new(this);
             this.PersistenceModel = new RemizionePersistenceModel();
             this.RenewSeed();
-            this.unlockManager = new(this.PlayerData);
+            this.unlockManager = new(this);
 
             ObjectPools = new ObjectPools(this);
 
@@ -149,6 +149,7 @@ namespace Remizione
         private static void RegisterAotTypes()
         {
             AotTypeRegistry.Register(typeof(Actor));
+            AotTypeRegistry.Register(typeof(AshVessel));
             AotTypeRegistry.Register(typeof(Bonfire));
             AotTypeRegistry.Register(typeof(Creature));
             AotTypeRegistry.Register(typeof(CreditsRoom));
@@ -221,20 +222,23 @@ namespace Remizione
             Seed = RandomNumberGenerator.GetInt32(int.MaxValue);
         }
 
-        // SyncProceduralMusic
-        private void SyncProceduralMusic()
+        // UpdateCycleTimer
+        private void UpdateCycleTimer(GameTime gameTime)
         {
-            /*
-            if (Room is ProceduralRoom proceduralRoom)
+            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            CycleRemainingTime -= delta;
+
+            if (CycleRemainingTime <= 0)
             {
-                var tag = proceduralRoom.RoomNode.Definition.MusicTag;
-
-                if (string.IsNullOrWhiteSpace(tag))
-                    tag = MusicTag.Castle;
-
-                AudioManager.Music.PlayTag(tag);
+                if (CurrentCycle == Cycle.Light)
+                {
+                    BeginDarkCycle();
+                }
+                else
+                {
+                    EndDarkCycle();
+                }
             }
-            */
         }
 
         #endregion
@@ -291,7 +295,6 @@ namespace Remizione
         {
             Game.SceneManager.PopUntil(this);
             MouseCursor.Reset();
-            SyncProceduralMusic();
 
             if (lastBonfireNameInSaveFile != null)
             {
@@ -381,6 +384,10 @@ namespace Remizione
             // Ashes
             if (sessionNode.Attributes[nameof(PlayerData.Ashes)]?.Value is string ashesValue)
                 PlayerData.Ashes = XmlConvert.ToInt32(ashesValue);
+
+            // CycleCount
+            if (sessionNode.Attributes[nameof(CycleCount)]?.Value is string cycleCountValue)
+                CycleCount = XmlConvert.ToInt32(cycleCountValue);
 
             // Inventory
             if (sessionNode.Attributes[nameof(PlayerData.Inventory)]?.Value is string inventoryValue)
@@ -514,6 +521,9 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
 
+            if (IsGameplayActive)
+                UpdateCycleTimer(gameTime);
+
             SepiaEffect.Update(gameTime);
 
             gameSavedText.Update(gameTime);
@@ -578,6 +588,9 @@ namespace Remizione
 
             // Ashes
             output.WriteAttributeString(nameof(PlayerData.Ashes), XmlConvert.ToString(PlayerData.Ashes));
+
+            // CycleCount
+            output.WriteAttributeString(nameof(CycleCount), XmlConvert.ToString(CycleCount));
 
             // Inventory
             output.WriteAttributeString(nameof(PlayerData.Inventory), PlayerData.Inventory.Serialize());
@@ -679,7 +692,9 @@ namespace Remizione
         [ScriptMethod]
         public void BeginDarkCycle()
         {
+            CycleCount++;
             CurrentCycle = Cycle.Dark;
+            CycleRemainingTime = GameSettings.DarkCycleDuration;
             Environment.BeginDarkCycle();
         }
 
@@ -708,6 +723,13 @@ namespace Remizione
         // CurrentCycle
         public Cycle CurrentCycle { get; private set; } = Cycle.Light;
 
+        // CycleCount
+        [ScriptProperty]
+        public int CycleCount { get; set; }
+
+        // CycleRemainingTime
+        public float CycleRemainingTime { get; private set; } = GameSettings.LightCycleDuration;
+
         // DialogOptionId
         [ScriptProperty]
         public int DialogOptionId { get; set; }
@@ -720,7 +742,9 @@ namespace Remizione
         [ScriptMethod]
         public void EndDarkCycle()
         {
+            CycleCount++;
             CurrentCycle = Cycle.Light;
+            CycleRemainingTime = GameSettings.LightCycleDuration;
             Environment.EndDarkCycle();
         }
 

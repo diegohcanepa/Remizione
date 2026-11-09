@@ -20,11 +20,11 @@ namespace Remizione
             ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CraftIcon = this[nameof(CraftIcon)];
             CreditsBar = this[nameof(CreditsBar)];
+            CycleMeterMarker = this[nameof(CycleMeterMarker)];
             DialogArrowLarge = this[nameof(DialogArrowLarge)];
             DialogOptionBullet = this[nameof(DialogOptionBullet)];
             EchoBackground = this[nameof(EchoBackground)];
             FakeItem = this[nameof(FakeItem)];
-            GutIcon = this[nameof(GutIcon)];
             HeartIcon = this[nameof(HeartIcon)];
             HeartMeterContainer = this[nameof(HeartMeterContainer)];
             InspectItem = this[nameof(InspectItem)];
@@ -47,6 +47,7 @@ namespace Remizione
             UIButtonContainerEdge = this[nameof(UIButtonContainerEdge)];
             UIButtonContainerPattern = this[nameof(UIButtonContainerPattern)];
             WoodIcon = this[nameof(WoodIcon)];
+            WorldIcon = this[nameof(WorldIcon)];
         }
 
         // BackButton
@@ -73,6 +74,9 @@ namespace Remizione
         // CreditsBar
         public AtlasImage CreditsBar { get; }
 
+        // CycleMeterMarker
+        public AtlasImage CycleMeterMarker { get; }
+
         // DialogArrowLarge
         public AtlasImage DialogArrowLarge { get; }
 
@@ -84,9 +88,6 @@ namespace Remizione
 
         // FakeItem
         public AtlasImage FakeItem { get; }
-
-        // GutIcon
-        public AtlasImage GutIcon { get; }
 
         // HeartIcon
         public AtlasImage HeartIcon { get; }
@@ -153,5 +154,8 @@ namespace Remizione
 
         // WoodIcon
         public AtlasImage WoodIcon { get; }
+
+        // WorldIcon
+        public AtlasImage WorldIcon { get; }
     }
 }

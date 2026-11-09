@@ -6,8 +6,8 @@
       "baseDropChance": 0.3,
       "ashReward": 5,
       "hp": 2,
-      "unlockMode": "BonfiresLit",
-      "requiredBonfires": 1,
+      "unlockMode": "Cycles",
+      "requiredCycles": 1,
       "effects": [
         {
           "context": "Contact",

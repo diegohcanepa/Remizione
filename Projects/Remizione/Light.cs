@@ -63,7 +63,7 @@ namespace Remizione
                 LightKind.CommonItemOrb => Colors.Palette.TerraLight,
                 LightKind.OrganicItemOrb => Colors.Palette.Green,
                 LightKind.SulfurBonfire => new(184, 196, 81),
-                LightKind.Player => Color.White * .7f,
+                LightKind.Player => new Color(235, 170, 170) * .8f,
                 _ => Color.White
             };
         }
@@ -95,6 +95,7 @@ namespace Remizione
                     break;
 
                 case LightKind.Global:
+                case LightKind.Player:
                     litTweenDuration = RoomEnvironment.CycleTransitionDuration;
                     unlitTweenDuration = RoomEnvironment.CycleTransitionDuration;
                     break;
@@ -113,7 +114,6 @@ namespace Remizione
                     break;
 
                 case LightKind.MuzzleFlash:
-                case LightKind.Player:
                 default:
                     break;
             }

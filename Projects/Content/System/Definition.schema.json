@@ -12,7 +12,7 @@
         "$ref": "./EffectDescriptor.schema.json" 
       }
     },
-    "requiredBonfires": {
+    "requiredCycles": {
       "type": "integer",
       "minimum": 0
     },   

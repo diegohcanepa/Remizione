@@ -8,13 +8,13 @@ namespace Remizione
     /// </summary>
     internal sealed class UnlockManager
     {
-        private readonly PlayerData playerData;
+        private readonly GameSession session;
         private readonly HashSet<string> unlockedDefinitions = [];
 
         // Constructor
-        internal UnlockManager(PlayerData playerData)
+        internal UnlockManager(GameSession session)
         {
-            this.playerData = playerData;
+            this.session = session;
         }
 
         #region Serialization
@@ -52,7 +52,7 @@ namespace Remizione
             {
                 UnlockMode.None => true,
                 UnlockMode.Manual => false,
-                UnlockMode.BonfiresLit => playerData.Bonfires >= def.RequiredBonfires,
+                UnlockMode.Cycles => session.CycleCount >= def.RequiredCycles,
                 UnlockMode.Room => !string.IsNullOrEmpty(def.RequiredRoom) && IsUnlocked(def.RequiredRoom),
                 _ => false
             };
