@@ -15,7 +15,7 @@
         public const string ContentRootDirectory = "Content";
 
         // DarkCycleDuration
-        public const int DarkCycleDuration = 18;
+        public const int DarkCycleDuration = 90;
 
         // DefaultInventoryCapacity
         public const int DefaultInventoryCapacity = 5;

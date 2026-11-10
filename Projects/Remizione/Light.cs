@@ -11,7 +11,6 @@ namespace Remizione
     {
         #region Private fields
 
-        private float durationMs;
         private readonly Sprite lightSprite;
         private int litTweenDuration;
         private int unlitTweenDuration;
@@ -31,7 +30,10 @@ namespace Remizione
                 RenderImage = Atlases.Environment.DefaultLight,
                 PivotOrigin = RectanglePoint.Center
             };
-            LightKind = lightKind;
+            this.LightKind = lightKind;
+            this.Color = GetInitialColor(lightKind);
+            
+            Setup();
         }
 
         #endregion
@@ -63,7 +65,7 @@ namespace Remizione
                 LightKind.CommonItemOrb => Colors.Palette.TerraLight,
                 LightKind.OrganicItemOrb => Colors.Palette.Green,
                 LightKind.SulfurBonfire => new(184, 196, 81),
-                LightKind.Player => new Color(235, 170, 170) * .8f,
+                LightKind.Player => new Color(235, 170, 170),
                 _ => Color.White
             };
         }
@@ -72,15 +74,35 @@ namespace Remizione
 
         #region Private members
 
+        // LitCore
+        private void LitCore(int duration = -1)
+        {
+            int targetDuration = duration < 0 ? litTweenDuration : duration;
+
+            if (targetDuration == 0)
+            {
+                fadeTween.Stop();
+                currentFade = 1;
+                return;
+            }
+
+            if (currentFade == 1 || (fadeTween.IsRunning && fadeTween.EndValue == 1))
+                return;
+
+            fadeTween.Start(TweenStyle.CubicIn, currentFade, 1f, targetDuration);
+        }
+
         // Setup
         private void Setup()
         {
+            fadeTween.Stop();
             litTweenDuration = 0;
             unlitTweenDuration = 0;
 
             lightSprite.Tweens.Reset();
             lightSprite.Color = Color;
             lightSprite.Scale = Scale;
+            lightSprite.Tweens.ScaleTween = CreateScaleTween(LightKind, Scale);
 
             switch (LightKind)
             {
@@ -94,6 +116,11 @@ namespace Remizione
                     unlitTweenDuration = 300;
                     break;
 
+                case LightKind.Lantern:
+                    litTweenDuration = 500;
+                    unlitTweenDuration = 500;
+                    break;
+
                 case LightKind.Global:
                 case LightKind.Player:
                     litTweenDuration = RoomEnvironment.CycleTransitionDuration;
@@ -101,7 +128,6 @@ namespace Remizione
                     break;
 
                 case LightKind.SulfurBonfire:
-                    lightSprite.Tweens.ScaleTween = CreateScaleTween(LightKind, Scale);
                     litTweenDuration = 1500;
                     unlitTweenDuration = 1500;
                     break;
@@ -117,6 +143,24 @@ namespace Remizione
                 default:
                     break;
             }
+        }
+
+        // UnlitCore
+        private void UnlitCore(int duration = -1)
+        {
+            int targetDuration = duration < 0 ? unlitTweenDuration : duration;
+
+            if (targetDuration == 0)
+            {
+                fadeTween.Stop();
+                currentFade = 0;
+                return;
+            }
+
+            if (currentFade == 0 || (fadeTween.IsRunning && fadeTween.EndValue == 0))
+                return;
+
+            fadeTween.Start(TweenStyle.CubicIn, currentFade, 0, targetDuration);
         }
 
         #endregion
@@ -144,13 +188,6 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (durationMs > 0)
-            {
-                durationMs -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-                if (durationMs <= 0)
-                    Unlit();
-            }
-
             // El sprite actualiza su escala, color y su flicker loopeado alegremente
             lightSprite.Update(gameTime);
 
@@ -206,24 +243,15 @@ namespace Remizione
         }
 
         // Lit
-        public void Lit(bool immediate = false, int duration = 0)
+        public void Lit(bool immediate)
         {
-            durationMs = duration <= 0 ? -1 : duration;
+            LitCore(immediate ? 0 : litTweenDuration);
+        }
 
-            if (immediate)
-            {
-                fadeTween.Stop();
-                currentFade = 1f;
-                return;
-            }
-
-            if (currentFade == 1f || (fadeTween.IsRunning && fadeTween.EndValue == 1f))
-                return;
-
-            if (litTweenDuration == 0)
-                currentFade = 1f;
-            else
-                fadeTween.Start(TweenStyle.CubicIn, currentFade, 1f, litTweenDuration);
+        // Lit
+        public void Lit(int duration)
+        {
+            LitCore(Math.Max(0, duration));
         }
 
         // Name
@@ -274,22 +302,15 @@ namespace Remizione
         }
 
         // Unlit
-        public void Unlit(bool immediate = false)
+        public void Unlit(bool immediate)
         {
-            if (immediate)
-            {
-                fadeTween.Stop();
-                currentFade = 0;
-                return;
-            }
+            UnlitCore(immediate ? 0 : unlitTweenDuration);
+        }
 
-            if (currentFade == 0 || (fadeTween.IsRunning && fadeTween.EndValue == 0))
-                return;
-
-            if (unlitTweenDuration == 0)
-                currentFade = 0;
-            else
-                fadeTween.Start(TweenStyle.CubicIn, currentFade, 0, unlitTweenDuration);
+        // Unlit
+        public void Unlit(int duration)
+        {
+            UnlitCore(Math.Max(0, duration));
         }
 
         // X

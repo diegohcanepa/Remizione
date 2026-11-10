@@ -1,4 +1,5 @@
 ﻿using Adberration;
+using Adberration.Scripting;
 using Engendro;
 using Engendro.Collections;
 using Microsoft.Xna.Framework;
@@ -339,6 +340,7 @@ namespace Remizione
         public RoomDefinition Definition { get; }
 
         // Respawn
+        [ScriptMethod]
         public void Respawn()
         {
             Cleanup();

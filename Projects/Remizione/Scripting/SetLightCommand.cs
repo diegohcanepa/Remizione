@@ -27,7 +27,7 @@ namespace Remizione.Scripting
             if (room?.Lights.Find(Body.Clauses[1]) is Light light)
             {
                 if (Parser.ParseEnum<SwitchState>(this, 2) == SwitchState.On)
-                    light.Lit();
+                    light.Lit(false);
                 else
                     light.Unlit(HasArg(ImmediateArg));
             }

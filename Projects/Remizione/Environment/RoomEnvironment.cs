@@ -15,8 +15,12 @@ namespace Remizione
         private readonly DustEmitter ashEmitter;
         private static readonly Color defaultLightMapColor = new(45, 45, 45);
         private readonly FireflyEmitter fireflyEmitter;
-        private readonly FloatTween globalOpacityTween = new();
+        private bool pendingRespawn;
+        private readonly Countdown respawnCountdown = new();
         private readonly ColorTween lightMapColorTween = new();
+        private const int proceduralThingsFade = 2500;
+        private readonly FloatTween procThingsOpacityTween = new();
+
         private readonly GameSession session;
 
         #endregion
@@ -56,7 +60,7 @@ namespace Remizione
         {
             if (session.Room is ProceduralRoom room)
                 room.Respawn();
-            globalOpacityTween.Start(TweenStyle.CubicIn, Light.GlobalOpacity, 1, 1000);
+            procThingsOpacityTween.Start(TweenStyle.CubicIn, 0, 1, proceduralThingsFade);
             RoomLight.Unlit(true);
             PlayerLight.Lit(true);
         }
@@ -66,14 +70,19 @@ namespace Remizione
         // BeginDarkCycle
         public void BeginDarkCycle()
         {
-            Sound.Play(SoundNames.CycleDark);
-            globalOpacityTween.Start(TweenStyle.CubicIn, Light.GlobalOpacity, 0, CycleTransitionDuration, Respawn);
+            pendingRespawn = true;
+            Sound.Play(SoundNames.CycleHorn);
+            respawnCountdown.Start(CycleTransitionDuration);
+            procThingsOpacityTween.StartDelay = CycleTransitionDuration - proceduralThingsFade;
+            procThingsOpacityTween.Start(TweenStyle.CubicIn, 1, 0, proceduralThingsFade);
             lightMapColorTween.Start(TweenStyle.CubicIn, LightMapColor, Color.Black, CycleTransitionDuration);
+            RoomLight.Unlit(CycleTransitionDuration);
+            PlayerLight.Lit(CycleTransitionDuration);
             AudioManager.Music.PlayTag("Dark", 8000);
         }
 
         // CycleTransitionDuration
-        public const int CycleTransitionDuration = 4000;
+        public const int CycleTransitionDuration = 10000;
 
         // DrawAshParticles
         public void DrawAshParticles(GameTime gameTime)
@@ -95,8 +104,8 @@ namespace Remizione
         public void EndDarkCycle()
         {
             lightMapColorTween.Start(TweenStyle.CubicIn, LightMapColor, defaultLightMapColor, CycleTransitionDuration);
-            RoomLight.Lit();
-            PlayerLight.Unlit();
+            RoomLight.Lit(CycleTransitionDuration);
+            PlayerLight.Unlit(CycleTransitionDuration);
             AudioManager.Music.PlayTag("Main", 8000);
         }
 
@@ -109,6 +118,9 @@ namespace Remizione
         // PlayerLight
         public Light PlayerLight { get; }
 
+        // RespawnOpacity
+        public Ratio RespawnOpacity { get; private set; } = 1;
+
         // RoomLight
         public Light RoomLight { get; }
 
@@ -118,10 +130,20 @@ namespace Remizione
             if (session.Room == null)
                 return;
 
-            if (globalOpacityTween.IsRunning)
+            if (procThingsOpacityTween.IsRunning)
             {
-                globalOpacityTween.Update(gameTime);
-                Light.GlobalOpacity = globalOpacityTween.CurrentValue;
+                procThingsOpacityTween.Update(gameTime);
+                RespawnOpacity = procThingsOpacityTween.CurrentValue;
+            }
+
+            if (pendingRespawn && respawnCountdown.IsRunning)
+            {
+                respawnCountdown.Update(gameTime);
+                if (!respawnCountdown.IsRunning)
+                {
+                    pendingRespawn = false;
+                    Respawn();
+                }
             }
 
             if (lightMapColorTween.IsRunning)

@@ -81,7 +81,7 @@ namespace Remizione
                     expirationTimer -= gameTime.ElapsedGameTime.Milliseconds;
                     if (expirationTimer < 0)
                     {
-                        AttachedLight?.Unlit();
+                        AttachedLight?.Unlit(false);
                         Tweens.OpacityTween = FloatTween.Create(TweenStyle.Linear, Opacity, 0, 1000, Unparent);
                     }
                 }

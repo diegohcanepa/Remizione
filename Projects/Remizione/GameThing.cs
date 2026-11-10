@@ -548,6 +548,13 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
+            if (HomePosition != Vector2.Zero)
+            {
+                OpacityFactor = Session.Environment.RespawnOpacity;
+                if (!IsPlayer && Session.Environment.RespawnOpacity < 1)
+                    return;
+            }
+
             floatingTween?.Update(gameTime);
             hurtTween?.Update(gameTime);
             hurtShakeTween?.Update(gameTime);
