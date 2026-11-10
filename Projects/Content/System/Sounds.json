@@ -9,6 +9,7 @@
     { "name": "Dark1", "tags": "Dark" }
   ],
   "FX": [
+    { "name": "AshVesselCover" },
     { "name": "BareFist", "soundCount": 3 },
     { "name": "Bible", "soundCount": 3 },
     { "name": "BibleBreak" },
@@ -26,6 +27,7 @@
     { "name": "ConsumeDrink" },
     { "name": "Craft", "soundCount": 2 },
     { "name": "CraftSuccess" },
+    { "name": "CycleDark" },
     { "name": "CycleHorn" },
     { "name": "DoorGateClose" },
     { "name": "DoorGateOpen" },
@@ -61,7 +63,6 @@
     { "name": "Lightning" },
     { "name": "LockOpen" },
     { "name": "MaleHurtA", "soundCount": 8 },
-    { "name": "Miracle", "soundCount": 2 },    
     { "name": "Monk", "soundCount": 3 },
     { "name": "MoveToSack" },
     { "name": "Penitent", "soundCount": 5, "volume": 0.1 },
@@ -81,7 +82,6 @@
     { "name": "RatDeath", "soundCount": 2 },
     { "name": "Raven" },
     { "name": "SpearTrap" },
-    { "name": "SpeakerMale", "soundCount": 3 },
     { "name": "SpeakerMonk", "soundCount": 2, "volume": 0.1 },
     { "name": "StatusPoison" },
     { "name": "Thunder", "soundCount": 4 },

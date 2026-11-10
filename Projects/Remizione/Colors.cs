@@ -41,7 +41,16 @@ namespace Remizione
             internal static Color Back { get; } = Palette.TerraDarker;
             internal static Color Border { get; } = Palette.AlmostBlack;
             internal static Color Diff { get; } = Palette.Orange;
-            internal static Color Fore { get; } = new(164, 60, 60);
+            internal static Color Fore { get; } = new(145, 56, 56);
+        }
+
+        // HPMeterPlayer
+        internal static class HPMeterPlayer
+        {
+            internal static Color Back { get; } = Palette.TerraDarker;
+            internal static Color Border { get; } = Palette.AlmostBlack;
+            internal static Color Diff { get; } = Palette.RedBloody;
+            internal static Color Fore { get; } = Palette.Terra;
         }
 
         // HPMeterProp
@@ -126,15 +135,6 @@ namespace Remizione
             internal static Color TextDark { get; } = new(124, 120, 104);
             internal static Color Yellow { get; } = new(255, 238, 131);
             internal static Color YellowDark { get; } = new(240, 181, 65);
-        }
-
-        // PlayerHPMeter
-        internal static class PlayerHPMeter
-        {
-            internal static Color Back { get; } = Palette.TerraDarker;
-            internal static Color Border { get; } = Color.Transparent;
-            internal static Color Diff { get; } = Palette.Terra;
-            internal static Color Fore { get; } = new(129, 34, 29);
         }
 
         // Shadow

@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Adberration.Scripting;
+using Engendro;
+using Microsoft.Xna.Framework;
 
 namespace Remizione
 {
@@ -35,8 +37,20 @@ namespace Remizione
         // Refresh
         private void Refresh()
         {
+            if (Session.CurrentCycle == Cycle.Dark && Session.Environment.IsChangingCycle)
+                return;
+
             lastKnownCycle = Session.CurrentCycle;
             AnimationPlayer.Play(Session.CurrentCycle.ToString());
+            if (lastKnownCycle == Cycle.Light)
+            {
+                if (IsInViewport)
+                {
+                    Tweens.XTween = FloatTween.Create(TweenStyle.Linear, X, X + .5f, 40, 4);
+                    PlaySound(SoundNames.AshVesselCover);
+                }
+            }
+            IsEnabled = lastKnownCycle == Cycle.Dark;
         }
 
         #endregion
@@ -60,5 +74,9 @@ namespace Remizione
         }
 
         #endregion
+
+        // IsEnabled
+        [ScriptProperty]
+        public bool IsEnabled { get; private set; }
     }
 }

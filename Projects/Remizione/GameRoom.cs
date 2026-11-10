@@ -146,7 +146,7 @@ namespace Remizione
 //            if (AllowGlobalLight)
             {
                 Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
-                Session.Environment.GlobalLight.Draw(gameTime);
+                Session.Environment.RoomLight.Draw(gameTime);
                 Game.SpriteBatch.End();
             }
 
@@ -447,7 +447,7 @@ namespace Remizione
             if (!CanUseLightingSystem || Session.CurrentCycle == Cycle.Light)
                 return true;
 
-            if (Session.Environment.GlobalLight.IsEmitting && Session.Environment.GlobalLight.BoundingBox.Contains(position))
+            if (Session.Environment.RoomLight.IsEmitting && Session.Environment.RoomLight.BoundingBox.Contains(position))
                 return true;
 
             if (Session.Environment.PlayerLight.IsEmitting && Session.Environment.PlayerLight.BoundingBox.Contains(position))

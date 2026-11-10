@@ -703,7 +703,6 @@ namespace Remizione
         public bool BonfireMode { get; set; }
 
         // CleanupWorld
-        // TODO: MUST call this 
         public void CleanupWorld()
         {
             static bool CanCleanup(Entity entity)
@@ -909,23 +908,20 @@ namespace Remizione
         // PlayerInputHandler
         public PlayerInputHandler<Actor> PlayerInputHandler { get; } = new(PlayerIndex.One);
 
+        // PrepareForRespawn
+        public void PrepareForRespawn()
+        {
+            unlockManager.Refresh();
+            RenewSeed();
+            CleanupWorld();
+        }
+
         // PreviousRoom
         [ScriptProperty]
         public new GameRoom? PreviousRoom => (GameRoom?)base.PreviousRoom;
 
         // Random
         public Random Random { get; private set; } = new(0);
-
-        // RespawnWorld
-        [ScriptMethod]
-        public void RespawnWorld()
-        {
-            unlockManager.Refresh();
-            RenewSeed();
-            CleanupWorld();
-            if (Room is ProceduralRoom proceduralRoom)
-                proceduralRoom.Populate();
-        }
 
         // RestartFromLastBonfire
         [ScriptMethod]

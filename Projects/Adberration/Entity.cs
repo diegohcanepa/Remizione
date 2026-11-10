@@ -216,12 +216,6 @@ namespace Adberration
             Sprite.Draw(gameTime);
         }
 
-        // OnCalculateOpacity
-        protected virtual float OnCalculateOpacity(float currentValue)
-        {
-            return currentValue;
-        }
-
         // OnInitialize
         protected virtual void OnInitialize()
         {
@@ -1058,12 +1052,6 @@ namespace Adberration
             internal EntitySprite(Entity entity)
             {
                 this.entity = entity;
-            }
-
-            // CalculateOpacity
-            protected override float CalculateOpacity()
-            {
-                return entity.OnCalculateOpacity(base.CalculateOpacity());
             }
 
             // OnTransform

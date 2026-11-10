@@ -10,6 +10,8 @@ namespace Remizione
     /// </summary>
     public sealed class RoomEnvironment
     {
+        #region Private members
+
         private readonly DustEmitter ashEmitter;
         private static readonly Color defaultLightMapColor = new(45, 45, 45);
         private readonly FireflyEmitter fireflyEmitter;
@@ -17,13 +19,18 @@ namespace Remizione
         private readonly ColorTween lightMapColorTween = new();
         private readonly GameSession session;
 
+        #endregion
+
+        #region Constructor
+
         // Constructor
         public RoomEnvironment(GameSession session)
         {
             this.session = session;
             this.ashEmitter = new DustEmitter(session.Camera, 6, 1000, 35);
             this.fireflyEmitter = new FireflyEmitter(session, 1, 500, 20);
-            this.GlobalLight = new("GlobalLight", LightKind.Global)
+
+            this.RoomLight = new("RoomLight", LightKind.Global)
             {
                 PivotOrigin = RectanglePoint.Center,
                 Scale = new(20,10)
@@ -40,31 +47,33 @@ namespace Remizione
             fireflyEmitter.Activate();
         }
 
-        // BeginDarkCycle
-        public void BeginDarkCycle(bool immediate = false)
-        {
-            session.RespawnWorld();
-            globalOpacityTween.Start(TweenStyle.CubicIn, 0, 1, 4000);
+        #endregion
 
-            if (immediate)
-            {
-                lightMapColorTween.Stop();
-                LightMapColor = Color.Black;
-                GlobalLight.Unlit(true);
-                PlayerLight.Lit(true);
-            }
-            else
-            {
-                Sound.Play(SoundNames.CycleHorn);
-                lightMapColorTween.Start(TweenStyle.CubicIn, LightMapColor, Color.Black, CycleTransitionDuration);
-                GlobalLight.Unlit();
-                PlayerLight.Lit();
-                AudioManager.Music.PlayTag("Dark", 8000);
-            }
+        #region Private members
+
+        // Respawn
+        private void Respawn()
+        {
+            if (session.Room is ProceduralRoom room)
+                room.Respawn();
+            globalOpacityTween.Start(TweenStyle.CubicIn, Light.GlobalOpacity, 1, 1000);
+            RoomLight.Unlit(true);
+            PlayerLight.Lit(true);
+        }
+
+        #endregion
+
+        // BeginDarkCycle
+        public void BeginDarkCycle()
+        {
+            Sound.Play(SoundNames.CycleDark);
+            globalOpacityTween.Start(TweenStyle.CubicIn, Light.GlobalOpacity, 0, CycleTransitionDuration, Respawn);
+            lightMapColorTween.Start(TweenStyle.CubicIn, LightMapColor, Color.Black, CycleTransitionDuration);
+            AudioManager.Music.PlayTag("Dark", 8000);
         }
 
         // CycleTransitionDuration
-        public const int CycleTransitionDuration = 10000;
+        public const int CycleTransitionDuration = 4000;
 
         // DrawAshParticles
         public void DrawAshParticles(GameTime gameTime)
@@ -83,35 +92,25 @@ namespace Remizione
         }
 
         // EndDarkCycle
-        public void EndDarkCycle(bool immediate = false)
+        public void EndDarkCycle()
         {
-            if (immediate)
-            {
-                lightMapColorTween.Stop();
-                LightMapColor = defaultLightMapColor;
-                GlobalLight.Lit(true);
-                PlayerLight.Unlit(true);
-            }
-            else
-            {
-                lightMapColorTween.Start(TweenStyle.CubicIn, LightMapColor, defaultLightMapColor, CycleTransitionDuration);
-                GlobalLight.Lit();
-                PlayerLight.Unlit();
-                AudioManager.Music.PlayTag("Main", 8000);
-            }
+            lightMapColorTween.Start(TweenStyle.CubicIn, LightMapColor, defaultLightMapColor, CycleTransitionDuration);
+            RoomLight.Lit();
+            PlayerLight.Unlit();
+            AudioManager.Music.PlayTag("Main", 8000);
         }
 
-        // GlobalLight
-        public Light GlobalLight { get; }
-
-        // GlobalOpacity
-        public Ratio GlobalOpacity { get; private set; } = 1;
+        // IsChangingCycle
+        public bool IsChangingCycle => lightMapColorTween.IsRunning;
 
         // LightMapColor
         public Color LightMapColor { get; private set; } = defaultLightMapColor;
 
         // PlayerLight
         public Light PlayerLight { get; }
+
+        // RoomLight
+        public Light RoomLight { get; }
 
         // Update
         public void Update(GameTime gameTime)
@@ -122,7 +121,7 @@ namespace Remizione
             if (globalOpacityTween.IsRunning)
             {
                 globalOpacityTween.Update(gameTime);
-                GlobalOpacity = globalOpacityTween.CurrentValue;
+                Light.GlobalOpacity = globalOpacityTween.CurrentValue;
             }
 
             if (lightMapColorTween.IsRunning)
@@ -131,8 +130,8 @@ namespace Remizione
                 LightMapColor = lightMapColorTween.CurrentValue;
             }
 
-            GlobalLight.Position = session.Camera.Position - session.Camera.Offset;
-            GlobalLight.Update(gameTime);
+            RoomLight.Position = session.Camera.Position - session.Camera.Offset;
+            RoomLight.Update(gameTime);
 
             if (session.Player != null)
                 PlayerLight.Position = session.Player.BoundingBox.Center;

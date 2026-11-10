@@ -133,7 +133,7 @@ namespace Remizione
             float originalSpriteOpacity = lightSprite.Opacity;
 
             // Aplicamos la opacidad combinada (Flicker * Fade de encendido)
-            lightSprite.Opacity = originalSpriteOpacity * currentFade;
+            lightSprite.Opacity = originalSpriteOpacity * currentFade * GlobalOpacity;
 
             lightSprite.Draw(gameTime);
 
@@ -183,6 +183,9 @@ namespace Remizione
                 }
             }
         }
+
+        // GlobalOpacity
+        public static Ratio GlobalOpacity { get; set; } = 1;
 
         // IsEmitting
         public bool IsEmitting => currentFade > 0;

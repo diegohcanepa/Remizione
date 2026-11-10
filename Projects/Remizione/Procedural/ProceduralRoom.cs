@@ -37,6 +37,13 @@ namespace Remizione
 
         #region Private members
 
+        // Cleanup
+        private void Cleanup()
+        {
+            spawnCounter.Clear();
+            occupiedPositions.Clear();
+        }
+
         // GetCandidateDefinitions
         private List<TDefinition> GetCandidateDefinitions<TDefinition>(IList<TDefinition> definitions)
             where TDefinition : ThingDefinition
@@ -323,7 +330,7 @@ namespace Remizione
         protected override void OnLoad()
         {
             base.OnLoad();
-            Populate();
+            Respawn();
         }
 
         #endregion
@@ -331,11 +338,11 @@ namespace Remizione
         // Definition
         public RoomDefinition Definition { get; }
 
-        // Populate
-        public void Populate()
+        // Respawn
+        public void Respawn()
         {
-            spawnCounter.Clear();
-            occupiedPositions.Clear();
+            Cleanup();
+            Session.PrepareForRespawn();
             SpawnProps();
             SpawnActors();
         }
