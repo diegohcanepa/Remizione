@@ -11,7 +11,6 @@ namespace Remizione
     /// </summary>
     public class Bonfire : Prop
     {
-        private const float MaxActiveTime = 40;
         private static readonly Vector2 maxLightScale = new(14, 10);
         private static readonly Vector2 minLightScale = new(9, 6);
         private readonly AnimatedSprite flame;
@@ -110,7 +109,7 @@ namespace Remizione
                 // Ajusta la escala de la luz proporcionalmente al tiempo restante
                 if (AttachedLight != null)
                 {
-                    float progress = MathHelper.Clamp(ActiveTimeRemaining / MaxActiveTime, 0f, 1f);
+                    float progress = MathHelper.Clamp(ActiveTimeRemaining / GameData.WorldSettings.BonfireDuration, 0f, 1f);
                     AttachedLight.Scale = Vector2.Lerp(minLightScale, maxLightScale, progress);
                 }
             }
@@ -137,7 +136,7 @@ namespace Remizione
 
                     if (field)
                     {
-                        ActiveTimeRemaining = MaxActiveTime;
+                        ActiveTimeRemaining = GameData.WorldSettings.BonfireDuration;
 
                         flame.Player.Play("Default", true);
                         soundInstance = PlaySound(SoundNames.Bonfire, true);

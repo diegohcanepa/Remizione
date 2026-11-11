@@ -8,6 +8,10 @@
       "type": "string",
       "description": "Ruta o URI al esquema JSON"
     },    
+    "bonfireDuration": {
+      "type": "integer",
+      "description": "Bonfire duration in seconds."
+    },
     "darkCycleDuration": {
       "type": "integer",
       "description": "Dark cycle duration in seconds."
@@ -18,8 +22,9 @@
     }
   },
   "required": [
-    "DarkCycleDuration",
-    "LightCycleDuration"
+    "bonfireDuration",
+    "darkCycleDuration",
+    "lightCycleDuration"
   ],
   "unevaluatedProperties": false
 }

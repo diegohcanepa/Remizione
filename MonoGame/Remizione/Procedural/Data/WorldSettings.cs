@@ -20,6 +20,9 @@ namespace Remizione
             using JsonDocument doc = JsonDocument.Parse(input);
             var element = doc.RootElement;
 
+            // BonfireDuration
+            BonfireDuration = element.GetInt32("bonfireDuration", 40);
+
             // DarkCycleDuration
             DarkCycleDuration = element.GetInt32("darkCycleDuration", 90);
 
@@ -28,6 +31,9 @@ namespace Remizione
         }
 
         #endregion
+
+        // BonfireDuration
+        public int BonfireDuration { get; }
 
         // DarkCycleDuration
         public int DarkCycleDuration { get; }
