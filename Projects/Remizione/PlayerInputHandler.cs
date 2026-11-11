@@ -42,9 +42,9 @@ namespace Remizione
             {
                 if (isPrimary)
                 {
-                    MouseCursor.Click();
+                    MouseCursor.Click(true);
 
-                    if (consecutiveActionCount >= MaxConsecutiveActions)
+                    if (consecutiveActionCount >= MaxConsecutiveActions && Owner.MaxHP > 0)
                     {
                         consecutiveActionCount = 0;
                         actionWindowTimer = 0;

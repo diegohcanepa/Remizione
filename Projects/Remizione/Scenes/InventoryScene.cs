@@ -86,7 +86,7 @@ namespace Remizione
                 }
                 else
                 {
-                    MouseCursor.Shake();
+                    MouseCursor.InvalidClick();
                 }
             }
 
@@ -99,7 +99,7 @@ namespace Remizione
                 }
                 else
                 {
-                    MouseCursor.Shake();
+                    MouseCursor.InvalidClick();
                 }
             }
 

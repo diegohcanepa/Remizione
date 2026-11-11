@@ -40,25 +40,12 @@ namespace Remizione
 
         #region Static members
 
-        // CreateScaleTween
-        private static Vector2Tween? CreateScaleTween(LightKind lightKind, Vector2 scale)
-        {
-            return lightKind switch
-            {
-                LightKind.Beacon => Vector2Tween.Create(TweenStyle.Linear, scale, scale * 1.1f, 1200, -1),
-                LightKind.Fire => Vector2Tween.Create(TweenStyle.Linear, scale, scale * 1.1f, 1200, -1),
-                LightKind.SulfurBonfire => Vector2Tween.Create(TweenStyle.Linear, scale, scale * 1.01f, 1200, -1),
-                LightKind.Lantern => Vector2Tween.Create(TweenStyle.Linear, scale, scale * 1.1f, Random.Shared.Next(1100, 1400), -1),
-                _ => null,
-            };
-        }
-
         // GetInitialColor
         private static Color GetInitialColor(LightKind lightKind)
         {
             return lightKind switch
             {
-                LightKind.Beacon => new Color(235, 170, 170),
+                LightKind.GroundTorch => new Color(235, 170, 170),
                 LightKind.Fire => new Color(255, 160, 160),
                 LightKind.Global => new Color(235, 170, 170),
                 LightKind.KeyItemOrb => Colors.Palette.SkyBlue,
@@ -102,11 +89,10 @@ namespace Remizione
             lightSprite.Tweens.Reset();
             lightSprite.Color = Color;
             lightSprite.Scale = Scale;
-            lightSprite.Tweens.ScaleTween = CreateScaleTween(LightKind, Scale);
 
             switch (LightKind)
             {
-                case LightKind.Beacon:
+                case LightKind.GroundTorch:
                     litTweenDuration = 2000;
                     unlitTweenDuration = 300;
                     break;
@@ -129,7 +115,7 @@ namespace Remizione
 
                 case LightKind.SulfurBonfire:
                     litTweenDuration = 1500;
-                    unlitTweenDuration = 1500;
+                    unlitTweenDuration = 2500;
                     break;
 
                 case LightKind.KeyItemOrb:
@@ -280,11 +266,7 @@ namespace Remizione
                 if (value != field)
                 {
                     field = value;
-
                     lightSprite.Scale = value;
-
-                    if (lightSprite.Tweens.ScaleTween != null)
-                        lightSprite.Tweens.ScaleTween = CreateScaleTween(LightKind, value);
                 }
             }
         } = Vector2.One;

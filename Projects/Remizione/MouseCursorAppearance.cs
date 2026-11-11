@@ -140,6 +140,7 @@ namespace Remizione
             else if (heldItem != null)
             {
                 MouseCursor.Tooltip = heldItem.Definition.Label;
+                MouseCursor.TooltipColor = heldItem.Definition.LabelColor;
                 MouseCursor.SubText = target?.Label;
             }
             else

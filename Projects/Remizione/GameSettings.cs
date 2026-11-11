@@ -15,7 +15,7 @@
         public const string ContentRootDirectory = "Content";
 
         // DarkCycleDuration
-        public const int DarkCycleDuration = 90;
+        public const int DarkCycleDuration = 30;
 
         // DefaultInventoryCapacity
         public const int DefaultInventoryCapacity = 5;
@@ -30,7 +30,7 @@
         public const string GameFolder = "Remizione";
 
         // LightCycleDuration
-        public const int LightCycleDuration = 15;
+        public const int LightCycleDuration = 60;
 
         // LogFileName
         public const string LogFileName = "ErrorLog.txt";

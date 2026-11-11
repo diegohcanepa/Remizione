@@ -11,8 +11,12 @@ namespace Remizione
     /// </summary>
     public class Bonfire : Prop
     {
+        private static readonly Vector2 defaultLightScale = new(9, 6);
         private readonly AnimatedSprite flame;
+        private const float flameOpacity = .8f;
+        private const float flameScale = .6f;
         private readonly Sprite patch;
+        private SoundInstance? soundInstance;
 
         #region Constructor
 
@@ -62,12 +66,13 @@ namespace Remizione
         protected override void OnDraw(GameTime gameTime)
         {
             base.OnDraw(gameTime);
-            if (IsLit)
+
+            if (IsLit || flame.Tweens.IsTweening)
             {
                 flame.Draw(gameTime);
                 patch.Draw(gameTime);
             }
-        }
+    }
 
         // OnTransform
         protected override void OnTransform(TransformChange change)
@@ -85,11 +90,30 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
+
             if (IsLit)
-                flame.Update(gameTime);
+            {
+                if (ActiveTimeRemaining > 0f)
+                {
+                    float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    ActiveTimeRemaining -= elapsed;
+
+                    if (ActiveTimeRemaining <= 0)
+                    {
+                        ActiveTimeRemaining = 0;
+                        IsLit = false;
+                    }
+                }
+            }
+
+            flame.Update(gameTime);
         }
 
         #endregion
+
+        // ActiveTimeRemaining
+        [ScriptProperty]
+        public float ActiveTimeRemaining { get; set; }
 
         // IsLit
         [ScriptProperty]
@@ -104,14 +128,27 @@ namespace Remizione
 
                     if (field)
                     {
+                        ActiveTimeRemaining = 10;
+
                         flame.Player.Play("Default", true);
-                        PlaySound(SoundNames.Bonfire, true);
+                        soundInstance = PlaySound(SoundNames.Bonfire, true);
                         AttachedLight?.Lit(Session.State == GameSessionState.Loading);
 
                         if (Session.State != GameSessionState.Loading)
                         {
-                            flame.Tweens.OpacityTween = FloatTween.Create(TweenStyle.CubicIn, 0, flame.Opacity, 500);
-                            flame.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicIn, .2f, flame.Scale.X, 1000);
+                            flame.Tweens.OpacityTween = FloatTween.Create(TweenStyle.CubicIn, 0, flameOpacity, 500);
+                            flame.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicIn, .2f, flameScale, 1000);
+                        }
+                    }
+                    else
+                    {
+                        ActiveTimeRemaining = 0;
+                        AttachedLight?.Unlit(Session.State == GameSessionState.Loading);
+                        if (Session.State != GameSessionState.Loading)
+                        {
+                            soundInstance?.Stop(2000);
+                            flame.Tweens.OpacityTween = FloatTween.Create(TweenStyle.CubicIn, flame.Opacity, 0, 2500);
+                            flame.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicIn, flame.Scale.X, .2f, 2000);
                         }
                     }
                 }

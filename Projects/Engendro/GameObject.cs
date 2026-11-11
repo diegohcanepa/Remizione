@@ -15,6 +15,9 @@ namespace Engendro
 
         #region Protected members
 
+        // CanUpdate
+        protected virtual bool CanUpdate() => true;
+
         // OnDraw
         protected virtual void OnDraw(GameTime gameTime)
         {
@@ -39,7 +42,8 @@ namespace Engendro
         // Update
         public void Update(GameTime gameTime)
         {
-            OnUpdate(gameTime);
+            if (CanUpdate())
+                OnUpdate(gameTime);
         }
     }
 }

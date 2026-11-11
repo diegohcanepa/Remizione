@@ -1066,7 +1066,7 @@ namespace Remizione
 
             IsFollowingPath = true;
 
-            if (IsPlayer)
+            if (IsPlayer && MaxHP > 0)
                 Session.HUD.DestinationMark.Position = path[^1];
 
             return MoveToResult.Success;

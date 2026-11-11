@@ -142,9 +142,12 @@ namespace Remizione
         #endregion
 
         // Click
-        public static void Click()
+        public static void Click(bool silent = false)
         {
             clickScaleTween.Start(TweenStyle.Linear, Vector2.One, clickScale, 60, 2);
+            
+            if (!silent)
+                Sound.Play(SoundNames.Interact);
         }
 
         // Color
@@ -210,6 +213,15 @@ namespace Remizione
             }
         }
 
+        // InvalidClick
+        public static void InvalidClick(bool silent = false)
+        {
+            shakeTween.Start(TweenStyle.CubicInOut, 0, 1, 50, 4);
+            
+            if (!silent)
+                Sound.Play(SoundNames.Error);
+        }
+
         // IsVisible
         public static bool IsVisible { get; set; } = true;
 
@@ -225,13 +237,6 @@ namespace Remizione
             subTextSprite.Color = Colors.MouseCursor.SubText;
             Icon = MouseCursorIcon.Cross;
             clickScaleTween.Stop();
-        }
-
-        // Shake
-        public static void Shake()
-        {
-            shakeTween.Start(TweenStyle.CubicInOut, 0, 1, 50, 4);
-            Sound.Play(SoundNames.Error);
         }
 
         // SubText

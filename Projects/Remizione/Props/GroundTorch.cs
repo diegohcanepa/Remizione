@@ -18,7 +18,7 @@ namespace Remizione
             Verb = Verb.LookAt;
             DepthOffset = -3;
 
-            this.AttachedLight = new("Light", LightKind.Beacon)
+            this.AttachedLight = new("Light", LightKind.GroundTorch)
             {
                 PivotOrigin = RectanglePoint.Center,
                 Position = new(9),

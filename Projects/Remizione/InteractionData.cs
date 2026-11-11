@@ -217,6 +217,7 @@ namespace Remizione
                 var destination = InputManager.DefaultPlayer.Mouse.WorldPosition(player.Session.Camera);
                 var fastMove = Vector2.Distance(player.Position, destination) > GameSettings.WalkThreshold;
                 player.MoveTo(destination, fastMove);
+                MouseCursor.Click(true);
                 return;
             }
 
@@ -225,7 +226,7 @@ namespace Remizione
 
             if (Target == null || activeCommand == null)
             {
-                MouseCursor.Shake();
+                MouseCursor.InvalidClick();
                 return;
             }
 
@@ -245,7 +246,7 @@ namespace Remizione
             }
             else
             {
-                Sound.Play(SoundNames.Interact);
+                MouseCursor.Click();
                 ApproachAndExecute(player, Target);
             }
         }
@@ -266,15 +267,22 @@ namespace Remizione
             }
             else if (context.HeldItem == null)
             {
-                context.HeldItem = player.Session.PlayerData.Inventory.Find(ItemNames.GadlingKnuckle);
+                if (player.Session.PlayerData.Inventory.Find(ItemNames.GadlingKnuckle) is Item item)
+                {
+                    context.HeldItem = item;
+                    MouseCursor.Click();
+                }
+                else
+                {
+                    MouseCursor.InvalidClick();
+                }
             }
             else
             {
                 player.StopMoving();
                 context.HeldItem = null;
+                MouseCursor.Click();
             }
-
-            Sound.Play(SoundNames.Interact);
         }
 
         // Target

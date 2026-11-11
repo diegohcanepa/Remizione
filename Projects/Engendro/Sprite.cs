@@ -45,7 +45,7 @@ namespace Engendro
         // CalculateOpacity
         protected virtual float CalculateOpacity()
         {
-            return Opacity * OpacityFactor;
+            return OnCalculateOpacity(Opacity * OpacityFactor);
         }
 
         // GetAbsolutePosition
@@ -62,6 +62,9 @@ namespace Engendro
 
         // IsBoundingBoxDirty
         protected bool IsBoundingBoxDirty { get; set; } = true;
+
+        // OnCalculateOpacity
+        protected virtual float OnCalculateOpacity(float currentOpacity) => currentOpacity;
 
         // OnDraw
         protected override void OnDraw(GameTime gameTime)

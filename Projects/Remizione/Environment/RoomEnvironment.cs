@@ -14,11 +14,12 @@ namespace Remizione
 
         private readonly DustEmitter ashEmitter;
         private static readonly Color defaultLightMapColor = new(45, 45, 45);
+        private static readonly Vector2 defaultPlayerLightSize = new(2);
         private readonly FireflyEmitter fireflyEmitter;
         private bool pendingRespawn;
         private readonly Countdown respawnCountdown = new();
         private readonly ColorTween lightMapColorTween = new();
-        private const int proceduralThingsFade = 2500;
+        private const int proceduralThingsFade = 2000;
         private readonly FloatTween procThingsOpacityTween = new();
 
         private readonly GameSession session;
@@ -44,8 +45,10 @@ namespace Remizione
             {
                 PivotOrigin = RectanglePoint.Center,
                 Position = Screen.Center,
-                Scale = new(4, 3)
+                Scale = defaultPlayerLightSize
             };
+
+            PlayerLight.Unlit(true);
 
             ashEmitter.Activate();
             fireflyEmitter.Activate();
@@ -60,6 +63,7 @@ namespace Remizione
         {
             if (session.Room is ProceduralRoom room)
                 room.Respawn();
+            procThingsOpacityTween.StartDelay = 0;
             procThingsOpacityTween.Start(TweenStyle.CubicIn, 0, 1, proceduralThingsFade);
             RoomLight.Unlit(true);
             PlayerLight.Lit(true);
@@ -72,7 +76,7 @@ namespace Remizione
         {
             pendingRespawn = true;
             Sound.Play(SoundNames.CycleHorn);
-            respawnCountdown.Start(CycleTransitionDuration);
+            respawnCountdown.Start(CycleTransitionDuration / 1000);
             procThingsOpacityTween.StartDelay = CycleTransitionDuration - proceduralThingsFade;
             procThingsOpacityTween.Start(TweenStyle.CubicIn, 1, 0, proceduralThingsFade);
             lightMapColorTween.Start(TweenStyle.CubicIn, LightMapColor, Color.Black, CycleTransitionDuration);
@@ -82,7 +86,7 @@ namespace Remizione
         }
 
         // CycleTransitionDuration
-        public const int CycleTransitionDuration = 10000;
+        public const int CycleTransitionDuration = 20000;
 
         // DrawAshParticles
         public void DrawAshParticles(GameTime gameTime)

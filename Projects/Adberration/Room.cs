@@ -187,7 +187,6 @@ namespace Adberration
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            // Skip Update if room is no longer the current scene
             if (!IsCurrentRoom)
                 return;
 
