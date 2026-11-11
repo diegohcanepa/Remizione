@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "WindowsDX",
+    "Projects": [
+      {
+        "Path": "Platforms\\WindowsDX\\Remizione.WindowsDX.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Content\\Content.csproj",
+        "Action": "None"
+      }
+    ]
+  }
+]

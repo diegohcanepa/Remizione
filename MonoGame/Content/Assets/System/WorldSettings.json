@@ -1,0 +1,5 @@
+{
+  "$schema": "./WorldSettings.schema.json",
+  "darkCycleDuration": 30,
+  "lightCycleDuration": 60
+}

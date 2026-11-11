@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "WorldSettings.schema.json",
+  "title": "World Settings",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Ruta o URI al esquema JSON"
+    },    
+    "darkCycleDuration": {
+      "type": "integer",
+      "description": "Dark cycle duration in seconds."
+    },
+    "lightCycleDuration": {
+      "type": "integer",
+      "description": "Light cycle duration in seconds."
+    }
+  },
+  "required": [
+    "DarkCycleDuration",
+    "LightCycleDuration"
+  ],
+  "unevaluatedProperties": false
+}

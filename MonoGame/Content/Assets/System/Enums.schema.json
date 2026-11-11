@@ -1,0 +1,238 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Enums",
+  "$defs": {
+    "ActionKind": {
+      "type": "string",
+      "enum": [
+        "ScriptOutcome",
+        "Proximity",
+        "Projectile",
+        "Self"
+      ]
+    },
+    "AttackRange": {
+      "type": "string",
+      "enum": [
+        "None",
+        "Short",
+        "Medium",
+        "Long"
+      ]
+    },
+    "AttackTelegraphKind": {
+      "type": "string",
+      "enum": [
+        "None",
+        "Animation",
+        "Vibration"
+      ]
+    },
+    "DamageType": {
+      "type": "string",
+      "enum": [
+        "None",
+        "Physical",
+        "Acid",
+        "Explosive",
+        "Fire",
+        "Ice",
+        "Lightning",
+        "Poison"
+      ]
+    },
+    "Difficulty": {
+      "type": "string",
+      "enum": [
+        "Easy",
+        "Normal",
+        "Hard"
+      ]
+    },
+    "CycleFilter": {
+      "type": "string",
+      "enum": [
+        "None",
+        "Light",
+        "Dark"
+      ]
+    },    
+    "EffectContext": {
+      "type": "string",
+      "enum": [
+        "Collect",
+        "Contact",
+        "Attack",
+        "Update",
+        "RemainsContact",
+        "Use",
+        "ProjectileHit",
+        "RunModifier",
+        "Status",
+        "ApplyStatus"
+      ]
+    },
+    "EffectTarget": {
+      "type": "string",
+      "enum": [
+        "Self",
+        "Target"
+      ]
+    },
+    "EffectType": {
+      "type": "string",
+      "enum": [
+        "None",
+        "Damage",
+        "Death",
+        "EnergyGain",
+        "EnergyLoss",
+        "EnergyRestore",
+        "HPGain",
+        "HPLoss",
+        "HPRestore",
+        "MaxEnergyGain",
+        "MaxEnergyLoss",
+        "MaxHPGain",
+        "MaxHPLoss",
+        "Status"
+      ]
+    },
+    "FacingDirection": {
+      "type": "string",
+      "enum": [
+        "Left",
+        "Right"
+      ]
+    },
+    "Faction": {
+      "type": "string",
+      "enum": [
+        "Player",
+        "Penitent",
+        "Creature",
+        "Neutral"
+      ]
+    },
+    "FallbackMovementKind": {
+      "type": "string",
+      "enum": [
+        "None",
+        "Flee",
+        "Random",
+        "Lurk"
+      ]
+    },    
+    "ImpactEffectType": {
+      "type": "string",
+      "enum": [
+        "None",
+        "Lightning"
+      ]
+    },
+    "ItemCategory": {
+      "type": "string",
+      "enum": [
+        "Access",
+        "Food",
+        "Luck",
+        "Medicine",
+        "Misc",
+        "Sacred",
+        "Weapon"
+      ]
+    },
+    "ItemKind": {
+      "type": "string",
+      "enum": [
+        "Common",
+        "Key",
+        "Organic"
+      ]
+    },
+    "KnockbackIntensity": {
+      "type": "string",
+      "enum": [
+        "None",
+        "Low",
+        "Medium",
+        "High"
+      ]
+    },
+    "LockType": {
+      "type": "string",
+      "enum": [
+        "None",
+        "BronzeKey",
+        "GoldenKey",
+        "GateLever",
+        "TrapDoorKey"
+      ]
+    }, 
+    "PlaceholderContentType": {
+      "type": "string",
+      "enum": [
+        "Prop",
+        "Actor"
+      ]
+    },
+    "ProjectileTrajectoryType": {
+      "type": "string",
+      "enum": [
+        "Linear",
+        "Parabolic"
+      ]
+    },
+    "PuzzleKind": {
+      "type": "string",
+      "enum": [
+        "BronzeKey",
+        "GateLever"
+      ]
+    },
+    "RunModifierScope": {
+      "type": "string",
+      "enum": [
+        "Room",
+        "Run"
+      ]
+    },
+    "StatusType": {
+      "type": "string",
+      "enum": [
+        "Laceration",
+        "Putrefaction"
+      ]
+    },
+    "Tag": {
+      "type": "string",
+      "enum": [
+        "Bonfire",
+        "Ceiling",
+        "Floor",
+        "GateLever",
+        "Grate",
+        "Obstacle",
+        "PetrifiedTree",
+        "Poison",
+        "Pottery",
+        "Torch",
+        "Trap",
+        "Trapdoor",
+        "Tree",
+        "Trunk",
+        "WallDecoration",
+        "Window"
+      ]
+    },
+    "UnlockMode": {
+      "type": "string",
+      "enum": [
+        "None",
+        "Manual",
+        "Cycles",
+        "Room"
+      ]
+    }    
+  }
+}

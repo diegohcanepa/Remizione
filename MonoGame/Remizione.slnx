@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Adberration/Adberration.csproj" />
+  <Project Path="Content/Content.csproj" />
+  <Project Path="Engendro/Engendro.csproj" />
+  <Project Path="Platforms/WindowsDX/Remizione.WindowsDX.csproj" />
+  <Project Path="Remizione/Remizione.csproj" />
+</Solution>
