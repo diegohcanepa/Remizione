@@ -3,12 +3,11 @@
     "Name": "WindowsDX",
     "Projects": [
       {
-        "Path": "Platforms\\WindowsDX\\Remizione.WindowsDX.csproj",
+        "Path": "Platforms\\WindowsDX\\WindowsDX.csproj",
         "Action": "Start"
       },
       {
-        "Path": "Content\\Content.csproj",
-        "Action": "None"
+        "Path": "Content\\Content.csproj"
       }
     ]
   }

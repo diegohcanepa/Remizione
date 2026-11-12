@@ -66,7 +66,7 @@ namespace Remizione
             procThingsOpacityTween.StartDelay = 0;
             procThingsOpacityTween.Start(TweenStyle.CubicIn, 0, 1, proceduralThingsFade);
             RoomLight.Unlit(true);
-            PlayerLight.Lit(true);
+            //PlayerLight.Lit(true);
         }
 
         #endregion
@@ -81,7 +81,7 @@ namespace Remizione
             procThingsOpacityTween.Start(TweenStyle.CubicIn, 1, 0, proceduralThingsFade);
             lightMapColorTween.Start(TweenStyle.CubicIn, LightMapColor, Color.Black, CycleTransitionDuration);
             RoomLight.Unlit(CycleTransitionDuration);
-            PlayerLight.Lit(CycleTransitionDuration);
+            //PlayerLight.Lit(CycleTransitionDuration);
             AudioManager.Music.PlayTag("Dark", 8000);
         }
 
@@ -109,7 +109,7 @@ namespace Remizione
         {
             lightMapColorTween.Start(TweenStyle.CubicIn, LightMapColor, defaultLightMapColor, CycleTransitionDuration);
             RoomLight.Lit(CycleTransitionDuration);
-            PlayerLight.Unlit(CycleTransitionDuration);
+            //PlayerLight.Unlit(CycleTransitionDuration);
             AudioManager.Music.PlayTag("Main", 8000);
         }
 

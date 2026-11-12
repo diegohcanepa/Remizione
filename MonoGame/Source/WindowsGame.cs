@@ -1,8 +1,6 @@
 ﻿using Adberration;
 using Engendro;
-using Engendro.Input;
 using Microsoft.Xna.Framework;
-using Steamworks;
 using System;
 using System.IO;
 using System.Threading;
@@ -21,7 +19,6 @@ namespace Remizione
             AppDomain.CurrentDomain.UnhandledException += ProgramUnhandledException;
 
             Graphics.HardwareModeSwitch = false;
-            GamePadDevice.Style = GamePadStyle.Xbox;
 
             /*
             // The following lines restart your game through the Steam-client in case someone started it by double-clicking the exe.
@@ -61,7 +58,7 @@ namespace Remizione
         {
             base.OnExiting(sender, args);
 
-            SteamAPI.Shutdown();
+            //SteamAPI.Shutdown();
         }
 
         // OnInitialize

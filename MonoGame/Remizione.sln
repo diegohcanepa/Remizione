@@ -1,10 +1,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.12.12405.243 stable
+VisualStudioVersion = 18.12.12405.243
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platforms", "Platforms", "{5AEFACD6-FB7F-47EA-A513-50ED5E1C974E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remizione.WindowsDX", "Platforms\WindowsDX\Remizione.WindowsDX.csproj", "{6E224F15-ED75-44F4-9093-43E6E73362C9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsDX", "Platforms\WindowsDX\WindowsDX.csproj", "{6E224F15-ED75-44F4-9093-43E6E73362C9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content", "Content\Content.csproj", "{2BEBA074-0983-4770-B036-4128F785FFA8}"
 EndProject
