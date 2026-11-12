@@ -12,6 +12,10 @@
       "type": "integer",
       "description": "Bonfire duration in seconds."
     },
+    "cycleTransitionDuration": {
+      "type": "integer",
+      "description": "Transition duration to next cycle state in seconds."
+    },
     "darkCycleDuration": {
       "type": "integer",
       "description": "Dark cycle duration in seconds."
