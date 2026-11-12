@@ -651,23 +651,16 @@ namespace Remizione
         public void ApplyDeathPenalty()
         {
             PlayerData.Ashes = 0;
-            Player?.HP = Player.MaxHP / 2;
+            Player?.HP = Player.MaxHP;
 
             for (var i = PlayerData.Inventory.Count - 1; i >= 0; i--)
             {
                 var item = PlayerData.Inventory[i];
 
-                if (item.Definition.ItemKind == ItemKind.Key)
-                    continue;
+                if (item.Definition.ItemKind != ItemKind.Key)
+                    item.Remove();
 
-                if (item.Definition.LostOnDeath)
-                {
-                    PlayerData.Inventory.RemoveAt(i);
                     continue;
-                }
-
-                if (item.Definition.ItemKind == ItemKind.Organic)
-                    item.Perish();
             }
 
             if (CanSave())
@@ -928,24 +921,16 @@ namespace Remizione
         [ScriptMethod]
         public void RestartFromLastBonfire()
         {
+            if (LastBonfire == null || Room == null || Player == null)
+                return;
+
+            Room.Children.Add(Player);
+
             if (LastBonfire != null)
-            {
-                if (Room != null)
-                {
-                    if (Player != null)
-                    {
-                        Room.Children.Add(Player);
+                Player.Position = LastBonfire.GetApproachPosition(Player);
 
-                        if (LastBonfire != null)
-                            Player.Position = LastBonfire.GetApproachPosition(Player);
-
-                        Camera.Follow(Player);
-                        Camera.FocusTarget();
-                    }
-
-                    //HUD.RoomTitle.Show(Room);
-                }
-            }
+            Camera.Follow(Player);
+            Camera.FocusTarget();
         }
 
         // Room

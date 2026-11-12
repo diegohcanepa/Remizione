@@ -23,6 +23,9 @@ namespace Remizione
             // BonfireDuration
             BonfireDuration = element.GetInt32("bonfireDuration", 40);
 
+            // CycleTransitionDuration
+            CycleTransitionDuration = element.GetInt32("cycleTransitionDuration", 15);
+
             // DarkCycleDuration
             DarkCycleDuration = element.GetInt32("darkCycleDuration", 90);
 
@@ -34,6 +37,9 @@ namespace Remizione
 
         // BonfireDuration
         public int BonfireDuration { get; }
+
+        // CycleTransitionDuration
+        public int CycleTransitionDuration { get; }
 
         // DarkCycleDuration
         public int DarkCycleDuration { get; }

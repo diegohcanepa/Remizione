@@ -2,7 +2,6 @@
 using Engendro;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-using Remizione.UI;
 
 namespace Remizione
 {
@@ -55,7 +54,6 @@ namespace Remizione
             if (Session.InventoryEnabled)
                 InventoryMeter.Draw(gameTime);
 
-            RoomTitle.Draw(gameTime);
             Message.Draw(gameTime);
             BottomMessage.Draw(gameTime);
         }
@@ -70,7 +68,6 @@ namespace Remizione
             ashMeter.Update(gameTime);
             statuses.Update(gameTime);
             DestinationMark.Update(gameTime);
-            RoomTitle.Update(gameTime);
             CycleMeter.Update(gameTime);
         }
 
@@ -112,8 +109,5 @@ namespace Remizione
             Message.Hide();
             statuses.Actor = Session.Player;
         }
-
-        // RoomTitle
-        public UIRoomTitle RoomTitle { get; } = new();
     }
 }

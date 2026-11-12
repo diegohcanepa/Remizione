@@ -86,7 +86,7 @@ namespace Remizione
         }
 
         // CycleTransitionDuration
-        public const int CycleTransitionDuration = 20000;
+        public static int CycleTransitionDuration => GameData.WorldSettings.CycleTransitionDuration * 1000;
 
         // DrawAshParticles
         public void DrawAshParticles(GameTime gameTime)

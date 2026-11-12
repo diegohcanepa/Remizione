@@ -142,8 +142,7 @@ namespace Remizione
                         soundInstance = PlaySound(SoundNames.Bonfire, true);
                         AttachedLight?.Lit(Session.State == GameSessionState.Loading);
 
-                        if (AttachedLight != null)
-                            AttachedLight.Scale = maxLightScale;
+                        AttachedLight?.Scale = maxLightScale;
 
                         if (Session.State != GameSessionState.Loading)
                         {
@@ -156,8 +155,7 @@ namespace Remizione
                         ActiveTimeRemaining = 0;
                         AttachedLight?.Unlit(Session.State == GameSessionState.Loading);
 
-                        if (AttachedLight != null)
-                            AttachedLight.Scale = minLightScale;
+                        AttachedLight?.Scale = minLightScale;
 
                         if (Session.State != GameSessionState.Loading)
                         {

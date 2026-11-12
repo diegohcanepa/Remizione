@@ -1,7 +1,7 @@
 {
   "$schema": "./WorldSettings.schema.json",
   "bonfireDuration": 40,
-  "cycleTransitionDuration": 20,
+  "cycleTransitionDuration": 15,
   "darkCycleDuration": 30,
   "lightCycleDuration": 60
 }
