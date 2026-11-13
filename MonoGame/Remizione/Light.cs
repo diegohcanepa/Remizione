@@ -47,7 +47,6 @@ namespace Remizione
             {
                 LightKind.GroundTorch => new Color(235, 170, 170),
                 LightKind.Fire => new Color(255, 160, 160),
-                LightKind.Global => new Color(235, 170, 170),
                 LightKind.KeyItemOrb => Colors.Palette.SkyBlue,
                 LightKind.CommonItemOrb => Colors.Palette.TerraLight,
                 LightKind.OrganicItemOrb => Colors.Palette.Green,
@@ -107,10 +106,7 @@ namespace Remizione
                     unlitTweenDuration = 500;
                     break;
 
-                case LightKind.Global:
                 case LightKind.Player:
-                    litTweenDuration = RoomEnvironment.CycleTransitionDuration;
-                    unlitTweenDuration = RoomEnvironment.CycleTransitionDuration;
                     break;
 
                 case LightKind.SulfurBonfire:
@@ -163,7 +159,7 @@ namespace Remizione
             float originalSpriteOpacity = lightSprite.Opacity;
 
             // Aplicamos la opacidad combinada (Flicker * Fade de encendido)
-            lightSprite.Opacity = originalSpriteOpacity * currentFade * GlobalOpacity;
+            lightSprite.Opacity = originalSpriteOpacity * currentFade;
 
             lightSprite.Draw(gameTime);
 
@@ -207,9 +203,6 @@ namespace Remizione
             }
         }
 
-        // GlobalOpacity
-        public static Ratio GlobalOpacity { get; set; } = 1;
-
         // IsEmitting
         public bool IsEmitting => currentFade > 0;
 
@@ -242,6 +235,13 @@ namespace Remizione
 
         // Name
         public string Name { get; }
+
+        // Opacity
+        public float Opacity
+        {
+            get => lightSprite.Opacity;
+            set => lightSprite.Opacity = value;
+        }
 
         // PivotOrigin
         public RectanglePoint PivotOrigin

@@ -10,7 +10,6 @@ namespace Engendro
     {
         #region Private fields
 
-        private int bounceCooldown;
         private Action? onCompleteAction;
         private TweenStyle scaleFunctionTweenStyle;
         private int startDelayCooldown;
@@ -164,9 +163,6 @@ namespace Engendro
         // BounceCount
         public int BounceCount { get; private set; }
 
-        // BounceDelay
-        public int BounceDelay { get; set; }
-
         // CurrentTime
         public float CurrentTime { get; private set; }
 
@@ -287,7 +283,6 @@ namespace Engendro
             if (stopBehavior == StopBehavior.ForceComplete)
                 ForceComplete();
 
-            bounceCooldown = 0;
             startDelayCooldown = 0;
 
             if (stopBehavior == StopBehavior.ForceComplete)
@@ -319,15 +314,6 @@ namespace Engendro
                     return;
             }
 
-            if (bounceCooldown > 0)
-            {
-                bounceCooldown -= ms;
-                if (bounceCooldown > 0)
-                    return;
-                else
-                    Bounce();
-            }
-
             CurrentTime += ms;
             if (CurrentTime >= Duration)
             {
@@ -335,15 +321,7 @@ namespace Engendro
 
                 if (CanBounce)
                 {
-                    if (BounceDelay > 0)
-                    {
-                        bounceCooldown = BounceDelay;
-                        return;
-                    }
-                    else
-                    {
-                        Bounce();
-                    }
+                    Bounce();
                 }
                 else
                 {

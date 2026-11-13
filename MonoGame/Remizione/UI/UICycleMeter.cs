@@ -62,18 +62,18 @@ namespace Remizione
         // UpdateOrbitPosition
         private void UpdateOrbitPosition()
         {
-            var totalDuration = Session.CurrentCycle == Cycle.Light ? GameData.WorldSettings.LightCycleDuration : GameData.WorldSettings.DarkCycleDuration;
+            var totalDuration = Session.CycleManager.CurrentCycle == Cycle.Light ? GameData.WorldSettings.LightCycleDuration : GameData.WorldSettings.DarkCycleDuration;
 
             if (totalDuration <= 0)
                 return;
 
             // Progreso del ciclo actual: 0.0f (inicio) -> 1.0f (final)
-            float t = 1f - MathHelper.Clamp(Session.CycleRemainingTime / totalDuration, 0f, 1f);
+            float t = 1f - MathHelper.Clamp(Session.CycleManager.CycleRemainingTime / totalDuration, 0f, 1f);
 
             // Ángulo en sentido horario (0 = 12 en punto):
             // Día (Light): 12:00 -> 6:00 recorriendo el semicírculo derecho (0 a PI)
             // Noche (Dark): 6:00 -> 12:00 recorriendo el semicírculo izquierdo (PI a 2*PI)
-            float angle = Session.CurrentCycle == Cycle.Light ? t * MathF.PI : MathF.PI + (t * MathF.PI);
+            float angle = Session.CycleManager.CurrentCycle == Cycle.Light ? t * MathF.PI : MathF.PI + (t * MathF.PI);
 
             // Centro del planeta
             var worldCenter = world.Position + new Vector2(-world.BoundingBox.Width * .5f, world.BoundingBox.Height * .5f);

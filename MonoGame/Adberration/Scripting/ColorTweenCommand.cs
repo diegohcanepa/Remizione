@@ -4,14 +4,14 @@ using Microsoft.Xna.Framework;
 namespace Adberration.Scripting
 {
     // ColorTweenCommand
-    // Arguments: {Entity} {TweenStyle} to {Color} duration {Integer} [#bounces:Integer] [#bounce-delay:Integer]
+    // Arguments: {Entity} {TweenStyle} to {Color} duration {Integer} [#bounces:Integer]
     internal sealed class ColorTweenCommand : AwaitableCommand
     {
         private int duration;
 
         // Constructor
         internal ColorTweenCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 6, BouncesArg, BounceDelayArg, DecimalsArg)
+            : base(script, source, body, 6, BouncesArg, DecimalsArg)
         {
             AssertEntity<Entity>(0);
             Parser.ParseEnum<TweenStyle>(this, 1);
@@ -20,7 +20,6 @@ namespace Adberration.Scripting
             AssertKeyword(4, "duration");
             Parser.ParseInt32(this, 5);
             Parser.ParseInt32Argument(this, BouncesArg);
-            Parser.ParseInt32Argument(this, BounceDelayArg);
         }
 
         // OnExecute
@@ -36,9 +35,8 @@ namespace Adberration.Scripting
             var endValue = Parser.ParseColor(this, 3);
             duration = Parser.ParseInt32(this, 5);
             var bounces = Parser.ParseInt32Argument(this, BouncesArg);
-            var bounceDelay = Parser.ParseInt32Argument(this, BounceDelayArg);
 
-            ColorTween tween = new() { BounceDelay = bounceDelay };
+            ColorTween tween = new();
             tween.Start(style, entity.Color, endValue, duration, bounces);
 
             entity.Tweens.ColorTween = tween;

@@ -92,9 +92,9 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
 
-            if (IsLit)
+            if (IsLit && Session.IsGameplayActive)
             {
-                if (ActiveTimeRemaining > 0f)
+                if (ActiveTimeRemaining > 0)
                 {
                     float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
                     ActiveTimeRemaining -= elapsed;
@@ -166,6 +166,43 @@ namespace Remizione
                     }
                 }
             }
+        }
+
+        // SafeToRest
+        [ScriptProperty]
+        public bool SafeToRest
+        {
+            get
+            {
+                if (Session.Room == null || Session.Player == null)
+                    return true;
+
+                var safeArea = RectangleF.ScaleCentered(Session.Camera.VisibleBox, .7f);
+
+                for (var i = 0; i < Session.Room.CulledThings.Count; i++)
+                {
+                    if (Session.Room.CulledThings[i] is Actor actor)
+                    {
+                        if (actor.IsPlayer)
+                            continue;
+
+                        if (FactionMatrix.IsHostile(actor, Session.Player))
+                        {
+                            if (safeArea.Intersects(actor.RuntimeHotspot.BoundingRectangleF))
+                                return false;
+                        }
+                    }
+                }
+
+                return true;
+            }
+        }
+
+        // SetAsDefault
+        [ScriptMethod]
+        public void SetAsDefault()
+        {
+            Session.LastBonfire = this;
         }
     }
 }

@@ -37,11 +37,11 @@ namespace Remizione
         // Refresh
         private void Refresh()
         {
-            if (Session.CurrentCycle == Cycle.Dark && Session.Environment.IsChangingCycle)
+            if (Session.CycleManager.CurrentCycle == Cycle.Dark && Session.CycleManager.IsTransitioning)
                 return;
 
-            lastKnownCycle = Session.CurrentCycle;
-            AnimationPlayer.Play(Session.CurrentCycle.ToString());
+            lastKnownCycle = Session.CycleManager.CurrentCycle;
+            AnimationPlayer.Play(Session.CycleManager.CurrentCycle.ToString());
             if (lastKnownCycle == Cycle.Light)
             {
                 if (IsInViewport)
@@ -69,7 +69,7 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
 
-            if (lastKnownCycle != Session.CurrentCycle)
+            if (lastKnownCycle != Session.CycleManager.CurrentCycle)
                 Refresh();
         }
 

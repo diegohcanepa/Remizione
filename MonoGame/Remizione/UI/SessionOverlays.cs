@@ -24,11 +24,11 @@ namespace Remizione
         public SessionOverlays(GameSession session)
         {
             this.session = session;
-            this.echoScene = new EchoScene(session);
-            this.narrationScene = new NarrationScene(session);
-            this.inventoryScene = new InventoryScene(session);
-            this.miniMapScene = new MiniMapScene(session);
-            this.itemInfoScene = new ItemInfoScene(session);
+            this.echoScene = new(session);
+            this.narrationScene = new(session);
+            this.inventoryScene = new(session);
+            this.miniMapScene = new(session);
+            this.itemInfoScene = new(session);
         }
 
         #endregion

@@ -124,7 +124,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../../Projects/Content/Atlases/Threshold.xml</filename>
+                <filename>../../../MonoGame/Content/Assets/Atlases/Threshold.xml</filename>
             </struct>
         </map>
         <key>multiPackMode</key>

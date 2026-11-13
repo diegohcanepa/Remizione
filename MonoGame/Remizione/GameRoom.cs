@@ -81,9 +81,6 @@ namespace Remizione
         {
             if (AllowAshParticles)
                 Session.Environment.DrawAshParticles(gameTime);
-
-            if (AllowFireflyParticles)
-                Session.Environment.DrawFireflyParticles(gameTime);
         }
 
         // DrawMeters
@@ -141,12 +138,12 @@ namespace Remizione
             var previousRenderTarget = Game.RenderTargets.CurrentTarget;
 
             Game.GraphicsDevice.SetRenderTarget(renderTarget);
-            Game.GraphicsDevice.Clear(Session.Environment.LightMapColor);
+            Game.GraphicsDevice.Clear(Session.CycleManager.LightMapColor);
 
 //            if (AllowGlobalLight)
             {
-                Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
-                Session.Environment.RoomLight.Draw(gameTime);
+                Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
+                Session.Environment.LightMask.Draw(gameTime);
                 Game.SpriteBatch.End();
             }
 
@@ -170,15 +167,14 @@ namespace Remizione
             Game.SpriteBatch.End();
 
             // PASADA 3: Luces sustractivas (Player)
+            /*
             if (Session.Player != null)
             {
                 Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, CustomBlendState.SubtractivePlayer, null);
                 Session.Environment.PlayerLight.Draw(gameTime);
                 Game.SpriteBatch.End();
             }
-
-            if (AllowFireflyParticles)
-                Session.Environment.DrawFireflyParticles(gameTime);
+            */
 
             Game.GraphicsDevice.SetRenderTarget(previousRenderTarget);
         }
@@ -403,10 +399,6 @@ namespace Remizione
         [ScriptProperty]
         public bool AllowAshParticles { get; set; } = true;
 
-        // AllowFireflyParticles
-        [ScriptProperty]
-        public bool AllowFireflyParticles { get; set; }
-
         // AllowPauseMenu
         [ScriptProperty]
         public bool AllowPauseMenu { get; set; } = true;
@@ -444,14 +436,16 @@ namespace Remizione
         // IsIlluminated
         public bool IsIlluminated(Vector2 position)
         {
-            if (!CanUseLightingSystem || Session.CurrentCycle == Cycle.Light)
+            if (!CanUseLightingSystem || Session.CycleManager.CurrentCycle == Cycle.Light)
                 return true;
 
-            if (Session.Environment.RoomLight.IsEmitting && Session.Environment.RoomLight.BoundingBox.Contains(position))
+            if (Session.CycleManager.LightOpacity > 0 && Session.Environment.LightMask.BoundingBox.Contains(position))
                 return true;
 
+            /*
             if (Session.Environment.PlayerLight.IsEmitting && Session.Environment.PlayerLight.BoundingBox.Contains(position))
                 return true;
+            */
 
             for (int i = 0; i < lights.Count; i++)
             {

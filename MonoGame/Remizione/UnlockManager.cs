@@ -52,7 +52,7 @@ namespace Remizione
             {
                 UnlockMode.None => true,
                 UnlockMode.Manual => false,
-                UnlockMode.Cycles => session.CycleCount >= def.RequiredCycles,
+                UnlockMode.Cycles => session.CycleManager.CycleCount >= def.RequiredCycles,
                 UnlockMode.Room => !string.IsNullOrEmpty(def.RequiredRoom) && IsUnlocked(def.RequiredRoom),
                 _ => false
             };

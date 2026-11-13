@@ -1,6 +1,7 @@
 ﻿using Adberration;
 using Adberration.Scripting;
 using Engendro;
+using Engendro.Audio;
 using Engendro.Collections;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
@@ -31,7 +32,6 @@ namespace Remizione
         private Vector2? playerPosition;
         private FrozenDictionary<string, GameThing>? proceduralCatalog;
         private readonly RoomEditor? roomEditor;
-        private readonly TextSprite gameSavedText;
         private readonly UnlockManager unlockManager;
 
         #endregion
@@ -53,7 +53,6 @@ namespace Remizione
             : base(game, Path.Combine("Content", ContentFolder.System.ToString(), "ScriptLibrary.esl"), slotNumber)
         {
             this.Game = game;
-            this.CycleRemainingTime = GameData.WorldSettings.LightCycleDuration;
             this.Environment = new RoomEnvironment(this);
             this.InteractionContext = new(this);
             this.InteractionData = new();
@@ -64,6 +63,7 @@ namespace Remizione
             this.PersistenceModel = new RemizionePersistenceModel();
             this.RenewSeed();
             this.unlockManager = new(this);
+            this.CycleManager.CycleChanged += OnCycleChanged;
 
             ObjectPools = new ObjectPools(this);
 
@@ -90,16 +90,6 @@ namespace Remizione
                 roomEditor = new RoomEditor(this);
             }
 
-            // Game saved text
-            this.gameSavedText = new TextSprite(Fonts.CommonOutline)
-            {
-                Color = Colors.Palette.Text,
-                PivotOrigin = RectanglePoint.RightTop,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightTop, -2, 0),
-                Scale = ScaleInfo.Text.Large,
-                Text = TextRepository.GetValue("Misc.GameSaved"),
-            };
-
             LocalizationSource = LocalizationSource.Script;
 
             this.interactionTargetMarker = new(Atlases.UI.InteractionTarget)
@@ -124,6 +114,13 @@ namespace Remizione
             Game.SpriteBatch.Begin(effect: RemizioneGame.Effects.Grain.Effect);
             Game.SpriteBatch.Draw(Game.RenderTargets.PreviousTarget, Vector2.Zero, Color.White);
             Game.SpriteBatch.End();
+        }
+
+        // OnCycleChanged
+        private void OnCycleChanged(Cycle cycle)
+        {
+            if (CycleManager.CurrentCycle == Cycle.Dark)
+                Sound.Play(SoundNames.CycleHorn);
         }
 
         // DrawInteractionTargetMarker
@@ -223,25 +220,6 @@ namespace Remizione
             Seed = RandomNumberGenerator.GetInt32(int.MaxValue);
         }
 
-        // UpdateCycleTimer
-        private void UpdateCycleTimer(GameTime gameTime)
-        {
-            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            CycleRemainingTime -= delta;
-
-            if (CycleRemainingTime <= 0)
-            {
-                if (CurrentCycle == Cycle.Light)
-                {
-                    BeginDarkCycle();
-                }
-                else
-                {
-                    EndDarkCycle();
-                }
-            }
-        }
-
         #endregion
 
         #region Protected members
@@ -258,13 +236,6 @@ namespace Remizione
         protected override void OnDraw(GameTime gameTime)
         {
             base.OnDraw(gameTime);
-
-            if (gameSavedText.Tweens.IsTweening)
-            {
-                Game.SpriteBatch.Begin(Game.Camera);
-                gameSavedText.Draw(gameTime);
-                Game.SpriteBatch.End();
-            }
 
             /*
             if (IsPaused)
@@ -371,10 +342,6 @@ namespace Remizione
             if (sessionNode == null || sessionNode.Attributes == null)
                 throw new InvalidOperationException("Session node attributes not found.");
 
-            // BonfireLevel
-            if (sessionNode.Attributes[nameof(PlayerData.Bonfires)]?.Value is string bonfireLevelValue)
-                PlayerData.Bonfires = XmlConvert.ToInt32(bonfireLevelValue);
-
             // LastBonfire
             lastBonfireNameInSaveFile = sessionNode.Attributes[nameof(LastBonfire)]?.Value;
 
@@ -386,10 +353,6 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(PlayerData.Ashes)]?.Value is string ashesValue)
                 PlayerData.Ashes = XmlConvert.ToInt32(ashesValue);
 
-            // CycleCount
-            if (sessionNode.Attributes[nameof(CycleCount)]?.Value is string cycleCountValue)
-                CycleCount = XmlConvert.ToInt32(cycleCountValue);
-
             // Inventory
             if (sessionNode.Attributes[nameof(PlayerData.Inventory)]?.Value is string inventoryValue)
                 PlayerData.Inventory.Deserialize(inventoryValue);
@@ -397,10 +360,6 @@ namespace Remizione
             // InventoryEnabled
             if (sessionNode.Attributes[nameof(InventoryEnabled)]?.Value is string inventoryEnabledValue)
                 InventoryEnabled = XmlConvert.ToBoolean(inventoryEnabledValue);
-
-            // IsSafe
-            if (sessionNode.Attributes[nameof(PlayerData.IsSafe)]?.Value is string isSafeValue)
-                PlayerData.IsSafe = XmlConvert.ToBoolean(isSafeValue);
 
             // Player
             if (sessionNode.Attributes[nameof(Player)]?.Value is string player)
@@ -442,6 +401,29 @@ namespace Remizione
                     }
                 }
             }
+
+            // CurrentCycle
+            Cycle currentCycle = Cycle.Light;
+            if (sessionNode.Attributes[nameof(CycleManager.CurrentCycle)]?.Value is string currentCycleValue)
+                currentCycle = Enum.Parse<Cycle>(currentCycleValue);
+
+            // CycleCount
+            if (sessionNode.Attributes[nameof(CycleManager.CycleCount)]?.Value is string cycleCountValue)
+                CycleManager.CycleCount = XmlConvert.ToInt32(cycleCountValue);
+
+            // CycleRemainingTime
+            float cycleRemainingTime = 0;
+            if (sessionNode.Attributes[nameof(CycleManager.CycleRemainingTime)]?.Value is string cycleRemainingTimeValue)
+                cycleRemainingTime = XmlConvert.ToSingle(cycleRemainingTimeValue);
+
+            CycleManager.IsEnabled = true;
+            CycleManager.SetCycle(currentCycle, cycleRemainingTime);
+        }
+
+        // OnReadCompleted
+        protected override void OnReadCompleted(XmlNode sessionNode)
+        {
+            base.OnReadCompleted(sessionNode);
         }
 
         // OnResume
@@ -458,13 +440,6 @@ namespace Remizione
             }
         }
 
-        // OnSave
-        protected override void OnSave()
-        {
-            base.OnSave();
-            gameSavedText.Tweens.OpacityTween = FloatTween.Create(TweenStyle.QuadraticInOut, 1, .8f, 300, 10);
-        }
-
         // OnScriptLibraryLoaded
         protected override void OnScriptLibraryLoaded()
         {
@@ -474,13 +449,10 @@ namespace Remizione
         // OnStarted
         protected override void OnStarted()
         {
-            unlockManager.Refresh();
+            if (IsNewSession)
+                CycleManager.SetCycle(Cycle.Light, GameData.WorldSettings.LightCycleDuration);
 
-            if (!PlayerData.IsSafe)
-            {
-                ApplyDeathPenalty();
-                PlayerData.IsSafe = true;
-            }
+            unlockManager.Refresh();
 
             Dictionary<string, GameThing> dict = [];
 
@@ -523,11 +495,9 @@ namespace Remizione
             base.OnUpdate(gameTime);
 
             if (IsGameplayActive)
-                UpdateCycleTimer(gameTime);
+                CycleManager.Update(gameTime);
 
             SepiaEffect.Update(gameTime);
-
-            gameSavedText.Update(gameTime);
 
             if (console != null)
             {
@@ -552,17 +522,17 @@ namespace Remizione
             {
                 if (Room == null || !Room.ControlMouseCursor)
                     InteractionContext.Refresh();
-            }
 
-            if (Player != null && !IsAwaiting && PlayerData.Inventory.Count > 0 && IsCurrentScene)
-            {
-                if (Player.HeldProp == null)
+                if (Player != null && !IsAwaiting && PlayerData.Inventory.Count > 0)
                 {
-                    if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
+                    if (Player.HeldProp == null)
                     {
-                        InteractionContext.HeldItem = null;
-                        Overlays.ShowInventory();
-                        return;
+                        if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
+                        {
+                            InteractionContext.HeldItem = null;
+                            Overlays.ShowInventory();
+                            return;
+                        }
                     }
                 }
             }
@@ -577,9 +547,6 @@ namespace Remizione
         // OnWrite
         protected override void OnWrite(XmlWriter output)
         {
-            // BonfireLevel
-            output.WriteAttributeString(nameof(PlayerData.Bonfires), XmlConvert.ToString(PlayerData.Bonfires));
-
             // LastBonfire
             if (LastBonfire != null)
                 output.WriteAttributeString(nameof(LastBonfire), LastBonfire.Name);
@@ -590,17 +557,20 @@ namespace Remizione
             // Ashes
             output.WriteAttributeString(nameof(PlayerData.Ashes), XmlConvert.ToString(PlayerData.Ashes));
 
+            // CurrentCycle
+            output.WriteAttributeString(nameof(CycleManager.CurrentCycle), XmlConvert.ToString((int)CycleManager.CurrentCycle));
+
             // CycleCount
-            output.WriteAttributeString(nameof(CycleCount), XmlConvert.ToString(CycleCount));
+            output.WriteAttributeString(nameof(CycleManager.CycleCount), XmlConvert.ToString(CycleManager.CycleCount));
+
+            // CycleRemainingTime
+            output.WriteAttributeString(nameof(CycleManager.CycleRemainingTime), XmlConvert.ToString(CycleManager.CycleRemainingTime));
 
             // Inventory
             output.WriteAttributeString(nameof(PlayerData.Inventory), PlayerData.Inventory.Serialize());
 
             // InventoryEnabled
             output.WriteAttributeString(nameof(InventoryEnabled), XmlConvert.ToString(InventoryEnabled));
-
-            // IsSafe
-            output.WriteAttributeString(nameof(PlayerData.IsSafe), XmlConvert.ToString(PlayerData.IsSafe));
 
             // Player
             if (Player != null)
@@ -682,14 +652,12 @@ namespace Remizione
             Save();
         }
 
-        // BeginDarkCycle
+        // BeginCycles
         [ScriptMethod]
-        public void BeginDarkCycle()
+        public void BeginCycles()
         {
-            CycleCount++;
-            CurrentCycle = Cycle.Dark;
-            CycleRemainingTime = GameData.WorldSettings.DarkCycleDuration;
-            Environment.BeginDarkCycle();
+            CycleManager.IsEnabled = true;
+            CycleManager.SetCycle(Cycle.Light, skipTransition:true);
         }
 
         // BonfireMode
@@ -713,15 +681,8 @@ namespace Remizione
             CleanUpVolatileRuntimeClones(CanCleanup);
         }
 
-        // CurrentCycle
-        public Cycle CurrentCycle { get; private set; } = Cycle.Light;
-
-        // CycleCount
-        [ScriptProperty]
-        public int CycleCount { get; set; }
-
-        // CycleRemainingTime
-        public float CycleRemainingTime { get; private set; }
+        // CycleManager
+        public CycleManager CycleManager { get; } = new();
 
         // DialogOptionId
         [ScriptProperty]
@@ -730,16 +691,6 @@ namespace Remizione
         // DisplayHPMeter
         [ScriptProperty]
         public bool DisplayHPMeter { get; set; }
-
-        // EndDarkCycle
-        [ScriptMethod]
-        public void EndDarkCycle()
-        {
-            CycleCount++;
-            CurrentCycle = Cycle.Light;
-            CycleRemainingTime = GameData.WorldSettings.LightCycleDuration;
-            Environment.EndDarkCycle();
-        }
 
         // EnoughMaterials
         [ScriptProperty]
@@ -780,13 +731,6 @@ namespace Remizione
 
         // HUD
         public HUD HUD { get; }
-
-        // IncrementBonfireCounter
-        [ScriptMethod]
-        public void IncrementBonfireCounter()
-        {
-            PlayerData.Bonfires++;
-        }
 
         // InteractionContext
         public InteractionContext InteractionContext { get; }
@@ -849,7 +793,6 @@ namespace Remizione
         }
 
         // LastBonfire
-        [ScriptProperty]
         public Bonfire? LastBonfire { get; set; }
 
         // LightingSystem
@@ -924,11 +867,9 @@ namespace Remizione
             if (LastBonfire == null || Room == null || Player == null)
                 return;
 
+            CycleManager.ApplyCycle();
             Room.Children.Add(Player);
-
-            if (LastBonfire != null)
-                Player.Position = LastBonfire.GetApproachPosition(Player);
-
+            Player.Position = LastBonfire.GetApproachPosition(Player);
             Camera.Follow(Player);
             Camera.FocusTarget();
         }

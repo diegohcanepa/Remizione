@@ -124,7 +124,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../Projects/Content/Atlases/UI.xml</filename>
+                <filename>../../MonoGame/Content/Assets/Atlases/UI.xml</filename>
             </struct>
         </map>
         <key>multiPackMode</key>
@@ -355,6 +355,7 @@
             <key type="filename">Modifiers-assets/TraitLuckIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorCrossIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorInspectIcon.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorSackIcon.png</key>
             <key type="filename">UIIcons-assets/CraftIcon.png</key>
             <key type="filename">UIIcons-assets/CycleDark.png</key>
             <key type="filename">UIIcons-assets/HeartIcon.png</key>
@@ -473,23 +474,6 @@
                 <rect>2,2,3,5</rect>
                 <key>scale9Paddings</key>
                 <rect>2,2,3,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">MouseCursors-assets/MouseCursorSackIcon.png</key>
-            <key type="filename">UIIcons-assets/Sack.png</key>
-            <key type="filename">UIIcons-assets/SavingIcon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,4,4</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,4,4</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -832,6 +816,22 @@
                 <rect>3,3,6,5</rect>
                 <key>scale9Paddings</key>
                 <rect>3,3,6,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">UIIcons-assets/Sack.png</key>
+            <key type="filename">UIIcons-assets/SavingIcon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,4,4</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,4,4</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

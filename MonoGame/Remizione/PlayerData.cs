@@ -24,13 +24,7 @@ namespace Remizione
             }
         }
 
-        // Bonfires
-        public int Bonfires { get; set; }
-
         // Inventory
         public ItemContainer Inventory { get; }
-
-        // IsSafe
-        public bool IsSafe { get; set; } = true;
     }
 }

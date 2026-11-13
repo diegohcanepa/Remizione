@@ -36,7 +36,7 @@ namespace Remizione
                 {
                     if (target.CanInteract() && target.RuntimeHotspot.Contains(mousePos))
                     {
-                        if (Session.CurrentCycle == Cycle.Dark)
+                        if (Session.CycleManager.CurrentCycle == Cycle.Dark)
                             return Session.Room?.IsIlluminated(target.Position) == true ? target : null;
                         else
                             return target;

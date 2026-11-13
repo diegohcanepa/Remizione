@@ -336,6 +336,7 @@ namespace Adberration
             AotTypeRegistry.Register(ScriptSyntax.MethodReference, typeof(CallMethodCommand), CodingContext.Any);
             AotTypeRegistry.Register("else", typeof(ElseStatement));
             AotTypeRegistry.Register("endif", typeof(EndifStatement));
+            AotTypeRegistry.Register("exit-game", typeof(ExitGameCommand));
             AotTypeRegistry.Register("flip", typeof(FlipCommand));
             AotTypeRegistry.Register("goto-frame-index", typeof(GoToFrameIndexCommand));
             AotTypeRegistry.Register("goto-frame-position", typeof(GoToFramePositionCommand));
@@ -1350,7 +1351,7 @@ namespace Adberration
         }
 
         // StartingRoom
-        public Room? StartingRoom { get; private set; }
+        public Room? StartingRoom { get; set; }
 
         // State
         public GameSessionState State { get; private set; }

@@ -124,7 +124,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../Projects/Content/Atlases/Environment.xml</filename>
+                <filename>../../MonoGame/Content/Assets/Atlases/Environment.xml</filename>
             </struct>
         </map>
         <key>multiPackMode</key>

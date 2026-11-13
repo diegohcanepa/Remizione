@@ -106,7 +106,7 @@ namespace Remizione
         internal static class MouseCursor
         {
             // Highlight
-            internal static Vector4 Highlight { get; } = (Color.WhiteSmoke * .3f).ToVector4();
+            internal static Vector4 Highlight { get; } = (Color.WhiteSmoke * .5f).ToVector4();
 
             // SubText
             internal static Color SubText { get; } = Palette.Text;

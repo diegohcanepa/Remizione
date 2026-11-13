@@ -11,7 +11,7 @@ namespace Adberration.Scripting
 
         // Constructor
         protected Vector2TweenCommand(Script script, string source, StatementBody body, params string[] supportedFlags)
-            : base(script, source, body, 6, supportedFlags.Concatenate([BouncesArg, BounceDelayArg, DecimalsArg, LoopedArg, RelativeArg]))
+            : base(script, source, body, 6, supportedFlags.Concatenate([BouncesArg, DecimalsArg, LoopedArg, RelativeArg]))
         {
             AssertEntity<Entity>(0);
             Parser.ParseEnum<TweenStyle>(this, 1);
@@ -20,7 +20,6 @@ namespace Adberration.Scripting
             AssertKeyword(4, "duration");
             Parser.ParseInt32(this, 5);
             Parser.ParseInt32Argument(this, BouncesArg);
-            Parser.ParseInt32Argument(this, BounceDelayArg);
         }
 
         // GetEndValue
@@ -44,9 +43,8 @@ namespace Adberration.Scripting
 
             var duration = Parser.ParseInt32(this, 5);
             var bounces = HasArg(LoopedArg) ? -1 : Parser.ParseInt32Argument(this, BouncesArg);
-            var bounceDelay = Parser.ParseInt32Argument(this, BounceDelayArg);
 
-            tween = new Vector2Tween() { BounceDelay = bounceDelay };
+            tween = new();
             tween.Start(style, GetStartValue(entity), endValue, duration, bounces);
 
             SetTween(entity, tween);
