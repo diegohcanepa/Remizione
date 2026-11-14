@@ -1,5 +1,4 @@
 ﻿using Adberration;
-using Adberration.Scripting;
 using Engendro;
 using Engendro.Collections;
 using Microsoft.Xna.Framework;
@@ -39,19 +38,22 @@ namespace Remizione
         #region Private members
 
         // CleanupAnnonymousThings
-        private void CleanupAnnonymousThings()
+        private void CleanupAnnonymousThings(RectangleF safeArea)
         {
-            var annonymousList = new List<Entity>();
+            var list = new List<Entity>();
 
             for (var i = 0; i < Children.Count; i++)
             {
                 if (Children[i].InstanceKind == EntityInstanceKind.Anonymous)
-                    annonymousList.Add(Children[i]);
+                {
+                    if (!safeArea.Intersects(Children[i].BoundingBox))
+                        list.Add(Children[i]);
+                }
             }
 
-            for (var i = 0; i < annonymousList.Count; i++)
+            for (var i = 0; i < list.Count; i++)
             {
-                annonymousList[i].Unparent();
+                list[i].Unparent();
             }
         }
 
@@ -81,20 +83,13 @@ namespace Remizione
             return outList;
         }
 
-        // GetVisibleBox
-        //private RectangleF GetVisibleBox() => RectangleF.Inflate(Session.Camera.VisibleBox, 15, 15);
-
-        public static RectangleF GetVisibleBox(Vector2 playerPosition, float cameraZoom)
+        // GetSafeArea
+        private static RectangleF GetSafeArea(Vector2 pos, float cameraZoom)
         {
-            float safeZoom = Math.Max(cameraZoom, 0.1f);
-            float width = 240f / safeZoom;
-            float height = 135f / safeZoom;
-
-            return new RectangleF(
-                playerPosition.X - width * 0.5f,
-                playerPosition.Y - height * 0.5f,
-                width,
-                height);
+            cameraZoom = Math.Max(cameraZoom, .1f);
+            var width = 240 / cameraZoom;
+            var height = 135 / cameraZoom;
+            return new RectangleF(pos.X - width * .5f, pos.Y - height * .5f, width, height);
         }
 
         // GetWalkAreaCandidates
@@ -371,31 +366,34 @@ namespace Remizione
         // Spawn
         public void Spawn()
         {
+            var safeArea = Session.Player == null ? RectangleF.Empty : GetSafeArea(Session.Player.Position, Zoom);
+
             spawnCounter.Clear();
             occupiedPositions.Clear();
             Session.RenewSeed();
             Session.UnlockManager.Refresh();
-            CleanupAnnonymousThings();
+            CleanupAnnonymousThings(safeArea);
 
-            var visibleBox = Session.Player == null ? RectangleF.Empty : GetVisibleBox(Session.Player.Position, Zoom);
-
-            var cleanupList = new List<Entity>();
+            var removeList = new List<Entity>();
             for (int i = 0; i < Children.Count; i++)
             {
                 if (Children[i].InstanceKind == EntityInstanceKind.RuntimeClone)
                 {
-                    if (visibleBox.Intersects(Children[i].BoundingBox))
+                    if (safeArea.Intersects(Children[i].BoundingBox))
                         continue;
 
                     if (Children[i] is not ItemOrb itemOrb || itemOrb.AllowCleanup)
-                        cleanupList.Add(Children[i]);
+                        removeList.Add(Children[i]);
                 }
             }
 
-            Session.CleanUpRuntimeClones(cleanupList);
+            for (var i = 0; i < removeList.Count; i++)
+            {
+                Session.RemoveRuntimeClone(removeList[i]);
+            }
 
-            SpawnProps(visibleBox);
-            SpawnActors(visibleBox);
+            SpawnProps(safeArea);
+            SpawnActors(safeArea);
         }
     }
 }

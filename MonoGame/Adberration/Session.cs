@@ -1,7 +1,6 @@
 ﻿using Adberration.Scripting;
 using Engendro;
 using Engendro.Audio;
-using Engendro.Collections;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using System;
@@ -35,7 +34,6 @@ namespace Adberration
         private bool canInterruptAwaitingScripts;
         private bool canRun;
         private readonly Dictionary<string, Entity> entities = [];
-        private readonly NamedCollection<Entity> entityList = [];
         private string? musicTagRoomScope;
         private string? musicTagScriptScope;
         private long nextEntityId;
@@ -43,6 +41,7 @@ namespace Adberration
         private bool pendingSave;
         private readonly List<Entity> persistentEntities = [];
         private readonly Dictionary<string, int> randomNumbers = [];
+        private readonly Dictionary<string, Entity> runtimeClones = [];
 
         #endregion
 
@@ -64,7 +63,6 @@ namespace Adberration
             this.ScriptProcessor = new ScriptProcessor(this);
             this.ScriptLibrary = new ScriptLibrary(this, scriptLibraryPath);
             this.ScriptEnvironment = new ScriptEnvironment(this);
-            this.Entities = new NamedReadOnlyCollection<Entity>(entityList);
             this.Camera = new Camera("Room") { CullingBoxScale = new Vector2(3) };
             this.SaveFileName = saveFileNumber >= 0 ? SaveFile.EncodeName(saveFileNumber) : string.Empty;
         }
@@ -643,7 +641,7 @@ namespace Adberration
                         room.Unload();
                 }
 
-                CleanUpRuntimeClones();
+                RemoveRuntimeClones();
                 IsRunning = false;
                 OnShutDown();
             }
@@ -817,7 +815,9 @@ namespace Adberration
             }
 
             entities.Add(entity.Name, entity);
-            entityList.Add(entity);
+
+            if (entity.InstanceKind == EntityInstanceKind.RuntimeClone)
+                runtimeClones.Add(entity.Name, entity);
         }
 
         // ScriptEnvironment
@@ -936,27 +936,6 @@ namespace Adberration
         [ScriptProperty]
         public int Chapter { get; set; }
 
-        // CleanUpRuntimeClones
-        public void CleanUpRuntimeClones(IList<Entity>? scope = null)
-        {
-            scope ??= entityList;
-            
-            var runtimeEntities = new List<Entity>();
-
-            for (var i = 0; i < scope.Count; i++)
-            {
-                if (scope[i].InstanceKind == EntityInstanceKind.RuntimeClone)
-                    runtimeEntities.Add(scope[i]);
-            }
-
-            for (var i = 0; i < runtimeEntities.Count; i++)
-            {
-                runtimeEntities[i].Unparent();
-                entities.Remove(runtimeEntities[i].Name);
-                entityList.Remove(runtimeEntities[i]);
-            }
-        }
-
         // CreateFlagCondition
         public FlagCondition CreateFlagCondition(IList<string> flags)
         {
@@ -1036,9 +1015,6 @@ namespace Adberration
             return true;
         }
 
-        // Entities
-        public NamedReadOnlyCollection<Entity> Entities { get; }
-
         // FindEntity
         public Entity? FindEntity(string name)
         {
@@ -1069,6 +1045,9 @@ namespace Adberration
             randomNumbers[name] = result;
             return result;
         }
+
+        // GetEntities
+        public IReadOnlyCollection<Entity> Entities => entities.Values;
 
         // GetEntity
         public Entity GetEntity(string name)
@@ -1210,6 +1189,30 @@ namespace Adberration
         [ScriptProperty]
         public int Progress { get; set; }
 
+        // RemoveRuntimeClone
+        public bool RemoveRuntimeClone(Entity entity)
+        {
+            if (entity.InstanceKind != EntityInstanceKind.RuntimeClone)
+                return false;
+
+            entity.Unparent();
+            entities.Remove(entity.Name);
+            runtimeClones.Remove(entity.Name);
+
+            return true;
+        }
+
+        // RemoveRuntimeClones
+        public void RemoveRuntimeClones()
+        {
+            var removList = new List<Entity>(runtimeClones.Values);
+
+            for (var i = 0; i < removList.Count; i++)
+            {
+                RemoveRuntimeClone(removList[i]);
+            }
+        }
+
         // Room
         [ScriptProperty]
         public virtual Room? Room { get; private set; }
@@ -1332,12 +1335,12 @@ namespace Adberration
                 State = GameSessionState.Idle;
             }
 
-            for (var i = 0; i < Entities.Count; i++)
+            foreach (var entity in entities.Values)
             {
-                Entities[i].Initialize();
+                entity.Initialize();
 
-                if (Entities[i].Persistent)
-                    persistentEntities.Add(Entities[i]);
+                if (entity.Persistent)
+                    persistentEntities.Add(entity);
             }
 
             persistentEntities.Sort(new EntityComparer());
