@@ -91,7 +91,7 @@ namespace Remizione
         public bool IsVisible { get; private set; }
 
         // Show
-        public void Show(MessageKind message, AtlasImage? image)
+        public void Show(MessageKind message, AtlasImage? image = null)
         {
             var text = Localization.GetValue(message);
             var color = Colors.Palette.Text;

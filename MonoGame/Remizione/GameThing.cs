@@ -124,6 +124,9 @@ namespace Remizione
 
         #region ILightSource implementation
 
+        // BoundingBox
+        RectangleF ILightSource.BoundingBox => AttachedLight?.BoundingBox ?? RectangleF.Empty;
+
         // DrawLights
         void ILightSource.DrawLights(GameTime gameTime, LightBlendMode blendMode)
         {
@@ -407,9 +410,6 @@ namespace Remizione
             return CollisionDetection;
         }
 
-        // CanUpdate
-        protected override bool CanUpdate() => HomePosition == Vector2.Zero || Session.Environment.RespawnOpacity == 1;
-
         // CreateHPMeter
         protected virtual FlatMeter CreateHPMeter()
         {
@@ -445,12 +445,6 @@ namespace Remizione
         protected virtual float GetKnockbackMultiplier(GameThing target)
         {
             return 1;
-        }
-
-        // OnCalculateOpacity
-        protected override float OnCalculateOpacity(float currentOpacity)
-        {
-            return HomePosition == Vector2.Zero ? currentOpacity : currentOpacity * Session.Environment.RespawnOpacity;
         }
 
         // OnCollision

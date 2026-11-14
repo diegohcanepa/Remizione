@@ -16,6 +16,7 @@ namespace Adberration.Scripting
         protected static readonly string AtArg = "#at";
         protected static readonly string BehaviorArg = "#behavior";
         protected static readonly string BouncesArg = "#bounces";
+        protected static readonly string BottomArg = "#bottom";
         protected static readonly string ChanceArg = "#chance";
         protected static readonly string ClearTagArg = "#clear-tag";
         protected static readonly string ColorArg = "#color";

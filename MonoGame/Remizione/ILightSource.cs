@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Engendro;
+using Microsoft.Xna.Framework;
 
 namespace Remizione
 {
@@ -7,6 +8,9 @@ namespace Remizione
     /// </summary>
     public interface ILightSource
     {
+        // BoundingBox
+        RectangleF BoundingBox { get; }
+
         // DrawLights
         void DrawLights(GameTime gameTime, LightBlendMode blendMode);
 

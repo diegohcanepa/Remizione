@@ -32,7 +32,7 @@ namespace Remizione
         private Vector2? playerPosition;
         private FrozenDictionary<string, GameThing>? proceduralCatalog;
         private readonly RoomEditor? roomEditor;
-        private readonly UnlockManager unlockManager;
+        private RectangleF visibleBox;
 
         #endregion
 
@@ -62,7 +62,7 @@ namespace Remizione
             this.LootGenerator = new(this);
             this.PersistenceModel = new RemizionePersistenceModel();
             this.RenewSeed();
-            this.unlockManager = new(this);
+            this.UnlockManager = new(this);
             this.CycleManager.CycleChanged += OnCycleChanged;
 
             ObjectPools = new ObjectPools(this);
@@ -195,29 +195,6 @@ namespace Remizione
             AotTypeRegistry.Register("terminate-dialog-block", typeof(TerminateDialogBlockCommand));
             AotTypeRegistry.Register("x-tween", typeof(XTweenCommand));
             AotTypeRegistry.Register("y-tween", typeof(YTweenCommand));
-        }
-
-        // RemoveAnnonymousChildren
-        private static void RemoveAnnonymousChildren(Entity entity)
-        {
-            var annonymousList = new List<Entity>();
-
-            for (var i = 0; i < entity.Children.Count; i++)
-            {
-                if (entity.Children[i].InstanceKind == EntityInstanceKind.Anonymous)
-                    annonymousList.Add(entity.Children[i]);
-            }
-
-            for (var i = 0; i < annonymousList.Count; i++)
-            {
-                annonymousList[i].Unparent();
-            }
-        }
-
-        // RenewSeed
-        private void RenewSeed()
-        {
-            Seed = RandomNumberGenerator.GetInt32(int.MaxValue);
         }
 
         #endregion
@@ -379,7 +356,7 @@ namespace Remizione
 
             // UnlockedDefinitions
             if (sessionNode.Attributes["UnlockedDefinitions"]?.Value is string UnlockedDefinitionsValue)
-                unlockManager.Deserialize(UnlockedDefinitionsValue);
+                UnlockManager.Deserialize(UnlockedDefinitionsValue);
 
             // Dropped key items
             droppedKeyItems.Clear();
@@ -411,6 +388,8 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(CycleManager.CycleCount)]?.Value is string cycleCountValue)
                 CycleManager.CycleCount = XmlConvert.ToInt32(cycleCountValue);
 
+            CycleManager.CycleCount = 3;
+
             // CycleRemainingTime
             float cycleRemainingTime = 0;
             if (sessionNode.Attributes[nameof(CycleManager.CycleRemainingTime)]?.Value is string cycleRemainingTimeValue)
@@ -440,6 +419,13 @@ namespace Remizione
             }
         }
 
+        // OnSave
+        protected override void OnSave()
+        {
+            base.OnSave();
+            HUD.BottomMessage.Show(MessageKind.GameSaved);
+        }
+
         // OnScriptLibraryLoaded
         protected override void OnScriptLibraryLoaded()
         {
@@ -452,7 +438,7 @@ namespace Remizione
             if (IsNewSession)
                 CycleManager.SetCycle(Cycle.Light, GameData.WorldSettings.LightCycleDuration);
 
-            unlockManager.Refresh();
+            UnlockManager.Refresh();
 
             Dictionary<string, GameThing> dict = [];
 
@@ -587,7 +573,7 @@ namespace Remizione
             output.WriteAttributeString("SepiaIntensity", XmlConvert.ToString(SepiaEffect.Intensity));
 
             // UnlockedDefinitions
-            output.WriteAttributeString("UnlockedDefinitions", unlockManager.Serialize());
+            output.WriteAttributeString("UnlockedDefinitions", UnlockManager.Serialize());
 
             // Dropped key items
             var keyItems = new List<string>();
@@ -663,23 +649,6 @@ namespace Remizione
         // BonfireMode
         [ScriptProperty]
         public bool BonfireMode { get; set; }
-
-        // CleanupWorld
-        public void CleanupWorld()
-        {
-            static bool CanCleanup(Entity entity)
-            {
-                return entity is not ItemOrb itemOrb || itemOrb.AllowCleanup;
-            }
-
-            var allRooms = new List<GameRoom>(Entities.OfType<GameRoom>());
-            foreach (var room in allRooms)
-            {
-                RemoveAnnonymousChildren(room);
-            }
-
-            CleanUpVolatileRuntimeClones(CanCleanup);
-        }
 
         // CycleManager
         public CycleManager CycleManager { get; } = new();
@@ -775,7 +744,7 @@ namespace Remizione
         // IsUnlocked
         public bool IsUnlocked(string definitionName)
         {
-            return unlockManager.IsUnlocked(definitionName);
+            return UnlockManager.IsUnlocked(definitionName);
         }
 
         // KillEnemies
@@ -834,7 +803,7 @@ namespace Remizione
                     HUD?.Reset();
                     InteractionData.Clear();
                     if (value != null)
-                        Camera.Follow(value);
+                        Camera.Follow(value, true);
                 }
             }
         }
@@ -845,20 +814,22 @@ namespace Remizione
         // PlayerInputHandler
         public PlayerInputHandler<Actor> PlayerInputHandler { get; } = new(PlayerIndex.One);
 
-        // PrepareForRespawn
-        public void PrepareForRespawn()
-        {
-            unlockManager.Refresh();
-            RenewSeed();
-            CleanupWorld();
-        }
-
         // PreviousRoom
         [ScriptProperty]
         public new GameRoom? PreviousRoom => (GameRoom?)base.PreviousRoom;
 
         // Random
         public Random Random { get; private set; } = new(0);
+
+        // RenewSeed
+        public void RenewSeed()
+        {
+            Seed = RandomNumberGenerator.GetInt32(int.MaxValue);
+        }
+
+        // RespawnRoom
+        [ScriptMethod]
+        public void RespawnRoom() => (Room as ProceduralRoom)?.Spawn();
 
         // RestartFromLastBonfire
         [ScriptMethod]
@@ -935,7 +906,7 @@ namespace Remizione
                     continue;
 
                 // 2. Excluir ítems que el jugador aún no ha desbloqueado
-                if (!unlockManager.IsUnlocked(itemDef.Name))
+                if (!UnlockManager.IsUnlocked(itemDef.Name))
                     continue;
 
                 // Agrega el ítem a la ruleta usando su CraftWeight
@@ -947,5 +918,8 @@ namespace Remizione
 
             return table.GetItem()?.Context as ItemDefinition;
         }
+
+        // UnlockManager
+        public UnlockManager UnlockManager { get; }
     }
 }

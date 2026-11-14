@@ -51,9 +51,6 @@ namespace Remizione
         // LightMask
         public Sprite LightMask { get; }
 
-        // RespawnOpacity
-        public Ratio RespawnOpacity { get; private set; } = 1;
-
         // Update
         public void Update(GameTime gameTime)
         {
@@ -61,11 +58,13 @@ namespace Remizione
                 return;
 
             LightMask.Opacity = session.CycleManager.LightOpacity;
-            LightMask.Position = session.Camera.Position;// - session.Camera.Offset;
+            LightMask.Position = session.Camera.Position;
             LightMask.Update(gameTime);
 
             if (session.Room.AllowAshParticles)
                 ashEmitter.Update(gameTime);
+
+
         }
     }
 }

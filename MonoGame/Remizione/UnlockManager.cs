@@ -6,13 +6,13 @@ namespace Remizione
     /// <summary>
     /// UnlockManager
     /// </summary>
-    internal sealed class UnlockManager
+    public sealed class UnlockManager
     {
         private readonly GameSession session;
         private readonly HashSet<string> unlockedDefinitions = [];
 
         // Constructor
-        internal UnlockManager(GameSession session)
+        public UnlockManager(GameSession session)
         {
             this.session = session;
         }
@@ -68,13 +68,13 @@ namespace Remizione
         #endregion
 
         // IsUnlocked
-        internal bool IsUnlocked(string definitionName)
+        public bool IsUnlocked(string definitionName)
         {
             return unlockedDefinitions.Contains(definitionName);
         }
 
         // Refresh
-        internal void Refresh()
+        public void Refresh()
         {
             // Items
             for (int i = 0; i < GameData.Items.Count; i++)
@@ -96,7 +96,7 @@ namespace Remizione
         }
 
         // Unlock
-        internal void Unlock(string name)
+        public void Unlock(string name)
         {
             unlockedDefinitions.Add(name);
         }

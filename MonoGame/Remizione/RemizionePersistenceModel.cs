@@ -23,7 +23,7 @@ namespace Remizione
 
             // Bonfire
             persistentType = Track(typeof(Bonfire));
-            persistentType.Track(nameof(Bonfire.ActiveTimeRemaining));
+            persistentType.Track(nameof(Bonfire.RemainingTime));
             persistentType.Track(nameof(Bonfire.IsLit));
 
             // Fleshines

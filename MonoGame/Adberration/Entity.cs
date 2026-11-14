@@ -200,9 +200,6 @@ namespace Adberration
         {
         }
 
-        // OnCalculateOpacity
-        protected virtual float OnCalculateOpacity(float currentOpacity) => currentOpacity;
-
         // OnChildAdded
         protected virtual void OnChildAdded(Entity child)
         {
@@ -1055,12 +1052,6 @@ namespace Adberration
             internal EntitySprite(Entity entity)
             {
                 this.entity = entity;
-            }
-
-            // OnCalculateOpacity
-            protected override float OnCalculateOpacity(float currentOpacity)
-            {
-                return entity.OnCalculateOpacity(currentOpacity);
             }
 
             // OnTransform

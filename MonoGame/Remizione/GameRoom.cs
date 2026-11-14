@@ -434,12 +434,15 @@ namespace Remizione
         }
 
         // IsIlluminated
-        public bool IsIlluminated(Vector2 position)
+        public bool IsIlluminated(GameThing target)
         {
             if (!CanUseLightingSystem || Session.CycleManager.CurrentCycle == Cycle.Light)
                 return true;
 
-            if (Session.CycleManager.LightOpacity > 0 && Session.Environment.LightMask.BoundingBox.Contains(position))
+            if (target is ILightSource { IsEmittingLight: true })
+                return true;
+
+            if (Session.CycleManager.LightOpacity > 0 && Session.Environment.LightMask.BoundingBox.Contains(target.Position))
                 return true;
 
             /*
@@ -450,7 +453,7 @@ namespace Remizione
             for (int i = 0; i < lights.Count; i++)
             {
                 Light light = lights[i];
-                if (light.IsEmitting && light.BoundingBox.Contains(position))
+                if (light.IsEmitting && light.BoundingBox.Contains(target.Position))
                 {
                     return true;
                 }
@@ -458,8 +461,8 @@ namespace Remizione
 
             for (int i = 0; i < CulledThings.Count; i++)
             {
-                if (CulledThings[i] is ILightSource { IsEmittingLight: true } lightSource
-                    && CulledThings[i].BoundingBox.Contains(position))
+                if (CulledThings[i] is ILightSource { IsEmittingLight: true } lightSource && 
+                    lightSource.BoundingBox.Contains(target.Position))
                     return true;
             }
 

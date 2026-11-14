@@ -141,7 +141,7 @@ namespace Remizione
     }
 
     // MessageKind
-    public enum MessageKind { AreaNotSafe, CannotPlaceItem, InventoryFull, ItemBroken, ItemCrafted, OutOfReach, OutOfSight, StackFull, NotEnoughAshes }
+    public enum MessageKind { AreaNotSafe, CannotPlaceItem, GameSaved, InventoryFull, ItemBroken, ItemCrafted, OutOfReach, OutOfSight, StackFull, NotEnoughAshes }
 
     // MeterColor
     public enum MeterColor { Green, Orange, Purple, SkyBlue, White }

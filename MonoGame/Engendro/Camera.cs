@@ -277,7 +277,8 @@ namespace Engendro
         public void Follow(ITransform target, bool focus = false)
         {
             Target = target;
-            if (focus) FocusTarget();
+            if (focus)
+                FocusTarget();
         }
 
         public EngendroGame Game { get; }

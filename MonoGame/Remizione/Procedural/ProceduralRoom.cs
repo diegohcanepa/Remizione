@@ -31,18 +31,28 @@ namespace Remizione
 
             this.LightingSystem = true;
             this.UnloadMode = UnloadMode.Manual;
-            //this.Zoom = 1.1f;
+            this.Zoom = 1.1f;
         }
 
         #endregion
 
         #region Private members
 
-        // Cleanup
-        private void Cleanup()
+        // CleanupAnnonymousThings
+        private void CleanupAnnonymousThings()
         {
-            spawnCounter.Clear();
-            occupiedPositions.Clear();
+            var annonymousList = new List<Entity>();
+
+            for (var i = 0; i < Children.Count; i++)
+            {
+                if (Children[i].InstanceKind == EntityInstanceKind.Anonymous)
+                    annonymousList.Add(Children[i]);
+            }
+
+            for (var i = 0; i < annonymousList.Count; i++)
+            {
+                annonymousList[i].Unparent();
+            }
         }
 
         // GetCandidateDefinitions
@@ -69,6 +79,22 @@ namespace Remizione
             }
 
             return outList;
+        }
+
+        // GetVisibleBox
+        //private RectangleF GetVisibleBox() => RectangleF.Inflate(Session.Camera.VisibleBox, 15, 15);
+
+        public static RectangleF GetVisibleBox(Vector2 playerPosition, float cameraZoom)
+        {
+            float safeZoom = Math.Max(cameraZoom, 0.1f);
+            float width = 240f / safeZoom;
+            float height = 135f / safeZoom;
+
+            return new RectangleF(
+                playerPosition.X - width * 0.5f,
+                playerPosition.Y - height * 0.5f,
+                width,
+                height);
         }
 
         // GetWalkAreaCandidates
@@ -147,7 +173,7 @@ namespace Remizione
         }
 
         // PopulatePlaceholders
-        private int PopulatePlaceholders<TDefinition>(List<Placeholder> placeholders, IList<TDefinition> candidates)
+        private int PopulatePlaceholders<TDefinition>(List<Placeholder> placeholders, IList<TDefinition> candidates, RectangleF? safeArea)
             where TDefinition : ThingDefinition
         {
             if (placeholders.Count == 0 || candidates.Count == 0)
@@ -160,6 +186,9 @@ namespace Remizione
             for (int i = 0; i < shuffled.Count; i++)
             {
                 var ph = shuffled[i];
+
+                if (safeArea?.Contains(ph.Position) == true)
+                    continue;
 
                 // 1. PRESENCIA: El Placeholder decide si vive o muere este slot
                 if (!ph.FillChance.Roll(Session.Random))
@@ -201,7 +230,7 @@ namespace Remizione
         }
 
         // SpawnActors
-        private void SpawnActors()
+        private void SpawnActors(RectangleF? safeArea)
         {
             var candidates = GetCandidateDefinitions(GameData.Actors);
             if (candidates.Count == 0)
@@ -209,7 +238,7 @@ namespace Remizione
 
             // 1. Placeholders
             var actorPlaceholders = Definition.GetPlaceholders(PlaceholderContentType.Actor);
-            var spawnedCount = PopulatePlaceholders(actorPlaceholders, candidates);
+            var spawnedCount = PopulatePlaceholders(actorPlaceholders, candidates, safeArea);
 
             // 2. WalkArea
             if (WalkArea == null)
@@ -238,7 +267,7 @@ namespace Remizione
                 pointIndex++;
 
                 // Descarta si cae cerca de un Placeholder, Prop o Actor ya instanciado
-                if (IsPositionOccupied(candidatePoint))
+                if (safeArea?.Contains(candidatePoint) == true || IsPositionOccupied(candidatePoint))
                     continue;
 
                 var chosen = walkAreaCandidates.GetRandomItem(Session.Random);
@@ -261,7 +290,7 @@ namespace Remizione
         }
 
         // SpawnProps
-        private void SpawnProps()
+        private void SpawnProps(RectangleF? safeArea)
         {
             var candidates = GetCandidateDefinitions(GameData.Props);
             if (candidates.Count == 0)
@@ -269,7 +298,7 @@ namespace Remizione
 
             // 1. Placeholders: Se procesan siempre
             var propPlaceholders = Definition.GetPlaceholders(PlaceholderContentType.Prop);
-            PopulatePlaceholders(propPlaceholders, candidates);
+            PopulatePlaceholders(propPlaceholders, candidates, safeArea);
 
             // 2. WalkArea: Solo si la sala admite props en piso libre
             if (WalkArea == null || Definition.MaxProps <= 0)
@@ -296,7 +325,7 @@ namespace Remizione
                     continue;
 
                 Vector2 spawnPosition = WalkArea.RandomWalkablePoint(Session.Random);
-                if (spawnPosition == Vector2.Zero || IsPositionOccupied(spawnPosition))
+                if (spawnPosition == Vector2.Zero || safeArea?.Contains(spawnPosition) == true || IsPositionOccupied(spawnPosition))
                     continue;
 
                 // Instanciación exitosa: se descuenta de la meta objetivo
@@ -331,7 +360,7 @@ namespace Remizione
         protected override void OnLoad()
         {
             base.OnLoad();
-            Respawn();
+            Spawn();
         }
 
         #endregion
@@ -339,14 +368,34 @@ namespace Remizione
         // Definition
         public RoomDefinition Definition { get; }
 
-        // Respawn
-        [ScriptMethod]
-        public void Respawn()
+        // Spawn
+        public void Spawn()
         {
-            Cleanup();
-            Session.PrepareForRespawn();
-            SpawnProps();
-            SpawnActors();
+            spawnCounter.Clear();
+            occupiedPositions.Clear();
+            Session.RenewSeed();
+            Session.UnlockManager.Refresh();
+            CleanupAnnonymousThings();
+
+            var visibleBox = Session.Player == null ? RectangleF.Empty : GetVisibleBox(Session.Player.Position, Zoom);
+
+            var cleanupList = new List<Entity>();
+            for (int i = 0; i < Children.Count; i++)
+            {
+                if (Children[i].InstanceKind == EntityInstanceKind.RuntimeClone)
+                {
+                    if (visibleBox.Intersects(Children[i].BoundingBox))
+                        continue;
+
+                    if (Children[i] is not ItemOrb itemOrb || itemOrb.AllowCleanup)
+                        cleanupList.Add(Children[i]);
+                }
+            }
+
+            Session.CleanUpRuntimeClones(cleanupList);
+
+            SpawnProps(visibleBox);
+            SpawnActors(visibleBox);
         }
     }
 }

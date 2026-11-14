@@ -643,7 +643,7 @@ namespace Adberration
                         room.Unload();
                 }
 
-                CleanUpVolatileRuntimeClones();
+                CleanUpRuntimeClones();
                 IsRunning = false;
                 OnShutDown();
             }
@@ -936,18 +936,17 @@ namespace Adberration
         [ScriptProperty]
         public int Chapter { get; set; }
 
-        // CleanUpVolatileRuntimeClones
-        public void CleanUpVolatileRuntimeClones(Func<Entity, bool>? predicate = null)
+        // CleanUpRuntimeClones
+        public void CleanUpRuntimeClones(IList<Entity>? scope = null)
         {
+            scope ??= entityList;
+            
             var runtimeEntities = new List<Entity>();
 
-            for (var i = 0; i < entityList.Count; i++)
+            for (var i = 0; i < scope.Count; i++)
             {
-                if (entityList[i].InstanceKind == EntityInstanceKind.RuntimeClone)
-                {
-                    if (predicate == null || predicate.Invoke(entityList[i]))
-                        runtimeEntities.Add(entityList[i]);
-                }
+                if (scope[i].InstanceKind == EntityInstanceKind.RuntimeClone)
+                    runtimeEntities.Add(scope[i]);
             }
 
             for (var i = 0; i < runtimeEntities.Count; i++)

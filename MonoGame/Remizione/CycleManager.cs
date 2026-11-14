@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Engendro;
+using Microsoft.Xna.Framework;
 using System;
 
 namespace Remizione
@@ -9,6 +10,7 @@ namespace Remizione
     public sealed class CycleManager
     {
         private static readonly Color defaultLightMapColor = new(45, 45, 45);
+        private readonly FloatTween procOpacityTween = new();
 
         // Constructor
         public CycleManager()

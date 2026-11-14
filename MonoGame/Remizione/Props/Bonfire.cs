@@ -11,12 +11,13 @@ namespace Remizione
     /// </summary>
     public class Bonfire : Prop
     {
-        private static readonly Vector2 maxLightScale = new(14, 10);
+        private static readonly Vector2 maxLightScale = new(18, 12);
         private static readonly Vector2 minLightScale = new(9, 6);
         private readonly AnimatedSprite flame;
         private const float flameOpacity = .8f;
         private const float flameScale = .6f;
         private readonly Sprite patch;
+        private readonly FloatTween resetTween = new();
         private SoundInstance? soundInstance;
 
         #region Constructor
@@ -61,6 +62,20 @@ namespace Remizione
 
         #endregion
 
+        #region Private members
+
+        // RefreshAttachedLightScale
+        private void RefreshAttachedLightScale()
+        {
+            if (AttachedLight != null)
+            {
+                float progress = MathHelper.Clamp(RemainingTime / GameData.WorldSettings.BonfireDuration, 0f, 1f);
+                AttachedLight.Scale = Vector2.Lerp(minLightScale, maxLightScale, progress);
+            }
+        }
+
+        #endregion
+
         #region Protected members
 
         // OnDraw
@@ -73,6 +88,13 @@ namespace Remizione
                 flame.Draw(gameTime);
                 patch.Draw(gameTime);
             }
+        }
+
+        // OnLoad
+        protected override void OnLoad()
+        {
+            base.OnLoad();
+            RefreshAttachedLightScale();
         }
 
         // OnTransform
@@ -94,14 +116,19 @@ namespace Remizione
 
             if (IsLit && Session.IsGameplayActive)
             {
-                if (ActiveTimeRemaining > 0)
+                if (resetTween.IsRunning)
+                {
+                    resetTween.Update(gameTime);
+                    RemainingTime = resetTween.CurrentValue;
+                }
+                else if (RemainingTime > 0)
                 {
                     float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    ActiveTimeRemaining -= elapsed;
+                    RemainingTime -= elapsed;
 
-                    if (ActiveTimeRemaining <= 0)
+                    if (RemainingTime <= 0)
                     {
-                        ActiveTimeRemaining = 0;
+                        RemainingTime = 0;
                         IsLit = false;
                     }
                 }
@@ -109,7 +136,7 @@ namespace Remizione
                 // Ajusta la escala de la luz proporcionalmente al tiempo restante
                 if (AttachedLight != null)
                 {
-                    float progress = MathHelper.Clamp(ActiveTimeRemaining / GameData.WorldSettings.BonfireDuration, 0f, 1f);
+                    float progress = MathHelper.Clamp(RemainingTime / GameData.WorldSettings.BonfireDuration, 0f, 1f);
                     AttachedLight.Scale = Vector2.Lerp(minLightScale, maxLightScale, progress);
                 }
             }
@@ -118,10 +145,6 @@ namespace Remizione
         }
 
         #endregion
-
-        // ActiveTimeRemaining
-        [ScriptProperty]
-        public float ActiveTimeRemaining { get; set; }
 
         // IsLit
         [ScriptProperty]
@@ -136,8 +159,7 @@ namespace Remizione
 
                     if (field)
                     {
-                        ActiveTimeRemaining = GameData.WorldSettings.BonfireDuration;
-
+                        ResetRemainingTime();
                         flame.Player.Play("Default", true);
                         soundInstance = PlaySound(SoundNames.Bonfire, true);
                         AttachedLight?.Lit(Session.State == GameSessionState.Loading);
@@ -152,7 +174,7 @@ namespace Remizione
                     }
                     else
                     {
-                        ActiveTimeRemaining = 0;
+                        RemainingTime = 0;
                         AttachedLight?.Unlit(Session.State == GameSessionState.Loading);
 
                         AttachedLight?.Scale = minLightScale;
@@ -166,6 +188,16 @@ namespace Remizione
                     }
                 }
             }
+        }
+
+        // RemainingTime
+        public float RemainingTime { get; set; }
+
+        // ResetRemainingTime
+        [ScriptMethod]
+        public void ResetRemainingTime()
+        {
+            resetTween.Start(TweenStyle.Linear, RemainingTime, GameData.WorldSettings.BonfireDuration, 2000);
         }
 
         // SafeToRest
