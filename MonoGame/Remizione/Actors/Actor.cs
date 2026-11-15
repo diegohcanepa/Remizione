@@ -660,13 +660,13 @@ namespace Remizione
             }
             else
             {
-                DropHelpProp();
+                DropHeldProp();
             }
         }
 
-        // DropHelpProp
+        // DropHeldProp
         [ScriptMethod]
-        public void DropHelpProp()
+        public void DropHeldProp()
         {
             if (HeldProp == null || Room == null)
                 return;
@@ -689,6 +689,21 @@ namespace Remizione
             HeldProp = null;
 
             PlaySound(SoundNames.PropPlace);
+        }
+
+        // DropItem
+        public bool DropItem(Item item)
+        {
+            if (IsDead)
+                return false;
+
+            StopMoving();
+
+            var state = BodyMachine.FindOrCreateState<BodyDropItemState>();
+            state.Item = item;
+            BodyMachine.ChangeState(state.GetType());
+
+            return true;
         }
 
         // Energy
@@ -1115,7 +1130,7 @@ namespace Remizione
             if (HeldProp == null || Room == null)
                 return;
 
-            DropHelpProp();
+            DropHeldProp();
             var state = BodyMachine.FindOrCreateState<BodyPlaceHeldPropState>();
             BodyMachine.ChangeState(state.GetType());
         }

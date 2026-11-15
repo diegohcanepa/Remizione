@@ -11,8 +11,8 @@ namespace Remizione
     {
         private int consecutiveActionCount;
         private float actionWindowTimer;
-        private const float ActionWindowDuration = 1.2f;
-        private const int MaxConsecutiveActions = 4;
+        private const float ActionWindowDuration = .2f;
+        private const int MaxConsecutiveActions = 2;
 
         // Constructor
         public PlayerInputHandler(PlayerIndex playerIndex)

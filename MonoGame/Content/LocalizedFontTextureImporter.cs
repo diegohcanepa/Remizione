@@ -25,7 +25,7 @@ namespace Content
             [
                 .. allChars,
             ];
-            
+
             LocalizedFontTextureContent localizedFontTextureContent = new(baseTextureContent, charList);
 
             return localizedFontTextureContent;

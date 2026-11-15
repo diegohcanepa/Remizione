@@ -5,13 +5,9 @@
   "type": "object",
   "properties": {
     "$schema": {
-      "type": "string",
-      "description": "Ruta o URI al esquema JSON"
+      "type": "string"
     },    
     "bonfireDuration": {
-      "type": "integer"
-    },
-    "cobaltPebbleDuration": {
       "type": "integer"
     },
     "cycleTransitionDuration": {
@@ -21,6 +17,9 @@
       "type": "integer"
     },
     "lightCycleDuration": {
+      "type": "integer"
+    },
+    "sulfurStoneDuration": {
       "type": "integer"
     }
   },

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace Engendro.Collections
 {
@@ -14,7 +13,7 @@ namespace Engendro.Collections
 
         // Constructor
         public FrozenNamedCollection(IList<T> items)
-            : base(items.ToArray())
+            : base([.. items])
         {
             var dict = new Dictionary<string, T>();
             for (var i = 0; i < items.Count; i++)

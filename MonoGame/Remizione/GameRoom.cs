@@ -140,7 +140,7 @@ namespace Remizione
             Game.GraphicsDevice.SetRenderTarget(renderTarget);
             Game.GraphicsDevice.Clear(Session.CycleManager.LightMapColor);
 
-//            if (AllowGlobalLight)
+            //            if (AllowGlobalLight)
             {
                 Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
                 Session.Environment.LightMask.Draw(gameTime);
@@ -461,7 +461,7 @@ namespace Remizione
 
             for (int i = 0; i < CulledThings.Count; i++)
             {
-                if (CulledThings[i] is ILightSource { IsEmittingLight: true } lightSource && 
+                if (CulledThings[i] is ILightSource { IsEmittingLight: true } lightSource &&
                     lightSource.BoundingBox.Contains(target.Position))
                     return true;
             }

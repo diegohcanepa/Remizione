@@ -28,7 +28,7 @@
         internal const string Interact = nameof(Interact);
         internal const string ItemAdd = nameof(ItemAdd);
         internal const string ItemBreak = nameof(ItemBreak);
-        internal const string ItemDiscard = nameof(ItemDiscard);
+        internal const string ItemDrop = nameof(ItemDrop);
         internal const string Lightning = nameof(Lightning);
         internal const string LockOpen = nameof(LockOpen);
         internal const string LootSack = nameof(LootSack);

@@ -6,14 +6,8 @@ namespace Engendro
     /// <summary>
     /// Ratio
     /// </summary>
-    public readonly struct Ratio
+    public readonly struct Ratio(float value)
     {
-        // Constructor
-        public Ratio(float value)
-        {
-            Value = Math.Clamp(value, 0f, 1f);
-        }
-
         #region Operators
 
         public static implicit operator float(Ratio r)
@@ -47,7 +41,7 @@ namespace Engendro
         }
 
         // Value
-        public float Value { get; }
+        public float Value { get; } = Math.Clamp(value, 0f, 1f);
     }
 }
 

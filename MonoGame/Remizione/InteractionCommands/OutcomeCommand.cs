@@ -1,12 +1,11 @@
 ﻿using Adberration.Scripting;
-using Engendro;
 
 namespace Remizione.InteractionCommands
 {
     /// <summary>
-    /// ScriptOutcomeCommand
+    /// OutcomeCommand
     /// </summary>
-    public sealed class ScriptOutcomeCommand : InteractionCommand
+    public sealed class OutcomeCommand : InteractionCommand
     {
         private Script? outcomeScript;
 

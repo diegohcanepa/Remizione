@@ -24,7 +24,7 @@ namespace Remizione
 
         // ExecuteFleeMovement
         // Huida pura en dirección opuesta al jugador.
-        private void ExecuteFleeMovement(Actor source, GameThing target, float stepDistance)
+        private static void ExecuteFleeMovement(Actor source, GameThing target, float stepDistance)
         {
             Vector2 directionAway = Vector2.Normalize(source.Position - target.Position);
             if (directionAway == Vector2.Zero)
@@ -41,7 +41,7 @@ namespace Remizione
 
         // ExecuteLurkMovement
         // Acecho errático perimetral (órbita + empuje a bordes). Reutilizable por cualquier enemigo.
-        private void ExecuteLurkMovement(Actor source, GameThing target, float stepDistance, float currentDistance)
+        private static void ExecuteLurkMovement(Actor source, GameThing target, float stepDistance, float currentDistance)
         {
             if (source.WalkArea == null)
             {

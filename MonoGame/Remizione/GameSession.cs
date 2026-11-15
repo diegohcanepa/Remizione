@@ -481,7 +481,7 @@ namespace Remizione
             base.OnUpdate(gameTime);
 
             //if (IsGameplayActive)
-                CycleManager.Update(gameTime);
+            CycleManager.Update(gameTime);
 
             SepiaEffect.Update(gameTime);
 
@@ -509,7 +509,7 @@ namespace Remizione
                 if (Room == null || !Room.ControlMouseCursor)
                     InteractionContext.Refresh();
 
-                if (Player != null && !IsAwaiting && PlayerData.Inventory.Count > 0)
+                if (Player != null && !IsAwaiting)
                 {
                     if (Player.HeldProp == null)
                     {
@@ -616,7 +616,7 @@ namespace Remizione
                 if (item.Definition.ItemKind != ItemKind.Key)
                     item.Remove();
 
-                    continue;
+                continue;
             }
 
             if (CanSave())
@@ -643,7 +643,7 @@ namespace Remizione
         public void BeginCycles()
         {
             CycleManager.IsEnabled = true;
-            CycleManager.SetCycle(Cycle.Light, skipTransition:true);
+            CycleManager.SetCycle(Cycle.Light, skipTransition: true);
         }
 
         // BonfireMode

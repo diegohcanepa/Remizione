@@ -3,5 +3,6 @@
   "bonfireDuration": 40,
   "cycleTransitionDuration": 15,
   "darkCycleDuration": 30,
-  "lightCycleDuration": 90
+  "lightCycleDuration": 90,
+  "sulfurStoneDuration": 40
 }

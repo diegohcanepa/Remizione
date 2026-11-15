@@ -20,6 +20,7 @@ namespace Remizione
             // DestinationMark
             this.sprite = new Sprite(Atlases.Environment.DestinationMark)
             {
+                Color = Colors.DestinationMark,
                 PivotOrigin = RectanglePoint.Center,
                 Scale = new(.7f)
             };
@@ -40,7 +41,6 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             sprite.Update(gameTime);
-            sprite.Color = Session.PlayerInputHandler.WillFatigueOnNextAction || Session.Player?.IsFatigued == true ? Colors.Palette.Red : Colors.DestinationMark;
         }
 
         #endregion

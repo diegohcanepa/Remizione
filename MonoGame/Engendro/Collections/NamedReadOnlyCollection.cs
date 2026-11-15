@@ -6,14 +6,8 @@ namespace Engendro.Collections
     /// <summary>
     /// NamedReadOnlyCollection
     /// </summary>
-    public class NamedReadOnlyCollection<T> : ReadOnlyCollection<T> where T : class, INamedObject
+    public class NamedReadOnlyCollection<T>(IList<T> list) : ReadOnlyCollection<T>(list) where T : class, INamedObject
     {
-        // Constructor
-        public NamedReadOnlyCollection(IList<T> list)
-            : base(list)
-        {
-        }
-
         // Contains
         public bool Contains(string name)
         {

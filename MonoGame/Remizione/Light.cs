@@ -32,7 +32,7 @@ namespace Remizione
             };
             this.LightKind = lightKind;
             this.Color = GetInitialColor(lightKind);
-            
+
             Setup();
         }
 

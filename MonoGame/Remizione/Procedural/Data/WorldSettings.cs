@@ -23,9 +23,6 @@ namespace Remizione
             // BonfireDuration
             BonfireDuration = element.GetInt32("bonfireDuration", 40);
 
-            // CobaltPebbleDuration
-            CobaltPebbleDuration = element.GetInt32("cobaltPebble", 40);
-
             // CycleTransitionDuration
             CycleTransitionDuration = element.GetInt32("cycleTransitionDuration", 15);
 
@@ -34,15 +31,15 @@ namespace Remizione
 
             // LightCycleDuration
             LightCycleDuration = element.GetInt32("lightCycleDuration", 180);
+
+            // SulfurStoneDuration
+            SulfurStoneDuration = element.GetInt32("sulfurStoneDuration", 40);
         }
 
         #endregion
 
         // BonfireDuration
         public int BonfireDuration { get; }
-
-        // CobaltPebbleDuration
-        public int CobaltPebbleDuration { get; }
 
         // CycleTransitionDuration
         public int CycleTransitionDuration { get; }
@@ -52,5 +49,8 @@ namespace Remizione
 
         // LightCycleDuration
         public int LightCycleDuration { get; }
+
+        // SulfurStoneDuration
+        public int SulfurStoneDuration { get; }
     }
 }

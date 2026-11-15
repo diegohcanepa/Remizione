@@ -58,7 +58,7 @@ namespace Remizione
                 {
                     if (AttachedLight != null)
                     {
-                        float progress = MathHelper.Clamp(RemainingTime / GameData.WorldSettings.CobaltPebbleDuration, 0f, 1f);
+                        float progress = MathHelper.Clamp(RemainingTime / GameData.WorldSettings.SulfurStoneDuration, 0f, 1f);
                         AttachedLight.Scale = Vector2.Lerp(minLightScale, maxLightScale, progress);
                     }
                 }
@@ -68,6 +68,6 @@ namespace Remizione
         #endregion
 
         // RemainingTime
-        public float RemainingTime { get; set; } = GameData.WorldSettings.CobaltPebbleDuration;
+        public float RemainingTime { get; set; } = GameData.WorldSettings.SulfurStoneDuration;
     }
 }

@@ -2,6 +2,7 @@
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Remizione
 {
@@ -23,6 +24,13 @@ namespace Remizione
         private int lastSeenContainerVersion = -1;
         private float selectionHysteresisTimer;
         private readonly InventorySlot[] slots = new InventorySlot[ItemContainer.MaximumCapacity];
+        private readonly TextSprite emptyMessage = new(Fonts.Common)
+        {
+            Color = Colors.Palette.Text,
+            PivotOrigin = RectanglePoint.Center,
+            Scale = ScaleInfo.Text.VeryLarge,
+            Text = "El saco está vacío."
+        };
 
         #endregion
 
@@ -56,6 +64,16 @@ namespace Remizione
                 Multiline = false,
                 PivotOrigin = RectanglePoint.Bottom,
                 Scale = ScaleInfo.Text.Medium,
+            };
+
+            // Empty message
+            this.emptyMessage = new(Fonts.Common)
+            {
+                Color = Colors.Palette.Text,
+                PivotOrigin = RectanglePoint.Center,
+                Position = background.BoundingBox.GetPoint(RectanglePoint.Center, 0, 3),
+                Scale = ScaleInfo.Text.VeryLarge,
+                Text = "@Misc.InventoryEmpty"
             };
 
             Refresh();
@@ -200,19 +218,26 @@ namespace Remizione
 
             background.Draw(gameTime);
 
-            for (var i = 0; i < itemContainer.Count; i++)
+            if (itemContainer.Count == 0)
             {
-                slots[i].Draw(gameTime);
+                emptyMessage.Draw(gameTime);
             }
-
-            if (lastSelectedItem != null)
+            else
             {
-                itemLabel.Draw(gameTime);
-                itemEffect.Draw(gameTime);
-            }
+                for (var i = 0; i < itemContainer.Count; i++)
+                {
+                    slots[i].Draw(gameTime);
+                }
 
-            if (lastSelectedItem != null)
-                inspectItem.Draw(gameTime);
+                if (lastSelectedItem != null)
+                {
+                    itemLabel.Draw(gameTime);
+                    itemEffect.Draw(gameTime);
+                }
+
+                if (lastSelectedItem != null)
+                    inspectItem.Draw(gameTime);
+            }
 
             Game.SpriteBatch.End();
         }

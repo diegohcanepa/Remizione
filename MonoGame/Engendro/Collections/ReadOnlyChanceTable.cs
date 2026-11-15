@@ -7,15 +7,9 @@ namespace Engendro.Collections
     /// <summary>
     /// ReadOnlyChanceTable
     /// </summary>
-    public sealed class ReadOnlyChanceTable : IReadOnlyList<ChanceTableItem>
+    public sealed class ReadOnlyChanceTable(ChanceTable table) : IReadOnlyList<ChanceTableItem>
     {
-        private readonly ChanceTable table;
-
-        // Constructor
-        public ReadOnlyChanceTable(ChanceTable table)
-        {
-            this.table = table;
-        }
+        private readonly ChanceTable table = table;
 
         // Count
         public int Count => table.Count;

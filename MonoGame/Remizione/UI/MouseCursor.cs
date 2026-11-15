@@ -145,7 +145,7 @@ namespace Remizione
         public static void Click(bool silent = false)
         {
             clickScaleTween.Start(TweenStyle.Linear, Vector2.One, clickScale, 60, 2);
-            
+
             if (!silent)
                 Sound.Play(SoundNames.Interact);
         }
@@ -217,7 +217,7 @@ namespace Remizione
         public static void InvalidClick(bool silent = false)
         {
             shakeTween.Start(TweenStyle.CubicInOut, 0, 1, 50, 4);
-            
+
             if (!silent)
                 Sound.Play(SoundNames.Error);
         }

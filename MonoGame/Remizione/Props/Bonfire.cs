@@ -167,6 +167,8 @@ namespace Remizione
                             flame.Tweens.OpacityTween = FloatTween.Create(TweenStyle.CubicIn, 0, flameOpacity, 500);
                             flame.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicIn, .2f, flameScale, 1000);
                         }
+
+                        Hotspot = new("18,1;24,15;5,15;12,1");
                     }
                     else
                     {
@@ -181,6 +183,8 @@ namespace Remizione
                             flame.Tweens.OpacityTween = FloatTween.Create(TweenStyle.CubicIn, flame.Opacity, 0, 2500);
                             flame.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicIn, flame.Scale.X, .2f, 2000);
                         }
+
+                        Hotspot = new("18,5;24,15;5,15;12,5");
                     }
                 }
             }

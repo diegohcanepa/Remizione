@@ -18,7 +18,7 @@ namespace Remizione
         private readonly InteractionCommand[] commandChain;
         private readonly HoldCommand holdCommand = new();
         private readonly ItemCommand itemCommand = new();
-        private readonly ScriptOutcomeCommand scriptCommand = new();
+        private readonly OutcomeCommand scriptCommand = new();
         private readonly ThrowHeldPropCommand throwCommand = new();
 
         #endregion
@@ -91,7 +91,7 @@ namespace Remizione
         }
 
         // GetCurrentAttackRange
-        private AttackRange GetCurrentAttackRange(Actor player)
+        private static AttackRange GetCurrentAttackRange(Actor player)
         {
             // 1. Props en mano: solo es Medium si es explícitamente arrojable
             if (player.HeldProp != null)
@@ -111,7 +111,7 @@ namespace Remizione
         }
 
         // IsInThrowZone
-        private bool IsInThrowZone(Actor player, GameThing target)
+        private static bool IsInThrowZone(Actor player, GameThing target)
         {
             AttackRange range = GetCurrentAttackRange(player);
 
@@ -151,7 +151,7 @@ namespace Remizione
                 else if (player == target)
                 {
                     if (!heldItem.Definition.AllowSelfAction)
-                       return;
+                        return;
                 }
             }
 

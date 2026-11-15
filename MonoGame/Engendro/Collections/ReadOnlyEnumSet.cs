@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Text.Json;
 
 namespace Engendro.Collections
@@ -9,17 +8,8 @@ namespace Engendro.Collections
     /// <summary>
     /// Conjunto de solo lectura optimizado para valores de tipo Enum.
     /// </summary>
-    public sealed class ReadOnlyEnumSet<T> : ReadOnlyCollection<T> where T : struct, Enum
+    public sealed class ReadOnlyEnumSet<T>(IList<T> items) : ReadOnlyCollection<T>(items) where T : struct, Enum
     {
-        #region Constructors
-
-        public ReadOnlyEnumSet(IList<T> items)
-            : base(items)
-        {
-        }
-
-        #endregion
-
         // Empty
         public static new ReadOnlyEnumSet<T> Empty { get; } = new(Array.Empty<T>());
 
@@ -67,7 +57,7 @@ namespace Engendro.Collections
                     }
                 }
 
-                return new ReadOnlyEnumSet<T>(set.ToArray());
+                return new ReadOnlyEnumSet<T>([.. set]);
             }
 
             return Empty;

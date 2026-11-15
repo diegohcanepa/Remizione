@@ -203,15 +203,15 @@ namespace Remizione
 
             if (item != null && Session.Room is { } room && Session.Player is { } player)
             {
+                // Drop
                 if (dropButton.TestPressed())
                 {
-                    item.Remove();
-                    Sound.Play(SoundNames.ItemDiscard);
-                    ItemOrb.Drop(item.Definition, item.Amount, room, player.Position);
                     Game.SceneManager.Pop();
+                    player.DropItem(item);
                     return HandleInputResult.Handled;
                 }
 
+                // Use
                 if (useButton.TestPressed())
                 {
                     Game.SceneManager.Pop();

@@ -6,17 +6,10 @@ namespace Engendro
     /// <summary>
     /// ConeEmitterType
     /// </summary>
-    public class ConeEmitterType : IEmitterType
+    public class ConeEmitterType(Vector2 direction, float spread) : IEmitterType
     {
-        // Constructor
-        public ConeEmitterType(Vector2 direction, float spread)
-        {
-            Direction = direction;
-            Spread = spread;
-        }
-
         // Direction
-        public Vector2 Direction { get; private set; }
+        public Vector2 Direction { get; private set; } = direction;
 
         // GetParticleDirection
         public Vector2 GetParticleDirection()
@@ -44,6 +37,6 @@ namespace Engendro
         }
 
         // Spread
-        public float Spread { get; private set; }
+        public float Spread { get; private set; } = spread;
     }
 }

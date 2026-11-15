@@ -743,7 +743,7 @@ namespace Engendro
                     }
                     else
                     {
-                        text = TextRepositoryKey != null ? TextRepository.GetValue(value.Substring(1)) : value;
+                        text = TextRepositoryKey != null ? TextRepository.GetValue(value[1..]) : value;
                     }
 
                     Invalidate();
