@@ -66,6 +66,13 @@ namespace Remizione
         private void ResolveSelfAction(IAction action)
         {
             EffectDescriptor.Apply(action.EffectDescriptors, Owner, null, EffectContext.Use);
+
+            if (action.Spawn && Owner.Room is { } room)
+            {
+                var instance = Owner.Session.CreateThingClone<Prop>(action.Name);
+                instance.Position = Owner.Position;
+                room.Children.Add(instance);
+            }
         }
 
         #endregion
@@ -88,11 +95,10 @@ namespace Remizione
         {
             base.Enter();
 
-            if (Target is Actor targetActor)
-            {
-                targetActor.StopMoving();
+            Target?.StopMoving();
+
+            if (Target is Actor targetActor && !targetActor.IsPlayer)
                 targetActor.IsLockedByPlayer = true;
-            }
 
             animationFound = Owner.ContainsAnimation(GetAnimationName());
             eventDone = !animationFound;
@@ -138,9 +144,10 @@ namespace Remizione
                         ResolveProximityAction(action);
                         break;
 
-                    // SelfAction
-                    case ActionKind.Self:
-                        ResolveSelfAction(action);
+                    // ScriptOutcome
+                    case ActionKind.Outcome:
+                        if (action.AllowSelfAction)
+                            ResolveSelfAction(action);
                         break;
 
                     default:

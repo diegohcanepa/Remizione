@@ -18,7 +18,10 @@ namespace Remizione
             : base(element)
         {
             // ActionKind
-            ActionKind = element.GetEnum("actionKind", ActionKind.ScriptOutcome);
+            ActionKind = element.GetEnum("actionKind", ActionKind.Outcome);
+
+            // AllowSelfAction
+            AllowSelfAction = element.GetBool("allowSelfAction", false);
 
             // AnimationName
             AnimationName = element.GetString("animationName");
@@ -89,6 +92,9 @@ namespace Remizione
             // SkillChance
             SkillChance = element.GetInt32("skillChance", 0);
 
+            // Spawn
+            Spawn = element.GetBool("spawn", false);
+
             // SoundStart
             this.SoundStart = element.GetObject("soundStart", Sound.Get);
 
@@ -130,7 +136,7 @@ namespace Remizione
                 LabelColor = Colors.Inventory.CommonItem;
                 OrbLightKind = LightKind.CommonItemOrb;
             }
-            
+
             RefreshLocalizedValues();
         }
 
@@ -175,6 +181,9 @@ namespace Remizione
 
         // ActionKind
         public ActionKind ActionKind { get; }
+
+        // AllowSelfAction
+        public bool AllowSelfAction { get; }
 
         // AnimationName
         public string AnimationName { get; }
@@ -280,5 +289,8 @@ namespace Remizione
 
         // SoundTrigger
         public Sound? SoundTrigger { get; }
+
+        // Spawn
+        public bool Spawn { get; }
     }
 }

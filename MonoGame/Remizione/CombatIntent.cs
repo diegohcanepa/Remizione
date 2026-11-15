@@ -71,6 +71,9 @@ namespace Remizione
 
         #region IAction interface
 
+        // AllowSelfAction
+        bool IAction.AllowSelfAction => false;
+
         // ApplyUsage
         ApplyUsageOutcome IAction.ApplyUsage(Actor actor)
         {
@@ -80,6 +83,9 @@ namespace Remizione
 
         // ProjectileImageName
         string IAction.ProjectileImageName => string.Empty;
+
+        // Spawn
+        bool IAction.Spawn => false;
 
         #endregion
 

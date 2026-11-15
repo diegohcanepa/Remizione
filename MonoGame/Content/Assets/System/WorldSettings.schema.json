@@ -9,20 +9,19 @@
       "description": "Ruta o URI al esquema JSON"
     },    
     "bonfireDuration": {
-      "type": "integer",
-      "description": "Bonfire duration in seconds."
+      "type": "integer"
+    },
+    "cobaltPebbleDuration": {
+      "type": "integer"
     },
     "cycleTransitionDuration": {
-      "type": "integer",
-      "description": "Transition duration to next cycle state in seconds."
+      "type": "integer"
     },
     "darkCycleDuration": {
-      "type": "integer",
-      "description": "Dark cycle duration in seconds."
+      "type": "integer"
     },
     "lightCycleDuration": {
-      "type": "integer",
-      "description": "Light cycle duration in seconds."
+      "type": "integer"
     }
   },
   "required": [

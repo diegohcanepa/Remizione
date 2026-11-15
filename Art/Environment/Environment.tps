@@ -228,6 +228,7 @@
             <key type="filename">Bible-assets/BiblePiece8.png</key>
             <key type="filename">DustParticles-assets/DustParticle1.png</key>
             <key type="filename">Environment-assets/Sparkle.png</key>
+            <key type="filename">Environment-assets/SulfurStone.png</key>
             <key type="filename">FireflyParticles-assets/FireflyParticle1.png</key>
             <key type="filename">Remains-assets/Bone3.png</key>
             <key type="filename">Remains-assets/Gut2.png</key>

@@ -494,7 +494,9 @@ namespace Adberration
                     if (counter.Persistent)
                         counterList.Add(counter.Name + "=" + XmlConvert.ToString(counter.Value));
                 }
-                output.WriteAttributeString(GameSessionPersistenceAttributeName.Counters.ToString(), string.Join(",", counterList));
+
+                if (counterList.Count > 0)
+                    output.WriteAttributeString(GameSessionPersistenceAttributeName.Counters.ToString(), string.Join(",", counterList));
             }
 
             // Flags

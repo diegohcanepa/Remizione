@@ -8,56 +8,41 @@ namespace Remizione.InteractionCommands
     /// </summary>
     public sealed class ScriptOutcomeCommand : InteractionCommand
     {
-        private Script? resolvedScript;
+        private Script? outcomeScript;
 
         // CanExecute
         public override bool CanExecute(InteractionData data, Actor player, GameThing target, Verb verb)
         {
             var heldItem = player.Session.InteractionContext.HeldItem;
-            resolvedScript = null;
+            outcomeScript = null;
 
             if (heldItem == null)
             {
                 if (target.Verb is not Verb.Attack and not Verb.Lift)
-                    resolvedScript = target.OutcomeScript;
+                    outcomeScript = target.OutcomeScript;
             }
             else
             {
                 if (Utils.IsGoToVerb(target.Verb))
                 {
-                    resolvedScript = target.OutcomeScript;
+                    outcomeScript = target.OutcomeScript;
                 }
-                else if (heldItem.Definition.ActionKind == ActionKind.ScriptOutcome)
+                else if (heldItem.Definition.ActionKind == ActionKind.Outcome)
                 {
-                    resolvedScript = target.Session.ScriptLibrary.FindOutcomeOverload(target.DeclaredName, heldItem.Name);
+                    outcomeScript = target.Session.ScriptLibrary.FindOutcomeOverload(target.DeclaredName, heldItem.Name);
                 }
             }
 
-            return resolvedScript != null;
+            return outcomeScript != null || (target == player && heldItem?.Definition.AllowSelfAction == true);
         }
 
         // Execute
         public override void Execute(InteractionData data, Actor player, GameThing target, Verb verb)
         {
-            if (resolvedScript == null)
+            if (!CanExecute(data, player, target, verb))
                 return;
 
             player.StopMoving();
-
-            if (player.Session.InteractionContext.HeldItem != null || verb == Verb.Use)
-            {
-                if (target.AshCost > player.Session.PlayerData.Ashes)
-                {
-                    if (target.ApproachBehavior != ApproachBehavior.Over)
-                        player.FaceTo(target);
-
-                    target.Session.HUD.Message.Show(MessageKind.NotEnoughAshes, null);
-
-                    player.Session.InteractionContext.HeldItem = null;
-
-                    return;
-                }
-            }
 
             if (target.Verb == Verb.PickUp && !player.Session.InventoryEnabled)
             {
@@ -67,12 +52,19 @@ namespace Remizione.InteractionCommands
                 return;
             }
 
+            if (target == player && player.Session.InteractionContext.HeldItem is { Definition.AllowSelfAction: true } helItem)
+            {
+                player.ExecuteAction(helItem, target);
+            }
+            else if (outcomeScript != null)
+            {
+                if (target.ApproachBehavior != ApproachBehavior.Over)
+                    player.FaceTo(target);
+
+                player.Session.BeginOutcome(outcomeScript, target);
+            }
+
             player.Session.InteractionContext.HeldItem = null;
-
-            if (target.ApproachBehavior != ApproachBehavior.Over)
-                player.FaceTo(target);
-
-            player.Session.BeginOutcome(resolvedScript, target);
         }
     }
 }

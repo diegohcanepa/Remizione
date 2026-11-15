@@ -12,6 +12,9 @@ namespace Remizione
         // ActionKind
         ActionKind ActionKind { get; }
 
+        // AllowSelfAction
+        bool AllowSelfAction { get; }
+
         // AnimationName
         string AnimationName { get; }
 
@@ -33,6 +36,9 @@ namespace Remizione
         // MissChance
         Ratio MissChance { get; }
 
+        // Name
+        string Name { get; }
+
         // ProjectileImageName
         string ProjectileImageName { get; }
 
@@ -41,5 +47,8 @@ namespace Remizione
 
         // SoundTrigger
         Sound? SoundTrigger { get; }
+
+        // Spawn
+        bool Spawn { get; }
     }
 }

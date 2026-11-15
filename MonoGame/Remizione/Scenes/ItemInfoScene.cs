@@ -14,16 +14,17 @@ namespace Remizione
         private readonly TextSprite amountText;
         private readonly UIImageButton backButton = UIImageButton.CreateBackButton();
         private readonly TextSprite breakChancesText;
-        private readonly UITextButton button;
+        private readonly UITextButton dropButton;
         private readonly TextSprite effectText;
         private readonly TextSprite descriptionText;
         private readonly Sprite image;
         private readonly Sprite imageSlot;
         private Item? item;
+        private readonly TextSprite nameText;
         private readonly Sprite perishStateIcon;
         private readonly TextSprite perishStateText;
         private readonly Sprite shadow;
-        private readonly TextSprite nameText;
+        private readonly UITextButton useButton;
 
         #endregion
 
@@ -131,12 +132,21 @@ namespace Remizione
                 Scale = ScaleInfo.Text.Medium
             };
 
-            // Button
-            this.button = new()
+            // Drop Button
+            this.dropButton = new()
             {
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -10, -5),
                 Text = Localization.GetValue(UserAction.Drop)
+            };
+
+            // Use Button
+            this.useButton = new()
+            {
+                PivotOrigin = RectanglePoint.RightBottom,
+                X = dropButton.BoundingBox.GetPoint(RectanglePoint.LeftBottom, -8, 0).X,
+                Y = dropButton.Y,
+                Text = Localization.GetValue(UserAction.Use)
             };
         }
 
@@ -172,8 +182,11 @@ namespace Remizione
                 //    breakChancesText.Draw(gameTime);
             }
 
-            if (button.IsEnabled)
-                button.Draw(gameTime);
+            dropButton.Draw(gameTime);
+
+            if (useButton.IsEnabled)
+                useButton.Draw(gameTime);
+
             backButton.Draw(gameTime);
             Game.SpriteBatch.End();
         }
@@ -188,17 +201,23 @@ namespace Remizione
                 return HandleInputResult.Handled;
             }
 
-            if (button.TestPressed())
+            if (item != null && Session.Room is { } room && Session.Player is { } player)
             {
-                if (item != null && Session.Room is { } room && Session.Player is { } player)
+                if (dropButton.TestPressed())
                 {
                     item.Remove();
                     Sound.Play(SoundNames.ItemDiscard);
                     ItemOrb.Drop(item.Definition, item.Amount, room, player.Position);
+                    Game.SceneManager.Pop();
+                    return HandleInputResult.Handled;
                 }
 
-                Game.SceneManager.Pop();
-                return HandleInputResult.Handled;
+                if (useButton.TestPressed())
+                {
+                    Game.SceneManager.Pop();
+                    player.ExecuteAction(item, player);
+                    return HandleInputResult.Handled;
+                }
             }
 
             return base.OnHandleInput(gameTime);
@@ -207,7 +226,8 @@ namespace Remizione
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            button.Update(gameTime);
+            dropButton.Update(gameTime);
+            useButton.Update(gameTime);
             nameText.Update(gameTime);
             descriptionText.Update(gameTime);
             backButton.Update(gameTime);
@@ -231,6 +251,7 @@ namespace Remizione
             this.breakChancesText.Text = item.Definition.HasBreakChance ? $"{TextRepository.GetValue("Misc.BreakChance")}{System.Environment.NewLine}{(item.BreakChance * 100).Round()}%" : null;
             this.breakChancesText.Color = item.BreakChance > .65f ? Colors.Palette.Red : Colors.Palette.Orange;
             this.shadow.RenderImage = item.Definition.Image;
+            this.useButton.IsEnabled = item.Definition.AllowSelfAction;
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿namespace Remizione.InteractionCommands
 {
     /// <summary>
-    /// CombatCommand
+    /// ExecuteActionCommand
     /// </summary>
-    public sealed class CombatCommand : InteractionCommand
+    public sealed class ExecuteActionCommand : InteractionCommand
     {
         private IAction? resolvedAction;
 
@@ -16,7 +16,7 @@
             {
                 if (player.Session.InteractionContext.HeldItem is { } heldItem)
                 {
-                    if (heldItem.Definition.ActionKind != ActionKind.ScriptOutcome)
+                    if (heldItem.Definition.ActionKind != ActionKind.Outcome)
                         resolvedAction = heldItem;
                 }
             }

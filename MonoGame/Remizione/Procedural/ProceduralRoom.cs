@@ -370,7 +370,6 @@ namespace Remizione
 
             spawnCounter.Clear();
             occupiedPositions.Clear();
-            Session.RenewSeed();
             Session.UnlockManager.Refresh();
             CleanupAnnonymousThings(safeArea);
 

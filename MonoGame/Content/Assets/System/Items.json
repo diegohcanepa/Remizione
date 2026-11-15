@@ -5,7 +5,7 @@
 			"name": "BarrenFig",
 			"animationName": "Consume",
 			"category": "Food",
-			"actionKind": "Self",
+			"actionKind": "Outcome",
 			"itemKind": "Organic",
 			"unlockMode": "None",
 			"effects": [
@@ -20,18 +20,21 @@
 		},
 		{
 			"name": "CobaltPebble",
+			"animationName": "PickUp",
 			"category": "Misc",
-			"actionKind": "ScriptOutcome",
+			"actionKind": "Outcome",
 			"isDepletable": true,
-			"itemKind": "Key",
+			"itemKind": "Common",
 			"isStackable": true,
-			"unlockMode": "None"
+			"unlockMode": "None",
+			"spawn": true
 		},
 		{
 			"name": "Loquat",
+			"allowSelfAction": true,
 			"animationName": "Consume",
 			"category": "Food",
-			"actionKind": "Self",
+			"actionKind": "Outcome",
 			"itemKind": "Organic",
 			"unlockMode": "None",
 			"effects": [
@@ -47,7 +50,7 @@
 		{
 			"name": "PyritePebble",
 			"category": "Misc",
-			"actionKind": "ScriptOutcome",
+			"actionKind": "Outcome",
 			"isDepletable": true,
 			"isStackable": true,
 			"unlockMode": "None"
@@ -55,7 +58,7 @@
 		{
 			"name": "CrudeKey",
 			"category": "Access",
-			"actionKind": "ScriptOutcome",
+			"actionKind": "Outcome",
 			"isDepletable": true,
 			"itemKind": "Key",
 			"isStackable": true,
@@ -99,7 +102,7 @@
 		{
 			"name": "Material",
 			"category": "Misc",
-			"actionKind": "ScriptOutcome",
+			"actionKind": "Outcome",
 			"isDepletable": true,
 			"isStackable": true,
 			"lostOnDeath": true,
@@ -126,12 +129,14 @@
 		},		
 		{
 			"name": "SulfurStone",
+			"allowSelfAction": true,
+			"animationName": "PickUp",
 			"category": "Misc",
-			"actionKind": "ScriptOutcome",
+			"actionKind": "Outcome",
 			"isDepletable": true,
-			"itemKind": "Key",
 			"isStackable": true,
-			"unlockMode": "None"
+			"unlockMode": "None",
+			"spawn": true
 		}
 	]
 }

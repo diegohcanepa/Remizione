@@ -1,5 +1,4 @@
 ﻿using Adberration;
-using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Remizione.InteractionCommands;
@@ -15,7 +14,7 @@ namespace Remizione
         #region Private fields
 
         private InteractionCommand? activeCommand;
-        private readonly CombatCommand combatCommand = new();
+        private readonly ExecuteActionCommand combatCommand = new();
         private readonly InteractionCommand[] commandChain;
         private readonly HoldCommand holdCommand = new();
         private readonly ItemCommand itemCommand = new();
@@ -151,12 +150,8 @@ namespace Remizione
                 }
                 else if (player == target)
                 {
-                    if (heldItem.Definition.ActionKind is ActionKind.Projectile or ActionKind.Proximity)
-                        return;
-                }
-                else if (heldItem.Definition.ActionKind == ActionKind.Self)
-                {
-                    return;
+                    if (!heldItem.Definition.AllowSelfAction)
+                       return;
                 }
             }
 
@@ -237,7 +232,8 @@ namespace Remizione
             // In-place action?
             bool executeInPlace = (context.HeldItem == null && Target == player && player.HeldProp == null) ||
                                   (Verb == Verb.LookAt && context.HeldItem == null && player.HeldProp == null) ||
-                                  (context.HeldItem?.Definition.ActionKind == ActionKind.Self) ||
+                                  (context.HeldItem?.Definition.AllowSelfAction == true && Target.IsPlayer) ||
+                                  (Target == player && context.HeldItem != null) ||
                                   (isRangedAction && IsInThrowZone(player, Target));
 
             if (executeInPlace)

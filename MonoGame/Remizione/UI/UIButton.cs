@@ -72,7 +72,7 @@ namespace Remizione
         // TestPressed
         public bool TestPressed()
         {
-            if (InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed() && IsMouseOver)
+            if (IsEnabled && InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed() && IsMouseOver)
             {
                 PressSound?.Play();
                 Action?.Invoke();

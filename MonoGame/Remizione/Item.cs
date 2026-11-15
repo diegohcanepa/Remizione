@@ -26,6 +26,10 @@ namespace Remizione
 
         #region IAction interface
 
+        ActionKind IAction.ActionKind => Definition.ActionKind;
+
+        bool IAction.AllowSelfAction => Definition.AllowSelfAction;
+
         string IAction.AnimationName => Definition.AnimationName;
 
         int IAction.AreaOfEffect => Definition.AreaOfEffect;
@@ -34,11 +38,11 @@ namespace Remizione
 
         ImpactEffectType IAction.ImpactEffectType => Definition.ImpactEffectType;
 
+        bool IAction.Spawn => Definition.Spawn;
+
         Sound? IAction.SoundStart => Definition.SoundStart;
 
         Sound? IAction.SoundTrigger => Definition.SoundTrigger;
-
-        ActionKind IAction.ActionKind => Definition.ActionKind;
 
         #endregion
 

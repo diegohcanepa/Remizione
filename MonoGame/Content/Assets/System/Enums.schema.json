@@ -5,10 +5,9 @@
     "ActionKind": {
       "type": "string",
       "enum": [
-        "ScriptOutcome",
+        "Outcome",
         "Proximity",
-        "Projectile",
-        "Self"
+        "Projectile"
       ]
     },
     "AttackRange": {

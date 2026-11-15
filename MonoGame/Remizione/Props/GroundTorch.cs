@@ -18,11 +18,11 @@ namespace Remizione
             Verb = Verb.LookAt;
             DepthOffset = -3;
 
-            this.AttachedLight = new("Light", LightKind.GroundTorch)
+            this.AttachedLight = new("Light", LightKind.SulfurBonfire)
             {
                 PivotOrigin = RectanglePoint.Center,
                 Position = new(9),
-                Scale = new(12)
+                Scale = new(12, 10)
             };
 
             AttachedLight.Unlit(true);

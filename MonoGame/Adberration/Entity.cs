@@ -635,7 +635,8 @@ namespace Adberration
             get;
             internal set
             {
-                if (InstanceKind == EntityInstanceKind.Anonymous || Session.State != GameSessionState.LoadingScripts)
+                if (InstanceKind == EntityInstanceKind.Anonymous || InstanceKind == EntityInstanceKind.RuntimeClone ||
+                    Session.State != GameSessionState.LoadingScripts)
                     throw new InvalidOperationException();
 
                 field = value;

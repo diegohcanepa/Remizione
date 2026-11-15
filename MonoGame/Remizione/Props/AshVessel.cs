@@ -46,7 +46,7 @@ namespace Remizione
             {
                 if (IsInViewport)
                 {
-                    Tweens.XTween = FloatTween.Create(TweenStyle.Linear, X, X + .5f, 40, 4);
+                    Tweens.XTween = FloatTween.Create(TweenStyle.Linear, X, X + .75f, 50, 6);
                     PlaySound(SoundNames.AshVesselCover);
                 }
             }

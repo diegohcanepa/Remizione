@@ -134,11 +134,7 @@ namespace Remizione
                 }
 
                 // Ajusta la escala de la luz proporcionalmente al tiempo restante
-                if (AttachedLight != null)
-                {
-                    float progress = MathHelper.Clamp(RemainingTime / GameData.WorldSettings.BonfireDuration, 0f, 1f);
-                    AttachedLight.Scale = Vector2.Lerp(minLightScale, maxLightScale, progress);
-                }
+                RefreshAttachedLightScale();
             }
 
             flame.Update(gameTime);

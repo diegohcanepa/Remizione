@@ -32,7 +32,6 @@ namespace Remizione
         private Vector2? playerPosition;
         private FrozenDictionary<string, GameThing>? proceduralCatalog;
         private readonly RoomEditor? roomEditor;
-        private RectangleF visibleBox;
 
         #endregion
 
@@ -61,7 +60,6 @@ namespace Remizione
             this.Overlays = new(this);
             this.LootGenerator = new(this);
             this.PersistenceModel = new RemizionePersistenceModel();
-            this.RenewSeed();
             this.UnlockManager = new(this);
             this.CycleManager.CycleChanged += OnCycleChanged;
 
@@ -154,12 +152,13 @@ namespace Remizione
             AotTypeRegistry.Register(typeof(FigTree));
             AotTypeRegistry.Register(typeof(Fleshiness));
             AotTypeRegistry.Register(typeof(GameRoom));
+            AotTypeRegistry.Register(typeof(GroundTorch));
             AotTypeRegistry.Register(typeof(ItemOrb));
             AotTypeRegistry.Register(typeof(Pottery));
             AotTypeRegistry.Register(typeof(ProceduralRoom));
             AotTypeRegistry.Register(typeof(Prop));
             AotTypeRegistry.Register(typeof(SpearTrap));
-            AotTypeRegistry.Register(typeof(GroundTorch));
+            AotTypeRegistry.Register(typeof(SulfurStone));
             AotTypeRegistry.Register(typeof(Trunk));
 
             AotTypeRegistry.Register("add-dialog-option", typeof(AddDialogOptionCommand));
@@ -192,6 +191,7 @@ namespace Remizione
             AotTypeRegistry.Register("set-item-reward", typeof(SetItemRewardCommand), CodingContext.Any);
             AotTypeRegistry.Register("set-light", typeof(SetLightCommand));
             AotTypeRegistry.Register("show-message", typeof(ShowMessageCommand));
+            AotTypeRegistry.Register("spawn-prop", typeof(SpawnPropCommand));
             AotTypeRegistry.Register("terminate-dialog-block", typeof(TerminateDialogBlockCommand));
             AotTypeRegistry.Register("x-tween", typeof(XTweenCommand));
             AotTypeRegistry.Register("y-tween", typeof(YTweenCommand));
@@ -480,7 +480,7 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
 
-            if (IsGameplayActive)
+            //if (IsGameplayActive)
                 CycleManager.Update(gameTime);
 
             SepiaEffect.Update(gameTime);
@@ -821,15 +821,9 @@ namespace Remizione
         // Random
         public Random Random { get; private set; } = new(0);
 
-        // RenewSeed
-        public void RenewSeed()
-        {
-            Seed = RandomNumberGenerator.GetInt32(int.MaxValue);
-        }
-
-        // RespawnRoom
+        // Respawn
         [ScriptMethod]
-        public void RespawnRoom() => (Room as ProceduralRoom)?.Spawn();
+        public void Respawn() => (Room as ProceduralRoom)?.Spawn();
 
         // RestartFromLastBonfire
         [ScriptMethod]
@@ -865,7 +859,7 @@ namespace Remizione
                     Random = new(field);
                 }
             }
-        }
+        } = RandomNumberGenerator.GetInt32(int.MaxValue);
 
         // SepiaEffect
         public SepiaEffect SepiaEffect { get; } = new();

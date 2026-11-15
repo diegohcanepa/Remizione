@@ -45,7 +45,7 @@ namespace Remizione
         {
             return lightKind switch
             {
-                LightKind.GroundTorch => new Color(235, 170, 170),
+                LightKind.CobaltPebble => new Color(163, 167, 194),
                 LightKind.Fire => new Color(255, 160, 160),
                 LightKind.KeyItemOrb => Colors.Palette.SkyBlue,
                 LightKind.CommonItemOrb => Colors.Palette.TerraLight,
@@ -91,9 +91,9 @@ namespace Remizione
 
             switch (LightKind)
             {
-                case LightKind.GroundTorch:
-                    litTweenDuration = 2000;
-                    unlitTweenDuration = 300;
+                case LightKind.CobaltPebble:
+                    litTweenDuration = 1000;
+                    unlitTweenDuration = 1300;
                     break;
 
                 case LightKind.Fire:

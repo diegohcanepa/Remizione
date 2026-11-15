@@ -242,14 +242,14 @@ namespace Engendro.Audio
             IsLoaded = true;
         }
 
+        // Looped
+        public bool Looped { get; }
+
         // MaxInstances
         public int MaxInstances { get; } = 6;
 
         // Name
         public string Name { get; }
-
-        // Looped
-        public bool Looped { get; }
 
         // Pan
         public float Pan { get; }

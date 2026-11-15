@@ -216,12 +216,6 @@ namespace Adberration.Scripting
         // CompilationPhase
         internal CompilationPhase CompilationPhase { get; private set; }
 
-        // FindDeclaration
-        internal Script? FindDeclaration(string name)
-        {
-            return declarations.TryGetValue(name, out var result) ? result : null;
-        }
-
         // FindScript
         internal Script? FindScript(string name)
         {
@@ -252,6 +246,12 @@ namespace Adberration.Scripting
 
         // AllScripts
         public IEnumerable<Script> AllScripts => scripts.Values;
+
+        // FindDeclaration
+        public Script? FindDeclaration(string name)
+        {
+            return declarations.TryGetValue(name, out var result) ? result : null;
+        }
 
         // FindOutcome
         public Script? FindOutcome(string name)

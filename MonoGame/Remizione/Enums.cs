@@ -3,7 +3,7 @@
 namespace Remizione
 {
     // ActionKind
-    public enum ActionKind { ScriptOutcome, Proximity, Projectile, Self }
+    public enum ActionKind { Outcome, Proximity, Projectile }
 
     // ApplyUsageOutcome
     public enum ApplyUsageOutcome { None, Broken, Consumed }
@@ -116,7 +116,7 @@ namespace Remizione
     }
 
     // LightKind
-    public enum LightKind { Default, GroundTorch, Lantern, Fire, KeyItemOrb, SulfurBonfire, MuzzleFlash, Player, CommonItemOrb, OrganicItemOrb }
+    public enum LightKind { Default, CobaltPebble, Lantern, Fire, KeyItemOrb, SulfurBonfire, MuzzleFlash, Player, CommonItemOrb, OrganicItemOrb }
 
     // LightState
     public enum LightState { Off, On, TurningOn, TurningOff }
@@ -218,7 +218,7 @@ namespace Remizione
     public enum UnlockMode { None, Manual, Cycles, Room }
 
     // UserAction
-    public enum UserAction { Discard, Drop }
+    public enum UserAction { Discard, Drop, Use }
 
     // Verb
     public enum Verb { None, Use, LookAt, Talk, Attack, Lift, GoLeft, GoRight, GoUp, GoDown, PickUp, Inspect }
