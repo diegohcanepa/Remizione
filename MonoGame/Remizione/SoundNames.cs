@@ -41,6 +41,7 @@
         internal const string PickupKey = nameof(PickupKey);
         internal const string PotteryBreak = nameof(PotteryBreak);
         internal const string PropPlace = nameof(PropPlace);
+        internal const string SackOpen = nameof(SackOpen);
         internal const string SpearTrap = nameof(SpearTrap);
         internal const string StatusPoison = nameof(StatusPoison);
         internal const string TrunkLocked = nameof(TrunkLocked);

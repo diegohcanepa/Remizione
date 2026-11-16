@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 
 namespace Remizione
 {
@@ -87,6 +88,7 @@ namespace Remizione
         public void ShowInventory()
         {
             PushScene<InventoryScene>(inventoryScene);
+            Sound.Play(SoundNames.SackOpen);
         }
 
         // ShowItemInfo

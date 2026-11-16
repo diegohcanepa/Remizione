@@ -81,6 +81,7 @@
     { "name": "RatAttack", "soundCount": 3 },
     { "name": "RatDeath", "soundCount": 2 },
     { "name": "Raven" },
+    { "name": "SackOpen", "volume": 0.25, "pitchVariance": 0.5, "scope": "Global" },
     { "name": "SpearTrap" },
     { "name": "SpeakerMonk", "soundCount": 2, "volume": 0.1 },
     { "name": "StatusPoison" },

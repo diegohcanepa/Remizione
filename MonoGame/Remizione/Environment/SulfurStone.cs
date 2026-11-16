@@ -8,8 +8,8 @@ namespace Remizione
     /// </summary>
     public sealed class SulfurStone : Prop
     {
-        private static readonly Vector2 maxLightScale = new(18, 12);
-        private static readonly Vector2 minLightScale = new(9, 6);
+        private static readonly Vector2 maxLightScale = new(9, 6);
+        private static readonly Vector2 minLightScale = new(4, 3);
 
         #region Constructor
 
@@ -24,10 +24,11 @@ namespace Remizione
             AttachedLight ??= new("Light", LightKind.CobaltPebble)
             {
                 PivotOrigin = RectanglePoint.Center,
-                Scale = new(7, 5)
             };
 
             AttachedLightPosition = new(2, 2);
+
+            Tweens.OpacityTween = FloatTween.Create(TweenStyle.Linear, 1, .8f, 70, -1);
         }
 
         #endregion
@@ -38,7 +39,7 @@ namespace Remizione
         protected override void OnLoad()
         {
             base.OnLoad();
-            AttachedLight?.Lit(3000);
+            AttachedLight?.Lit(2000);
         }
 
         // OnUpdate

@@ -15,7 +15,7 @@ namespace Remizione
         private int litTweenDuration;
         private int unlitTweenDuration;
         private readonly FloatTween fadeTween = new();
-        private float currentFade = 1;
+        private float currentFade = 0;
 
         #endregion
 
