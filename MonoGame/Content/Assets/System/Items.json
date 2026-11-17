@@ -35,6 +35,7 @@
 			"animationName": "Consume",
 			"category": "Food",
 			"actionKind": "Outcome",
+			"perishInterval": 600,
 			"itemKind": "Organic",
 			"unlockMode": "None",
 			"effects": [

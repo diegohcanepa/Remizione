@@ -1,6 +1,7 @@
 ﻿using Adberration.Scripting;
 using Engendro;
 using Engendro.Audio;
+using Microsoft.Xna.Framework;
 using System.Collections.ObjectModel;
 
 namespace Remizione
@@ -13,11 +14,11 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public Item(ItemContainer inventory, ItemDefinition definition)
+        public Item(ItemContainer container, ItemDefinition definition)
         {
-            this.Inventory = inventory;
+            this.Container = container;
             this.Definition = definition;
-            this.Script = inventory.Session.ScriptLibrary.FindRoutine($"{Definition.Name}Outcome");
+            this.Script = container.Session.ScriptLibrary.FindRoutine($"{Definition.Name}Outcome");
             this.Amount = definition.InitialAmount;
             ResetBreakState();
         }
@@ -86,8 +87,8 @@ namespace Remizione
                 {
                     field = int.Clamp(value, 0, Definition.IsStackable || Definition.IsDepletable ? GameSettings.MaxItemAmount : 1);
                     if (field == 0)
-                        Inventory.Remove(this);
-                    Inventory.Version++;
+                        Container.Remove(this);
+                    Container.Version++;
                 }
             }
         }
@@ -117,17 +118,20 @@ namespace Remizione
         // BreakChance
         public Ratio BreakChance { get; set; }
 
+        // Container
+        public ItemContainer Container { get; }
+
         // Definition
         public ItemDefinition Definition { get; }
+
+        // ElapsedPerishTime
+        public float ElapsedPerishTimer { get; set; }
 
         // HPCost
         public int HPCost => Definition.HPCost;
 
         // Index
-        public int Index => Inventory.IndexOf(this);
-
-        // Inventory
-        public ItemContainer Inventory { get; }
+        public int Index => Container.IndexOf(this);
 
         // IsStackFull
         public bool IsStackFull => Definition.IsStackable || Definition.IsDepletable ? Amount == GameSettings.MaxItemAmount : Amount == 1;
@@ -146,6 +150,8 @@ namespace Remizione
 
             PerishState++;
 
+            Container.Version++;
+
             return true;
         }
 
@@ -158,7 +164,7 @@ namespace Remizione
         // Remove
         public void Remove()
         {
-            Inventory.Remove(this);
+            Container.Remove(this);
         }
 
         // ResetBreakState
@@ -175,6 +181,20 @@ namespace Remizione
         public override string ToString()
         {
             return Definition.Label;
+        }
+
+        // Update
+        public void Update(GameTime gameTime)
+        {
+            if (Definition.PerishInterval > 0)
+            {
+                ElapsedPerishTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (ElapsedPerishTimer >= Definition.PerishInterval)
+                {
+                    ElapsedPerishTimer = 0;
+                    Perish();
+                }
+            }
         }
 
         // Uses

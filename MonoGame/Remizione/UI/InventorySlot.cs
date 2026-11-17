@@ -37,7 +37,11 @@ namespace Remizione
             this.icon = new() { PivotOrigin = RectanglePoint.Center };
 
             // Perish state
-            this.perishStateIcon = new() { PivotOrigin = RectanglePoint.Top, Scale = ScaleInfo.UIElement.Medium };
+            this.perishStateIcon = new()
+            {
+                PivotOrigin = RectanglePoint.Top,
+                Scale = ScaleInfo.UIElement.Medium
+            };
 
             // Shadow
             this.shadow = new()

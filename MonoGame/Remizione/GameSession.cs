@@ -388,8 +388,6 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(CycleManager.CycleCount)]?.Value is string cycleCountValue)
                 CycleManager.CycleCount = XmlConvert.ToInt32(cycleCountValue);
 
-            CycleManager.CycleCount = 3;
-
             // CycleRemainingTime
             float cycleRemainingTime = 0;
             if (sessionNode.Attributes[nameof(CycleManager.CycleRemainingTime)]?.Value is string cycleRemainingTimeValue)
@@ -480,6 +478,9 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
 
+            if (IsGameplayActive)
+                PlayerData.Inventory.Update(gameTime);
+
             //if (IsGameplayActive)
             CycleManager.Update(gameTime);
 
@@ -513,7 +514,7 @@ namespace Remizione
                 {
                     if (Player.HeldProp == null)
                     {
-                        if (InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
+                        if (InventoryEnabled && InputManager.DefaultPlayer.Mouse.VirtualPosition.Y > 130)
                         {
                             InteractionContext.HeldItem = null;
                             Overlays.ShowInventory();
@@ -739,12 +740,6 @@ namespace Remizione
 
                 return true;
             }
-        }
-
-        // IsUnlocked
-        public bool IsUnlocked(string definitionName)
-        {
-            return UnlockManager.IsUnlocked(definitionName);
         }
 
         // KillEnemies

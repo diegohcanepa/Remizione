@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Xml;
@@ -24,36 +25,35 @@ namespace Remizione
         #region Serialization
 
         // Deserialize
-        public string Deserialize(string content)
+        public void Deserialize(string content)
         {
             Clear();
 
             if (string.IsNullOrWhiteSpace(content))
-                return string.Empty;
+                return;
 
-            var values = content.Split(";");
+            var values = content.Split(';', StringSplitOptions.RemoveEmptyEntries);
 
             foreach (var value in values)
             {
-                var data = value.Split("|");
+                var data = value.Split('|');
 
                 if (GameData.Items.Find(data[0]) is not ItemDefinition definition)
                     continue;
 
-                var amount = XmlConvert.ToInt32(data[1]);
+                var perishState = (ItemPerishState)XmlConvert.ToInt32(data[2]);
 
                 var item = new Item(this, definition)
                 {
-                    Amount = amount,
-                    PerishState = Enum.TryParse<ItemPerishState>(data[2], out ItemPerishState perishState) ? perishState : ItemPerishState.Fresh,
-                    Uses = XmlConvert.ToInt32(data[3]),
-                    BreakChance = XmlConvert.ToSingle(data[4])
+                    Amount = XmlConvert.ToInt32(data[1]),
+                    PerishState = Enum.IsDefined(perishState) ? perishState : ItemPerishState.Fresh,
+                    ElapsedPerishTimer = XmlConvert.ToSingle(data[3]),
+                    Uses = XmlConvert.ToInt32(data[4]),
+                    BreakChance = XmlConvert.ToSingle(data[5])
                 };
 
                 Add(item);
             }
-
-            return string.Join(";", values);
         }
 
         // Serialize
@@ -64,7 +64,13 @@ namespace Remizione
             // Name | Amount | PerishState | Uses | BreakChance
             foreach (var item in this)
             {
-                values.Add($"{item.Name}|{XmlConvert.ToString(item.Amount)}|{(int)item.PerishState}|{item.Uses}|{XmlConvert.ToString(item.BreakChance)}");
+                var amount = XmlConvert.ToString(item.Amount);
+                var perishState = XmlConvert.ToString((int)item.PerishState);
+                var uses = XmlConvert.ToString(item.Uses);
+                var breakChance = XmlConvert.ToString(item.BreakChance);
+                var elapsedPerishTimer = XmlConvert.ToString(item.ElapsedPerishTimer);
+
+                values.Add($"{item.Name}|{amount}|{perishState}|{elapsedPerishTimer}|{uses}|{breakChance}");
             }
 
             return string.Join(";", values);
@@ -198,6 +204,15 @@ namespace Remizione
             }
 
             return lastCreated;
+        }
+
+        // Update
+        public void Update(GameTime gameTime)
+        {
+            for (var i = 0; i < Count; i++)
+            {
+                this[i].Update(gameTime);
+            }
         }
     }
 }

@@ -83,6 +83,9 @@ namespace Remizione
             // LuckModifier
             LuckModifier = element.GetFloat("luckModifier", 0);
 
+            // PerishInterval
+            PerishInterval = element.GetInt32("perishInterval", 0);
+
             // PickupSound
             PickupSound = element.GetObject("pickupSound", Sound.Get) ?? Sound.Get(SoundNames.PickupGeneric);
 
@@ -136,6 +139,9 @@ namespace Remizione
                 LabelColor = Colors.Inventory.CommonItem;
                 OrbLightKind = LightKind.CommonItemOrb;
             }
+
+            if (ItemKind != ItemKind.Organic && PerishInterval > 0)
+                RaiseValidationError(this, "Perish interval is only valid for organic items.", nameof(PerishInterval));
 
             RefreshLocalizedValues();
         }
@@ -271,6 +277,9 @@ namespace Remizione
 
         // OrbLightKind
         public LightKind OrbLightKind { get; }
+
+        // PerishInterval
+        public int PerishInterval { get; }
 
         // PickupSound
         public Sound PickupSound { get; }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:896ad03e499cc2f88c81291558b83e7d:a66840dcb4d4ca206d1bdbce1bbe18af:50dafd640d12dc5b727443ba106e9849$ -->
+<!-- $TexturePacker:SmartUpdate:ba349c3747216d11b0a059aefa4e9ead:de74a0f29968e132c2a3729be24481bc:50dafd640d12dc5b727443ba106e9849$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -20,7 +20,6 @@ verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="Threshold.png" width="512" height="512">
-    <sprite n="Inscription.png" x="484" y="2" w="9" h="5"/>
     <sprite n="Map.png" x="2" y="274" w="132" h="75"/>
     <sprite n="Threshold.png" x="2" y="2" w="480" h="270"/>
 </TextureAtlas>

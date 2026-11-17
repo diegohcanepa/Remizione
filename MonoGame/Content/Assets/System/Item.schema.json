@@ -100,6 +100,10 @@
               "type": "number",
               "default": 0.0
             },
+            "perishInterval": {
+              "type": "integer",
+              "default": 0
+            },            
             "pickupSound": {
               "type": "string",
               "description": "Nombre del archivo de sonido a reproducir cuando se colecta."
