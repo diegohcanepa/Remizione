@@ -24,6 +24,17 @@ namespace Remizione
             }
         }
 
+        // Crafts
+        public int Crafts
+        {
+            get;
+            set
+            {
+                if (value != field)
+                    field = Math.Max(0, value);
+            }
+        }
+
         // Inventory
         public ItemContainer Inventory { get; }
     }

@@ -370,6 +370,10 @@ namespace Remizione
             if (sessionNode == null || sessionNode.Attributes == null)
                 throw new InvalidOperationException("Session node attributes not found.");
 
+            // Crafts
+            if (sessionNode.Attributes[nameof(PlayerData.Crafts)]?.Value is string craftsValue)
+                PlayerData.Crafts = XmlConvert.ToInt32(craftsValue);
+
             // DisplayHPMeter
             if (sessionNode.Attributes[nameof(DisplayHPMeter)]?.Value is string displayHPMeterValue)
                 DisplayHPMeter = XmlConvert.ToBoolean(displayHPMeterValue);
@@ -618,6 +622,9 @@ namespace Remizione
         // OnWrite
         protected override void OnWrite(XmlWriter output)
         {
+            // Crafts
+            output.WriteAttributeString("Crafts", XmlConvert.ToString(PlayerData.Crafts));
+
             // DisplayHPMeter
             output.WriteAttributeString(nameof(DisplayHPMeter), XmlConvert.ToString(DisplayHPMeter));
 
@@ -1002,6 +1009,8 @@ namespace Remizione
 
             if (table.Count == 0)
                 return null;
+
+            PlayerData.Crafts++;
 
             return table.GetItem()?.Context as ItemDefinition;
         }

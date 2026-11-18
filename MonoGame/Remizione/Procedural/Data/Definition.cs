@@ -42,6 +42,9 @@ namespace Remizione
             // CycleFilter
             CycleFilter = element.GetEnum("cycleFilter", CycleFilter.None);
 
+            // RequiredCrafts
+            RequiredCrafts = Math.Max(0, element.GetInt32("requiredCrafts", 0));
+
             // RequiredCycles
             RequiredCycles = Math.Max(0, element.GetInt32("requiredCycles", 0));
 
@@ -123,6 +126,9 @@ namespace Remizione
         {
             OnRefreshLocalizedValues();
         }
+
+        // RequiredCrafts
+        public int RequiredCrafts { get; }
 
         // RequiredCycles
         public int RequiredCycles { get; }

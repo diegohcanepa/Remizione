@@ -12,6 +12,10 @@
         "$ref": "./EffectDescriptor.schema.json" 
       }
     },
+    "requiredCrafts": {
+      "type": "integer",
+      "minimum": 0
+    },   
     "requiredCycles": {
       "type": "integer",
       "minimum": 0
