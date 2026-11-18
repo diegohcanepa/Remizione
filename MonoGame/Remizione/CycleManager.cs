@@ -1,5 +1,4 @@
-﻿using Engendro;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System;
 
 namespace Remizione
@@ -10,7 +9,6 @@ namespace Remizione
     public sealed class CycleManager
     {
         private static readonly Color defaultLightMapColor = new(45, 45, 45);
-        private readonly FloatTween procOpacityTween = new();
 
         // Constructor
         public CycleManager()
@@ -27,6 +25,12 @@ namespace Remizione
                 ? GameData.WorldSettings.DarkCycleDuration
                 : GameData.WorldSettings.LightCycleDuration;
 
+        // GetTransitionDuration
+        private static float GetTransitionDuration(Cycle cycle) =>
+            cycle == Cycle.Dark
+                ? GameData.WorldSettings.DarkCycleTransitionDuration
+                : GameData.WorldSettings.LightCycleTransitionDuration;
+
         // GetElapsedTime
         private float GetElapsedTime()
         {
@@ -42,7 +46,7 @@ namespace Remizione
             if (!IsEnabled)
                 return;
 
-            float transitionDuration = GameData.WorldSettings.CycleTransitionDuration;
+            float transitionDuration = GetTransitionDuration(CurrentCycle);
             float elapsedTime = GetElapsedTime();
 
             float linearProgress = transitionDuration > 0f
@@ -92,7 +96,7 @@ namespace Remizione
         }
 
         // IsTransitioning
-        public bool IsTransitioning => IsEnabled && GetElapsedTime() < GameData.WorldSettings.CycleTransitionDuration;
+        public bool IsTransitioning => IsEnabled && GetElapsedTime() < GetTransitionDuration(CurrentCycle);
 
         // LightMapColor
         public Color LightMapColor { get; private set; } = defaultLightMapColor;
@@ -113,7 +117,7 @@ namespace Remizione
             {
                 float duration = GetCycleDuration(cycle);
                 CycleRemainingTime = skipTransition
-                    ? Math.Max(0f, duration - GameData.WorldSettings.CycleTransitionDuration)
+                    ? Math.Max(0f, duration - GetTransitionDuration(cycle))
                     : duration;
             }
 
@@ -131,6 +135,8 @@ namespace Remizione
             if (CycleRemainingTime <= 0)
             {
                 Cycle nextCycle = CurrentCycle == Cycle.Dark ? Cycle.Light : Cycle.Dark;
+                if (nextCycle == Cycle.Light)
+                    CycleCount++;
                 SetCycle(nextCycle);
                 CycleChanged?.Invoke(nextCycle);
             }

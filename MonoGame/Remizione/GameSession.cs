@@ -28,10 +28,11 @@ namespace Remizione
         private readonly ScriptConsole? console;
         private readonly Sprite interactionTargetMarker;
         private readonly List<(ItemDefinition itemDef, int amount, GameRoom room, Vector2 position)> droppedKeyItems = [];
-        private string? lastBonfireNameInSaveFile;
         private Vector2? playerPosition;
         private FrozenDictionary<string, GameThing>? proceduralCatalog;
         private readonly RoomEditor? roomEditor;
+        private record RuntimeCloneInfo(string Name, int HP, Vector2 Position, bool flipped);
+        private readonly List<RuntimeCloneInfo> savedRuntimeClones = [];
 
         #endregion
 
@@ -51,6 +52,8 @@ namespace Remizione
         public GameSession(RemizioneGame game, int slotNumber)
             : base(game, Path.Combine("Content", ContentFolder.System.ToString(), "ScriptLibrary.esl"), slotNumber)
         {
+            RenewSeed();
+
             this.Game = game;
             this.Environment = new RoomEnvironment(this);
             this.InteractionContext = new(this);
@@ -118,7 +121,17 @@ namespace Remizione
         private void OnCycleChanged(Cycle cycle)
         {
             if (CycleManager.CurrentCycle == Cycle.Dark)
+            {
                 Sound.Play(SoundNames.CycleHorn);
+
+                if (Room is ProceduralRoom room)
+                {
+                    RenewSeed();
+                    room.Spawn();
+                }
+            }
+            else if (Room?.Children.Contains<Bonfire>() == true)
+                Save();
         }
 
         // DrawInteractionTargetMarker
@@ -197,6 +210,49 @@ namespace Remizione
             AotTypeRegistry.Register("y-tween", typeof(YTweenCommand));
         }
 
+        // SerializeDroppedKeyItems
+        private string SerializeDroppedKeyItems()
+        {
+            var list = new List<string>();
+            
+            foreach (var room in Entities.OfType<GameRoom>())
+            {
+                foreach (var orb in room.Children.OfType<ItemOrb>())
+                {
+                    if (orb.ItemReward is { ItemKind: ItemKind.Key } itemDef)
+                    {
+                        var value = $"{itemDef.Name}|{XmlConvert.ToString(orb.ItemRewardAmount)}|{room.Name}|{DataConvert.ToString(orb.Position)}";
+                        list.Add(value);
+                    }
+                }
+            }
+
+            return string.Join(";", list);
+        }
+
+        // SerializeRuntimeClones
+        private string SerializeRuntimeClones()
+        {
+            var list = new List<string>();
+            
+            if (Room != null)
+            {
+                foreach (var thing in Room.Children.OfType<GameThing>())
+                {
+                    if (thing is ItemOrb)
+                        continue;
+
+                    if (thing.InstanceKind == EntityInstanceKind.RuntimeClone)
+                    {
+                        var value = $"{thing.DeclaredName}|{XmlConvert.ToString(thing.HP)}|{DataConvert.ToString(thing.Position)}|{XmlConvert.ToString(thing.IsFlippedHorizontally)}";
+                        list.Add(value);
+                    }
+                }
+            }
+
+            return string.Join(";", list);
+        }
+
         #endregion
 
         #region Protected members
@@ -242,16 +298,11 @@ namespace Remizione
         // OnEnterRoom
         protected override void OnEnterRoom(Room room)
         {
+            if (room.Children.Contains<Bonfire>())
+                RestartRoom = room;
+
             Game.SceneManager.PopUntil(this);
             MouseCursor.Reset();
-
-            if (lastBonfireNameInSaveFile != null)
-            {
-                TransitionManager.DefaultTransition.In(0);
-                LastBonfire = FindEntity<Bonfire>(lastBonfireNameInSaveFile);
-                RestartFromLastBonfire();
-                TransitionManager.DefaultTransition.Out(3000);
-            }
 
             if (room is GameRoom gameRoom)
                 gameRoom.WalkArea?.BuildStaticNavGraph();
@@ -319,9 +370,6 @@ namespace Remizione
             if (sessionNode == null || sessionNode.Attributes == null)
                 throw new InvalidOperationException("Session node attributes not found.");
 
-            // LastBonfire
-            lastBonfireNameInSaveFile = sessionNode.Attributes[nameof(LastBonfire)]?.Value;
-
             // DisplayHPMeter
             if (sessionNode.Attributes[nameof(DisplayHPMeter)]?.Value is string displayHPMeterValue)
                 DisplayHPMeter = XmlConvert.ToBoolean(displayHPMeterValue);
@@ -346,9 +394,17 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(playerPosition)]?.Value is string playerPositionValue)
                 playerPosition = DataConvert.ToVector2(playerPositionValue);
 
+            // RestartRoom
+            if (sessionNode.Attributes[nameof(RestartRoom)]?.Value is string restartRoom)
+                RestartRoom = FindEntity<GameRoom>(restartRoom);
+
             // RunCount
             if (sessionNode.Attributes[nameof(RunIndex)]?.Value is string runCountValue)
                 RunIndex = XmlConvert.ToInt32(runCountValue);
+
+            // Seed
+            if (sessionNode.Attributes[nameof(Seed)]?.Value is string seedValue)
+                Seed = XmlConvert.ToInt32(seedValue);
 
             // SepiaIntensity
             if (sessionNode.Attributes["SepiaIntensity"]?.Value is string sepiaIntensityValue)
@@ -395,12 +451,24 @@ namespace Remizione
 
             CycleManager.IsEnabled = true;
             CycleManager.SetCycle(currentCycle, cycleRemainingTime);
-        }
 
-        // OnReadCompleted
-        protected override void OnReadCompleted(XmlNode sessionNode)
-        {
-            base.OnReadCompleted(sessionNode);
+            // Runtime clones
+            if (sessionNode.Attributes["RuntimeClones"]?.Value is string runtimeClonesValue)
+            {
+                var clones = runtimeClonesValue.Split(';');
+
+                foreach (var item in clones)
+                {
+                    var itemData = item.Split('|');
+                    if (GameData.Actors.Find(itemData[0]) != null || GameData.Props.Find(itemData[0]) != null)
+                    {
+                        var hp = XmlConvert.ToInt32(itemData[1]);
+                        var pos = DataConvert.ToVector2(itemData[2]);
+                        var isFlipped = XmlConvert.ToBoolean(itemData[3]);
+                        savedRuntimeClones.Add(new(itemData[0], hp, pos, isFlipped));
+                    }
+                }
+            }
         }
 
         // OnResume
@@ -421,7 +489,7 @@ namespace Remizione
         protected override void OnSave()
         {
             base.OnSave();
-            HUD.BottomMessage.Show(MessageKind.GameSaved);
+            HUD.Message.Show(MessageKind.GameSaved);
         }
 
         // OnScriptLibraryLoaded
@@ -469,8 +537,22 @@ namespace Remizione
             {
                 ItemOrb.Drop(item.itemDef, item.amount, item.room, item.position);
             }
-
             droppedKeyItems.Clear();
+
+            if (StartingRoom != null)
+            {
+                foreach (var clone in savedRuntimeClones)
+                {
+                    var thing = CreateThingClone<GameThing>(clone.Name);
+                    StartingRoom.Children.Add(thing);
+                    thing.HP = clone.HP;
+                    thing.Position = clone.Position;
+                    if (clone.flipped)
+                        thing.FlipHorizontally();
+                }
+            }
+
+            savedRuntimeClones.Clear();
         }
 
         // OnUpdate
@@ -534,10 +616,6 @@ namespace Remizione
         // OnWrite
         protected override void OnWrite(XmlWriter output)
         {
-            // LastBonfire
-            if (LastBonfire != null)
-                output.WriteAttributeString(nameof(LastBonfire), LastBonfire.Name);
-
             // DisplayHPMeter
             output.WriteAttributeString(nameof(DisplayHPMeter), XmlConvert.ToString(DisplayHPMeter));
 
@@ -567,8 +645,15 @@ namespace Remizione
             if (playerPosition.HasValue)
                 output.WriteAttributeString(nameof(playerPosition), DataConvert.ToString(playerPosition.Value));
 
+            // RestartRoom
+            if (RestartRoom != null)
+                output.WriteAttributeString(nameof(RestartRoom), RestartRoom.Name);
+
             // RunCount
             output.WriteAttributeString(nameof(RunIndex), XmlConvert.ToString(RunIndex));
+
+            // Seed
+            output.WriteAttributeString("Seed", XmlConvert.ToString(Seed));
 
             // SepiaIntensity
             output.WriteAttributeString("SepiaIntensity", XmlConvert.ToString(SepiaEffect.Intensity));
@@ -576,21 +661,11 @@ namespace Remizione
             // UnlockedDefinitions
             output.WriteAttributeString("UnlockedDefinitions", UnlockManager.Serialize());
 
-            // Dropped key items
-            var keyItems = new List<string>();
-            foreach (var room in Entities.OfType<GameRoom>())
-            {
-                foreach (var orb in room.Children.OfType<ItemOrb>())
-                {
-                    if (orb.ItemReward is { ItemKind: ItemKind.Key } itemDef)
-                    {
-                        var value = $"{itemDef.Name}|{XmlConvert.ToString(orb.ItemRewardAmount)}|{room.Name}|{DataConvert.ToString(orb.Position)}";
-                        keyItems.Add(value);
-                    }
-                }
-            }
+            // DroppedKeyItems
+            output.WriteAttributeString("DroppedKeyItems", string.Join(";", SerializeDroppedKeyItems()));
 
-            output.WriteAttributeString("DroppedKeyItems", string.Join(";", keyItems));
+            // RuntimeClones
+            output.WriteAttributeString("RuntimeClones", string.Join(";", SerializeRuntimeClones()));
         }
 
         #endregion
@@ -756,9 +831,6 @@ namespace Remizione
             }
         }
 
-        // LastBonfire
-        public Bonfire? LastBonfire { get; set; }
-
         // LightingSystem
         [ScriptProperty]
         public bool LightingSystem { get; set; } = true;
@@ -816,23 +888,47 @@ namespace Remizione
         // Random
         public Random Random { get; private set; } = new(0);
 
+        // RenewSeed
+        public void RenewSeed()
+        {
+            Seed = RandomNumberGenerator.GetInt32(int.MaxValue);
+        }
+
         // Respawn
         [ScriptMethod]
         public void Respawn() => (Room as ProceduralRoom)?.Spawn();
 
-        // RestartFromLastBonfire
+        // Restart
         [ScriptMethod]
-        public void RestartFromLastBonfire()
+        public void Restart()
         {
-            if (LastBonfire == null || Room == null || Player == null)
+            if (RestartRoom == null || Player == null)
                 return;
 
-            CycleManager.ApplyCycle();
-            Room.Children.Add(Player);
-            Player.Position = LastBonfire.GetApproachPosition(Player);
-            Camera.Follow(Player);
-            Camera.FocusTarget();
+            float distance = float.MaxValue;
+            Bonfire? targetBonfire = null;
+            foreach (var item in RestartRoom.Children)
+            {
+                if (item is Bonfire bonfire)
+                {
+                    var newDist = Player.DistanceTo(bonfire);
+                    if (newDist < distance)
+                    {
+                        distance = newDist;
+                        targetBonfire = bonfire;
+                    }
+                }
+            }
+
+            CycleManager.SetCycle(Cycle.Light);
+            RestartRoom.Children.Add(Player);
+            if (targetBonfire != null)
+                Player.Position = targetBonfire.GetApproachPosition(Player);
+            EnterRoom(RestartRoom);
         }
+
+        // RestartRoom
+        public Room? RestartRoom { get; private set; }
 
         // Room
         [ScriptProperty]
@@ -854,7 +950,7 @@ namespace Remizione
                     Random = new(field);
                 }
             }
-        } = RandomNumberGenerator.GetInt32(int.MaxValue);
+        }
 
         // SepiaEffect
         public SepiaEffect SepiaEffect { get; } = new();

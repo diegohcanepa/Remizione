@@ -912,6 +912,18 @@ namespace Adberration
                 return items.Contains(item);
             }
 
+            // Contains
+            public bool Contains<T>() where T : Thing
+            {
+                for (int i = 0; i < Count; i++)
+                {
+                    if (this[i] is T)
+                        return true;
+                }
+
+                return false;
+            }
+
             // Count
             public int Count => items.Count;
 

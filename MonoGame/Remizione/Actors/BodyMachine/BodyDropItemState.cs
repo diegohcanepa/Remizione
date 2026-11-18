@@ -1,6 +1,4 @@
-﻿using Engendro;
-using Engendro.Audio;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 namespace Remizione
 {
@@ -44,7 +42,7 @@ namespace Remizione
                 if (Owner.Room != null)
                 {
                     Owner.PlaySound(SoundNames.ItemDrop);
-                    ItemOrb.Drop(Item.Definition, Item.Amount, Owner.Room, Owner.Position + new Vector2(0,3));
+                    ItemOrb.Drop(Item.Definition, Item.Amount, Owner.Room, Owner.Position + new Vector2(0, 3));
                 }
                 return;
             }

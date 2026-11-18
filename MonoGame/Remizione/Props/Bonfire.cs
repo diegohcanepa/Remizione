@@ -58,6 +58,8 @@ namespace Remizione
             AttachedLight.Unlit(true);
 
             AttachedLightPosition = new(10, 4);
+
+            Verb = Verb.LookAt;
         }
 
         #endregion
@@ -198,43 +200,6 @@ namespace Remizione
         public void ResetRemainingTime()
         {
             resetTween.Start(TweenStyle.Linear, RemainingTime, GameData.WorldSettings.BonfireDuration, 2000);
-        }
-
-        // SafeToRest
-        [ScriptProperty]
-        public bool SafeToRest
-        {
-            get
-            {
-                if (Session.Room == null || Session.Player == null)
-                    return true;
-
-                var safeArea = RectangleF.ScaleCentered(Session.Camera.VisibleBox, .7f);
-
-                for (var i = 0; i < Session.Room.CulledThings.Count; i++)
-                {
-                    if (Session.Room.CulledThings[i] is Actor actor)
-                    {
-                        if (actor.IsPlayer)
-                            continue;
-
-                        if (FactionMatrix.IsHostile(actor, Session.Player))
-                        {
-                            if (safeArea.Intersects(actor.RuntimeHotspot.BoundingRectangleF))
-                                return false;
-                        }
-                    }
-                }
-
-                return true;
-            }
-        }
-
-        // SetAsDefault
-        [ScriptMethod]
-        public void SetAsDefault()
-        {
-            Session.LastBonfire = this;
         }
     }
 }

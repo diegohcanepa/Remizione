@@ -10,13 +10,16 @@
     "bonfireDuration": {
       "type": "integer"
     },
-    "cycleTransitionDuration": {
+    "darkCycleTransitionDuration": {
       "type": "integer"
     },
     "darkCycleDuration": {
       "type": "integer"
     },
     "lightCycleDuration": {
+      "type": "integer"
+    },
+    "lightCycleTransitionDuration": {
       "type": "integer"
     },
     "sulfurStoneDuration": {

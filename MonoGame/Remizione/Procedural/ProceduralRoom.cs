@@ -355,7 +355,9 @@ namespace Remizione
         protected override void OnLoad()
         {
             base.OnLoad();
-            Spawn();
+
+            if (!Session.IsFirstRoomSinceLoad)
+                Spawn();
         }
 
         #endregion

@@ -159,6 +159,7 @@ namespace Remizione
 
             // Name
             var value = SelectedThing.Name + " (" + SelectedThing.GetType().Name + ")" + (SelectedThing.Persistent ? " [persistent]" : string.Empty);
+            value += $" {SelectedThing.InstanceKind}";
             DrawText(gameTime, text, value, Colors.Palette.Text, ScaleInfo.Text.Tiny);
 
             // Animation Name

@@ -30,6 +30,24 @@
 			"spawn": true
 		},
 		{
+			"name": "GadlingKnuckle",
+			"animationName": "Punch",
+			"category": "Weapon",
+			"actionKind": "Proximity",
+			"hardSurfacePenalty": true,
+			"isDepletable": false,
+			"itemKind": "Key",
+			"unlockMode": "None",
+			"effects": [
+				{
+					"context": "Attack",
+					"effectType": "Damage",
+					"amount": "1",
+					"sound": "BareFist"
+				}
+			]			
+		},
+		{
 			"name": "Loquat",
 			"allowSelfAction": true,
 			"animationName": "Consume",
@@ -82,24 +100,6 @@
 				}
 			]			
 		},		
-		{
-			"name": "GadlingKnuckle",
-			"animationName": "Punch",
-			"category": "Weapon",
-			"actionKind": "Proximity",
-			"hardSurfacePenalty": true,
-			"isDepletable": false,
-			"itemKind": "Key",
-			"unlockMode": "None",
-			"effects": [
-				{
-					"context": "Attack",
-					"effectType": "Damage",
-					"amount": "1",
-					"sound": "BareFist"
-				}
-			]			
-		},
 		{
 			"name": "Material",
 			"category": "Misc",

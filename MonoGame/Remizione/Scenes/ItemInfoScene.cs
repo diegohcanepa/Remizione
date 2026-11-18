@@ -195,8 +195,8 @@ namespace Remizione
         // OnHandleInput
         protected override HandleInputResult OnHandleInput(GameTime gameTime)
         {
-            if (backButton.TestPressed() || 
-                InputBindings.Back.IsPressed(PlayerIndex.One) || 
+            if (backButton.TestPressed() ||
+                InputBindings.Back.IsPressed(PlayerIndex.One) ||
                 InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
             {
                 Game.SceneManager.Pop();
