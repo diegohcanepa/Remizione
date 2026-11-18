@@ -58,7 +58,7 @@ namespace Remizione
             Uses++;
 
             // Safe uses
-            if (Uses <= Definition.BreakSafeUses)
+            if (HasSafeUses)
                 return false;
 
             // Break chances
@@ -126,6 +126,9 @@ namespace Remizione
 
         // ElapsedPerishTime
         public float ElapsedPerishTimer { get; set; }
+
+        // HasBreakSafeUses
+        public bool HasSafeUses => Uses <= Definition.BreakSafeUses;
 
         // HPCost
         public int HPCost => Definition.HPCost;

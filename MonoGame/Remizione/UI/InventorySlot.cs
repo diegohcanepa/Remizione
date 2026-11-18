@@ -13,10 +13,10 @@ namespace Remizione
         private readonly TextSprite amount;
         private readonly FloatTween blinkTween = new();
         private readonly Sprite icon;
-        private readonly Sprite perishStateIcon;
         private readonly Sprite shadow;
         private readonly Sprite slot;
         private static int slotImageIndex;
+        private readonly Sprite stateIcon;
 
         #endregion
 
@@ -36,8 +36,8 @@ namespace Remizione
             // Icon
             this.icon = new() { PivotOrigin = RectanglePoint.Center };
 
-            // Perish state
-            this.perishStateIcon = new()
+            // State
+            this.stateIcon = new()
             {
                 PivotOrigin = RectanglePoint.Top,
                 Scale = ScaleInfo.UIElement.Medium
@@ -82,7 +82,7 @@ namespace Remizione
             amount.X = center.X;
             amount.Y = slot.BoundingBox.Bottom;
 
-            perishStateIcon.Position = amount.Position;
+            stateIcon.Position = amount.Position;
         }
 
         #endregion
@@ -103,15 +103,14 @@ namespace Remizione
             if (Item.Definition.IsStackable)
                 amount.Draw(gameTime);
 
-            if (Item.Definition.ItemKind == ItemKind.Organic)
-                perishStateIcon.Draw(gameTime);
+            stateIcon.Draw(gameTime);
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
-            perishStateIcon.Update(gameTime);
+            stateIcon.Update(gameTime);
         }
 
         #endregion
@@ -147,13 +146,21 @@ namespace Remizione
 
                         if (field.Definition.ItemKind == ItemKind.Organic)
                         {
-                            perishStateIcon.RenderImage = Atlases.UI.ItemPerishStates[(int)field.PerishState];
+                            stateIcon.RenderImage = Atlases.UI.ItemPerishStates[(int)field.PerishState];
 
                             if (field.PerishState == ItemPerishState.Rotten)
                             {
                                 blinkTween.Start(TweenStyle.Linear, 1, .8f, 600, -1);
-                                perishStateIcon.Tweens.OpacityTween = blinkTween;
+                                stateIcon.Tweens.OpacityTween = blinkTween;
                             }
+                        }
+                        else if (!field.HasSafeUses)
+                        {
+                            stateIcon.RenderImage = Atlases.UI.WarningIcon;
+                        }
+                        else
+                        {
+                            stateIcon.RenderImage = null;
                         }
                     }
                     else

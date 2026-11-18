@@ -485,12 +485,14 @@ namespace Remizione
             }
         }
 
+        /*
         // OnSave
         protected override void OnSave()
         {
             base.OnSave();
             HUD.Message.Show(MessageKind.GameSaved);
         }
+        */
 
         // OnScriptLibraryLoaded
         protected override void OnScriptLibraryLoaded()

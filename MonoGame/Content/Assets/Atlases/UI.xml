@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:646c2b8b13d6c88eac5085f85757d8c8:9c3702daffb46004fe31d7653eea9b63:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:021204257b6d81e05f5ae0521278c8ca:c12b02741bcca6a14b7802393dc27791:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -29,7 +29,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="CloseButtonHot.png" x="376" y="137" w="15" h="15"/>
     <sprite n="CobaltPebble.png" x="476" y="137" w="14" h="14"/>
     <sprite n="ConditionMeterUnit.png" x="505" y="9" w="1" h="2"/>
-    <sprite n="ContextMenuOptionSelector.png" x="151" y="176" w="4" h="5"/>
+    <sprite n="ContextMenuOptionSelector.png" x="137" y="177" w="4" h="5"/>
     <sprite n="CraftIcon.png" x="14" y="184" w="9" h="9"/>
     <sprite n="CreditsBar.png" x="2" y="2" w="480" h="67"/>
     <sprite n="CrudeKey.png" x="460" y="153" w="14" h="14"/>
@@ -37,22 +37,22 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="CycleMeterMarker.png" x="312" y="83" w="1" h="1"/>
     <sprite n="DialogArrowLarge.png" x="503" y="163" w="7" h="5"/>
     <sprite n="DialogBlockContainer.png" x="2" y="71" w="240" h="53"/>
-    <sprite n="DialogBoxBorderB.png" x="137" y="177" w="4" h="4"/>
-    <sprite n="DialogBoxBorderL.png" x="130" y="178" w="4" h="4"/>
-    <sprite n="DialogBoxBorderLB.png" x="143" y="177" w="4" h="4"/>
-    <sprite n="DialogBoxBorderLT.png" x="136" y="183" w="4" h="4"/>
-    <sprite n="DialogBoxBorderR.png" x="142" y="183" w="4" h="4"/>
-    <sprite n="DialogBoxBorderRB.png" x="148" y="183" w="4" h="4"/>
-    <sprite n="DialogBoxBorderRT.png" x="108" y="179" w="4" h="4"/>
-    <sprite n="DialogBoxBorderT.png" x="97" y="181" w="4" h="4"/>
-    <sprite n="DialogBoxFillB.png" x="114" y="179" w="4" h="4"/>
-    <sprite n="DialogBoxFillL.png" x="120" y="179" w="4" h="4"/>
-    <sprite n="DialogBoxFillLB.png" x="126" y="184" w="4" h="4"/>
-    <sprite n="DialogBoxFillLT.png" x="103" y="185" w="4" h="4"/>
-    <sprite n="DialogBoxFillR.png" x="109" y="185" w="4" h="4"/>
-    <sprite n="DialogBoxFillRB.png" x="115" y="185" w="4" h="4"/>
-    <sprite n="DialogBoxFillRT.png" x="53" y="182" w="4" h="4"/>
-    <sprite n="DialogBoxFillT.png" x="59" y="182" w="4" h="4"/>
+    <sprite n="DialogBoxBorderB.png" x="130" y="178" w="4" h="4"/>
+    <sprite n="DialogBoxBorderL.png" x="143" y="177" w="4" h="4"/>
+    <sprite n="DialogBoxBorderLB.png" x="143" y="183" w="4" h="4"/>
+    <sprite n="DialogBoxBorderLT.png" x="108" y="179" w="4" h="4"/>
+    <sprite n="DialogBoxBorderR.png" x="97" y="181" w="4" h="4"/>
+    <sprite n="DialogBoxBorderRB.png" x="114" y="179" w="4" h="4"/>
+    <sprite n="DialogBoxBorderRT.png" x="120" y="179" w="4" h="4"/>
+    <sprite n="DialogBoxBorderT.png" x="126" y="184" w="4" h="4"/>
+    <sprite n="DialogBoxFillB.png" x="132" y="184" w="4" h="4"/>
+    <sprite n="DialogBoxFillL.png" x="103" y="185" w="4" h="4"/>
+    <sprite n="DialogBoxFillLB.png" x="109" y="185" w="4" h="4"/>
+    <sprite n="DialogBoxFillLT.png" x="115" y="185" w="4" h="4"/>
+    <sprite n="DialogBoxFillR.png" x="53" y="182" w="4" h="4"/>
+    <sprite n="DialogBoxFillRB.png" x="59" y="182" w="4" h="4"/>
+    <sprite n="DialogBoxFillRT.png" x="65" y="182" w="4" h="4"/>
+    <sprite n="DialogBoxFillT.png" x="71" y="182" w="4" h="4"/>
     <sprite n="DialogOptionBullet.png" x="130" y="171" w="5" h="5"/>
     <sprite n="EchoBackground.png" x="244" y="86" w="240" h="49"/>
     <sprite n="FakeItem.png" x="476" y="153" w="14" h="14"/>
@@ -134,6 +134,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="UIControlContainerEdgeLeftSmall.png" x="505" y="41" w="5" h="10"/>
     <sprite n="UIControlContainerEdgeRightLarge.png" x="505" y="28" w="5" h="11"/>
     <sprite n="UIControlContainerEdgeRightSmall.png" x="505" y="53" w="5" h="10"/>
+    <sprite n="WarningIcon.png" x="151" y="176" w="4" h="9"/>
     <sprite n="WoodIcon.png" x="502" y="178" w="8" h="9"/>
     <sprite n="WorldIcon.png" x="15" y="171" w="11" h="11"/>
 </TextureAtlas>

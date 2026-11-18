@@ -46,6 +46,7 @@ namespace Remizione
             StoneIcon = this[nameof(StoneIcon)];
             UIButtonContainerEdge = this[nameof(UIButtonContainerEdge)];
             UIButtonContainerPattern = this[nameof(UIButtonContainerPattern)];
+            WarningIcon = this[nameof(WarningIcon)];
             WoodIcon = this[nameof(WoodIcon)];
             WorldIcon = this[nameof(WorldIcon)];
         }
@@ -151,6 +152,9 @@ namespace Remizione
 
         // UIButtonContainerPattern
         public AtlasImage UIButtonContainerPattern { get; }
+
+        // WarningIcon
+        public AtlasImage WarningIcon { get; }
 
         // WoodIcon
         public AtlasImage WoodIcon { get; }

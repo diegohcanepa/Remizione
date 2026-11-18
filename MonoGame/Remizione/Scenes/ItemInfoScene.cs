@@ -22,8 +22,8 @@ namespace Remizione
         private readonly Sprite imageSlot;
         private Item? item;
         private readonly TextSprite nameText;
-        private readonly Sprite perishStateIcon;
-        private readonly TextSprite perishStateText;
+        private readonly Sprite stateIcon;
+        private readonly TextSprite stateText;
         private readonly Sprite shadow;
         private readonly UITextButton useButton;
 
@@ -99,7 +99,7 @@ namespace Remizione
             };
 
             // Perish state icon
-            this.perishStateIcon = new(Atlases.UI.ItemPerishStates[0])
+            this.stateIcon = new(Atlases.UI.ItemPerishStates[0])
             {
                 PivotOrigin = RectanglePoint.Left,
                 Position = imageSlot.BoundingBox.GetPoint(RectanglePoint.Right, 3, 0),
@@ -107,11 +107,10 @@ namespace Remizione
             };
 
             // Perish state text
-            this.perishStateText = new(Fonts.Common)
+            this.stateText = new(Fonts.Common)
             {
                 Color = Colors.Palette.Text,
                 PivotOrigin = RectanglePoint.Left,
-                Position = perishStateIcon.BoundingBox.GetPoint(RectanglePoint.Right, 2, .5f),
                 Scale = ScaleInfo.Text.Large
             };
 
@@ -168,11 +167,8 @@ namespace Remizione
 
             if (item != null)
             {
-                if (item.Definition.ItemKind == ItemKind.Organic)
-                {
-                    perishStateIcon.Draw(gameTime);
-                    perishStateText.Draw(gameTime);
-                }
+                stateIcon.Draw(gameTime);
+                stateText.Draw(gameTime);
 
                 if (item.Definition.IsStackable)
                 {
@@ -247,9 +243,27 @@ namespace Remizione
             this.effectText.Text = item.Definition.EffectDescription;
             this.descriptionText.Text = item.Definition.Description;
             this.image.RenderImage = item.Definition.Image;
-            this.perishStateText.Text = Localization.GetValue(item.PerishState);
-            this.perishStateText.Color = item.PerishState == ItemPerishState.Rotten ? Colors.Palette.Red : Colors.Palette.Text;
-            this.perishStateIcon.RenderImage = Atlases.UI.ItemPerishStates[(int)item.PerishState];
+
+            if (item.Definition.ItemKind == ItemKind.Organic)
+            {
+                this.stateText.Text = Localization.GetValue(item.PerishState);
+                this.stateText.Color = item.PerishState == ItemPerishState.Rotten ? Colors.Palette.Red : Colors.Palette.Text;
+                this.stateIcon.RenderImage = Atlases.UI.ItemPerishStates[(int)item.PerishState];
+            }
+            else if (!item.HasSafeUses)
+            {
+                this.stateText.Text = TextRepository.GetValue("Misc.Worn");
+                this.stateText.Color = Colors.Palette.Text;
+                this.stateIcon.RenderImage = Atlases.UI.WarningIcon;
+            }
+            else
+            {
+                stateText.Clear();
+                stateIcon.RenderImage = null;
+            }
+
+            this.stateText.Position = stateIcon.BoundingBox.GetPoint(RectanglePoint.Right, 2, .5f);
+
             this.amountText.Text = item.Definition.IsStackable ? $"x{item.Amount}" : string.Empty;
             this.breakChancesText.Text = item.Definition.HasBreakChance ? $"{TextRepository.GetValue("Misc.BreakChance")}{System.Environment.NewLine}{(item.BreakChance * 100).Round()}%" : null;
             this.breakChancesText.Color = item.BreakChance > .65f ? Colors.Palette.Red : Colors.Palette.Orange;
