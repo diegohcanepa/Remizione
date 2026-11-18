@@ -19,7 +19,6 @@ namespace Remizione
         public override void Enter()
         {
             base.Enter();
-            Owner.PlaySound(SoundNames.PenitentEffortRelease);
             eventDone = false;
         }
 

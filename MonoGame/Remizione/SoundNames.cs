@@ -33,9 +33,6 @@
         internal const string LockOpen = nameof(LockOpen);
         internal const string LootSack = nameof(LootSack);
         internal const string MoveToSack = nameof(MoveToSack);
-        internal const string Penitent = nameof(Penitent);
-        internal const string PenitentEffort = nameof(PenitentEffort);
-        internal const string PenitentEffortRelease = nameof(PenitentEffortRelease);
         internal const string PickupSack = nameof(PickupSack);
         internal const string PickupGeneric = nameof(PickupGeneric);
         internal const string PickupKey = nameof(PickupKey);
