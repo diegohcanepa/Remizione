@@ -63,7 +63,7 @@ namespace Remizione
             // AmountText
             this.amountText = new(Fonts.CommonOutline)
             {
-                Color = Colors.Palette.Text,
+                Color = foreColor,
                 PivotOrigin = RectanglePoint.Bottom,
                 Scale = ScaleInfo.Text.Tiny
             };
@@ -88,7 +88,7 @@ namespace Remizione
             diff.X -= xOffset;
 
             amountText.Text = Value.ToString(CultureInfo.InvariantCulture);
-            amountText.Position = container.BoundingBox.GetPoint(RectanglePoint.Top);
+            amountText.Position = container.BoundingBox.GetPoint(RectanglePoint.Top, 0, .5f);
         }
 
         // GetScaledWidth
