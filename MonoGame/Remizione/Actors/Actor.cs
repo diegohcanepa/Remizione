@@ -544,7 +544,7 @@ namespace Remizione
             BodyMachine.Update(gameTime);
             tintTween.Update(gameTime);
 
-            if (!IsDead && !Session.IsAwaiting && !IsPlayer)
+            if (!IsDead && !IsPlayer)
                 combatMachine?.Update(gameTime);
 
             // Lógica de aceleración

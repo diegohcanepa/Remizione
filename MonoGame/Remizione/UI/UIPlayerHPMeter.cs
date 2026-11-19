@@ -29,9 +29,9 @@ namespace Remizione
         public UIPlayerHPMeter(GameSession session)
             : base(session)
         {
-            this.meter = new(Colors.HPMeterPlayer.Border, Colors.HPMeterPlayer.Back, Colors.HPMeterPlayer.Fore, Colors.HPMeterPlayer.Diff, new(21, 3), 0)
+            this.meter = new(Colors.HPMeterPlayer.Border, Colors.HPMeterPlayer.Back, Colors.HPMeterPlayer.Fore, Colors.HPMeterPlayer.Diff, new(21, 4), 0)
             {
-                Position = icon.BoundingBox.GetPoint(RectanglePoint.Right, 10.5f, -2),
+                Position = icon.BoundingBox.GetPoint(RectanglePoint.Right, 10.5f, -3),
             };
 
             container.Position = icon.BoundingBox.GetPoint(RectanglePoint.Right, -1, -1);

@@ -11,7 +11,7 @@ namespace Remizione
     {
         #region Private fields
 
-        private readonly UICapacity capacity = new() { MaximumReachedColor = Colors.Palette.Red, PivotOrigin = RectanglePoint.Bottom, Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 4, 0) };
+        private readonly UICapacity capacity;
         private readonly Sprite flyingIcon = new() { PivotOrigin = RectanglePoint.Center };
         private readonly Sprite icon;
         private readonly ItemContainer inventory;
@@ -31,8 +31,16 @@ namespace Remizione
             // Icon
             this.icon = new(Atlases.UI.Sack)
             {
-                PivotOrigin = RectanglePoint.Center,
-                Position = capacity.BoundingBox.GetPoint(RectanglePoint.Top, 0, -6)
+                PivotOrigin = RectanglePoint.LeftBottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 1, 0)
+            };
+
+            // Capacity
+            this.capacity = new()
+            { 
+                MaximumReachedColor = Colors.Palette.Red, 
+                PivotOrigin = RectanglePoint.LeftBottom, 
+                Position = icon.BoundingBox.GetPoint(RectanglePoint.RightBottom, 1, 0)
             };
         }
 

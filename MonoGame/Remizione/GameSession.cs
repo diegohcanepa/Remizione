@@ -5,6 +5,7 @@ using Engendro.Audio;
 using Engendro.Collections;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Remizione.Scripting;
 using System;
 using System.Collections.Frozen;

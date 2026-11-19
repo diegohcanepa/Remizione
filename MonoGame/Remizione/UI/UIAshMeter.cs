@@ -12,12 +12,12 @@ namespace Remizione
     {
         private const int duration = 2000;
 
-        private readonly ColorTween colorTween = new();
         private int deltaScore;
         private bool isInitializing = true;
         private int lastKnownValue;
-        private readonly Color titleColor = Colors.Palette.TerraDark;
-        private readonly TextSprite titleText;
+        private readonly Sprite icon;
+        private readonly FloatTween rotationTween = new();
+        private readonly Vector2Tween scaleTween = new();
         private readonly FloatTween tween = new();
         private readonly TextSprite valueText;
 
@@ -27,23 +27,20 @@ namespace Remizione
         public UIAshMeter(GameSession session)
             : base(session)
         {
-            // Title text
-            this.titleText = new(Fonts.CommonOutline)
+            // Icon
+            this.icon = new(Atlases.UI.AshVessel)
             {
-                Color = titleColor,
-                PivotOrigin = RectanglePoint.RightTop,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -3, -13),
-                Scale = ScaleInfo.Text.Large,
-                Text = Localization.GetValue(PlayerStat.Ashes)
+                PivotOrigin = RectanglePoint.RightBottom,
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -3, 0),
             };
 
             // Value text
             this.valueText = new(Fonts.CommonOutline)
             {
                 Color = Colors.Palette.Terra,
-                PivotOrigin = RectanglePoint.RightTop,
-                Scale = ScaleInfo.Text.VeryLarge,
-                Position = titleText.BoundingBox.GetPoint(RectanglePoint.RightBottom, 0, -1)
+                PivotOrigin = RectanglePoint.RightBottom,
+                Scale = ScaleInfo.Text.ExtraLarge,
+                Position = icon.BoundingBox.GetPoint(RectanglePoint.LeftBottom, -1, 1)
             };
 
             isInitializing = true;
@@ -59,8 +56,8 @@ namespace Remizione
             if (lastKnownValue == 0)
                 return;
 
+            icon.Draw(gameTime);
             valueText.Draw(gameTime);
-            titleText.Draw(gameTime);
         }
 
         // OnUpdate
@@ -81,8 +78,7 @@ namespace Remizione
             {
                 if (!isInitializing)
                 {
-                    colorTween.Start(TweenStyle.CubicInOut, titleColor, Colors.Palette.Terra, 1000, 2);
-                    titleText.Tweens.ColorTween = colorTween;
+                    Animate();
                     tween.Start(TweenStyle.Linear, lastKnownValue, Session.PlayerData.Ashes, duration);
                 }
 
@@ -91,16 +87,21 @@ namespace Remizione
                 isInitializing = false;
             }
 
-            titleText.Update(gameTime);
+            icon.Update(gameTime);
         }
 
         #endregion
 
-        // Color
-        public Color Color
+        // Animate
+        public void Animate()
         {
-            get => valueText.Color;
-            set => valueText.Color = value;
+            rotationTween.Start(TweenStyle.QuadraticInOut, 0, 10, 50, 6);
+            scaleTween.Start(TweenStyle.QuadraticInOut, Vector2.One, Vector2.One * 1.1f, 150, 2);
+
+            icon.Tweens.RotationTween = rotationTween;
+            icon.Tweens.ScaleTween = scaleTween;
+
+            //Sound.Play(SoundNames.ItemAdd);
         }
     }
 }

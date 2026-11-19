@@ -12,6 +12,7 @@ namespace Remizione
         public UIAtlas()
             : base(EngendroGame.Instance.Content, "UI", ContentManagerExtension.EncodePath(ContentFolder.Atlases, "UI"), false)
         {
+            AshVessel = this[nameof(AshVessel)];
             BackButton = this[nameof(BackButton)];
             BackButtonHot = this[nameof(BackButtonHot)];
             CheckMark = this[nameof(CheckMark)];
@@ -50,6 +51,9 @@ namespace Remizione
             WoodIcon = this[nameof(WoodIcon)];
             WorldIcon = this[nameof(WorldIcon)];
         }
+
+        // AshVessel
+        public AtlasImage AshVessel { get; }
 
         // BackButton
         public AtlasImage BackButton { get; }

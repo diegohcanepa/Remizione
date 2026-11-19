@@ -15,7 +15,7 @@ namespace Remizione
     {
         #region Private fields
 
-        private static readonly Vector2 clickScale = new(.75f);
+        private static readonly Vector2 clickScale = new(.85f);
         private static readonly Vector2Tween clickScaleTween = new();
         private static readonly ColorTween customImageColorTween = ColorTween.Create(TweenStyle.CubicInOut, Color.White, new(210, 210, 210), 500, -1);
         private static readonly AtlasImage?[] cursorImages;

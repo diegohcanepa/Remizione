@@ -50,7 +50,7 @@ namespace Remizione
             internal static Color Back { get; } = Palette.TerraDarker;
             internal static Color Border { get; } = Palette.AlmostBlack;
             internal static Color Diff { get; } = Palette.RedBloody;
-            internal static Color Fore { get; } = Palette.Terra;
+            internal static Color Fore { get; } = Palette.TerraDark;
         }
 
         // HPMeterProp
