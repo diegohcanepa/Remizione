@@ -47,7 +47,7 @@ namespace Remizione
         // HPMeterPlayer
         internal static class HPMeterPlayer
         {
-            internal static Color Back { get; } = Palette.TerraDarker;
+            internal static Color Back { get; } = Palette.TerraDarkest;
             internal static Color Border { get; } = Palette.AlmostBlack;
             internal static Color Diff { get; } = Palette.RedBloody;
             internal static Color Fore { get; } = Palette.TerraDark;

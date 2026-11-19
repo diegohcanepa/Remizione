@@ -547,7 +547,7 @@ namespace Remizione
             if (!IsDead && !IsPlayer)
                 combatMachine?.Update(gameTime);
 
-            // Lógica de aceleración
+            // Logica de aceleración
             if (IsMoving && moveAccelerationMultiplier < 1f)
             {
                 float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;

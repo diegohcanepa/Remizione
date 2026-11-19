@@ -1,4 +1,5 @@
-﻿using Adberration;
+﻿using System;
+using Adberration;
 using Engendro;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -11,10 +12,12 @@ namespace Remizione
     public sealed class FlyOff : SessionGameObject<GameSession>
     {
         private const int fadeDuration = 100;
-        private static readonly float defaultScale = ScaleInfo.Text.Small.X;
+        private const int scaleInMaxDuration = 280;
+        private const int scaleInMinDuration = 100;
+        private const int shrinkMaxDuration = 340;
+        private const int shrinkMinDuration = 140;
 
-        private Sprite? activeSprite;
-        private readonly Sprite icon = new() { PivotOrigin = RectanglePoint.Bottom, Scale = ScaleInfo.UIElement.Medium };
+        private static readonly float defaultScale = ScaleInfo.Text.Small.X;
         private static readonly Vector2[] LaunchOffsets =
         [
             new(-5f, -5f), // Izquierda, subida media
@@ -24,10 +27,16 @@ namespace Remizione
             new(-1f, -8f), // Centro-izquierda, subida máxima
             new( 1f, -2f)  // Centro-derecha, subida corta
         ];
+
+        private Sprite? activeSprite;
+        private readonly Sprite icon = new() { PivotOrigin = RectanglePoint.Bottom, Scale = ScaleInfo.UIElement.Medium };
         private readonly FloatTween opacityTween = new();
         private readonly FloatTween rotationTween = new();
+        private readonly Vector2Tween scaleInTween = new();
+        private readonly Vector2Tween scaleOutTween = new();
         private bool shake;
         private readonly FloatTween shakeTween = FloatTween.Create(TweenStyle.Linear, 0, .5f, 50, -1);
+        private bool shrinkOnEnd;
         private static int spawnIndex;
         private readonly TextSprite text = new(Fonts.CommonOutline) { PivotOrigin = RectanglePoint.Bottom };
         private readonly FloatTween xTween = new();
@@ -48,13 +57,17 @@ namespace Remizione
             spawnIndex = (spawnIndex + 1) % LaunchOffsets.Length;
 
             activeSprite = sprite;
-
-            shake = sprite is not TextSprite;
+            shrinkOnEnd = sprite is not TextSprite;
+            shake = shrinkOnEnd;
 
             if (duration < fadeDuration)
                 duration = fadeDuration;
 
+            var targetScale = sprite.Scale;
+            var scaleInDuration = Random.Shared.Next(scaleInMinDuration, scaleInMaxDuration + 1);
+
             sprite.Position = origin;
+            sprite.Opacity = 1f;
 
             if (distance.Y != 0)
             {
@@ -68,11 +81,25 @@ namespace Remizione
                 sprite.Tweens.XTween = xTween;
             }
 
-            opacityTween.StartDelay = duration - fadeDuration;
-            opacityTween.Start(TweenStyle.QuadraticIn, 1, 0, fadeDuration);
+            scaleInTween.Start(TweenStyle.Linear, Vector2.Zero, targetScale, scaleInDuration);
+            sprite.Tweens.ScaleTween = scaleInTween;
 
-            sprite.Tweens.OpacityTween = opacityTween;
-            sprite.Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.Linear, Vector2.Zero, sprite.Scale, 200);
+            if (shrinkOnEnd)
+            {
+                var shrinkDuration = Random.Shared.Next(shrinkMinDuration, shrinkMaxDuration + 1);
+                var shrinkDelay = duration - shrinkDuration - scaleInDuration;
+                if (shrinkDelay < 0)
+                    shrinkDelay = 0;
+
+                scaleOutTween.StartDelay = shrinkDelay;
+                scaleOutTween.Start(TweenStyle.QuadraticIn, targetScale, Vector2.Zero, shrinkDuration);
+            }
+            else
+            {
+                opacityTween.StartDelay = duration - fadeDuration;
+                opacityTween.Start(TweenStyle.QuadraticIn, 1, 0, fadeDuration);
+                sprite.Tweens.OpacityTween = opacityTween;
+            }
 
             if (shake)
             {
@@ -117,24 +144,27 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             shakeTween.Update(gameTime);
+
+            if (activeSprite != null && shrinkOnEnd && !scaleInTween.IsRunning && activeSprite.Tweens.ScaleTween != scaleOutTween)
+                activeSprite.Tweens.ScaleTween = scaleOutTween;
+
             activeSprite?.Update(gameTime);
 
             if (!IsVisible)
                 Session.ObjectPools.FlyOffs.Return(this);
         }
 
-
         #endregion
 
         // IsVisible
-        public bool IsVisible => xTween.IsRunning || yTween.IsRunning || opacityTween.IsRunning;
+        public bool IsVisible => xTween.IsRunning || yTween.IsRunning || opacityTween.IsRunning || scaleOutTween.IsRunning;
 
         // ShowIcon
         public void ShowIcon(Vector2 origin, AtlasImage image, float scale = 1)
         {
             icon.RenderImage = image;
             icon.Scale = new(scale);
-            Launch(origin, icon, 1000);
+            Launch(origin, icon, 1800);
         }
 
         // ShowText
