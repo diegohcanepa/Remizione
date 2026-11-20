@@ -136,8 +136,7 @@ namespace Remizione
             this.dropButton = new()
             {
                 PivotOrigin = RectanglePoint.RightBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -10, -5),
-                Text = Localization.GetValue(UserAction.Drop)
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -10, -5)
             };
 
             // Use Button
@@ -145,8 +144,7 @@ namespace Remizione
             {
                 PivotOrigin = RectanglePoint.RightBottom,
                 X = dropButton.BoundingBox.GetPoint(RectanglePoint.LeftBottom, -8, 0).X,
-                Y = dropButton.Y,
-                Text = Localization.GetValue(UserAction.Use)
+                Y = dropButton.Y              
             };
         }
 
@@ -267,8 +265,12 @@ namespace Remizione
             this.amountText.Text = item.Definition.IsStackable ? $"x{item.Amount}" : string.Empty;
             this.breakChancesText.Text = item.Definition.HasBreakChance ? $"{TextRepository.GetValue("Misc.BreakChance")}{System.Environment.NewLine}{(item.BreakChance * 100).Round()}%" : null;
             this.breakChancesText.Color = item.BreakChance > .65f ? Colors.Palette.Red : Colors.Palette.Orange;
+            this.dropButton.Text = item.Definition.ItemKind == ItemKind.Key ? Localization.GetValue(UserAction.Drop) : Localization.GetValue(UserAction.Discard);
             this.shadow.RenderImage = item.Definition.Image;
             this.useButton.IsEnabled = item.Definition.AllowSelfAction;
+
+            if (useButton.IsEnabled)
+                useButton.Text = Localization.GetValue(item.Definition.SelfUseAction);
         }
     }
 }

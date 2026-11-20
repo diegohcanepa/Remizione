@@ -149,6 +149,15 @@
         "Organic"
       ]
     },
+    "ItemSelfUseAction": {
+      "type": "string",
+      "enum": [
+        "None",
+        "Consume",
+        "Light",
+        "Use"
+      ]
+    },    
     "KnockbackIntensity": {
       "type": "string",
       "enum": [

@@ -39,7 +39,7 @@ namespace Remizione
             {
                 Color = Colors.Palette.Terra,
                 PivotOrigin = RectanglePoint.RightBottom,
-                Scale = ScaleInfo.Text.ExtraLarge,
+                Scale = ScaleInfo.Text.VeryLarge,
                 Position = icon.BoundingBox.GetPoint(RectanglePoint.LeftBottom, -1, 1)
             };
 

@@ -202,5 +202,8 @@ namespace Remizione
 
         // Uses
         public int Uses { get; set; }
+
+        // Verb
+        public Verb Verb { get; set; }
     }
 }

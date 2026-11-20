@@ -151,7 +151,7 @@ namespace Remizione
             // Evita que las luces suaves saturen entre sí.
             Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, CustomBlendState.LightMax, null);
 
-            DrawLightsWithBlendMode(gameTime, LightBlendMode.Max);
+            DrawLights(gameTime, LightBlendMode.Max);
 
             if (BrightnessModifier > 0)
                 Game.Shapes.DrawRectangle(Session.Viewport.ToRectangle(), brightnessColor);
@@ -162,7 +162,7 @@ namespace Remizione
             // Suma fotones. El fuego y la magia van aquí para lograr el núcleo blanco/caliente.
             Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
 
-            DrawLightsWithBlendMode(gameTime, LightBlendMode.Additive);
+            DrawLights(gameTime, LightBlendMode.Additive);
 
             Game.SpriteBatch.End();
 
@@ -179,8 +179,8 @@ namespace Remizione
             Game.GraphicsDevice.SetRenderTarget(previousRenderTarget);
         }
 
-        // DrawLightsWithBlendMode
-        private void DrawLightsWithBlendMode(GameTime gameTime, LightBlendMode blendMode)
+        // DrawLights
+        private void DrawLights(GameTime gameTime, LightBlendMode blendMode)
         {
             // Owned lights
             for (int i = 0; i < lights.Count; i++)

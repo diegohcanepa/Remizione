@@ -27,9 +27,6 @@
             "actionKind": {
               "$ref": "enums.schema.json#/$defs/ActionKind"
             },
-            "allowSelfAction": {
-              "type": "boolean"
-            },            
             "animationName": {
               "type": "string"
             },
@@ -110,6 +107,9 @@
             },
             "projectileImageName": {
               "type": "string"
+            },
+            "selfUseAction": {
+              "$ref": "enums.schema.json#/$defs/ItemSelfUseAction"
             },
             "skillChance": {
               "type": "integer"

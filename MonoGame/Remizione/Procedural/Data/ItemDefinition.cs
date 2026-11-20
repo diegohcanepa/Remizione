@@ -20,9 +20,6 @@ namespace Remizione
             // ActionKind
             ActionKind = element.GetEnum("actionKind", ActionKind.Outcome);
 
-            // AllowSelfAction
-            AllowSelfAction = element.GetBool("allowSelfAction", false);
-
             // AnimationName
             AnimationName = element.GetString("animationName");
             if (string.IsNullOrWhiteSpace(AnimationName))
@@ -91,6 +88,9 @@ namespace Remizione
 
             // ProjectileImageName
             ProjectileImageName = element.GetString("projectileImageName");
+
+            // SelfUseAction
+            SelfUseAction = element.GetEnum("selfUseAction", ItemSelfUseAction.None);
 
             // SkillChance
             SkillChance = element.GetInt32("skillChance", 0);
@@ -189,7 +189,7 @@ namespace Remizione
         public ActionKind ActionKind { get; }
 
         // AllowSelfAction
-        public bool AllowSelfAction { get; }
+        public bool AllowSelfAction => SelfUseAction != ItemSelfUseAction.None;
 
         // AnimationName
         public string AnimationName { get; }
@@ -289,6 +289,9 @@ namespace Remizione
 
         // ProjectileImageName
         public string ProjectileImageName { get; }
+
+        // SelfUseAction
+        public ItemSelfUseAction SelfUseAction { get; }
 
         // SkillChance
         public int SkillChance { get; }

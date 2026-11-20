@@ -3,6 +3,7 @@
 	"data": [
 		{
 			"name": "BarrenFig",
+			"selfUseAction": "Consume",
 			"animationName": "Consume",
 			"category": "Food",
 			"actionKind": "Outcome",
@@ -49,7 +50,7 @@
 		},
 		{
 			"name": "Loquat",
-			"allowSelfAction": true,
+			"selfUseAction": "Consume",
 			"animationName": "Consume",
 			"category": "Food",
 			"actionKind": "Outcome",
@@ -130,7 +131,7 @@
 		},		
 		{
 			"name": "SulfurStone",
-			"allowSelfAction": true,
+			"selfUseAction": "Light",
 			"animationName": "PickUp",
 			"category": "Misc",
 			"actionKind": "Outcome",

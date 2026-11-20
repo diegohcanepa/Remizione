@@ -105,6 +105,9 @@ namespace Remizione
     // ItemKind
     public enum ItemKind { Common, Key, Organic }
 
+    // ItemSelfUseAction
+    public enum ItemSelfUseAction { None, Consume, Light, Use }
+
     // KnockbackIntensity
     public enum KnockbackIntensity { None, Low, Medium, High }
 
