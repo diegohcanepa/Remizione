@@ -41,7 +41,10 @@ namespace Remizione
         }
 
         // RenewDarknessTimer
-        private static void RenewDarknessTimer() => Random.Shared.Next(5, 9);
+        private void RenewDarknessTimer()
+        {
+            darknessDamageTimer = Random.Shared.Next(5, 9);
+        }
 
         #endregion
 
@@ -167,6 +170,7 @@ namespace Remizione
                     if (darknessDamageTimer <= 0)
                     {
                         RenewDarknessTimer();
+                        session.Player.HurtSound?.Play();
                         session.Player.HP -= Random.Shared.Next(1, 3);
                         Sound.Play(SoundNames.DarknessCreature);
                     }
