@@ -12,7 +12,6 @@ namespace Remizione
 
         private readonly Sprite iconSprite;
         private readonly UIContextMenu<T> menu;
-        private Vector2 position;
         private readonly FloatTween shakeTween = new();
         private readonly TextSprite textSprite;
 
@@ -23,10 +22,7 @@ namespace Remizione
         {
             this.menu = menu;
             this.Key = key;
-            this.iconSprite = new(icon)
-            {
-            };
-
+            this.iconSprite = new(icon);
             this.textSprite = new(menu.Font)
             {
                 Scale = menu.OptionTextScale,
@@ -43,9 +39,18 @@ namespace Remizione
         // Invalidate
         private void Invalidate()
         {
-            iconSprite.PivotOrigin = RectanglePoint.LeftTop;
-            iconSprite.Position = position;
-            textSprite.Position = position;
+            iconSprite.PivotOrigin = RectanglePoint.Right;
+            iconSprite.Position = Position;
+            
+            textSprite.Position = Position;
+            textSprite.PivotOrigin = menu.Alignment switch
+            {
+                HorizontalAlignment.Left => RectanglePoint.LeftTop,
+                HorizontalAlignment.Right => RectanglePoint.RightTop,
+                HorizontalAlignment.Center => RectanglePoint.Top,
+                _ => throw new System.NotImplementedException()
+            };
+
 
             if (!iconSprite.IsEmpty)
                 textSprite.X += iconSprite.BoundingBox.Width + 2;
@@ -113,10 +118,10 @@ namespace Remizione
         // Position
         public Vector2 Position
         {
-            get => position;
+            get;
             set
             {
-                this.position = value;
+                field = value;
                 Invalidate();
             }
         }

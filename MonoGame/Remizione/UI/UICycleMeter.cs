@@ -62,7 +62,7 @@ namespace Remizione
         // UpdateOrbitPosition
         private void UpdateOrbitPosition()
         {
-            var totalDuration = Session.CycleManager.CurrentCycle == Cycle.Light ? GameData.WorldSettings.LightCycleDuration : GameData.WorldSettings.DarkCycleDuration;
+            var totalDuration = CycleManager.GetCycleDuration(Session.CycleManager.CurrentCycle);
 
             if (totalDuration <= 0)
                 return;

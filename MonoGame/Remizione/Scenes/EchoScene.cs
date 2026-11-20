@@ -16,10 +16,8 @@ namespace Remizione
         #region Private fields
 
         private readonly Sprite background = new(Atlases.UI.EchoBackground) { PivotOrigin = RectanglePoint.LeftBottom, Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom) };
-        private SoundInstance? speakerSoundInstance;
         private readonly FloatTween textOpacityTween = new();
         private readonly TextSprite textSprite;
-        private readonly TextSprite titleSprite;
 
         #endregion
 
@@ -30,14 +28,6 @@ namespace Remizione
             : base(session)
         {
             this.PausePreviousScenes = false;
-
-            // Title
-            this.titleSprite = new(Fonts.Common)
-            {
-                Color = Colors.Palette.Text,
-                PivotOrigin = RectanglePoint.Bottom,
-                Scale = ScaleInfo.Text.ExtraLarge
-            };
 
             // Text sprite
             this.textSprite = new(Fonts.Common)
@@ -75,7 +65,10 @@ namespace Remizione
         {
             CanClose = true;
             if (Session.AwaitingScript?.NextStatement is not EchoCommand and not AwaitCommand)
+            {
+                MouseCursor.Click();
                 Game.SceneManager.Pop();
+            }
         }
 
         #endregion
@@ -86,17 +79,8 @@ namespace Remizione
         protected override void OnActivate()
         {
             base.OnActivate();
+            MouseCursor.Clear();
             MouseCursor.Icon = MouseCursorIcon.Talk;
-            MouseCursor.Tooltip = null;
-            MouseCursor.CustomImage = null;
-        }
-
-        // OnDeactivate
-        protected override void OnDeactivate()
-        {
-            base.OnDeactivate();
-            speakerSoundInstance?.Stop();
-            speakerSoundInstance = null;
         }
 
         // OnDraw
@@ -131,7 +115,6 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             textSprite.Update(gameTime);
-            titleSprite.Opacity = textSprite.Opacity;
             background.Update(gameTime);
         }
 
@@ -141,13 +124,9 @@ namespace Remizione
         public bool CanClose { get; private set; }
 
         // Show
-        public void Show(GameThing target, string displayText)
+        public void Show(string displayText)
         {
             this.textSprite.Text = displayText;
-            this.titleSprite.Opacity = 0;
-            this.titleSprite.Text = target.Label;
-            this.titleSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.Top);
-
             textOpacityTween.Start(TweenStyle.CubicIn, 0, 1, 500);
             textSprite.Tweens.OpacityTween = textOpacityTween;
 

@@ -11,6 +11,7 @@ namespace Adberration.Scripting
         #region Argument names
 
         protected static readonly string ActionArg = "#action";
+        protected static readonly string AlignmentArg = "#alignment";
         protected static readonly string AmountArg = "#amount";
         protected static readonly string AnimationArg = "#animation";
         protected static readonly string AtArg = "#at";
@@ -50,6 +51,7 @@ namespace Adberration.Scripting
         protected static readonly string OnceArg = "#once";
         protected static readonly string OnExitArg = "#on-exit";
         protected static readonly string OpacityArg = "#opacity";
+        protected static readonly string OptionsArg = "#options";
         protected static readonly string PanArg = "#pan";
         protected static readonly string ParentArg = "#parent";
         protected static readonly string PauseAwareArg = "#pause-aware";
@@ -80,6 +82,7 @@ namespace Adberration.Scripting
         protected static readonly string StyleArg = "#style";
         protected static readonly string SubAreaArg = "#sub-area";
         protected static readonly string TargetArg = "#target";
+        protected static readonly string TitleArg = "#title";
         protected static readonly string TransientArg = "#transient";
         protected static readonly string TransitionAwareArg = "#transition-aware";
         protected static readonly string TriggerArg = "#trigger";

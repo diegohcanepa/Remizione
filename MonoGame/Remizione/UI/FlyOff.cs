@@ -12,10 +12,10 @@ namespace Remizione
     public sealed class FlyOff : SessionGameObject<GameSession>
     {
         private const int fadeDuration = 100;
+        private const int fadeOutMaxDuration = 900;
+        private const int fadeOutMinDuration = 420;
         private const int scaleInMaxDuration = 280;
         private const int scaleInMinDuration = 100;
-        private const int shrinkMaxDuration = 340;
-        private const int shrinkMinDuration = 140;
 
         private static readonly float defaultScale = ScaleInfo.Text.Small.X;
         private static readonly Vector2[] LaunchOffsets =
@@ -33,10 +33,8 @@ namespace Remizione
         private readonly FloatTween opacityTween = new();
         private readonly FloatTween rotationTween = new();
         private readonly Vector2Tween scaleInTween = new();
-        private readonly Vector2Tween scaleOutTween = new();
         private bool shake;
         private readonly FloatTween shakeTween = FloatTween.Create(TweenStyle.Linear, 0, .5f, 50, -1);
-        private bool shrinkOnEnd;
         private static int spawnIndex;
         private readonly TextSprite text = new(Fonts.CommonOutline) { PivotOrigin = RectanglePoint.Bottom };
         private readonly FloatTween xTween = new();
@@ -53,15 +51,19 @@ namespace Remizione
         // Launch
         private void Launch(Vector2 origin, Sprite sprite, int duration)
         {
-            var distance = sprite is TextSprite ? new(0, -1) : LaunchOffsets[spawnIndex];
+            var isIcon = sprite is not TextSprite;
+            var distance = isIcon ? LaunchOffsets[spawnIndex] : new(0, -1);
             spawnIndex = (spawnIndex + 1) % LaunchOffsets.Length;
 
             activeSprite = sprite;
-            shrinkOnEnd = sprite is not TextSprite;
-            shake = shrinkOnEnd;
+            shake = isIcon;
 
-            if (duration < fadeDuration)
-                duration = fadeDuration;
+            var currentFadeDuration = isIcon
+                ? Random.Shared.Next(fadeOutMinDuration, fadeOutMaxDuration + 1)
+                : fadeDuration;
+
+            if (duration < currentFadeDuration)
+                duration = currentFadeDuration;
 
             var targetScale = sprite.Scale;
             var scaleInDuration = Random.Shared.Next(scaleInMinDuration, scaleInMaxDuration + 1);
@@ -84,22 +86,9 @@ namespace Remizione
             scaleInTween.Start(TweenStyle.Linear, Vector2.Zero, targetScale, scaleInDuration);
             sprite.Tweens.ScaleTween = scaleInTween;
 
-            if (shrinkOnEnd)
-            {
-                var shrinkDuration = Random.Shared.Next(shrinkMinDuration, shrinkMaxDuration + 1);
-                var shrinkDelay = duration - shrinkDuration - scaleInDuration;
-                if (shrinkDelay < 0)
-                    shrinkDelay = 0;
-
-                scaleOutTween.StartDelay = shrinkDelay;
-                scaleOutTween.Start(TweenStyle.QuadraticIn, targetScale, Vector2.Zero, shrinkDuration);
-            }
-            else
-            {
-                opacityTween.StartDelay = duration - fadeDuration;
-                opacityTween.Start(TweenStyle.QuadraticIn, 1, 0, fadeDuration);
-                sprite.Tweens.OpacityTween = opacityTween;
-            }
+            opacityTween.StartDelay = duration - currentFadeDuration;
+            opacityTween.Start(TweenStyle.QuadraticIn, 1, 0, currentFadeDuration);
+            sprite.Tweens.OpacityTween = opacityTween;
 
             if (shake)
             {
@@ -144,10 +133,6 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             shakeTween.Update(gameTime);
-
-            if (activeSprite != null && shrinkOnEnd && !scaleInTween.IsRunning && activeSprite.Tweens.ScaleTween != scaleOutTween)
-                activeSprite.Tweens.ScaleTween = scaleOutTween;
-
             activeSprite?.Update(gameTime);
 
             if (!IsVisible)
@@ -157,7 +142,7 @@ namespace Remizione
         #endregion
 
         // IsVisible
-        public bool IsVisible => xTween.IsRunning || yTween.IsRunning || opacityTween.IsRunning || scaleOutTween.IsRunning;
+        public bool IsVisible => xTween.IsRunning || yTween.IsRunning || opacityTween.IsRunning;
 
         // ShowIcon
         public void ShowIcon(Vector2 origin, AtlasImage image, float scale = 1)

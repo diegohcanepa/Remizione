@@ -638,9 +638,18 @@ namespace Remizione
             set
             {
                 if (value != field)
+                {
                     field = Math.Max(0, value);
+                    if (field == 0)
+                        AshCostLabel = string.Empty;
+                    else
+                        AshCostLabel = $"{field} {TextRepository.GetValue("Misc.Ashes")}";
+                }
             }
         }
+
+        // AshCostLabel
+        public string AshCostLabel { get; private set; } = string.Empty;
 
         // AttachedLight
         public Light? AttachedLight { get; set; }

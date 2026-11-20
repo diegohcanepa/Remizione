@@ -159,8 +159,8 @@ namespace Remizione
         private static void RegisterAotTypes()
         {
             AotTypeRegistry.Register(typeof(Actor));
-            AotTypeRegistry.Register(typeof(AshVessel));
             AotTypeRegistry.Register(typeof(Bonfire));
+            AotTypeRegistry.Register(typeof(CineraryUrn));
             AotTypeRegistry.Register(typeof(Creature));
             AotTypeRegistry.Register(typeof(CreditsRoom));
             AotTypeRegistry.Register(typeof(FigTree));
@@ -195,6 +195,7 @@ namespace Remizione
             AotTypeRegistry.Register("epigrah", typeof(EpigraphCommand));
             AotTypeRegistry.Register("exit-session", typeof(ExitSessionCommand));
             AotTypeRegistry.Register("if-can-pickup-item-reward", typeof(IfCanPickUpItemRewardStatement));
+            AotTypeRegistry.Register("if-can-use-ashes", typeof(IfCanUseAshesStatement));
             AotTypeRegistry.Register("if-test-skill", typeof(IfTestSkillStatement));
             AotTypeRegistry.Register("narrate", typeof(NarrateCommand));
             AotTypeRegistry.Register("pickup-item-reward", typeof(PickUpItemRewardCommand));
@@ -724,6 +725,14 @@ namespace Remizione
             Save();
         }
 
+        // Ashes
+        [ScriptProperty]
+        public int Ashes
+        {
+            get => PlayerData.Ashes;
+            set => PlayerData.Ashes = value;
+        }
+
         // BeginCycles
         [ScriptMethod]
         public void BeginCycles()
@@ -731,10 +740,6 @@ namespace Remizione
             CycleManager.IsEnabled = true;
             CycleManager.SetCycle(Cycle.Light, skipTransition: true);
         }
-
-        // BonfireMode
-        [ScriptProperty]
-        public bool BonfireMode { get; set; }
 
         // CycleManager
         public CycleManager CycleManager { get; } = new();

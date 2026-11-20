@@ -4,7 +4,10 @@
   <String Key="Actor.Hopeless">Desahuciado</String>
   <String Key="Actor.Monk">Celador</String>
   <String Key="Actor.Penitent">Penitente</String>
-  <String Key="Bestiary.EnviousEye">Masa de carne viva y nervios deshilachados con un enorme ojo de pupila cruciforme.</String>
+  <String Key="Answer.Accept">Aceptar</String>
+  <String Key="Answer.Cancel">Cancelar</String>
+  <String Key="Answer.No">No</String>
+  <String Key="Answer.Yes">Sí</String>
   <String Key="BonfireAction.March.Description">Reanudar la marcha.</String>
   <String Key="BonfireAction.March.Name">Marchar</String>
   <String Key="BonfireAction.SaveAndExit.Description">La tierra vuelva a brotar. La materia orgánica se degrada.</String>
@@ -42,7 +45,7 @@
   <String Key="Item.FulguriteCrystal.Description">Una concreción áspera de sílice y escoria, nacida en el instante en que la rabia del cielo calcinó la tierra muerta. En su cara más llana lleva grabado a punzón el glifo de la fijación alquímica, sellado con cera rancia. Al romper el sello sobre un condenado, la piedra clama a las alturas y descarga un rayo fulminante que consume su carne.</String>
   <String Key="Item.FulguriteCrystal.Name">Fulgurite crystal</String>
   <String Key="Item.GadlingKnuckle.Description">Una placa de hierro tosco, martillada a golpes sobre el cuero podrido de un guante de verdugo. De la articulación sobresale una púa piramidal, mellada y negra de mugre seca.</String>
-  <String Key="Item.GadlingKnuckle.Effect" />
+  <String Key="Item.GadlingKnuckle.Effect"></String>
   <String Key="Item.GadlingKnuckle.Name">Puño de púa</String>
   <String Key="Item.Lift.Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</String>
   <String Key="Item.Lift.Name">Alzar</String>
@@ -55,7 +58,7 @@
   <String Key="Item.PyritePebble.Effect">Enciende fuego</String>
   <String Key="Item.PyritePebble.Name">Guijarro de Pirita</String>
   <String Key="Item.RusticAxe.Description">Un hacha primitiva de piedra caliza.</String>
-  <String Key="Item.RusticAxe.Effect" />
+  <String Key="Item.RusticAxe.Effect"></String>
   <String Key="Item.RusticAxe.Name">Hacha rústica</String>
   <String Key="Item.ServantCross.Name">Cruz del Siervo</String>
   <String Key="Item.SulfurStone.Description">Un trozo de azufre cristalizado que arde con memoria propia: no necesita chispa, se enciende porque "recuerda" haber sido fuego alguna vez.
@@ -174,7 +177,7 @@ Los penitentes la usan para encender las Hogueras, cuyo calor no cura la carne s
   <String Key="MessageKind.InventoryFull">No te queda espacio.</String>
   <String Key="MessageKind.ItemBroken">¡El ítem se rompió!</String>
   <String Key="MessageKind.ItemCrafted">¡Ítem labrado!</String>
-  <String Key="MessageKind.NotEnoughAshes">Sin cenizas suficientes.</String>
+  <String Key="MessageKind.NotEnoughAshes">Cenizas insuficientes.</String>
   <String Key="MessageKind.OutOfReach">Fuera de alcance.</String>
   <String Key="MessageKind.OutOfSight">Vista obstruida.</String>
   <String Key="MessageKind.StackFull">No se puede acumular más.</String>
@@ -224,7 +227,7 @@ Bla bla bla</String>
   <String Key="Misc.Recovering">Recuperando</String>
   <String Key="Misc.SelectSlot">Seleccionar ranura</String>
   <String Key="Misc.Stamina">Resistencia</String>
-  <String Key="Misc.StandUp" />
+  <String Key="Misc.StandUp"></String>
   <String Key="Misc.Threshold">Umbral</String>
   <String Key="Misc.Unknown">???</String>
   <String Key="Misc.WithPreposition">con</String>
@@ -244,9 +247,9 @@ Bla bla bla</String>
   <String Key="Playtime.LessThanAMinute">Menos de un minuto</String>
   <String Key="Playtime.Minute">minuto</String>
   <String Key="Playtime.Minutes">minutos</String>
-  <String Key="Prop.AshVessel">Vasija de cenizas</String>
   <String Key="Prop.Bonfire">Hoguera</String>
   <String Key="Prop.Chest">Cofre</String>
+  <String Key="Prop.CineraryUrn">Urna cineraria</String>
   <String Key="Prop.Coin">Moneda</String>
   <String Key="Prop.Cross">Cruz</String>
   <String Key="Prop.CrucifiedMan">Hombre crucificado</String>

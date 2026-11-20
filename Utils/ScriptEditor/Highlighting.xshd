@@ -152,6 +152,7 @@
 			<Word>enable-area-if</Word>
 			<Word>endif</Word>
 			<Word>if-can-pickup-item-reward</Word>
+			<Word>if-can-use-ashes</Word>
 			<Word>if-hotspot-area</Word>
 			<Word>if-counter</Word>
 			<Word>if-entity-type</Word>

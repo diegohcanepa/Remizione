@@ -13,13 +13,13 @@
     <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\Projects\Engendro\CodeContract.cs" Link="CodeContract.cs" />
-    <Compile Include="..\..\Projects\Engendro\Collections\NamedCollection.cs" Link="NamedCollection.cs" />
-    <Compile Include="..\..\Projects\Engendro\Collections\NamedReadOnlyCollection.cs" Link="NamedReadOnlyCollection.cs" />
-    <Compile Include="..\..\Projects\Engendro\Extensions\FloatExtensions.cs" Link="FloatExtensions.cs" />
-    <Compile Include="..\..\Projects\Engendro\Extensions\IntExtensions.cs" Link="IntExtensions.cs" />
-    <Compile Include="..\..\Projects\Engendro\INamedObject.cs" Link="INamedObject.cs" />
-    <Compile Include="..\..\Projects\Engendro\XOREncryptor.cs" Link="XOREncryptor.cs" />
+    <Compile Include="..\..\MonoGame\Engendro\CodeContract.cs" Link="CodeContract.cs" />
+    <Compile Include="..\..\MonoGame\Engendro\Collections\NamedCollection.cs" Link="NamedCollection.cs" />
+    <Compile Include="..\..\MonoGame\Engendro\Collections\NamedReadOnlyCollection.cs" Link="NamedReadOnlyCollection.cs" />
+    <Compile Include="..\..\MonoGame\Engendro\Extensions\FloatExtensions.cs" Link="FloatExtensions.cs" />
+    <Compile Include="..\..\MonoGame\Engendro\Extensions\IntExtensions.cs" Link="IntExtensions.cs" />
+    <Compile Include="..\..\MonoGame\Engendro\INamedObject.cs" Link="INamedObject.cs" />
+    <Compile Include="..\..\MonoGame\Engendro\XOREncryptor.cs" Link="XOREncryptor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="DeploymentDiagram(SubsystemMapper)_11298.ico" />

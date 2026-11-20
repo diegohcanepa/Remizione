@@ -1,4 +1,5 @@
 ﻿using Adberration.Scripting;
+using Engendro;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -14,11 +15,12 @@ namespace Remizione
         #region Constructor
 
         // Constructor
-        public DialogBlock(Script? script, bool allowQuit)
+        public DialogBlock(Script? script, bool allowQuit, HorizontalAlignment alignment)
         {
             this.Script = script;
             this.AllowQuit = allowQuit;
             this.AvailableOptions = new ReadOnlyCollection<DialogOption>(availableOptions);
+            this.Alignment = alignment;
 
             Invalidate();
         }
@@ -64,6 +66,9 @@ namespace Remizione
             Add(result);
             return result;
         }
+
+        // Alignment
+        public HorizontalAlignment Alignment { get; }
 
         // AllowQuit
         public bool AllowQuit { get; }
@@ -132,5 +137,8 @@ namespace Remizione
 
         // Script
         public Script? Script { get; }
+
+        // Title
+        public string Title { get; set; } = string.Empty;
     }
 }

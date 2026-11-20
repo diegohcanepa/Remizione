@@ -173,38 +173,6 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">AshVessel-assets/AshVesselDark.png</key>
-            <key type="filename">AshVessel-assets/AshVesselLight.png</key>
-            <key type="filename">GravestoneA-assets/GravestoneA.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>4,4,7,7</rect>
-                <key>scale9Paddings</key>
-                <rect>4,4,7,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">AshVessel-assets/AshVesselShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,2,6,3</rect>
-                <key>scale9Paddings</key>
-                <rect>3,2,6,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Bonfire-assets/Bonfire01.png</key>
             <key type="filename">Bonfire-assets/Bonfire02.png</key>
             <key type="filename">Bonfire-assets/BonfireFlame01.png</key>
@@ -246,6 +214,105 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">CineraryUrn-assets/CineraryUrnDark.png</key>
+            <key type="filename">CineraryUrn-assets/CineraryUrnLight.png</key>
+            <key type="filename">GravestoneA-assets/GravestoneA.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,4,7,7</rect>
+                <key>scale9Paddings</key>
+                <rect>4,4,7,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">CineraryUrn-assets/CineraryUrnRemains1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,1,1</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,1,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">CineraryUrn-assets/CineraryUrnRemains2.png</key>
+            <key type="filename">CineraryUrn-assets/CineraryUrnRemains4.png</key>
+            <key type="filename">CrossA-assets/CrossARemains3.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,3,1</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,3,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">CineraryUrn-assets/CineraryUrnRemains3.png</key>
+            <key type="filename">TreeA-assets/TreeARemains2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,2,1</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,2,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">CineraryUrn-assets/CineraryUrnRemains5.png</key>
+            <key type="filename">CrossA-assets/CrossARemains2.png</key>
+            <key type="filename">CrossA-assets/CrossARemains4.png</key>
+            <key type="filename">PotteryB-assets/PotteryBRemains2.png</key>
+            <key type="filename">PotteryC-assets/PotteryCPiece4.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,1,3</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,1,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">CineraryUrn-assets/CineraryUrnlShadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,2,6,3</rect>
+                <key>scale9Paddings</key>
+                <rect>3,2,6,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">CrossA-assets/CrossA.png</key>
             <key type="filename">CrossA-assets/CrossAShadow.png</key>
             <key type="filename">CrossC-assets/CrossC.png</key>
@@ -277,39 +344,6 @@
                 <rect>2,1,3,2</rect>
                 <key>scale9Paddings</key>
                 <rect>2,1,3,2</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">CrossA-assets/CrossARemains2.png</key>
-            <key type="filename">CrossA-assets/CrossARemains4.png</key>
-            <key type="filename">PotteryB-assets/PotteryBRemains2.png</key>
-            <key type="filename">PotteryC-assets/PotteryCPiece4.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,1,1,3</rect>
-                <key>scale9Paddings</key>
-                <rect>1,1,1,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">CrossA-assets/CrossARemains3.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,1,3,1</rect>
-                <key>scale9Paddings</key>
-                <rect>1,1,3,1</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -820,21 +854,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">TreeA-assets/TreeARemains2.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,1,2,1</rect>
-                <key>scale9Paddings</key>
-                <rect>1,1,2,1</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">TreeB-assets/TreeB.png</key>
             <key type="filename">TreeB-assets/TreeBShadow.png</key>
             <struct type="IndividualSpriteSettings">
@@ -981,7 +1000,7 @@
                     <filename>GravestoneB-assets</filename>
                     <filename>FigTree-assets</filename>
                     <filename>PetrifiedTree-assets</filename>
-                    <filename>AshVessel-assets</filename>
+                    <filename>CineraryUrn-assets</filename>
                 </array>
             </struct>
         </map>

@@ -16,7 +16,6 @@ namespace Remizione
         #region Private fields
 
         private readonly List<UIContextMenuOption<T>> optionList = [];
-        private readonly Sprite optionSelector;
         private Vector2 optionTextScale = ScaleInfo.ContextMenu.Option;
         private Vector2 position;
         private readonly StickInputController stick = new(GamePadThumbStick.Left) { AutoRepeatRate = 200 };
@@ -29,13 +28,6 @@ namespace Remizione
         public UIContextMenu(Font? font = null)
         {
             this.Font = font ?? Fonts.Common;
-
-            // Option Selector
-            optionSelector = new Sprite(Atlases.UI.ContextMenuOptionSelector)
-            {
-                PivotOrigin = RectanglePoint.Right
-            };
-
             this.Options = new ReadOnlyCollection<UIContextMenuOption<T>>(optionList);
         }
 
@@ -43,8 +35,8 @@ namespace Remizione
 
         #region Private members
 
-        // Invalidate
-        private void Invalidate()
+        // Refresh
+        private void Refresh()
         {
             int NewLine(RectangleF bbox)
             {
@@ -69,10 +61,7 @@ namespace Remizione
             BoundingBox = new RectangleF(Position.X, Position.Y, Width, Height);
 
             if (SelectedIndex != -1)
-            {
                 optionList[SelectedIndex].IsSelected = true;
-                optionSelector.Position = optionList[SelectedIndex].BoundingBox.GetPoint(RectanglePoint.Left, -1, -.75f);
-            }
         }
 
         #endregion
@@ -83,9 +72,6 @@ namespace Remizione
         protected override void OnDraw(GameTime gameTime)
         {
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.PointClamp, RemizioneGame.Effects.ColorReduction.Effect);
-
-            if (ShowSelector && optionList.Count > 0 && SelectInputBinding == null)
-                optionSelector.Draw(gameTime);
 
             for (var i = 0; i < optionList.Count; i++)
             {
@@ -107,7 +93,7 @@ namespace Remizione
                     if (HoveredOption.Index != SelectedIndex)
                     {
                         SelectedIndex = HoveredOption.Index;
-                        Sound.Play(SoundNames.UIHover);
+                        Sound.Play(SoundNames.ButtonHover);
                         HoveredOption.Shake();
                     }
                 }
@@ -119,7 +105,6 @@ namespace Remizione
 
             stick.Stick = GamePadThumbStick.Left;
             stick.Update(gameTime);
-            optionSelector.Update(gameTime);
 
             for (var i = 0; i < optionList.Count; i++)
             {
@@ -138,10 +123,24 @@ namespace Remizione
             if (SelectedIndex == -1)
                 SelectedIndex = 0;
 
-            Invalidate();
+            Refresh();
 
             return result;
         }
+
+        // Alignment
+        public HorizontalAlignment Alignment
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    Refresh();
+                }
+            }
+        } = HorizontalAlignment.Left;
 
         // BoundingBox
         public RectangleF BoundingBox { get; private set; }
@@ -215,7 +214,7 @@ namespace Remizione
             else
                 SelectedIndex++;
 
-            Sound.Play(SoundNames.UIHover);
+            Sound.Play(SoundNames.ButtonHover);
 
             SelectedOption?.Shake();
 
@@ -231,13 +230,6 @@ namespace Remizione
         // OptionSelectedColor
         public Color OptionSelectedColor { get; set; } = Colors.Palette.Text;
 
-        // OptionSelectorImage
-        public AtlasImage? OptionSelectorImage
-        {
-            get => optionSelector.RenderImage;
-            set => optionSelector.RenderImage = value;
-        }
-
         // OptionSpacing
         public float OptionSpacing { get; set; }
 
@@ -250,7 +242,7 @@ namespace Remizione
                 if (value != optionTextScale)
                 {
                     optionTextScale = value;
-                    Invalidate();
+                    Refresh();
                 }
             }
         }
@@ -264,7 +256,7 @@ namespace Remizione
                 if (value != position)
                 {
                     position = value;
-                    Invalidate();
+                    Refresh();
                 }
             }
         }
@@ -280,7 +272,7 @@ namespace Remizione
             else
                 SelectedIndex--;
 
-            Sound.Play(SoundNames.UIHover);
+            Sound.Play(SoundNames.ButtonHover);
 
             SelectedOption?.Shake();
 
@@ -296,19 +288,16 @@ namespace Remizione
                 if (value != field)
                 {
                     field = value;
-                    Invalidate();
+                    Refresh();
                 }
             }
         } = -1;
 
-        // SelectedOption
-        public UIContextMenuOption<T>? SelectedOption => SelectedIndex == -1 ? null : optionList[SelectedIndex];
-
         // SelectInputBinding
         public InputBinding? SelectInputBinding { get; set; }
 
-        // ShowSelector
-        public bool ShowSelector { get; set; } = true;
+        // SelectedOption
+        public UIContextMenuOption<T>? SelectedOption => SelectedIndex == -1 ? null : optionList[SelectedIndex];
 
         // Width
         public int Width { get; private set; }
@@ -321,8 +310,8 @@ namespace Remizione
             {
                 if (value != position.X)
                 {
-                    this.position.X = value;
-                    Invalidate();
+                    position.X = value;
+                    Refresh();
                 }
             }
         }
@@ -335,8 +324,8 @@ namespace Remizione
             {
                 if (value != position.Y)
                 {
-                    this.position.Y = value;
-                    Invalidate();
+                    position.Y = value;
+                    Refresh();
                 }
             }
         }

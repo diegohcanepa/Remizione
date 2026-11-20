@@ -3,7 +3,6 @@ using Engendro;
 using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using System.Globalization;
 
 namespace Remizione
@@ -15,6 +14,7 @@ namespace Remizione
     {
         #region Private fields
 
+        private readonly Sprite background = new(Atlases.UI.EchoBackground) { PivotOrigin = RectanglePoint.LeftBottom, Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom) };
         private bool completed;
         private readonly DialogBlock dialogBlock;
         private readonly UIContextMenu<string> menu;
@@ -34,9 +34,11 @@ namespace Remizione
 
             this.menu = new UIContextMenu<string>(Fonts.CommonOutline)
             {
-                OptionColor = Colors.Palette.Text,
+                Alignment = dialogBlock.Alignment,
+                OptionSpacing = 2,
+                OptionColor = Colors.Palette.Terra,
                 OptionSelectedColor = Colors.Palette.Yellow,
-                OptionTextScale = ScaleInfo.Text.ExtraLarge,
+                OptionTextScale = ScaleInfo.Text.VeryLarge,
                 SelectInputBinding = InputBindings.SelectDialogOption
             };
         }
@@ -52,8 +54,6 @@ namespace Remizione
 
             if (RunningOption != null)
             {
-                RunningOption.IsRead = true;
-
                 InvalidateOptions();
                 if (dialogBlock.AvailableOptions.Count == 0)
                     completed = true;
@@ -70,7 +70,7 @@ namespace Remizione
         // HandleMouseInput
         private bool HandleMouseInput()
         {
-            if (InputManager.DefaultPlayer.Mouse.IsRightButtonPressed() && dialogBlock.AllowQuit)
+            if (dialogBlock.AllowQuit && InputManager.DefaultPlayer.Mouse.IsRightButtonPressed())
             {
                 Game.SceneManager.Pop();
             }
@@ -95,9 +95,8 @@ namespace Remizione
 
             foreach (var option in dialogBlock.AvailableOptions)
             {
-                var image = option.IsRead ? Atlases.UI.CheckMark : Atlases.UI.FindImage("DialogOptionBullet");
                 var optionText = option.Text;
-                var menuOption = menu.AddOption(option.Id.ToString(CultureInfo.InvariantCulture), optionText, image);
+                var menuOption = menu.AddOption(option.Id.ToString(CultureInfo.InvariantCulture), optionText);
                 menuOption.IconOffset = new(0, -1);
             }
 
@@ -107,18 +106,8 @@ namespace Remizione
         // Layout
         private void Layout()
         {
-            menu.X = 8;
-            menu.Y = Screen.HUDArea.Bottom - menu.BoundingBox.Height - 10;
-
-            if (dialogBlock.AllowQuit)
-            {
-                var buttons = new List<UITextButton>();
-
-                //if (dialogBlock.AllowQuit)
-                //  buttons.Add(buttonQuit);
-
-                Utils.LayoutControlsVertically([.. buttons], 1);
-            }
+            menu.X = dialogBlock.Alignment == HorizontalAlignment.Left ? 8 : Screen.Area.Center.X;
+            menu.Y = Screen.HUDArea.Bottom - menu.BoundingBox.Height - 8;
         }
 
         // RunSelectedOption
@@ -154,6 +143,13 @@ namespace Remizione
             if (completed || RunningOption != null)
                 return;
 
+            Game.SpriteBatch.Begin(Game.Camera);
+            background.Draw(gameTime);
+            session.HUD.AshMeter.Draw(gameTime);
+            Game.SpriteBatch.End();
+
+            session.HUD.InventoryMeter.Draw(gameTime);
+
             menu.Draw(gameTime);
         }
 
@@ -163,18 +159,22 @@ namespace Remizione
             if (RunningOption != null)
                 return HandleInputResult.Unhandled;
 
+            if (dialogBlock.AllowQuit && InputBindings.Back.IsPressed(0))
+            {
+                Game.SceneManager.Pop();
+                return HandleInputResult.Handled;
+            }
+
             if (menu.HandleInput(gameTime) == HandleInputResult.Handled)
                 return HandleInputResult.Handled;
 
             if (HandleMouseInput())
-            {
                 return HandleInputResult.Handled;
-            }
 
             // Select
             else if (menu.SelectInputBinding != null && menu.SelectInputBinding.IsPressed(PlayerIndex.One))
             {
-                Sound.Play(SoundNames.UISelectA);
+                Sound.Play(SoundNames.UISelect);
                 return HandleInputResult.Handled;
             }
 

@@ -26,6 +26,11 @@ namespace Remizione.Scripting
             DialogBlock.Instance = null;
         }
 
+        protected override void OnExecutionCompleted()
+        {
+            base.OnExecutionCompleted();
+        }
+
         #endregion
 
         // IsAwaiting

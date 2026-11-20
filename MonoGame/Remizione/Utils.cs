@@ -100,18 +100,22 @@ namespace Remizione
 
             for (var i = 0; i < controlList.Length; i++)
             {
+                if (controlList[i].BoundingBox.Width == 0)
+                    continue;
+
                 //controlList[i].PivotOrigin = RectanglePoint.LeftBottom;
                 width += controlList[i].BoundingBox.Width;
 
                 if (i < controlList.Length - 1)
-                {
                     width += spacing;
-                }
             }
 
             var x = (Screen.NativeWidth - width) / 2;
             for (var i = 0; i < controlList.Length; i++)
             {
+                if (controlList[i].BoundingBox.Width == 0)
+                    continue;
+
                 controlList[i].PivotOrigin = RectanglePoint.LeftBottom;
                 controlList[i].X = x;
                 controlList[i].Y = Screen.HUDArea.Bottom;

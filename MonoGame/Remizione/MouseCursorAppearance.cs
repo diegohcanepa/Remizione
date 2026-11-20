@@ -126,26 +126,28 @@ namespace Remizione
             var target = context.Target;
             var heldItem = context.HeldItem;
 
-            MouseCursor.TooltipColor = Colors.MouseCursor.Tooltip;
+            MouseCursor.TextColor = Colors.MouseCursor.Tooltip;
             MouseCursor.SubTextColor = Colors.MouseCursor.SubText;
 
             if (target != null && heldItem == null)
             {
-                MouseCursor.Tooltip = target.Label;
-                MouseCursor.SubText = null;
+                MouseCursor.Text = target.Label;
+                MouseCursor.SubText = target.AshCostLabel;
+                if (target.AshCost > 0)
+                    MouseCursor.SubTextColor = Colors.Palette.Terra;
 
                 if (target.ItemRewardAmount > 1)
-                    MouseCursor.Tooltip += $" (x{target.ItemRewardAmount})";
+                    MouseCursor.Text += $" (x{target.ItemRewardAmount})";
             }
             else if (heldItem != null)
             {
-                MouseCursor.Tooltip = heldItem.Definition.Label;
-                MouseCursor.TooltipColor = heldItem.Definition.LabelColor;
+                MouseCursor.Text = heldItem.Definition.Label;
+                MouseCursor.TextColor = heldItem.Definition.LabelColor;
                 MouseCursor.SubText = target?.Label;
             }
             else
             {
-                MouseCursor.Tooltip = null;
+                MouseCursor.Text = null;
                 MouseCursor.SubText = null;
             }
         }

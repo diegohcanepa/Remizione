@@ -1,35 +1,38 @@
 ﻿using Adberration.Scripting;
 using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 
 namespace Remizione
 {
     /// <summary>
-    /// AshVessel
+    /// CineraryUrn
     /// </summary>
-    public class AshVessel : Prop
+    public class CineraryUrn : Prop
     {
         private Cycle lastKnownCycle = Cycle.Light;
 
         // Constructor
-        public AshVessel(GameSession session, string name)
+        public CineraryUrn(GameSession session, string name)
             : base(session, name)
         {
             Atlas = Atlases.Props;
             ApproachBehavior = ApproachBehavior.ClosestSide;
             Collider = new("14,12;15,16;0,16;1,12");
+            DeathSound = Sound.Find(SoundNames.PotteryBreak);
             DepthOffset = 1;
             Hotspot = new("12,0;12,15;3,15;3,0");
+            IsHittable = true;
             IsStatic = true;
-            LabelKey = "Prop.AshVessel";
+            LabelKey = "Prop.CineraryUrn";
             ShadowOffset = new(2, -3);
             ShadowSpotSize = 6;
 
             var anim = AddAnimation(nameof(Cycle.Light));
-            anim.AddFrame(nameof(AshVessel) + anim.Name, 10000);
+            anim.AddFrame(nameof(CineraryUrn) + anim.Name, 10000);
 
             anim = AddAnimation(nameof(Cycle.Dark));
-            anim.AddFrame(nameof(AshVessel) + anim.Name, 10000);
+            anim.AddFrame(nameof(CineraryUrn) + anim.Name, 10000);
         }
 
         #region Private members
@@ -74,6 +77,14 @@ namespace Remizione
         }
 
         #endregion
+
+        // Fill
+        [ScriptMethod]
+        public void Fill()
+        {
+            Session.PlayerData.Ashes -= AshCost;
+            Die();
+        }
 
         // IsEnabled
         [ScriptProperty]

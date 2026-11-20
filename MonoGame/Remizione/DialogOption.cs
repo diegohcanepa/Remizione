@@ -43,7 +43,7 @@ namespace Remizione
                     for (int i = 0; i < RequiresRead.Count; i++)
                     {
                         var requiredOption = Dialog.FindOption(RequiresRead[i]);
-                        if (requiredOption == null || !requiredOption.IsRead)
+                        if (requiredOption == null)
                             return false;
                     }
                 }
@@ -51,9 +51,6 @@ namespace Remizione
                 return true;
             }
         }
-
-        // IsRead
-        public bool IsRead { get; set; }
 
         // RequiresRead
         public ReadOnlyCollection<int> RequiresRead { get; }

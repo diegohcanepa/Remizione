@@ -19,12 +19,6 @@ namespace Remizione
 
         #region Private members
 
-        // GetCycleDuration
-        private static float GetCycleDuration(Cycle cycle) =>
-            cycle == Cycle.Dark
-                ? GameData.WorldSettings.DarkCycleDuration
-                : GameData.WorldSettings.LightCycleDuration;
-
         // GetTransitionDuration
         private static float GetTransitionDuration(Cycle cycle) =>
             cycle == Cycle.Dark
@@ -79,6 +73,12 @@ namespace Remizione
 
         // CycleRemainingTime
         public float CycleRemainingTime { get; private set; }
+
+        // GetCycleDuration
+        public static float GetCycleDuration(Cycle cycle) =>
+            cycle == Cycle.Dark
+                ? GameData.WorldSettings.DarkCycleDuration
+                : GameData.WorldSettings.LightCycleDuration;
 
         // IsEnabled
         public bool IsEnabled

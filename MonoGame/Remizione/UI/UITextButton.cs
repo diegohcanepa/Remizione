@@ -48,8 +48,8 @@ namespace Remizione
         // Refresh
         private void Refresh()
         {
-            if (label.IsEmpty)
-                boundingBox = RectangleF.Empty;
+            if (label.IsEmpty || TextOnly)
+                boundingBox = label.BoundingBox;
 
             strips[1].ScaleX = float.Max(label.BoundingBox.Width, MinimumWidth - strips[0].BoundingBox.Width - strips[2].BoundingBox.Width) / 2;
 
@@ -70,9 +70,13 @@ namespace Remizione
         {
             if (!label.IsEmpty)
             {
-                strips[0].Draw(gameTime);
-                strips[1].Draw(gameTime);
-                strips[2].Draw(gameTime);
+                if (!TextOnly)
+                {
+                    strips[0].Draw(gameTime);
+                    strips[1].Draw(gameTime);
+                    strips[2].Draw(gameTime);
+                }
+
                 label.Draw(gameTime);
             }
         }
@@ -186,6 +190,20 @@ namespace Remizione
 
         // TextColor
         public Color TextColor { get; set; } = Colors.Palette.Text;
+
+        // TextOnly
+        public bool TextOnly
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    Refresh();
+                }
+            }
+        }
 
         // X
         public override float X

@@ -140,6 +140,9 @@ namespace Remizione
         Accept = 8
     }
 
+    // Answer
+    public enum Answer { Yes, No, Cancel, Accept }
+
     // MessageKind
     public enum MessageKind { AreaNotSafe, CannotPlaceItem, GameSaved, InventoryFull, ItemBroken, ItemCrafted, OutOfReach, OutOfSight, StackFull, NotEnoughAshes }
 

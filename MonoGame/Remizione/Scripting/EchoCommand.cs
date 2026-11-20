@@ -3,16 +3,15 @@
 namespace Remizione.Scripting
 {
     // EchoCommand
-    // Arguments: {"Text"} [#lid:Integer] [#literal] [#sound:Name]
+    // Arguments: {"Text"} [#lid:Integer] [#literal]
     [ForceAwait]
     internal sealed class EchoCommand : LocalizableCommand
     {
         // Constructor
         public EchoCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 1, LiteralArg, LocalizationIdArg, SoundArg)
+            : base(script, source, body, 1, LiteralArg, LocalizationIdArg)
         {
             Parser.ParseQuotedString(this, 0);
-            Parser.ParseNameArgument(this, SoundArg);
         }
 
         #region Protected members
@@ -20,8 +19,8 @@ namespace Remizione.Scripting
         // OnExecute
         protected override void OnExecute()
         {
-            if (Session is GameSession session && session.InteractionData.Target is { } target)
-                session.Overlays.ShowEcho(target, GetDisplayText());
+            if (Session is GameSession session)
+                session.Overlays.ShowEcho(GetDisplayText());
         }
 
         // TextClauseIndex

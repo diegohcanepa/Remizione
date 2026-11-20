@@ -73,7 +73,7 @@ namespace Remizione
         {
             base.OnActivate();
             MouseCursor.Icon = MouseCursorIcon.Wait;
-            MouseCursor.Tooltip = null;
+            MouseCursor.Text = null;
             MouseCursor.CustomImage = null;
         }
 

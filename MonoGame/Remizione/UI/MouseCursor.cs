@@ -23,7 +23,7 @@ namespace Remizione
         private static OutlineEffect? effect;
         private static readonly FloatTween shakeTween = new();
         private static readonly TextSprite subTextSprite = new(Fonts.CommonOutline) { Scale = ScaleInfo.Text.VeryLarge };
-        private static readonly TextSprite tooltipSprite;
+        private static readonly TextSprite textSprite;
 
         #endregion
 
@@ -50,7 +50,7 @@ namespace Remizione
             }
 
             // Text sprite
-            tooltipSprite = new(Fonts.CommonOutline)
+            textSprite = new(Fonts.CommonOutline)
             {
                 PivotOrigin = RectanglePoint.LeftTop,
                 Multiline = true,
@@ -91,30 +91,30 @@ namespace Remizione
         // ClampTextToScreen
         private static void ClampTextToScreen()
         {
-            if (tooltipSprite.IsEmpty)
+            if (textSprite.IsEmpty)
                 return;
 
             var offset = CustomImage == null ? new Vector2(-1, 1) : new Vector2(-2, 1);
 
-            tooltipSprite.PivotOrigin = RectanglePoint.Left;
-            tooltipSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.Right, -offset.X, offset.Y);
+            textSprite.PivotOrigin = RectanglePoint.Left;
+            textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.Right, -offset.X, offset.Y);
 
             if (!subTextSprite.IsEmpty)
             {
                 subTextSprite.PivotOrigin = RectanglePoint.LeftTop;
-                subTextSprite.Position = tooltipSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom);
+                subTextSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.LeftBottom);
             }
 
-            if (!tooltipSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox) ||
+            if (!textSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox) ||
                 (!subTextSprite.IsEmpty && !subTextSprite.BoundingBox.IsInside(EngendroGame.Instance.Camera.VisibleBox)))
             {
-                tooltipSprite.PivotOrigin = RectanglePoint.Right;
-                tooltipSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.Left, offset.X, offset.Y);
+                textSprite.PivotOrigin = RectanglePoint.Right;
+                textSprite.Position = cursorSprite.BoundingBox.GetPoint(RectanglePoint.Left, offset.X, offset.Y);
 
                 if (!subTextSprite.IsEmpty)
                 {
                     subTextSprite.PivotOrigin = RectanglePoint.RightTop;
-                    subTextSprite.Position = tooltipSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom);
+                    subTextSprite.Position = textSprite.BoundingBox.GetPoint(RectanglePoint.RightBottom);
                 }
             }
         }
@@ -140,6 +140,14 @@ namespace Remizione
         }
 
         #endregion
+
+        // Clear
+        public static void Clear()
+        {
+            Text = null;
+            SubText = null;
+            CustomImage = null;
+        }
 
         // Click
         public static void Click(bool silent = false)
@@ -190,7 +198,7 @@ namespace Remizione
             if (CanShowText)
             {
                 EngendroGame.Instance.SpriteBatch.Begin(EngendroGame.Instance.Camera, SamplerState.PointClamp);
-                tooltipSprite.Draw(gameTime);
+                textSprite.Draw(gameTime);
                 subTextSprite.Draw(gameTime);
                 EngendroGame.Instance.SpriteBatch.End();
             }
@@ -228,12 +236,12 @@ namespace Remizione
         // Reset
         public static void Reset()
         {
-            tooltipSprite.Text = null;
+            textSprite.Text = null;
             subTextSprite.Text = null;
             cursorSprite.Color = Color.White;
             CustomImage = null;
             HightlightColor = null;
-            tooltipSprite.Color = Colors.MouseCursor.Tooltip;
+            textSprite.Color = Colors.MouseCursor.Tooltip;
             subTextSprite.Color = Colors.MouseCursor.SubText;
             Icon = MouseCursorIcon.Cross;
             clickScaleTween.Stop();
@@ -253,18 +261,18 @@ namespace Remizione
             set => subTextSprite.Color = value;
         }
 
-        // Tooltip
-        public static string? Tooltip
+        // Text
+        public static string? Text
         {
-            get => tooltipSprite.Text;
-            set => tooltipSprite.Text = value;
+            get => textSprite.Text;
+            set => textSprite.Text = value;
         }
 
-        // TooltipColor
-        public static Color TooltipColor
+        // TextColor
+        public static Color TextColor
         {
-            get => tooltipSprite.Color;
-            set => tooltipSprite.Color = value;
+            get => textSprite.Color;
+            set => textSprite.Color = value;
         }
 
         // Update

@@ -15,7 +15,7 @@ namespace Remizione
         private const float SelectionHysteresisDuration = 0.08f;
         private bool autoHide;
         private readonly Sprite background = new(Atlases.UI.QuickInventoryBackground) { PivotOrigin = RectanglePoint.LeftBottom, Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom) };
-        private readonly Sprite inspectItem = new(Atlases.UI.InspectItem) { PivotOrigin = RectanglePoint.RightBottom, Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -2, -2), Scale = new(.75f) };
+        private readonly Sprite inspectItem = new(Atlases.UI.InspectItem) { PivotOrigin = RectanglePoint.LeftBottom, Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 2, -12), Scale = new(.75f) };
         private readonly ItemContainer itemContainer;
         private readonly TextSprite itemEffect;
         private readonly TextSprite itemLabel;
@@ -167,7 +167,7 @@ namespace Remizione
             itemLabel.Clear();
             itemEffect.Clear();
 
-            MouseCursor.Tooltip = null;
+            MouseCursor.Text = null;
 
             for (var i = 0; i < itemContainer.Count; i++)
             {
@@ -217,6 +217,8 @@ namespace Remizione
 
             background.Draw(gameTime);
 
+            Session.HUD.AshMeter.Draw(gameTime);
+
             if (itemContainer.Count == 0)
             {
                 emptyMessage.Draw(gameTime);
@@ -239,6 +241,8 @@ namespace Remizione
             }
 
             Game.SpriteBatch.End();
+
+            Session.HUD.InventoryMeter.Draw(gameTime);
         }
 
         // OnHandleInput
@@ -312,10 +316,10 @@ namespace Remizione
                     itemEffect.X = slotCenterX;
                     itemEffect.Text = rawSelectedItem.Definition.EffectDescription;
 
-                    MouseCursor.Tooltip = rawSelectedItem.Definition.Label;
+                    MouseCursor.Text = rawSelectedItem.Definition.Label;
 
                     slots[currentSlotIndex].SetSelected(true);
-
+                    Sound.Play(SoundNames.ButtonHover);
                     itemLabel.Tag = rawSelectedItem;
                     lastSelectedItem = rawSelectedItem;
                 }
@@ -327,13 +331,11 @@ namespace Remizione
                 if (selectionHysteresisTimer >= SelectionHysteresisDuration)
                 {
                     if (lastSelectedItem.Index >= 0 && lastSelectedItem.Index < itemContainer.Count)
-                    {
                         slots[lastSelectedItem.Index].SetSelected(false);
-                    }
 
                     itemLabel.Clear();
                     itemEffect.Clear();
-                    MouseCursor.Tooltip = null;
+                    MouseCursor.Text = null;
 
                     lastSelectedItem = null;
                     selectionHysteresisTimer = 0f;

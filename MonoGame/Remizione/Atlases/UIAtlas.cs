@@ -12,13 +12,12 @@ namespace Remizione
         public UIAtlas()
             : base(EngendroGame.Instance.Content, "UI", ContentManagerExtension.EncodePath(ContentFolder.Atlases, "UI"), false)
         {
-            AshVessel = this[nameof(AshVessel)];
+            CineraryUrn = this[nameof(CineraryUrn)];
             BackButton = this[nameof(BackButton)];
             BackButtonHot = this[nameof(BackButtonHot)];
             CheckMark = this[nameof(CheckMark)];
             CloseButton = this[nameof(CloseButton)];
             CloseButtonHot = this[nameof(CloseButtonHot)];
-            ContextMenuOptionSelector = this[nameof(ContextMenuOptionSelector)];
             CraftIcon = this[nameof(CraftIcon)];
             CreditsBar = this[nameof(CreditsBar)];
             CycleMeterMarker = this[nameof(CycleMeterMarker)];
@@ -52,9 +51,6 @@ namespace Remizione
             WorldIcon = this[nameof(WorldIcon)];
         }
 
-        // AshVessel
-        public AtlasImage AshVessel { get; }
-
         // BackButton
         public AtlasImage BackButton { get; }
 
@@ -63,9 +59,6 @@ namespace Remizione
 
         // CheckMark
         public AtlasImage CheckMark { get; }
-
-        // ContextMenuOptionSelector
-        public AtlasImage ContextMenuOptionSelector { get; }
 
         // CloseButton
         public AtlasImage CloseButton { get; }
@@ -81,6 +74,9 @@ namespace Remizione
 
         // CycleMeterMarker
         public AtlasImage CycleMeterMarker { get; }
+
+        // CineraryUrn
+        public AtlasImage CineraryUrn { get; }
 
         // DialogArrowLarge
         public AtlasImage DialogArrowLarge { get; }

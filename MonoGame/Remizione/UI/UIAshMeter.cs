@@ -28,7 +28,7 @@ namespace Remizione
             : base(session)
         {
             // Icon
-            this.icon = new(Atlases.UI.AshVessel)
+            this.icon = new(Atlases.UI.CineraryUrn)
             {
                 PivotOrigin = RectanglePoint.RightBottom,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -3, 0),
@@ -53,9 +53,6 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            if (lastKnownValue == 0)
-                return;
-
             icon.Draw(gameTime);
             valueText.Draw(gameTime);
         }

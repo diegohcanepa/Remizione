@@ -279,7 +279,7 @@ namespace Remizione
                 if (value != field)
                 {
                     if (field != null && value != null)
-                        Sound.Play(SoundNames.UISelectA);
+                        Sound.Play(SoundNames.UISelect);
 
                     field = value;
                     OnSelectionChanged?.Invoke(field);

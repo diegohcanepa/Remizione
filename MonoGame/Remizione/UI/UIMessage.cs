@@ -1,4 +1,5 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -63,7 +64,7 @@ namespace Remizione
             if (icon.RenderImage != null)
             {
                 icon.Opacity = currentOpacity;
-                icon.Position = messageText.BoundingBox.GetPoint(RectanglePoint.Left);
+                icon.Position = messageText.BoundingBox.GetPoint(RectanglePoint.Left, -1, 0);
             }
 
             if (!fadeTween.IsRunning)
@@ -95,7 +96,16 @@ namespace Remizione
         {
             var text = Localization.GetValue(message);
             var color = Colors.Palette.Text;
-            Show(text, color, image, 3000);
+
+            if (image == null)
+            {
+                if (message == MessageKind.NotEnoughAshes)
+                {
+                    image = Atlases.UI.CineraryUrn;
+                }
+
+                Show(text, color, image, 3000);
+            }
         }
 
         // Show
@@ -116,6 +126,7 @@ namespace Remizione
             messageText.Tweens.ScaleTween = scaleTween;
             container.Position = messageText.BoundingBox.Center + Vector2.UnitY;
             IsVisible = true;
+            Sound.Play(SoundNames.UIMessageAlert);
         }
 
         // ShowItem
