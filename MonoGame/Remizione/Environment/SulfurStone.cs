@@ -6,7 +6,7 @@ namespace Remizione
     /// <summary>
     /// SulfurStone
     /// </summary>
-    public sealed class SulfurStone : Prop
+    public sealed class SulfurStone : Prop, ITransientLight
     {
         private static readonly Vector2 maxLightScale = new(9, 6);
         private static readonly Vector2 minLightScale = new(4, 3);
@@ -32,6 +32,17 @@ namespace Remizione
         }
 
         #endregion
+
+        #region ITransientLight interface
+
+        // Reset
+        void ITransientLight.Reset()
+        {
+            AttachedLight?.Unlit(true);
+        }
+
+        #endregion
+
 
         #region Protected members
 

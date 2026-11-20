@@ -41,7 +41,7 @@ namespace Remizione
         {
             iconSprite.PivotOrigin = RectanglePoint.Right;
             iconSprite.Position = Position;
-            
+
             textSprite.Position = Position;
             textSprite.PivotOrigin = menu.Alignment switch
             {

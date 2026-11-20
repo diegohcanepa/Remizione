@@ -17,6 +17,14 @@ namespace Remizione
             internal static Color ToxicGuts { get; } = new(70, 110, 70);
         }
 
+        // Button
+        internal static class Button
+        {
+            internal static Color Disabled { get; } = Color.Gray;
+            internal static Color Hover { get; } = Palette.Yellow;
+            internal static Color Text { get; } = Palette.Text;
+        }
+
         // ContextMenu
         internal static class ContextMenu
         {

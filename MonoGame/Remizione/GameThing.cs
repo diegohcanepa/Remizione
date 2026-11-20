@@ -1197,6 +1197,9 @@ namespace Remizione
         // IsHPMeterVisible
         public bool IsHPMeterVisible => !IsPlayer && hpMeter != null && !HideHPMeter && (Session.InteractionContext.Target == this || hpMeter.IsAnimating);
 
+        // IsIlluminated
+        public bool IsIlluminated => Room?.IsIlluminated(this) == true;
+
         // IsKnockbackInProgress
         public bool IsKnockbackInProgress => knockbackVelocity != Vector2.Zero;
 

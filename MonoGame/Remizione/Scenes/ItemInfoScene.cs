@@ -12,6 +12,7 @@ namespace Remizione
     {
         #region Private fields
 
+        private readonly UITextButton actionButton;
         private readonly TextSprite amountText;
         private readonly UIImageButton backButton = UIImageButton.CreateBackButton();
         private readonly TextSprite breakChancesText;
@@ -25,7 +26,6 @@ namespace Remizione
         private readonly Sprite stateIcon;
         private readonly TextSprite stateText;
         private readonly Sprite shadow;
-        private readonly UITextButton useButton;
 
         #endregion
 
@@ -139,12 +139,11 @@ namespace Remizione
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightBottom, -10, -5)
             };
 
-            // Use Button
-            this.useButton = new()
+            // Action Button
+            this.actionButton = new()
             {
                 PivotOrigin = RectanglePoint.RightBottom,
-                X = dropButton.BoundingBox.GetPoint(RectanglePoint.LeftBottom, -8, 0).X,
-                Y = dropButton.Y              
+                Y = dropButton.Y
             };
         }
 
@@ -179,8 +178,8 @@ namespace Remizione
 
             dropButton.Draw(gameTime);
 
-            if (useButton.IsEnabled)
-                useButton.Draw(gameTime);
+            if (actionButton.IsEnabled)
+                actionButton.Draw(gameTime);
 
             backButton.Draw(gameTime);
             Game.SpriteBatch.End();
@@ -209,7 +208,7 @@ namespace Remizione
                 }
 
                 // Use
-                if (useButton.TestPressed())
+                if (actionButton.TestPressed())
                 {
                     Game.SceneManager.Pop();
                     player.ExecuteAction(item, player);
@@ -224,7 +223,7 @@ namespace Remizione
         protected override void OnUpdate(GameTime gameTime)
         {
             dropButton.Update(gameTime);
-            useButton.Update(gameTime);
+            actionButton.Update(gameTime);
             nameText.Update(gameTime);
             descriptionText.Update(gameTime);
             backButton.Update(gameTime);
@@ -236,23 +235,24 @@ namespace Remizione
         public void Show(Item item)
         {
             this.item = item;
-            this.nameText.Color = item.Definition.LabelColor;
-            this.nameText.Text = item.Definition.Label;
-            this.effectText.Text = item.Definition.EffectDescription;
-            this.descriptionText.Text = item.Definition.Description;
-            this.image.RenderImage = item.Definition.Image;
+
+            nameText.Color = item.Definition.LabelColor;
+            nameText.Text = item.Definition.Label;
+            effectText.Text = item.Definition.EffectDescription;
+            descriptionText.Text = item.Definition.Description;
+            image.RenderImage = item.Definition.Image;
 
             if (item.Definition.ItemKind == ItemKind.Organic)
             {
-                this.stateText.Text = Localization.GetValue(item.PerishState);
-                this.stateText.Color = item.PerishState == ItemPerishState.Rotten ? Colors.Palette.Red : Colors.Palette.Text;
-                this.stateIcon.RenderImage = Atlases.UI.ItemPerishStates[(int)item.PerishState];
+                stateText.Text = Localization.GetValue(item.PerishState);
+                stateText.Color = item.PerishState == ItemPerishState.Rotten ? Colors.Palette.Red : Colors.Palette.Text;
+                stateIcon.RenderImage = Atlases.UI.ItemPerishStates[(int)item.PerishState];
             }
             else if (!item.HasSafeUses)
             {
-                this.stateText.Text = TextRepository.GetValue("Misc.Worn");
-                this.stateText.Color = Colors.Palette.Text;
-                this.stateIcon.RenderImage = Atlases.UI.WarningIcon;
+                stateText.Text = TextRepository.GetValue("Misc.Worn");
+                stateText.Color = Colors.Palette.Text;
+                stateIcon.RenderImage = Atlases.UI.WarningIcon;
             }
             else
             {
@@ -260,17 +260,19 @@ namespace Remizione
                 stateIcon.RenderImage = null;
             }
 
-            this.stateText.Position = stateIcon.BoundingBox.GetPoint(RectanglePoint.Right, 2, .5f);
+            stateText.Position = stateIcon.BoundingBox.GetPoint(RectanglePoint.Right, 2, .5f);
+            amountText.Text = item.Definition.IsStackable ? $"x{item.Amount}" : string.Empty;
+            breakChancesText.Text = item.Definition.HasBreakChance ? $"{TextRepository.GetValue("Misc.BreakChance")}{System.Environment.NewLine}{(item.BreakChance * 100).Round()}%" : null;
+            breakChancesText.Color = item.BreakChance > .65f ? Colors.Palette.Red : Colors.Palette.Orange;
+            dropButton.Text = item.Definition.ItemKind == ItemKind.Key ? Localization.GetValue(UserAction.Drop) : Localization.GetValue(UserAction.Discard);
+            shadow.RenderImage = item.Definition.Image;
+            actionButton.IsEnabled = item.Definition.AllowSelfAction;
 
-            this.amountText.Text = item.Definition.IsStackable ? $"x{item.Amount}" : string.Empty;
-            this.breakChancesText.Text = item.Definition.HasBreakChance ? $"{TextRepository.GetValue("Misc.BreakChance")}{System.Environment.NewLine}{(item.BreakChance * 100).Round()}%" : null;
-            this.breakChancesText.Color = item.BreakChance > .65f ? Colors.Palette.Red : Colors.Palette.Orange;
-            this.dropButton.Text = item.Definition.ItemKind == ItemKind.Key ? Localization.GetValue(UserAction.Drop) : Localization.GetValue(UserAction.Discard);
-            this.shadow.RenderImage = item.Definition.Image;
-            this.useButton.IsEnabled = item.Definition.AllowSelfAction;
-
-            if (useButton.IsEnabled)
-                useButton.Text = Localization.GetValue(item.Definition.SelfUseAction);
+            if (actionButton.IsEnabled)
+            {
+                actionButton.X = dropButton.BoundingBox.GetPoint(RectanglePoint.LeftBottom, -8, 0).X;
+                actionButton.Text = Localization.GetValue(item.Definition.SelfUseAction);
+            }
         }
     }
 }

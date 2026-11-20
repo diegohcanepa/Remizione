@@ -12,7 +12,6 @@ namespace Remizione
         #region Private members
 
         private RectangleF boundingBox;
-        private readonly Color disabledColor = Color.Gray;
         private readonly TextSprite label;
         private readonly Sprite[] strips;
 
@@ -35,7 +34,7 @@ namespace Remizione
 
             this.label = new TextSprite(Fonts.CommonOutline)
             {
-                Color = Colors.Palette.Text,
+                Color = Colors.Button.Text,
             };
 
             this.Scale = ScaleInfo.Text.Huge;
@@ -94,7 +93,7 @@ namespace Remizione
             }
             else
             {
-                label.Color = IsEnabled ? TextColor : disabledColor;
+                label.Color = IsEnabled ? TextColor : Colors.Button.Disabled;
                 label.Scale = Scale;
             }
         }
@@ -112,7 +111,7 @@ namespace Remizione
         }
 
         // HoverColor
-        public Color HoverColor { get; set; } = Colors.Palette.Terra;
+        public Color HoverColor { get; set; } = Colors.Button.Hover;
 
         // MinimumWidth
         public float MinimumWidth
@@ -189,7 +188,7 @@ namespace Remizione
         }
 
         // TextColor
-        public Color TextColor { get; set; } = Colors.Palette.Text;
+        public Color TextColor { get; set; } = Colors.Button.Text;
 
         // TextOnly
         public bool TextOnly

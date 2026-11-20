@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Engendro.Audio;
+using Microsoft.Xna.Framework;
 using System;
 
 namespace Remizione
@@ -8,14 +9,21 @@ namespace Remizione
     /// </summary>
     public sealed class CycleManager
     {
+        private float darknessDamageTimer;
         private static readonly Color defaultLightMapColor = new(45, 45, 45);
+        private readonly GameSession session;
+
+        #region Constructor
 
         // Constructor
-        public CycleManager()
+        public CycleManager(GameSession session)
         {
-            IsEnabled = false;
+            this.session = session;
+            RenewDarknessTimer();
             SetCycle(Cycle.Light, skipTransition: true);
         }
+
+        #endregion
 
         #region Private members
 
@@ -31,6 +39,9 @@ namespace Remizione
             float totalCycleDuration = GetCycleDuration(CurrentCycle);
             return Math.Max(0f, totalCycleDuration - CycleRemainingTime);
         }
+
+        // RenewDarknessTimer
+        private static void RenewDarknessTimer() => Random.Shared.Next(5, 9);
 
         #endregion
 
@@ -136,13 +147,30 @@ namespace Remizione
             {
                 Cycle nextCycle = CurrentCycle == Cycle.Dark ? Cycle.Light : Cycle.Dark;
                 if (nextCycle == Cycle.Light)
+                {
+                    darknessDamageTimer = 0;
                     CycleCount++;
+                }
                 SetCycle(nextCycle);
                 CycleChanged?.Invoke(nextCycle);
             }
             else
             {
                 ApplyCycle();
+            }
+
+            if (CurrentCycle == Cycle.Dark && session.Player != null && !session.Player.IsDead)
+            {
+                if (!session.Player.IsIlluminated)
+                {
+                    darknessDamageTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    if (darknessDamageTimer <= 0)
+                    {
+                        RenewDarknessTimer();
+                        session.Player.HP -= Random.Shared.Next(1, 3);
+                        Sound.Play(SoundNames.DarknessCreature);
+                    }
+                }
             }
         }
     }

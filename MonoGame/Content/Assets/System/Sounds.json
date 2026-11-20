@@ -29,6 +29,7 @@
     { "name": "CraftSuccess" },
     { "name": "CycleDark", "scope": "Global" },
     { "name": "CycleHorn", "scope": "Global" },
+    { "name": "DarknessCreature", "soundCount": 3 },
     { "name": "DoorGateClose" },
     { "name": "DoorGateOpen" },
     { "name": "DoorGenericClose", "soundCount": 2 },

@@ -5,7 +5,6 @@ using Engendro.Audio;
 using Engendro.Collections;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Remizione.Scripting;
 using System;
 using System.Collections.Frozen;
@@ -65,6 +64,7 @@ namespace Remizione
             this.LootGenerator = new(this);
             this.PersistenceModel = new RemizionePersistenceModel();
             this.UnlockManager = new(this);
+            this.CycleManager = new(this);
             this.CycleManager.CycleChanged += OnCycleChanged;
 
             ObjectPools = new ObjectPools(this);
@@ -216,7 +216,7 @@ namespace Remizione
         private string SerializeDroppedKeyItems()
         {
             var list = new List<string>();
-            
+
             foreach (var room in Entities.OfType<GameRoom>())
             {
                 foreach (var orb in room.Children.OfType<ItemOrb>())
@@ -236,7 +236,7 @@ namespace Remizione
         private string SerializeRuntimeClones()
         {
             var list = new List<string>();
-            
+
             if (Room != null)
             {
                 foreach (var thing in Room.Children.OfType<GameThing>())
@@ -742,7 +742,7 @@ namespace Remizione
         }
 
         // CycleManager
-        public CycleManager CycleManager { get; } = new();
+        public CycleManager CycleManager { get; }
 
         // DialogOptionId
         [ScriptProperty]
@@ -937,6 +937,12 @@ namespace Remizione
 
             CycleManager.SetCycle(Cycle.Light);
             RestartRoom.Children.Add(Player);
+
+            foreach (var thing in RestartRoom.Children.OfType<ITransientLight>())
+            {
+                thing.Reset();
+            }
+
             if (targetBonfire != null)
                 Player.Position = targetBonfire.GetApproachPosition(Player);
             EnterRoom(RestartRoom);

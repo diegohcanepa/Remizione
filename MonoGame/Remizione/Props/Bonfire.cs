@@ -9,16 +9,20 @@ namespace Remizione
     /// <summary>
     /// Bonfire
     /// </summary>
-    public class Bonfire : Prop
+    public class Bonfire : Prop, ITransientLight
     {
-        private static readonly Vector2 maxLightScale = new(18, 12);
-        private static readonly Vector2 minLightScale = new(9, 6);
+        #region Private members
+
         private readonly AnimatedSprite flame;
         private const float flameOpacity = .8f;
         private const float flameScale = .6f;
+        private static readonly Vector2 maxLightScale = new(18, 12);
+        private static readonly Vector2 minLightScale = new(9, 6);
         private readonly Sprite patch;
         private readonly FloatTween resetTween = new();
         private SoundInstance? soundInstance;
+
+        #endregion
 
         #region Constructor
 
@@ -60,6 +64,16 @@ namespace Remizione
             AttachedLightPosition = new(10, 4);
 
             Verb = Verb.LookAt;
+        }
+
+        #endregion
+
+        #region ITransientLight interface
+
+        // Reset
+        void ITransientLight.Reset()
+        {
+            IsLit = false;
         }
 
         #endregion
@@ -109,6 +123,13 @@ namespace Remizione
                 flame.Position = Position + new Vector2(1, -8);
                 patch.Position = Position;
             }
+        }
+
+        // OnUnload
+        protected override void OnUnload()
+        {
+            base.OnUnload();
+            IsLit = false;
         }
 
         // OnUpdate
@@ -161,8 +182,7 @@ namespace Remizione
                         flame.Player.Play("Default", true);
                         soundInstance = PlaySound(SoundNames.Bonfire, true);
                         AttachedLight?.Lit(Session.State == GameSessionState.Loading);
-
-                        AttachedLight?.Scale = maxLightScale;
+                        RefreshAttachedLightScale();
 
                         if (Session.State != GameSessionState.Loading)
                         {

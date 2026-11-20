@@ -37,9 +37,9 @@ namespace Remizione
 
             // Capacity
             this.capacity = new()
-            { 
-                MaximumReachedColor = Colors.Palette.Red, 
-                PivotOrigin = RectanglePoint.LeftBottom, 
+            {
+                MaximumReachedColor = Colors.Palette.Red,
+                PivotOrigin = RectanglePoint.LeftBottom,
                 Position = icon.BoundingBox.GetPoint(RectanglePoint.RightBottom, 1, 0)
             };
         }

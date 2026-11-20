@@ -1,6 +1,8 @@
 ﻿using Engendro;
+using Engendro.Audio;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace Remizione
 {
@@ -30,8 +32,7 @@ namespace Remizione
                 Color = new Color(235, 170, 170),
                 RenderImage = Atlases.Environment.DefaultLight,
                 PivotOrigin = RectanglePoint.Center,
-                Scale = new(20, 10),
-                Opacity = session.CycleManager.LightOpacity
+                Scale = new(20, 10)
             };
         }
 
@@ -63,8 +64,6 @@ namespace Remizione
 
             if (session.Room.AllowAshParticles)
                 ashEmitter.Update(gameTime);
-
-
         }
     }
 }

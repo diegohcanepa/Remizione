@@ -15,6 +15,7 @@
         internal const string CraftActive = nameof(CraftActive);
         internal const string CycleDark = nameof(CycleDark);
         internal const string CycleHorn = nameof(CycleHorn);
+        internal const string DarknessCreature = nameof(DarknessCreature);
         internal const string DoorGateClose = nameof(DoorGateClose);
         internal const string DoorGateOpen = nameof(DoorGateOpen);
         internal const string DoorGenericClose = nameof(DoorGenericClose);
