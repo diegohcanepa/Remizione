@@ -17,6 +17,7 @@ namespace Engendro
     {
         #region Private fields
 
+        private const string texturePackerSmartFolderSuffix = "-assets/";
         private readonly Dictionary<string, AtlasImage> images = [];
         private static readonly Dictionary<string, Atlas> instancesByName = [];
         private static readonly List<Atlas> instanceList = [];
@@ -26,7 +27,7 @@ namespace Engendro
         #region Constructor
 
         // Constructor
-        public Atlas(ContentManager content, string name, string assetName, bool useFolderNames)
+        public Atlas(ContentManager content, string name, string assetName)
         {
             CodeContract.NotEmpty(name, nameof(name));
 
@@ -46,7 +47,6 @@ namespace Engendro
             // Load texture
             this.Texture = content.Load<Texture2D>(assetName);
             this.AssetName = assetName;
-            this.UseFolderNames = useFolderNames;
 
             // Load atlas data
             var dataFile = Path.Combine(content.RootDirectory, assetName);
@@ -91,6 +91,9 @@ namespace Engendro
                 if (r["n"] is string name)
                 {
                     name = Path.ChangeExtension(name, null);
+
+                    if (!HasFolderNamesPrepended && name.Contains(texturePackerSmartFolderSuffix))
+                        HasFolderNamesPrepended = true;
 
                     if (r["x"] is string xValue &&
                         r["y"] is string yValue &&
@@ -236,6 +239,9 @@ namespace Engendro
             return FindImageCore(imageName, null, string.Empty) ?? throw new KeyNotFoundException($"Image '{imageName}' not found in atlas '{Name}'.");
         }
 
+        // HasFolderNamesPrepended
+        public bool HasFolderNamesPrepended { get; private set; }
+
         // Index
         public AtlasImage this[string imageName]
         {
@@ -260,8 +266,5 @@ namespace Engendro
         {
             return $"{Name} [{AssetName}]";
         }
-
-        // UseFolderNames
-        public bool UseFolderNames { get; }
     }
 }

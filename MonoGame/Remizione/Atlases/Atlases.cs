@@ -15,10 +15,10 @@ namespace Remizione
         private static void Load()
         {
             isLoaded = true;
-            Actors = new Atlas(EngendroGame.Instance.Content, nameof(Actors), ContentManagerExtension.EncodePath(ContentFolder.Atlases, nameof(Actors)), true);
+            Actors = new Atlas(EngendroGame.Instance.Content, nameof(Actors), ContentManagerExtension.EncodePath(ContentFolder.Atlases, nameof(Actors)));
             Environment = new EnvironmentAtlas();
             Menu = new MenuAtlas();
-            Props = new Atlas(EngendroGame.Instance.Content, nameof(Props), ContentManagerExtension.EncodePath(ContentFolder.Atlases, nameof(Props)), false);
+            Props = new Atlas(EngendroGame.Instance.Content, nameof(Props), ContentManagerExtension.EncodePath(ContentFolder.Atlases, nameof(Props)));
             UI = new UIAtlas();
         }
 

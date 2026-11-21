@@ -10,7 +10,7 @@ namespace Remizione
     {
         // Constructor
         public EnvironmentAtlas()
-            : base(EngendroGame.Instance.Content, "Environment", ContentManagerExtension.EncodePath(ContentFolder.Atlases, "Environment"), false)
+            : base(EngendroGame.Instance.Content, "Environment", ContentManagerExtension.EncodePath(ContentFolder.Atlases, "Environment"))
         {
             Bones = CreateReadOnlyCollection("Bone", 1, 5);
             DefaultLight = this[nameof(DefaultLight)];

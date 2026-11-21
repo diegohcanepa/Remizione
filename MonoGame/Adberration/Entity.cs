@@ -17,7 +17,6 @@ namespace Adberration
     {
         #region Private fields
 
-        private bool firstUpdate;
         private bool isInitialized;
         private bool isUnloading;
         private readonly Script? loadScript;
@@ -106,20 +105,10 @@ namespace Adberration
         {
             const string texturePackerSmartFolderSuffix = "-assets/";
 
-            if (Atlas != null)
-            {
-                var defaultFolder = string.IsNullOrWhiteSpace(Name) ? GetType().Name : DeclaredName;
-                var redefinesAtlasFolder = !string.IsNullOrWhiteSpace(AtlasFolder);
-
-                if (Atlas.UseFolderNames)
-                    return (redefinesAtlasFolder ? AtlasFolder : defaultFolder) + texturePackerSmartFolderSuffix;
-                else
-                    return redefinesAtlasFolder ? AtlasFolder : string.Empty;
-            }
-            else
-            {
+            if (Atlas == null || !Atlas.HasFolderNamesPrepended)
                 return string.Empty;
-            }
+            else
+                return DeclaredName + texturePackerSmartFolderSuffix;
         }
 
         // NotifyChildAdded
@@ -195,11 +184,6 @@ namespace Adberration
         {
         }
 
-        // OnAtlasFolderChanged
-        protected virtual void OnAtlasFolderChanged()
-        {
-        }
-
         // OnChildAdded
         protected virtual void OnChildAdded(Entity child)
         {
@@ -251,11 +235,6 @@ namespace Adberration
         {
         }
 
-        // OnStart
-        protected virtual void OnStart()
-        {
-        }
-
         // OnTransform
         protected virtual void OnTransform(TransformChange change)
         {
@@ -269,12 +248,6 @@ namespace Adberration
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
-            if (firstUpdate)
-            {
-                firstUpdate = false;
-                OnStart();
-            }
-
             Sprite.Update(gameTime);
         }
 
@@ -381,22 +354,6 @@ namespace Adberration
                 }
             }
         }
-
-        // AtlasFolder
-        [ScriptProperty]
-        public string AtlasFolder
-        {
-            get;
-            set
-            {
-                if (value != field)
-                {
-                    field = value;
-                    Sprite.ImagePath = EncodeImagePath();
-                    OnAtlasFolderChanged();
-                }
-            }
-        } = string.Empty;
 
         // AutoPlayAnimation
         [ScriptProperty]
@@ -550,8 +507,6 @@ namespace Adberration
         // Load
         public void Load()
         {
-            firstUpdate = true;
-
             if (LoadState == LoadState.Loaded)
                 return;
 

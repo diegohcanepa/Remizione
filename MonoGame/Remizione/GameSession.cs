@@ -594,12 +594,7 @@ namespace Remizione
 
             HUD.Update(gameTime);
 
-            if (HUD.HoveredComponent != null && IsGameplayActive)
-            {
-                MouseCursor.Icon = MouseCursorIcon.Info;
-                MouseCursor.Clear();
-            }
-            else if (IsCurrentScene)
+            if (IsCurrentScene)
             {
                 if (Room == null || !Room.ControlMouseCursor)
                     InteractionContext.Refresh();

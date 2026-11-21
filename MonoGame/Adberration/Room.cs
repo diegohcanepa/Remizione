@@ -135,7 +135,7 @@ namespace Adberration
             {
                 var atlasEncodedName = ScriptSyntax.RuntimeRoomNamePrefix + AtlasName;
                 this.Atlas = Atlas.FindInstance(atlasEncodedName);
-                this.Atlas ??= new Atlas(Content, atlasEncodedName, GetAtlasPath(), false);
+                this.Atlas ??= new Atlas(Content, atlasEncodedName, GetAtlasPath());
             }
 
             ResetAreas();

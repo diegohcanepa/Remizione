@@ -263,6 +263,18 @@ namespace Remizione
                 handled = true;
             }
 
+            else if (InputManager.DefaultPlayer.Keyboard.IsKeyPressed(Keys.D))
+            {
+                session.CycleManager.SetCycle(Cycle.Light);
+                handled = true;
+            }
+
+            else if (InputManager.DefaultPlayer.Keyboard.IsKeyPressed(Keys.N))
+            {
+                session.CycleManager.SetCycle(Cycle.Dark);
+                handled = true;
+            }
+
             else if (SelectedThing != null)
             {
                 var control = InputManager.DefaultPlayer.Keyboard.IsKeyDown(Keys.LeftControl);

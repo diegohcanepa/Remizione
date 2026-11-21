@@ -10,7 +10,7 @@ namespace Remizione
     {
         // Constructor
         public UIAtlas()
-            : base(EngendroGame.Instance.Content, "UI", ContentManagerExtension.EncodePath(ContentFolder.Atlases, "UI"), false)
+            : base(EngendroGame.Instance.Content, "UI", ContentManagerExtension.EncodePath(ContentFolder.Atlases, "UI"))
         {
             BonfireIcon = this[nameof(BonfireIcon)];
             CineraryUrn = this[nameof(CineraryUrn)];

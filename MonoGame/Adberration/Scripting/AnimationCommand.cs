@@ -3,18 +3,18 @@
 namespace Adberration.Scripting
 {
     // AnimationCommand
-    // Arguments: {Name} [#headless] [#prefix:String] [#zero-padding:Int32]
+    // Arguments: {Name} [#zero-padding:Int32]
     internal sealed class AnimationCommand : NonAwaitableCommand
     {
         // Constructor
         internal AnimationCommand(Script script, string source, StatementBody body)
-            : base(script, source, body, 1, PrefixArg, ZeroPaddingArg)
+            : base(script, source, body, 1, ZeroPaddingArg)
         {
             var entity = AssertEntityNotNull<Entity>(Script.EntityName);
             var animationName = RemoveQuotes(0);
 
             ActiveAnimation = entity.AddAnimation(animationName);
-            ActiveAnimationFramePrefix = Parser.ParseNameArgument(this, PrefixArg);
+            ActiveAnimationFramePrefix = entity.Atlas?.HasFolderNamesPrepended == true ? null : entity.DeclaredName;
 
             ZeroPaddingLength = Parser.ParseInt32Argument(this, ZeroPaddingArg, 2);
         }
