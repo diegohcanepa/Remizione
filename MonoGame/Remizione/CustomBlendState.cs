@@ -31,6 +31,17 @@ namespace Remizione
         };
 
         // SubtractivePlayer
+        internal static BlendState ShadowMask { get; } = new()
+        {
+            ColorSourceBlend = Blend.Zero,
+            ColorDestinationBlend = Blend.Zero,
+            ColorBlendFunction = BlendFunction.Add,
+            AlphaSourceBlend = Blend.One,
+            AlphaDestinationBlend = Blend.One,
+            AlphaBlendFunction = BlendFunction.Max
+        };
+
+        // SubtractivePlayer
         internal static BlendState SubtractivePlayer { get; } = new()
         {
             ColorSourceBlend = Blend.InverseDestinationColor,

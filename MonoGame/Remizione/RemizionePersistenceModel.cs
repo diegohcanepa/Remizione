@@ -26,6 +26,10 @@ namespace Remizione
             persistentType.Track(nameof(Bonfire.RemainingTime));
             persistentType.Track(nameof(Bonfire.IsLit));
 
+            // FigTree
+            persistentType = Track(typeof(FigTree));
+            persistentType.Track(nameof(FigTree.CustomState));
+
             // Fleshines
             persistentType = Track(typeof(Fleshiness));
             persistentType.Track(nameof(Fleshiness.Position));

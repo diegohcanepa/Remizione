@@ -767,6 +767,10 @@ namespace Remizione
         [ScriptProperty]
         public int CollisionHeight { get; set; }
 
+        // CustomState
+        [ScriptProperty]
+        public int CustomState { get; set; }
+
         // Definition
         public virtual ThingDefinition? Definition { get; }
 

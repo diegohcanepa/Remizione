@@ -22,6 +22,7 @@ namespace Remizione
         private RenderTarget2D? lightMapTarget;
         private readonly List<Light> lights = [];
         private readonly List<ILightSource> lightSources = [];
+        private RenderTarget2D? shadowMapTarget;
         private readonly List<TriggerArea> triggerAreas = [];
         private readonly List<WalkArea> walkAreas = [];
         private readonly List<IPolygon> walls = [];
@@ -96,14 +97,13 @@ namespace Remizione
         }
 
         // DrawShadows
-        private void DrawShadows(GameTime gameTime)
+        private void DrawShadows()
         {
-            Game.SpriteBatch.Begin(Session.Camera, SamplerState.PointClamp, BlendState.AlphaBlend, null);
-            for (int i = 0; i < CulledThings.Count; i++)
-            {
-                if (CulledThings[i] is GameThing thing)
-                    thing.DrawShadow(gameTime);
-            }
+            if (Game.SpriteBatch == null || shadowMapTarget == null)
+                return;
+
+            Game.SpriteBatch.Begin(transformMatrix: Game.Camera.GetTransformationMatrix());
+            Game.SpriteBatch.Draw(shadowMapTarget, Screen.Area, Color.White);
             Game.SpriteBatch.End();
         }
 
@@ -175,6 +175,28 @@ namespace Remizione
                 Game.SpriteBatch.End();
             }
             */
+
+            Game.GraphicsDevice.SetRenderTarget(previousRenderTarget);
+        }
+
+        // PrepareShadowMap
+        private void PrepareShadowMap(GameTime gameTime, RenderTarget2D? renderTarget)
+        {
+            if (renderTarget == null)
+                return;
+
+            var previousRenderTarget = Game.RenderTargets.CurrentTarget;
+
+            Game.GraphicsDevice.SetRenderTarget(renderTarget);
+            Game.GraphicsDevice.Clear(Color.Transparent);
+
+            Game.SpriteBatch.Begin(Session.Camera, SamplerState.PointClamp, CustomBlendState.ShadowMask, null);
+            for (int i = 0; i < CulledThings.Count; i++)
+            {
+                if (CulledThings[i] is GameThing thing)
+                    thing.DrawShadow(gameTime);
+            }
+            Game.SpriteBatch.End();
 
             Game.GraphicsDevice.SetRenderTarget(previousRenderTarget);
         }
@@ -251,10 +273,16 @@ namespace Remizione
             if (CanUseLightingSystem)
             {
                 if (lightMapTarget != null && lightMapTarget.IsDisposed)
-                    lightMapTarget = Game.RenderTargets.AuxiliaryTargets[0];
+                    lightMapTarget = Game.RenderTargets.LightTarget;
 
                 PrepareLightMap(gameTime, lightMapTarget);
             }
+
+            // Prepare shadow map
+            if (shadowMapTarget != null && shadowMapTarget.IsDisposed)
+                shadowMapTarget = Game.RenderTargets.ShadowTarget;
+
+            PrepareShadowMap(gameTime, shadowMapTarget);
 
             currentDrawIndex = 0;
 
@@ -273,7 +301,7 @@ namespace Remizione
             DrawThings(gameTime, RenderLayer.OverBackground);
 
             // Shadows
-            DrawShadows(gameTime);
+            DrawShadows();
 
             // Move destination mark
             if (Session.InteractionData.Target == null && Session.Player?.RemainsKind != RemainsKind.None)
@@ -321,7 +349,9 @@ namespace Remizione
             if (FollowPlayer && Session.Player?.Room == this)
                 Session.Camera.Follow(Session.Player, true);
 
-            lightMapTarget = Game.RenderTargets.AuxiliaryTargets[0];
+            lightMapTarget = Game.RenderTargets.LightTarget;
+            shadowMapTarget = Game.RenderTargets.ShadowTarget;
+
             lightSources.Clear();
         }
 

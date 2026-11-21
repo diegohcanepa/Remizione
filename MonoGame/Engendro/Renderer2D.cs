@@ -13,7 +13,6 @@ namespace Engendro
     {
         #region Private fields
 
-        private readonly List<RenderTarget2D> auxiliaryTargetList = [];
         private int index;
         private readonly RenderTarget2D[] renderTargets = new RenderTarget2D[2];
 
@@ -31,13 +30,8 @@ namespace Engendro
             renderTargets[0].Name = "RenderTarget 0";
             renderTargets[1].Name = "RenderTarget 1";
 
-            // Create auxiliary targets
-            for (var i = 0; i < 4; i++)
-            {
-                auxiliaryTargetList.Add(CreateRenderTarget(RenderTargetUsage.PreserveContents));
-            }
-
-            AuxiliaryTargets = new ReadOnlyCollection<RenderTarget2D>(auxiliaryTargetList);
+            LightTarget = CreateRenderTarget(RenderTargetUsage.PreserveContents);
+            ShadowTarget = CreateRenderTarget(RenderTargetUsage.PreserveContents);
         }
 
         #endregion
@@ -47,13 +41,11 @@ namespace Engendro
         // CreateRenderTarget
         private static RenderTarget2D CreateRenderTarget(RenderTargetUsage usage)
         {
-            return new RenderTarget2D(EngendroGame.Instance.GraphicsDevice, EngendroGame.Instance.ViewportAdapter.DisplayWidth, EngendroGame.Instance.ViewportAdapter.DisplayHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, usage);
+            var vp = EngendroGame.Instance.ViewportAdapter;
+            return new(EngendroGame.Instance.GraphicsDevice, vp.DisplayWidth, vp.DisplayHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, usage);
         }
 
         #endregion
-
-        // AuxiliaryTargets
-        public ReadOnlyCollection<RenderTarget2D> AuxiliaryTargets { get; }
 
         // CurrentTarget
         public RenderTarget2D CurrentTarget => renderTargets[index];
@@ -66,14 +58,18 @@ namespace Engendro
                 renderTargets[i]?.Dispose();
             }
 
-            for (var i = 0; i < auxiliaryTargetList.Count; i++)
-            {
-                auxiliaryTargetList[i]?.Dispose();
-            }
+            LightTarget.Dispose();
+            ShadowTarget.Dispose();
         }
+
+        // LightTarget
+        public RenderTarget2D LightTarget { get; }
 
         // PreviousTarget
         public RenderTarget2D PreviousTarget => index == 0 ? renderTargets[1] : renderTargets[0];
+
+        // ShadowTarget
+        public RenderTarget2D ShadowTarget { get; }
 
         // Swap
         public RenderTarget2D Swap()
@@ -85,6 +81,7 @@ namespace Engendro
         public RenderTarget2D Swap(bool clear)
         {
             index = index == 0 ? 1 : 0;
+            
             EngendroGame.Instance.GraphicsDevice.SetRenderTarget(CurrentTarget);
             if (clear)
                 EngendroGame.Instance.GraphicsDevice.Clear(Color.Black);

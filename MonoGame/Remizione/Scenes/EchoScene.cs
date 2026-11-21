@@ -1,5 +1,6 @@
 ﻿using Adberration.Scripting;
 using Engendro;
+using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -125,10 +126,9 @@ namespace Remizione
         // Show
         public void Show(string displayText)
         {
-            this.textSprite.Text = displayText;
+            textSprite.Text = displayText;
             textOpacityTween.Start(TweenStyle.CubicIn, 0, 1, 500);
             textSprite.Tweens.OpacityTween = textOpacityTween;
-
             CanClose = false;
         }
     }
