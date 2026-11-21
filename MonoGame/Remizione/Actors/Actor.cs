@@ -623,7 +623,7 @@ namespace Remizione
             if (IsInvulnerable)
                 return false;
 
-            if (IsPlayer && Session.AwaitingScript?.Protected == true)
+            if (IsPlayer && Session.CanInterruptScripts)
                 return false;
 
             return base.CanTakeDamage();

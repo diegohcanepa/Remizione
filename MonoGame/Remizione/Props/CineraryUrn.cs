@@ -78,16 +78,16 @@ namespace Remizione
 
         #endregion
 
-        // Fill
+        // IsEnabled
+        [ScriptProperty]
+        public bool IsEnabled { get; private set; }
+
+        // OfferAndShatter
         [ScriptMethod]
-        public void Fill()
+        public void OfferAndShatter()
         {
             Session.PlayerData.Ashes -= AshCost;
             Die();
         }
-
-        // IsEnabled
-        [ScriptProperty]
-        public bool IsEnabled { get; private set; }
     }
 }

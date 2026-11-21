@@ -31,7 +31,6 @@ namespace Adberration
         private readonly Stack<Script> awaitingScripts = new();
         private readonly Stack<Room> busyRooms = new();
         private readonly Stack<Script> busyRoomsScripts = new();
-        private bool canInterruptAwaitingScripts;
         private bool canRun;
         private readonly Dictionary<string, Entity> entities = [];
         private string? musicTagRoomScope;
@@ -452,6 +451,8 @@ namespace Adberration
 
                 if (awaitingScripts.Count == 0)
                 {
+                    CanInterruptScripts = false;
+
                     if (musicTagScriptScope != null)
                     {
                         AudioManager.Music.PlayTag(musicTagScriptScope);
@@ -874,14 +875,14 @@ namespace Adberration
             // In any case it must be started
             if (!containsScript || script.IsCompleted)
             {
+                if (script.Protected)
+                    CanInterruptScripts = true;
+
                 if (!containsScript)
                 {
                     awaitingScripts.Push(script);
                     if (awaitingScripts.Count == 1)
-                    {
-                        canInterruptAwaitingScripts = !script.Protected;
                         OnAwait();
-                    }
                 }
 
                 if (!ScriptProcessor.IsExecutingScript(script))
@@ -921,6 +922,10 @@ namespace Adberration
 
         // Camera
         public Camera Camera { get; }
+
+        // CanInterruptScripts
+        [ScriptProperty]
+        public bool CanInterruptScripts { get; private set; }
 
         // CanSave
         public virtual bool CanSave(bool immediate = false)
@@ -1078,7 +1083,7 @@ namespace Adberration
         // InterruptAwaitingScripts
         public bool InterruptAwaitingScripts()
         {
-            if (!canInterruptAwaitingScripts)
+            if (CanInterruptScripts)
                 return false;
 
             var result = false;
