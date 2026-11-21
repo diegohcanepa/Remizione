@@ -424,15 +424,17 @@ namespace Remizione
         // DropLoot
         protected void DropLoot()
         {
-            if (Session.Room is not GameRoom room || Definition == null)
+            if (Session.Room is not GameRoom room)
                 return;
 
-            ItemReward ??= Session.LootGenerator.RollForLoot(Definition);
+            if (ItemReward == null)
+            {
+                if (Definition != null)
+                    ItemReward = Session.LootGenerator.RollForLoot(Definition);
+            }
 
             if (ItemReward != null)
                 ItemOrb.Drop(ItemReward, 1, room, Position);
-
-            ItemReward = null;
         }
 
         // GetHurtShakeOffset

@@ -379,8 +379,12 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">FigTree-assets/FigTree.png</key>
-            <key type="filename">FigTree-assets/FigTreeFlowers.png</key>
+            <key type="filename">FigTree-assets/FigTree01.png</key>
+            <key type="filename">FigTree-assets/FigTree02.png</key>
+            <key type="filename">FigTree-assets/FigTree03.png</key>
+            <key type="filename">FigTree-assets/FigTree04.png</key>
+            <key type="filename">FigTree-assets/FigTree05.png</key>
+            <key type="filename">FigTree-assets/FigTree06.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

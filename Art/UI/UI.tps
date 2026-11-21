@@ -251,6 +251,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Items-assets/AmberSap.png</key>
             <key type="filename">Items-assets/AppleOn.png</key>
             <key type="filename">Items-assets/BarrenFig.png</key>
             <key type="filename">Items-assets/CobaltPebble.png</key>
@@ -599,6 +600,21 @@
                 <rect>60,13,120,27</rect>
                 <key>scale9Paddings</key>
                 <rect>60,13,120,27</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">UI-assets/DialogOrnament.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,0,17,1</rect>
+                <key>scale9Paddings</key>
+                <rect>9,0,17,1</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

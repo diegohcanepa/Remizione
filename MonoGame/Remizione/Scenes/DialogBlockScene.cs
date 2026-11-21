@@ -15,12 +15,14 @@ namespace Remizione
         #region Private fields
 
         private readonly Sprite background = new(Atlases.UI.EchoBackground) { PivotOrigin = RectanglePoint.LeftBottom, Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom) };
+        private readonly Sprite bottomOrnament = new(Atlases.UI.GetImage("DialogOrnament")) { PivotOrigin = RectanglePoint.Top, Scale = ScaleInfo.UIElement.Small };
         private bool completed;
         private readonly DialogBlock dialogBlock;
         private readonly UIContextMenu<string> menu;
         private Script? runningScript;
         private readonly GameSession session;
         private bool terminate;
+        private readonly Sprite topOrnament = new(Atlases.UI.GetImage("DialogOrnament")) { PivotOrigin = RectanglePoint.Bottom, Scale = ScaleInfo.UIElement.Small, Effects = Microsoft.Xna.Framework.Graphics.SpriteEffects.FlipVertically };
 
         #endregion
 
@@ -107,7 +109,10 @@ namespace Remizione
         private void Layout()
         {
             menu.X = dialogBlock.Alignment == HorizontalAlignment.Left ? 8 : Screen.Area.Center.X;
-            menu.Y = Screen.HUDArea.Bottom - menu.BoundingBox.Height - 8;
+            menu.Y = Screen.HUDArea.Bottom - menu.BoundingBox.Height - 10;
+            bottomOrnament.Position = Screen.Area.GetPoint(RectanglePoint.Bottom, 0, -10);
+            topOrnament.X = bottomOrnament.X;
+            topOrnament.Y = menu.BoundingBox.Top - 3;
         }
 
         // RunSelectedOption
@@ -146,6 +151,8 @@ namespace Remizione
             Game.SpriteBatch.Begin(Game.Camera);
             background.Draw(gameTime);
             session.HUD.AshMeter.Draw(gameTime);
+            topOrnament.Draw(gameTime);
+            bottomOrnament.Draw(gameTime);
             Game.SpriteBatch.End();
 
             session.HUD.InventoryMeter.Draw(gameTime);

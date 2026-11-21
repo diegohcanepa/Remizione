@@ -2,6 +2,14 @@
 	"$schema": "./Item.schema.json",
 	"data": [
 		{
+			"name": "AmberSap",
+			"category": "Misc",
+			"actionKind": "Outcome",
+			"isDepletable": true,
+			"itemKind": "Key",
+			"unlockMode": "None"
+		},
+		{
 			"name": "BarrenFig",
 			"selfUseAction": "Consume",
 			"animationName": "Consume",
@@ -46,7 +54,7 @@
 					"amount": "1",
 					"sound": "BareFist"
 				}
-			]			
+			]
 		},
 		{
 			"name": "Loquat",
@@ -99,8 +107,8 @@
 					"effectType": "Damage",
 					"amount": "1d4+2"
 				}
-			]			
-		},		
+			]
+		},
 		{
 			"name": "Material",
 			"category": "Misc",
@@ -109,7 +117,7 @@
 			"isStackable": true,
 			"lostOnDeath": true,
 			"unlockMode": "None"
-		},		
+		},
 		{
 			"name": "RusticAxe",
 			"animationName": "Punch",
@@ -127,8 +135,8 @@
 					"effectType": "Damage",
 					"amount": "2"
 				}
-			]			
-		},		
+			]
+		},
 		{
 			"name": "SulfurStone",
 			"selfUseAction": "Light",

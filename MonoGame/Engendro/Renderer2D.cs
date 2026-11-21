@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Engendro
 {
@@ -81,7 +79,7 @@ namespace Engendro
         public RenderTarget2D Swap(bool clear)
         {
             index = index == 0 ? 1 : 0;
-            
+
             EngendroGame.Instance.GraphicsDevice.SetRenderTarget(CurrentTarget);
             if (clear)
                 EngendroGame.Instance.GraphicsDevice.Clear(Color.Black);
