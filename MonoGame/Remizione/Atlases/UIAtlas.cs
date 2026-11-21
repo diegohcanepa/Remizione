@@ -12,6 +12,7 @@ namespace Remizione
         public UIAtlas()
             : base(EngendroGame.Instance.Content, "UI", ContentManagerExtension.EncodePath(ContentFolder.Atlases, "UI"), false)
         {
+            BonfireIcon = this[nameof(BonfireIcon)];
             CineraryUrn = this[nameof(CineraryUrn)];
             BackButton = this[nameof(BackButton)];
             BackButtonHot = this[nameof(BackButtonHot)];
@@ -56,6 +57,9 @@ namespace Remizione
 
         // BackButtonHot
         public AtlasImage BackButtonHot { get; }
+
+        // BonfireIcon
+        public AtlasImage BonfireIcon { get; }
 
         // CheckMark
         public AtlasImage CheckMark { get; }

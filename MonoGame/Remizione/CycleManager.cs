@@ -164,7 +164,11 @@ namespace Remizione
 
             if (CurrentCycle == Cycle.Dark && session.Player != null && !session.Player.IsDead)
             {
-                if (!session.Player.IsIlluminated)
+                if (session.Player.IsIlluminated)
+                {
+                    RenewDarknessTimer();
+                }
+                else
                 {
                     darknessDamageTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
                     if (darknessDamageTimer <= 0)

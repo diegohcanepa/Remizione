@@ -1,7 +1,9 @@
 ﻿using Adberration;
 using Engendro;
+using Engendro.Audio;
 using Engendro.Input;
 using Microsoft.Xna.Framework;
+using Remizione.UI;
 
 namespace Remizione
 {
@@ -68,6 +70,21 @@ namespace Remizione
             statuses.Update(gameTime);
             DestinationMark.Update(gameTime);
             CycleMeter.Update(gameTime);
+
+            if (InventoryMeter.IsMouseOver())
+                HoveredComponent = InventoryMeter;
+
+            else if (AshMeter.IsMouseOver())
+                HoveredComponent = AshMeter;
+
+            else if (CycleMeter.IsMouseOver())
+                HoveredComponent = CycleMeter;
+
+            else if (PlayerHPMeter.IsMouseOver())
+                HoveredComponent = PlayerHPMeter;
+
+            else
+                HoveredComponent = null;
         }
 
         #endregion
@@ -93,8 +110,17 @@ namespace Remizione
             if (Session.IsConsoleVisible)
                 return HandleInputResult.Unhandled;
 
+            if (HoveredComponent != null && InputManager.DefaultPlayer.Mouse.IsLeftButtonPressed())
+            {
+                Sound.Play(SoundNames.Bones);
+                return HandleInputResult.Handled;
+            }
+
             return HandleInputResult.Unhandled;
         }
+
+        // HoveredComponent
+        public HUDComponent? HoveredComponent { get; private set; }
 
         // InventoryMeter
         public UIInventoryMeter InventoryMeter { get; }

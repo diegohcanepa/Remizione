@@ -45,12 +45,12 @@ namespace Remizione
 
             lastKnownCycle = Session.CycleManager.CurrentCycle;
             AnimationPlayer.Play(Session.CycleManager.CurrentCycle.ToString());
-            if (lastKnownCycle == Cycle.Light)
+            //if (lastKnownCycle == Cycle.Light)
             {
                 if (IsInViewport)
                 {
                     Tweens.XTween = FloatTween.Create(TweenStyle.Linear, X, X + .75f, 50, 6);
-                    PlaySound(SoundNames.AshVesselCover);
+                    PlaySound(SoundNames.VesselCover);
                 }
             }
             IsEnabled = lastKnownCycle == Cycle.Dark;

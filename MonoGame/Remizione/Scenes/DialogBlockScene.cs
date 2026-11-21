@@ -36,8 +36,8 @@ namespace Remizione
             {
                 Alignment = dialogBlock.Alignment,
                 OptionSpacing = 2,
-                OptionColor = Colors.Palette.Terra,
-                OptionSelectedColor = Colors.Palette.Yellow,
+                OptionColor = Colors.Button.Text,
+                OptionSelectedColor = Colors.Button.Hover,
                 OptionTextScale = ScaleInfo.Text.VeryLarge,
                 SelectInputBinding = InputBindings.SelectDialogOption
             };

@@ -1,4 +1,5 @@
 ﻿using Adberration.Scripting;
+using Engendro.Audio;
 
 namespace Remizione.Scripting
 {
@@ -22,6 +23,7 @@ namespace Remizione.Scripting
             if (Session is not GameSession session || DialogBlock.Instance == null || DialogBlock.Instance.AvailableOptions.Count == 0)
                 return;
 
+            Sound.Play(SoundNames.UIMessageAlert);
             session.ShowDialogMenu(DialogBlock.Instance);
             DialogBlock.Instance = null;
         }

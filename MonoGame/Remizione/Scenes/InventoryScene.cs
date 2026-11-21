@@ -15,7 +15,7 @@ namespace Remizione
         private const float SelectionHysteresisDuration = 0.08f;
         private bool autoHide;
         private readonly Sprite background = new(Atlases.UI.QuickInventoryBackground) { PivotOrigin = RectanglePoint.LeftBottom, Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom) };
-        private readonly Sprite inspectItem = new(Atlases.UI.InspectItem) { PivotOrigin = RectanglePoint.LeftBottom, Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 2, -12), Scale = new(.75f) };
+        private readonly Sprite inspectItem = new(Atlases.UI.InspectItem) { PivotOrigin = RectanglePoint.Bottom, Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 2, -14), Scale = ScaleInfo.UIElement.Small };
         private readonly ItemContainer itemContainer;
         private readonly TextSprite itemEffect;
         private readonly TextSprite itemLabel;
@@ -322,6 +322,7 @@ namespace Remizione
                     Sound.Play(SoundNames.ButtonHover);
                     itemLabel.Tag = rawSelectedItem;
                     lastSelectedItem = rawSelectedItem;
+                    inspectItem.Position = itemLabel.BoundingBox.GetPoint(RectanglePoint.Top, 0, -1);
                 }
             }
             else if (lastSelectedItem != null)

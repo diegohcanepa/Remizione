@@ -9,7 +9,6 @@
     { "name": "Dark1", "tags": "Dark" }
   ],
   "FX": [
-    { "name": "AshVesselCover" },
     { "name": "BareFist", "soundCount": 3 },
     { "name": "Bible", "soundCount": 3 },
     { "name": "BibleBreak" },
@@ -87,6 +86,7 @@
     { "name": "TrunkOpen" },
     { "name": "UIMessageAlert", "scope": "Global" },
     { "name": "UISelect", "scope": "Global" },
+    { "name": "VesselCover" },
     { "name": "WoodDebris", "soundCount": 1 },
     { "name": "WhooshA", "pitchVariance": 0.4 },
     { "name": "WhooshSmallA", "soundCount": 4 },

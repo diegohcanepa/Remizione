@@ -1,6 +1,7 @@
 ﻿using Adberration;
 using Engendro;
 using Microsoft.Xna.Framework;
+using Remizione.UI;
 using System.Globalization;
 
 namespace Remizione
@@ -8,7 +9,7 @@ namespace Remizione
     /// <summary>
     /// UIAshMeter
     /// </summary>
-    public class UIAshMeter : SessionGameObject<GameSession>
+    public class UIAshMeter : HUDComponent
     {
         private const int duration = 2000;
 
@@ -44,6 +45,8 @@ namespace Remizione
             };
 
             isInitializing = true;
+
+            BoundingBox = icon.BoundingBox;
         }
 
         #endregion

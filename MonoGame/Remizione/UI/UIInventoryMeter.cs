@@ -1,13 +1,14 @@
 ﻿using Engendro;
 using Engendro.Audio;
 using Microsoft.Xna.Framework;
+using Remizione.UI;
 
 namespace Remizione
 {
     /// <summary>
     /// UIInventoryMeter
     /// </summary>
-    public sealed class UIInventoryMeter : GameObject
+    public sealed class UIInventoryMeter : HUDComponent
     {
         #region Private fields
 
@@ -25,6 +26,7 @@ namespace Remizione
 
         // Constructor
         public UIInventoryMeter(ItemContainer inventory)
+            : base(inventory.Session)
         {
             this.inventory = inventory;
 
@@ -32,7 +34,7 @@ namespace Remizione
             this.icon = new(Atlases.UI.Sack)
             {
                 PivotOrigin = RectanglePoint.LeftBottom,
-                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 1, 0)
+                Position = Screen.HUDArea.GetPoint(RectanglePoint.LeftBottom, 2, -2)
             };
 
             // Capacity
@@ -42,6 +44,8 @@ namespace Remizione
                 PivotOrigin = RectanglePoint.LeftBottom,
                 Position = icon.BoundingBox.GetPoint(RectanglePoint.RightBottom, 1, 0)
             };
+
+            BoundingBox = icon.BoundingBox;
         }
 
         #endregion

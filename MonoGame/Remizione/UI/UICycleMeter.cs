@@ -1,6 +1,6 @@
-﻿using Adberration;
-using Engendro;
+﻿using Engendro;
 using Microsoft.Xna.Framework;
+using Remizione.UI;
 using System;
 
 namespace Remizione
@@ -8,9 +8,9 @@ namespace Remizione
     /// <summary>
     /// UICycleMeter
     /// </summary>
-    public sealed class UICycleMeter : SessionGameObject<GameSession>
+    public sealed class UICycleMeter : HUDComponent
     {
-        private readonly Sprite world;
+        private readonly Sprite icon;
         private readonly Sprite marker;
 
         #region Constructor
@@ -20,7 +20,7 @@ namespace Remizione
             : base(session)
         {
             // Planeta (mitad derecha clara, mitad izquierda oscura)
-            this.world = new(Atlases.UI.WorldIcon)
+            this.icon = new(Atlases.UI.WorldIcon)
             {
                 PivotOrigin = RectanglePoint.RightTop,
                 Position = Screen.HUDArea.GetPoint(RectanglePoint.RightTop, -2, -1)
@@ -31,6 +31,8 @@ namespace Remizione
             {
                 PivotOrigin = RectanglePoint.Center
             };
+
+            BoundingBox = icon.BoundingBox;
         }
 
         #endregion
@@ -40,7 +42,7 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
-            world.Draw(gameTime);
+            icon.Draw(gameTime);
             marker.Draw(gameTime);
         }
 
@@ -51,7 +53,7 @@ namespace Remizione
 
             UpdateOrbitPosition();
 
-            world.Update(gameTime);
+            icon.Update(gameTime);
             marker.Update(gameTime);
         }
 
@@ -76,10 +78,10 @@ namespace Remizione
             float angle = Session.CycleManager.CurrentCycle == Cycle.Light ? t * MathF.PI : MathF.PI + (t * MathF.PI);
 
             // Centro del planeta
-            var worldCenter = world.Position + new Vector2(-world.BoundingBox.Width * .5f, world.BoundingBox.Height * .5f);
+            var worldCenter = icon.Position + new Vector2(-icon.BoundingBox.Width * .5f, icon.BoundingBox.Height * .5f);
 
             // Radio de la circunferencia externa (+1px de margen sobre el borde)
-            float radius = (world.BoundingBox.Width * .5f) + 1f;
+            float radius = (icon.BoundingBox.Width * .5f) + 1f;
 
             // Desplazamiento trigonométrico en sentido horario (sin para X, -cos para Y)
             float offsetX = (MathF.Sin(angle) * radius) - .5f;

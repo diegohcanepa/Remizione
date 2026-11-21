@@ -5,7 +5,6 @@
     /// </summary>
     internal static class SoundNames
     {
-        internal const string AshVesselCover = nameof(AshVesselCover);
         internal const string Bones = nameof(Bones);
         internal const string Bonfire = nameof(Bonfire);
         internal const string BonfireMenu = nameof(BonfireMenu);
@@ -46,6 +45,7 @@
         internal const string TrunkOpen = nameof(TrunkOpen);
         internal const string UIMessageAlert = nameof(UIMessageAlert);
         internal const string UISelect = nameof(UISelect);
+        internal const string VesselCover = nameof(VesselCover);
         internal const string WhooshA = nameof(WhooshA);
         internal const string WoodDebris = nameof(WoodDebris);
         internal const string WreckingBallChain = nameof(WreckingBallChain);

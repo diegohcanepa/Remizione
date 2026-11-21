@@ -1,13 +1,13 @@
-﻿using Adberration;
-using Engendro;
+﻿using Engendro;
 using Microsoft.Xna.Framework;
+using Remizione.UI;
 
 namespace Remizione
 {
     /// <summary>
     /// UIHeartMeter
     /// </summary>
-    public sealed class UIPlayerHPMeter : SessionGameObject<GameSession>
+    public sealed class UIPlayerHPMeter : HUDComponent
     {
         #region Private fields
 
@@ -41,6 +41,8 @@ namespace Remizione
                 PivotOrigin = RectanglePoint.Left,
                 Position = container.BoundingBox.GetPoint(RectanglePoint.Right, 1, .5f),
             };
+
+            BoundingBox = icon.BoundingBox;
         }
 
         #endregion

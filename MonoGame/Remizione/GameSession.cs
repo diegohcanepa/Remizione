@@ -571,7 +571,6 @@ namespace Remizione
             if (IsGameplayActive)
                 PlayerData.Inventory.Update(gameTime);
 
-            //if (IsGameplayActive)
             CycleManager.Update(gameTime);
 
             SepiaEffect.Update(gameTime);
@@ -595,7 +594,12 @@ namespace Remizione
 
             HUD.Update(gameTime);
 
-            if (IsCurrentScene)
+            if (HUD.HoveredComponent != null && IsGameplayActive)
+            {
+                MouseCursor.Icon = MouseCursorIcon.Info;
+                MouseCursor.Clear();
+            }
+            else if (IsCurrentScene)
             {
                 if (Room == null || !Room.ControlMouseCursor)
                     InteractionContext.Refresh();
@@ -612,12 +616,12 @@ namespace Remizione
                         }
                     }
                 }
-            }
 
-            if (InteractionData.Target != null && !InteractionData.Target.IsPlayer)
-            {
-                interactionTargetMarker.Update(gameTime);
-                interactionTargetMarker.Position = InteractionData.Target.GetOverheadPosition(new(0, -3));
+                if (InteractionData.Target != null && !InteractionData.Target.IsPlayer)
+                {
+                    interactionTargetMarker.Update(gameTime);
+                    interactionTargetMarker.Position = InteractionData.Target.GetOverheadPosition(new(0, -3));
+                }
             }
         }
 
@@ -810,6 +814,9 @@ namespace Remizione
         {
             get
             {
+                if (!IsCurrentScene)
+                    return false;
+
                 if (TransitionManager.CurrentTransition.IsRunning)
                     return false;
 
@@ -822,10 +829,6 @@ namespace Remizione
 
                 // Session is awaiting script
                 if (IsAwaiting)
-                    return false;
-
-                // Inventory is active
-                if (!IsCurrentScene)
                     return false;
 
                 return true;
