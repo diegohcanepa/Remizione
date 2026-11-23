@@ -1,6 +1,5 @@
 ﻿using Engendro;
 using Microsoft.Xna.Framework;
-using System;
 
 namespace Remizione
 {
@@ -9,7 +8,6 @@ namespace Remizione
     /// </summary>
     public sealed class ItemOrb : Pickable
     {
-        private int expirationTimer = Random.Shared.Next(10000, 20000);
         private readonly FloatTween fadeTween = new();
 
         #region Constructor
@@ -59,7 +57,7 @@ namespace Remizione
             base.OnLoad();
 
             fadeTween.Start(TweenStyle.CubicIn, 0, 1, 1000);
-            Tweens.OpacityTween = FloatTween.Create(TweenStyle.Linear, .5f, .6f, 90, -1);
+            Tweens.OpacityTween = FloatTween.Create(TweenStyle.Linear, .9f, 1, 90, -1);
             Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicIn, .1f, .75f, 400);
         }
 
@@ -74,24 +72,24 @@ namespace Remizione
                 OpacityFactor = fadeTween.CurrentValue;
             }
 
-            if (Session.OutcomeTarget != this)
+            if (ExpirationTimer > 0 && ItemReward != null)
             {
-                if (expirationTimer >= 0 && ItemReward != null && ItemReward.ItemKind != ItemKind.Key)
-                {
-                    expirationTimer -= gameTime.ElapsedGameTime.Milliseconds;
-                    if (expirationTimer < 0)
-                    {
-                        AttachedLight?.Unlit(false);
-                        Tweens.OpacityTween = FloatTween.Create(TweenStyle.Linear, Opacity, 0, 1000, Unparent);
-                    }
-                }
+                ExpirationTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (ExpirationTimer < 0)
+                    fadeTween.Start(TweenStyle.CubicIn, OpacityFactor, 0, 2500, Unparent);
             }
         }
 
         #endregion
 
         // AllowCleanup
-        public bool AllowCleanup => ItemReward == null || ItemReward.ItemKind != ItemKind.Key;
+        public bool AllowCleanup => ItemReward == null || ExpirationTimer == 0;
+
+        // Drop
+        public static ItemOrb? Drop(string item, int amount, GameRoom room, Vector2 position)
+        {
+            return GameData.Items.Find(item) is { } def ? Drop(def, amount, room, position) : null;
+        }
 
         // Drop
         public static ItemOrb? Drop(ItemDefinition itemDefinition, int amount, GameRoom room, Vector2 position)
@@ -105,5 +103,8 @@ namespace Remizione
 
             return orb;
         }
+
+        // ExpirationTimer
+        public float ExpirationTimer { get; set; } = 5;
     }
 }

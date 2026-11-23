@@ -385,6 +385,9 @@
             <key type="filename">FigTree-assets/FigTree04.png</key>
             <key type="filename">FigTree-assets/FigTree05.png</key>
             <key type="filename">FigTree-assets/FigTree06.png</key>
+            <key type="filename">FigTree-assets/FigTree07.png</key>
+            <key type="filename">FigTree-assets/FigTree08.png</key>
+            <key type="filename">FigTree-assets/FigTree09.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

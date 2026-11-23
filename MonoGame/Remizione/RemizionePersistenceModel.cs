@@ -29,6 +29,7 @@ namespace Remizione
             // FigTree
             persistentType = Track(typeof(FigTree));
             persistentType.Track(nameof(FigTree.CustomState));
+            persistentType.Track(nameof(FigTree.ItemRewardName));
 
             // Fleshines
             persistentType = Track(typeof(Fleshiness));

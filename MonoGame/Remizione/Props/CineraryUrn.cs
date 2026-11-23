@@ -19,7 +19,7 @@ namespace Remizione
             Atlas = Atlases.Props;
             ApproachBehavior = ApproachBehavior.ClosestSide;
             Collider = new("14,12;15,16;0,16;1,12");
-            DeathSound = Sound.Find(SoundNames.PotteryBreak);
+            DeathSound = Sound.Find(SoundNames.CineraryUrnBreak);
             DepthOffset = 1;
             Hotspot = new("12,0;12,15;3,15;3,0");
             IsHittable = true;

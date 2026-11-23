@@ -201,19 +201,27 @@ namespace Remizione
         }
 
         // GetPivotBasedPolyOffset
-        private Vector2 GetPivotBasedPolyOffset()
+        private Vector2 GetPivotBasedPolyOffset(Vector2 scale)
         {
             var result = new Vector2(X, Y);
 
+            float width = Sprite.RenderImage != null
+                ? Sprite.Width * scale.X
+                : (Scale.X != 0f ? BoundingBox.Width / Scale.X * scale.X : 0f);
+
+            float height = Sprite.RenderImage != null
+                ? Sprite.Height * scale.Y
+                : (Scale.Y != 0f ? BoundingBox.Height / Scale.Y * scale.Y : 0f);
+
             if (Sprite.Pivot.AtMiddleX)
-                result.X -= BoundingBox.Width / 2;
+                result.X -= width * 0.5f;
             else if (Sprite.Pivot.AtRight)
-                result.X -= BoundingBox.Width;
+                result.X -= width;
 
             if (Sprite.Pivot.AtMiddleY)
-                result.Y -= BoundingBox.Height / 2;
+                result.Y -= height * 0.5f;
             else if (Sprite.Pivot.AtBottom)
-                result.Y -= BoundingBox.Height;
+                result.Y -= height;
 
             return result;
         }
@@ -224,15 +232,16 @@ namespace Remizione
             if (Collider.IsEmpty || !isCollisionDirty)
                 return;
 
+            isCollisionDirty = false;
+
             int vertexCount = Collider.Vertices.Count;
 
             if (collisionVerticesBuffer.Length != vertexCount)
                 collisionVerticesBuffer = new Vector2[vertexCount];
 
-            var offset = ColliderPlacement == PlacementMode.Relative ? GetPivotBasedPolyOffset() : Vector2.Zero;
-            Vector2 currentScale = ColliderPlacement == PlacementMode.Relative ? Scale : Vector2.One;
+            var currentScale = ColliderPlacement == PlacementMode.Relative && !IsStatic ? Scale : Vector2.One;
+            var offset = ColliderPlacement == PlacementMode.Relative ? GetPivotBasedPolyOffset(currentScale) : Vector2.Zero;
 
-            // Usamos el buffer reutilizado
             Collider.GetVertices(collisionVerticesBuffer, offset, currentScale);
 
             holePoly.SetVertices(collisionVerticesBuffer);
@@ -243,8 +252,6 @@ namespace Remizione
                 holePoly.FlipHorizontally(X);
                 RuntimeCollider.FlipHorizontally(X);
             }
-
-            isCollisionDirty = false;
         }
 
         // InvalidateWalkArea
@@ -458,6 +465,11 @@ namespace Remizione
         protected virtual void OnCollisioning(GameThing thing, out bool handled)
         {
             handled = false;
+        }
+
+        // OnCustomStateChanged
+        protected virtual void OnCustomStateChanged()
+        {
         }
 
         // OnDeath
@@ -771,7 +783,18 @@ namespace Remizione
 
         // CustomState
         [ScriptProperty]
-        public int CustomState { get; set; }
+        public int CustomState
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    OnCustomStateChanged();
+                }
+            }
+        }
 
         // Definition
         public virtual ThingDefinition? Definition { get; }
@@ -1063,6 +1086,10 @@ namespace Remizione
             return walkArea.GetWalkablePoint(candidatePosition);
         }
 
+        // HasItemReward
+        [ScriptProperty]
+        public bool HasItemReward => ItemReward != null;
+
         // HasLineOfSightTo
         public bool HasLineOfSightTo(GameThing target)
         {
@@ -1227,7 +1254,18 @@ namespace Remizione
 
         // IsStatic
         [ScriptProperty]
-        public bool IsStatic { get; set; }
+        public bool IsStatic
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    isCollisionDirty = true;
+                }
+            }
+        }
 
         // ItemReward
         public ItemDefinition? ItemReward
@@ -1350,7 +1388,14 @@ namespace Remizione
         public new GameRoom? Room => Parent as GameRoom;
 
         // RuntimeCollider
-        public Polygon RuntimeCollider { get; } = new();
+        public Polygon RuntimeCollider
+        {
+            get
+            {
+                InvalidateCollisionPolygons();
+                return field;
+            }
+        } = new();
 
         // RuntimeHotspot
         public Polygon RuntimeHotspot
@@ -1371,7 +1416,7 @@ namespace Remizione
                     }
                     else if (HotspotPlacement == PlacementMode.Relative)
                     {
-                        var offset = GetPivotBasedPolyOffset();
+                        var offset = GetPivotBasedPolyOffset(Scale);
                         offset.Y -= Altitude;
 
                         int vertexCount = Hotspot.Vertices.Count;

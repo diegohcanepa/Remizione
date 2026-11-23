@@ -364,6 +364,10 @@
             <key type="filename">Penitent-assets/RaiseArm01.png</key>
             <key type="filename">Penitent-assets/RaiseArm02.png</key>
             <key type="filename">Penitent-assets/RaiseArm03.png</key>
+            <key type="filename">Penitent-assets/RaiseArmUp01.png</key>
+            <key type="filename">Penitent-assets/RaiseArmUp02.png</key>
+            <key type="filename">Penitent-assets/RaiseArmUp03.png</key>
+            <key type="filename">Penitent-assets/RaiseArmUp04.png</key>
             <key type="filename">Penitent-assets/RestIn01.png</key>
             <key type="filename">Penitent-assets/RestIn02.png</key>
             <key type="filename">Penitent-assets/RestIn03.png</key>

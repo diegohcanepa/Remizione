@@ -16,6 +16,9 @@
     "darkCycleDuration": {
       "type": "integer"
     },
+    "figTreeRewardInterval": {
+      "type": "integer"
+    },    
     "lightCycleDuration": {
       "type": "integer"
     },

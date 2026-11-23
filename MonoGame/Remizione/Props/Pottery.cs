@@ -15,6 +15,7 @@ namespace Remizione
             : base(session, name)
         {
             Atlas = Atlases.Props;
+            IsStatic = false;
             ApproachBehavior = ApproachBehavior.ClosestSide;
             Verb = Verb.Lift;
             IsHittable = true;

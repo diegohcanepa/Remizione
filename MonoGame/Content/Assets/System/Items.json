@@ -10,7 +10,25 @@
 			"unlockMode": "None"
 		},
 		{
-			"name": "BarrenFig",
+			"name": "CobaltPebble",
+			"animationName": "PickUp",
+			"category": "Misc",
+			"actionKind": "Outcome",
+			"isDepletable": true,
+			"itemKind": "Common",
+			"isStackable": true,
+			"unlockMode": "None",
+			"spawn": true
+		},
+		{
+			"name": "EmptyBowl",
+			"category": "Misc",
+			"actionKind": "Outcome",
+			"isDepletable": true,
+			"unlockMode": "None"
+		},		
+		{
+			"name": "Fig",
 			"selfUseAction": "Consume",
 			"animationName": "Consume",
 			"category": "Food",
@@ -26,17 +44,6 @@
 					"sound": "ConsumeBite"
 				}
 			]
-		},
-		{
-			"name": "CobaltPebble",
-			"animationName": "PickUp",
-			"category": "Misc",
-			"actionKind": "Outcome",
-			"isDepletable": true,
-			"itemKind": "Common",
-			"isStackable": true,
-			"unlockMode": "None",
-			"spawn": true
 		},
 		{
 			"name": "GadlingKnuckle",

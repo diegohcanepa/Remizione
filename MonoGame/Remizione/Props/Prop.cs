@@ -25,6 +25,7 @@ namespace Remizione
             : base(session, name)
         {
             this.Definition = GameData.Props.Find(DeclaredName);
+            this.IsStatic = true;
             this.HideHPMeter = true;
             this.IgnoreKnockback = true;
             this.Verb = Verb.Use;
@@ -44,10 +45,14 @@ namespace Remizione
 
         #region Private members
 
-        // InvalidateShadowPosition
-        private void InvalidateShadowPosition()
+        // InvalidateShadow
+        private void InvalidateShadow()
         {
-            Shadow?.Position = BoundingBox.GetPoint(RectanglePoint.Bottom, ShadowOffset);
+            if (Shadow != null)
+            {
+                Shadow.Position = BoundingBox.GetPoint(RectanglePoint.Bottom, ShadowOffset * Scale);
+                Shadow.Scale = Scale;
+            }
         }
 
         // InvalidateShadowImage
@@ -196,7 +201,7 @@ namespace Remizione
         protected override void OnTransform(TransformChange change)
         {
             base.OnTransform(change);
-            InvalidateShadowPosition();
+            InvalidateShadow();
             isRevealBoxDirty = true;
         }
 
@@ -251,7 +256,7 @@ namespace Remizione
                 if (value != field)
                 {
                     field = value;
-                    InvalidateShadowPosition();
+                    InvalidateShadow();
                 }
             }
         }

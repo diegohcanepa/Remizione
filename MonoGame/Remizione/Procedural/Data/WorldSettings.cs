@@ -29,6 +29,9 @@ namespace Remizione
             // DarkCycleDuration
             DarkCycleDuration = element.GetInt32("darkCycleDuration", 90);
 
+            // FigTreeRewardInterval
+            FigTreeRewardInterval = element.GetInt32("figTreeRewardInterval", 0);
+
             // LightCycleDuration
             LightCycleDuration = element.GetInt32("lightCycleDuration", 180);
 
@@ -49,6 +52,9 @@ namespace Remizione
 
         // DarkCycleDuration
         public int DarkCycleDuration { get; }
+
+        // FigTreeRewardInterval
+        public int FigTreeRewardInterval { get; }
 
         // LightCycleDuration
         public int LightCycleDuration { get; }
