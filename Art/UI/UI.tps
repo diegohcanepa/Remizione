@@ -253,11 +253,11 @@
             </struct>
             <key type="filename">Items-assets/AmberSap.png</key>
             <key type="filename">Items-assets/AppleOn.png</key>
-            <key type="filename">Items-assets/BarrenFig.png</key>
             <key type="filename">Items-assets/CobaltPebble.png</key>
             <key type="filename">Items-assets/CrudeKey.png</key>
             <key type="filename">Items-assets/EmptyBowl.png</key>
             <key type="filename">Items-assets/FakeItem.png</key>
+            <key type="filename">Items-assets/Fig.png</key>
             <key type="filename">Items-assets/FulguriteCrystal.png</key>
             <key type="filename">Items-assets/GadlingKnuckle.png</key>
             <key type="filename">Items-assets/Loquat.png</key>

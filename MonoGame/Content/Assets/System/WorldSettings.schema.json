@@ -16,7 +16,13 @@
     "darkCycleDuration": {
       "type": "integer"
     },
+    "figCycleInterval": {
+      "type": "integer"
+    },    
     "figTreeRewardInterval": {
+      "type": "integer"
+    },    
+    "itemOrbExpirationInterval": {
       "type": "integer"
     },    
     "lightCycleDuration": {

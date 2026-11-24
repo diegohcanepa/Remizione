@@ -105,6 +105,6 @@ namespace Remizione
         }
 
         // ExpirationTimer
-        public float ExpirationTimer { get; set; } = 5;
+        public float ExpirationTimer { get; set; } = GameData.WorldSettings.ItemOrbExpirationInterval;
     }
 }

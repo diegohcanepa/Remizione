@@ -21,16 +21,16 @@ namespace Remizione
             LabelKey = "Prop.FigTree";
             ShadowOffset = new(16, -2);
             StandPoint = new(35, 60);
-            Verb = Verb.LookAt;
 
             AttachedLight ??= new("Light", LightKind.Default)
             {
                 BlendMode = LightBlendMode.Max,
                 PivotOrigin = RectanglePoint.Center,
-                Scale = new(3,2)
+                Opacity = .7f,
+                Scale = new(4)
             };
 
-            AttachedLightPosition = new(40,32);
+            AttachedLightPosition = new(27, 30);
 
             AttachedLight.Unlit(true);
         }
@@ -43,12 +43,12 @@ namespace Remizione
         protected override void OnCustomStateChanged()
         {
             base.OnCustomStateChanged();
-            
-            if (CustomState == 1)
-                Scale = new(.75f);
+            Scale = CustomState == 1 ? new(.75f) : Vector2.One;
 
-            else if (CustomState == 2)
-                TimeUntilNextReward = GameData.WorldSettings.FigTreeRewardInterval;
+            if (CustomState > 1)
+                Verb = Verb.Use;
+            else
+                Verb = Verb.LookAt;
         }
 
         // OnItemRewardChanged
@@ -58,15 +58,15 @@ namespace Remizione
 
             if (HasItemReward)
             {
-                Verb = Verb.Use;
-                AttachedLight?.Lit(4000);
+                AttachedLight?.Lit(2000);
             }
             else
             {
                 TimeUntilNextReward = GameData.WorldSettings.FigTreeRewardInterval;
-                Verb = Verb.LookAt;
-                AttachedLight?.Unlit(true);
+                AttachedLight?.Unlit(3000);
             }
+
+            OnCustomStateChanged();
         }
 
         // OnLoad
@@ -75,25 +75,43 @@ namespace Remizione
             base.OnLoad();
             if (ItemReward != null)
                 AttachedLight?.Lit(true);
+            OnCustomStateChanged();
         }
 
         // OnUpdate
         protected override void OnUpdate(GameTime gameTime)
         {
             base.OnUpdate(gameTime);
+
             
-            if (!HasItemReward && CustomState == 2 && GameData.WorldSettings.FigTreeRewardInterval > 0)
+            if (Session.CycleManager.CycleCount >= CycleThreshold)
             {
-                TimeUntilNextReward -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-                if (TimeUntilNextReward <= 0)
-                    ItemRewardName = ItemNames.Fig;
+                if (!HasItemReward && CustomState == 2 && GameData.WorldSettings.FigTreeRewardInterval > 0)
+                {
+                    TimeUntilNextReward -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    if (TimeUntilNextReward <= 0)
+                        Reward();
+                }
             }
         }
 
         #endregion
 
+        // CycleThreshold
+        [ScriptProperty]
+        public int CycleThreshold { get; set; }
+
+        // Reward
+        [ScriptMethod]
+        public void Reward()
+        {
+            ItemRewardName = ItemNames.Fig;
+            CycleThreshold = Session.CycleManager.CycleCount + 3;
+            TimeUntilNextReward = GameData.WorldSettings.FigTreeRewardInterval;
+        }
+
         // TimeUntilNextReward
         [ScriptProperty]
-        public float TimeUntilNextReward { get; set; } = GameData.WorldSettings.FigTreeRewardInterval;
+        public float TimeUntilNextReward { get; set; }
     }
 }

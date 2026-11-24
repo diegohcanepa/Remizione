@@ -6,7 +6,6 @@
 			"category": "Misc",
 			"actionKind": "Outcome",
 			"isDepletable": true,
-			"itemKind": "Key",
 			"unlockMode": "None"
 		},
 		{
