@@ -18,7 +18,6 @@ namespace Remizione
             : base(session, name)
         {
             Atlas = Atlases.Environment;
-            IsStatic = true;
             RenderLayer = RenderLayer.Default;
 
             AttachedLight ??= new("Light", LightKind.CobaltPebble)

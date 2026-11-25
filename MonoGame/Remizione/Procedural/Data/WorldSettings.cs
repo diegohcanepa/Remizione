@@ -35,14 +35,14 @@ namespace Remizione
             // FigTreeRewardInterval
             FigTreeRewardInterval = element.GetInt32("figTreeRewardInterval", 0);
 
-            // ItemOrbExpirationInterval
-            ItemOrbExpirationInterval = element.GetInt32("itemOrbExpirationInterval", 10);
-
             // LightCycleDuration
             LightCycleDuration = element.GetInt32("lightCycleDuration", 180);
 
             // LightCycleTransitionDuration
             LightCycleTransitionDuration = element.GetInt32("lightCycleTransitionDuration", 15);
+
+            // OrbExpirationInterval
+            OrbExpirationInterval = element.GetInt32("orbExpirationInterval", 10);
 
             // SulfurStoneDuration
             SulfurStoneDuration = element.GetInt32("sulfurStoneDuration", 40);
@@ -65,14 +65,14 @@ namespace Remizione
         // FigTreeRewardInterval
         public int FigTreeRewardInterval { get; }
 
-        // ItemOrbExpirationInterval
-        public int ItemOrbExpirationInterval { get; }
-
         // LightCycleDuration
         public int LightCycleDuration { get; }
 
         // LightCycleTransitionDuration
         public int LightCycleTransitionDuration { get; }
+
+        // OrbExpirationInterval
+        public int OrbExpirationInterval { get; }
 
         // SulfurStoneDuration
         public int SulfurStoneDuration { get; }

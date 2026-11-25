@@ -167,7 +167,7 @@ namespace Remizione
             AotTypeRegistry.Register(typeof(Fleshiness));
             AotTypeRegistry.Register(typeof(GameRoom));
             AotTypeRegistry.Register(typeof(GroundTorch));
-            AotTypeRegistry.Register(typeof(ItemOrb));
+            AotTypeRegistry.Register(typeof(Orb));
             AotTypeRegistry.Register(typeof(Pottery));
             AotTypeRegistry.Register(typeof(ProceduralRoom));
             AotTypeRegistry.Register(typeof(Prop));
@@ -212,16 +212,16 @@ namespace Remizione
             AotTypeRegistry.Register("y-tween", typeof(YTweenCommand));
         }
 
-        // SerializeDroppedKeyItems
-        private string SerializeDroppedKeyItems()
+        // SerializeOrbs
+        private string SerializeOrbs()
         {
             var list = new List<string>();
 
             foreach (var room in Entities.OfType<GameRoom>())
             {
-                foreach (var orb in room.Children.OfType<ItemOrb>())
+                foreach (var orb in room.Children.OfType<Orb>())
                 {
-                    if (orb.ItemReward is { ItemKind: ItemKind.Key } itemDef)
+                    if (orb.ItemReward is {  ItemKind: ItemKind.Key } itemDef)
                     {
                         var value = $"{itemDef.Name}|{XmlConvert.ToString(orb.ItemRewardAmount)}|{room.Name}|{DataConvert.ToString(orb.Position)}";
                         list.Add(value);
@@ -241,7 +241,7 @@ namespace Remizione
             {
                 foreach (var thing in Room.Children.OfType<GameThing>())
                 {
-                    if (thing is ItemOrb)
+                    if (thing is Orb)
                         continue;
 
                     if (thing.InstanceKind == EntityInstanceKind.RuntimeClone)
@@ -543,7 +543,7 @@ namespace Remizione
 
             foreach (var item in droppedKeyItems)
             {
-                ItemOrb.Drop(item.itemDef, item.amount, item.room, item.position);
+                Orb.Drop(item.itemDef, item.room, item.position, item.amount);
             }
             droppedKeyItems.Clear();
 
@@ -671,8 +671,8 @@ namespace Remizione
             // UnlockedDefinitions
             output.WriteAttributeString("UnlockedDefinitions", UnlockManager.Serialize());
 
-            // DroppedKeyItems
-            output.WriteAttributeString("DroppedKeyItems", string.Join(";", SerializeDroppedKeyItems()));
+            // Orbs
+            output.WriteAttributeString("Orbs", string.Join(";", SerializeOrbs()));
 
             // RuntimeClones
             output.WriteAttributeString("RuntimeClones", string.Join(";", SerializeRuntimeClones()));

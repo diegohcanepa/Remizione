@@ -1,5 +1,4 @@
 ﻿using Adberration.Scripting;
-using Engendro;
 using Microsoft.Xna.Framework;
 
 namespace Remizione
@@ -17,22 +16,9 @@ namespace Remizione
         {
             Atlas = Atlases.Props;
             DepthOffset = -2;
-            IsStatic = true;
             LabelKey = "Prop.FigTree";
             ShadowOffset = new(16, -2);
             StandPoint = new(35, 60);
-
-            AttachedLight ??= new("Light", LightKind.Default)
-            {
-                BlendMode = LightBlendMode.Max,
-                PivotOrigin = RectanglePoint.Center,
-                Opacity = .7f,
-                Scale = new(4)
-            };
-
-            AttachedLightPosition = new(27, 30);
-
-            AttachedLight.Unlit(true);
         }
 
         #endregion
@@ -44,11 +30,6 @@ namespace Remizione
         {
             base.OnCustomStateChanged();
             Scale = CustomState == 1 ? new(.75f) : Vector2.One;
-
-            if (CustomState > 1)
-                Verb = Verb.Use;
-            else
-                Verb = Verb.LookAt;
         }
 
         // OnItemRewardChanged
@@ -56,15 +37,8 @@ namespace Remizione
         {
             base.OnItemRewardChanged();
 
-            if (HasItemReward)
-            {
-                AttachedLight?.Lit(2000);
-            }
-            else
-            {
+            if (!HasItemReward)
                 TimeUntilNextReward = GameData.WorldSettings.FigTreeRewardInterval;
-                AttachedLight?.Unlit(3000);
-            }
 
             OnCustomStateChanged();
         }
@@ -73,8 +47,6 @@ namespace Remizione
         protected override void OnLoad()
         {
             base.OnLoad();
-            if (ItemReward != null)
-                AttachedLight?.Lit(true);
             OnCustomStateChanged();
         }
 
@@ -83,10 +55,9 @@ namespace Remizione
         {
             base.OnUpdate(gameTime);
 
-            
             if (Session.CycleManager.CycleCount >= CycleThreshold)
             {
-                if (!HasItemReward && CustomState == 2 && GameData.WorldSettings.FigTreeRewardInterval > 0)
+                if (!HasItemReward && CustomState == 3 && GameData.WorldSettings.FigTreeRewardInterval > 0)
                 {
                     TimeUntilNextReward -= (float)gameTime.ElapsedGameTime.TotalSeconds;
                     if (TimeUntilNextReward <= 0)
@@ -105,9 +76,11 @@ namespace Remizione
         [ScriptMethod]
         public void Reward()
         {
-            ItemRewardName = ItemNames.Fig;
             CycleThreshold = Session.CycleManager.CycleCount + 3;
             TimeUntilNextReward = GameData.WorldSettings.FigTreeRewardInterval;
+
+            if (Room != null && Orb.Drop(ItemNames.Fig, Room, Position + new Vector2(-6, 4)) is { } orb)
+                orb.ExpirationTimer = 0;
         }
 
         // TimeUntilNextReward

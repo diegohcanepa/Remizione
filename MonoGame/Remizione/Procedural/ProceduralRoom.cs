@@ -382,7 +382,7 @@ namespace Remizione
                     if (safeArea.Intersects(Children[i].BoundingBox))
                         continue;
 
-                    if (Children[i] is not ItemOrb itemOrb || itemOrb.AllowCleanup)
+                    if (Children[i] is not Orb orb || orb.Transient)
                         removeList.Add(Children[i]);
                 }
             }

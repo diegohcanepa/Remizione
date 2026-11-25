@@ -441,7 +441,7 @@ namespace Remizione
             }
 
             if (ItemReward != null)
-                ItemOrb.Drop(ItemReward, 1, room, Position);
+                Orb.Drop(ItemReward, room, Position, 1);
         }
 
         // GetHurtShakeOffset

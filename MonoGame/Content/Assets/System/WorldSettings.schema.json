@@ -22,15 +22,15 @@
     "figTreeRewardInterval": {
       "type": "integer"
     },    
-    "itemOrbExpirationInterval": {
-      "type": "integer"
-    },    
     "lightCycleDuration": {
       "type": "integer"
     },
     "lightCycleTransitionDuration": {
       "type": "integer"
     },
+    "orbExpirationInterval": {
+      "type": "integer"
+    },    
     "sulfurStoneDuration": {
       "type": "integer"
     }

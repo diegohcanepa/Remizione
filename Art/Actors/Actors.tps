@@ -564,6 +564,7 @@
                     <filename>Hopeless-assets</filename>
                     <filename>Monk-assets</filename>
                     <filename>PenitentA-assets</filename>
+                    <filename>Beheaded-assets</filename>
                 </array>
             </struct>
         </map>

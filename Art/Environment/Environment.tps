@@ -328,6 +328,9 @@
                 <false/>
             </struct>
             <key type="filename">Environment-assets/DestinationMark.png</key>
+            <key type="filename">Orb-assets/Orb01.png</key>
+            <key type="filename">Orb-assets/Orb02.png</key>
+            <key type="filename">Orb-assets/Orb03.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -369,21 +372,6 @@
                 <rect>64,56,128,113</rect>
                 <key>scale9Paddings</key>
                 <rect>64,56,128,113</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Environment-assets/ItemOrb.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,3,3,5</rect>
-                <key>scale9Paddings</key>
-                <rect>2,3,3,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -754,6 +742,7 @@
                     <filename>BloodSplashHigh-assets</filename>
                     <filename>BloodSplashLow-assets</filename>
                     <filename>Fleshiness-assets</filename>
+                    <filename>Orb-assets</filename>
                 </array>
             </struct>
         </map>

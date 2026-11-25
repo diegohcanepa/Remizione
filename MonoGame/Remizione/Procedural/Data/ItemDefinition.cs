@@ -127,17 +127,17 @@ namespace Remizione
             if (ItemKind == ItemKind.Key)
             {
                 LabelColor = Colors.Inventory.KeyItem;
-                OrbLightKind = LightKind.KeyItemOrb;
+                OrbLightKind = LightKind.KeyOrb;
             }
             else if (ItemKind == ItemKind.Organic)
             {
                 LabelColor = Colors.Inventory.OrganicItem;
-                OrbLightKind = LightKind.OrganicItemOrb;
+                OrbLightKind = LightKind.OrganicOrb;
             }
             else
             {
                 LabelColor = Colors.Inventory.CommonItem;
-                OrbLightKind = LightKind.CommonItemOrb;
+                OrbLightKind = LightKind.CommonOrb;
             }
 
             if (ItemKind != ItemKind.Organic && PerishInterval > 0)

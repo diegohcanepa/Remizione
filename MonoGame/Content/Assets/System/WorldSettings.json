@@ -7,5 +7,6 @@
   "figTreeRewardInterval": 10,
   "lightCycleDuration": 60,
   "lightCycleTransitionDuration": 3,
+  "orbExpirationInterval": 15,
   "sulfurStoneDuration": 40
 }

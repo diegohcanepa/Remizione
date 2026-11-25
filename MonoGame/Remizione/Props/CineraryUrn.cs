@@ -23,7 +23,6 @@ namespace Remizione
             DepthOffset = 1;
             Hotspot = new("12,0;12,15;3,15;3,0");
             IsHittable = true;
-            IsStatic = true;
             LabelKey = "Prop.CineraryUrn";
             ShadowOffset = new(2, -3);
             ShadowSpotSize = 6;

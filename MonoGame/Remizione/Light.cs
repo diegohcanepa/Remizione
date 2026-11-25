@@ -47,9 +47,9 @@ namespace Remizione
             {
                 LightKind.CobaltPebble => new Color(163, 167, 194),
                 LightKind.Fire => new Color(255, 160, 160),
-                LightKind.KeyItemOrb => Colors.Palette.SkyBlue,
-                LightKind.CommonItemOrb => Colors.Palette.TerraLight,
-                LightKind.OrganicItemOrb => Colors.Palette.Green,
+                LightKind.KeyOrb => Colors.Palette.SkyBlue,
+                LightKind.CommonOrb => Colors.Palette.TerraLight,
+                LightKind.OrganicOrb => Colors.Palette.Green,
                 LightKind.SulfurBonfire => new(184, 196, 81),
                 LightKind.Player => new Color(235, 170, 170) * .7f,
                 _ => Color.White
@@ -114,9 +114,9 @@ namespace Remizione
                     unlitTweenDuration = 2500;
                     break;
 
-                case LightKind.KeyItemOrb:
-                case LightKind.CommonItemOrb:
-                case LightKind.OrganicItemOrb:
+                case LightKind.KeyOrb:
+                case LightKind.CommonOrb:
+                case LightKind.OrganicOrb:
                     litTweenDuration = 1000;
                     unlitTweenDuration = 1000;
                     break;

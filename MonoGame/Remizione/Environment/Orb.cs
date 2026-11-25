@@ -4,16 +4,16 @@ using Microsoft.Xna.Framework;
 namespace Remizione
 {
     /// <summary>
-    /// ItemOrb
+    /// Orb
     /// </summary>
-    public sealed class ItemOrb : Pickable
+    public sealed class Orb : Pickable
     {
         private readonly FloatTween fadeTween = new();
 
         #region Constructor
 
         // Constructor
-        public ItemOrb(GameSession session, string name)
+        public Orb(GameSession session, string name)
             : base(session, name)
         {
             ApproachBehavior = ApproachBehavior.Over;
@@ -36,6 +36,7 @@ namespace Remizione
             {
                 AttachedLight?.Unlit(true);
                 LabelKey = string.Empty;
+                Transient = true;
                 return;
             }
 
@@ -47,7 +48,7 @@ namespace Remizione
 
             this.AttachedLight.LightKind = ItemReward.OrbLightKind;
             this.Color = AttachedLight.Color;
-
+            this.ExpirationTimer = ItemReward.ItemKind == ItemKind.Key ? 0 : GameData.WorldSettings.OrbExpirationInterval;
             LabelKey = ItemReward != null ? $"Item.{ItemReward.Name}.Name" : string.Empty;
         }
 
@@ -75,26 +76,26 @@ namespace Remizione
             if (ExpirationTimer > 0 && ItemReward != null)
             {
                 ExpirationTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-                if (ExpirationTimer < 0)
+                if (ExpirationTimer <= 0)
+                {
                     fadeTween.Start(TweenStyle.CubicIn, OpacityFactor, 0, 2500, Unparent);
+                    Tweens.ScaleTween = Vector2Tween.Create(TweenStyle.CubicIn, Scale, Vector2.Zero, 3500);
+                }
             }
         }
 
         #endregion
 
-        // AllowCleanup
-        public bool AllowCleanup => ItemReward == null || ExpirationTimer == 0;
-
         // Drop
-        public static ItemOrb? Drop(string item, int amount, GameRoom room, Vector2 position)
+        public static Orb? Drop(string itemName, GameRoom room, Vector2 position, int amount = 1)
         {
-            return GameData.Items.Find(item) is { } def ? Drop(def, amount, room, position) : null;
+            return GameData.Items.Find(itemName) is { } def ? Drop(def, room, position, amount) : null;
         }
 
         // Drop
-        public static ItemOrb? Drop(ItemDefinition itemDefinition, int amount, GameRoom room, Vector2 position)
+        public static Orb? Drop(ItemDefinition itemDefinition, GameRoom room, Vector2 position, int amount = 1)
         {
-            var orb = room.Session.CreateThingClone<ItemOrb>(nameof(ItemOrb));
+            var orb = room.Session.CreateThingClone<Orb>(nameof(Orb));
 
             orb.ItemReward = itemDefinition;
             orb.ItemRewardAmount = amount;
@@ -105,6 +106,20 @@ namespace Remizione
         }
 
         // ExpirationTimer
-        public float ExpirationTimer { get; set; } = GameData.WorldSettings.ItemOrbExpirationInterval;
+        public float ExpirationTimer
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    Transient = field > 0;
+                }
+            }
+        }
+
+        // Transient
+        public bool Transient { get; private set; }
     }
 }

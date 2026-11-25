@@ -23,6 +23,7 @@ namespace Content.Builder
     /// </summary>
     public sealed class Builder : ContentBuilder
     {
+        // GetContentCollection
         public override IContentCollection GetContentCollection()
         {
             var content = new ContentCollection();
