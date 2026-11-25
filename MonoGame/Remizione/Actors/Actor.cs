@@ -516,11 +516,7 @@ namespace Remizione
             if (IsPlayer)
             {
                 if (Session.InterruptAwaitingScripts())
-                {
                     this.Game.SceneManager.PopUntil(Session);
-                    StopTalking();
-                    speechText?.Hide();
-                }
 
                 Session.Camera.Shake(TweenStyle.Linear, Vector2.One, 40, 6);
             }
