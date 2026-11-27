@@ -50,7 +50,19 @@ namespace Remizione
         #endregion
 
         // HeldItem
-        public Item? HeldItem { get; set; }
+        public Item? HeldItem
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    if (field != null)
+                        UnarmedAttackMode = false;
+                }
+            }
+        }
 
         // Refresh
         public void Refresh()
@@ -75,5 +87,19 @@ namespace Remizione
 
         // Target
         public GameThing? Target { get; private set; }
+
+        // UnarmedAttackMode
+        public bool UnarmedAttackMode
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    HeldItem = null;
+                }
+            }
+        }
     }
 }

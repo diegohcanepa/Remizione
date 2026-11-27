@@ -153,7 +153,7 @@ namespace Remizione
     public enum MeterColor { Green, Orange, Purple, SkyBlue, White }
 
     // MouseCursorIcon
-    public enum MouseCursorIcon { Cross, Arrow, Down, Eye, Hand, Left, Lift, Disabled, Right, Sack, Talk, Target, Up, Wait }
+    public enum MouseCursorIcon { Cross, Arrow, Down, Eye, Hand, Left, Lift, Disabled, Right, Sack, Talk, TargetOff, TargetOn, Up, Wait }
 
     // NameValidationRule
     public enum NameValidationRule
@@ -227,7 +227,7 @@ namespace Remizione
     public enum UserAction { Discard, Drop, Use }
 
     // Verb
-    public enum Verb { None, Use, LookAt, Talk, Attack, Lift, GoLeft, GoRight, GoUp, GoDown, PickUp, Null }
+    public enum Verb { None, Use, LookAt, Talk, Attack, Lift, GoLeft, GoRight, GoUp, GoDown, PickUp, Disabled }
 
     // VolumeCategory
     public enum VolumeCategory { Ambient, FX, Music, Voice, Master }

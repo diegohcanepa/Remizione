@@ -12,6 +12,9 @@ namespace Remizione.InteractionCommands
         // CanExecute
         public override bool CanExecute(InteractionData data, Actor player, GameThing target, Verb verb)
         {
+            if (player.Session.InteractionContext.UnarmedAttackMode)
+                return false;
+
             var heldItem = player.Session.InteractionContext.HeldItem;
             outcomeScript = null;
 

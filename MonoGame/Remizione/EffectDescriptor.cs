@@ -22,17 +22,22 @@ namespace Remizione
         #region Constructor
 
         // Constructor
+        public EffectDescriptor()
+        {
+        }
+
+        // Constructor
         public EffectDescriptor(JsonElement element)
         {
             this.Amount = element.GetObject("amount", v => new DiceExpression(v));
-            this.Chance = element.GetFloat("chance", 1);
-            this.Context = element.GetEnum("context", EffectContext.Contact);
-            this.DamageType = element.GetEnum("damageType", DamageType.Physical);
-            this.EffectType = element.GetEnum("effectType", EffectType.None);
-            this.KnockbackIntensity = element.GetEnum("knockbackIntensity", KnockbackIntensity.Low);
+            this.Chance = element.GetFloat("chance", this.Chance);
+            this.Context = element.GetEnum("context", this.Context);
+            this.DamageType = element.GetEnum("damageType", this.DamageType);
+            this.EffectType = element.GetEnum("effectType", this.EffectType);
+            this.KnockbackIntensity = element.GetEnum("knockbackIntensity", this.KnockbackIntensity);
             this.Sound = element.GetObject("sound", Sound.Get);
             this.StatusType = element.GetEnum<StatusType>("statusType");
-            this.Target = element.GetEnum("target", EffectTarget.Target);
+            this.Target = element.GetEnum("target", this.Target);
         }
 
         #endregion
@@ -251,19 +256,19 @@ namespace Remizione
         #endregion
 
         // Amount
-        public DiceExpression? Amount { get; }
+        public DiceExpression? Amount { get; init; }
 
         // Chance
-        public Ratio Chance { get; }
+        public Ratio Chance { get; init; } = 1;
 
         // Context
-        public EffectContext Context { get; }
+        public EffectContext Context { get; init; } = EffectContext.Contact;
 
         // DamageType
-        public DamageType DamageType { get; }
+        public DamageType DamageType { get; init; } = DamageType.Physical;
 
         // EffectType
-        public EffectType EffectType { get; }
+        public EffectType EffectType { get; init; } = EffectType.None;
 
         // GetKnockbackForce
         public Vector2 GetKnockbackForce()
@@ -279,15 +284,15 @@ namespace Remizione
         }
 
         // KnockbackIntensity
-        public KnockbackIntensity KnockbackIntensity { get; }
+        public KnockbackIntensity KnockbackIntensity { get; init; } = KnockbackIntensity.Low;
 
         // Sound
-        public Sound? Sound { get; }
+        public Sound? Sound { get; init; }
 
         // StatusType
-        public StatusType? StatusType { get; }
+        public StatusType? StatusType { get; init; }
 
         // Target
-        public EffectTarget Target { get; }
+        public EffectTarget Target { get; init; } = EffectTarget.Target;
     }
 }

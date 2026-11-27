@@ -125,6 +125,25 @@
 			"unlockMode": "None"
 		},
 		{
+			"name": "Punch",
+			"animationName": "Punch",
+			"category": "Weapon",
+			"actionKind": "Proximity",
+			"hardSurfacePenalty": true,
+			"isDepletable": false,
+			"itemKind": "Key",
+			"spawnWeight": 0,
+			"unlockMode": "None",
+			"effects": [
+				{
+					"context": "Attack",
+					"effectType": "Damage",
+					"amount": "1",
+					"sound": "BareFist"
+				}
+			]
+		},
+		{
 			"name": "RusticAxe",
 			"animationName": "Punch",
 			"breakBaseChance": 0.5,

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:60040cbf1676e315df81e079e7bc42de:a9b2b90d4a8369280cd712d29868a191:8a2bcf6183f5f6907875966dbe68a151$ -->
+<!-- $TexturePacker:SmartUpdate:9ae71b871db69ee2d063d6338bfe6a72:6911323ad5ed8cd2b6e659f56be8e0b3:8a2bcf6183f5f6907875966dbe68a151$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -44,17 +44,17 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="DialogBoxBorderLT.png" x="24" y="208" w="4" h="4"/>
     <sprite n="DialogBoxBorderR.png" x="24" y="214" w="4" h="4"/>
     <sprite n="DialogBoxBorderRB.png" x="24" y="220" w="4" h="4"/>
-    <sprite n="DialogBoxBorderRT.png" x="166" y="180" w="4" h="4"/>
-    <sprite n="DialogBoxBorderT.png" x="172" y="180" w="4" h="4"/>
-    <sprite n="DialogBoxFillB.png" x="178" y="180" w="4" h="4"/>
-    <sprite n="DialogBoxFillL.png" x="184" y="180" w="4" h="4"/>
-    <sprite n="DialogBoxFillLB.png" x="190" y="180" w="4" h="4"/>
-    <sprite n="DialogBoxFillLT.png" x="196" y="180" w="4" h="4"/>
-    <sprite n="DialogBoxFillR.png" x="202" y="180" w="4" h="4"/>
-    <sprite n="DialogBoxFillRB.png" x="208" y="180" w="4" h="4"/>
-    <sprite n="DialogBoxFillRT.png" x="214" y="180" w="4" h="4"/>
-    <sprite n="DialogBoxFillT.png" x="220" y="180" w="4" h="4"/>
-    <sprite n="DialogOptionBullet.png" x="162" y="149" w="5" h="5"/>
+    <sprite n="DialogBoxBorderRT.png" x="163" y="180" w="4" h="4"/>
+    <sprite n="DialogBoxBorderT.png" x="169" y="180" w="4" h="4"/>
+    <sprite n="DialogBoxFillB.png" x="175" y="180" w="4" h="4"/>
+    <sprite n="DialogBoxFillL.png" x="181" y="180" w="4" h="4"/>
+    <sprite n="DialogBoxFillLB.png" x="187" y="180" w="4" h="4"/>
+    <sprite n="DialogBoxFillLT.png" x="193" y="180" w="4" h="4"/>
+    <sprite n="DialogBoxFillR.png" x="199" y="180" w="4" h="4"/>
+    <sprite n="DialogBoxFillRB.png" x="205" y="180" w="4" h="4"/>
+    <sprite n="DialogBoxFillRT.png" x="211" y="180" w="4" h="4"/>
+    <sprite n="DialogBoxFillT.png" x="217" y="180" w="4" h="4"/>
+    <sprite n="DialogOptionBullet.png" x="162" y="151" w="5" h="5"/>
     <sprite n="DialogOrnament.png" x="134" y="158" w="102" h="4"/>
     <sprite n="EchoBackground.png" x="244" y="74" w="240" h="49"/>
     <sprite n="EmptyBowl.png" x="18" y="159" w="14" h="14"/>
@@ -65,7 +65,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="HeartIcon.png" x="13" y="208" w="9" h="10"/>
     <sprite n="HeartMeterContainer.png" x="484" y="2" w="22" h="6"/>
     <sprite n="InspectItem.png" x="172" y="126" w="17" h="11"/>
-    <sprite n="InteractionTarget.png" x="152" y="180" w="5" h="4"/>
+    <sprite n="InteractionTarget.png" x="128" y="193" w="5" h="4"/>
     <sprite n="InventoryItemSlot1.png" x="486" y="142" w="15" h="15"/>
     <sprite n="InventoryItemSlot2.png" x="486" y="159" w="15" h="15"/>
     <sprite n="InventoryItemSlot3.png" x="191" y="126" w="15" h="15"/>
@@ -93,22 +93,24 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="MouseCursorArrowIcon.png" x="504" y="73" w="6" h="6"/>
     <sprite n="MouseCursorCrossIcon.png" x="2" y="208" w="9" h="11"/>
     <sprite n="MouseCursorDisabledIcon.png" x="503" y="149" w="7" h="7"/>
-    <sprite n="MouseCursorDownIcon.png" x="99" y="199" w="9" h="6"/>
+    <sprite n="MouseCursorDownIcon.png" x="110" y="199" w="9" h="6"/>
     <sprite n="MouseCursorEyeIcon.png" x="77" y="199" w="9" h="9"/>
     <sprite n="MouseCursorHandIcon.png" x="200" y="143" w="10" h="12"/>
     <sprite n="MouseCursorLeftIcon.png" x="504" y="51" w="6" h="9"/>
     <sprite n="MouseCursorLiftIcon.png" x="503" y="119" w="7" h="8"/>
     <sprite n="MouseCursorRightIcon.png" x="504" y="62" w="6" h="9"/>
     <sprite n="MouseCursorSackIcon.png" x="64" y="175" w="11" h="11"/>
-    <sprite n="MouseCursorTalkIcon.png" x="88" y="199" w="9" h="8"/>
-    <sprite n="MouseCursorTargetIcon.png" x="62" y="200" w="9" h="9"/>
-    <sprite n="MouseCursorUpIcon.png" x="110" y="199" w="9" h="6"/>
+    <sprite n="MouseCursorTalkIcon.png" x="99" y="199" w="9" h="8"/>
+    <sprite n="MouseCursorTargetOffIcon.png" x="62" y="200" w="9" h="9"/>
+    <sprite n="MouseCursorTargetOnIcon.png" x="42" y="209" w="9" h="9"/>
+    <sprite n="MouseCursorUpIcon.png" x="142" y="180" w="9" h="6"/>
     <sprite n="MouseCursorWaitIcon.png" x="503" y="107" w="7" h="10"/>
     <sprite n="MouseLeftButtonIcon.png" x="503" y="81" w="7" h="11"/>
     <sprite n="MouseRightButtonIcon.png" x="503" y="94" w="7" h="11"/>
     <sprite n="Pixel.png" x="244" y="71" w="1" h="1"/>
     <sprite n="PointingHand.png" x="503" y="158" w="7" h="6"/>
     <sprite n="ProhibitionIcon.png" x="503" y="129" w="7" h="8"/>
+    <sprite n="Punch.png" x="162" y="138" w="8" h="11"/>
     <sprite n="PutrefactionIcon.png" x="30" y="191" w="12" h="11"/>
     <sprite n="PyritePebble.png" x="2" y="175" w="14" h="14"/>
     <sprite n="QuickInventoryBackground.png" x="244" y="125" w="240" h="43"/>
@@ -117,9 +119,9 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="RunModifierToxicIcon.png" x="90" y="175" w="11" h="11"/>
     <sprite n="RusticAxe.png" x="18" y="175" w="14" h="14"/>
     <sprite n="Sack.png" x="64" y="188" w="11" h="10"/>
-    <sprite n="SavingIcon.png" x="142" y="180" w="8" h="8"/>
+    <sprite n="SavingIcon.png" x="142" y="188" w="8" h="8"/>
     <sprite n="Scroll.png" x="2" y="138" w="130" h="19"/>
-    <sprite n="SpeechTextArrow.png" x="159" y="180" w="5" h="4"/>
+    <sprite n="SpeechTextArrow.png" x="135" y="193" w="5" h="4"/>
     <sprite n="SpeechTextPipe.png" x="134" y="138" w="5" h="3"/>
     <sprite n="StatusLaceration1.png" x="226" y="164" w="10" h="15"/>
     <sprite n="StatusLaceration2.png" x="50" y="192" w="10" h="15"/>
@@ -127,7 +129,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="StatusPutrefaction1.png" x="50" y="175" w="12" h="15"/>
     <sprite n="StatusPutrefaction2.png" x="2" y="191" w="12" h="15"/>
     <sprite n="StatusPutrefaction3.png" x="16" y="191" w="12" h="15"/>
-    <sprite n="StoneIcon.png" x="42" y="209" w="9" h="9"/>
+    <sprite n="StoneIcon.png" x="88" y="199" w="9" h="9"/>
     <sprite n="SulfurStone.png" x="34" y="175" w="14" h="14"/>
     <sprite n="TipBalloon.png" x="134" y="143" w="12" h="13"/>
     <sprite n="TraitLockpickingIcon.png" x="103" y="175" w="11" h="11"/>
@@ -139,6 +141,6 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="UIControlContainerEdgeRightLarge.png" x="505" y="26" w="5" h="11"/>
     <sprite n="UIControlContainerEdgeRightSmall.png" x="121" y="188" w="5" h="10"/>
     <sprite n="WarningIcon.png" x="238" y="169" w="4" h="9"/>
-    <sprite n="WoodIcon.png" x="162" y="138" w="8" h="9"/>
+    <sprite n="WoodIcon.png" x="153" y="180" w="8" h="9"/>
     <sprite n="WorldIcon.png" x="129" y="180" w="11" h="11"/>
 </TextureAtlas>

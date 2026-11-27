@@ -19,6 +19,7 @@ namespace Remizione
         private readonly HoldCommand holdCommand = new();
         private readonly ItemCommand itemCommand = new();
         private readonly OutcomeCommand scriptCommand = new();
+        private readonly UnarmedAttackCommand unarmedAttackCommand = new();
         private readonly ThrowHeldPropCommand throwCommand = new();
 
         #endregion
@@ -26,7 +27,7 @@ namespace Remizione
         // Constructor
         public InteractionData()
         {
-            this.commandChain = [throwCommand, combatCommand, holdCommand, scriptCommand, itemCommand];
+            this.commandChain = [unarmedAttackCommand, throwCommand, combatCommand, holdCommand, scriptCommand, itemCommand];
         }
 
         #region Private members
@@ -262,15 +263,8 @@ namespace Remizione
             }
             else if (context.HeldItem == null)
             {
-                if (player.Session.PlayerData.Inventory.Find(ItemNames.GadlingKnuckle) is Item item)
-                {
-                    context.HeldItem = item;
-                    MouseCursor.Click();
-                }
-                else
-                {
-                    MouseCursor.InvalidClick();
-                }
+                context.UnarmedAttackMode = !context.UnarmedAttackMode;
+                MouseCursor.Click();
             }
             else
             {

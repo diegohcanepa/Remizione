@@ -282,6 +282,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Items-assets/Punch.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,3,4,5</rect>
+                <key>scale9Paddings</key>
+                <rect>2,3,4,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">KeyboardControls-assets/KeyboardD.png</key>
             <key type="filename">KeyboardControls-assets/KeyboardGadgetsSlot.png</key>
             <key type="filename">KeyboardControls-assets/KeyboardI.png</key>
@@ -411,7 +426,8 @@
             </struct>
             <key type="filename">MouseCursors-assets/MouseCursorEyeIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorLeftIcon.png</key>
-            <key type="filename">MouseCursors-assets/MouseCursorTargetIcon.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorTargetOffIcon.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorTargetOnIcon.png</key>
             <key type="filename">UI-assets/ProhibitionIcon.png</key>
             <key type="filename">UIIcons-assets/BonfireIcon.png</key>
             <key type="filename">UIIcons-assets/StoneIcon.png</key>

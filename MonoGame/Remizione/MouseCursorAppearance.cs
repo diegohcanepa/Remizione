@@ -25,7 +25,7 @@ namespace Remizione
                 return null;
 
             if (player?.HeldProp != null && target != null)
-                return target.IsPlayer ? MouseCursorIcon.Cross : MouseCursorIcon.Target;
+                return target.IsPlayer ? MouseCursorIcon.Cross : MouseCursorIcon.TargetOn;
 
             // Modal speech text active
             if (SpeechText.ModalInstance != null)
@@ -45,6 +45,9 @@ namespace Remizione
 
                 return null;
             }
+
+            if (context.UnarmedAttackMode)
+                return target == null ? MouseCursorIcon.TargetOff : MouseCursorIcon.TargetOn;
 
             if (heldItem != null && (target == null || !Utils.IsGoToVerb(target.Verb)))
                 return null;
@@ -75,11 +78,7 @@ namespace Remizione
             }
 
             // 2. Custom Image
-            var desiredCustomImage = heldItem?.Definition.Image;
-            if (MouseCursor.CustomImage != desiredCustomImage)
-            {
-                MouseCursor.CustomImage = desiredCustomImage;
-            }
+            MouseCursor.CustomImage = heldItem?.Definition.Image;
 
             // 3. Highlight Color: Limpia la memoria si no aplica
             if (heldItem != null && (target == null || !Utils.IsGoToVerb(target.Verb)))
@@ -94,9 +93,7 @@ namespace Remizione
             // 4. Determinar y aplicar el Icono
             var targetIcon = DetermineIcon();
             if (targetIcon.HasValue)
-            {
                 MouseCursor.Icon = targetIcon.Value;
-            }
         }
 
         // MapVerbToIcon (Reemplaza a SyncIcon)
@@ -104,7 +101,7 @@ namespace Remizione
         {
             return verb switch
             {
-                Verb.Attack => MouseCursorIcon.Target,
+                Verb.Attack => MouseCursorIcon.TargetOn,
                 Verb.LookAt => MouseCursorIcon.Eye,
                 Verb.GoDown => MouseCursorIcon.Down,
                 Verb.GoLeft => MouseCursorIcon.Left,
@@ -115,7 +112,7 @@ namespace Remizione
                 Verb.Talk => MouseCursorIcon.Talk,
                 Verb.Use => MouseCursorIcon.Hand,
                 Verb.None => MouseCursorIcon.Cross,
-                Verb.Null => MouseCursorIcon.Disabled,
+                Verb.Disabled => MouseCursorIcon.Disabled,
                 _ => MouseCursorIcon.Cross
             };
         }

@@ -5,6 +5,7 @@
     /// </summary>
     internal static class SoundNames
     {
+        internal const string BareFist = nameof(BareFist);
         internal const string Bones = nameof(Bones);
         internal const string Bonfire = nameof(Bonfire);
         internal const string BonfireMenu = nameof(BonfireMenu);
