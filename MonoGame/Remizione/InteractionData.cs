@@ -20,14 +20,13 @@ namespace Remizione
         private readonly ItemCommand itemCommand = new();
         private readonly OutcomeCommand scriptCommand = new();
         private readonly UnarmedAttackCommand unarmedAttackCommand = new();
-        private readonly ThrowHeldPropCommand throwCommand = new();
 
         #endregion
 
         // Constructor
         public InteractionData()
         {
-            this.commandChain = [unarmedAttackCommand, throwCommand, combatCommand, holdCommand, scriptCommand, itemCommand];
+            this.commandChain = [unarmedAttackCommand, combatCommand, holdCommand, scriptCommand, itemCommand];
         }
 
         #region Private members
@@ -96,16 +95,12 @@ namespace Remizione
         {
             // 1. Props en mano: solo es Medium si es explícitamente arrojable
             if (player.HeldProp != null)
-            {
-                return player.HeldProp.Verb == Verb.Lift ? AttackRange.Medium : AttackRange.None;
-            }
+                return AttackRange.None;
 
             // 2. Ítem equipado
             var heldItem = player.Session.InteractionContext.HeldItem;
             if (heldItem != null)
-            {
                 return heldItem.Definition.AttackRange;
-            }
 
             // 3. Sin ítem ni prop (piña / interacción básica) -> Approch estándar
             return AttackRange.None;
@@ -140,19 +135,23 @@ namespace Remizione
             Clear();
 
             if (player.HeldProp != null)
-                verb = Verb.Attack;
-
-            var heldItem = player.Session.InteractionContext.HeldItem;
-            if (heldItem != null && !Utils.IsGoToVerb(verb))
             {
-                if (!target.CanBeHit() && heldItem.Definition.Category == ItemCategory.Weapon)
+                verb = Verb.Disabled;
+            }
+            else
+            {
+                var heldItem = player.Session.InteractionContext.HeldItem;
+                if (heldItem != null && !Utils.IsGoToVerb(verb))
                 {
-                    return;
-                }
-                else if (player == target)
-                {
-                    if (!heldItem.Definition.AllowSelfAction)
+                    if (!target.CanBeHit() && heldItem.Definition.Category == ItemCategory.Weapon)
+                    {
                         return;
+                    }
+                    else if (player == target)
+                    {
+                        if (!heldItem.Definition.AllowSelfAction)
+                            return;
+                    }
                 }
             }
 

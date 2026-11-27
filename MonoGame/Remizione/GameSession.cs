@@ -318,8 +318,8 @@ namespace Remizione
 
             for (var i = currentRoom.Children.Count - 1; i >= 0; i--)
             {
-                if (currentRoom.Children[i] is ThrownProp thrownObject)
-                    thrownObject.Unparent();
+                if (currentRoom.Children[i] is FallingProp fallingProp)
+                    fallingProp.Unparent();
             }
         }
 

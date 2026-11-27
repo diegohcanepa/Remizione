@@ -41,10 +41,13 @@ namespace Remizione.InteractionCommands
         // Execute
         public override void Execute(InteractionData data, Actor player, GameThing target, Verb verb)
         {
+            player.StopMoving();
+
             if (!CanExecute(data, player, target, verb))
                 return;
 
-            player.StopMoving();
+            if (player.HeldProp != null)
+                return;
 
             if (target.Verb == Verb.PickUp && !player.Session.InventoryEnabled)
             {

@@ -58,9 +58,6 @@
               "minimum": 0,
               "maximum": 1.0
             },
-            "hardSurfacePenalty": {
-              "type": "boolean"
-            },
             "hpCost": {
               "type": "integer"
             },

@@ -25,7 +25,7 @@ namespace Remizione
                 return null;
 
             if (player?.HeldProp != null && target != null)
-                return target.IsPlayer ? MouseCursorIcon.Cross : MouseCursorIcon.TargetOn;
+                return target.IsPlayer ? MouseCursorIcon.Cross : MouseCursorIcon.Disabled;
 
             // Modal speech text active
             if (SpeechText.ModalInstance != null)
@@ -70,17 +70,17 @@ namespace Remizione
             var target = context.Target;
             var heldItem = context.HeldItem;
 
-            // 1. Estados críticos: Congelan cualquier actualización visual inmediatamente
+            // 1. Player is dead
             if (player?.IsDead == true)
             {
                 MouseCursor.Icon = MouseCursorIcon.Wait;
                 return;
             }
 
-            // 2. Custom Image
+            // 2. Held item
             MouseCursor.CustomImage = heldItem?.Definition.Image;
 
-            // 3. Highlight Color: Limpia la memoria si no aplica
+            // 3. Highlight Color
             if (heldItem != null && (target == null || !Utils.IsGoToVerb(target.Verb)))
             {
                 MouseCursor.HightlightColor = target == null ? null : Colors.MouseCursor.Highlight;
@@ -96,7 +96,7 @@ namespace Remizione
                 MouseCursor.Icon = targetIcon.Value;
         }
 
-        // MapVerbToIcon (Reemplaza a SyncIcon)
+        // MapVerbToIcon
         private static MouseCursorIcon MapVerbToIcon(Verb verb)
         {
             return verb switch

@@ -660,8 +660,8 @@ namespace Remizione
             if (HeldProp.MaxHP > 0)
             {
                 StopMoving();
-                var thrownObject = new ThrownProp(this, HeldProp);
-                thrownObject.Drop();
+                var thrownObject = new FallingProp(this, HeldProp);
+                thrownObject.Fall();
                 HeldProp = null;
                 lastKnownLiftPosition = null;
             }
@@ -1225,20 +1225,5 @@ namespace Remizione
         // SuppressMoveBounceEffect
         [ScriptProperty]
         public bool SuppressMoveBounceEffect { get; set; }
-
-        // ThrowHeldProp
-        public void ThrowHeldProp(GameThing target)
-        {
-            if (HeldProp == null)
-                return;
-
-            StopMoving();
-            FaceTo(target);
-            var state = BodyMachine.FindOrCreateState<ActorThrowObjectState>();
-            state.Target = target;
-            state.Prop = HeldProp;
-            HeldProp = null;
-            BodyMachine.ChangeState(state.GetType());
-        }
     }
 }
