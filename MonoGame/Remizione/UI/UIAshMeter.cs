@@ -55,6 +55,9 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
+            if (!Session.AshesEnabled)
+                return;
+
             icon.Draw(gameTime);
             valueText.Draw(gameTime);
         }
@@ -82,7 +85,7 @@ namespace Remizione
                 }
 
                 lastKnownValue = Session.PlayerData.Ashes;
-                valueText.Text = lastKnownValue.ToString(CultureInfo.InvariantCulture);
+                valueText.Text = lastKnownValue == 0 ? string.Empty : lastKnownValue.ToString(CultureInfo.InvariantCulture);
                 isInitializing = false;
             }
 

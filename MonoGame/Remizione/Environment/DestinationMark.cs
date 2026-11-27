@@ -21,11 +21,10 @@ namespace Remizione
             this.sprite = new Sprite(Atlases.Environment.DestinationMark)
             {
                 Color = Colors.DestinationMark,
+                Opacity = .5f,
                 PivotOrigin = RectanglePoint.Center,
                 Scale = new(.7f)
             };
-
-            sprite.Tweens.OpacityTween = FloatTween.Create(TweenStyle.CubicInOut, .3f, .5f, 500, -1);
         }
 
         #region Protected members
@@ -58,7 +57,7 @@ namespace Remizione
                     if (position.HasValue)
                     {
                         sprite.Position = position.Value;
-                        scaleTween.Start(TweenStyle.CubicIn, Vector2.Zero, new(.8f), 150);
+                        scaleTween.Start(TweenStyle.CubicIn, Vector2.Zero, new(.6f), 150);
                     }
                     else
                     {

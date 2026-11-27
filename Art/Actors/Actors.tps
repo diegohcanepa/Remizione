@@ -551,6 +551,24 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Zabul-assets/Move01.png</key>
+            <key type="filename">Zabul-assets/Move02.png</key>
+            <key type="filename">Zabul-assets/Stand01.png</key>
+            <key type="filename">Zabul-assets/Stand02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,2,6,4</rect>
+                <key>scale9Paddings</key>
+                <rect>3,2,6,4</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileLists</key>
         <map type="SpriteSheetMap">
@@ -564,7 +582,7 @@
                     <filename>Hopeless-assets</filename>
                     <filename>Monk-assets</filename>
                     <filename>PenitentA-assets</filename>
-                    <filename>Beheaded-assets</filename>
+                    <filename>Zabul-assets</filename>
                 </array>
             </struct>
         </map>

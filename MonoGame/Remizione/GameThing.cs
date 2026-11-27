@@ -277,6 +277,20 @@ namespace Remizione
             }
         }
 
+        // RefreshFloatingForce
+        private void RefreshFloatingForce()
+        {
+            if (FloatingForce > 0 && FloatingForceInterval > 0)
+            {
+                floatingTween ??= new FloatTween();
+                floatingTween.Start(TweenStyle.CubicInOut, 0, FloatingForce, FloatingForceInterval, -1);
+            }
+            else
+            {
+                floatingTween?.Stop();
+            }
+        }
+
         // ResolveStaticCollisions
         private void ResolveStaticCollisions()
         {
@@ -919,19 +933,25 @@ namespace Remizione
                 if (value != field)
                 {
                     field = value;
-
-                    if (field > 0)
-                    {
-                        floatingTween ??= new FloatTween();
-                        floatingTween.Start(TweenStyle.CubicInOut, 0, field, 1000, -1);
-                    }
-                    else
-                    {
-                        floatingTween?.Stop();
-                    }
+                    RefreshFloatingForce();
                 }
             }
         }
+
+        // FloatingForceInterval
+        [ScriptProperty]
+        public int FloatingForceInterval
+        {
+            get;
+            set
+            {
+                if (value != field)
+                {
+                    field = value;
+                    RefreshFloatingForce();
+                }
+            }
+        } = 1000;
 
         // GetApproachPosition
         public Vector2 GetApproachPosition(GameThing requester, ApproachBehavior? behavior = null)

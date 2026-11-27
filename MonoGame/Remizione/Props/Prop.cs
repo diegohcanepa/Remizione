@@ -221,6 +221,19 @@ namespace Remizione
 
         #endregion
 
+        // BlockingUrn
+        [ScriptProperty]
+        public CineraryUrn? BlockingUrn { get; set; }
+
+        // CanInteract
+        public override bool CanInteract()
+        {
+            if (BlockingUrn != null && BlockingUrn.IsInCurrentRoom)
+                return false;
+
+            return base.CanInteract();
+        }
+
         // Definition
         public override PropDefinition? Definition { get; }
 

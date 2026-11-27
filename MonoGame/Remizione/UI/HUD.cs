@@ -29,7 +29,7 @@ namespace Remizione
             this.InventoryMeter = new(session.PlayerData.Inventory);
             this.DestinationMark = new(session);
             this.Message = new(RectanglePoint.Top, Screen.HUDArea.GetPoint(RectanglePoint.Top, 0, 10));
-            this.BottomMessage = new(RectanglePoint.Bottom, Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -5));
+            this.BottomMessage = new(RectanglePoint.Bottom, Screen.HUDArea.GetPoint(RectanglePoint.Bottom, 0, -9));
             this.AshMeter = new(session);
             this.statuses = new(session);
         }
@@ -52,8 +52,7 @@ namespace Remizione
             statuses.Draw(gameTime);
             Game.SpriteBatch.End();
 
-            if (Session.InventoryEnabled)
-                InventoryMeter.Draw(gameTime);
+            InventoryMeter.Draw(gameTime);
 
             Message.Draw(gameTime);
             BottomMessage.Draw(gameTime);

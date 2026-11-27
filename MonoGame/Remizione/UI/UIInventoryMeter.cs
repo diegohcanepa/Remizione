@@ -55,6 +55,9 @@ namespace Remizione
         // OnDraw
         protected override void OnDraw(GameTime gameTime)
         {
+            if (!Session.InventoryEnabled)
+                return;
+
             Game.SpriteBatch.Begin(Game.Camera);
             flyingIcon.Draw(gameTime);
             icon.Draw(gameTime);

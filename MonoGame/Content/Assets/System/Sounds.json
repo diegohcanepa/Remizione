@@ -4,9 +4,8 @@
     { "name": "Purgatory" }
   ],
   "Music": [
-    { "name": "Anger1", "tags": "Anger" },
-    { "name": "Main", "tags": "Light" },
-    { "name": "Dark1", "tags": "Dark" }
+    { "name": "Main", "volume": 0.7 },
+    { "name": "Shadow", "volume": 0.7 }
   ],
   "FX": [
     { "name": "BareFist", "soundCount": 3 },

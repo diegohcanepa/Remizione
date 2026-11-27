@@ -3,11 +3,33 @@
   "data": [
     {
       "name": "Threshold",
-      "minEnemies": 1,
-      "maxEnemies": 5,
+      "minEnemies": 3,
+      "maxEnemies": 9,
       "placeholders": [
         {
-          "position": "255,130"
+          "allowTags": ["Pottery"],
+          "position": "100,24",
+          "fillChance": 0.25
+        },
+        {
+          "allowTags": ["Pottery"],
+          "position": "112,30",
+          "fillChance": 0.25
+        },
+        {
+          "allowTags": ["Pottery"],
+          "position": "210,38",
+          "fillChance": 0.5
+        },
+        {
+          "allowTags": ["Pottery"],
+          "position": "241,93",
+          "fillChance": 0.5
+        },
+        {
+          "allowTags": ["Pottery"],
+          "position": "260,85",
+          "fillChance": 0.5
         }
       ]
     }

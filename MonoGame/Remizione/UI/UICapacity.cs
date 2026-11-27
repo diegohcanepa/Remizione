@@ -11,7 +11,7 @@ namespace Remizione
         #region Private fields
 
         private readonly TextSprite currentAmount;
-        private static readonly Color defaultColor = Colors.Palette.Terra;
+        private static readonly Color defaultColor = Colors.Palette.AmountText;
         private int lastCurrentAmount = int.MinValue;
         private int lastMaximumAmount = int.MinValue;
         private readonly TextSprite maximumAmount;
@@ -34,7 +34,7 @@ namespace Remizione
             // Maximum amount
             this.maximumAmount = new(Fonts.CommonOutline)
             {
-                Color = Colors.Palette.TerraDark,
+                Color = Colors.Palette.AmountTextDark,
                 PivotOrigin = RectanglePoint.Left,
                 Scale = ScaleInfo.Text.Large
             };

@@ -356,7 +356,6 @@
             <key type="filename">Modifiers-assets/TraitLockpickingIcon.png</key>
             <key type="filename">Modifiers-assets/TraitLuckIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorCrossIcon.png</key>
-            <key type="filename">MouseCursors-assets/MouseCursorInspectIcon.png</key>
             <key type="filename">MouseCursors-assets/MouseCursorSackIcon.png</key>
             <key type="filename">UIIcons-assets/CraftIcon.png</key>
             <key type="filename">UIIcons-assets/CycleDark.png</key>
@@ -377,6 +376,7 @@
                 <false/>
             </struct>
             <key type="filename">MouseCursors-assets/MouseCursorArrowIcon.png</key>
+            <key type="filename">MouseCursors-assets/MouseCursorDisabledIcon.png</key>
             <key type="filename">UI-assets/CheckMark.png</key>
             <key type="filename">UI-assets/PointingHand.png</key>
             <struct type="IndividualSpriteSettings">

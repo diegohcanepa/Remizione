@@ -248,6 +248,9 @@ namespace Remizione
             if (Room == null)
                 return;
 
+            if (IsPlayer && MaxHP == 0)
+                return;
+
             if (Sprite.Player.Frame == null || Sprite.Player.Frame == footstepLastUsedFrame || !Sprite.Player.Frame.IsTrigger)
                 return;
 
@@ -467,7 +470,7 @@ namespace Remizione
             BodyMachine.ChangeState<BodyMoveState>();
 
             // Reiniciamos el multiplicador de velocidad para aplicar la aceleración
-            moveAccelerationMultiplier = InitialSpeedMultiplier;
+            moveAccelerationMultiplier = MoveAccelerationTime > 0f ? InitialSpeedMultiplier : 1f;
 
             if (!SuppressMoveBounceEffect)
                 moveVerticalTween.Start(TweenStyle.QuadraticInOut, 0, .8f, 200, -1);
@@ -543,11 +546,19 @@ namespace Remizione
             if (!IsDead && !IsPlayer)
                 combatMachine?.Update(gameTime);
 
-            // Logica de aceleración
+            // Lógica de aceleración
             if (IsMoving && moveAccelerationMultiplier < 1f)
             {
-                float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-                moveAccelerationMultiplier = float.Min(1f, moveAccelerationMultiplier + (dt / MoveAccelerationTime));
+                if (MoveAccelerationTime <= 0f)
+                {
+                    moveAccelerationMultiplier = 1f;
+                }
+                else
+                {
+                    float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    if (dt > 0f)
+                        moveAccelerationMultiplier = float.Min(1f, moveAccelerationMultiplier + (dt / MoveAccelerationTime));
+                }
             }
 
             CheckContactDamage();

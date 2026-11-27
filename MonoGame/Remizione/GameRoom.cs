@@ -143,7 +143,7 @@ namespace Remizione
             //            if (AllowGlobalLight)
             {
                 Game.SpriteBatch.Begin(Session.Camera, SamplerState.LinearClamp, BlendState.Additive, null);
-                Session.Environment.LightMask.Draw(gameTime);
+                Session.Environment.DrawLightMask(gameTime);
                 Game.SpriteBatch.End();
             }
 
@@ -472,7 +472,7 @@ namespace Remizione
             if (target is ILightSource { IsEmittingLight: true })
                 return true;
 
-            if (Session.CycleManager.LightOpacity > 0 && Session.Environment.LightMask.BoundingBox.Contains(target.Position))
+            if (Session.CycleManager.LightOpacity > 0 && Session.Environment.LightMaskBoundingBox.Contains(target.Position))
                 return true;
 
             /*

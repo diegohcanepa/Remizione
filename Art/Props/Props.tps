@@ -530,71 +530,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">PetrifiedTree-assets/PetrifiedTreeA.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>6,6,12,11</rect>
-                <key>scale9Paddings</key>
-                <rect>6,6,12,11</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">PetrifiedTree-assets/PetrifiedTreeARemains1.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,4,5</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,4,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">PetrifiedTree-assets/PetrifiedTreeARemains2.png</key>
-            <key type="filename">PetrifiedTree-assets/PetrifiedTreeARemains3.png</key>
-            <key type="filename">PotteryB-assets/PotteryBRemains4.png</key>
-            <key type="filename">PotteryE-assets/PotteryEPiece1.png</key>
-            <key type="filename">PotteryE-assets/PotteryEPiece3.png</key>
-            <key type="filename">Props-assets/Sack.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,3,3</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,3,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">PetrifiedTree-assets/PetrifiedTreeAShadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>5,3,11,6</rect>
-                <key>scale9Paddings</key>
-                <rect>5,3,11,6</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">PotteryA-assets/PotteryA.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -713,6 +648,24 @@
                 <rect>2,1,3,3</rect>
                 <key>scale9Paddings</key>
                 <rect>2,1,3,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">PotteryB-assets/PotteryBRemains4.png</key>
+            <key type="filename">PotteryE-assets/PotteryEPiece1.png</key>
+            <key type="filename">PotteryE-assets/PotteryEPiece3.png</key>
+            <key type="filename">Props-assets/Sack.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,3,3</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,3,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1006,7 +959,6 @@
                     <filename>GravestoneA-assets</filename>
                     <filename>GravestoneB-assets</filename>
                     <filename>FigTree-assets</filename>
-                    <filename>PetrifiedTree-assets</filename>
                     <filename>CineraryUrn-assets</filename>
                 </array>
             </struct>

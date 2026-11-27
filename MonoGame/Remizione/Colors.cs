@@ -41,7 +41,7 @@ namespace Remizione
         internal static Color CreditLine { get; } = new(230, 230, 212);
 
         // DestinationMark
-        internal static Color DestinationMark { get; } = Palette.Green;
+        internal static Color DestinationMark { get; } = Palette.AmountText;
 
         // HPMeterActor
         internal static class HPMeterActor
@@ -55,10 +55,10 @@ namespace Remizione
         // HPMeterPlayer
         internal static class HPMeterPlayer
         {
-            internal static Color Back { get; } = Palette.TerraDarkest;
+            internal static Color Back { get; } = Palette.AmountTextDark;
             internal static Color Border { get; } = Palette.AlmostBlack;
             internal static Color Diff { get; } = Palette.RedBloody;
-            internal static Color Fore { get; } = Palette.TerraDark;
+            internal static Color Fore { get; } = Palette.AmountText;
         }
 
         // HPMeterProp
@@ -126,6 +126,8 @@ namespace Remizione
         // Palette
         internal static class Palette
         {
+            internal static Color AmountText { get; } = new(117, 83, 88);
+            internal static Color AmountTextDark { get; } = new(75, 57, 64);
             internal static Color AlmostBlack { get; } = new(25, 25, 25);
             internal static Color Green { get; } = new(59, 125, 79);
             internal static Color Orange { get; } = new(171, 81, 48);
@@ -149,7 +151,7 @@ namespace Remizione
         internal static Color Shadow { get; } = Color.Black * .3f;
 
         // ShadowOpacity
-        public const float ShadowOpacity = .3f;
+        public const float ShadowOpacity = .4f;
 
         // ShadowSpot
         internal static Color ShadowSpot { get; } = Color.Black * .7f;

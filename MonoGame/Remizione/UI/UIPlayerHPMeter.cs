@@ -14,7 +14,7 @@ namespace Remizione
         private Actor? actor;
         private readonly UICapacity capacityMeter;
         private readonly Sprite container = new(Atlases.UI.HeartMeterContainer) { PivotOrigin = RectanglePoint.Left };
-        private readonly Sprite icon = new(Atlases.UI.HeartIcon) { PivotOrigin = RectanglePoint.Center, Position = new(8, 8) };
+        private readonly Sprite icon = new(Atlases.UI.HeartIcon) { PivotOrigin = RectanglePoint.Center, Position = new(8) };
         private int lastHp = int.MinValue;
         private int lastMaxHp = int.MinValue;
         private readonly FlatMeter meter;
@@ -39,7 +39,7 @@ namespace Remizione
             this.capacityMeter = new()
             {
                 PivotOrigin = RectanglePoint.Left,
-                Position = container.BoundingBox.GetPoint(RectanglePoint.Right, 1, .5f),
+                Position = icon.BoundingBox.GetPoint(RectanglePoint.Right, 1, 0)
             };
 
             BoundingBox = icon.BoundingBox;
@@ -87,8 +87,8 @@ namespace Remizione
             if (actor == null)
                 return;
 
-            meter.Draw(gameTime);
-            container.Draw(gameTime);
+            //meter.Draw(gameTime);
+            //container.Draw(gameTime);
             icon.Draw(gameTime);
             capacityMeter.Draw(gameTime);
         }

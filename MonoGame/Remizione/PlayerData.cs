@@ -7,9 +7,12 @@ namespace Remizione
     /// </summary>
     public sealed class PlayerData
     {
+        private readonly GameSession session;
+
         // Constructor
         public PlayerData(GameSession session)
         {
+            this.session = session;
             Inventory = new(session);
         }
 
@@ -20,7 +23,10 @@ namespace Remizione
             set
             {
                 if (value != field)
+                {
                     field = Math.Max(0, value);
+                    session.AshesEnabled = true;
+                }
             }
         }
 

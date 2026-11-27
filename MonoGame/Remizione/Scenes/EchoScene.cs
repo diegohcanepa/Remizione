@@ -63,7 +63,7 @@ namespace Remizione
         private void Step()
         {
             CanClose = true;
-            if (Session.AwaitingScript?.NextStatement is not EchoCommand and not AwaitCommand)
+            if (Session.AwaitingScript?.NextStatement is not EchoCommand)
             {
                 MouseCursor.Click();
                 Game.SceneManager.Pop();

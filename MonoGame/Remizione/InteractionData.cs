@@ -231,7 +231,6 @@ namespace Remizione
 
             // In-place action?
             bool executeInPlace = (context.HeldItem == null && Target == player && player.HeldProp == null) ||
-                                  (Verb == Verb.LookAt && context.HeldItem == null && player.HeldProp == null) ||
                                   (context.HeldItem?.Definition.AllowSelfAction == true && Target.IsPlayer) ||
                                   (Target == player && context.HeldItem != null) ||
                                   (isRangedAction && IsInThrowZone(player, Target));

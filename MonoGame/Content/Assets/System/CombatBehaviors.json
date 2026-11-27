@@ -24,31 +24,17 @@
         ]
       },
       {
-        "name": "PenitentA",
+        "name": "Zabul",
         "archetype":
         {
-          "awarenessRange": 100,
-          "cooldownDuration": 1.5,
-          "exposedPauseDuration": 2,
+          "awarenessRange": 50,
+          "cooldownDuration": 1,
+          "exposedPauseDuration": 1,
           "fallbackMovement": "None",
-          "loseSightRange": 200,
-          "maxStepPerTurn": 30
-        },        
+          "loseSightRange": 100,
+          "maxStepPerTurn": 15
+        },
         "intents": [
-          {
-            "name": "GadlingKnuckle",
-            "animationName": "Punch",
-            "actionKind": "Proximity",
-            "maxRange": 15,
-            "effects": [
-              {
-                "context": "Attack",
-                "effectType": "Damage",
-                "amount": "1",
-                "sound": "BareFist"
-              }
-            ]
-          }
         ]
       }      
     ]

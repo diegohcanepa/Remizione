@@ -12,6 +12,7 @@ namespace Remizione
         #region Private members
 
         private readonly DustEmitter ashEmitter;
+        private readonly Sprite lightMask;
         private readonly GameSession session;
 
         #endregion
@@ -25,7 +26,7 @@ namespace Remizione
             this.ashEmitter = new DustEmitter(session.Camera, 6, 1000, 35);
             ashEmitter.Activate();
 
-            LightMask = new()
+            lightMask = new()
             {
                 Color = new Color(235, 170, 170),
                 RenderImage = Atlases.Environment.DefaultLight,
@@ -44,11 +45,17 @@ namespace Remizione
             session.Game.SpriteBatch.End();
         }
 
+        // DrawLightMask
+        public void DrawLightMask(GameTime gameTime)
+        {
+            lightMask.Draw(gameTime);
+        }
+
         // LightMapColor
         public Color LightMapColor => session.CycleManager.LightMapColor;
 
-        // LightMask
-        public Sprite LightMask { get; }
+        // LightMaskBoundingBox
+        public RectangleF LightMaskBoundingBox => lightMask.BoundingBox;
 
         // Update
         public void Update(GameTime gameTime)
@@ -56,9 +63,9 @@ namespace Remizione
             if (session.Room == null)
                 return;
 
-            LightMask.Opacity = session.CycleManager.LightOpacity;
-            LightMask.Position = session.Camera.Position;
-            LightMask.Update(gameTime);
+            lightMask.Opacity = session.CycleManager.LightOpacity;
+            lightMask.Position = session.Camera.Position;
+            lightMask.Update(gameTime);
 
             if (session.Room.AllowAshParticles)
                 ashEmitter.Update(gameTime);

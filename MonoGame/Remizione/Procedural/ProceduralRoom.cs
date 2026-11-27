@@ -30,6 +30,7 @@ namespace Remizione
 
             this.LightingSystem = true;
             this.UnloadMode = UnloadMode.Manual;
+            this.Zoom = 1.2f;
         }
 
         #endregion

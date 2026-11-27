@@ -21,24 +21,11 @@ namespace Remizione
         public ShadowSpot(GameThing thing)
         {
             this.thing = thing;
-            this.spotImage = new Sprite()
+            this.spotImage = new()
             {
                 Color = Colors.ShadowSpot,
                 PivotOrigin = RectanglePoint.Center
             };
-        }
-
-        #endregion
-
-        #region Private members
-
-        // GetCurrentOpacity
-        private float GetCurrentOpacity()
-        {
-            if (spotImage.Tweens.OpacityTween == null)
-                return Colors.ShadowOpacity;
-            else
-                return spotImage.Tweens.OpacityTween.CurrentValue;
         }
 
         #endregion
@@ -51,7 +38,7 @@ namespace Remizione
             if (!spotImage.IsEmpty)
             {
                 spotImage.Effects = thing.Effects;
-                spotImage.Opacity = GetCurrentOpacity() * thing.Opacity;
+                spotImage.Opacity = Colors.ShadowOpacity * thing.Opacity;
                 spotImage.Position = thing.GetAnchoredPosition(AnchorPosition);
 
                 if (thing.Altitude > 0)

@@ -112,10 +112,10 @@ namespace Remizione
                 Verb.GoUp => MouseCursorIcon.Up,
                 Verb.Lift => MouseCursorIcon.Lift,
                 Verb.PickUp => MouseCursorIcon.Sack,
-                Verb.Inspect => MouseCursorIcon.Inspect,
                 Verb.Talk => MouseCursorIcon.Talk,
                 Verb.Use => MouseCursorIcon.Hand,
                 Verb.None => MouseCursorIcon.Cross,
+                Verb.Null => MouseCursorIcon.Disabled,
                 _ => MouseCursorIcon.Cross
             };
         }

@@ -12,15 +12,9 @@
       ]      
     },
     {
-      "name": "PetrifiedTreeA",
-      "hp": 6,
-      "tags": [
-        "PetrifiedTree"
-      ]
-    },
-    {
       "name": "PotteryA",
       "baseDropChance": 0.5,
+      "unlockMode": "None",
       "effects": [
         {
           "context": "Contact",
@@ -35,11 +29,34 @@
       ],
       "lootPool": [
         {
-          "item": "Material",
+          "item": "SulfurStone",
           "weight": 10
         }
       ]    
     },
+    {
+      "name": "PotteryB",
+      "baseDropChance": 0.8,
+      "unlockMode": "None",
+      "effects": [
+        {
+          "context": "Contact",
+          "effectType": "Damage",
+          "amount": "6",
+          "knockbackIntensity": "None"
+        }
+      ],
+      "hp": 2,
+      "tags": [
+        "Pottery"
+      ],
+      "lootPool": [
+        {
+          "item": "Material",
+          "weight": 10
+        }
+      ]    
+    },    
     {
       "name": "TreeA",
       "hp": 3,

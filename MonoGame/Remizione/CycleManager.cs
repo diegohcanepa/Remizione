@@ -10,7 +10,7 @@ namespace Remizione
     public sealed class CycleManager
     {
         private float darknessDamageTimer;
-        private static readonly Color defaultLightMapColor = new(45, 45, 45);
+        private static readonly Color defaultLightMapColor = new(25, 25, 25);
         private readonly GameSession session;
 
         #region Constructor

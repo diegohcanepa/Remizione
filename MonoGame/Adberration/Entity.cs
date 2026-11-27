@@ -663,8 +663,8 @@ namespace Adberration
             set
             {
                 if (value != Sprite.Position)
-                    Sprite.Position = value;
-            }
+                      Sprite.Position = value;
+              }
         }
 
         // Reload

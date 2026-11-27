@@ -87,6 +87,11 @@ namespace Remizione
         {
             Session.PlayerData.Ashes -= AshCost;
             Die();
+            Target?.Reload();
         }
+
+        // Target
+        [ScriptProperty]
+        public GameThing? Target { get; set; }
     }
 }

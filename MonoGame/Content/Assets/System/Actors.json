@@ -28,9 +28,27 @@
       "hp": 10
     },
     {
-      "name": "PenitentA",
-      "ashReward": 5,
-      "hp": 6
-    }    
+      "name": "Zabul",
+      "baseDropChance": 0.3,
+      "ashReward": 2,
+      "maxPerRoom": 2,
+      "hp": 1,
+      "unlockMode": "Cycles",
+      "requiredCycles": 1,
+      "effects": [
+        {
+          "context": "Contact",
+          "effectType": "Damage",
+          "sound": "RatAttack",
+          "amount": "3"
+        }
+      ],
+      "lootPool": [
+        {
+          "item": "Loquat",
+          "weight": 10
+        }
+      ]
+    }
   ]
 }

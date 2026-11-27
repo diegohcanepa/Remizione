@@ -384,6 +384,10 @@ namespace Remizione
             if (sessionNode.Attributes[nameof(PlayerData.Ashes)]?.Value is string ashesValue)
                 PlayerData.Ashes = XmlConvert.ToInt32(ashesValue);
 
+            // AshesEnabled
+            if (sessionNode.Attributes[nameof(AshesEnabled)]?.Value is string ashesEnabledValue)
+                AshesEnabled = XmlConvert.ToBoolean(ashesEnabledValue);
+
             // Inventory
             if (sessionNode.Attributes[nameof(PlayerData.Inventory)]?.Value is string inventoryValue)
                 PlayerData.Inventory.Deserialize(inventoryValue);
@@ -632,6 +636,9 @@ namespace Remizione
             // Ashes
             output.WriteAttributeString(nameof(PlayerData.Ashes), XmlConvert.ToString(PlayerData.Ashes));
 
+            // AshesEnabled
+            output.WriteAttributeString(nameof(AshesEnabled), XmlConvert.ToString(AshesEnabled));
+
             // CurrentCycle
             output.WriteAttributeString(nameof(CycleManager.CurrentCycle), XmlConvert.ToString((int)CycleManager.CurrentCycle));
 
@@ -731,6 +738,9 @@ namespace Remizione
             get => PlayerData.Ashes;
             set => PlayerData.Ashes = value;
         }
+
+        // AshesEnabled
+        public bool AshesEnabled { get; set; }
 
         // BeginCycles
         [ScriptMethod]

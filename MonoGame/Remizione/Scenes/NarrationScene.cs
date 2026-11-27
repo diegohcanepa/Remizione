@@ -18,7 +18,7 @@ namespace Remizione
         #region Private fields
 
         private readonly ContentManager content;
-        private readonly Sprite background = new(Atlases.UI.EchoBackground) { PivotOrigin = RectanglePoint.LeftBottom, Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom) };
+        private readonly Sprite background = new(Atlases.UI.EchoBackground) { PivotOrigin = RectanglePoint.LeftBottom, Position = Screen.Area.GetPoint(RectanglePoint.LeftBottom, 0, 4) };
         private readonly FloatTween opacityTween = new();
         private SoundEffect? soundEffect;
         private SoundEffectInstance? soundEffectInstance;
@@ -41,7 +41,7 @@ namespace Remizione
                 Color = Colors.Palette.Yellow * .8f,
                 MaximumWidth = (int)(Screen.NativeWidth * .7f),
                 PivotOrigin = RectanglePoint.Top,
-                Position = background.BoundingBox.GetPoint(RectanglePoint.Top, 0, 20),
+                Position = background.BoundingBox.GetPoint(RectanglePoint.Top, 0, 25),
                 Scale = ScaleInfo.Text.ExtraLarge
             };
         }
@@ -90,9 +90,6 @@ namespace Remizione
         {
             Game.SpriteBatch.Begin(Game.Camera, SamplerState.LinearClamp);
             background.Draw(gameTime);
-            Game.SpriteBatch.End();
-
-            Game.SpriteBatch.Begin(Game.Camera);
             textSprite.Draw(gameTime);
             Game.SpriteBatch.End();
         }
@@ -115,6 +112,8 @@ namespace Remizione
                 opacityTween.Start(TweenStyle.CubicIn, 1, 0, 500, action);
                 textSprite.Tweens.OpacityTween = opacityTween;
             }
+
+            background.Opacity = textSprite.Opacity;
         }
 
         #endregion
